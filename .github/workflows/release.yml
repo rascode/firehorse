@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "22", cache: npm, registry-url: "https://registry.npmjs.org" }
+      # Trusted publishing (OIDC, no stored token) needs npm 11.5.1 or later.
+      - run: npm install -g npm@latest
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm test
@@ -23,4 +25,6 @@ jobs:
           if [[ "${GITHUB_REF_NAME}" == *-* ]]; then TAG=next; else TAG=latest; fi
           npm publish --access public --provenance --tag "$TAG"
         env:
+          # Only needed for the first publish; after that, switch on trusted publishing
+          # for this repo in the package's npm settings and delete the NPM_TOKEN secret.
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
