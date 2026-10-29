@@ -1,0 +1,487 @@
+/*
+ * Firehorse — marketing showcase: pricing tiers, features,
+ * testimonial, logo strip, bento grid, announcement marquee
+ */
+
+@layer fh.components {
+  /* —— Pricing tiers ——
+   * Plans side by side, as many as fit; the featured plan carries the
+   * tone. Prices line up because every tier uses the same anatomy.
+   *   <div class="fh-tiers">
+   *     <article class="fh-tier" data-tone="sky" data-featured>
+   *       <header><p class="fh-tier__name">Agent</p><p class="fh-tier__price"><b>$1,695</b>/mo</p>
+   *         <p class="fh-tier__note">3-day free trial</p></header>
+   *       <ul class="fh-checklist" data-tone>…</ul>
+   *       <a class="fh-button fh-button--block">Start trial</a>
+   *     </article>
+   *   </div> */
+  .fh-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--fh-space-4);
+    align-items: stretch;
+  }
+
+  .fh-tier {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--fh-space-6);
+    padding: var(--fh-space-7) var(--fh-space-6);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    container: fh-tier / inline-size;
+
+    & > header {
+      display: grid;
+      gap: var(--fh-space-2);
+    }
+
+    & > .fh-button,
+    & > .fh-tier__actions {
+      margin-block-start: auto;
+    }
+
+    &:is([data-featured], .fh-tier--featured) {
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
+    }
+
+    &[data-featured]::before {
+      content: attr(data-featured);
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-end: var(--fh-space-5);
+      translate: 0 -50%;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--fh-tone);
+      color: var(--fh-color-on-tone);
+      font-family: var(--fh-font-mono);
+      font-size: 0.58rem;
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+
+    &[data-featured=""]::before {
+      content: "Popular";
+    }
+  }
+
+  .fh-tier__name {
+    margin: 0;
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-tier__price {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+
+    & > b {
+      color: var(--fh-color-text);
+      font-size: clamp(2rem, 1.4rem + 4cqi, 2.75rem);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-tightest);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .fh-tier__note {
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  /* —— Feature ——
+   *   <div class="fh-feature" data-tone="teal">
+   *     <span class="fh-feature__icon"><svg …/></span>
+   *     <h3>Container-native</h3><p>…</p>
+   *   </div> */
+  .fh-feature {
+    display: grid;
+    align-content: start;
+    gap: var(--fh-space-3);
+
+    & > :is(h3, h4) {
+      margin: 0;
+      font-size: var(--fh-text-lede);
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+    }
+
+    & > p {
+      margin: 0;
+      color: var(--fh-color-text-muted);
+      line-height: var(--fh-leading-relaxed);
+    }
+  }
+
+  .fh-feature__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 2.5rem;
+    aspect-ratio: 1;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 50%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent);
+    color: var(--fh-tone);
+
+    & > svg {
+      inline-size: 1.15rem;
+      block-size: 1.15rem;
+    }
+  }
+
+  /* —— Testimonial —— */
+  .fh-testimonial {
+    display: grid;
+    gap: var(--fh-space-6);
+    margin: 0;
+    padding: clamp(var(--fh-space-6), 5cqi, var(--fh-space-10));
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+
+    & > blockquote {
+      margin: 0;
+      color: var(--fh-color-text);
+      font-size: clamp(1.1rem, 0.9rem + 1.2cqi, 1.5rem);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-heading);
+      line-height: 1.45;
+      text-wrap: pretty;
+
+      &::before {
+        content: "“";
+        display: block;
+        margin-block-end: var(--fh-space-2);
+        color: var(--fh-tone);
+        font-family: var(--fh-font-mono);
+        font-size: 2.5rem;
+        line-height: 0.6;
+      }
+    }
+
+    & > figcaption {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-3);
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+
+      & b {
+        display: block;
+        color: var(--fh-color-text);
+        font-weight: var(--fh-weight-semibold);
+      }
+    }
+  }
+
+  /* —— Logo strip ——
+   * Grayscale marks that come to full color on hover. Add
+   * fh-logos--marquee for an endless scroll (duplicate the list once).
+   * Only show logos you have permission to use. */
+  .fh-logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-6) clamp(var(--fh-space-8), 6cqi, var(--fh-space-16));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & :is(img, svg) {
+      block-size: var(--fh-logo-height, 1.5rem);
+      inline-size: auto;
+      opacity: 0.6;
+      filter: grayscale(1);
+      transition:
+        opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        filter var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    & :is(img, svg):hover {
+      opacity: 1;
+      filter: none;
+    }
+  }
+
+  .fh-logos--marquee {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow: hidden;
+    mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+
+    & > * {
+      flex: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-logos--marquee > * {
+      animation: fh-marquee var(--fh-marquee-duration, 30s) linear infinite;
+    }
+
+    .fh-logos--marquee:hover > * {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes fh-marquee {
+    to {
+      translate: calc(-100% - var(--fh-space-16)) 0;
+    }
+  }
+
+  /* —— Bento grid ——
+   * Mixed-size tiles that rearrange by container width: six columns
+   * wide, three medium, one narrow. Size tiles with data-span.
+   *   <div class="fh-bento">
+   *     <div data-span="wide tall">…</div><div>…</div>
+   *   </div> */
+  .fh-bento {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(var(--fh-bento-row, 11rem), auto);
+    grid-auto-flow: dense;
+    gap: var(--fh-space-3);
+
+    & > * {
+      position: relative;
+      min-inline-size: 0;
+      overflow: hidden;
+      padding: var(--fh-space-6);
+      border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-radius: var(--fh-radius-md);
+      background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 3%, transparent);
+      container: fh-tile / inline-size;
+    }
+  }
+
+  @container (inline-size >= 36rem) {
+    .fh-bento {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      & > :is([data-span~="wide"], [data-span~="hero"]) { grid-column: span 2; }
+      & > [data-span~="full"] { grid-column: 1 / -1; }
+      & > :is([data-span~="tall"], [data-span~="hero"]) { grid-row: span 2; }
+    }
+  }
+
+  @container (inline-size >= 64rem) {
+    .fh-bento {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+
+      & > * { grid-column: span 2; }
+      & > [data-span~="wide"] { grid-column: span 3; }
+      & > [data-span~="hero"] { grid-column: span 4; grid-row: span 2; }
+      & > [data-span~="full"] { grid-column: 1 / -1; }
+    }
+  }
+
+  /* Explicit featured flag element (instead of the data-featured label). */
+  /* The flag sits on the tier's top edge: opaque, filled with the tier's
+   * own tone and above the border so the line never runs through it. */
+  .fh-tier__flag {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 0;
+    inset-inline-end: var(--fh-space-5);
+    translate: 0 -50%;
+    border: var(--fh-border-thin) solid var(--fh-tone);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    font-weight: var(--fh-weight-semibold);
+  }
+
+  .fh-tier__pitch {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-tier > .fh-checklist {
+    flex: 1;
+    align-content: start;
+  }
+
+  /* —— Carousel ——
+   * Scroll-snapping panels in the style of X media posts: swipe or
+   * scroll, panels snap, and the current dot stretches into a bar.
+   * Chromium draws the dots natively with ::scroll-marker; the
+   * enhancer adds the same dots and a 1/N counter elsewhere.
+   *   <section class="fh-carousel" aria-roledescription="carousel" aria-label="…">
+   *     <div class="fh-carousel__track" tabindex="0">
+   *       <figure class="fh-carousel__slide" aria-label="1 of 4">…</figure> …
+   *     </div>
+   *     <span class="fh-carousel__count"></span>
+   *   </section> */
+  .fh-carousel {
+    position: relative;
+    display: grid;
+    gap: var(--fh-space-3);
+    container: fh-carousel / inline-size;
+  }
+
+  .fh-carousel__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--fh-carousel-slide, 100%);
+    gap: var(--fh-space-3);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    border-radius: var(--fh-radius-lg);
+    scroll-marker-group: after;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline-offset: 3px;
+    }
+
+    /* Native dots (Chromium 135+) */
+    &::scroll-marker-group {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      padding-block-start: var(--fh-space-1);
+    }
+  }
+
+  .fh-carousel__slide {
+    position: relative;
+    min-block-size: var(--fh-carousel-height, 18rem);
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    scroll-snap-align: start;
+
+    &::scroll-marker {
+      content: "";
+      inline-size: 0.45rem;
+      block-size: 0.45rem;
+      border-radius: var(--fh-radius-pill);
+      background-color: color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+      transition:
+        inline-size var(--fh-duration-base) var(--fh-ease-out),
+        background-color var(--fh-duration-base) var(--fh-ease-standard);
+    }
+
+    &::scroll-marker:target-current {
+      inline-size: 1.25rem;
+      background-color: var(--fh-color-text);
+    }
+  }
+
+  /* Wider slots show a peek of the next panel. */
+  @container fh-carousel (inline-size >= 40rem) {
+    .fh-carousel__track {
+      --fh-carousel-slide: 86%;
+    }
+  }
+
+  /* Enhancer-drawn dots (when ::scroll-marker is unavailable) */
+  .fh-carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.35rem;
+
+    & > button {
+      inline-size: 0.45rem;
+      block-size: 0.45rem;
+      padding: 0;
+      border: 0;
+      border-radius: var(--fh-radius-pill);
+      background-color: color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+      transition:
+        inline-size var(--fh-duration-base) var(--fh-ease-out),
+        background-color var(--fh-duration-base) var(--fh-ease-standard);
+
+      &[aria-current="true"] {
+        inline-size: 1.25rem;
+        background-color: var(--fh-color-text);
+      }
+    }
+  }
+
+  .fh-carousel__count {
+    position: absolute;
+    inset-block-start: var(--fh-space-3);
+    inset-inline-end: var(--fh-space-3);
+    z-index: 1;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 70%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    font-variant-numeric: tabular-nums;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .fh-carousel__prev,
+  .fh-carousel__next {
+    position: absolute;
+    inset-block-start: calc(var(--fh-carousel-height, 18rem) / 2);
+    display: grid;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-round);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 75%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--fh-color-text);
+    translate: 0 -50%;
+
+    &::before {
+      content: "";
+      inline-size: 0.9rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-right) center / contain no-repeat;
+    }
+
+    &:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .fh-carousel__prev {
+    inset-inline-start: var(--fh-space-3);
+
+    &::before {
+      rotate: 180deg;
+    }
+  }
+
+  .fh-carousel__next {
+    inset-inline-end: var(--fh-space-3);
+  }
+}

@@ -1,0 +1,120 @@
+/*
+ * Firehorse — semantic tokens
+ * ---------------------------------------------------------------
+ * Roles, not values. Every color role is written with light-dark(),
+ * so a single attribute flips any subtree between schemes:
+ *
+ *   <html>                          dark (Firehorse default)
+ *   <html data-fh-scheme="light">   light
+ *   <html data-fh-scheme="auto">    follows the OS setting
+ *
+ * The attribute works on any element, not only <html>: a light card
+ * can sit inside a dark page.
+ */
+
+@layer fh.tokens {
+  :root,
+  [data-fh-scheme="dark"] {
+    color-scheme: dark;
+  }
+  [data-fh-scheme="light"] {
+    color-scheme: light;
+  }
+  [data-fh-scheme="auto"] {
+    color-scheme: light dark;
+  }
+
+  :root {
+    /* —— Surfaces —— */
+    --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
+    --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
+    --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
+    --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
+    --fh-color-field: light-dark(var(--fh-gray-150), var(--fh-gray-750));
+    --fh-color-field-hover: light-dark(var(--fh-gray-200), var(--fh-gray-700));
+
+    /* —— Text —— */
+    --fh-color-text: light-dark(var(--fh-gray-950), var(--fh-gray-100));
+    --fh-color-text-strong: light-dark(var(--fh-gray-1000), var(--fh-gray-0));
+    --fh-color-text-muted: light-dark(#5c5c5c, var(--fh-gray-400));
+    --fh-color-text-subtle: light-dark(#6b6b6b, var(--fh-gray-500));
+    --fh-color-text-placeholder: light-dark(#616161, var(--fh-gray-300));
+    --fh-color-text-inverse: light-dark(var(--fh-gray-100), var(--fh-gray-950));
+    /* Decorative only (mono indices, watermarks) — never for meaning. */
+    --fh-color-text-ghost: light-dark(#c4c4c0, #3d3d3d);
+
+    /* —— Lines —— */
+    --fh-color-border: light-dark(rgb(22 22 22 / 0.1), rgb(240 240 240 / 0.08));
+    --fh-color-border-strong: light-dark(rgb(22 22 22 / 0.18), rgb(240 240 240 / 0.14));
+    --fh-color-rule: light-dark(#d9d9d5, var(--fh-gray-800));
+    --fh-color-etch: color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+    --fh-color-etch-soft: color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    --fh-color-cross: color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+    --fh-color-scaffold: light-dark(rgb(0 0 0 / 0.08), rgb(255 255 255 / 0.1));
+    --fh-color-scaffold-tick: light-dark(rgb(0 0 0 / 0.2), rgb(255 255 255 / 0.2));
+
+    /* —— Action —— */
+    --fh-color-primary: var(--fh-color-text);
+    --fh-color-on-primary: var(--fh-color-canvas);
+    --fh-color-accent: light-dark(var(--fh-ember-700), var(--fh-ember-500));
+    --fh-color-accent-hover: light-dark(var(--fh-ember-500), var(--fh-ember-400));
+    --fh-color-on-accent: var(--fh-gray-0);
+    /* Accent as text: one step lighter on dark so it clears 4.5:1. */
+    --fh-color-accent-text: light-dark(var(--fh-ember-700), var(--fh-ember-400));
+    --fh-color-focus: var(--fh-color-accent);
+    --fh-color-selection: color-mix(in oklab, var(--fh-color-accent) 35%, transparent);
+    --fh-color-scrim: rgb(0 0 0 / 0.6);
+    /* Text over photos and video, under a scrim. */
+    --fh-color-on-media: var(--fh-gray-0);
+
+    /* —— Status —— */
+    --fh-color-success: light-dark(var(--fh-green-700), var(--fh-lime-400));
+    --fh-color-danger: light-dark(var(--fh-red-700), var(--fh-red-500));
+    --fh-color-warning: light-dark(var(--fh-amber-700), var(--fh-amber-400));
+    --fh-color-live: light-dark(var(--fh-green-700), var(--fh-green-500));
+
+    /* —— Tones (category color; see utilities/tone.css) —— */
+    --fh-tone-neutral: var(--fh-color-text-muted);
+    --fh-tone-sky: light-dark(var(--fh-sky-700), var(--fh-sky-400));
+    --fh-tone-lime: light-dark(var(--fh-lime-700), var(--fh-lime-400));
+    --fh-tone-orange: light-dark(var(--fh-orange-700), var(--fh-orange-400));
+    --fh-tone-teal: light-dark(var(--fh-teal-700), var(--fh-teal-400));
+    --fh-tone-fuchsia: light-dark(var(--fh-fuchsia-700), var(--fh-fuchsia-400));
+    --fh-tone-violet: light-dark(var(--fh-violet-700), var(--fh-violet-400));
+    --fh-tone-rose: light-dark(var(--fh-rose-700), var(--fh-rose-400));
+    --fh-tone-amber: light-dark(var(--fh-amber-700), var(--fh-amber-400));
+    --fh-tone-accent: var(--fh-color-accent-text);
+    /* Text on a tone-filled block (cubes, solid badges). */
+    --fh-color-on-tone: light-dark(var(--fh-gray-0), var(--fh-gray-950));
+
+    /* —— Focus ring —— */
+    --fh-focus-width: 2px;
+    --fh-focus-offset: 2px;
+  }
+
+}
+
+/*
+ * The active tone. Registered so it inherits as a computed color,
+ * can be transitioned, and has a safe initial value.
+ */
+@property --fh-tone {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #989898;
+}
+
+/*
+ * Layout knobs are set on the element they configure and must not
+ * leak into nested primitives (a stack's gap should not become the
+ * gap of a cluster inside it). Registering them as non-inheriting
+ * makes `var(--fh-gap, fallback)` fall back on every element that
+ * doesn't set its own value.
+ */
+@property --fh-gap { syntax: "*"; inherits: false; }
+@property --fh-grid-min { syntax: "*"; inherits: false; }
+@property --fh-grid-max-cols { syntax: "*"; inherits: false; }
+@property --fh-split { syntax: "*"; inherits: false; }
+@property --fh-align { syntax: "*"; inherits: false; }
+@property --fh-justify { syntax: "*"; inherits: false; }

@@ -1,0 +1,26 @@
+name: Release to npm
+# Push a tag like v1.1.0 (or v1.2.0-rc.0 for a prerelease on the "next" tag).
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+  id-token: write # npm provenance
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm, registry-url: "https://registry.npmjs.org" }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - name: Tag matches package.json
+        run: test "v$(node -p "require('./package.json').version")" = "${GITHUB_REF_NAME}"
+      - name: Publish
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == *-* ]]; then TAG=next; else TAG=latest; fi
+          npm publish --access public --provenance --tag "$TAG"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

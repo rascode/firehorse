@@ -1,0 +1,673 @@
+/*
+ * Firehorse — commerce
+ * ---------------------------------------------------------------
+ * Everything a store needs, built from the same tokens: product
+ * cards, price, swatches and sizes, quantity, product gallery and
+ * detail layout, cart drawer and line items, free-shipping meter,
+ * order summary and promo code, shipping and payment choice cards,
+ * a payment card preview and card fields, express pay, trust row,
+ * reviews breakdown and an order confirmation.
+ *
+ * The defaults are Firehorse: etched dashed shells, mono labels and
+ * prices, tone accents. Product cards read the global card tokens
+ * (data-fh-card), so the whole store restyles with the rest of the site.
+ */
+
+@layer fh.components {
+  /* —— Price —— */
+  .fh-price {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--fh-space-1) var(--fh-space-2);
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-variant-numeric: tabular-nums;
+
+    & > b,
+    & > strong { color: var(--fh-color-text); font-size: var(--fh-text-body); font-weight: var(--fh-weight-medium); }
+    & > s,
+    & > del { color: var(--fh-color-text-subtle); font-size: 0.88em; }
+    & > small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wide); text-transform: uppercase; }
+    &:has(> s, > del) > :is(b, strong) { color: var(--fh-tone, var(--fh-color-danger)); }
+  }
+  .fh-price--lg > :is(b, strong) { font-size: var(--fh-text-h3); letter-spacing: -0.02em; }
+
+  /* —— Product card ——
+   *   <article class="fh-product">
+   *     <a class="fh-product__media" href="…"><img …><img class="fh-product__alt" …></a>
+   *     <span class="fh-product__badge">New</span>
+   *     <button class="fh-product__fav" aria-pressed="false" aria-label="Save"></button>
+   *     <h3 class="fh-product__title"><a href="…">Name</a></h3>
+   *     <p class="fh-price"><b>$48</b></p>
+   *     <div class="fh-swatches">…</div>
+   *     <button class="fh-product__add fh-button">Add to bag</button>
+   *   </article> */
+  .fh-product {
+    position: relative;
+    display: grid;
+    gap: var(--fh-space-2);
+    align-content: start;
+    padding: var(--fh-space-2) var(--fh-space-2) var(--fh-space-4);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    box-shadow: var(--fh-card-shadow, none);
+    backdrop-filter: var(--fh-card-backdrop, none);
+    container: fh-product / inline-size;
+    transition: border-color var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > :not(.fh-product__media, .fh-product__badge, .fh-product__fav) { margin-inline: var(--fh-space-2); }
+    &:hover { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); }
+  }
+  /* Grids of products share their etched rules, like .fh-grid--ruled cards. */
+  .fh-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-product-min, 13rem)), 1fr));
+    gap: var(--fh-gap, var(--fh-space-4));
+  }
+
+  /* Shared by every product tile: a sunken surface and a faint etched grid. */
+  .fh-product__media,
+  .fh-gallery__main,
+  .fh-gallery__thumbs > a,
+  .fh-line-item > :first-child {
+    --_tile: color-mix(in oklab, var(--fh-color-surface-sunken) 55%, var(--fh-color-canvas));
+    --_grid: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+  }
+
+  .fh-product__media {
+    position: relative;
+    display: block;
+    aspect-ratio: var(--fh-product-ratio, 4 / 5);
+    overflow: hidden;
+    border-radius: calc(var(--fh-card-radius, 0px) * 0.6);
+    /* Etched tile: sunken surface, a faint dashed grid, a glow in the product's tone. */
+    background:
+      radial-gradient(70% 55% at 50% 48%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 22%, transparent), transparent 72%),
+      repeating-linear-gradient(90deg, var(--_grid) 0 1px, transparent 1px 2.5rem) 50% 0 / 100% 100%,
+      repeating-linear-gradient(0deg, var(--_grid) 0 1px, transparent 1px 2.5rem) 0 50% / 100% 100%,
+      var(--_tile);
+
+    & > :is(img, svg) {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+      transition: opacity var(--fh-duration-slow, 380ms) var(--fh-ease-standard), scale 900ms var(--fh-ease-out);
+    }
+    & > .fh-product__alt { opacity: 0; }
+  }
+  .fh-product:hover .fh-product__media > :first-child { scale: 1.03; }
+  .fh-product:hover .fh-product__media:has(> .fh-product__alt) > :first-child { opacity: 0; }
+  .fh-product:hover .fh-product__alt { opacity: 1; }
+
+  .fh-product__badge {
+    position: absolute;
+    inset-block-start: var(--fh-space-3);
+    inset-inline-start: var(--fh-space-3);
+    z-index: 1;
+    padding: 0.12rem 0.45rem 0.16rem;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 78%, transparent);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: 0.58rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+  }
+  .fh-product__badge[data-tone] { border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent); color: var(--fh-tone); }
+
+  .fh-product__fav {
+    position: absolute;
+    inset-block-start: var(--fh-space-2);
+    inset-inline-end: var(--fh-space-2);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 80%, transparent);
+    color: var(--fh-color-text);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-heart, var(--fh-icon-plus)) center / contain no-repeat;
+    }
+    &[aria-pressed="true"] { color: var(--fh-color-danger); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  .fh-product__title {
+    margin: var(--fh-space-1) 0 0;
+    font-family: var(--fh-font-display);
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-snug);
+
+    & a { color: inherit; text-decoration: none; }
+    & a::after { content: ""; position: absolute; inset: 0; }
+  }
+  .fh-product__meta { margin: 0; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro, 0.62rem); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+
+  /* Quick add: fades in on hover on pointer devices; always visible on touch. */
+  .fh-product__add {
+    position: relative;
+    z-index: 2;
+    inline-size: 100%;
+  }
+  @media (hover: hover) {
+    .fh-product > .fh-product__add { opacity: 0; translate: 0 0.25rem; transition: opacity var(--fh-duration-base), translate var(--fh-duration-base); }
+    .fh-product:is(:hover, :focus-within) > .fh-product__add { opacity: 1; translate: 0 0; }
+  }
+
+  /* —— Swatches & sizes (real radios) —— */
+  .fh-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-space-1-5);
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    & > label {
+      position: relative;
+      display: inline-block;
+      inline-size: var(--fh-swatch-size, 1.35rem);
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-pill);
+      background: var(--swatch, var(--fh-color-surface-sunken));
+      box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+      cursor: pointer;
+
+      & > input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+      &:has(:checked) { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 18%, transparent), 0 0 0 2px var(--fh-color-bg, var(--fh-color-canvas)), 0 0 0 3.5px var(--fh-color-text); }
+      &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 4px; }
+    }
+  }
+  .fh-swatches--sm { --fh-swatch-size: 0.85rem; }
+
+  .fh-sizes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
+    gap: var(--fh-space-1-5);
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    & > label {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-block-size: 2.75rem;
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-radius: var(--fh-radius-sm);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-caption);
+      cursor: pointer;
+      transition: border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
+
+      & > input { position: absolute; opacity: 0; pointer-events: none; }
+      &:hover { border-color: var(--fh-color-text-muted); }
+      &:has(:checked) { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, transparent); color: var(--fh-color-text); }
+      &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+      &:has(:disabled) {
+        color: var(--fh-color-text-subtle);
+        cursor: not-allowed;
+        background: linear-gradient(to top right, transparent calc(50% - 0.5px), var(--fh-color-border-strong) 50%, transparent calc(50% + 0.5px));
+      }
+    }
+  }
+
+  /* —— Quantity stepper ——
+   *   <div class="fh-qty"><button aria-label="Decrease">−</button><input type="number" value="1" min="1"><button aria-label="Increase">+</button></div> */
+  .fh-qty {
+    display: inline-grid;
+    grid-template-columns: 2.25rem 2.75rem 2.25rem;
+    align-items: stretch;
+    min-block-size: 2.5rem;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-sm);
+    font-family: var(--fh-font-mono);
+
+    & > button {
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: 1.05rem;
+      cursor: pointer;
+      &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); }
+      &:disabled { color: var(--fh-color-text-subtle); cursor: not-allowed; }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    }
+    & > input {
+      inline-size: 100%;
+      border: 0;
+      border-inline: var(--fh-border-thin) solid var(--fh-color-border);
+      background: none;
+      color: var(--fh-color-text);
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      appearance: textfield;
+      &::-webkit-inner-spin-button { appearance: none; }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    }
+  }
+  .fh-qty--sm { grid-template-columns: 1.85rem 2.25rem 1.85rem; min-block-size: 2rem; font-size: var(--fh-text-small); }
+
+  /* —— Product gallery: scroll-snap main image + thumbnail links —— */
+  .fh-gallery {
+    display: grid;
+    gap: var(--fh-space-3);
+    min-inline-size: 0;
+  }
+  .fh-gallery__main {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background:
+      radial-gradient(60% 50% at 50% 48%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 16%, transparent), transparent 72%),
+      repeating-linear-gradient(90deg, var(--_grid) 0 1px, transparent 1px 3rem),
+      repeating-linear-gradient(0deg, var(--_grid) 0 1px, transparent 1px 3rem),
+      var(--_tile);
+
+    & > * { scroll-snap-align: start; aspect-ratio: var(--fh-product-ratio, 4 / 5); overflow: hidden; }
+    & > * > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+  }
+  .fh-gallery__thumbs {
+    display: flex;
+    gap: var(--fh-space-2);
+    overflow-x: auto;
+
+    & > a {
+      flex: 0 0 4rem;
+      aspect-ratio: var(--fh-product-ratio, 4 / 5);
+      overflow: hidden;
+      border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--_tile);
+      opacity: 0.6;
+      outline: var(--fh-border-thin) solid transparent;
+      transition: opacity var(--fh-duration-fast);
+
+      &:is(:hover, [aria-current="true"]) { opacity: 1; border-color: var(--fh-tone, var(--fh-color-text)); border-style: solid; }
+      & > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+    }
+  }
+
+  /* —— Product detail layout —— */
+  .fh-pdp {
+    display: grid;
+    gap: var(--fh-space-8);
+    container: fh-pdp / inline-size;
+  }
+  @container (inline-size >= 52rem) {
+    .fh-pdp { grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr); align-items: start; }
+    .fh-pdp__info { position: sticky; inset-block-start: var(--fh-space-8); }
+  }
+  .fh-pdp__info {
+    display: grid;
+    gap: var(--fh-space-5);
+    align-content: start;
+
+    & h1 { margin: 0; font-family: var(--fh-font-display); font-size: clamp(1.8rem, 5cqi, 2.8rem); font-weight: var(--fh-weight-bold); letter-spacing: -0.04em; line-height: 1; }
+  }
+  .fh-pdp__label {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 var(--fh-space-2);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+  .fh-pdp__buy { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--fh-space-2); }
+  .fh-pdp__buy > .fh-button { min-block-size: 2.75rem; }
+
+  /* —— Trust row —— */
+  .fh-trust {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--fh-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li { display: flex; align-items: center; gap: var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+    & > li > .fh-icon { color: var(--fh-tone, var(--fh-color-text)); font-size: 1.1rem; }
+  }
+
+  /* —— Cart: line items, meter, totals —— */
+  .fh-cart-button {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    inline-size: 2.5rem;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); }
+    & > b {
+      position: absolute;
+      inset-block-start: 0.2rem;
+      inset-inline-end: 0.15rem;
+      min-inline-size: 1.05rem;
+      padding: 0 0.28rem;
+      border-radius: var(--fh-radius-pill);
+      background-color: var(--fh-tone, var(--fh-color-accent));
+      color: var(--fh-color-on-tone);
+      font-family: var(--fh-font-mono);
+      font-size: 0.6rem;
+      line-height: 1.05rem;
+    }
+  }
+
+  .fh-line-items { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+  .fh-line-item {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    gap: var(--fh-space-3);
+    padding-block: var(--fh-space-3);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > :first-child { aspect-ratio: var(--fh-product-ratio, 4 / 5); overflow: hidden; border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-sm); background: radial-gradient(70% 55% at 50% 48%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 16%, transparent), transparent 72%), var(--_tile); }
+    & > :first-child > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+    & h4 { margin: 0; font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
+    & p { margin: var(--fh-space-0-5) 0 var(--fh-space-2); color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro, 0.62rem); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+    & > :last-child > b { font-family: var(--fh-font-mono); font-weight: var(--fh-weight-medium); font-variant-numeric: tabular-nums; }
+    & > :last-child { display: grid; justify-items: end; align-content: space-between; gap: var(--fh-space-2); }
+  }
+  .fh-line-item__remove {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text-subtle);
+    font: inherit;
+    font-size: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    &:hover { color: var(--fh-color-text); }
+  }
+
+  /* Free shipping meter: --v is the percent reached. */
+  .fh-ship-meter {
+    display: grid;
+    gap: var(--fh-space-2);
+    padding: var(--fh-space-3);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 45%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 7%, transparent);
+    font-size: var(--fh-text-small);
+
+    & > i {
+      block-size: 0.35rem;
+      border-radius: var(--fh-radius-pill);
+      background:
+        linear-gradient(var(--fh-tone, var(--fh-color-success)), var(--fh-tone, var(--fh-color-success))) 0 / calc(var(--v, 0) * 1%) 100% no-repeat,
+        color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+      transition: background-size var(--fh-duration-slow, 380ms) var(--fh-ease-out);
+    }
+  }
+
+  /* Order summary. */
+  .fh-summary {
+    display: grid;
+    gap: var(--fh-space-2);
+    margin: 0;
+
+    & > div { display: flex; justify-content: space-between; gap: var(--fh-space-3); font-size: var(--fh-text-small); }
+    & dt { color: var(--fh-color-text-muted); }
+    & dd { margin: 0; font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; }
+    & > .fh-summary__total { margin-block-start: var(--fh-space-2); padding-block-start: var(--fh-space-3); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); font-size: var(--fh-text-body); }
+    & > .fh-summary__total :is(dt, dd) { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+    & > .fh-summary__discount dd { color: var(--fh-color-success); }
+  }
+
+  /* —— Choice cards (shipping, payment method, plan) —— */
+  .fh-choice-cards { display: grid; gap: var(--fh-space-2); margin: 0; padding: 0; border: 0; }
+  .fh-choice-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-3) var(--fh-space-4);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    cursor: pointer;
+    transition: border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
+
+    & > input { margin: 0; accent-color: var(--fh-tone, var(--fh-color-text)); inline-size: 1rem; block-size: 1rem; }
+    & b { display: block; font-weight: var(--fh-weight-medium); font-size: var(--fh-text-small); }
+    & small { color: var(--fh-color-text-subtle); font-size: 0.78rem; }
+    & > :last-child { font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; font-size: var(--fh-text-caption); }
+    &:hover { border-color: var(--fh-color-text-muted); }
+    &:has(:checked) { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 6%, transparent); }
+    &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  /* —— Payment card preview ——
+   * A CSS-drawn card that mirrors the fields. Flips to show the CVC
+   * while the security code field has focus (no script needed);
+   * firehorse.js formats the number and fills the preview.
+   *   <div class="fh-paycard" data-brand="visa"><div class="fh-paycard__front">…</div><div class="fh-paycard__back">…</div></div> */
+  .fh-paycard {
+    --_c1: var(--fh-paycard-from, oklch(0.27 0.005 270));
+    --_c2: var(--fh-paycard-to, oklch(0.15 0.003 270));
+    --_glow: var(--fh-paycard-glow, var(--fh-tone, var(--fh-color-accent)));
+
+    position: relative;
+    inline-size: min(100%, 22rem);
+    aspect-ratio: 1.586;
+    perspective: 1200px;
+    container: fh-paycard / inline-size;
+    font-family: var(--fh-font-mono);
+  }
+  .fh-paycard[data-brand="mastercard"] { --_c1: oklch(0.36 0.09 40); --_c2: oklch(0.2 0.05 20); }
+  .fh-paycard[data-brand="amex"] { --_c1: oklch(0.42 0.08 200); --_c2: oklch(0.24 0.05 230); }
+  .fh-paycard[data-brand="discover"] { --_c1: oklch(0.42 0.1 60); --_c2: oklch(0.22 0.04 40); }
+
+  .fh-paycard__front,
+  .fh-paycard__back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    padding: 6.5cqi 7cqi;
+    border-radius: 4.5cqi;
+    background:
+      radial-gradient(80% 90% at 100% 0%, color-mix(in oklab, var(--_glow) 38%, transparent), transparent 60%),
+      repeating-linear-gradient(90deg, color-mix(in oklab, white 7%, transparent) 0 1px, transparent 1px 8cqi),
+      repeating-linear-gradient(0deg, color-mix(in oklab, white 7%, transparent) 0 1px, transparent 1px 8cqi),
+      linear-gradient(135deg, var(--_c1), var(--_c2));
+    outline: 1px dashed color-mix(in oklab, white 22%, transparent);
+    outline-offset: -2.2cqi;
+    color: var(--fh-color-on-media);
+    box-shadow: 0 1px 0 color-mix(in oklab, white 20%, transparent) inset, var(--fh-shadow-overlay);
+    backface-visibility: hidden;
+    transition: rotate 700ms cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+  .fh-paycard__front { grid-template-rows: auto 1fr auto auto; }
+  .fh-paycard__back { rotate: y 180deg; grid-template-rows: 18% 1fr; padding-inline: 0; }
+  :root:has(.fh-paycard-cvc:focus) .fh-paycard .fh-paycard__front,
+  .fh-paycard--flipped .fh-paycard__front { rotate: y -180deg; }
+  :root:has(.fh-paycard-cvc:focus) .fh-paycard .fh-paycard__back,
+  .fh-paycard--flipped .fh-paycard__back { rotate: y 0deg; }
+
+  .fh-paycard__top { display: flex; justify-content: space-between; align-items: center; }
+  .fh-paycard__chip {
+    inline-size: 13cqi;
+    aspect-ratio: 1.3;
+    border-radius: 1.6cqi;
+    background:
+      linear-gradient(90deg, transparent 32%, color-mix(in oklab, black 25%, transparent) 33% 35%, transparent 36% 64%, color-mix(in oklab, black 25%, transparent) 65% 67%, transparent 68%),
+      linear-gradient(0deg, transparent 45%, color-mix(in oklab, black 25%, transparent) 46% 54%, transparent 55%),
+      linear-gradient(135deg, oklch(0.86 0.09 85), oklch(0.68 0.1 70));
+  }
+  .fh-paycard__mark { align-self: center; font-family: var(--fh-font-sans); font-size: 4.2cqi; font-weight: var(--fh-weight-bold); letter-spacing: -0.02em; }
+  .fh-paycard__mark::first-letter { color: var(--_glow); }
+  .fh-paycard__brand { font-family: var(--fh-font-sans); font-size: 5.2cqi; font-weight: var(--fh-weight-heavy); font-style: italic; letter-spacing: 0.02em; text-transform: uppercase; opacity: 0.92; }
+  .fh-paycard__number { align-self: end; font-size: 6.4cqi; letter-spacing: 0.12em; word-spacing: 0.25em; text-shadow: 0 1px 0 color-mix(in oklab, black 40%, transparent); white-space: nowrap; }
+  .fh-paycard__row { display: flex; justify-content: space-between; gap: 4cqi; margin-block-start: 4cqi; font-size: 3.6cqi; letter-spacing: 0.08em; text-transform: uppercase; }
+  .fh-paycard__row small { display: block; margin-block-end: 0.6cqi; font-size: 2.4cqi; opacity: 0.7; }
+  .fh-paycard__stripe { background-color: oklch(0.12 0 0); }
+  .fh-paycard__sig {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-self: start;
+    margin: 6cqi 7cqi 0;
+    padding: 2cqi 3cqi;
+    border-radius: 1cqi;
+    background: repeating-linear-gradient(-45deg, oklch(0.95 0 0) 0 6px, oklch(0.88 0 0) 6px 8px);
+    color: oklch(0.2 0 0);
+    font-size: 4cqi;
+    font-style: italic;
+  }
+
+  /* Card number field with a brand chip on the end. */
+  .fh-card-field {
+    position: relative;
+
+    & > .fh-input { padding-inline-end: 4.5rem; font-family: var(--fh-font-mono); letter-spacing: 0.06em; }
+    & > [data-card-brand] {
+      position: absolute;
+      inset-block: 0;
+      inset-inline-end: var(--fh-space-3);
+      display: flex;
+      align-items: center;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-sans);
+      font-size: 0.7rem;
+      font-weight: var(--fh-weight-heavy);
+      font-style: italic;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+  }
+
+  /* Express pay buttons. */
+  .fh-express {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--fh-space-2);
+
+    & > button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--fh-space-2);
+      min-block-size: 2.75rem;
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--fh-color-surface-raised);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color var(--fh-duration-fast);
+      &:hover { border-style: solid; border-color: var(--fh-color-text-muted); }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+    }
+  }
+  .fh-or {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    &::before,
+    &::after { content: ""; flex: 1; border-block-start: var(--fh-border-thin) solid var(--fh-color-border); }
+  }
+
+  /* —— Checkout layout —— */
+  .fh-checkout {
+    display: grid;
+    gap: var(--fh-space-8);
+    container: fh-checkout / inline-size;
+  }
+  @container (inline-size >= 54rem) {
+    .fh-checkout { grid-template-columns: minmax(0, 1.25fr) minmax(19rem, 0.75fr); align-items: start; }
+    .fh-checkout__aside { position: sticky; inset-block-start: var(--fh-space-6); }
+  }
+  .fh-checkout__aside {
+    display: grid;
+    gap: var(--fh-space-4);
+    padding: var(--fh-space-5);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, var(--fh-color-surface-sunken));
+    box-shadow: var(--fh-card-shadow, none);
+  }
+  .fh-checkout__step {
+    display: grid;
+    gap: var(--fh-space-4);
+    padding-block-end: var(--fh-space-6);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > h3 { display: flex; align-items: center; gap: var(--fh-space-3); margin: 0; font-size: var(--fh-text-body); font-weight: var(--fh-weight-medium); letter-spacing: -0.01em; }
+    & > h3 > span { display: grid; place-items: center; inline-size: 1.6rem; aspect-ratio: 1; border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 60%, transparent); border-radius: var(--fh-radius-sm); color: var(--fh-tone, var(--fh-color-text)); font-family: var(--fh-font-mono); font-size: 0.68rem; }
+  }
+
+  /* —— Reviews breakdown —— */
+  .fh-review-bars {
+    display: grid;
+    gap: var(--fh-space-1-5);
+    margin: 0;
+
+    & > div { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem; align-items: center; gap: var(--fh-space-2); font-size: 0.78rem; color: var(--fh-color-text-muted); }
+    & dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
+    & i { block-size: 0.4rem; border-radius: var(--fh-radius-pill); background: linear-gradient(var(--fh-tone, var(--fh-color-text)), var(--fh-tone, var(--fh-color-text))) 0 / calc(var(--v, 0) * 1%) 100% no-repeat, color-mix(in oklab, var(--fh-color-text) 10%, transparent); }
+  }
+
+  /* —— Order confirmation —— */
+  .fh-confirm {
+    display: grid;
+    gap: var(--fh-space-4);
+    justify-items: start;
+
+    & > .fh-icon-tile { --fh-icon-tile: 3rem; }
+    & h3 { margin: 0; font-family: var(--fh-font-display); font-size: var(--fh-text-h3); font-weight: var(--fh-weight-bold); letter-spacing: -0.03em; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-paycard__front,
+    .fh-paycard__back,
+    .fh-product__media > * { transition: none; }
+  }
+}

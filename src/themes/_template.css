@@ -1,0 +1,38 @@
+/*
+ * Firehorse theme — TEMPLATE (hand-written CSS)
+ * ---------------------------------------------------------------
+ * Most themes should start from _template.json instead: one JSON file
+ * holds type, both color schemes and every component decision, and
+ * `npx firehorse-theme <file>.json` compiles it to CSS and checks its
+ * contrast. Use this CSS template only for a brand layer that sits on
+ * top of a theme (fonts, a token or two), like themes/rascode.css.
+ *
+ * A theme only re-points tokens; it never adds selectors for
+ * components. If you need a new component, add it to Firehorse.
+ *
+ * Load order:  firehorse.css  →  your theme
+ * Scope:       `:root` for a whole site, or `[data-fh-theme="<brand>"]`
+ *              to theme one subtree (a client preview inside docs).
+ *
+ * Tiers you can override, from broad to narrow:
+ *   1. Scheme      data-fh-scheme="light|dark|auto" (markup, not here)
+ *   2. Primitives  --fh-gray-*, --fh-ember-*, tone hues, fonts
+ *   3. Semantics   --fh-color-*, --fh-tone-*
+ *   4. Components  --fh-button-*, --fh-card-radius …
+ */
+
+@layer fh.themes {
+  [data-fh-theme="brand"] {
+    /* Type */
+    --fh-font-sans: "Your Sans", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-mono: "Your Mono", ui-monospace, monospace;
+
+    /* Accent: give both scheme variants (light canvas, dark canvas). */
+    --fh-color-accent: light-dark(#1d4ed8, #60a5fa);
+    --fh-color-accent-hover: light-dark(#1e40af, #93c5fd);
+
+    /* Shape: e.g. softer CTAs */
+    --fh-button-radius: var(--fh-radius-md);
+    --fh-card-radius: var(--fh-radius-md);
+  }
+}

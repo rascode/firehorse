@@ -1,0 +1,829 @@
+/*
+ * Firehorse — dock: the floating bar, cubes, chips and chip cards
+ * ---------------------------------------------------------------
+ * The dock is the masthead that rides under the site header on
+ * rascode.dev. At rest it is a quiet row (usually just the
+ * breadcrumb pill). Once the page scrolls far enough for it to pin,
+ * it "engages": it gains a blurred surface, the small title slides
+ * in, the snapshot cubes appear, and its outline CTA fills in.
+ *
+ *   <div class="fh-dock fh-frame" data-tone="sky">
+ *     <div class="fh-dock__bar">
+ *       <div class="fh-dock__identity">
+ *         <p class="fh-eyebrow-pill">…</p>
+ *         <p class="fh-dock__title">Landscaping agent</p>
+ *       </div>
+ *       <ul class="fh-cubes">
+ *         <li><b class="fh-cube">$1,695</b> per month</li> …
+ *       </ul>
+ *       <div class="fh-dock__actions"><a class="fh-button fh-button--outline">Talk to Wes</a></div>
+ *     </div>
+ *     <span class="fh-dock__progress"></span>
+ *   </div>
+ *
+ * Engaging needs no JavaScript in browsers with scroll-state
+ * container queries (it engages when it sticks). Elsewhere, and to
+ * hand off the header CTA, the optional enhancer (dist/firehorse.js)
+ * sets data-active="true". Both paths share one set of styles.
+ */
+
+@layer fh.components {
+  /* —— Cubes ——
+   * Tone-filled blocks carrying a mono value. In a list, each cube
+   * walks the tone wheel by +28° so a row of facts reads as one
+   * family rather than a rainbow. */
+  .fh-cube {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-1);
+    flex: none;
+    min-inline-size: 2rem;
+    max-inline-size: 11rem;
+    padding: 0.34rem 0.45rem;
+    overflow: hidden;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--_cube, var(--fh-tone));
+    color: var(--fh-color-on-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.66rem;
+    font-weight: var(--fh-weight-heavy);
+    font-style: normal;
+    letter-spacing: var(--fh-tracking-mono);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: background-color var(--fh-duration-base) var(--fh-ease-standard);
+  }
+
+  .fh-cube--lg {
+    min-inline-size: 2.75rem;
+    padding: 0.55rem 0.65rem;
+    font-size: var(--fh-text-small);
+  }
+  .fh-cube--sm { min-inline-size: 1.5rem; padding: 0.22rem 0.35rem; font-size: 0.58rem; }
+  .fh-cube--xl { min-inline-size: 3.5rem; max-inline-size: 14rem; padding: 0.7rem 0.85rem; border-radius: var(--fh-radius-md); font-size: var(--fh-text-lede); letter-spacing: -0.02em; }
+  .fh-cube > .fh-icon { font-size: 1.1em; }
+  /* Outline cube: the tone as a dashed frame instead of a fill. */
+  .fh-cube--outline { border: var(--fh-border-thin) dashed var(--_cube, var(--fh-tone)); background-color: color-mix(in oklab, var(--_cube, var(--fh-tone)) 8%, transparent); color: var(--_cube, var(--fh-tone)); }
+
+  .fh-cubes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-2) var(--fh-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: 0.56rem;
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    & > li:nth-child(3n + 2) .fh-cube {
+      --_cube: oklch(from var(--fh-tone) l c calc(h + 28));
+    }
+
+    & > li:nth-child(3n + 3) .fh-cube {
+      --_cube: oklch(from var(--fh-tone) l c calc(h + 56));
+    }
+  }
+
+  /* —— Chips ——
+   * Dashed pill with a tone dot. Use as filters, section jumps or
+   * tags. `aria-current` / `aria-pressed` / a checked radio inside
+   * mark the selected chip, which fills with the tone. */
+  .fh-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    flex: none;
+    padding: 0.38rem 0.8rem;
+    border: var(--fh-border-thin) var(--fh-chip-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+    border-radius: var(--fh-chip-radius, var(--fh-radius-pill));
+    background: var(--fh-chip-bg, none);
+    box-shadow: inset 0 calc(var(--fh-chip-underline, 0px) * -1) 0 color-mix(in oklab, var(--fh-tone) 70%, transparent);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+    line-height: var(--fh-leading-snug);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      inline-size: 0.4rem;
+      aspect-ratio: 1;
+      flex: none;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone);
+    }
+
+    &:hover {
+      color: var(--fh-color-text);
+      border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
+    }
+
+    &:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], :has(:checked)) {
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 14%, transparent);
+      color: var(--fh-color-text);
+    }
+
+    &:has(:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+
+    & > input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Removable chip: <button class="fh-chip__remove" aria-label="Remove …"> */
+    & .fh-chip__remove {
+      display: inline-grid;
+      place-items: center;
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      margin-inline-end: -0.35rem;
+      padding: 0;
+      border: 0;
+      border-radius: var(--fh-radius-round);
+      background: none;
+      color: inherit;
+
+      &::before {
+        content: "";
+        inline-size: 0.6rem;
+        aspect-ratio: 1;
+        background-color: currentColor;
+        mask: var(--fh-icon-close) center / contain no-repeat;
+      }
+
+      &:hover {
+        background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      }
+    }
+  }
+
+  .fh-chip--plain::before {
+    content: none;
+  }
+
+  /* A track of chips: scrolls sideways instead of wrapping when it
+   * runs out of room. */
+  /* —— Chip variants ——
+   *   fh-chip--solid      filled with the tone, text in on-tone
+   *   fh-chip--tone       soft tone wash with a solid tone border
+   *   fh-chip--underline  no box; a tone underline that thickens when selected
+   *   fh-chip--indexed    a mono index in place of the dot:
+   *                       <span class="fh-chip fh-chip--indexed"><b class="fh-chip__index">01</b>Discovery</span>
+   *                       or number a whole group with fh-chips--indexed
+   *   Icons: put <i class="fh-icon fh-icon--…"> first and it replaces the dot. */
+  .fh-chip--solid {
+    border-style: solid;
+    border-color: var(--fh-tone);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+
+    &::before { background-color: currentColor; }
+    &:hover { color: var(--fh-color-on-tone); border-color: var(--fh-tone); }
+    &:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], :has(:checked)) {
+      background-color: var(--fh-tone);
+      color: var(--fh-color-on-tone);
+      box-shadow: 0 0 0 2px var(--fh-color-bg, var(--fh-color-canvas)), 0 0 0 4px var(--fh-tone);
+    }
+  }
+
+  .fh-chip--tone {
+    border-style: solid;
+    border-color: color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
+    color: var(--fh-color-text);
+  }
+
+  .fh-chip--underline {
+    padding-inline: var(--fh-space-1);
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--fh-tone) 45%, transparent);
+
+    &:hover { box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--fh-tone) 70%, transparent); }
+    &:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], :has(:checked)) {
+      background: none;
+      color: var(--fh-color-text);
+      box-shadow: inset 0 -2px 0 var(--fh-tone);
+    }
+  }
+
+  .fh-chip--indexed::before,
+  .fh-chips--indexed > .fh-chip::before,
+  .fh-chip:has(> .fh-icon)::before {
+    display: none;
+  }
+
+  .fh-chip__index,
+  .fh-chips--indexed > .fh-chip::after {
+    order: -1;
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.85em;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wide);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-chip--solid .fh-chip__index { color: inherit; opacity: 0.75; }
+
+  .fh-chips--indexed {
+    counter-reset: fh-chip;
+
+    & > .fh-chip {
+      counter-increment: fh-chip;
+
+      &::after { content: counter(fh-chip, decimal-leading-zero); }
+    }
+  }
+
+  .fh-chip > .fh-icon { color: var(--fh-tone); }
+  .fh-chip--solid > .fh-icon { color: inherit; }
+
+  .fh-chip--sm { padding: 0.22rem 0.6rem; font-size: var(--fh-text-label); }
+  .fh-chip--lg { padding: 0.5rem 1rem; font-size: var(--fh-text-small); }
+
+  .fh-chips {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    max-inline-size: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    list-style: none;
+    scrollbar-width: none;
+  }
+
+  .fh-chips--wrap {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  /* Pill track: chips inside one dashed capsule (contact-task tabs). */
+  .fh-chips--track {
+    inline-size: fit-content;
+    padding: 0.16rem;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 40%, transparent);
+
+    & .fh-chip {
+      border-color: transparent;
+    }
+  }
+
+  /* —— Chip card ——
+   * A compact card led by a tone block: identity, a fact, a person,
+   * a file. Sits in docks, sidebars, menus and grids.
+   *   <a class="fh-chip-card" data-tone="teal" href="…">
+   *     <span class="fh-chip-card__block">DA</span>
+   *     <span class="fh-chip-card__text"><b>Data architecture</b><small>4 services</small></span>
+   *   </a> */
+  .fh-chip-card {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    min-inline-size: 0;
+    padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) var(--fh-space-2);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
+    color: var(--fh-color-text);
+    text-decoration: none;
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(a, button, label):hover {
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent);
+    }
+  }
+
+  .fh-chip-card__block {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.62rem;
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0.04em;
+
+    & > :is(img, svg) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    & > svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+  }
+
+  .fh-chip-card__text {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > :first-child {
+      overflow: hidden;
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > small {
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: 0.58rem;
+      letter-spacing: var(--fh-tracking-wider);
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+
+  /* —— Cube cards ——
+   * A card led by a cube: the value is the headline, the text says
+   * what it measures. In a .fh-cube-cards group the tones walk the
+   * hue wheel like a list of cubes.
+   *   <div class="fh-cube-cards" data-tone="teal">
+   *     <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">14</b>
+   *       <div class="fh-cube-card__text"><b>Days</b><small>From kickoff to handoff</small></div></article>
+   *   </div> */
+  .fh-cube-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-cube-card-min, 13rem)), 1fr));
+    gap: var(--fh-gap, var(--fh-space-3));
+
+    & > :nth-child(3n + 2) { --_cube: oklch(from var(--fh-tone) l c calc(h + 28)); }
+    & > :nth-child(3n + 3) { --_cube: oklch(from var(--fh-tone) l c calc(h + 56)); }
+  }
+  .fh-cube-card {
+    --_c: var(--_cube, var(--fh-tone));
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    min-inline-size: 0;
+    padding: var(--fh-space-3);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--_c) 5%, transparent);
+    color: var(--fh-color-text);
+    text-decoration: none;
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    & > .fh-cube { --_cube: var(--_c); }
+    &:is(a, button, label):hover { border-color: color-mix(in oklab, var(--_c) 70%, transparent); background-color: color-mix(in oklab, var(--_c) 10%, transparent); }
+    &:is(a, button, label):focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+  .fh-cube-card__text {
+    display: grid;
+    gap: 0.15rem;
+    min-inline-size: 0;
+
+    & b { overflow: hidden; font-weight: var(--fh-weight-medium); text-overflow: ellipsis; white-space: nowrap; }
+    & small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); line-height: var(--fh-leading-snug); }
+  }
+  .fh-cube-card__trend { margin-inline-start: auto; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); white-space: nowrap; }
+  .fh-cube-card__trend[data-dir="up"] { color: var(--fh-color-success); }
+  .fh-cube-card__trend[data-dir="down"] { color: var(--fh-color-danger); }
+  /* Stacked: value on top, label, then a row of small cubes. */
+  .fh-cube-card--stack {
+    flex-direction: column;
+    align-items: start;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-4);
+
+    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-space-3); border-block-start: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
+  }
+
+  /* —— Dock —— */
+  .fh-dock {
+    position: sticky;
+    inset-block-start: var(--fh-dock-offset, var(--fh-header-height));
+    z-index: calc(var(--fh-z-sticky) - 1);
+    border-block-end: var(--fh-border-thin) dashed transparent;
+    /* A frame (inline-size) that can also report when it is stuck. */
+    container: fh-frame / inline-size scroll-state;
+    transition:
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      border-color var(--fh-duration-base) var(--fh-ease-standard);
+  }
+
+  .fh-dock__bar {
+    position: relative;
+    display: flex;
+    /* One row, always. Engaging slides the title in; if the bar could wrap,
+     * that would add a row, grow the sticky bar and shift the whole page. */
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3) var(--fh-space-6);
+    padding-block: var(--fh-space-3) var(--fh-space-4);
+
+    & > .fh-chips {
+      flex: 0 4 auto;
+      flex-wrap: nowrap;
+      min-inline-size: 0;
+      padding-block: 3px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      mask-image: linear-gradient(to right, black calc(100% - 1.5rem), transparent);
+    }
+    & > .fh-dock__actions { flex: none; }
+  }
+
+  .fh-dock__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: clip;
+    overflow-clip-margin: 4px;
+
+    & .fh-eyebrow-pill {
+      flex: none;
+    }
+  }
+
+  /* Square portrait plate (agent, author, account). */
+  .fh-dock__avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: 0.62rem;
+    font-weight: var(--fh-weight-heavy);
+
+    & > img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .fh-dock__text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.18rem;
+    min-inline-size: 0;
+  }
+
+  /* The small title is collapsed at rest and slides in on engage. */
+  .fh-dock__title {
+    max-inline-size: 0;
+    margin: 0;
+    overflow: hidden;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-heading);
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    translate: -0.35rem 0;
+    transition:
+      max-inline-size var(--fh-duration-base) var(--fh-ease-out),
+      opacity var(--fh-duration-base) var(--fh-ease-standard),
+      translate var(--fh-duration-base) var(--fh-ease-out);
+  }
+
+  .fh-dock__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .fh-dock .fh-cubes,
+  .fh-dock .fh-chips {
+    opacity: 0;
+    visibility: hidden;
+    translate: -0.35rem 0;
+    transition:
+      opacity var(--fh-duration-base) var(--fh-ease-standard) 0.1s,
+      translate var(--fh-duration-base) var(--fh-ease-out) 0.1s,
+      visibility 0s linear var(--fh-duration-slow);
+  }
+
+  .fh-dock__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    margin-inline-start: auto;
+  }
+
+  /* Reading / scroll progress on the bar's bottom edge, driven by the
+   * page scroll itself — no script. */
+  .fh-dock__progress {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: -1px;
+    block-size: 2px;
+    background-color: var(--fh-tone);
+    transform-origin: 0 50%;
+    scale: 0 1;
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .fh-dock__progress {
+      animation: fh-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes fh-progress {
+    to {
+      scale: 1 1;
+    }
+  }
+
+  /* —— Engaged state (one block of rules, two triggers) —— */
+  .fh-dock[data-active="true"] {
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 92%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    border-block-end-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+
+    & .fh-dock__title {
+      max-inline-size: min(48cqi, 36rem);
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    & :is(.fh-cubes, .fh-chips) {
+      opacity: 1;
+      visibility: visible;
+      translate: 0 0;
+      transition-delay: 0.1s, 0.1s, 0s;
+    }
+
+    /* The outline CTA fills in, after the title has landed. */
+    & .fh-dock__actions .fh-button--outline {
+      --_bg: var(--fh-color-primary);
+      --_fg: var(--fh-color-on-primary);
+      --_shadow: var(--fh-shadow-convex);
+      --_shadow-hover: var(--fh-shadow-convex-hover);
+      --_shadow-active: var(--fh-shadow-convex-active);
+
+      transition-delay: 0.35s;
+    }
+  }
+
+  @container scroll-state(stuck: top) {
+    .fh-dock__title {
+      max-inline-size: min(48cqi, 36rem);
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    .fh-dock :is(.fh-cubes, .fh-chips) {
+      opacity: 1;
+      visibility: visible;
+      translate: 0 0;
+      transition-delay: 0.1s, 0.1s, 0s;
+    }
+
+    .fh-dock__actions .fh-button--outline {
+      --_bg: var(--fh-color-primary);
+      --_fg: var(--fh-color-on-primary);
+      --_shadow: var(--fh-shadow-convex);
+      --_shadow-hover: var(--fh-shadow-convex-hover);
+      --_shadow-active: var(--fh-shadow-convex-active);
+
+      transition-delay: 0.35s;
+    }
+  }
+
+  /* The scroll-state container can't style itself, so when stuck its
+   * surface is painted by the bar's ::after, widened from the content
+   * column to the frame's full width. */
+  @container scroll-state(stuck: top) {
+    .fh-dock__bar::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline: calc((100% - 100cqi) / 2);
+      z-index: -1;
+      border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      background-color: color-mix(in oklab, var(--fh-color-canvas) 92%, transparent);
+      backdrop-filter: blur(var(--fh-blur-chrome));
+      pointer-events: none;
+    }
+  }
+
+  /* Header hand-off: while a dock is engaged, the header's own CTA
+   * slides away so there is only ever one primary action on screen.
+   * (Needs data-active — set by the enhancer.) */
+  :root:has(.fh-dock[data-active="true"]) .fh-header__actions > .fh-button:not(.fh-button--secondary, .fh-button--ghost) {
+    translate: 0 -220%;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      translate var(--fh-duration-slow) var(--fh-ease-out) 0.3s,
+      visibility 0s linear 0.8s;
+  }
+
+  /* Narrow docks: the pill yields to the small title, cubes hide,
+   * the CTA compacts. */
+  /* Narrow docks: two fixed rows that never change height.
+   *   row 1 — identity (title + current section) and a compact CTA
+   *   row 2 — the section chips as a swipeable strip
+   * The title is always shown here (no slide-in), so engaging changes
+   * colour, never layout. firehorse.js keeps the active chip in view and
+   * rolls the .fh-dock__heading to the section you're in. */
+  @container fh-frame (inline-size < 48rem) {
+    .fh-dock__bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "identity actions" "chips chips";
+      gap: var(--fh-space-2) var(--fh-space-3);
+      padding-block: var(--fh-space-2);
+    }
+    .fh-dock__identity { grid-area: identity; }
+    .fh-dock__actions { grid-area: actions; }
+    .fh-dock__bar > .fh-chips {
+      grid-area: chips;
+      gap: var(--fh-space-1-5);
+      margin-inline: calc(var(--fh-page-margin, 1rem) * -1);
+      padding-inline: var(--fh-page-margin, 1rem);
+      padding-block: 2px;
+      scroll-snap-type: x proximity;
+      scroll-padding-inline: var(--fh-page-margin, 1rem);
+      mask-image: linear-gradient(90deg, transparent, black var(--fh-space-4), black calc(100% - var(--fh-space-6)), transparent);
+    }
+    .fh-dock__bar > .fh-chips > .fh-chip {
+      scroll-snap-align: start;
+      padding: 0.3rem 0.65rem;
+      font-size: var(--fh-text-caption);
+    }
+
+    /* Chips are always visible on narrow docks: they are the navigation. */
+    .fh-dock .fh-dock__bar > .fh-chips,
+    .fh-dock:not([data-active="true"]) .fh-dock__bar > .fh-chips {
+      opacity: 1;
+      visibility: visible;
+      translate: none;
+    }
+
+    .fh-dock .fh-cubes,
+    .fh-dock .fh-eyebrow-pill:not(.fh-dock__heading) {
+      display: none;
+    }
+
+    .fh-dock .fh-dock__title {
+      max-inline-size: none;
+      opacity: 1;
+      translate: none;
+      font-size: var(--fh-text-body);
+    }
+    .fh-dock__meta { font-size: var(--fh-text-micro); }
+
+    /* CTA collapses to its icon; the label stays for assistive tech. */
+    .fh-dock__actions .fh-button {
+      inline-size: 2.25rem;
+      min-block-size: 2.25rem;
+      padding-inline: 0;
+      justify-content: center;
+    }
+    .fh-dock__actions .fh-button:has(> .fh-roll, > span)::before { margin: 0; }
+    .fh-dock__actions .fh-button > :is(.fh-roll, span) {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  /* Rolling section heading: the dock's title follows where you are. */
+  /* Plain: a bold title. As an eyebrow pill (.fh-eyebrow-pill.fh-dock__heading)
+   * it reads like "● Data | 04 / 16": live dot and both segments follow the
+   * section's tone and roll with it. */
+  .fh-dock__heading:not(.fh-eyebrow-pill) {
+    display: flex;
+    min-inline-size: 0;
+    margin: 0;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-heading);
+  }
+  .fh-dock__identity .fh-eyebrow-pill.fh-dock__heading {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    transition: border-color var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > .fh-eyebrow-pill__seg { min-inline-size: 0; }
+    & > .fh-eyebrow-pill__seg:last-child { flex: none; }
+    & .fh-dot { transition: background-color var(--fh-duration-base) var(--fh-ease-standard); }
+  }
+
+  /* —— Floating action bar ——
+   * A pill that floats above the bottom edge and surfaces once the
+   * visitor has scrolled a screen. Pure CSS where scroll-driven
+   * animations exist; always visible otherwise.
+   *   <nav class="fh-float" aria-label="Quick actions">…chips, cubes, buttons…</nav> */
+  .fh-float {
+    position: fixed;
+    z-index: var(--fh-z-overlay);
+    inset-inline: 0;
+    inset-block-end: calc(var(--fh-space-5) + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    inline-size: fit-content;
+    max-inline-size: calc(100% - 2 * var(--fh-space-4));
+    margin-inline: auto;
+    padding: var(--fh-space-1-5);
+    padding-inline-start: var(--fh-space-3);
+    overflow-x: auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.2);
+    box-shadow: var(--fh-shadow-overlay);
+    scrollbar-width: none;
+
+    & .fh-button {
+      border-radius: var(--fh-radius-pill);
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .fh-float {
+      animation: fh-float-in linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 40vh 70vh;
+    }
+  }
+
+  @keyframes fh-float-in {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      visibility: visible;
+    }
+  }
+}

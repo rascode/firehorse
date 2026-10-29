@@ -1,0 +1,762 @@
+/*
+ * Firehorse — forms
+ * ---------------------------------------------------------------
+ * Fields sit one step above the canvas so empty inputs stay
+ * visible on dark. Labels are mono caps. Required/optional chips are
+ * generated from the input's own `required` attribute — no extra
+ * markup, and the label can never disagree with the input.
+ *
+ *   <div class="fh-field">
+ *     <label for="email">Work email</label>
+ *     <input class="fh-input" id="email" type="email" required>
+ *     <p class="fh-field__hint">We reply within one business day.</p>
+ *   </div>
+ *
+ * Validation styling uses :user-invalid, so errors appear only after
+ * the visitor has interacted with the field.
+ */
+
+@layer fh.components {
+  .fh-field {
+    display: grid;
+    gap: var(--fh-space-1-5);
+    min-inline-size: 0;
+
+    & > label,
+    & > .fh-field__label,
+    & > legend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      padding: 0;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      line-height: var(--fh-leading-snug);
+      text-transform: uppercase;
+      color: var(--fh-color-text-muted);
+    }
+
+    /* Auto chips */
+    &:has(:is(input, textarea, select)[required]) > label::after,
+    &.fh-field--optional > label::after {
+      content: "Required";
+      padding: 0.08rem 0.42rem 0.12rem;
+      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+      border-radius: var(--fh-radius-pill);
+      font-size: 0.58rem;
+      line-height: 1.35;
+      color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
+    }
+
+    &.fh-field--optional > label::after {
+      content: "Optional";
+    }
+
+    /* Valid + required: the chip settles to a check. */
+    &:has(:is(input, textarea, select)[required]:valid:not(:placeholder-shown)) > label::after {
+      content: "Done";
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-color-success) 50%, transparent);
+      color: var(--fh-color-success);
+    }
+
+    &:has(:user-invalid) > label {
+      color: var(--fh-color-danger);
+    }
+  }
+
+  .fh-field__hint,
+  .fh-field__error {
+    margin: 0;
+    font-size: var(--fh-text-caption);
+    line-height: var(--fh-leading-normal);
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-field__error {
+    display: none;
+    color: var(--fh-color-danger);
+  }
+
+  .fh-field:has(:user-invalid) .fh-field__error {
+    display: block;
+  }
+
+  /* —— Text inputs, textarea, select —— */
+  .fh-input,
+  .fh-textarea,
+  .fh-select {
+    inline-size: 100%;
+    min-block-size: 2.5rem;
+    padding: 0.55rem var(--fh-space-3);
+    border: var(--fh-border-thin) solid transparent;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-field);
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-body);
+    line-height: 1.4;
+    appearance: none;
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      box-shadow var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover:not(:disabled, :focus) {
+      background-color: var(--fh-color-field-hover);
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    &:user-invalid {
+      border-color: color-mix(in oklab, var(--fh-color-danger) 70%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+    }
+
+    @media (pointer: coarse) {
+      min-block-size: var(--fh-tap-target);
+      font-size: max(16px, var(--fh-text-body)); /* stops iOS zoom-on-focus */
+    }
+
+    @media (forced-colors: active) {
+      border-color: FieldText;
+    }
+  }
+
+  .fh-textarea {
+    min-block-size: 7.5rem;
+    resize: vertical;
+    field-sizing: content;
+  }
+
+  .fh-select {
+    padding-inline-end: 2.25rem;
+    background-image: none;
+    cursor: pointer;
+  }
+
+  /* Native chevron replacement — wrap the select so the arrow can sit
+   * on top without a background image (keeps currentColor). */
+  .fh-select-wrap {
+    position: relative;
+    display: grid;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline-end: var(--fh-space-3);
+      inline-size: 1rem;
+      margin-block: auto;
+      block-size: 1rem;
+      background-color: var(--fh-color-text-muted);
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      pointer-events: none;
+    }
+  }
+
+  /* Customizable <select> (Chromium 135+): style the open picker too. */
+  @supports (appearance: base-select) {
+    .fh-select,
+    .fh-select::picker(select) {
+      appearance: base-select;
+    }
+
+    .fh-select::picker-icon {
+      display: none;
+    }
+
+    .fh-select::picker(select) {
+      margin-block-start: var(--fh-space-1-5);
+      padding: var(--fh-space-1-5);
+      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-radius: var(--fh-radius-sm);
+      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+      box-shadow: var(--fh-shadow-menu);
+    }
+
+    .fh-select option {
+      padding: 0.55rem 0.65rem;
+      border-radius: calc(var(--fh-radius-sm) - 1px);
+
+      &:is(:hover, :focus-visible) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+      }
+
+      &::checkmark {
+        order: 1;
+        margin-inline-start: auto;
+      }
+    }
+  }
+
+  /* —— Input group (prefix / suffix) —— */
+  .fh-input-group {
+    display: flex;
+    align-items: center;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-field);
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    & > .fh-input {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    & > :not(.fh-input) {
+      padding-inline: var(--fh-space-3);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-caption);
+      white-space: nowrap;
+    }
+  }
+
+  /* —— Checkbox & radio —— */
+  .fh-check {
+    display: flex;
+    inline-size: fit-content;
+    align-items: flex-start;
+    gap: var(--fh-space-2-5);
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+    cursor: pointer;
+
+    & > input:not(.fh-switch) {
+      flex: none;
+      inline-size: 1rem;
+      block-size: 1rem;
+      margin-block-start: 0.15rem;
+      accent-color: var(--fh-color-primary);
+    }
+  }
+
+  /* —— Switch: <input type="checkbox" class="fh-switch" role="switch"> —— */
+  .fh-switch {
+    --_track: var(--fh-color-field);
+    --_thumb: var(--fh-color-text-muted);
+
+    appearance: none;
+    position: relative;
+    flex: none;
+    inline-size: 2.25rem;
+    block-size: 1.3rem;
+    margin: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: var(--_track);
+    cursor: pointer;
+    transition: background-color var(--fh-duration-base) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0.2rem;
+      inset-inline-start: 0.2rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--_thumb);
+      transition:
+        translate var(--fh-duration-base) var(--fh-ease-out),
+        background-color var(--fh-duration-base) var(--fh-ease-standard);
+    }
+
+    &:checked {
+      --_track: var(--fh-color-primary);
+      --_thumb: var(--fh-color-on-primary);
+
+      &::before {
+        translate: 0.95rem 0;
+      }
+    }
+
+    &:dir(rtl):checked::before {
+      translate: -0.95rem 0;
+    }
+
+    @media (forced-colors: active) {
+      border: 1px solid ButtonText;
+    }
+  }
+
+  /* —— Segmented choice ——
+   * A radio group that looks like a pill switch. Real radios inside,
+   * so it is accessible and form-submittable without script.
+   *   <fieldset class="fh-segmented">
+   *     <legend class="fh-sr-only">Contact by</legend>
+   *     <label><input type="radio" name="c" value="email" checked> Email</label>
+   *     <label><input type="radio" name="c" value="call"> Call</label>
+   *   </fieldset>  */
+  .fh-segmented {
+    display: flex;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    gap: var(--fh-space-1);
+    margin: 0;
+    padding: var(--fh-space-1);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+    min-inline-size: 0;
+
+    & > label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      gap: var(--fh-space-1-5);
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--fh-radius-pill);
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: 0.66rem;
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+      transition:
+        background-color var(--fh-duration-base) var(--fh-ease-standard),
+        color var(--fh-duration-base) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+
+      &:has(:checked) {
+        background-color: var(--fh-color-primary);
+        color: var(--fh-color-on-primary);
+      }
+
+      &:has(:focus-visible) {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: var(--fh-focus-offset);
+      }
+
+      & > input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .fh-segmented--sm {
+    padding: 2px;
+
+    & > label { padding: 0.32rem 0.6rem; font-size: 0.6rem; }
+  }
+
+  /* Stack vertically when the slot is too narrow for a row. */
+  @container (inline-size < 22rem) {
+    .fh-segmented {
+      flex-direction: column;
+      border-radius: var(--fh-radius-xl);
+
+      & > label {
+        border-radius: 0.8rem;
+      }
+    }
+  }
+
+  /* —— Form layout ——
+   * Fields flow into 1 or 2 columns depending on the form's slot.
+   * `fh-field--full` always spans the row. */
+  .fh-form {
+    display: grid;
+    gap: var(--fh-space-5) var(--fh-space-4);
+    container: fh-form / inline-size;
+  }
+
+  .fh-form__row {
+    display: grid;
+    gap: var(--fh-space-5) var(--fh-space-4);
+  }
+
+  @container fh-form (inline-size >= 34rem) {
+    .fh-form__row {
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    }
+  }
+
+  .fh-form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-3);
+    padding-block-start: var(--fh-space-2);
+  }
+}
+
+@layer fh.components {
+  /* —— Dropzone ——
+   *   <label class="fh-dropzone">
+   *     <input type="file" multiple>
+   *     <span class="fh-dropzone__title">Drop files or browse</span>
+   *     <span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span>
+   *   </label>
+   * The enhancer adds data-dragging while files hover over it. */
+  .fh-dropzone {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--fh-space-2);
+    padding: var(--fh-space-8) var(--fh-space-5);
+    border: var(--fh-border-thick) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-color-field) 35%, transparent);
+    color: var(--fh-color-text-muted);
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      inline-size: 1.5rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-tone);
+      mask: var(--fh-icon-upload) center / contain no-repeat;
+    }
+
+    & > input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    &:hover,
+    &[data-dragging] {
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent);
+    }
+
+    &:has(:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  .fh-dropzone__title {
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-semibold);
+  }
+
+  .fh-dropzone__hint {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  /* —— Range ——
+   *   <input class="fh-range" type="range" min="0" max="100" value="40"> */
+  .fh-range {
+    --_track: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+
+    inline-size: 100%;
+    block-size: 1.25rem;
+    margin: 0;
+    background: transparent;
+    accent-color: var(--fh-tone);
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      block-size: 0.3rem;
+      border-radius: var(--fh-radius-pill);
+      background: var(--_track);
+    }
+
+    &::-moz-range-track {
+      block-size: 0.3rem;
+      border-radius: var(--fh-radius-pill);
+      background: var(--_track);
+    }
+
+    &::-moz-range-progress {
+      block-size: 0.3rem;
+      border-radius: var(--fh-radius-pill);
+      background: var(--fh-tone);
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      inline-size: 1.1rem;
+      aspect-ratio: 1;
+      margin-block-start: -0.4rem;
+      border: 3px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background: var(--fh-color-text);
+      box-shadow: 0 0 0 1px var(--fh-color-border-strong);
+    }
+
+    &::-moz-range-thumb {
+      inline-size: 1.1rem;
+      block-size: 1.1rem;
+      border: 3px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background: var(--fh-color-text);
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::-webkit-slider-thumb {
+        box-shadow: 0 0 0 2px var(--fh-color-focus);
+      }
+
+      &::-moz-range-thumb {
+        box-shadow: 0 0 0 2px var(--fh-color-focus);
+      }
+    }
+  }
+
+  /* —— Tag field: chips + an input in one field ——
+   *   <div class="fh-tags">
+   *     <span class="fh-chip" data-tone="sky">Agents <button class="fh-chip__remove" aria-label="Remove Agents"></button></span>
+   *     <input aria-label="Add a tag" placeholder="Add…">
+   *   </div> */
+  .fh-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    min-block-size: 2.5rem;
+    padding: var(--fh-space-1-5);
+    /* Concentric with the chips inside: outer radius = chip radius + inset.
+     * Chip radius is capped at half a compact chip's height (~1.7rem). */
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + var(--fh-space-1-5));
+    background-color: var(--fh-color-field);
+    cursor: text;
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    & > input {
+      flex: 1 1 6rem;
+      min-inline-size: 6rem;
+      padding-inline: var(--fh-space-1-5);
+      border: 0;
+      outline: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+    }
+
+    & > .fh-chip {
+      padding-block: 0.22rem;
+      background-color: var(--fh-color-canvas);
+    }
+  }
+
+  /* —— Dictation field ——
+   * A free-text field you can type into or talk into. The label and a
+   * small Text | Transcribe switch share the first row (the label stays a
+   * direct child, so its Required / Optional chip still works). While
+   * transcribing, a live caption under the box shows a waveform, the
+   * clock and the words being heard. Progressive: without the switch it
+   * is a plain textarea. dist/firehorse.js wires any [data-fh-dictate]
+   * field to the browser's speech recognition; React and other apps can
+   * drive the same markup themselves (aria-pressed, data-listening).
+   *
+   *   <div class="fh-field fh-field--dictate" data-fh-dictate>
+   *     <label for="msg">Message</label>
+   *     <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+   *       <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
+   *       <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
+   *     </div>
+   *     <textarea class="fh-textarea" id="msg"></textarea>
+   *     <p class="fh-dictate__live" role="status" hidden>
+   *       <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+   *       <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+   *       <span class="fh-dictate__interim"></span>
+   *     </p>
+   *     <p class="fh-dictate__error" role="alert" hidden></p>
+   *   </div> */
+  .fh-field--dictate {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+
+    & > label {
+      grid-column: 1;
+    }
+
+    & > .fh-dictate {
+      grid-column: 2;
+      justify-self: end;
+    }
+
+    & > :not(label, .fh-dictate) {
+      grid-column: 1 / -1;
+    }
+
+    &[data-listening] .fh-textarea {
+      border-color: color-mix(in oklab, var(--fh-color-danger) 55%, transparent);
+    }
+  }
+
+  .fh-dictate {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .fh-dictate__mode {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    padding: 0.3rem 0.65rem;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      color var(--fh-duration-base) var(--fh-ease-standard);
+
+    &:hover {
+      color: var(--fh-color-text);
+    }
+
+    &[aria-pressed="true"] {
+      background-color: var(--fh-color-primary);
+      color: var(--fh-color-on-primary);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    & > svg,
+    & > .fh-icon {
+      inline-size: 0.8rem;
+      block-size: 0.8rem;
+    }
+  }
+
+  /* Recording: a red dot and the clock ride the Transcribe button. */
+  .fh-field--dictate[data-listening] .fh-dictate__mode[data-mode="voice"]::after {
+    content: "";
+    inline-size: 0.4rem;
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    background-color: var(--fh-color-danger);
+    animation: fh-dictate-blink 1.2s ease-in-out infinite;
+  }
+
+  .fh-dictate__live {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-1) var(--fh-space-3);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .fh-dictate__clock {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-dictate__interim {
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-caption);
+    font-style: italic;
+    letter-spacing: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-dictate__wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    block-size: 0.9rem;
+
+    & > i {
+      inline-size: 2px;
+      block-size: 30%;
+      border-radius: 1px;
+      background-color: var(--fh-color-danger);
+      animation: fh-dictate-wave 0.9s ease-in-out infinite;
+    }
+
+    & > i:nth-child(2) { animation-delay: -0.15s; }
+    & > i:nth-child(3) { animation-delay: -0.3s; }
+    & > i:nth-child(4) { animation-delay: -0.45s; }
+    & > i:nth-child(5) { animation-delay: -0.6s; }
+  }
+
+  .fh-dictate__error {
+    margin: 0;
+    color: var(--fh-color-danger);
+    font-size: var(--fh-text-caption);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  @keyframes fh-dictate-wave {
+    0%, 100% { block-size: 25%; }
+    50% { block-size: 100%; }
+  }
+
+  @keyframes fh-dictate-blink {
+    50% { opacity: 0.25; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dictate__wave > i,
+    .fh-field--dictate[data-listening] .fh-dictate__mode[data-mode="voice"]::after {
+      animation: none;
+    }
+
+    .fh-dictate__wave > i:nth-child(odd) { block-size: 70%; }
+  }
+}

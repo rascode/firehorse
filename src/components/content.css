@@ -1,0 +1,442 @@
+/*
+ * Firehorse — content blocks: checklist, steps, card, stats, quote
+ * ---------------------------------------------------------------
+ * Every block here is container-aware: it adapts to the slot, cell
+ * or pane it is placed in, not to the viewport.
+ */
+
+@layer fh.components {
+  /* —— Checklist ——
+   * Dashed circular marks; mark color follows the tone.
+   *   <ul class="fh-checklist"><li>Schema review</li></ul>  */
+  .fh-checklist {
+    --_mark: color-mix(in oklab, var(--fh-color-text) 72%, transparent);
+
+    display: grid;
+    gap: var(--fh-space-2-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &[data-tone] {
+      --_mark: var(--fh-tone);
+    }
+
+    & > li {
+      position: relative;
+      min-block-size: 1.55rem;
+      padding-inline-start: calc(1.55rem + var(--fh-space-3));
+      padding-block-start: 0.12rem;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-normal);
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+        inline-size: 1.55rem;
+        aspect-ratio: 1;
+      }
+
+      /* dashed ring */
+      &::before {
+        border: var(--fh-border-thick) dashed color-mix(in oklab, var(--_mark) 48%, transparent);
+        border-radius: var(--fh-radius-round);
+        background-color: color-mix(in oklab, var(--_mark) 6%, transparent);
+      }
+
+      /* check glyph, painted in the mark color */
+      &::after {
+        background-color: var(--_mark);
+        mask: var(--fh-icon-check) center / 0.62rem no-repeat;
+      }
+    }
+  }
+
+  /* —— Steps (process list) ——
+   *   <ol class="fh-steps">
+   *     <li data-tone="sky"><span class="fh-steps__mark">01</span>
+   *       <div><h3>Assess</h3><p>…</p></div></li>
+   *   </ol>  */
+  .fh-steps {
+    display: grid;
+    gap: var(--fh-space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fh-step;
+
+    & > li {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--fh-space-4) var(--fh-space-5);
+      align-items: start;
+      counter-increment: fh-step;
+    }
+
+    & h3 {
+      max-inline-size: 22ch;
+      font-size: var(--fh-text-lede);
+      font-weight: var(--fh-weight-bold);
+    }
+
+    & p {
+      max-inline-size: 34ch;
+      margin-block-start: var(--fh-space-1-5);
+      color: var(--fh-color-text-muted);
+      line-height: var(--fh-leading-normal);
+    }
+  }
+
+  .fh-steps__mark {
+    display: grid;
+    justify-items: center;
+    gap: var(--fh-space-2);
+    min-inline-size: 2rem;
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+
+    &:empty::after {
+      content: counter(fh-step, decimal-leading-zero);
+    }
+
+    & svg {
+      inline-size: 1.05rem;
+      block-size: 1.05rem;
+    }
+  }
+
+  /* Steps lay out as a grid when the slot is wide enough. */
+  @container (inline-size >= 52rem) {
+    .fh-steps--grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-grid-min, 15rem)), 1fr));
+      gap: var(--fh-space-8) var(--fh-space-6);
+    }
+  }
+
+  /* —— Card ——
+   * The Firehorse catalog card: dashed etched cell, tone-colored meta,
+   * whole-card link, price + action footer.
+   *
+   *   <article class="fh-card" data-tone="teal">
+   *     <p class="fh-card__meta">Data architecture</p>
+   *     <h3 class="fh-card__title"><a href="…">Schema design</a></h3>
+   *     <p class="fh-card__body">…</p>
+   *     <footer class="fh-card__footer">
+   *       <p class="fh-card__price"><span>From</span> <b>$1,250</b></p>
+   *       <span class="fh-action" data-tone>View</span>
+   *     </footer>
+   *   </article>
+   *
+   * The title link stretches over the card; other links stay clickable.
+   */
+  .fh-card {
+    --_pad-b: clamp(var(--fh-space-5), 4cqi, var(--fh-space-7));
+    --_pad-i: clamp(var(--fh-space-4), 4cqi, var(--fh-space-6));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100%;
+    padding: var(--_pad-b) var(--_pad-i);
+    /* Every visual decision is a config token (tokens/config.css):
+     * set data-fh-card on <html> and every card follows. */
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    box-shadow: var(--fh-card-shadow, none);
+    backdrop-filter: var(--fh-card-backdrop, none);
+    container: fh-card / inline-size;
+    transition: background-color var(--fh-duration-base) var(--fh-ease-standard), box-shadow var(--fh-duration-base) var(--fh-ease-standard);
+
+    &:has(.fh-card__title a:hover, .fh-card__title a:focus-visible) {
+      background-color: color-mix(in oklab, var(--fh-tone) 9%, transparent);
+    }
+
+    &:has(.fh-card__title a:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  /* Cards inside a ruled grid drop their own border: the grid draws it. */
+  .fh-grid--ruled > .fh-card {
+    border-block-start: 0;
+    border-inline-start: 0;
+  }
+
+  .fh-card--solid {
+    --fh-card-border-style: solid;
+    --fh-card-border-color: var(--fh-color-rule);
+    --fh-card-bg: var(--fh-color-surface);
+  }
+
+  /* Media: an image (or any art) flush to the card's top edge.
+   *   <article class="fh-card"><figure class="fh-card__media"><img …></figure>…</article>
+   * Ratio follows --fh-card-media-ratio / data-fh-card-media. */
+  .fh-card__media {
+    position: relative;
+    margin: calc(var(--_pad-b) * -1) calc(var(--_pad-i) * -1) var(--fh-space-4);
+    aspect-ratio: var(--fh-card-media-ratio, 16 / 9);
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    background-color: var(--fh-color-surface-sunken);
+
+    & > :is(img, video, svg) {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* Cover: the media fills the card and the content sits on a scrim. */
+  .fh-card--cover {
+    --fh-card-border-style: solid;
+    --fh-card-border-color: transparent;
+    justify-content: flex-end;
+    min-block-size: max(100%, 18rem);
+    overflow: hidden;
+    color: var(--fh-color-on-media);
+    isolation: isolate;
+
+    & .fh-card__media {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      margin: 0;
+      aspect-ratio: auto;
+      border-radius: inherit;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 30%, var(--fh-color-scrim));
+      }
+    }
+
+    & .fh-card__body { color: color-mix(in oklab, currentColor 80%, transparent); }
+  }
+
+  .fh-card__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    margin: 0 0 var(--fh-space-3);
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    line-height: 1;
+    text-transform: uppercase;
+
+    & svg {
+      inline-size: 0.72rem;
+      block-size: 0.72rem;
+    }
+  }
+
+  .fh-card__title {
+    margin: 0;
+    font-size: var(--fh-text-h4);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-heading);
+    line-height: var(--fh-leading-heading);
+
+    & a {
+      color: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  .fh-card__body {
+    margin: var(--fh-space-3) 0 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-body);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--fh-space-4) var(--fh-space-6);
+    margin-block-start: auto;
+    padding-block-start: var(--fh-space-6);
+
+    /* Interactive footer content sits above the stretched link. */
+    & :is(a, button) {
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+  .fh-card__price {
+    display: grid;
+    gap: var(--fh-space-0-5);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    line-height: var(--fh-leading-heading);
+    text-transform: uppercase;
+
+    & :is(b, strong) {
+      color: var(--fh-tone);
+      font-size: var(--fh-text-body);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: 0.01em;
+      text-transform: none;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  /* On a narrow card, the footer stacks. */
+  @container fh-card (inline-size < 17rem) {
+    .fh-card__footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  /* —— Stats strip ——
+   * Grouped figures with shared dashed rules and a 7px outer radius.
+   *   <dl class="fh-stats">
+   *     <div><dt>Timeline</dt><dd>2–3 wk</dd></div> …
+   *   </dl>  */
+  .fh-stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    overflow: hidden;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: var(--fh-space-2);
+      padding: var(--fh-space-5) var(--fh-space-5) var(--fh-space-6);
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      background-color: color-mix(in oklab, var(--fh-tone) 2.5%, transparent);
+    }
+
+    & dt {
+      order: -1;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      color: var(--fh-color-text-muted);
+    }
+
+    & dd {
+      margin: 0;
+      font-size: var(--fh-text-stat);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-tightest);
+      line-height: var(--fh-leading-none);
+      font-variant-numeric: tabular-nums;
+      color: var(--fh-color-text);
+    }
+
+    & dd + dd {
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-body);
+      line-height: var(--fh-leading-normal);
+      color: var(--fh-color-text-muted);
+    }
+  }
+
+  /* Two, three or four-plus figures: one row once there's room,
+   * otherwise pairs. Never leaves an orphan cell for 2 or 3 items. */
+  @container (inline-size >= 34rem) {
+    .fh-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fh-stats:not(:has(> :nth-child(4))) {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+  }
+
+  @container (inline-size >= 56rem) {
+    .fh-stats {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+  }
+
+  /* —— Quote / founder letter —— */
+  .fh-quote {
+    margin: 0;
+    padding-inline-start: var(--fh-space-5);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & blockquote {
+      margin: 0;
+      font-size: var(--fh-text-lede);
+      font-weight: var(--fh-weight-light);
+      line-height: 1.65;
+      color: var(--fh-color-text-muted);
+    }
+
+    & figcaption {
+      margin-block-start: var(--fh-space-4);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wide);
+      text-transform: uppercase;
+      color: var(--fh-color-text-subtle);
+    }
+  }
+
+  /* —— Crosses ——
+   * Small registration crosses at the four corners of an etched box.
+   * One class, no extra markup. */
+  .fh-crosses {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -4.5px;
+      pointer-events: none;
+      --_c: var(--fh-color-cross);
+      background:
+        linear-gradient(var(--_c), var(--_c)) 0 4px / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) 4px 0 / 1px 9px,
+        linear-gradient(var(--_c), var(--_c)) 100% 4px / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) calc(100% - 4px) 0 / 1px 9px,
+        linear-gradient(var(--_c), var(--_c)) 0 calc(100% - 4px) / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) 4px 100% / 1px 9px,
+        linear-gradient(var(--_c), var(--_c)) 100% calc(100% - 4px) / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) calc(100% - 4px) 100% / 1px 9px;
+      background-repeat: no-repeat;
+    }
+  }
+}

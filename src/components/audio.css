@@ -1,0 +1,702 @@
+/*
+ * Firehorse — audio
+ * ---------------------------------------------------------------
+ * Generic audio UI: a track player, a seekable bar waveform, a play
+ * button with a progress ring, scrubber, volume, speed, a now-playing
+ * equalizer, playlists, synced captions and a line reel, a multitrack
+ * mixer with channel strips and level meters, DSP-style parameters
+ * and a staged render/progress readout.
+ *
+ * Everything reads two custom properties that dist/audio.js keeps up
+ * to date (or that you can set yourself):
+ *   --p      playback progress, 0–1
+ *   --level  live output level, 0–1
+ * Without the script, the native <audio controls> inside a player is
+ * shown instead, so playback always works.
+ */
+
+/* —— Shared registered properties so progress can animate smoothly —— */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --level {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer fh.components {
+  /* —— Player shell ——
+   *   <div class="fh-player" data-fh-player data-tone="sky">
+   *     <audio src="…" preload="metadata" controls></audio>
+   *     <figure class="fh-player__art"><img …></figure>
+   *     <div class="fh-player__meta">…</div>
+   *     <button class="fh-play" data-fh-play aria-label="Play"></button>
+   *     <div class="fh-wave" data-fh-wave></div>
+   *     <p class="fh-player__time"><span data-fh-time>0:00</span><span data-fh-duration>0:00</span></p>
+   *     <div class="fh-player__tools">…volume, speed, loop…</div>
+   *   </div> */
+  .fh-player {
+    --_art: 4.5rem;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "art meta"
+      "play wave"
+      "tools tools";
+    gap: var(--fh-space-3) var(--fh-space-4);
+    align-items: center;
+    padding: var(--fh-space-4);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    box-shadow: var(--fh-card-shadow, none);
+    backdrop-filter: var(--fh-card-backdrop, none);
+    container: fh-player / inline-size;
+
+    /* The native element is the no-JS fallback. */
+    & > audio { grid-column: 1 / -1; inline-size: 100%; }
+    &[data-ready] > audio { display: none; }
+    &:not([data-ready]) > :is(.fh-play, .fh-wave, .fh-player__time, .fh-player__tools) { display: none; }
+  }
+
+  /* The player's own layout follows its slot (nearest container);
+   * pieces inside follow the player itself (fh-player). */
+  @container (inline-size >= 34rem) {
+    .fh-player {
+      grid-template-columns: auto auto minmax(0, 1fr) auto;
+      grid-template-areas:
+        "art meta meta meta"
+        "art play wave time"
+        "tools tools tools tools";
+    }
+  }
+
+  .fh-player__art {
+    grid-area: art;
+    inline-size: var(--_art);
+    aspect-ratio: 1;
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: calc(var(--fh-card-radius, 0px) * 0.6 + var(--fh-radius-sm));
+    background:
+      radial-gradient(70% 60% at 50% 45%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 30%, transparent), transparent 75%),
+      var(--fh-color-surface-sunken);
+
+    & > :is(img, svg) { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+  }
+
+  .fh-player__meta { grid-area: meta; display: grid; gap: var(--fh-space-1); min-inline-size: 0; }
+  .fh-player__kicker {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin: 0;
+    color: var(--fh-tone, var(--fh-color-text-subtle));
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+  .fh-player__title {
+    margin: 0;
+    overflow: hidden;
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: -0.02em;
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .fh-player__by { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+
+  .fh-player > .fh-play { grid-area: play; }
+  .fh-player > .fh-wave { grid-area: wave; }
+  .fh-player__time {
+    grid-area: time;
+    display: flex;
+    gap: var(--fh-space-1);
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    & > :first-child { color: var(--fh-color-text); }
+    & > * + *::before { content: "/ "; color: var(--fh-color-text-subtle); }
+  }
+  .fh-player__tools {
+    grid-area: tools;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2) var(--fh-space-3);
+  }
+  @container (inline-size < 34rem) {
+    .fh-player:not(.fh-player--bar) { grid-template-areas: "art meta" "play wave" ". time" "tools tools"; }
+    .fh-player:not(.fh-player--bar) > .fh-player__time { justify-self: end; margin-block-start: calc(var(--fh-space-2) * -1); }
+  }
+  @container fh-player (inline-size >= 34rem) {
+    .fh-player__tools { justify-content: end; }
+  }
+
+  /* Bar layout: one row, art + play + wave + time — for docks and lists. */
+  .fh-player.fh-player--bar {
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "art play wave time tools";
+    padding: var(--fh-space-2) var(--fh-space-3);
+    --_art: 2.75rem;
+
+    & .fh-player__meta { display: none; }
+    & .fh-wave { --fh-wave-height: 2.25rem; }
+  }
+  @container (inline-size < 30rem) {
+    .fh-player--bar { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "play wave time"; }
+    .fh-player--bar > :is(.fh-player__art, .fh-player__tools) { display: none; }
+  }
+
+  /* —— Play button with progress ring ——
+   *   <button class="fh-play" data-fh-play aria-label="Play" aria-pressed="false"></button>
+   * aria-pressed="true" shows pause. --p draws the ring. */
+  .fh-play {
+    --_size: var(--fh-play-size, 3rem);
+    --_ring: max(2px, calc(var(--_size) * 0.06));
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--_size);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    cursor: pointer;
+    transition: scale var(--fh-duration-fast) var(--fh-ease-standard);
+
+    /* Progress ring. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: conic-gradient(var(--fh-tone, var(--fh-color-accent)) calc(var(--p) * 1turn), color-mix(in oklab, var(--fh-color-text) 12%, transparent) 0);
+      mask: radial-gradient(farthest-side, transparent calc(100% - var(--_ring) - 0.5px), black calc(100% - var(--_ring)));
+    }
+    /* Glyph: play triangle, or pause bars when pressed. */
+    &::after {
+      content: "";
+      inline-size: 34%;
+      aspect-ratio: 1;
+      margin-inline-start: 8%;
+      background-color: currentColor;
+      clip-path: polygon(12% 4%, 96% 50%, 12% 96%);
+      transition: clip-path var(--fh-duration-base) var(--fh-ease-standard), margin var(--fh-duration-base);
+    }
+    &[aria-pressed="true"]::after {
+      margin-inline-start: 0;
+      clip-path: polygon(8% 6%, 38% 6%, 38% 94%, 8% 94%, 8% 6%, 62% 6%, 92% 6%, 92% 94%, 62% 94%, 62% 6%);
+    }
+    &:hover { scale: 1.04; }
+    &:active { scale: 0.97; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 3px; }
+    &[data-loading]::before { animation: fh-play-spin 900ms linear infinite; background: conic-gradient(var(--fh-tone, var(--fh-color-accent)) 0.25turn, transparent 0); }
+  }
+  .fh-play--sm { --fh-play-size: 2.25rem; }
+  .fh-play--lg { --fh-play-size: 4rem; }
+  .fh-play--solid { background: var(--fh-tone, var(--fh-color-text)); color: var(--fh-color-on-tone, var(--fh-color-canvas)); }
+  @keyframes fh-play-spin { to { rotate: 1turn; } }
+
+  /* —— Seekable bar waveform ——
+   *   <div class="fh-wave" data-fh-wave data-peaks="0.3,0.6,…" role="slider" tabindex="0"></div>
+   * The script draws the bars as a mask (data-fh-wave-mask) so one
+   * gradient colors the played and unplayed parts with a crisp split. */
+  .fh-wave {
+    --_h: var(--fh-wave-height, 3rem);
+    --_played: var(--fh-tone, var(--fh-color-accent));
+    --_rest: color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+
+    position: relative;
+    block-size: var(--_h);
+    min-inline-size: 0;
+    cursor: pointer;
+    touch-action: none;
+    border-radius: var(--fh-radius-sm);
+
+    & > .fh-wave__bars {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--_played) calc(var(--p) * 100%), var(--_rest) 0);
+      mask: var(--fh-wave-mask, linear-gradient(transparent 46%, black 46% 54%, transparent 54%)) 0 0 / 100% 100% no-repeat;
+    }
+    /* Hover preview shades the bars up to the pointer. */
+    & > .fh-wave__hover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, color-mix(in oklab, var(--fh-color-text) 22%, transparent) calc(var(--hover, 0) * 100%), transparent 0);
+      mask: var(--fh-wave-mask, linear-gradient(transparent 46%, black 46% 54%, transparent 54%)) 0 0 / 100% 100% no-repeat;
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast);
+      pointer-events: none;
+    }
+    &:hover > .fh-wave__hover { opacity: 1; }
+    & > .fh-wave__head {
+      position: absolute;
+      inset-block: -2px;
+      inset-inline-start: calc(var(--p) * 100%);
+      inline-size: 2px;
+      margin-inline-start: -1px;
+      border-radius: 1px;
+      background-color: var(--fh-color-text);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
+      opacity: 0;
+      transition: opacity var(--fh-duration-base);
+      pointer-events: none;
+    }
+    &:is(:hover, :focus-visible, [data-playing]) > .fh-wave__head { opacity: 1; }
+    & > .fh-wave__tip {
+      position: absolute;
+      inset-block-end: calc(100% + 0.35rem);
+      inset-inline-start: calc(var(--hover, 0) * 100%);
+      translate: -50% 0;
+      padding: 0.1rem 0.4rem;
+      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--fh-color-surface-raised);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast);
+      pointer-events: none;
+    }
+    &:hover > .fh-wave__tip { opacity: 1; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 4px; }
+    &[data-loading] > .fh-wave__bars { animation: fh-wave-load 1.2s ease-in-out infinite alternate; }
+  }
+  .fh-wave--sm { --fh-wave-height: 1.75rem; }
+  .fh-wave--lg { --fh-wave-height: 5rem; }
+  @keyframes fh-wave-load { from { opacity: 0.35; } to { opacity: 0.8; } }
+
+  /* —— Range scrubber (for simple players, or as a volume/gain fader) ——
+   *   <input class="fh-scrub" type="range" min="0" max="100" value="40" style="--p:.4"> */
+  .fh-scrub {
+    --_track: 0.3rem;
+    --_thumb: 0.9rem;
+    --_fill: var(--fh-tone, var(--fh-color-text));
+
+    inline-size: 100%;
+    min-inline-size: 4rem;
+    block-size: var(--_thumb);
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      block-size: var(--_track);
+      border-radius: var(--fh-radius-pill);
+      background: linear-gradient(90deg, var(--_fill) calc(var(--p) * 100%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
+    }
+    &::-moz-range-track {
+      block-size: var(--_track);
+      border-radius: var(--fh-radius-pill);
+      background: linear-gradient(90deg, var(--_fill) calc(var(--p) * 100%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
+    }
+    &::-webkit-slider-thumb {
+      inline-size: var(--_thumb);
+      block-size: var(--_thumb);
+      margin-block-start: calc((var(--_track) - var(--_thumb)) / 2);
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-pill);
+      background: var(--fh-color-text);
+      appearance: none;
+    }
+    &::-moz-range-thumb {
+      inline-size: var(--_thumb);
+      block-size: var(--_thumb);
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-pill);
+      background: var(--fh-color-text);
+    }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 3px; border-radius: var(--fh-radius-pill); }
+  }
+
+  /* —— Small icon toggles used across audio (mute, loop, captions, skip) ——
+   *   <button class="fh-audio-btn" aria-pressed="false" data-icon="volume">…</button> */
+  .fh-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-1-5);
+    min-inline-size: 2rem;
+    block-size: 2rem;
+    padding-inline: var(--fh-space-2);
+    border: var(--fh-border-thin) dashed transparent;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color var(--fh-duration-fast), border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
+
+    & > .fh-icon { font-size: 1rem; }
+    &:hover { color: var(--fh-color-text); background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+    &[aria-pressed="true"] { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  /* Volume: mute toggle + fader. */
+  .fh-volume {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    inline-size: min(100%, 9rem);
+
+    & > .fh-scrub { --_fill: var(--fh-color-text-muted); }
+    &:has([aria-pressed="true"]) > .fh-scrub { opacity: 0.45; }
+  }
+
+  /* —— Now-playing equalizer ——
+   *   <span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+   * Animates while an ancestor is [data-playing] or it has .fh-eq--on. */
+  .fh-eq {
+    display: inline-flex;
+    align-items: end;
+    gap: 2px;
+    block-size: 0.85rem;
+
+    & > i {
+      inline-size: 3px;
+      block-size: 30%;
+      border-radius: 1px;
+      background-color: var(--fh-tone, var(--fh-color-text));
+      transform-origin: bottom;
+    }
+    & > i:nth-child(2) { block-size: 70%; }
+    & > i:nth-child(3) { block-size: 45%; }
+    & > i:nth-child(4) { block-size: 85%; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :is([data-playing], [aria-current="true"][data-playing]) .fh-eq > i,
+    .fh-eq--on > i { animation: fh-eq 0.9s ease-in-out infinite alternate; }
+    :is([data-playing]) .fh-eq > i:nth-child(2), .fh-eq--on > i:nth-child(2) { animation-duration: 0.62s; }
+    :is([data-playing]) .fh-eq > i:nth-child(3), .fh-eq--on > i:nth-child(3) { animation-duration: 0.78s; animation-delay: -0.2s; }
+    :is([data-playing]) .fh-eq > i:nth-child(4), .fh-eq--on > i:nth-child(4) { animation-duration: 0.54s; animation-delay: -0.35s; }
+  }
+  @keyframes fh-eq { from { scale: 1 0.25; } to { scale: 1 1.15; } }
+
+  /* —— Playlist ——
+   *   <ol class="fh-tracks" data-fh-playlist="#player-id">
+   *     <li><button class="fh-track" data-src="…" data-title="…" aria-current="true">…</button></li>
+   *   </ol> */
+  .fh-tracks {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fh-track;
+  }
+  .fh-track {
+    counter-increment: fh-track;
+    display: grid;
+    grid-template-columns: 1.5rem 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-space-3);
+    inline-size: 100%;
+    padding: var(--fh-space-2) var(--fh-space-2);
+    border: 0;
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition: background-color var(--fh-duration-fast);
+
+    &::before {
+      content: counter(fh-track, decimal-leading-zero);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+    }
+    & > .fh-eq { display: none; }
+    &[aria-current="true"]::before { display: none; }
+    &[aria-current="true"] > .fh-eq { display: inline-flex; grid-column: 1; grid-row: 1; justify-self: center; }
+    & > :is(img, .fh-track__art) {
+      inline-size: 2.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-sm);
+      object-fit: cover;
+      background: radial-gradient(70% 60% at 50% 45%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 35%, transparent), transparent 75%), var(--fh-color-surface-sunken);
+    }
+    & b { display: block; overflow: hidden; font-weight: var(--fh-weight-medium); text-overflow: ellipsis; white-space: nowrap; }
+    & small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
+    & > :last-child { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; }
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 4%, transparent); }
+    &[aria-current="true"] b { color: var(--fh-tone, var(--fh-color-text)); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+
+  /* —— Synced captions ——
+   *   <div class="fh-captions" data-fh-captions="#player" aria-live="polite">
+   *     <p class="fh-captions__line"><span data-state="done">The</span> <span data-state="active">tide</span> …</p>
+   *   </div> */
+  .fh-captions {
+    display: grid;
+    place-items: center;
+    min-block-size: 3.5rem;
+    padding: var(--fh-space-3) var(--fh-space-4);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    text-align: center;
+  }
+  .fh-captions__line {
+    margin: 0;
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -0.01em;
+    line-height: var(--fh-leading-snug);
+    text-wrap: balance;
+
+    & > [data-state] { transition: color var(--fh-duration-base), opacity var(--fh-duration-base); }
+    & > [data-state="pending"] { color: var(--fh-color-text-subtle); }
+    & > [data-state="done"] { color: var(--fh-color-text); }
+    & > [data-state="active"] { color: var(--fh-tone, var(--fh-color-accent-text)); }
+  }
+
+  /* —— Line reel: one line at a time, rolling up as it changes ——
+   *   <div class="fh-reel" data-fh-reel="#player"><span class="fh-reel__count">2/6</span><p class="fh-reel__line">…</p></div> */
+  .fh-reel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--fh-space-3);
+    overflow: hidden;
+  }
+  .fh-reel__count { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; }
+  .fh-reel__line {
+    margin: 0;
+    overflow: hidden;
+    font-size: var(--fh-text-body);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-reel__line[data-enter] { animation: fh-reel-in 520ms var(--fh-ease-out) both; }
+  }
+  @keyframes fh-reel-in { from { opacity: 0; translate: 0 0.9em; filter: blur(3px); } }
+
+  /* —— Mixer: channel strips ——
+   *   <div class="fh-mixer" data-fh-mixer>
+   *     <div class="fh-mixer__bar">…master play, wave, time…</div>
+   *     <div class="fh-channel" data-src="…" data-tone="sky">…</div>
+   *   </div> */
+  .fh-mixer {
+    display: grid;
+    gap: 0;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    container: fh-mixer / inline-size;
+  }
+  .fh-mixer__bar > .fh-player__time { grid-area: auto; }
+  .fh-mixer__bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-4);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  }
+  .fh-channel {
+    display: grid;
+    grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr) auto;
+    grid-template-areas: "name wave buttons" "name gain buttons";
+    align-items: center;
+    gap: var(--fh-space-1) var(--fh-space-4);
+    padding: var(--fh-space-3) var(--fh-space-4);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    transition: opacity var(--fh-duration-base);
+
+    &:last-child { border-block-end: 0; }
+    &[data-muted] { opacity: 0.5; }
+    & > .fh-wave { grid-area: wave; --fh-wave-height: 1.75rem; }
+    & > .fh-channel__gain { grid-area: gain; display: flex; align-items: center; gap: var(--fh-space-2); }
+    & > .fh-channel__buttons { grid-area: buttons; display: flex; gap: var(--fh-space-1); }
+  }
+  .fh-channel__name {
+    grid-area: name;
+    display: grid;
+    gap: var(--fh-space-1);
+    min-inline-size: 0;
+
+    & b { display: flex; align-items: center; gap: var(--fh-space-2); font-weight: var(--fh-weight-medium); }
+    & b::before { content: ""; flex: none; inline-size: 0.5rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background-color: var(--fh-tone, var(--fh-color-text)); box-shadow: 0 0 calc(var(--level) * 12px) var(--fh-tone, transparent); }
+    & small { overflow: hidden; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); letter-spacing: var(--fh-tracking-wider); text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+  }
+  .fh-channel__value { min-inline-size: 3.5rem; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; text-align: end; }
+  @container fh-mixer (inline-size < 36rem) {
+    .fh-channel { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name buttons" "wave wave" "gain gain"; }
+  }
+
+  /* —— Level meter ——
+   *   <span class="fh-meter-level" style="--level:.6" role="meter" aria-valuenow="60"></span> */
+  .fh-meter-level {
+    --_seg: 6%;
+
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 3rem;
+    block-size: 0.35rem;
+    border-radius: 1px;
+    background:
+      linear-gradient(90deg, transparent calc(var(--level) * 100%), color-mix(in oklab, var(--fh-color-text) 14%, transparent) 0),
+      linear-gradient(90deg, var(--fh-color-success) 0 64%, var(--fh-color-warning) 64% 86%, var(--fh-color-danger) 86%);
+    mask: repeating-linear-gradient(90deg, black 0 calc(var(--_seg) - 2px), transparent calc(var(--_seg) - 2px) var(--_seg));
+  }
+  .fh-meter-level--v { inline-size: 0.35rem; block-size: 3rem; min-inline-size: 0; rotate: 180deg; writing-mode: vertical-lr; }
+
+  /* —— Parameter field: label, range and a formatted readout ——
+   *   <label class="fh-param">
+   *     <span class="fh-param__label">High-pass <small>Hz</small></span>
+   *     <input class="fh-scrub" type="range" min="40" max="2000" step="10" value="80" data-unit="Hz">
+   *     <output class="fh-param__value">80 Hz</output>
+   *   </label> */
+  .fh-params {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--fh-space-4) var(--fh-space-6);
+  }
+  .fh-param {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "label value" "range range" "hint hint";
+    gap: var(--fh-space-2) var(--fh-space-3);
+    align-items: center;
+
+    & > .fh-scrub { grid-area: range; }
+    & > .fh-param__hint { grid-area: hint; margin: 0; color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
+  }
+  .fh-param__label {
+    grid-area: label;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+  .fh-param__value {
+    grid-area: value;
+    padding: 0.1rem 0.45rem;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-sm);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* —— Staged progress (renders, exports, uploads) ——
+   *   <div class="fh-stages" style="--p:.46" data-tone="violet">
+   *     <div class="fh-stages__head"><b>Rendering</b><span>46%</span></div>
+   *     <span class="fh-stages__track"></span>
+   *     <ol class="fh-stages__list"><li data-state="done">Voice</li><li data-state="active">Mix</li><li>Export</li></ol>
+   *     <p class="fh-stages__meta"><span>Mixing background…</span><span>~40s left</span></p>
+   *   </div> */
+  .fh-stages {
+    display: grid;
+    gap: var(--fh-space-3);
+  }
+  .fh-stages__head,
+  .fh-stages__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--fh-space-3);
+    margin: 0;
+    font-size: var(--fh-text-small);
+
+    & > :last-child { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; }
+  }
+  .fh-stages__head > b { font-weight: var(--fh-weight-medium); }
+  .fh-stages__meta > :first-child { color: var(--fh-color-text-muted); }
+  .fh-stages__track {
+    position: relative;
+    display: block;
+    block-size: 0.4rem;
+    overflow: hidden;
+    border-radius: var(--fh-radius-pill);
+    background: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      inline-size: calc(var(--p) * 100%);
+      border-radius: inherit;
+      background: var(--fh-tone, var(--fh-color-accent));
+      transition: inline-size 600ms var(--fh-ease-out);
+    }
+  }
+  .fh-stages[data-state="active"] .fh-stages__track::after {
+    background:
+      repeating-linear-gradient(-45deg, color-mix(in oklab, white 22%, transparent) 0 6px, transparent 6px 12px) 0 0 / 34px 100%,
+      var(--fh-tone, var(--fh-color-accent));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-stages[data-state="active"] .fh-stages__track::after { animation: fh-stages-flow 0.8s linear infinite; }
+  }
+  @keyframes fh-stages-flow { to { background-position: 34px 0, 0 0; } }
+  .fh-stages__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-space-1-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-space-1-5);
+      padding: 0.15rem 0.55rem;
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-radius: var(--fh-radius-pill);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+    & > li::before { content: ""; inline-size: 0.4rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background-color: currentColor; opacity: 0.5; }
+    & > li[data-state="done"] { color: var(--fh-color-text-muted); }
+    & > li[data-state="done"]::before { opacity: 1; background-color: var(--fh-color-success); }
+    & > li[data-state="active"] { border-style: solid; border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 60%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
+    & > li[data-state="active"]::before { opacity: 1; }
+    & > li[data-state="failed"] { color: var(--fh-color-danger); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-stages__list > li[data-state="active"]::before { animation: fh-stage-pulse 1.1s ease-in-out infinite; }
+  }
+  @keyframes fh-stage-pulse { 50% { scale: 0.55; opacity: 0.45; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-play,
+    .fh-play::after,
+    .fh-stages__track::after { transition: none; }
+  }
+}

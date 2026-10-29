@@ -1,0 +1,870 @@
+/*
+ * Firehorse — site chrome: header, nav, drawer, mega panel, footer
+ * ---------------------------------------------------------------
+ * The header switches between full nav and menu button by querying
+ * its own frame width — not the viewport — so it behaves the same in
+ * a full page, a sidebar preview, or an iframe.
+ *
+ * Menus are native popovers: they open on click, close on Esc and
+ * light-dismiss, and need no JavaScript.
+ */
+
+@layer fh.components {
+  /* —— Header —— */
+  .fh-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--fh-z-sticky);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 88%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-rule);
+
+    /* While a mega panel or the drawer is open, the header goes solid. */
+    :root:has(:is(.fh-mega, .fh-drawer):popover-open) & {
+      background-color: var(--fh-color-surface-raised);
+      backdrop-filter: none;
+      border-block-end-color: transparent;
+    }
+  }
+
+  .fh-header__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "brand nav actions";
+    align-items: center;
+    gap: var(--fh-space-5);
+    min-block-size: var(--fh-header-height);
+  }
+
+  .fh-header__brand {
+    grid-area: brand;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    color: var(--fh-color-text-strong);
+    font-weight: var(--fh-weight-heavy);
+    font-size: 1.25rem;
+    letter-spacing: var(--fh-tracking-tight);
+    text-decoration: none;
+
+    & :is(img, svg) {
+      block-size: 1.55rem;
+      inline-size: auto;
+    }
+  }
+
+  .fh-header__actions {
+    grid-area: actions;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+  }
+
+  .fh-header__toggle {
+    grid-area: toggle;
+    display: none;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+
+    /* two lines → × */
+    &::before,
+    &::after {
+      content: "";
+      grid-area: 1 / 1;
+      inline-size: 1.15rem;
+      block-size: 1.5px;
+      background-color: currentColor;
+      transition:
+        translate var(--fh-duration-base) var(--fh-ease-out),
+        rotate var(--fh-duration-base) var(--fh-ease-out);
+    }
+
+    &::before {
+      translate: 0 -0.28rem;
+    }
+
+    &::after {
+      translate: 0 0.28rem;
+    }
+
+    &:hover {
+      color: var(--fh-color-accent-text);
+    }
+
+    :root:has(.fh-drawer:popover-open) &::before {
+      translate: 0 0;
+      rotate: 45deg;
+    }
+
+    :root:has(.fh-drawer:popover-open) &::after {
+      translate: 0 0;
+      rotate: -45deg;
+    }
+  }
+
+  /* Header collapses by its own width. */
+  @container fh-frame (inline-size < 60rem) {
+    .fh-header__bar {
+      grid-template-columns: 1fr auto auto;
+      grid-template-areas: "brand actions toggle";
+      gap: var(--fh-space-3);
+    }
+
+    .fh-header__bar > .fh-nav {
+      display: none;
+    }
+
+    .fh-header__toggle {
+      display: grid;
+    }
+  }
+
+  @container fh-frame (inline-size < 26rem) {
+    .fh-header__actions .fh-button:not(:first-child) {
+      display: none;
+    }
+  }
+
+  /* —— Nav —— */
+  .fh-nav {
+    grid-area: nav;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-6);
+  }
+
+  .fh-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    padding: var(--fh-space-1) 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.72;
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(:hover, :focus-visible, [aria-current="page"], [aria-expanded="true"]) {
+      opacity: 1;
+    }
+
+    /* Buttons that open a panel get a chevron. */
+    &[popovertarget]::after {
+      content: "";
+      inline-size: 0.7rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      opacity: 0.7;
+      transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+  }
+
+  /* —— Drawer (mobile menu) ——
+   *   <div id="menu" popover class="fh-drawer"> … </div> */
+  .fh-drawer {
+    position: fixed;
+    inset: var(--fh-header-height) 0 0 0;
+    inline-size: 100%;
+    max-inline-size: none;
+    block-size: auto;
+    max-block-size: none;
+    margin: 0;
+    padding: var(--fh-space-6) var(--fh-page-margin) var(--fh-space-12);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    opacity: 0;
+    translate: 0 -0.5rem;
+    transition:
+      opacity var(--fh-duration-base) var(--fh-ease-out),
+      translate var(--fh-duration-base) var(--fh-ease-out),
+      overlay var(--fh-duration-base) allow-discrete,
+      display var(--fh-duration-base) allow-discrete;
+
+    &:popover-open {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.5rem;
+      }
+    }
+
+    &::backdrop {
+      background: transparent;
+    }
+  }
+
+  .fh-drawer__group {
+    padding-block: var(--fh-space-5);
+
+    & + & {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & > ul {
+      display: grid;
+      gap: var(--fh-space-1);
+      margin: var(--fh-space-3) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2-5);
+      padding-block: var(--fh-space-2);
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-lede);
+      letter-spacing: var(--fh-tracking-heading);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--fh-color-accent-text);
+      }
+    }
+  }
+
+  /* Drawer sections: one collapsible per top-level menu, holding the
+   * same groups and rich links as the mega panel.
+   *   <details class="fh-drawer__section" name="menu">
+   *     <summary><svg …/> Services <span class="fh-drawer__count">12</span></summary>
+   *     <div>
+   *       <section data-tone="sky"><h3><a href="…">Agents</a></h3><ul>…fh-mega__link…</ul></section>
+   *       <div class="fh-mega__rail">…</div>
+   *     </div>
+   *   </details> */
+  .fh-drawer__section {
+    & + & {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & > summary {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-3);
+      padding-block: var(--fh-space-4);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      list-style: none;
+      cursor: pointer;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      & > :is(svg, .fh-icon) {
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: var(--fh-color-text-muted);
+      }
+
+      &::after {
+        content: "";
+        inline-size: 0.8rem;
+        aspect-ratio: 1;
+        background-color: currentColor;
+        mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+        opacity: 0.7;
+        transition: rotate var(--fh-duration-base) var(--fh-ease-standard);
+      }
+
+      &:hover {
+        color: var(--fh-color-text-strong);
+      }
+    }
+
+    &[open] > summary::after {
+      rotate: 180deg;
+    }
+
+    & > div {
+      display: grid;
+      gap: var(--fh-space-5);
+      padding-block: 0 var(--fh-space-6);
+    }
+
+    & h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      margin: 0 0 var(--fh-space-2);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--fh-color-text) 78%, transparent);
+
+      &::before {
+        content: "";
+        inline-size: 0.4rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+      }
+
+      & a {
+        padding: 0;
+        color: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        text-decoration: none;
+      }
+    }
+
+    & ul {
+      display: grid;
+      gap: var(--fh-space-0-5);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & .fh-mega__rail {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--fh-space-4) 0 0;
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+  }
+
+  .fh-drawer__count {
+    margin-inline-start: auto;
+    color: var(--fh-color-text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* —— Mega panel ——
+   * Equal category columns with dashed rules and one footer rail
+   * (featured left, "view all" right). Combine with .fh-frame so
+   * columns align with the page content.
+   *   <div id="services" popover class="fh-mega fh-frame">
+   *     <div class="fh-mega__grid">
+   *       <section data-tone="sky"><h3>…</h3><ul>…</ul></section> …
+   *     </div>
+   *     <div class="fh-mega__rail">…</div>
+   *   </div> */
+  .fh-mega {
+    position: fixed;
+    inset: var(--fh-header-height) 0 auto 0;
+    inline-size: 100%;
+    max-inline-size: none;
+    max-block-size: calc(100dvh - var(--fh-header-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: var(--fh-shadow-overlay);
+    opacity: 0;
+    transition:
+      opacity var(--fh-duration-fast) var(--fh-ease-out),
+      overlay var(--fh-duration-fast) allow-discrete,
+      display var(--fh-duration-fast) allow-discrete;
+
+    &:popover-open {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    &::backdrop {
+      background: transparent;
+    }
+  }
+
+  .fh-mega__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & > * {
+      padding: var(--fh-space-6) var(--fh-space-6) var(--fh-space-7);
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    & h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      margin: 0 0 var(--fh-space-4);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--fh-color-text) 78%, transparent);
+
+      &::before {
+        content: "";
+        inline-size: 0.4rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+      }
+    }
+
+    & ul {
+      display: grid;
+      gap: var(--fh-space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+      text-decoration: none;
+      transition: color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+    }
+  }
+
+  .fh-mega__rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3) var(--fh-space-6);
+    padding: var(--fh-space-4) var(--fh-space-6);
+  }
+
+  /* —— Headed mega panel ——
+   * The category titles sit on one row above a full-bleed etched rule
+   * with scaffold ticks; the lists line up beneath them; the rail sits
+   * between two more full-bleed rules. Pairs with .fh-mega__link for
+   * rich rows (icon or avatar, title, role, description, meta).
+   *   <div id="services" popover class="fh-mega fh-mega--headed fh-frame">
+   *     <div class="fh-mega__grid">
+   *       <section data-tone="sky">
+   *         <h3><a href="…">Agents</a></h3>
+   *         <ul><li><a class="fh-mega__link" href="…">
+   *           <span class="fh-mega__link-media"><svg …/></span>
+   *           <span class="fh-mega__link-title">…</span>
+   *           <span class="fh-mega__link-desc">…</span>
+   *         </a></li></ul>
+   *       </section> …
+   *     </div>
+   *     <div class="fh-mega__rail">…</div>
+   *   </div> */
+  .fh-mega--headed {
+    --_g: calc(max(var(--_margin), (100cqi - var(--_max)) / 2) - var(--fh-scaffold-outdent));
+    --_tick: linear-gradient(var(--fh-color-scaffold-tick) 0 0);
+    --_ticks:
+      var(--_tick) var(--_g) 50% / var(--fh-scaffold-tick) var(--fh-scaffold-tick) no-repeat,
+      var(--_tick) calc(100% - var(--_g)) 50% / var(--fh-scaffold-tick) var(--fh-scaffold-tick) no-repeat;
+
+    overflow-x: clip;
+    animation: fh-mega-drop var(--fh-duration-base) var(--fh-ease-out);
+
+    /* Bleed widths come from the panel's own frame container. */
+    & :is(.fh-mega__grid, .fh-mega__rail) {
+      container-type: normal;
+    }
+
+    & .fh-mega__grid {
+      position: relative;
+      grid-template-rows: auto auto;
+
+      & > * {
+        display: grid;
+        grid-row: span 2;
+        grid-template-rows: subgrid;
+        row-gap: 0;
+        padding: 0;
+        border-block-end: 0;
+      }
+
+      /* Full-bleed rule under the head row. */
+      /* Absolutely placed in row 1, so it never takes a grid cell. */
+      &::before {
+        content: "";
+        position: absolute;
+        grid-row: 1 / 2;
+        grid-column: 1 / -1;
+        inset-block-end: 0;
+        inset-inline: calc(50% - 50cqi);
+        border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+        pointer-events: none;
+      }
+
+      & h3 {
+        align-self: end;
+        margin: 0;
+        padding: var(--fh-space-5) var(--fh-space-6) var(--fh-space-3-5);
+
+        & a {
+          color: inherit;
+          font-size: inherit;
+          text-decoration: none;
+
+          &:hover {
+            color: var(--fh-color-text-strong);
+          }
+        }
+      }
+
+      & ul {
+        align-content: start;
+        gap: var(--fh-space-0-5);
+        padding: var(--fh-space-3-5) var(--fh-space-3-5) var(--fh-space-6);
+      }
+    }
+
+    /* Ticks where the column guides cross the head rule. */
+    & .fh-mega__grid::after {
+      content: "";
+      position: absolute;
+      grid-row: 1 / 2;
+      grid-column: 1 / -1;
+      inset-block-end: calc(var(--fh-scaffold-tick) / -2 + var(--fh-border-thin) / 2);
+      inset-inline: calc(50% - 50cqi);
+      block-size: var(--fh-scaffold-tick);
+      background: var(--_ticks);
+      pointer-events: none;
+    }
+
+    /* The rail sits between two full-bleed rules: the top one drawn
+     * here, the bottom one the panel's own border. */
+    & .fh-mega__rail {
+      position: relative;
+      padding-inline: var(--fh-space-6);
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline: calc(50% - 50cqi);
+        block-size: var(--fh-scaffold-tick);
+        pointer-events: none;
+      }
+
+      &::before {
+        inset-block-start: calc(var(--fh-scaffold-tick) / -2);
+        background:
+          var(--_ticks),
+          repeating-linear-gradient(90deg, var(--fh-color-etch) 0 3px, transparent 3px 6px) 0 50% / 100% var(--fh-border-thin) no-repeat;
+      }
+
+      /* Bottom ticks: the upper half only, so the panel never overflows. */
+      &::after {
+        inset-block-end: 0;
+        block-size: calc(var(--fh-scaffold-tick) / 2);
+        background:
+          var(--_tick) var(--_g) 100% / var(--fh-scaffold-tick) 100% no-repeat,
+          var(--_tick) calc(100% - var(--_g)) 100% / var(--fh-scaffold-tick) 100% no-repeat;
+      }
+    }
+  }
+
+  @keyframes fh-mega-drop {
+    from {
+      translate: 0 -0.5rem;
+    }
+  }
+
+  /* Rich mega link: media | title / role / description / meta.
+   * Titles wrap to two lines; no text-shadow roll, so they never ghost. */
+  :is(.fh-mega__grid, .fh-drawer) a.fh-mega__link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--fh-space-1) var(--fh-space-3);
+    padding: var(--fh-space-2-5);
+    border-radius: var(--fh-radius-md);
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:not(:has(.fh-mega__link-media)) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &:is(:hover, :focus-visible) {
+      color: var(--fh-color-text);
+      background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 13%, transparent);
+
+      & .fh-mega__link-title {
+        color: var(--fh-color-text-strong);
+      }
+    }
+  }
+
+  /* Compact rows for long lists: title and role only. */
+  :is(.fh-mega__grid, .fh-drawer) a.fh-mega__link--compact {
+    align-items: center;
+    padding-block: var(--fh-space-1-5);
+    row-gap: 0;
+
+    & .fh-mega__link-desc,
+    & .fh-mega__link-meta {
+      display: none;
+    }
+
+    & .fh-mega__link-media:has(> img) {
+      --fh-avatar-size: 2rem;
+      inline-size: 2rem;
+    }
+  }
+
+  .fh-mega__link-media {
+    grid-row: 1 / span 4;
+    display: inline-grid;
+    place-items: center;
+    margin-block-start: 0.1rem;
+    color: var(--fh-tone, var(--fh-color-text-muted));
+
+    & :is(svg, .fh-icon) {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+
+    &:has(> img),
+    &.fh-avatar {
+      --fh-avatar-size: 2.4rem;
+      inline-size: 2.4rem;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
+      border-radius: var(--fh-radius-md);
+      background-color: var(--fh-color-surface-sunken);
+
+      & > img {
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .fh-mega__link-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    color: color-mix(in oklab, var(--fh-color-text-strong) 92%, transparent);
+    font-size: 0.84rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-snug);
+    line-height: var(--fh-leading-snug);
+    transition: color var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+
+  .fh-mega__link-role {
+    color: var(--fh-tone, var(--fh-color-text-muted));
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .fh-mega__link-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--fh-tracking-mono);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-mega__link-meta {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-caps);
+    text-transform: uppercase;
+  }
+
+  /* Rail entries for the headed panel: "Featured / name →" and "View all →". */
+  .fh-mega__feature {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2-5);
+    min-inline-size: 0;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    text-decoration: none;
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.4rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone, var(--fh-color-text));
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 35%, transparent);
+    }
+
+    & > img {
+      order: -1;
+      inline-size: 1.75rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-sm);
+      object-fit: cover;
+    }
+
+    & .fh-label {
+      color: var(--fh-color-text-subtle);
+    }
+
+    & .fh-label + .fh-label::before {
+      content: "/";
+      margin-inline-end: var(--fh-space-2-5);
+      color: var(--fh-color-text-ghost);
+    }
+
+    & strong {
+      overflow: hidden;
+      font-weight: var(--fh-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+      opacity: 0.7;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover {
+      color: var(--fh-color-text-strong);
+
+      &::after {
+        translate: 0.15rem 0;
+        opacity: 1;
+      }
+    }
+  }
+
+  /* —— Footer —— */
+  .fh-footer {
+    padding-block: var(--fh-section-space) var(--fh-space-8);
+  }
+
+  /* Ruled grid: the grid draws top/left, each column right/bottom,
+   * so lines stay continuous at any column count. */
+  .fh-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-footer__column {
+    padding: var(--fh-space-6) var(--fh-space-5) var(--fh-space-7);
+    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & h2,
+    & h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      margin: 0 0 var(--fh-space-4);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--fh-color-text) 78%, transparent);
+
+      &::before {
+        content: "";
+        inline-size: 0.4rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+        box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-tone) 35%, transparent);
+      }
+    }
+
+    & ul {
+      display: grid;
+      gap: var(--fh-space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      color: var(--fh-color-text-muted);
+      font-size: 0.84rem;
+      font-weight: var(--fh-weight-book);
+      letter-spacing: var(--fh-tracking-body);
+      text-decoration: none;
+      transition: color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-tone);
+      }
+    }
+  }
+
+  .fh-footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3) var(--fh-space-6);
+    padding-block-start: var(--fh-space-6);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+
+    & a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+    }
+  }
+}

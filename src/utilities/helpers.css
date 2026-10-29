@@ -1,0 +1,67 @@
+/*
+ * Firehorse — helpers
+ * Highest layer. Kept deliberately small: Firehorse prefers
+ * component classes and layout primitives over utility soup.
+ */
+
+@layer fh.utilities {
+  /* A closed popover is never on the page, whatever else sets its
+   * display (a .fh-frame or a grid on the same element would otherwise
+   * leave an invisible layer that swallows clicks). */
+  [popover]:not(:popover-open) {
+    display: none;
+  }
+
+  .fh-sr-only:not(:focus, :focus-within) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Skip link: visible only when focused. */
+  .fh-skip {
+    position: absolute;
+    inset-block-start: var(--fh-space-2);
+    inset-inline-start: var(--fh-space-2);
+    z-index: var(--fh-z-modal);
+    padding: var(--fh-space-2) var(--fh-space-4);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-primary);
+    color: var(--fh-color-on-primary);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    translate: 0 -200%;
+
+    &:focus {
+      translate: 0 0;
+    }
+  }
+
+  /* Container-aware visibility */
+  @container (inline-size < 40rem) {
+    .fh-hide-narrow {
+      display: none;
+    }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-hide-wide {
+      display: none;
+    }
+  }
+
+  .fh-text-start { text-align: start; }
+  .fh-text-center { text-align: center; }
+  .fh-text-end { text-align: end; }
+  .fh-nowrap { white-space: nowrap; }
+  .fh-tabular { font-variant-numeric: tabular-nums; }
+  .fh-full { inline-size: 100%; }
+}

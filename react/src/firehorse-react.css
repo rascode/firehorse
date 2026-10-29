@@ -1,0 +1,22 @@
+/* Bridges Radix data-state attributes to Firehorse looks. Import once:
+ *   import "@rascode/firehorse-react/src/firehorse-react.css"; */
+@layer fh.components {
+  .fh-rx-overlay { position: fixed; inset: 0; background: var(--fh-color-scrim); }
+  .fh-rx-dialog { position: fixed; inset: 0; margin: auto; block-size: fit-content; opacity: 1; translate: 0; z-index: 50; }
+  .fh-rx-dialog.fh-dialog--sheet, .fh-rx-dialog.fh-dialog--float { block-size: auto; }
+  .fh-rx-menu { opacity: 1; translate: none; }
+  .fh-rx-menu [data-highlighted] { background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent); outline: none; }
+  .fh-rx-menu [role="menuitemcheckbox"][data-state="checked"]::after { opacity: 1; }
+  .fh-rx-tab[data-state="active"] { color: var(--fh-color-text); box-shadow: inset 0 -2px 0 var(--fh-tone); }
+  .fh-rx-tooltip { padding: var(--fh-space-1-5) var(--fh-space-2-5); border-radius: var(--fh-radius-sm); background: var(--fh-color-text); color: var(--fh-color-canvas); font-size: var(--fh-text-small); }
+  .fh-rx-select { display: flex; align-items: center; justify-content: space-between; text-align: start; }
+  .fh-rx-option { display: flex; justify-content: space-between; gap: var(--fh-space-3); padding: var(--fh-space-2) var(--fh-space-3); border-radius: var(--fh-radius-sm); cursor: pointer; }
+  .fh-rx-switch__root { inline-size: 2.4rem; block-size: 1.4rem; padding: 2px; border: 0; border-radius: var(--fh-radius-pill); background: var(--fh-color-field); }
+  .fh-rx-switch__root[data-state="checked"] { background: var(--fh-color-success); }
+  .fh-rx-switch__thumb { display: block; inline-size: 1.15rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background: var(--fh-color-text-strong); transition: translate var(--fh-duration-fast); }
+  .fh-rx-switch__thumb[data-state="checked"] { translate: 1rem 0; }
+  .fh-rx-checkbox__root { display: grid; place-items: center; inline-size: 1.1rem; aspect-ratio: 1; border: var(--fh-border-thin) solid var(--fh-color-border-strong); border-radius: var(--fh-radius-sm); background: var(--fh-color-field); color: var(--fh-color-on-tone); }
+  .fh-rx-checkbox__root[data-state="checked"] { background: var(--fh-tone, var(--fh-color-text)); }
+  .fh-rx-accordion__trigger { display: flex; inline-size: 100%; justify-content: space-between; padding: var(--fh-space-4) var(--fh-space-5); border: 0; background: none; color: inherit; font: inherit; text-align: start; cursor: pointer; }
+  .fh-rx-accordion__content { padding: 0 var(--fh-space-5) var(--fh-space-4); color: var(--fh-color-text-muted); }
+}

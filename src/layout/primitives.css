@@ -1,0 +1,183 @@
+/*
+ * Firehorse — layout primitives
+ * ---------------------------------------------------------------
+ * Small, composable, intrinsically responsive. None of these use
+ * viewport media queries: they either size themselves (stack,
+ * cluster, auto grid) or respond to their container (split).
+ *
+ * Each primitive exposes one or two public knobs as custom
+ * properties, e.g. <div class="fh-stack" style="--fh-gap: 2rem">.
+ */
+
+@layer fh.layout {
+  /* —— Stack: vertical flow with one gap —— */
+  .fh-stack {
+    --_gap: var(--fh-gap, var(--fh-space-4));
+
+    /* Gap, not sibling margins: components reset their own margins in a
+     * higher layer, which would silently collapse a margin-based stack. */
+    display: flex;
+    flex-direction: column;
+    gap: var(--_gap);
+
+    & > * {
+      margin-block: 0;
+    }
+
+    /* Inline-level components stack as their own rows. */
+    & > :is(.fh-action, .fh-button, .fh-badge, .fh-chip, .fh-person, .fh-cube) {
+      display: flex;
+      inline-size: fit-content;
+    }
+  }
+
+  .fh-stack--2xs { --fh-gap: var(--fh-space-1-5); }
+  .fh-stack--xs { --fh-gap: var(--fh-space-2-5); }
+  .fh-stack--sm { --fh-gap: var(--fh-space-3); }
+  .fh-stack--lg { --fh-gap: var(--fh-space-6); }
+  .fh-stack--xl { --fh-gap: var(--fh-space-10); }
+  .fh-stack--2xl { --fh-gap: var(--fh-space-12); }
+
+  /* —— Cluster: inline items that wrap —— */
+  .fh-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--fh-align, center);
+    justify-content: var(--fh-justify, flex-start);
+    gap: var(--fh-gap, var(--fh-space-3));
+  }
+
+  .fh-cluster--between {
+    --fh-justify: space-between;
+  }
+
+  .fh-cluster--end {
+    --fh-justify: flex-end;
+  }
+
+  /* —— Auto grid ——
+   * Fits as many columns of at least --fh-grid-min as the slot allows,
+   * never more than --fh-grid-max-cols. No breakpoints. */
+  .fh-grid {
+    --_min: var(--fh-grid-min, 16rem);
+    --_cols: var(--fh-grid-max-cols, 4);
+    --_gap: var(--fh-gap, var(--fh-space-5));
+
+    display: grid;
+    gap: var(--_gap);
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(
+        min(100%, max(var(--_min), (100% - (var(--_cols) - 1) * var(--_gap)) / var(--_cols))),
+        1fr
+      )
+    );
+
+    & > * {
+      min-inline-size: 0;
+      container: fh-cell / inline-size;
+    }
+  }
+
+  .fh-grid[data-cols="2"] { --fh-grid-max-cols: 2; }
+  .fh-grid[data-cols="3"] { --fh-grid-max-cols: 3; }
+  .fh-grid[data-cols="4"] { --fh-grid-max-cols: 4; }
+  .fh-grid[data-cols="5"] { --fh-grid-max-cols: 5; }
+  .fh-grid[data-cols="6"] { --fh-grid-max-cols: 6; }
+
+  /*
+   * Ruled grid: one continuous line drawing — cells share borders
+   * (the grid paints top/left, each cell paints right/bottom).
+   */
+  .fh-grid--ruled {
+    --fh-gap: 0px;
+
+    border-block-start: var(--fh-border-thin) var(--_rule-style, solid) var(--_rule, var(--fh-color-rule));
+    border-inline-start: var(--fh-border-thin) var(--_rule-style, solid) var(--_rule, var(--fh-color-rule));
+
+    & > * {
+      border-inline-end: var(--fh-border-thin) var(--_rule-style, solid) var(--_rule, var(--fh-color-rule));
+      border-block-end: var(--fh-border-thin) var(--_rule-style, solid) var(--_rule, var(--fh-color-rule));
+    }
+  }
+
+  .fh-grid--etched {
+    --_rule-style: dashed;
+    --_rule: var(--fh-color-etch-soft);
+  }
+
+  /* Rounded outer silhouette for grouped strips (stats, matrices). */
+  .fh-grid--rounded {
+    border-radius: var(--fh-radius-md);
+    overflow: hidden;
+  }
+
+  /* —— Split: two panes that sit side by side when the slot allows ——
+   * Panes become containers, so anything inside adapts to the pane. */
+  .fh-split {
+    --_gap: var(--fh-gap, clamp(var(--fh-space-8), 5cqi, var(--fh-space-12)));
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--_gap);
+    align-items: var(--fh-align, start);
+
+    & > * {
+      min-inline-size: 0;
+      container: fh-pane / inline-size;
+    }
+  }
+
+  @container (inline-size >= 48rem) {
+    .fh-split {
+      grid-template-columns: var(--fh-split, minmax(0, 1fr) minmax(0, 1fr));
+    }
+
+    .fh-split--wide-start {
+      --fh-split: minmax(0, 1.35fr) minmax(12rem, 0.65fr);
+    }
+
+    .fh-split--wide-end {
+      --fh-split: minmax(12rem, 0.65fr) minmax(0, 1.35fr);
+    }
+
+    .fh-split--sidebar {
+      --fh-split: minmax(14rem, 18rem) minmax(0, 1fr);
+    }
+  }
+
+  /* —— Center: constrain a measure and center it —— */
+  .fh-center {
+    box-sizing: content-box;
+    max-inline-size: var(--fh-measure-max, var(--fh-measure));
+    margin-inline: auto;
+  }
+
+  /* —— Frame ratio: media that holds an aspect ratio —— */
+  .fh-ratio {
+    aspect-ratio: var(--fh-ratio, 16 / 9);
+    overflow: hidden;
+
+    & > :is(img, video, iframe) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* —— Reel: horizontal scroller with snap —— */
+  .fh-reel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--fh-reel-item, minmax(16rem, 1fr));
+    gap: var(--fh-gap, var(--fh-space-4));
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: thin;
+
+    & > * {
+      scroll-snap-align: start;
+    }
+  }
+}

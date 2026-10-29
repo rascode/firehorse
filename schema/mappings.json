@@ -1,0 +1,191 @@
+{
+  "$comment": "Firehorse → Schema.org. Source of truth for scripts/schema.mjs and agent/schema.md. Components opt in with data-schema; nothing is published unless the visible content is real.",
+  "version": 1,
+  "context": "https://schema.org",
+  "page": [
+    {
+      "type": "WebSite",
+      "required": [
+        "name",
+        "url"
+      ],
+      "note": "Once per site, usually on the home page. Hand-write it in <head>; the checker validates it."
+    },
+    {
+      "type": "Organization",
+      "required": [
+        "name",
+        "url"
+      ],
+      "recommended": [
+        "logo",
+        "sameAs"
+      ],
+      "note": "Give it an @id (e.g. https://example.com/#org). Generated Service and Offer nodes link to it as provider/seller."
+    }
+  ],
+  "components": [
+    {
+      "component": "fh-breadcrumb",
+      "attribute": "data-schema=\"breadcrumb\"",
+      "type": "BreadcrumbList",
+      "required": [
+        "itemListElement"
+      ],
+      "from": "Each link becomes a ListItem (position, name, item) in visible order. The current page (aria-current) is the last ListItem.",
+      "parity": "Same number of items, same names, same order as the visible trail."
+    },
+    {
+      "component": "fh-accordion",
+      "attribute": "data-schema=\"faq\"",
+      "type": "FAQPage",
+      "required": [
+        "mainEntity"
+      ],
+      "from": "Each <details>: <summary> text → Question.name, the rest of the panel → acceptedAnswer.text.",
+      "parity": "Every visible question appears once, with the same wording. Only for questions the site itself answers."
+    },
+    {
+      "component": "fh-tiers",
+      "attribute": "data-schema=\"offers\"",
+      "type": "Service with Offer",
+      "required": [
+        "name",
+        "offers"
+      ],
+      "from": "Each fh-tier: fh-tier__name → name, the number in fh-tier__price → Offer.price, data-currency (default USD) → priceCurrency.",
+      "parity": "Same tiers and the same prices as the page shows."
+    },
+    {
+      "component": "fh-card",
+      "attribute": "data-schema=\"service\"",
+      "type": "Service",
+      "required": [
+        "name"
+      ],
+      "recommended": [
+        "description",
+        "provider"
+      ],
+      "from": "fh-card__title → name, fh-card__body → description, fh-card__meta → serviceType, the page Organization → provider.",
+      "parity": "Name and description match the card."
+    },
+    {
+      "component": "fh-testimonial",
+      "attribute": "data-schema=\"review\"",
+      "type": "Review",
+      "required": [
+        "reviewBody",
+        "author"
+      ],
+      "recommended": [
+        "itemReviewed"
+      ],
+      "from": "<blockquote> → reviewBody, the name in fh-person → author, data-schema-item → itemReviewed.",
+      "parity": "Quote text matches. Real, attributable reviews only; never invented or sample quotes."
+    },
+    {
+      "component": "fh-steps",
+      "attribute": "data-schema=\"howto\"",
+      "type": "HowTo",
+      "required": [
+        "name",
+        "step"
+      ],
+      "from": "data-schema-name (or the nearest heading) → name; each <li> heading → HowToStep.name, its paragraph → HowToStep.text.",
+      "parity": "Same steps in the same order."
+    },
+    {
+      "component": "fh-person",
+      "attribute": "data-schema=\"person\"",
+      "type": "Person",
+      "required": [
+        "name"
+      ],
+      "recommended": [
+        "jobTitle",
+        "image"
+      ],
+      "from": "The <b> in fh-person__text → name, the line under it → jobTitle, the avatar <img> → image.",
+      "parity": "Real people only; not agents, mascots or sample personas."
+    },
+    {
+      "component": "fh-prose",
+      "attribute": "data-schema=\"article\"",
+      "type": "Article",
+      "required": [
+        "headline",
+        "author",
+        "datePublished"
+      ],
+      "from": "First <h1>/<h2> → headline, data-schema-author → author, the first <time datetime> → datePublished.",
+      "parity": "Headline matches the visible title."
+    }
+  ],
+  "rules": {
+    "WebSite": [
+      "name",
+      "url"
+    ],
+    "Organization": [
+      "name",
+      "url"
+    ],
+    "BreadcrumbList": [
+      "itemListElement"
+    ],
+    "ListItem": [
+      "position",
+      "name"
+    ],
+    "FAQPage": [
+      "mainEntity"
+    ],
+    "Question": [
+      "name",
+      "acceptedAnswer"
+    ],
+    "Answer": [
+      "text"
+    ],
+    "Service": [
+      "name"
+    ],
+    "Product": [
+      "name"
+    ],
+    "Offer": [
+      "price",
+      "priceCurrency"
+    ],
+    "Review": [
+      "reviewBody",
+      "author"
+    ],
+    "HowTo": [
+      "name",
+      "step"
+    ],
+    "HowToStep": [
+      "text"
+    ],
+    "Person": [
+      "name"
+    ],
+    "Article": [
+      "headline",
+      "author",
+      "datePublished"
+    ],
+    "SoftwareSourceCode": [
+      "name",
+      "codeRepository"
+    ],
+    "SoftwareApplication": [
+      "name"
+    ],
+    "Thing": [
+      "name"
+    ]
+  }
+}

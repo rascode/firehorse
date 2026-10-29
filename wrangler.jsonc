@@ -1,0 +1,15 @@
+// firehorse.rascode.dev — static site on Cloudflare Workers assets, plus the
+// lead form endpoint (POST /api/lead) in worker/index.js.
+// Build first: `npm test && node scripts/site.mjs`, then `npx wrangler deploy`.
+// Lead delivery secrets: LEAD_WEBHOOK_URL and/or RESEND_API_KEY + LEAD_TO.
+{
+  "name": "firehorse-site",
+  "main": "./worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./site/dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "routes": [{ "pattern": "firehorse.rascode.dev", "custom_domain": true }]
+}

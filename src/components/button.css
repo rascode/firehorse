@@ -1,0 +1,397 @@
+/*
+ * Firehorse — button
+ * ---------------------------------------------------------------
+ * The Firehorse CTA is a flat rounded rect (3px), mono uppercase,
+ * with a convex fill: it bends toward the visitor at rest, the
+ * shadow inverts on hover, and it sinks on press. One timing curve
+ * across all three states so it reads as a single gesture.
+ *
+ *   <a class="fh-button" href="/contact">Discuss a project</a>
+ *   <button class="fh-button fh-button--secondary">Cancel</button>
+ *
+ * Primary buttons get an up-right arrow automatically. Opt out with
+ * `fh-button--plain`. Add `data-tone="sky"` for a tone-lit top edge.
+ *
+ * Public knobs: --fh-button-bg, --fh-button-fg, --fh-button-border,
+ * --fh-button-radius, --fh-button-font.
+ */
+
+@layer fh.components {
+  .fh-button {
+    --_bg: var(--fh-button-bg, var(--fh-color-primary));
+    --_fg: var(--fh-button-fg, var(--fh-color-on-primary));
+    --_border: var(--fh-button-border, var(--_bg));
+    --_shadow: var(--fh-button-shadow, var(--fh-shadow-convex));
+    --_sheen: var(--fh-button-sheen, 1);
+    --_shadow-hover: var(--fh-shadow-convex-hover);
+    --_shadow-active: var(--fh-shadow-convex-active);
+    --_lift: -1px;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-2);
+    min-block-size: 2.25rem;
+    padding: 0.55rem var(--fh-space-4);
+    border: var(--fh-border-thin) solid var(--_border);
+    border-radius: var(--fh-button-radius, var(--fh-radius-sm));
+    background-color: var(--_bg);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--_bg) calc(100% - 14% * var(--_sheen)), white),
+      var(--_bg) 55%,
+      color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), black)
+    );
+    color: var(--_fg);
+    font-family: var(--fh-button-font, var(--fh-font-mono));
+    font-size: 0.7rem;
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: var(--fh-tracking-widest);
+    line-height: var(--fh-leading-snug);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    translate: 0 var(--_lift);
+    box-shadow: var(--_shadow);
+    transition:
+      translate var(--fh-duration-base) var(--fh-ease-out),
+      box-shadow var(--fh-duration-base) var(--fh-ease-out),
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      color var(--fh-duration-base) var(--fh-ease-standard),
+      opacity var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover {
+      box-shadow: var(--_shadow-hover);
+    }
+
+    &:active {
+      --_lift: 2px;
+      box-shadow: var(--_shadow-active);
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* Auto arrow on primary CTAs */
+    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon)::after {
+      content: "";
+      inline-size: 0.85em;
+      block-size: 0.85em;
+      flex: none;
+      background-color: currentColor;
+      mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover::after {
+      translate: 0.1rem -0.1rem;
+    }
+
+    & > svg {
+      inline-size: 1em;
+      block-size: 1em;
+      flex: none;
+    }
+
+    @media (pointer: coarse) {
+      min-block-size: var(--fh-tap-target);
+    }
+
+    @media (forced-colors: active) {
+      border-color: ButtonText;
+    }
+  }
+
+  /* —— Variants —— */
+
+  /* Bordered variants stay flat: no depth at rest, hover or press. */
+  .fh-button--secondary,
+  .fh-button--outline,
+  .fh-button--ghost {
+    --_shadow: none;
+    --_shadow-hover: none;
+    --_shadow-active: none;
+    --_lift: 0px;
+
+    background-image: none;
+  }
+
+  .fh-button--secondary {
+    --_bg: transparent;
+    --_fg: var(--fh-color-text);
+    --_border: var(--fh-color-border-strong);
+
+    &:hover {
+      --_border: var(--fh-color-text);
+    }
+  }
+
+  .fh-button--outline {
+    --_bg: transparent;
+    --_fg: var(--fh-color-text);
+    --_border: var(--fh-color-text);
+
+    border-width: var(--fh-border-heavy);
+
+    &:hover {
+      --_bg: var(--fh-color-primary);
+      --_fg: var(--fh-color-on-primary);
+    }
+  }
+
+  .fh-button--ghost {
+    --_bg: transparent;
+    --_fg: var(--fh-color-text-muted);
+    --_border: transparent;
+
+    &:hover {
+      --_fg: var(--fh-color-text);
+      --_bg: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    }
+  }
+
+  /* Scarce: at most one filled accent button per view. */
+  .fh-button--accent {
+    --_bg: var(--fh-color-accent);
+    --_fg: var(--fh-color-on-accent);
+  }
+
+  /* —— Sizes —— */
+  .fh-button--sm {
+    min-block-size: 2rem;
+    padding: 0.42rem var(--fh-space-3);
+    font-size: 0.64rem;
+  }
+
+  .fh-button--lg {
+    min-block-size: 2.75rem;
+    padding: 0.75rem 1.35rem;
+    font-size: 0.76rem;
+  }
+
+  .fh-button--block {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  .fh-button--icon {
+    inline-size: 2.25rem;
+    padding: 0;
+    aspect-ratio: 1;
+  }
+
+  /* Busy: keeps its size, swaps label for a spinner. */
+  .fh-button[aria-busy="true"] {
+    color: transparent;
+    pointer-events: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      inline-size: 1em;
+      block-size: 1em;
+      border: 2px solid var(--_fg);
+      border-inline-end-color: transparent;
+      border-radius: var(--fh-radius-round);
+      animation: fh-spin 0.7s linear infinite;
+    }
+  }
+
+  /* —— Tone edge ——
+   * A 1px masked edge in the page tone: bright at the crown, fading
+   * down the sides, absent at the base. Primary buttons only. */
+  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost) {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--fh-tone) 72%, white) 0%,
+        color-mix(in oklab, var(--fh-tone) 52%, transparent) 38%,
+        transparent 72%
+      );
+      mask:
+        linear-gradient(black 0 0) content-box exclude,
+        linear-gradient(black 0 0);
+      pointer-events: none;
+    }
+  }
+
+  /* —— Action link ——
+   * Mono caps link with a dashed underline and arrow. Used for
+   * "View all", section CTAs and card actions. Takes the tone. */
+  .fh-action {
+    --_color: var(--fh-action-color, var(--fh-color-text));
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    padding-block-end: 0.2em;
+    border-block-end: var(--fh-border-thin) dashed color-mix(in oklab, var(--_color) 45%, transparent);
+    color: var(--_color);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wide);
+    line-height: var(--fh-leading-heading);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::after {
+      content: "";
+      inline-size: 0.8em;
+      block-size: 0.8em;
+      flex: none;
+      background-color: currentColor;
+      mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover {
+      --_color: var(--fh-color-accent-text);
+    }
+
+    &:hover::after {
+      translate: 0.1rem -0.1rem;
+    }
+
+    &[data-tone] {
+      --_color: var(--fh-tone);
+    }
+  }
+
+  .fh-action--lg {
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: 0.04em;
+  }
+
+  /* —— Text link —— */
+  .fh-link {
+    color: var(--fh-color-text);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: var(--fh-color-etch);
+    transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  .fh-link--quiet {
+    color: var(--fh-color-text-muted);
+    text-decoration-line: none;
+
+    &:hover {
+      color: var(--fh-color-text);
+    }
+  }
+
+  /*
+   * Slot-machine label roll. The same copy scrolls up and a duplicate
+   * enters from below. No extra markup: the duplicate is a text
+   * shadow, the window is a clip-path.
+   *
+   *   <a class="fh-button"><span class="fh-roll">Book a call</span></a>
+   */
+  .fh-roll {
+    --_line: 1.2em;
+
+    display: inline-block;
+    line-height: var(--_line);
+    text-shadow: 0 var(--_line) currentColor;
+    clip-path: inset(0 -0.25em 0 -0.25em);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-roll {
+      transition:
+        translate var(--fh-duration-slow) var(--fh-ease-out),
+        clip-path var(--fh-duration-slow) var(--fh-ease-out);
+    }
+
+    :is(a, button, .fh-button, .fh-action):is(:hover, :focus-visible) > .fh-roll,
+    :is(a, button):is(:hover, :focus-visible) .fh-roll {
+      translate: 0 calc(-1 * var(--_line));
+      clip-path: inset(var(--_line) -0.25em calc(-1 * var(--_line)) -0.25em);
+    }
+  }
+
+  /* —— Rollover heading ——
+   * A one-line label that rolls to new text: up when you move forward,
+   * down when you move back. Items stack in one grid cell, so the old
+   * and new text animate past each other without moving the layout.
+   *   <span class="fh-rollover" data-fh-rollover="sections" data-fh-default="Firehorse">
+   *     <span class="fh-rollover__item">Firehorse</span>
+   *   </span>
+   * dist/firehorse.js rolls it to the section in view (sections carry
+   * data-fh-label and optional data-fh-index), or call
+   * Firehorse.rollover(el, "New text", "up" | "down"). */
+  .fh-rollover {
+    display: inline-grid;
+    align-items: baseline;
+    max-inline-size: 100%;
+    overflow: clip;
+    overflow-clip-margin: 0.15em;
+    line-height: 1.25;
+    vertical-align: bottom;
+  }
+  .fh-rollover__item {
+    grid-area: 1 / 1;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5em;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & > b {
+      flex: none;
+      color: var(--fh-tone, var(--fh-color-text-subtle));
+      font-family: var(--fh-font-mono);
+      font-size: 0.62em;
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+    }
+    &[data-leave] { pointer-events: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-rollover__item[data-enter="up"] { animation: fh-roll-in-up var(--fh-duration-slow) var(--fh-ease-out) both; }
+    .fh-rollover__item[data-enter="down"] { animation: fh-roll-in-down var(--fh-duration-slow) var(--fh-ease-out) both; }
+    .fh-rollover__item[data-leave="up"] { animation: fh-roll-out-up var(--fh-duration-slow) var(--fh-ease-out) both; }
+    .fh-rollover__item[data-leave="down"] { animation: fh-roll-out-down var(--fh-duration-slow) var(--fh-ease-out) both; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fh-rollover__item[data-leave] { display: none; }
+  }
+  @keyframes fh-roll-in-up { from { translate: 0 105%; opacity: 0; } }
+  @keyframes fh-roll-in-down { from { translate: 0 -105%; opacity: 0; } }
+  @keyframes fh-roll-out-up { to { translate: 0 -105%; opacity: 0; } }
+  @keyframes fh-roll-out-down { to { translate: 0 105%; opacity: 0; } }
+
+  @keyframes fh-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+}

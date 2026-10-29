@@ -1,0 +1,103 @@
+{
+  "name": "@rascode/firehorse",
+  "version": "1.1.0",
+  "description": "Firehorse — a dark-first, container-native CSS design system. Cascade layers, container queries, light-dark() theming, zero JavaScript.",
+  "license": "MIT",
+  "author": "Rascode (https://rascode.dev)",
+  "homepage": "https://firehorse.rascode.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rascode/firehorse.git"
+  },
+  "bugs": "https://github.com/rascode/firehorse/issues",
+  "keywords": [
+    "design-system",
+    "css",
+    "container-queries",
+    "cascade-layers",
+    "dark-mode",
+    "light-dark",
+    "design-tokens",
+    "firehorse",
+    "schema-org",
+    "structured-data",
+    "json-ld",
+    "themes"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "./dist/firehorse.js"
+  ],
+  "style": "./dist/firehorse.css",
+  "main": "./dist/tokens.js",
+  "types": "./dist/tokens.d.ts",
+  "exports": {
+    ".": "./dist/firehorse.css",
+    "./css": "./dist/firehorse.css",
+    "./min.css": "./dist/firehorse.min.css",
+    "./compat.css": "./dist/firehorse.compat.min.css",
+    "./themes/*": "./dist/themes/*",
+    "./themes.css": "./dist/themes.css",
+    "./themes.json": "./dist/themes.json",
+    "./index.json": "./dist/index.json",
+    "./src/*": "./src/*",
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
+    "./tokens.json": "./dist/tokens.json",
+    "./agent/*": "./agent/*",
+    "./package.json": "./package.json",
+    "./js": "./dist/firehorse.js",
+    "./firehorse.js": "./dist/firehorse.js",
+    "./schema/mappings.json": "./schema/mappings.json",
+    "./icons.css": "./dist/icons.css",
+    "./icons.json": "./dist/icons.json",
+    "./datatable": "./dist/datatable.js",
+    "./datatable.js": "./dist/datatable.js",
+    "./audio": "./dist/audio.js",
+    "./audio.js": "./dist/audio.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "agent",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "schema",
+    "scripts/schema.mjs",
+    "scripts/gen-themes.mjs"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "lint": "node scripts/lint.mjs",
+    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check",
+    "prepublishOnly": "npm test && node scripts/gen-index.mjs",
+    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/site.mjs && node scripts/stable.mjs && node scripts/schema.mjs site/dist/index.html --write",
+    "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
+    "schema": "node scripts/schema.mjs site/dist/index.html",
+    "tokens:adaptive": "node scripts/gen-adaptive.mjs"
+  },
+  "devDependencies": {
+    "browserslist": "4.25.0",
+    "lightningcss": "1.33.0",
+    "lucide-static": "^0.469.0",
+    "marked": "^14.1.4",
+    "playwright": "^1.56.1"
+  },
+  "browserslist": [
+    "chrome >= 123",
+    "edge >= 123",
+    "firefox >= 128",
+    "safari >= 17.5"
+  ],
+  "dependencies": {
+    "node-html-parser": "^7.0.1"
+  },
+  "bin": {
+    "firehorse-schema": "./scripts/schema.mjs",
+    "firehorse-theme": "./scripts/gen-themes.mjs"
+  }
+}

@@ -1,0 +1,532 @@
+/*
+ * Firehorse — panels & menus
+ * ---------------------------------------------------------------
+ * Detail drawer, hamburger button, overlay navigation, command menu,
+ * richer dropdown menus and a phone tab bar. All of it opens with
+ * native <dialog> or [popover]; no JavaScript is required to open,
+ * close, trap focus or animate.
+ */
+
+@layer fh.components {
+  /* —— Detail drawer ——————————————————————————————————————
+   * A floating sheet for a record: header, quick facts, grouped
+   * fields, activity and a sticky footer. Slides in and out.
+   *
+   *   <dialog class="fh-dialog fh-dialog--float fh-detail" id="record">
+   *     <header class="fh-detail__header">…</header>
+   *     <div class="fh-detail__body">
+   *       <section class="fh-detail__section"><h3>Contact</h3>
+   *         <dl class="fh-detail__fields"><div><dt>Email</dt><dd>…</dd></div></dl>
+   *       </section>
+   *     </div>
+   *     <footer class="fh-detail__footer">…</footer>
+   *   </dialog>
+   */
+  .fh-dialog--float {
+    --_gap: var(--fh-space-3);
+
+    inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));
+    max-inline-size: none;
+    block-size: calc(100dvh - 2 * var(--_gap));
+    max-block-size: none;
+    margin: var(--_gap) var(--_gap) var(--_gap) auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    opacity: 1;
+    translate: calc(100% + 2 * var(--_gap)) 0;
+    transition:
+      translate var(--fh-duration-slow, 380ms) cubic-bezier(0.32, 0.72, 0, 1),
+      overlay var(--fh-duration-slow, 380ms) allow-discrete,
+      display var(--fh-duration-slow, 380ms) allow-discrete;
+
+    &[open] {
+      translate: 0 0;
+
+      @starting-style { translate: calc(100% + 2 * var(--_gap)) 0; }
+    }
+
+    &:dir(rtl) {
+      margin: var(--_gap) auto var(--_gap) var(--_gap);
+      translate: calc(-100% - 2 * var(--_gap)) 0;
+    }
+  }
+
+  .fh-dialog--float.fh-dialog--start {
+    margin: var(--_gap) auto var(--_gap) var(--_gap);
+    translate: calc(-100% - 2 * var(--_gap)) 0;
+
+    &[open] { translate: 0 0; @starting-style { translate: calc(-100% - 2 * var(--_gap)) 0; } }
+  }
+
+  .fh-detail {
+    padding: 0;
+
+    &[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  }
+
+  .fh-detail__header {
+    display: grid;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-4) var(--fh-space-5) var(--fh-space-3);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    /* Flat on purpose: drawers are drawn with lines, never a gradient wash. */
+    background-color: transparent;
+  }
+
+  .fh-detail__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-detail__nav {
+    display: inline-flex;
+    gap: var(--fh-space-1);
+  }
+
+  .fh-detail__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    --fh-avatar-size: 3rem;
+
+    & h2 { margin: 0; font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); letter-spacing: var(--fh-tracking-heading); line-height: 1.15; }
+    & p { margin: var(--fh-space-0-5) 0 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+  }
+
+  .fh-detail__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-border);
+
+    & > div { display: grid; gap: var(--fh-space-0-5); padding: var(--fh-space-2) var(--fh-space-3); background-color: var(--fh-color-surface-raised); }
+    & dt { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: 0.62rem; letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+    & dd { margin: 0; font-size: var(--fh-text-body); font-weight: var(--fh-weight-medium); font-variant-numeric: tabular-nums; }
+  }
+
+  .fh-detail__body {
+    display: grid;
+    gap: var(--fh-space-6);
+    align-content: start;
+    padding: var(--fh-space-5);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .fh-detail__section {
+    display: grid;
+    gap: var(--fh-space-3);
+
+    & > h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      margin: 0;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  /* Label / value rows. Values may be text, links, pills, inputs. */
+  .fh-detail__fields {
+    display: grid;
+    gap: 0;
+    margin: 0;
+
+    & > div {
+      display: grid;
+      grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr);
+      gap: var(--fh-space-3);
+      align-items: center;
+      min-block-size: 2.4rem;
+      padding-block: var(--fh-space-1);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & dt { display: flex; align-items: center; gap: var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+    & dt > .fh-icon { color: var(--fh-color-text-subtle); }
+    & dd { margin: 0; min-inline-size: 0; font-size: var(--fh-text-small); overflow-wrap: anywhere; }
+    & :is(.fh-input, .fh-select) { min-block-size: 2rem; padding-block: 0.3rem; font-size: var(--fh-text-small); }
+  }
+
+  @container fh-dialog (inline-size < 24rem) {
+    .fh-detail__fields > div { grid-template-columns: minmax(0, 1fr); gap: var(--fh-space-1); }
+  }
+
+  .fh-detail__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2);
+    padding: var(--fh-space-3) var(--fh-space-5);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: var(--fh-color-surface-raised);
+  }
+
+  /* —— Hamburger ———————————————————————————————————————————
+   * Three bars that morph when open. Open state comes from
+   * aria-expanded="true", or from a popover that is its next sibling,
+   * or from fh-burger--open, so it works with or without script.
+   *
+   *   <button class="fh-burger" popovertarget="nav" aria-label="Menu"><span></span></button>
+   *
+   * Morphs: (default) cross · --arrow · --minus · --spin · --squeeze · --plus · --dots
+   * Extras: --label (shows Menu / Close), --boxed, --tone
+   */
+  .fh-burger {
+    --_w: var(--fh-burger-size, 1.25rem);
+    --_t: 2px;
+    --_gap: calc(var(--_w) * 0.3);
+    --_dur: var(--fh-duration-base);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-2);
+    min-inline-size: 2.5rem;
+    min-block-size: 2.5rem;
+    padding: 0 var(--fh-space-2);
+    border: var(--fh-border-thin) solid transparent;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    & > span {
+      position: relative;
+      display: block;
+      inline-size: var(--_w);
+      block-size: var(--_t);
+      border-radius: var(--_t);
+      background-color: currentColor;
+      transition: background-color var(--_dur), rotate var(--_dur) var(--fh-ease-out), translate var(--_dur) var(--fh-ease-out), inline-size var(--_dur);
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: inherit;
+        background-color: currentColor;
+        transition: rotate var(--_dur) var(--fh-ease-out), translate var(--_dur) var(--fh-ease-out), inline-size var(--_dur), opacity var(--_dur), top var(--_dur);
+      }
+      &::before { translate: 0 calc(var(--_gap) * -1); }
+      &::after { translate: 0 var(--_gap); }
+    }
+
+    &:hover > span::after { inline-size: 70%; }
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
+
+  .fh-burger--boxed { border-color: var(--fh-color-border-strong); }
+  .fh-burger--tone { color: var(--fh-tone); }
+
+  /* Open (cross by default). */
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open) {
+    & > span { background-color: transparent; }
+    & > span::before { translate: 0 0; rotate: 45deg; inline-size: 100%; }
+    & > span::after { translate: 0 0; rotate: -45deg; inline-size: 100%; }
+  }
+
+  /* Arrow: bars fold into a left arrow. */
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--arrow {
+    & > span { background-color: currentColor; }
+    & > span::before { inline-size: 55%; translate: -1px calc(var(--_w) * -0.17); rotate: -40deg; }
+    & > span::after { inline-size: 55%; translate: -1px calc(var(--_w) * 0.17); rotate: 40deg; }
+  }
+
+  /* Minus: everything collapses to one bar. */
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--minus {
+    & > span { background-color: currentColor; }
+    & > span::before,
+    & > span::after { translate: 0 0; rotate: 0deg; opacity: 0; }
+  }
+
+  /* Spin: the cross arrives with a half turn. */
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--spin > span { rotate: 180deg; }
+
+  /* Squeeze: bars meet in the middle, then cross (delayed). */
+  .fh-burger--squeeze > span::before,
+  .fh-burger--squeeze > span::after { transition-delay: 0s, var(--_dur); transition-property: rotate, translate; }
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--squeeze > span::before,
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--squeeze > span::after { transition-delay: var(--_dur), 0s; }
+
+  /* Plus: a single bar becomes a plus, then an ×. */
+  .fh-burger--plus > span::before { translate: 0 0; rotate: 90deg; }
+  .fh-burger--plus > span::after { opacity: 0; }
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--plus > span { rotate: 45deg; background-color: currentColor; }
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--plus > span::after { opacity: 0; }
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--plus > span::before { rotate: 90deg; }
+
+  /* Dots: three dots that stretch into a cross. */
+  .fh-burger--dots > span {
+    inline-size: 4px;
+    block-size: 4px;
+
+    &::before,
+    &::after { inline-size: 4px; block-size: 4px; translate: 0 calc(var(--_gap) * -1.2); }
+    &::after { translate: 0 calc(var(--_gap) * 1.2); }
+  }
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--dots > span {
+    &::before,
+    &::after { inline-size: var(--_w); block-size: var(--_t); inset-inline-start: calc((var(--_w) - 4px) / -2); }
+  }
+
+  /* Label: Menu ↔ Close. */
+  .fh-burger--label::after { content: var(--fh-burger-label, "Menu"); }
+  :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--label::after { content: var(--fh-burger-label-open, "Close"); }
+
+  /* —— Overlay navigation ————————————————————————————————————
+   * A full-screen menu with big links that cascade in.
+   *   <button class="fh-burger" popovertarget="site-nav" aria-label="Menu"><span></span></button>
+   *   <nav class="fh-overlay-nav" id="site-nav" popover>
+   *     <ol><li><a href="/work">Work</a></li>…</ol>
+   *     <div class="fh-overlay-nav__aside">…</div>
+   *   </nav>
+   */
+  .fh-overlay-nav {
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100dvh;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: clamp(var(--fh-space-8), 8vh, var(--fh-space-20)) var(--fh-page-margin, var(--fh-space-6));
+    border: 0;
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 96%, transparent);
+    color: var(--fh-color-text);
+    backdrop-filter: blur(var(--fh-blur-chrome, 12px));
+    opacity: 0;
+    transition: opacity var(--fh-duration-base) var(--fh-ease-out), overlay var(--fh-duration-base) allow-discrete, display var(--fh-duration-base) allow-discrete;
+    container: fh-overlay / inline-size;
+
+    &:popover-open {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: center;
+      gap: var(--fh-space-10);
+      opacity: 1;
+      @starting-style { opacity: 0; }
+    }
+
+    & ol {
+      display: grid;
+      gap: var(--fh-space-1);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: fh-onav;
+    }
+
+    & li {
+      counter-increment: fh-onav;
+      opacity: 0;
+      translate: 0 0.75rem;
+      transition: opacity var(--fh-duration-slow, 380ms) var(--fh-ease-out), translate var(--fh-duration-slow, 380ms) var(--fh-ease-out);
+    }
+    &:popover-open li { opacity: 1; translate: 0 0; @starting-style { opacity: 0; translate: 0 0.75rem; } }
+    & li:nth-child(2) { transition-delay: 40ms; }
+    & li:nth-child(3) { transition-delay: 80ms; }
+    & li:nth-child(4) { transition-delay: 120ms; }
+    & li:nth-child(5) { transition-delay: 160ms; }
+    & li:nth-child(6) { transition-delay: 200ms; }
+    & li:nth-child(n + 7) { transition-delay: 240ms; }
+
+    & ol a {
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--fh-space-4);
+      color: var(--fh-color-text);
+      font-size: clamp(2.25rem, 8cqi, 5.5rem);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: -0.045em;
+      line-height: 1;
+      text-decoration: none;
+      transition: color var(--fh-duration-fast);
+
+      &::before {
+        content: counter(fh-onav, decimal-leading-zero);
+        color: var(--fh-tone);
+        font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-label);
+        letter-spacing: var(--fh-tracking-wider);
+      }
+      &:hover,
+      &[aria-current="page"] { color: var(--fh-tone); }
+    }
+
+    /* Dim the others while hovering one. */
+    & ol:has(a:hover) a:not(:hover) { color: color-mix(in oklab, var(--fh-color-text) 35%, transparent); }
+  }
+
+  @container fh-overlay (inline-size >= 56rem) {
+    .fh-overlay-nav:popover-open { grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr); align-items: end; }
+  }
+
+  .fh-overlay-nav__aside {
+    display: grid;
+    gap: var(--fh-space-4);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+  }
+
+  .fh-overlay-nav__close {
+    position: absolute;
+    inset-block-start: var(--fh-space-4);
+    inset-inline-end: var(--fh-page-margin, var(--fh-space-4));
+  }
+
+  /* —— Menu extras: labels, icons, shortcuts, checks, danger —— */
+  .fh-menu__label {
+    margin: var(--fh-space-1-5) var(--fh-space-2) var(--fh-space-1);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: 0.62rem;
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+  .fh-menu > :is(a, button) > .fh-icon { color: var(--fh-color-text-subtle); }
+  .fh-menu > :is(a, button) > kbd,
+  .fh-menu__kbd {
+    margin-inline-start: auto;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: 0.66rem;
+  }
+  .fh-menu > [role="menuitemcheckbox"],
+  .fh-menu > [role="menuitemradio"] {
+    &::after {
+      content: "";
+      inline-size: 0.85rem;
+      aspect-ratio: 1;
+      margin-inline-start: auto;
+      background-color: var(--fh-tone, currentColor);
+      mask: var(--fh-icon-check) center / contain no-repeat;
+      opacity: 0;
+    }
+    &[aria-checked="true"]::after { opacity: 1; }
+    &:has(> kbd)::after { margin-inline-start: var(--fh-space-2); }
+  }
+  .fh-menu > .fh-menu__danger { color: var(--fh-color-danger); }
+  .fh-menu > .fh-menu__danger > .fh-icon { color: inherit; }
+
+  /* —— Command menu ————————————————————————————————————————
+   *   <dialog class="fh-dialog fh-command"> <label class="fh-command__search">…</label>
+   *     <div class="fh-command__list"><p class="fh-menu__label">Pages</p><a>…</a></div> </dialog> */
+  .fh-command {
+    --fh-dialog-size: 36rem;
+    margin-block-start: 12vh;
+    padding: 0;
+
+    &[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; max-block-size: min(30rem, 76dvh); }
+  }
+  .fh-command__search {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-3) var(--fh-space-4);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-muted);
+
+    &::before { content: ""; inline-size: 1rem; aspect-ratio: 1; background-color: currentColor; mask: var(--fh-icon-search) center / contain no-repeat; }
+    & > input { flex: 1; min-inline-size: 0; padding: var(--fh-space-1) 0; border: 0; background: none; color: var(--fh-color-text); font: inherit; font-size: var(--fh-text-body); outline: none; }
+  }
+  .fh-command__list {
+    display: grid;
+    align-content: start;
+    gap: 1px;
+    padding: var(--fh-space-2);
+    overflow-y: auto;
+
+    & > :is(a, button) {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-3);
+      padding: var(--fh-space-2) var(--fh-space-3);
+      border: 0;
+      border-radius: var(--fh-radius-sm);
+      background: none;
+      color: var(--fh-color-text);
+      font: inherit;
+      font-size: var(--fh-text-small);
+      text-align: start;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:is(:hover, :focus-visible, [aria-selected="true"]) { background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, transparent); outline: none; }
+      & > .fh-icon-tile { --fh-icon-tile: 1.75rem; }
+      & > kbd { margin-inline-start: auto; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: 0.66rem; }
+      &[hidden] { display: none; }
+    }
+  }
+  .fh-command__foot {
+    display: flex;
+    gap: var(--fh-space-4);
+    padding: var(--fh-space-2) var(--fh-space-4);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: 0.64rem;
+  }
+
+  /* —— Tab bar (phones) —— */
+  .fh-tabbar {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: var(--fh-space-1-5) var(--fh-space-2) calc(var(--fh-space-1-5) + env(safe-area-inset-bottom, 0px));
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: color-mix(in oklab, var(--fh-color-surface-chrome) 92%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome, 12px));
+
+    & > a {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 0.2rem;
+      padding: var(--fh-space-1-5) 0;
+      border-radius: var(--fh-radius-md);
+      color: var(--fh-color-text-subtle);
+      font-size: 0.66rem;
+      text-decoration: none;
+
+      & > .fh-icon { font-size: 1.25rem; }
+      &[aria-current="page"] { color: var(--fh-tone, var(--fh-color-text)); }
+      &[aria-current="page"]::before { content: ""; position: absolute; inset-block-start: -0.4rem; inline-size: 1.5rem; block-size: 2px; border-radius: 2px; background-color: currentColor; }
+      & > b { position: absolute; inset-block-start: 0.1rem; inset-inline-start: calc(50% + 0.35rem); min-inline-size: 1rem; padding: 0 0.25rem; border-radius: var(--fh-radius-pill); background-color: var(--fh-color-danger); color: var(--fh-color-on-media); font-size: 0.6rem; line-height: 1rem; text-align: center; }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dialog--float,
+    .fh-overlay-nav,
+    .fh-overlay-nav li,
+    .fh-burger > span,
+    .fh-burger > span::before,
+    .fh-burger > span::after { transition-duration: 0.01ms; }
+  }
+}

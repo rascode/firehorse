@@ -1,0 +1,181 @@
+/*
+ * Firehorse — frame, page and sections
+ * ---------------------------------------------------------------
+ * A *frame* is a full-width grid with three named column ranges:
+ *
+ *   |  gutter  |        content (≤ 1400px)        |  gutter  |
+ *   [full-start [content-start           content-end] full-end]
+ *
+ * Direct children sit in `content`. Add `.fh-bleed` to run edge to
+ * edge. Every direct child is a query container (`fh-slot`), so the
+ * components inside respond to the slot they're in, not the
+ * viewport. Frames themselves are containers too (`fh-frame`).
+ *
+ * This replaces the `width: 100vw; left: 50%; margin-left: -50vw`
+ * breakout hacks: no horizontal scrollbar, no transforms.
+ */
+
+@layer fh.layout {
+  .fh-page,
+  .fh-frame,
+  .fh-main,
+  .fh-section {
+    --_margin: var(--fh-page-margin);
+    --_max: var(--fh-content-max);
+
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(var(--_margin), 1fr)
+      [content-start] min(100% - 2 * var(--_margin), var(--_max))
+      [content-end] minmax(var(--_margin), 1fr)
+      [full-end];
+    align-content: start;
+    container: fh-frame / inline-size;
+
+    & > * {
+      grid-column: content;
+      min-inline-size: 0;
+      container: fh-slot / inline-size;
+    }
+
+    & > .fh-bleed {
+      grid-column: full;
+    }
+
+    /* A frame inside a frame spans edge to edge and stays a frame. */
+    & > :is(.fh-frame, .fh-section, .fh-main) {
+      grid-column: full;
+      container: fh-frame / inline-size;
+    }
+  }
+
+  .fh-frame--narrow,
+  .fh-section--narrow {
+    --_max: var(--fh-content-narrow);
+  }
+
+  /* —— Page shell ——
+   * Owns the canvas, the scaffold column guides, and the sticky-chrome
+   * offset. Use once, on the element wrapping header + main + footer. */
+  .fh-page {
+    position: relative;
+    isolation: isolate;
+    min-block-size: 100dvh;
+    grid-template-rows: auto 1fr auto;
+    overflow-x: clip;
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-color-text);
+
+    /* Header, main and footer are frames of their own. */
+    & > :is(header, main, footer, .fh-header, .fh-main, .fh-footer) {
+      grid-column: full;
+    }
+
+    /* Scaffold: two vertical guides just outside the content edges.
+     * At narrow widths the guides fall outside the viewport and are
+     * clipped — no breakpoint needed. */
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset-block: 0;
+      inset-inline: calc(
+        max(var(--_margin), (100% - var(--_max)) / 2) - var(--fh-scaffold-outdent)
+      );
+      border-inline: var(--fh-border-thin) solid var(--fh-color-scaffold);
+      pointer-events: none;
+    }
+  }
+
+  .fh-page--plain::before {
+    content: none;
+  }
+
+  /* Main is a frame too, so sections and bleeds line up inside it. */
+  .fh-main {
+    padding-block-end: var(--fh-section-space);
+  }
+
+  /* —— Sections ——
+   * Vertical rhythm comes from padding on the section, never margins
+   * on its contents, so sections can be reordered freely. */
+  .fh-section {
+    position: relative;
+    padding-block: var(--fh-section-space) 0;
+  }
+
+  .fh-section--flush {
+    padding-block-start: 0;
+  }
+
+  .fh-section--tight {
+    padding-block-start: var(--fh-space-10);
+  }
+
+  /*
+   * Ruled section: [gap] [etched rule with scaffold ticks] [gap] [content]
+   * The rule is the section's own top border, so it is always exactly
+   * full-bleed; the ticks mark where the column guides cross it.
+   */
+  .fh-section--ruled {
+    margin-block-start: var(--fh-section-space);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block-start: calc(var(--fh-scaffold-tick) / -2 - 0.5px);
+      inline-size: var(--fh-scaffold-tick);
+      block-size: var(--fh-scaffold-tick);
+      background: var(--fh-color-scaffold-tick);
+      pointer-events: none;
+    }
+
+    &::before {
+      inset-inline-start: calc(
+        max(var(--_margin), (100% - var(--_max)) / 2) - var(--fh-scaffold-outdent)
+      );
+    }
+
+    &::after {
+      inset-inline-end: calc(
+        max(var(--_margin), (100% - var(--_max)) / 2) - var(--fh-scaffold-outdent)
+      );
+    }
+  }
+
+  /* A ruled section that directly follows a hero/page header shares
+   * the hero's trailing space instead of adding its own. */
+  :is(.fh-hero, .fh-section--hero) + .fh-section--ruled {
+    margin-block-start: 0;
+  }
+
+  /* Stand-alone etched rule (e.g. inside a slot). */
+  .fh-rule {
+    block-size: 0;
+    border: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-rule--solid {
+    border-block-start-style: solid;
+    border-block-start-color: var(--fh-color-border);
+  }
+
+  /* —— Centered container (for use outside a frame) —— */
+  .fh-container {
+    inline-size: min(100% - 2 * var(--fh-page-margin), var(--fh-content-max));
+    margin-inline: auto;
+    container: fh-slot / inline-size;
+  }
+
+  .fh-container--narrow {
+    inline-size: min(100% - 2 * var(--fh-page-margin), var(--fh-content-narrow));
+  }
+
+  /* Opt any element into being a query container. */
+  .fh-cq {
+    container-type: inline-size;
+  }
+}

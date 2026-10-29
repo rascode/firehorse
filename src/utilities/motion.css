@@ -1,0 +1,119 @@
+/*
+ * Firehorse — motion
+ * ---------------------------------------------------------------
+ * Scroll-linked motion with no JavaScript: entrances, parallax and
+ * a page progress line, all driven by scroll-driven animations.
+ *
+ * Rules the system holds to:
+ *   - Motion only under prefers-reduced-motion: no-preference.
+ *   - Only where animation-timeline is supported; elsewhere content
+ *     simply sits still.
+ *   - Content is never parked invisible: an element starts its
+ *     entrance as it enters the viewport and has finished well before
+ *     anyone can read it, so nothing waits on a script.
+ *
+ * Opt in per element (.fh-reveal, .fh-parallax) or for a whole page
+ * with data-fh-motion on .fh-page, which animates section heads,
+ * grid cells, cards, stats and splits automatically.
+ */
+
+@layer fh.utilities {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /* —— Entrances —— */
+      .fh-reveal,
+      .fh-reveal-children > *,
+      [data-fh-motion] :is(
+        .fh-section-head,
+        .fh-grid > *,
+        .fh-tiers > *,
+        .fh-bento > *,
+        .fh-steps > li,
+        .fh-split > *,
+        .fh-stats,
+        .fh-cta-band,
+        .fh-carousel,
+        .fh-accordion,
+        .fh-etched-split__pane,
+        .fh-testimonial
+      ) {
+        animation: var(--fh-reveal, fh-reveal-up) both var(--fh-ease-out);
+        animation-timeline: view();
+        animation-range: entry 0% entry var(--fh-reveal-span, 38%);
+      }
+
+      /* Staggered siblings: each next item finishes a little later. */
+      :is(.fh-reveal-children, [data-fh-motion] :is(.fh-grid, .fh-tiers, .fh-bento, .fh-steps, .fh-split)) > :nth-child(2) { --fh-reveal-span: 46%; }
+      :is(.fh-reveal-children, [data-fh-motion] :is(.fh-grid, .fh-tiers, .fh-bento, .fh-steps, .fh-split)) > :nth-child(3) { --fh-reveal-span: 54%; }
+      :is(.fh-reveal-children, [data-fh-motion] :is(.fh-grid, .fh-tiers, .fh-bento, .fh-steps, .fh-split)) > :nth-child(n + 4) { --fh-reveal-span: 62%; }
+
+      .fh-reveal--fade { --fh-reveal: fh-reveal-fade; }
+      .fh-reveal--scale { --fh-reveal: fh-reveal-scale; }
+      .fh-reveal--left { --fh-reveal: fh-reveal-left; }
+      .fh-reveal--right { --fh-reveal: fh-reveal-right; }
+      .fh-reveal--blur { --fh-reveal: fh-reveal-blur; }
+
+      /* —— Parallax ——
+       * A light drift against the scroll. --fh-depth: 0.1 (barely) to
+       * 0.5 (pronounced); negative values drift the other way. */
+      .fh-parallax {
+        animation: fh-parallax linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+
+      /* —— Page progress line —— */
+      .fh-scroll-progress {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: calc(var(--fh-z-sticky) + 2);
+        block-size: 2px;
+        background-color: var(--fh-tone);
+        transform-origin: 0 50%;
+        animation: fh-progress-x linear both;
+        animation-timeline: scroll(root block);
+      }
+    }
+  }
+
+  /* Hidden progress line when there is no timeline to drive it. */
+  @supports not (animation-timeline: view()) {
+    .fh-scroll-progress {
+      display: none;
+    }
+  }
+
+  @keyframes fh-reveal-up {
+    from { opacity: 0; translate: 0 1.75rem; }
+  }
+
+  @keyframes fh-reveal-fade {
+    from { opacity: 0; }
+  }
+
+  @keyframes fh-reveal-scale {
+    from { opacity: 0; scale: 0.94; }
+  }
+
+  @keyframes fh-reveal-left {
+    from { opacity: 0; translate: -2rem 0; }
+  }
+
+  @keyframes fh-reveal-right {
+    from { opacity: 0; translate: 2rem 0; }
+  }
+
+  @keyframes fh-reveal-blur {
+    from { opacity: 0; filter: blur(8px); translate: 0 0.75rem; }
+  }
+
+  @keyframes fh-parallax {
+    from { translate: 0 calc(var(--fh-depth, 0.15) * 8rem); }
+    to { translate: 0 calc(var(--fh-depth, 0.15) * -8rem); }
+  }
+
+  @keyframes fh-progress-x {
+    from { scale: 0 1; }
+    to { scale: 1 1; }
+  }
+}

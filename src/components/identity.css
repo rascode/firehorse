@@ -1,0 +1,597 @@
+/*
+ * Firehorse — people and records: avatar, list, timeline, chat,
+ * description list, kbd, divider, code block
+ */
+
+@layer fh.components {
+  /* —— Avatar ——
+   * Square plate by default (the Firehorse portrait); --round for
+   * people in social contexts. Initials fall back when there is no image.
+   *   <span class="fh-avatar" data-tone="sky"><img src="…" alt=""></span>
+   *   <span class="fh-avatar">JR</span> */
+  .fh-avatar {
+    --_size: var(--fh-avatar-size, 2.25rem);
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--_size);
+    aspect-ratio: var(--fh-avatar-ratio, 1);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    /* Shape comes from config tokens (see tokens/config.css) so one
+     * data-fh-avatar on <html> reshapes every avatar on the site. */
+    border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--_size) * 0.3);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    & > img {
+      inline-size: 100%;
+      block-size: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
+    /* Presence dot: data-status="online|away|busy" */
+    &[data-status]::after {
+      content: "";
+      position: absolute;
+      inset-block-end: -2px;
+      inset-inline-end: -2px;
+      inline-size: 0.6rem;
+      aspect-ratio: 1;
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-live);
+    }
+
+    &[data-status="away"]::after { background-color: var(--fh-color-warning); }
+    &[data-status="busy"]::after { background-color: var(--fh-color-danger); }
+  }
+
+  .fh-avatar--sm { --fh-avatar-size: 1.75rem; }
+  .fh-avatar--lg { --fh-avatar-size: 3.5rem; }
+  .fh-avatar--xl { --fh-avatar-size: 5.5rem; }
+  .fh-avatar--round { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
+
+  /* Overlapping stack: <div class="fh-avatars">…avatars… <span class="fh-avatar">+4</span></div> */
+  .fh-avatars {
+    display: flex;
+    align-items: center;
+
+    & > .fh-avatar {
+      border-style: solid;
+      border-color: var(--fh-color-canvas);
+      border-width: 2px;
+    }
+
+    & > .fh-avatar + .fh-avatar {
+      margin-inline-start: calc(var(--fh-avatar-size, 2.25rem) * -0.3);
+    }
+  }
+
+  /* —— List ——
+   * Rows of records: leading media, title + meta, trailing value or
+   * action. Rows can be links. Reflows its trailing column under the
+   * text in narrow slots.
+   *   <ul class="fh-list">
+   *     <li><span class="fh-avatar">AL</span>
+   *       <div><b>Ada Lovelace</b><small>Booked an assessment · 2h</small></div>
+   *       <span class="fh-badge" data-tone="lime">Paid</span></li>
+   *   </ul> */
+  .fh-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    container: fh-list / inline-size;
+
+    & > li {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--fh-space-1) var(--fh-space-4);
+      padding: var(--fh-space-3) var(--fh-space-1);
+
+      & + li {
+        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      }
+
+      & > div {
+        display: grid;
+        min-inline-size: 0;
+        line-height: var(--fh-leading-snug);
+      }
+
+      & > div > :first-child {
+        overflow: hidden;
+        color: var(--fh-color-text);
+        font-weight: var(--fh-weight-semibold);
+        letter-spacing: var(--fh-tracking-heading);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      & > div > small {
+        color: var(--fh-color-text-muted);
+        font-size: var(--fh-text-caption);
+      }
+
+      & a::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+
+      & a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      &:has(a:hover) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 4%, transparent);
+      }
+
+      &:has(a:focus-visible) {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  @container fh-list (inline-size < 22rem) {
+    .fh-list > li {
+      grid-template-columns: auto minmax(0, 1fr);
+
+      & > :last-child:not(div) {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+  }
+
+  /* —— Timeline / activity feed ——
+   *   <ol class="fh-timeline">
+   *     <li data-tone="lime"><time>09:41</time><p><b>Invoice paid</b> by Northwind</p></li>
+   *   </ol> */
+  .fh-timeline {
+    --_when: 5.25rem;
+
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--_when) minmax(0, 1fr);
+      column-gap: calc(var(--fh-space-3) * 2 + 1rem);
+      padding-block-end: var(--fh-space-5);
+
+      /* rail */
+      &:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        inset-block: 1rem 0;
+        inset-inline-start: calc(var(--_when) + var(--fh-space-3) + 0.5rem);
+        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      }
+
+      /* node */
+      &::after {
+        content: "";
+        position: absolute;
+        inset-block-start: 0.4rem;
+        inset-inline-start: calc(var(--_when) + var(--fh-space-3) + 0.5rem - 0.3rem);
+        inline-size: 0.6rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+        box-shadow: 0 0 0 3px var(--fh-color-canvas);
+      }
+
+      & > time,
+      & > .fh-timeline__when {
+        grid-column: 1;
+        padding-block-start: 0.15rem;
+        color: var(--fh-color-text-subtle);
+        font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-micro);
+        letter-spacing: var(--fh-tracking-wider);
+        text-align: end;
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+      }
+
+      & > :not(time, .fh-timeline__when) {
+        grid-column: 2;
+        margin: 0;
+        color: var(--fh-color-text-muted);
+        font-size: var(--fh-text-small);
+        line-height: var(--fh-leading-normal);
+      }
+
+      & b {
+        color: var(--fh-color-text);
+        font-weight: var(--fh-weight-semibold);
+      }
+    }
+  }
+
+  /* —— Chat ——
+   *   <div class="fh-chat">
+   *     <div class="fh-message" data-tone="sky">
+   *       <span class="fh-avatar">R</span>
+   *       <div><p class="fh-message__name">Reginald</p><p>Good day…</p></div>
+   *     </div>
+   *     <div class="fh-message fh-message--self"><div><p>How fast can Wes start?</p></div></div>
+   *   </div> */
+  .fh-chat {
+    display: grid;
+    gap: var(--fh-space-4);
+    container: fh-chat / inline-size;
+  }
+
+  .fh-message {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--fh-space-2-5);
+    max-inline-size: min(36rem, 88cqi);
+
+    & > div {
+      display: grid;
+      gap: var(--fh-space-1);
+      padding: var(--fh-space-3) var(--fh-space-4);
+      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border-radius: var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-sm);
+      background-color: var(--fh-color-surface-raised);
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-normal);
+    }
+
+    & p {
+      margin: 0;
+    }
+  }
+
+  .fh-message__name {
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.6rem;
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-message--self,
+  .fh-message[data-from="me"] {
+    flex-direction: row-reverse;
+    justify-self: end;
+
+    & > div {
+      border-color: transparent;
+      border-radius: var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-sm) var(--fh-radius-lg);
+      background-color: var(--fh-color-primary);
+      color: var(--fh-color-on-primary);
+    }
+  }
+
+  /* Typing indicator: <div class="fh-message"><div class="fh-typing"><i></i><i></i><i></i></div></div> */
+  .fh-typing {
+    display: inline-flex;
+    gap: 0.25rem;
+    padding-block: var(--fh-space-4);
+
+    & > i {
+      inline-size: 0.35rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-text-muted);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-typing > i {
+      animation: fh-bounce 1.2s var(--fh-ease-in-out) infinite;
+    }
+
+    .fh-typing > i:nth-child(2) { animation-delay: 0.15s; }
+    .fh-typing > i:nth-child(3) { animation-delay: 0.3s; }
+  }
+
+  @keyframes fh-bounce {
+    0%, 60%, 100% { translate: 0 0; opacity: 0.5; }
+    30% { translate: 0 -0.25rem; opacity: 1; }
+  }
+
+  /* —— Description list (key / value) ——
+   * Two columns when the slot allows, stacked otherwise. */
+  .fh-dl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0;
+    container: fh-dl / inline-size;
+
+    & > div {
+      display: grid;
+      gap: var(--fh-space-1);
+      padding-block: var(--fh-space-3);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & dt {
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+
+    & dd {
+      margin: 0;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+    }
+  }
+
+  @container fh-dl (inline-size >= 28rem) {
+    .fh-dl > div {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: var(--fh-space-4);
+      align-items: baseline;
+    }
+  }
+
+  /* —— Keyboard key —— */
+  .fh-kbd {
+    display: inline-block;
+    min-inline-size: 1.5em;
+    padding: 0.05rem 0.35rem;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-block-end-width: 2px;
+    border-radius: 4px;
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: 0.72em;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* —— Divider with a label —— */
+  .fh-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    &:empty {
+      gap: 0;
+    }
+  }
+
+  /* —— Code block ——
+   *   <figure class="fh-code">
+   *     <figcaption>tokens.css <button class="fh-button fh-button--sm fh-button--ghost">Copy</button></figcaption>
+   *     <pre><code>…</code></pre>
+   *   </figure> */
+  .fh-code {
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-sunken);
+
+    & > figcaption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-space-3);
+      min-block-size: 2.5rem;
+      padding: var(--fh-space-1) var(--fh-space-2) var(--fh-space-1) var(--fh-space-4);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+
+    & > pre {
+      margin: 0;
+      padding: var(--fh-space-4) var(--fh-space-5);
+      overflow-x: auto;
+      color: var(--fh-color-text);
+      font-size: 0.78rem;
+      line-height: 1.7;
+      tab-size: 2;
+    }
+  }
+
+  /* —— Avatar shapes, sizes, rings ——
+   * Rounded rect is the Firehorse plate; every other shape is one
+   * modifier away. */
+  .fh-avatar--xs { --fh-avatar-size: 1.4rem; }
+  .fh-avatar--2xl { --fh-avatar-size: 7rem; }
+  .fh-avatar--circle { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
+  .fh-avatar--square { --fh-avatar-radius: var(--fh-radius-sm); --fh-avatar-ratio: 1; }
+  .fh-avatar--rounded { --fh-avatar-radius: var(--fh-radius-md); --fh-avatar-ratio: 1; }
+  /* Oval: a portrait rectangle capped with a half circle top and bottom. */
+  .fh-avatar--oval { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 3 / 4; }
+  .fh-avatar--squircle { --fh-avatar-radius: 32%; --fh-avatar-ratio: 1; --fh-avatar-corner-shape: squircle; }
+
+  @supports (corner-shape: squircle) {
+    .fh-avatar {
+      corner-shape: var(--fh-avatar-corner-shape, round);
+    }
+  }
+
+  .fh-avatar[data-status="offline"]::after {
+    background-color: var(--fh-color-text-subtle);
+  }
+
+  /* Ring: a tone outline with a canvas gap. */
+  .fh-avatar--ring {
+    border: 0;
+    box-shadow:
+      0 0 0 2px var(--fh-color-canvas),
+      0 0 0 4px var(--fh-tone);
+  }
+
+  /* Halo: a soft tone glow that breathes. */
+  .fh-avatar--halo {
+    border: 0;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 35%, transparent), 0 0 24px -4px var(--fh-tone);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-avatar--halo {
+      animation: fh-halo 3s var(--fh-ease-in-out) infinite alternate;
+    }
+  }
+
+  @keyframes fh-halo {
+    to {
+      box-shadow: 0 0 0 5px color-mix(in oklab, var(--fh-tone) 20%, transparent), 0 0 36px -2px var(--fh-tone);
+    }
+  }
+
+  /* Generated: initials on a tone mesh built from the tone and its
+   * neighbours on the wheel. */
+  .fh-avatar--generated {
+    border: 0;
+    background:
+      radial-gradient(circle at 20% 15%, oklch(from var(--fh-tone) l c calc(h + 40)) 0, transparent 55%),
+      radial-gradient(circle at 85% 90%, oklch(from var(--fh-tone) calc(l - 0.12) c calc(h - 30)) 0, transparent 60%),
+      var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
+  }
+
+  /* —— Avatar groups —— */
+  .fh-avatars__more {
+    border-style: solid;
+    background-color: var(--fh-color-surface-chrome);
+    color: var(--fh-color-text-muted);
+    font-size: calc(var(--fh-avatar-size, 2.25rem) * 0.28);
+  }
+
+  .fh-avatars--lg > .fh-avatar { --fh-avatar-size: 3rem; }
+
+  /* Fans out on hover / focus. */
+  .fh-avatars--spread > .fh-avatar + .fh-avatar {
+    transition: margin-inline-start var(--fh-duration-base) var(--fh-ease-out);
+  }
+
+  .fh-avatars--spread:is(:hover, :focus-within, :focus-visible) > .fh-avatar + .fh-avatar {
+    margin-inline-start: var(--fh-space-1);
+  }
+
+  /* Packed cluster: a tight grid of small faces. */
+  .fh-avatars--grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: var(--fh-space-1);
+    inline-size: fit-content;
+
+    & > .fh-avatar + .fh-avatar {
+      margin-inline-start: 0;
+    }
+  }
+
+  /* Plain row with breathing room. */
+  .fh-avatars--row {
+    gap: var(--fh-space-2);
+
+    & > .fh-avatar + .fh-avatar {
+      margin-inline-start: 0;
+    }
+  }
+
+  /* —— Person: avatar + name + role —— */
+  .fh-person {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    min-inline-size: 0;
+    color: var(--fh-color-text);
+    text-decoration: none;
+  }
+
+  .fh-person__text {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > b {
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+    }
+
+    & > span {
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  a.fh-person:hover b {
+    color: var(--fh-tone);
+  }
+
+  /* —— List parts (explicit classes) —— */
+  .fh-list__title {
+    margin: 0;
+    overflow: hidden;
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-semibold);
+    letter-spacing: var(--fh-tracking-heading);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-list__meta {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+  }
+
+  /* —— Chat bubble class + one-element typing dots —— */
+  .fh-message__bubble {
+    display: grid;
+    gap: var(--fh-space-1);
+  }
+
+  .fh-message__bubble > .fh-typing {
+    display: inline-flex;
+    padding-block: var(--fh-space-2);
+
+    & > i:only-child {
+      margin-inline: 0.45rem;
+      box-shadow:
+        -0.5rem 0 0 var(--fh-color-text-muted),
+        0.5rem 0 0 var(--fh-color-text-muted);
+    }
+  }
+}

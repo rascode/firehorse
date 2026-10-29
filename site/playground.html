@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Firehorse Playground</title>
+<meta name="description" content="Drag Firehorse blocks onto a page, flip the global configuration, preview at any width, then send the page to Claude, ChatGPT, Cursor or any agent.">
+<link rel="canonical" href="https://firehorse.rascode.dev/playground.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:wght@500;600&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300..700&display=swap">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="firehorse.css">
+<link rel="stylesheet" href="themes/rascode.css">
+<link rel="stylesheet" href="themes.css">
+<script>try{var t=localStorage.getItem("fh-theme");if(t!==null)t?document.documentElement.setAttribute("data-fh-theme",t):document.documentElement.removeAttribute("data-fh-theme")}catch(e){}</script>
+<link rel="stylesheet" href="icons.css">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="playground.css">
+</head>
+<body class="pg">
+<a class="fh-skip" href="#pg-canvas">Skip to canvas</a>
+
+<header class="pg-bar" data-tone="lime">
+  <a class="site-mark" href="index.html" aria-label="Back to Firehorse"><span class="site-mark__bar">_</span>firehorse<span class="site-mark__sub">playground</span></a>
+  <div class="fh-select-wrap pg-preset"><label class="fh-sr-only" for="pg-preset">Start from a preset</label>
+    <select class="fh-select" id="pg-preset"><option value="">Start from a preset…</option></select></div>
+  <fieldset class="fh-segmented fh-segmented--sm pg-widths" aria-label="Preview width">
+    <label><input type="radio" name="pg-width" value="390"> <i class="fh-icon fh-icon--smartphone" aria-hidden="true"></i> 390</label>
+    <label><input type="radio" name="pg-width" value="768"> <i class="fh-icon fh-icon--monitor" aria-hidden="true"></i> 768</label>
+    <label><input type="radio" name="pg-width" value="1280" checked> 1280</label>
+    <label><input type="radio" name="pg-width" value="fluid"> Fluid</label>
+  </fieldset>
+  <fieldset class="fh-segmented fh-segmented--sm" aria-label="Scheme">
+    <label><input type="radio" name="pg-scheme" value="dark" checked> Dark</label>
+    <label><input type="radio" name="pg-scheme" value="light"> Light</label>
+  </fieldset>
+  <span class="pg-bar__spacer"></span>
+  <select class="fh-select site-theme-select" id="pg-theme" data-fh-theme-select aria-label="Theme"><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select>
+  <button class="fh-dt__tool" type="button" data-pg="clear"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i><span>Clear</span></button>
+  <button class="fh-dt__tool" type="button" data-pg="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i><span>Copy HTML</span></button>
+  <button class="fh-dt__tool" type="button" data-pg="download"><i class="fh-icon fh-icon--download" aria-hidden="true"></i><span>Download</span></button>
+  <span class="site-agents site-agents--sm" data-agent-menu="manual" id="pg-agents"></span>
+</header>
+
+<div class="pg-app">
+  <aside class="pg-library" aria-label="Block library">
+    <label class="fh-search"><span class="fh-sr-only">Search blocks</span><input type="search" placeholder="Search blocks" id="pg-search"></label>
+    <p class="site-note" style="margin:0">Drag a block onto the page, or click to add it at the end.</p>
+    <div id="pg-blocks"></div>
+  </aside>
+
+  <main class="pg-stage" id="pg-canvas" tabindex="-1">
+    <div class="pg-frame" id="pg-frame">
+      <div class="fh-page pg-page" id="pg-page"></div>
+      <div class="pg-empty" id="pg-empty">
+        <span class="fh-icon-tile fh-icon-tile--solid" data-tone="lime" style="--fh-icon-tile:3rem"><i class="fh-icon fh-icon--mouse-pointer-click" aria-hidden="true"></i></span>
+        <h2 class="fh-subheading">Drop blocks here</h2>
+        <p class="fh-muted">Or pick a preset above. Everything you place is plain Firehorse markup.</p>
+        <div class="fh-chips fh-chips--wrap fh-chips--indexed" id="pg-preset-chips" style="justify-content:center"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="fh-toaster" role="region" aria-label="Notifications" id="toaster"></div>
+<script type="module" src="firehorse.js"></script>
+<script type="module" src="playground.js"></script>
+</body>
+</html>

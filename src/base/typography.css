@@ -1,0 +1,202 @@
+/*
+ * Firehorse — typography roles
+ * Text classes map to roles, not sizes. Fluid roles scale with the
+ * nearest container (see --fh-text-* in primitives.css).
+ */
+
+@layer fh.base {
+  .fh-display,
+  .fh-title,
+  .fh-heading,
+  .fh-subheading {
+    margin: 0;
+    font-family: var(--fh-font-display);
+    color: var(--fh-color-text);
+    text-wrap: balance;
+  }
+
+  /* Home / campaign headline */
+  .fh-display {
+    max-inline-size: 18ch;
+    font-size: var(--fh-text-display);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-tight);
+    letter-spacing: var(--fh-tracking-tight);
+  }
+
+  /* Page title (one per page) */
+  .fh-title {
+    max-inline-size: var(--fh-measure-title);
+    font-size: var(--fh-text-h1);
+    font-weight: var(--fh-weight-bold);
+    line-height: var(--fh-leading-tight);
+    letter-spacing: var(--fh-tracking-tight);
+  }
+
+  /* Section title */
+  .fh-heading {
+    max-inline-size: var(--fh-measure-title);
+    font-size: var(--fh-text-h2);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-snug);
+    letter-spacing: var(--fh-tracking-snug);
+  }
+
+  /* Card / block title */
+  .fh-subheading {
+    font-size: var(--fh-text-h4);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-heading);
+    letter-spacing: var(--fh-tracking-heading);
+  }
+
+  .fh-lede {
+    margin: 0;
+    max-inline-size: var(--fh-measure);
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-regular);
+    line-height: var(--fh-leading-relaxed);
+    color: var(--fh-color-text-muted);
+    text-wrap: pretty;
+  }
+
+  .fh-body {
+    font-size: var(--fh-text-body);
+    line-height: var(--fh-leading-relaxed);
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-small {
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+  }
+
+  /* Mono uppercase chrome: eyebrows, labels, meta, indices */
+  .fh-label,
+  .fh-eyebrow {
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    line-height: var(--fh-leading-snug);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-eyebrow {
+    font-size: var(--fh-text-caption);
+    letter-spacing: var(--fh-tracking-caps);
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-mono {
+    font-family: var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-mono);
+  }
+
+  .fh-index {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    color: var(--fh-color-text-ghost);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-price {
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: clamp(1.45rem, 1.1rem + 1.6cqi, 1.75rem);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: var(--fh-tracking-mono);
+    line-height: var(--fh-leading-heading);
+    font-variant-numeric: tabular-nums;
+    color: var(--fh-color-text);
+  }
+
+  .fh-signature {
+    font-family: var(--fh-font-script);
+    font-size: clamp(2rem, 1.4rem + 2.5cqi, 2.75rem);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-tight);
+    letter-spacing: 0.01em;
+  }
+
+  .fh-muted {
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-subtle {
+    color: var(--fh-color-text-subtle);
+  }
+
+  /* Long-form reading (articles, legal, docs) */
+  .fh-prose {
+    max-inline-size: 42rem;
+    font-size: var(--fh-text-lede);
+    line-height: 1.7;
+    color: var(--fh-color-text-muted);
+
+    & > * + * {
+      margin-block-start: 1.15em;
+    }
+
+    & :is(h2, h3, h4) {
+      color: var(--fh-color-text);
+      margin-block-start: 2em;
+    }
+
+    & h2 {
+      font-size: var(--fh-text-h3);
+    }
+
+    & h3 {
+      font-size: var(--fh-text-h4);
+    }
+
+    & :is(h2, h3, h4) + * {
+      margin-block-start: 0.65em;
+    }
+
+    & strong {
+      color: var(--fh-color-text);
+    }
+
+    & a {
+      color: var(--fh-color-text);
+      text-decoration-line: underline;
+      text-underline-offset: 0.18em;
+      text-decoration-color: var(--fh-color-etch);
+    }
+
+    & :is(ul, ol) {
+      padding-inline-start: 1.25em;
+    }
+
+    & li + li {
+      margin-block-start: 0.4em;
+    }
+
+    & blockquote {
+      padding-inline-start: var(--fh-space-5);
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      color: var(--fh-color-text);
+    }
+
+    & :not(pre) > code {
+      padding: 0.1em 0.35em;
+      border-radius: var(--fh-radius-sm);
+      background: var(--fh-color-surface-raised);
+      color: var(--fh-color-text);
+    }
+
+    & pre {
+      padding: var(--fh-space-4);
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-radius: var(--fh-radius-md);
+      overflow-x: auto;
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-normal);
+    }
+  }
+}

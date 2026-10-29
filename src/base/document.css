@@ -1,0 +1,160 @@
+/*
+ * Firehorse — document defaults
+ * Element-level styling only (no classes). Everything here is
+ * overridable from unlayered author CSS.
+ */
+
+@layer fh.base {
+  /* A painted surface: its text and tones are computed from this color
+   * (see tokens/adaptive.css). */
+  [data-fh-surface] {
+    background-color: var(--fh-color-bg);
+    color: var(--fh-color-text);
+  }
+
+  html {
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-color-text);
+    accent-color: var(--fh-color-accent);
+    scrollbar-gutter: stable;
+    scroll-padding-block-start: calc(var(--fh-header-height) + var(--fh-space-4));
+    hanging-punctuation: first allow-end last;
+  }
+
+  /* Anchors clear the sticky chrome: header, plus the floating bar when
+   * the page has one. A section lands with its heading just under the
+   * chrome, not its top padding (the negative margin cancels it). */
+  html:has(.fh-dock) {
+    scroll-padding-block-start: calc(var(--fh-header-height) + var(--fh-dock-height) + var(--fh-space-4));
+  }
+  .fh-section[id] {
+    scroll-margin-block-start: calc(var(--fh-section-space) * -1 + var(--fh-space-2));
+  }
+  .fh-section--flush[id],
+  .fh-section--tight[id] {
+    scroll-margin-block-start: 0;
+  }
+
+  body {
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
+    line-height: var(--fh-leading-relaxed);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-snug);
+    line-height: var(--fh-leading-snug);
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  a:not([class]) {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
+    transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--fh-font-mono);
+    font-size: 0.92em;
+    letter-spacing: var(--fh-tracking-none);
+  }
+
+  hr {
+    border: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  strong,
+  b {
+    font-weight: var(--fh-weight-bold);
+  }
+
+  ::selection {
+    background-color: var(--fh-color-selection);
+  }
+
+  ::placeholder {
+    color: var(--fh-color-text-placeholder);
+    opacity: 1;
+  }
+
+  /* One focus treatment, everywhere. Components may tune the offset. */
+  :focus-visible {
+    outline: var(--fh-focus-width) solid var(--fh-color-focus);
+    outline-offset: var(--fh-focus-offset);
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* —— Motion safety ——
+   * Firehorse treats motion as an enhancement: every animation in the
+   * system is either gated on `no-preference` or neutralised here. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* —— Windows High Contrast / forced colors —— */
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  /* —— Print: ink on paper, no chrome —— */
+  @media print {
+    html {
+      color-scheme: light;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    a[href^="http"]::after {
+      content: " (" attr(href) ")";
+      font-size: 0.85em;
+    }
+  }
+}

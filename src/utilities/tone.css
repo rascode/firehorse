@@ -1,0 +1,37 @@
+/*
+ * Firehorse — tones
+ * ---------------------------------------------------------------
+ * One mechanism for every category color in the system.
+ * Set `data-tone` on any element; everything inside that reads
+ * `var(--fh-tone)` (dots, marks, card meta, action links, tone
+ * edges) picks it up. Tones are scheme-aware: 400-weight hues on
+ * dark, 700-weight hues on light, all ≥ 4.5:1 on the canvas.
+ *
+ *   <article class="fh-card" data-tone="teal">…</article>
+ *
+ * Available: neutral sky lime orange teal fuchsia violet rose amber
+ * accent. Map product categories to tones in your app, not in CSS.
+ */
+
+@layer fh.utilities {
+  :root {
+    --fh-tone: var(--fh-tone-neutral);
+  }
+
+  [data-tone="neutral"] { --fh-tone: var(--fh-tone-neutral); }
+  [data-tone="sky"] { --fh-tone: var(--fh-tone-sky); }
+  [data-tone="lime"] { --fh-tone: var(--fh-tone-lime); }
+  [data-tone="orange"] { --fh-tone: var(--fh-tone-orange); }
+  [data-tone="teal"] { --fh-tone: var(--fh-tone-teal); }
+  [data-tone="fuchsia"] { --fh-tone: var(--fh-tone-fuchsia); }
+  [data-tone="violet"] { --fh-tone: var(--fh-tone-violet); }
+  [data-tone="rose"] { --fh-tone: var(--fh-tone-rose); }
+  [data-tone="amber"] { --fh-tone: var(--fh-tone-amber); }
+  [data-tone="accent"] { --fh-tone: var(--fh-tone-accent); }
+  [data-tone="live"] { --fh-tone: var(--fh-color-live); }
+  [data-tone="danger"] { --fh-tone: var(--fh-color-danger); }
+
+  .fh-tone-text {
+    color: var(--fh-tone);
+  }
+}

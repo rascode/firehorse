@@ -1,0 +1,21 @@
+/*
+ * Firehorse theme — Rascode (rascode.dev)
+ * ---------------------------------------------------------------
+ * The reference brand theme. Firehorse core ships brand-neutral
+ * (system fonts); this file adds Rascode's type. Load the fonts
+ * yourself (e.g. next/font) and expose them as the variables below,
+ * or let the fallbacks resolve to locally installed copies.
+ *
+ *   --font-rascode-sans       Inter
+ *   --font-rascode-mono       Geist Mono
+ *   --font-rascode-signature  Caveat
+ */
+
+@layer fh.themes {
+  :root,
+  [data-fh-theme="rascode"] {
+    --fh-font-sans: var(--font-rascode-sans, "Inter"), ui-sans-serif, system-ui, sans-serif;
+    --fh-font-mono: var(--font-rascode-mono, "Geist Mono"), ui-monospace, "SF Mono", monospace;
+    --fh-font-script: var(--font-rascode-signature, "Caveat"), "Segoe Script", cursive;
+  }
+}

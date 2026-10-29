@@ -1,0 +1,463 @@
+/*
+ * Firehorse — disclosure: accordion, tabs, dialog, popover menu, toast
+ * ---------------------------------------------------------------
+ * Built on native elements (<details>, <dialog>, [popover]) so
+ * they work without JavaScript and get keyboard + a11y behavior from
+ * the browser. Open/close transitions use @starting-style and
+ * ::details-content where supported, and degrade to instant.
+ */
+
+@layer fh.components {
+  /* —— Accordion ——
+   * One rounded, etched shell with dashed row rules (iOS cell group).
+   *   <div class="fh-accordion">
+   *     <details name="faq"><summary>Question?</summary><div>Answer</div></details>
+   *   </div>
+   * Use the same `name` on each <details> for exclusive open. */
+  .fh-accordion {
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-lg);
+    overflow: hidden;
+
+    & > details + details {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    & summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-space-5);
+      padding: var(--fh-space-5) clamp(var(--fh-space-4), 3cqi, var(--fh-space-6));
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-body);
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+      line-height: var(--fh-leading-normal);
+      list-style: none;
+      cursor: pointer;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      /* plus → × */
+      &::after {
+        content: "";
+        flex: none;
+        inline-size: 1.9rem;
+        aspect-ratio: 1;
+        border: var(--fh-border-thick) solid color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+        border-radius: var(--fh-radius-pill);
+        background:
+          linear-gradient(currentColor, currentColor) center / 0.75rem 1.5px no-repeat,
+          linear-gradient(currentColor, currentColor) center / 1.5px 0.75rem no-repeat;
+        transition:
+          rotate var(--fh-duration-base) var(--fh-ease-standard),
+          border-color var(--fh-duration-fast) var(--fh-ease-standard);
+      }
+
+      &:focus-visible {
+        outline-offset: -2px;
+      }
+    }
+
+    & details[open] > summary::after {
+      rotate: 45deg;
+      border-color: color-mix(in oklab, var(--fh-color-text) 45%, transparent);
+    }
+
+    & details > :not(summary) {
+      padding: 0 clamp(var(--fh-space-4), 3cqi, var(--fh-space-6)) var(--fh-space-6);
+      max-inline-size: var(--fh-measure);
+      color: var(--fh-color-text-muted);
+      line-height: var(--fh-leading-relaxed);
+    }
+
+    /* Smooth height where the browser supports it. */
+    & details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size var(--fh-duration-base) var(--fh-ease-out),
+        content-visibility var(--fh-duration-base) allow-discrete;
+    }
+
+    & details[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+  /* —— Tabs ——
+   * Underline tabs. Works with role="tablist" buttons, or as a nav of
+   * links with aria-current. Scrolls horizontally when it overflows.
+   *   <div class="fh-tabs" role="tablist">
+   *     <button role="tab" aria-selected="true">Overview</button> …
+   */
+  .fh-tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+
+    & > :is(button, a) {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      flex: none;
+      padding: 0.7rem var(--fh-space-4);
+      border: 0;
+      background: none;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-book);
+      line-height: var(--fh-leading-snug);
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: inset 0 -2px 0 transparent;
+      transition:
+        color var(--fh-duration-fast) var(--fh-ease-standard),
+        box-shadow var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+
+      &:is([aria-selected="true"], [aria-current="page"]) {
+        color: var(--fh-color-text);
+        box-shadow: inset 0 -2px 0 var(--fh-color-text);
+      }
+
+      &:focus-visible {
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  .fh-tabs--mono > :is(button, a) {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  /* —— Dialog ——
+   *   <dialog class="fh-dialog"><form method="dialog">…</form></dialog>
+   */
+  .fh-dialog {
+    inline-size: min(100% - 2 * var(--fh-page-margin), var(--fh-dialog-size, 32rem));
+    max-block-size: min(100dvh - 2 * var(--fh-space-8), 48rem);
+    margin: auto;
+    padding: 0;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, transparent);
+    color: var(--fh-color-text);
+    box-shadow: var(--fh-shadow-overlay);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    container: fh-dialog / inline-size;
+    opacity: 0;
+    translate: 0 0.5rem;
+    transition:
+      opacity var(--fh-duration-base) var(--fh-ease-out),
+      translate var(--fh-duration-base) var(--fh-ease-out),
+      overlay var(--fh-duration-base) allow-discrete,
+      display var(--fh-duration-base) allow-discrete;
+
+    &[open] {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 0.5rem;
+      }
+    }
+
+    &::backdrop {
+      background-color: transparent;
+      transition:
+        background-color var(--fh-duration-base) var(--fh-ease-standard),
+        overlay var(--fh-duration-base) allow-discrete,
+        display var(--fh-duration-base) allow-discrete;
+    }
+
+    &[open]::backdrop {
+      background-color: var(--fh-color-scrim);
+
+      @starting-style {
+        background-color: transparent;
+      }
+    }
+  }
+
+  /* Sheet: the dialog slides in from the inline end, full height.
+   *   <dialog class="fh-dialog fh-dialog--sheet">… */
+  .fh-dialog--sheet {
+    inline-size: min(100%, var(--fh-dialog-size, 28rem));
+    max-inline-size: 100%;
+    block-size: 100dvh;
+    max-block-size: none;
+    margin: 0 0 0 auto;
+    border-block: 0;
+    border-inline-end: 0;
+    border-radius: 0;
+    translate: 100% 0;
+
+    &[open] {
+      translate: 0 0;
+
+      @starting-style {
+        translate: 100% 0;
+      }
+    }
+
+    &:dir(rtl) {
+      margin: 0 auto 0 0;
+    }
+  }
+
+  /* Bottom sheet for phones and compact panels. */
+  .fh-dialog--bottom {
+    inline-size: 100%;
+    max-inline-size: 40rem;
+    margin: auto auto 0;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+    translate: 0 100%;
+
+    &[open] {
+      translate: 0 0;
+
+      @starting-style {
+        translate: 0 100%;
+      }
+    }
+  }
+
+  .fh-dialog__header,
+  .fh-dialog__body,
+  .fh-dialog__footer {
+    padding: var(--fh-space-5) clamp(var(--fh-space-5), 5cqi, var(--fh-space-7));
+  }
+
+  .fh-dialog__header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--fh-space-4);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  }
+
+  .fh-dialog__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--fh-space-3);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  }
+
+  /* Close button: an × in a quiet square. */
+  .fh-close {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-muted);
+
+    &::before {
+      content: "";
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-close) center / contain no-repeat;
+    }
+
+    &:hover {
+      color: var(--fh-color-text);
+      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+    }
+  }
+
+  /* —— Menu (popover) ——
+   *   <button popovertarget="m1">Options</button>
+   *   <div id="m1" popover class="fh-menu">
+   *     <a href="…">Item</a> <button>Item</button>
+   *   </div>
+   * Positioned with CSS anchor positioning where supported; centered
+   * near the top of the viewport otherwise. */
+  .fh-menu {
+    min-inline-size: 13rem;
+    max-block-size: min(22rem, 60dvh);
+    margin: 0;
+    padding: var(--fh-space-1-5);
+    overflow: auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-sm);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+    color: var(--fh-color-text);
+    box-shadow: var(--fh-shadow-menu);
+    opacity: 0;
+    translate: 0 -0.25rem;
+    transition:
+      opacity var(--fh-duration-fast) var(--fh-ease-out),
+      translate var(--fh-duration-fast) var(--fh-ease-out),
+      overlay var(--fh-duration-fast) allow-discrete,
+      display var(--fh-duration-fast) allow-discrete;
+
+    &:popover-open {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
+    }
+
+    & > :is(a, button) {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-3);
+      inline-size: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 0;
+      border-radius: calc(var(--fh-radius-sm) - 1px);
+      background: none;
+      color: inherit;
+      font-size: var(--fh-text-small);
+      text-align: start;
+      text-decoration: none;
+
+      &:is(:hover, :focus-visible) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+        outline: none;
+      }
+    }
+
+    & > hr {
+      margin-block: var(--fh-space-1-5);
+    }
+  }
+
+  @supports (position-area: bottom) {
+    .fh-menu {
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline;
+      margin-block-start: var(--fh-space-1-5);
+    }
+  }
+
+  /* —— Toast ——
+   * Stack them inside `.fh-toaster` (fixed, bottom-end).
+   *   <div class="fh-toaster" role="region" aria-label="Notifications">
+   *     <div class="fh-toast" data-tone="success" role="status">
+   *       <p>Saved.</p><button class="fh-close" aria-label="Dismiss"></button>
+   *     </div>
+   *   </div>  */
+  .fh-toaster {
+    position: fixed;
+    z-index: var(--fh-z-toast);
+    inset-block-end: var(--fh-space-5);
+    inset-inline-end: var(--fh-space-5);
+    display: grid;
+    gap: var(--fh-space-3);
+    inline-size: min(100% - 2 * var(--fh-space-5), 24rem);
+    pointer-events: none;
+  }
+
+  .fh-toast {
+    --_edge: var(--fh-color-border-strong);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--fh-space-3);
+    align-items: start;
+    padding: 0.9rem 0.95rem;
+    border: var(--fh-border-thin) solid var(--_edge);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+    box-shadow: var(--fh-shadow-overlay);
+    pointer-events: auto;
+    transition:
+      opacity var(--fh-duration-base) var(--fh-ease-out),
+      translate var(--fh-duration-base) var(--fh-ease-out);
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 0.75rem;
+    }
+
+    & .fh-close {
+      inline-size: 1.5rem;
+      margin: -0.2rem -0.3rem 0 0;
+    }
+
+    &[data-tone="success"] {
+      --_edge: color-mix(in oklab, var(--fh-color-success) 45%, var(--fh-color-border-strong));
+    }
+
+    &[data-tone="danger"] {
+      --_edge: color-mix(in oklab, var(--fh-color-danger) 55%, var(--fh-color-border-strong));
+    }
+  }
+
+  /* —— Sheet ——
+   * A dialog that slides in from the inline end (or the bottom, on
+   * narrow screens, with fh-dialog--sheet-bottom). Same markup as
+   * fh-dialog.
+   *   <dialog class="fh-dialog fh-dialog--sheet">…</dialog> */
+  .fh-dialog--sheet {
+    inline-size: min(100%, var(--fh-dialog-size, 28rem));
+    max-inline-size: 100%;
+    block-size: 100dvh;
+    max-block-size: 100dvh;
+    margin: 0 0 0 auto;
+    border-block: 0;
+    border-inline-end: 0;
+    border-radius: 0;
+    translate: 2rem 0;
+
+    &[open] {
+      translate: 0 0;
+
+      @starting-style {
+        translate: 2rem 0;
+      }
+    }
+
+    &:dir(rtl) {
+      margin: 0 auto 0 0;
+    }
+  }
+
+  .fh-dialog--sheet-bottom {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    block-size: auto;
+    max-block-size: 85dvh;
+    margin: auto 0 0;
+    border-inline: 0;
+    border-block-end: 0;
+    border-radius: var(--fh-radius-lg) var(--fh-radius-lg) 0 0;
+    translate: 0 2rem;
+
+    &[open] {
+      translate: 0 0;
+
+      @starting-style {
+        translate: 0 2rem;
+      }
+    }
+  }
+}

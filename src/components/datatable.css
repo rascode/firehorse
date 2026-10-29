@@ -1,0 +1,707 @@
+/*
+ * Firehorse — datatable
+ * ---------------------------------------------------------------
+ * A database-style table: toolbar, filter chips, sticky header and
+ * primary column, typed cells, groups, a summary row, a bulk-action
+ * bar and three views (grid, gallery, board). The markup works on its
+ * own; dist/datatable.js renders it from a JSON field definition and
+ * adds search, filters, sorting, grouping, field visibility, column
+ * resizing, selection and drag-between-columns.
+ *
+ *   <div class="fh-dt" data-view="grid" data-density="comfortable">
+ *     <div class="fh-dt__toolbar">…</div>
+ *     <div class="fh-dt__filters">…</div>
+ *     <div class="fh-dt__scroll"><table class="fh-dt__table">…</table></div>
+ *     <div class="fh-dt__footer">…</div>
+ *   </div>
+ *
+ * Cells: <td class="fh-cell fh-cell--{type}">. Types: text, long,
+ * number, currency, percent, progress, select, multi, status, date,
+ * check, rating, user, users, url, email, phone, link, attachment,
+ * formula, sparkline, tags.
+ */
+
+@layer fh.components {
+  .fh-dt {
+    --_row: var(--fh-dt-row, 2.75rem);
+    --_pad: var(--fh-dt-pad, var(--fh-space-3));
+    --_rule: var(--fh-table-rule, var(--fh-color-rule));
+    --_zebra: var(--fh-table-zebra, transparent);
+    --_head: var(--fh-color-surface-raised);
+    --_ctl: var(--fh-dt-control, 1.875rem);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    min-inline-size: 0;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    container: fh-dt / inline-size;
+    font-size: var(--fh-text-small);
+    font-variant-numeric: tabular-nums;
+    overflow: clip;
+  }
+
+  .fh-dt[data-density="compact"] { --_row: 2.1rem; --_pad: var(--fh-space-2); }
+  .fh-dt[data-density="spacious"] { --_row: 3.5rem; --_pad: var(--fh-space-4); }
+
+  /* —— Toolbar —— */
+  /* One quiet row: identity (title · count · views) on the left, tools on
+   * the right. Every control shares one height (--fh-dt-control). */
+  .fh-dt__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-2) var(--fh-space-3);
+    padding: var(--fh-space-2-5) var(--fh-space-3);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-dt__tools {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  /* Toolbar segmented controls: square-shouldered, sans, no white fill. */
+  .fh-dt__toolbar .fh-segmented {
+    flex-direction: row;
+    gap: 0;
+    padding: 2px;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-sm);
+
+    & > label {
+      min-block-size: calc(var(--_ctl) - 6px);
+      padding: 0 var(--fh-space-2);
+      border-radius: calc(var(--fh-radius-sm) - 2px);
+      font-family: var(--fh-font-sans);
+      font-size: var(--fh-text-caption);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-body);
+      text-transform: none;
+
+      & .fh-icon { font-size: 0.9em; opacity: 0.8; }
+    }
+    & > label:has(:checked) {
+      background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+      color: var(--fh-color-text);
+    }
+  }
+  .fh-dt__density > label { min-inline-size: 1.6rem; font-family: var(--fh-font-mono); }
+
+  .fh-dt__title {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin: 0;
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-heading);
+    white-space: nowrap;
+  }
+
+  .fh-dt__count {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    white-space: nowrap;
+  }
+
+  .fh-dt__spacer { flex: 1; }
+
+  .fh-dt .fh-dt__search {
+    flex: 0 1 12rem;
+    min-inline-size: 7rem;
+    min-block-size: var(--_ctl);
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: transparent;
+    font-size: var(--fh-text-small);
+    transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    block-size: var(--_ctl);
+    &:focus-within { border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent); }
+    & input { block-size: 100%; padding-block: 0; font-size: inherit; }
+  }
+
+  /* Narrow: title and count, then views, then a full-width search, then tools. */
+  @container fh-dt (inline-size < 36rem) {
+    .fh-dt__toolbar { gap: var(--fh-space-2); }
+    .fh-dt__count { flex: 1; text-align: end; }
+    .fh-dt__spacer { display: none; }
+    .fh-dt__views { flex: 1 1 100%; }
+    .fh-dt .fh-dt__search { flex: 1 1 100%; order: 1; }
+    .fh-dt__tools, .fh-dt__density, .fh-dt__tool--action { order: 2; }
+    .fh-dt__tool--action { margin-inline-start: auto; }
+  }
+
+  /* Toolbar tool: a quiet button with an icon, label and optional count. */
+  .fh-dt__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    min-block-size: var(--_ctl);
+    padding: 0 var(--fh-space-2);
+    border: var(--fh-border-thin) solid transparent;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-muted);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); color: var(--fh-color-text); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
+    &:disabled { opacity: 0.4; cursor: default; background: none; }
+    & > .fh-icon { font-size: 0.95em; }
+    &[aria-pressed="true"],
+    &[data-active] {
+      background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent);
+      color: var(--fh-color-text);
+
+      & > .fh-icon { color: var(--fh-tone); }
+    }
+
+    /* Active count: a mono figure in the tone, no filled bubble. */
+    & b {
+      color: var(--fh-tone);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+    }
+  }
+
+  /* Primary action: an etched tone outline at control height. */
+  .fh-dt__tool--action {
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    color: var(--fh-color-text);
+
+    & > .fh-icon { color: var(--fh-tone); }
+    &:hover { border-style: solid; background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent); }
+  }
+
+  /* —— Popover panels (filter, sort, group, fields) —— */
+  .fh-dt__panel {
+    inline-size: min(26rem, calc(100vw - 2rem));
+    max-block-size: min(28rem, 70vh);
+    margin: 0;
+    padding: var(--fh-space-3);
+    overflow: auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: var(--fh-shadow-menu);
+
+    &:popover-open { display: grid; gap: var(--fh-space-2); }
+
+    & h3 {
+      margin: 0 0 var(--fh-space-1);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  @supports (position-area: bottom) {
+    .fh-dt__panel {
+      position-area: bottom span-right;
+      position-try-fallbacks: flip-inline, flip-block;
+      margin-block-start: var(--fh-space-1);
+    }
+  }
+
+  .fh-dt__rule {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
+    gap: var(--fh-space-1-5);
+    align-items: center;
+
+    & :is(select, input) { min-block-size: 2rem; padding-block: 0.25rem; font-size: var(--fh-text-small); }
+  }
+
+  .fh-dt__field-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-1) var(--fh-space-1);
+    border-radius: var(--fh-radius-sm);
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+    & > span { display: inline-flex; align-items: center; gap: var(--fh-space-2); }
+  }
+
+  /* —— Active filters —— */
+  .fh-dt__filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    padding: var(--fh-space-2) var(--fh-space-3);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    &:empty { display: none; }
+  }
+
+  /* —— Scroller —— */
+  .fh-dt__scroll {
+    position: relative;
+    min-inline-size: 0;
+    max-block-size: var(--fh-dt-height, 34rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .fh-dt__table {
+    inline-size: max-content;
+    min-inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+
+    & :is(th, td) {
+      block-size: var(--_row);
+      padding: 0 var(--_pad);
+      border-block-end: var(--fh-border-thin) solid var(--_rule);
+      border-inline-end: var(--fh-border-thin) solid color-mix(in oklab, var(--_rule) 70%, transparent);
+      text-align: start;
+      vertical-align: middle;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & thead th {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 3;
+      /* Firehorse label voice: mono, uppercase, tracked, subtle. */
+      block-size: 2.25rem;
+      border-block-end-color: var(--fh-color-border-strong);
+      background-color: var(--_head);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      overflow: visible;
+    }
+
+    & tbody tr:nth-child(even of :not(.fh-dt__group)) > td { background-color: var(--_zebra); }
+    & tbody tr:not(.fh-dt__group) { cursor: default; }
+    & tbody tr:not(.fh-dt__group):hover > :is(td, th) { background-color: color-mix(in oklab, var(--fh-color-text) 4%, var(--fh-color-surface)); }
+    & tbody tr[aria-selected="true"] > :is(td, th) { background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--fh-color-surface)); }
+    & tbody tr:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: calc(var(--fh-focus-width) * -1); }
+
+    /* Sticky leading columns: selection + primary field. */
+    & [data-sticky] {
+      position: sticky;
+      z-index: 2;
+      background-color: var(--fh-color-surface);
+    }
+    & thead [data-sticky] { z-index: 4; background-color: var(--_head); }
+    & [data-sticky="select"] { inset-inline-start: 0; inline-size: 2.6rem; padding-inline: 0; text-align: center; }
+    & [data-sticky="primary"] {
+      inset-inline-start: var(--fh-dt-primary-offset, 2.6rem);
+      box-shadow: 1px 0 0 var(--_rule), 8px 0 12px -10px var(--fh-color-scrim);
+      font-weight: var(--fh-weight-medium);
+    }
+
+    & tfoot td {
+      position: sticky;
+      inset-block-end: 0;
+      z-index: 2;
+      border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-block-end: 0;
+      background-color: var(--_head);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+    & tfoot td b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+
+  /* —— Header cell —— */
+  .fh-dt__th {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); font-size: 1.05em; opacity: 0.75; }
+    & > span { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Sort indicator from aria-sort on the <th>. */
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast), rotate var(--fh-duration-fast);
+    }
+    &:hover::after { opacity: 0.4; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+  th[aria-sort="ascending"] .fh-dt__th::after { opacity: 1; rotate: 180deg; color: var(--fh-tone); }
+  th[aria-sort="descending"] .fh-dt__th::after { opacity: 1; color: var(--fh-tone); }
+  th[aria-sort] { color: var(--fh-color-text); }
+
+  .fh-dt__sort-rank {
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.62rem;
+  }
+
+  /* Column resize handle. */
+  .fh-dt__resize {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: -4px;
+    z-index: 5;
+    inline-size: 8px;
+    cursor: col-resize;
+    touch-action: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 25%;
+      inset-inline-start: 3px;
+      inline-size: 2px;
+      border-radius: 1px;
+      background-color: var(--fh-tone);
+      opacity: 0;
+    }
+    &:hover::after,
+    &[data-dragging]::after { opacity: 1; }
+  }
+
+  /* —— Group rows —— */
+  .fh-dt__group > td {
+    position: sticky;
+    inset-inline-start: 0;
+    background-color: color-mix(in oklab, var(--fh-tone) 7%, var(--fh-color-surface));
+    font-weight: var(--fh-weight-medium);
+  }
+  .fh-dt__group-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      transition: rotate var(--fh-duration-fast);
+    }
+    &[aria-expanded="false"]::before { rotate: -90deg; }
+  }
+  .fh-dt__group-meta {
+    margin-inline-start: var(--fh-space-3);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-regular, 400);
+    letter-spacing: var(--fh-tracking-wide);
+  }
+
+  /* —— Footer, pagination —— */
+  .fh-dt__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-2) var(--fh-space-3);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-small);
+  }
+
+  /* —— Bulk actions: floats over the table when rows are selected —— */
+  .fh-dt__bulk {
+    position: sticky;
+    inset-block-end: var(--fh-space-3);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    inline-size: max-content;
+    max-inline-size: calc(100% - 2 * var(--fh-space-3));
+    margin: calc(var(--fh-space-12) * -1) auto var(--fh-space-3);
+    padding: var(--fh-space-1-5) var(--fh-space-1-5) var(--fh-space-1-5) var(--fh-space-4);
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-pill);
+    background-color: var(--fh-color-surface-raised);
+    box-shadow: var(--fh-shadow-overlay);
+    translate: 0 0;
+    opacity: 1;
+    transition: translate var(--fh-duration-base) var(--fh-ease-out), opacity var(--fh-duration-base), display var(--fh-duration-base) allow-discrete;
+
+    &[hidden] { display: none; translate: 0 1rem; opacity: 0; }
+    @starting-style { translate: 0 1rem; opacity: 0; }
+
+    & > b { margin-inline-end: var(--fh-space-2); white-space: nowrap; }
+  }
+
+  /* —— Cells ——————————————————————————————————————————————— */
+  .fh-cell--number,
+  .fh-cell--currency,
+  .fh-cell--percent { text-align: end; font-family: var(--fh-font-mono); font-size: 0.82rem; }
+  .fh-cell--formula { font-family: var(--fh-font-mono); font-size: 0.8rem; color: var(--fh-color-text-muted); }
+  .fh-cell--long { white-space: normal; }
+  .fh-cell--long > span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--fh-color-text-muted);
+    line-height: var(--fh-leading-snug);
+  }
+  .fh-cell--date time { color: var(--fh-color-text); }
+  .fh-cell--date small { margin-inline-start: var(--fh-space-1-5); color: var(--fh-color-text-subtle); font-size: 0.78em; }
+  .fh-cell--date[data-overdue] time { color: var(--fh-color-danger); }
+  .fh-cell--url a,
+  .fh-cell--email a,
+  .fh-cell--phone a { color: var(--fh-color-text); text-decoration: underline; text-decoration-color: color-mix(in oklab, currentColor 30%, transparent); text-underline-offset: 3px; }
+  .fh-cell--check { text-align: center; }
+
+  /* Pill used by select, multi-select, tags and linked records. */
+  .fh-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    max-inline-size: 100%;
+    padding: 0.12rem 0.5rem;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-tone) 16%, transparent);
+    color: var(--fh-color-text);
+    font-size: 0.78rem;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+  .fh-pill + .fh-pill { margin-inline-start: var(--fh-space-1); }
+  .fh-pill--link {
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone) 35%, transparent);
+    background: none;
+  }
+  .fh-pill--link::before {
+    content: "";
+    inline-size: 0.7rem;
+    aspect-ratio: 1;
+    background-color: var(--fh-tone);
+    mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+  }
+
+  /* Status: a tone dot and label. */
+  .fh-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    font-size: 0.82rem;
+
+    &::before {
+      content: "";
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 22%, transparent);
+    }
+  }
+
+  /* Progress / percent bar. */
+  .fh-cell__bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--fh-space-2);
+
+    & > i {
+      block-size: 0.35rem;
+      border-radius: var(--fh-radius-pill);
+      background:
+        linear-gradient(var(--fh-tone), var(--fh-tone)) 0 / calc(var(--v, 0) * 1%) 100% no-repeat,
+        color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    }
+    & > span { min-inline-size: 2.6rem; text-align: end; font-family: var(--fh-font-mono); font-size: 0.78rem; color: var(--fh-color-text-muted); }
+  }
+
+  /* Rating: five marks, filled up to --v. */
+  .fh-rating {
+    --_star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.3l-5.9 3.2 1.3-6.6-4.9-4.5 6.6-.8z'/%3E%3C/svg%3E");
+    display: inline-block;
+    inline-size: 5.5em;
+    block-size: 1.1em;
+    vertical-align: middle;
+    background:
+      linear-gradient(90deg, var(--fh-tone) calc(var(--v, 0) * 20%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
+    mask: var(--_star) 0 50% / 1.1em 1.1em repeat-x;
+    font-size: 0.85rem;
+  }
+
+  /* Attachments: tiny thumbnails. */
+  .fh-thumbs {
+    display: inline-flex;
+    gap: var(--fh-space-1);
+    vertical-align: middle;
+
+    & > * {
+      inline-size: 1.8rem;
+      block-size: 1.8rem;
+      border-radius: var(--fh-radius-sm);
+      border: var(--fh-border-thin) solid var(--fh-color-border);
+      object-fit: cover;
+      background: var(--fh-color-surface-sunken);
+    }
+    & > span { display: inline-grid; place-items: center; font-family: var(--fh-font-mono); font-size: 0.62rem; color: var(--fh-color-text-muted); }
+  }
+
+  .fh-sparkline {
+    display: inline-block;
+    inline-size: 5.5rem;
+    block-size: 1.4rem;
+    vertical-align: middle;
+    color: var(--fh-tone);
+    overflow: visible;
+  }
+
+  .fh-cell__user {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    --fh-avatar-size: 1.6rem;
+  }
+
+  /* —— Gallery view —— */
+  .fh-dt__gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--fh-space-3);
+    max-block-size: var(--fh-dt-height, 34rem);
+    padding: var(--fh-space-3);
+    overflow: auto;
+  }
+
+  .fh-dt__card {
+    display: grid;
+    gap: var(--fh-space-2);
+    align-content: start;
+    padding: var(--fh-space-3);
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-raised);
+    cursor: pointer;
+    transition: border-color var(--fh-duration-fast), translate var(--fh-duration-fast), box-shadow var(--fh-duration-fast);
+
+    &:hover { border-color: color-mix(in oklab, var(--fh-tone) 45%, transparent); translate: 0 -1px; box-shadow: var(--fh-shadow-raised); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+    &[aria-selected="true"] { border-color: var(--fh-tone); }
+
+    & h4 { margin: 0; font-size: var(--fh-text-body); font-weight: var(--fh-weight-medium); }
+    & dl { display: grid; gap: var(--fh-space-1-5); margin: 0; }
+    & dl > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: var(--fh-space-2); align-items: center; }
+    & dt { color: var(--fh-color-text-subtle); font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    & dd { margin: 0; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  }
+
+  .fh-dt__cover {
+    margin: calc(var(--fh-space-3) * -1) calc(var(--fh-space-3) * -1) var(--fh-space-1);
+    aspect-ratio: 16 / 7;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    background:
+      radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--fh-tone) 45%, transparent), transparent 60%),
+      radial-gradient(90% 100% at 100% 100%, color-mix(in oklab, var(--fh-tone) 25%, transparent), transparent 70%),
+      var(--fh-color-surface-sunken);
+  }
+
+  /* —— Board view —— */
+  .fh-dt__board {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(16rem, 1fr);
+    gap: var(--fh-space-3);
+    align-items: start;
+    max-block-size: var(--fh-dt-height, 34rem);
+    padding: var(--fh-space-3);
+    overflow: auto;
+  }
+
+  .fh-dt__lane {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--fh-space-2);
+    min-block-size: 12rem;
+    padding: var(--fh-space-2);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone) 7%, var(--fh-color-surface-raised));
+    transition: box-shadow var(--fh-duration-fast);
+
+    &[data-drop] { box-shadow: inset 0 0 0 2px var(--fh-tone); }
+
+    & > header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--fh-space-1) var(--fh-space-1);
+    }
+    & > div { display: grid; gap: var(--fh-space-2); align-content: start; }
+  }
+  .fh-dt__lane .fh-dt__card { cursor: grab; }
+  .fh-dt__lane .fh-dt__card[data-dragging] { opacity: 0.4; }
+
+  /* —— Empty + loading —— */
+  .fh-dt__empty {
+    display: grid;
+    place-items: center;
+    gap: var(--fh-space-2);
+    padding: var(--fh-space-12) var(--fh-space-4);
+    color: var(--fh-color-text-muted);
+    text-align: center;
+  }
+
+  /* Narrow slot: hide the toolbar labels, keep the icons. */
+  @container fh-dt (inline-size < 44rem) {
+    .fh-dt__tool > span { display: none; }
+    .fh-dt__search { flex: 1 1 10rem; }
+    .fh-dt__title { flex-basis: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dt__bulk,
+    .fh-dt__card { transition: none; }
+  }
+}

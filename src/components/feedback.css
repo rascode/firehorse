@@ -1,0 +1,359 @@
+/*
+ * Firehorse — feedback: alert, banner, progress, meter, ring,
+ * spinner, skeleton, empty state, tooltip
+ */
+
+@layer fh.components {
+  /* —— Alert / callout ——
+   *   <div class="fh-alert" data-tone="danger" role="alert">
+   *     <p class="fh-alert__title">Payment failed</p>
+   *     <p>Your card was declined. Update it to keep your agent on shift.</p>
+   *   </div>
+   * Tones: neutral (default), sky (info), live/lime (success),
+   * amber (warning), danger. */
+  .fh-alert {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: var(--fh-space-3);
+    row-gap: var(--fh-space-1);
+    align-items: start;
+    padding: var(--fh-space-4) var(--fh-space-5);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    border-inline-start: 3px solid var(--fh-tone);
+    border-radius: var(--fh-radius-sm);
+    background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+
+    /* status dot in the first column */
+    &::before {
+      content: "";
+      grid-row: 1 / span 2;
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      margin-block-start: 0.45em;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone);
+    }
+
+    & > :not(.fh-close, .fh-alert__actions) {
+      grid-column: 2;
+      margin: 0;
+    }
+
+    & > .fh-close {
+      grid-column: 3;
+      grid-row: 1;
+      inline-size: 1.5rem;
+      margin: -0.2rem -0.4rem 0 0;
+    }
+
+    & > .fh-alert__actions {
+      grid-column: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--fh-space-3);
+      margin-block-start: var(--fh-space-2);
+    }
+  }
+
+  .fh-alert__title {
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-semibold);
+  }
+
+  /* —— Banner: full-width announcement above the header —— */
+  .fh-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-2) var(--fh-space-4);
+    padding: var(--fh-space-2) var(--fh-page-margin);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    background-color: color-mix(in oklab, var(--fh-tone) 9%, var(--fh-color-canvas));
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-caption);
+    text-align: center;
+
+    & a {
+      color: var(--fh-tone);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  /* —— Progress (native <progress>) ——
+   *   <progress class="fh-progress" value="64" max="100">64%</progress> */
+  .fh-progress {
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    block-size: var(--fh-progress-size, 0.375rem);
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    color: var(--fh-tone);
+    accent-color: var(--fh-tone);
+
+    &::-webkit-progress-bar {
+      background: transparent;
+    }
+
+    &::-webkit-progress-value {
+      border-radius: inherit;
+      background-color: var(--fh-tone);
+      transition: inline-size var(--fh-duration-slow) var(--fh-ease-out);
+    }
+
+    &::-moz-progress-bar {
+      border-radius: inherit;
+      background-color: var(--fh-tone);
+    }
+
+    /* Indeterminate: a sweeping segment */
+    &:indeterminate {
+      background-image: linear-gradient(90deg, transparent, var(--fh-tone), transparent);
+      background-size: 40% 100%;
+      background-repeat: no-repeat;
+      animation: fh-sweep 1.4s var(--fh-ease-in-out) infinite;
+    }
+
+    &:indeterminate::-moz-progress-bar {
+      background: transparent;
+    }
+  }
+
+  @keyframes fh-sweep {
+    from { background-position: -40% 0; }
+    to { background-position: 140% 0; }
+  }
+
+  /* Labelled progress: label left, value right, bar below. */
+  .fh-progress-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--fh-space-2);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+
+    & > output,
+    & > .fh-progress-field__value {
+      color: var(--fh-color-text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & > .fh-progress {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* —— Meter (native <meter>): capacity, quota, score —— */
+  .fh-meter {
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    block-size: 0.5rem;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+
+    &::-webkit-meter-bar {
+      block-size: 0.5rem;
+      border: 0;
+      border-radius: var(--fh-radius-pill);
+      background: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    }
+
+    &::-webkit-meter-optimum-value { background: var(--fh-color-success); border-radius: inherit; }
+    &::-webkit-meter-suboptimum-value { background: var(--fh-color-warning); border-radius: inherit; }
+    &::-webkit-meter-even-less-good-value { background: var(--fh-color-danger); border-radius: inherit; }
+    &:-moz-meter-optimum::-moz-meter-bar { background: var(--fh-color-success); }
+    &:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--fh-color-warning); }
+    &:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--fh-color-danger); }
+  }
+
+  /* —— Ring: circular progress from one custom property ——
+   *   <div class="fh-ring" style="--fh-value: 72" role="img" aria-label="72% complete"><b>72%</b></div> */
+  @property --fh-value {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+
+  .fh-ring {
+    --_size: var(--fh-ring-size, 4.5rem);
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--_size);
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    background:
+      radial-gradient(closest-side, var(--fh-color-canvas) 78%, transparent 79%),
+      conic-gradient(var(--fh-tone) calc(var(--fh-value) * 1%), color-mix(in oklab, var(--fh-color-text) 10%, transparent) 0);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--_size) / 5);
+    font-weight: var(--fh-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--fh-color-text);
+    transition: --fh-value var(--fh-duration-slow) var(--fh-ease-out);
+  }
+
+  /* —— Spinner —— */
+  .fh-spinner {
+    display: inline-block;
+    inline-size: var(--fh-spinner-size, 1rem);
+    aspect-ratio: 1;
+    border: 2px solid color-mix(in oklab, currentColor 25%, transparent);
+    border-block-start-color: currentColor;
+    border-radius: var(--fh-radius-round);
+    animation: fh-spin 0.7s linear infinite;
+  }
+
+  /* —— Skeleton ——
+   *   <div class="fh-skeleton" style="--fh-lines: 3"></div>
+   *   <span class="fh-skeleton fh-skeleton--block" style="block-size: 8rem"></span> */
+  .fh-skeleton {
+    --_line: 0.9em;
+    --_gap: 0.6em;
+
+    display: block;
+    block-size: calc(var(--fh-lines, 1) * (var(--_line) + var(--_gap)) - var(--_gap));
+    border-radius: var(--fh-radius-sm);
+    background:
+      linear-gradient(90deg, transparent 0 30%, color-mix(in oklab, var(--fh-color-text) 6%, transparent) 50%, transparent 70%)
+        0 0 / 300% 100%,
+      repeating-linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--fh-color-text) 8%, transparent) 0 var(--_line),
+        transparent var(--_line) calc(var(--_line) + var(--_gap))
+      );
+    mask: linear-gradient(90deg, black 0 82%, transparent) no-repeat;
+  }
+
+  .fh-skeleton--block {
+    block-size: auto;
+    min-block-size: 2.5rem;
+    mask: none;
+    background:
+      linear-gradient(90deg, transparent 0 30%, color-mix(in oklab, var(--fh-color-text) 6%, transparent) 50%, transparent 70%)
+        0 0 / 300% 100%,
+      color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+  }
+
+  .fh-skeleton--circle {
+    inline-size: var(--fh-skeleton-size, 2.5rem);
+    block-size: auto;
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    mask: none;
+    background: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-skeleton {
+      animation: fh-shimmer 1.6s linear infinite;
+    }
+  }
+
+  @keyframes fh-shimmer {
+    from { background-position: 100% 0, 0 0; }
+    to { background-position: -50% 0, 0 0; }
+  }
+
+  /* —— Empty state —— */
+  .fh-empty {
+    display: grid;
+    justify-items: center;
+    gap: var(--fh-space-3);
+    padding: clamp(var(--fh-space-8), 8cqi, var(--fh-space-16)) var(--fh-space-6);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background-image: repeating-linear-gradient(-45deg, var(--fh-color-border) 0 1px, transparent 1px 9px);
+    text-align: center;
+
+    & > :is(h2, h3, h4, .fh-empty__title) {
+      margin: 0;
+      font-size: var(--fh-text-h4);
+      font-weight: var(--fh-weight-medium);
+    }
+
+    & > p {
+      max-inline-size: 42ch;
+      margin: 0;
+      color: var(--fh-color-text-muted);
+    }
+  }
+
+  .fh-empty__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 3rem;
+    aspect-ratio: 1;
+    margin-block-end: var(--fh-space-1);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-tone);
+
+    & > svg {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+    }
+  }
+
+  /* —— Tooltip ——
+   * Text-only hints for icon buttons and abbreviations. Shown on hover
+   * and keyboard focus. The text also belongs in aria-label.
+   *   <button class="fh-close" aria-label="Close" data-tooltip="Close"></button> */
+  [data-tooltip] {
+    position: relative;
+
+    &::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      z-index: var(--fh-z-dropdown);
+      inset-block-end: calc(100% + 0.5rem);
+      inset-inline-start: 50%;
+      padding: 0.3rem 0.5rem;
+      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--fh-color-surface-raised);
+      box-shadow: var(--fh-shadow-menu);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: 0.62rem;
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wide);
+      line-height: 1.3;
+      text-transform: none;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      translate: -50% 0.25rem;
+      transition:
+        opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        translate var(--fh-duration-fast) var(--fh-ease-out);
+    }
+
+    &:is(:hover, :focus-visible)::after {
+      opacity: 1;
+      translate: -50% 0;
+      transition-delay: 0.35s;
+    }
+  }
+
+  [data-tooltip-position="bottom"]::after {
+    inset-block: calc(100% + 0.5rem) auto;
+  }
+}

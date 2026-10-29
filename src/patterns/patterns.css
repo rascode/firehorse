@@ -1,0 +1,237 @@
+/*
+ * Firehorse — patterns
+ * ---------------------------------------------------------------
+ * Page-level compositions built from components and layout
+ * primitives. Each one is a section-sized block you can drop into
+ * a frame slot.
+ */
+
+@layer fh.patterns {
+  /* —— Hero ——
+   *   <section class="fh-section fh-section--hero">
+   *     <div class="fh-hero">
+   *       <p class="fh-eyebrow-pill">…</p>
+   *       <h1 class="fh-display">…</h1>
+   *       <p class="fh-lede">…</p>
+   *       <div class="fh-hero__actions">…buttons…</div>
+   *     </div>
+   *   </section> */
+  .fh-section--hero {
+    padding-block: var(--fh-page-top) var(--fh-section-space);
+  }
+
+  .fh-hero {
+    display: grid;
+    gap: var(--fh-space-5);
+    justify-items: start;
+    max-inline-size: 44rem;
+
+    & > .fh-display,
+    & > .fh-title {
+      margin-block-start: var(--fh-space-1);
+    }
+  }
+
+  .fh-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-space-3);
+    margin-block-start: var(--fh-space-2);
+  }
+
+  /* Hero with media: copy left, frame right; stacks when narrow. */
+  .fh-hero-split {
+    display: grid;
+    gap: var(--fh-space-10);
+    align-items: center;
+  }
+
+  @container (inline-size >= 60rem) {
+    .fh-hero-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--fh-space-12);
+    }
+  }
+
+  /* —— Section head: title left, action right ——
+   *   <header class="fh-section-head">
+   *     <div><p class="fh-eyebrow-pill">…</p><h2 class="fh-heading">…</h2></div>
+   *     <a class="fh-action fh-action--lg" href="…">View all</a>
+   *   </header> */
+  .fh-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--fh-space-5) var(--fh-space-8);
+    margin-block-end: clamp(var(--fh-space-8), 5cqi, var(--fh-space-12));
+
+    & > :first-child {
+      display: grid;
+      gap: var(--fh-space-4);
+      justify-items: start;
+      flex: 1 1 28rem;
+      min-inline-size: 0;
+    }
+  }
+
+  /* —— Etched split ——
+   * Full-bleed pair of panes divided by dashed rules, with each pane's
+   * copy aligned to the page content edge. Context (problem |
+   * approach) and contact (details | form) both use it.
+   *
+   *   <div class="fh-etched-split fh-bleed">
+   *     <div class="fh-etched-split__pane">…</div>
+   *     <div class="fh-etched-split__pane">…</div>
+   *   </div> */
+  .fh-etched-split {
+    --_gutter: max(var(--fh-page-margin), (100cqi - var(--fh-content-max)) / 2);
+    --_pad: var(--fh-space-7);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-block: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-etched-split__pane {
+    position: relative;
+    min-inline-size: 0;
+    padding: var(--fh-space-7) var(--_gutter) var(--fh-space-8);
+    container: fh-pane / inline-size;
+
+    & + & {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  @container (inline-size >= 56rem) {
+    .fh-etched-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .fh-etched-split__pane {
+      padding-block: var(--fh-space-10) var(--fh-space-12);
+
+      &:first-child {
+        padding-inline: var(--_gutter) var(--_pad);
+      }
+
+      & + & {
+        padding-inline: var(--_pad) var(--_gutter);
+        border-block-start: 0;
+        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      }
+    }
+  }
+
+  /* —— CTA band ——
+   * Closing call to action inside an etched box with corner crosses. */
+  .fh-cta-band {
+    position: relative;
+    display: grid;
+    gap: var(--fh-space-5);
+    justify-items: start;
+    padding: clamp(var(--fh-space-8), 6cqi, var(--fh-space-16));
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & > .fh-heading {
+      max-inline-size: 24ch;
+    }
+  }
+
+  @container (inline-size >= 52rem) {
+    .fh-cta-band {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      column-gap: var(--fh-space-12);
+
+      & > :not(.fh-hero__actions) {
+        grid-column: 1;
+      }
+
+      & > .fh-hero__actions {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        align-self: end;
+      }
+    }
+  }
+
+  /* —— Window frame ——
+   * Product evidence in browser chrome (three dots + bar).
+   *   <figure class="fh-window"><div class="fh-window__bar"></div>…</figure> */
+  .fh-window {
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    box-shadow: var(--fh-shadow-overlay);
+    container: fh-window / inline-size;
+  }
+
+  .fh-window__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    min-block-size: 2.25rem;
+    padding-inline: var(--fh-space-3);
+    background-color: var(--fh-color-surface-chrome);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wide);
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.6rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone-rose);
+      box-shadow:
+        0.95rem 0 0 var(--fh-tone-amber),
+        1.9rem 0 0 var(--fh-tone-lime);
+      margin-inline-end: 2.2rem;
+    }
+  }
+
+  .fh-window__body {
+    padding: clamp(var(--fh-space-4), 4cqi, var(--fh-space-8));
+  }
+
+  /* —— Letter ——
+   * Founder note: long-form copy with a signature and a sticky
+   * portrait that drops above the text in narrow slots. */
+  .fh-letter {
+    display: grid;
+    gap: clamp(var(--fh-space-8), 5cqi, var(--fh-space-12));
+    align-items: start;
+  }
+
+  .fh-letter__portrait {
+    max-inline-size: 18rem;
+    margin: 0;
+
+    & img {
+      inline-size: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border: var(--fh-border-thin) solid var(--fh-color-rule);
+      border-radius: var(--fh-radius-sm);
+    }
+  }
+
+  @container (inline-size >= 52rem) {
+    .fh-letter {
+      grid-template-columns: minmax(0, 1.35fr) minmax(12rem, 0.65fr);
+    }
+
+    .fh-letter__portrait {
+      position: sticky;
+      inset-block-start: calc(var(--fh-header-height) + var(--fh-space-8));
+      max-inline-size: none;
+    }
+  }
+}

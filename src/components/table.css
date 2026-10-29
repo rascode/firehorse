@@ -1,0 +1,140 @@
+/*
+ * Firehorse — table & matrix
+ * ---------------------------------------------------------------
+ * Elevated data table: mono header on a surface, etched frame,
+ * tabular numbers. When its slot is narrow the table reflows into
+ * labelled rows (cards) — give each <td> a data-label.
+ *
+ *   <div class="fh-table-wrap">
+ *     <table class="fh-table">…<td data-label="Status">Paid</td>…</table>
+ *   </div>
+ */
+
+@layer fh.components {
+  .fh-table-wrap {
+    overflow-x: auto;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    container: fh-table / inline-size;
+  }
+
+  .fh-table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--fh-text-small);
+    font-variant-numeric: tabular-nums;
+
+    & caption {
+      padding: var(--fh-space-4) var(--fh-space-5);
+      text-align: start;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      color: var(--fh-color-text-muted);
+    }
+
+    & thead th {
+      padding: var(--fh-space-3) var(--fh-space-5);
+      background-color: var(--fh-color-surface-raised);
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-align: start;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & :is(tbody, tfoot) :is(td, th) {
+      padding: var(--fh-space-3) var(--fh-space-5);
+      color: var(--fh-color-text);
+      text-align: start;
+      vertical-align: top;
+    }
+
+    & tbody tr + tr :is(td, th) {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & tbody tr:hover {
+      background-color: color-mix(in oklab, var(--fh-color-text) 3%, transparent);
+    }
+
+    & tfoot :is(td, th) {
+      border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      font-weight: var(--fh-weight-bold);
+    }
+
+    & .fh-num {
+      text-align: end;
+      font-family: var(--fh-font-mono);
+      letter-spacing: var(--fh-tracking-mono);
+    }
+  }
+
+  /* Reflow to labelled rows in narrow slots. */
+  @container fh-table (inline-size < 36rem) {
+    .fh-table.fh-table--reflow {
+      & thead {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+
+      & tr {
+        display: grid;
+        padding: var(--fh-space-3) 0;
+      }
+
+      & :is(tbody, tfoot) :is(td, th) {
+        display: grid;
+        grid-template-columns: minmax(6rem, 40%) minmax(0, 1fr);
+        gap: var(--fh-space-3);
+        padding-block: var(--fh-space-1-5);
+        border: 0;
+        text-align: start;
+      }
+
+      & td[data-label]::before {
+        content: attr(data-label);
+        font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-label);
+        letter-spacing: var(--fh-tracking-wider);
+        text-transform: uppercase;
+        color: var(--fh-color-text-muted);
+      }
+
+      & tbody tr + tr {
+        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      }
+    }
+  }
+
+  /* —— Comparison matrix ——
+   * Feature × plan grid with tone dots for included items. */
+  .fh-matrix {
+    & td:is([data-included="true"], [data-included="false"]) {
+      text-align: center;
+    }
+
+    & td[data-included="true"]::after {
+      content: "";
+      display: inline-block;
+      inline-size: 0.95rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-tone);
+      mask: var(--fh-icon-check) center / contain no-repeat;
+      vertical-align: middle;
+    }
+
+    & td[data-included="false"]::after {
+      content: "—";
+      color: var(--fh-color-text-ghost);
+    }
+  }
+}

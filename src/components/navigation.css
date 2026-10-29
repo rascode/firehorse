@@ -1,0 +1,305 @@
+/*
+ * Firehorse — navigation: pagination, stepper, table of contents,
+ * search, sidebar nav
+ */
+
+@layer fh.components {
+  /* —— Pagination ——
+   *   <nav class="fh-pagination" aria-label="Pages">
+   *     <a href="?p=1" rel="prev">Prev</a>
+   *     <a href="?p=1">1</a> <a href="?p=2" aria-current="page">2</a> <span>…</span>
+   *     <a href="?p=3" rel="next">Next</a>
+   *   </nav> */
+  .fh-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-1);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    font-variant-numeric: tabular-nums;
+
+    & > :is(a, button, span) {
+      display: inline-grid;
+      place-items: center;
+      min-inline-size: 2.25rem;
+      block-size: 2.25rem;
+      padding-inline: var(--fh-space-2);
+      border: var(--fh-border-thin) solid transparent;
+      border-radius: var(--fh-radius-sm);
+      background: none;
+      color: var(--fh-color-text-muted);
+      text-decoration: none;
+    }
+
+    & > :is(a, button):hover {
+      border-color: var(--fh-color-border-strong);
+      color: var(--fh-color-text);
+    }
+
+    & > [aria-current] {
+      border-color: var(--fh-color-text);
+      color: var(--fh-color-text);
+    }
+
+    & > :is([rel="prev"], [rel="next"]) {
+      padding-inline: var(--fh-space-3);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      font-size: var(--fh-text-label);
+    }
+
+    & > [rel="next"] {
+      margin-inline-start: auto;
+    }
+
+    & > [aria-disabled="true"] {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  @container (inline-size < 26rem) {
+    .fh-pagination > :not([rel], [aria-current]) {
+      display: none;
+    }
+  }
+
+  /* —— Stepper ——
+   * Multi-step flows (checkout, onboarding, intake).
+   *   <ol class="fh-stepper">
+   *     <li data-state="done">Details</li>
+   *     <li aria-current="step">Scope</li>
+   *     <li>Review</li>
+   *   </ol> */
+  .fh-stepper {
+    display: flex;
+    gap: var(--fh-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fh-stepper;
+
+    & > li {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      flex: 1 1 0;
+      min-inline-size: 0;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      white-space: nowrap;
+      counter-increment: fh-stepper;
+
+      &::before {
+        content: counter(fh-stepper);
+        display: grid;
+        place-items: center;
+        flex: none;
+        inline-size: 1.6rem;
+        aspect-ratio: 1;
+        border: var(--fh-border-thick) dashed var(--fh-color-etch);
+        border-radius: var(--fh-radius-round);
+        font-size: 0.62rem;
+      }
+
+      /* connector */
+      &:not(:last-child)::after {
+        content: "";
+        flex: 1;
+        min-inline-size: 1rem;
+        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      }
+
+      &[aria-current] {
+        color: var(--fh-color-text);
+
+        &::before {
+          border-style: solid;
+          border-color: var(--fh-tone);
+          color: var(--fh-tone);
+        }
+      }
+
+      &[data-state="done"] {
+        color: var(--fh-color-text-muted);
+
+        &::before {
+          content: "✓";
+          border-style: solid;
+          border-color: var(--fh-tone);
+          background-color: var(--fh-tone);
+          color: var(--fh-color-on-tone);
+          font-weight: var(--fh-weight-heavy);
+        }
+
+        &::after {
+          border-block-start-style: solid;
+          border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
+        }
+      }
+    }
+  }
+
+  /* Narrow: only the current step keeps its label. */
+  @container (inline-size < 30rem) {
+    .fh-stepper > li:not([aria-current]) {
+      flex: 0 1 auto;
+      font-size: 0;
+      letter-spacing: 0;
+
+      &::before {
+        font-size: 0.62rem;
+      }
+    }
+
+    .fh-stepper > li:not([aria-current]):not(:last-child)::after {
+      min-inline-size: 0.75rem;
+    }
+  }
+
+  /* —— Table of contents / sidebar nav ——
+   * Sticky by default inside a split; the enhancer marks the section
+   * in view with aria-current.
+   *   <nav class="fh-toc" aria-label="On this page"><p class="fh-label">On this page</p>
+   *     <ol><li><a href="#intro">Intro</a></li>…</ol></nav> */
+  .fh-toc {
+    position: sticky;
+    inset-block-start: calc(var(--fh-header-height) + var(--fh-space-6));
+    display: grid;
+    gap: var(--fh-space-3);
+    align-self: start;
+
+    & :is(ol, ul) {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    & :is(ol, ul) :is(ol, ul) {
+      margin-inline-start: var(--fh-space-3);
+      border: 0;
+    }
+
+    & a {
+      display: block;
+      margin-inline-start: -1px;
+      padding: var(--fh-space-1-5) var(--fh-space-4);
+      border-inline-start: 2px solid transparent;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-snug);
+      text-decoration: none;
+      transition:
+        color var(--fh-duration-fast) var(--fh-ease-standard),
+        border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+
+      &[aria-current]:not([aria-current="false"]) {
+        border-inline-start-color: var(--fh-tone, var(--fh-color-text));
+        color: var(--fh-color-text);
+      }
+    }
+  }
+
+  /* —— Search field ——
+   *   <label class="fh-search"><span class="fh-sr-only">Search</span>
+   *     <input type="search" placeholder="Search docs"><kbd class="fh-kbd">/</kbd></label> */
+  .fh-search {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    min-block-size: 2.5rem;
+    padding-inline: var(--fh-space-3);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-field);
+    color: var(--fh-color-text-muted);
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.95rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-search) center / contain no-repeat;
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    & > input {
+      flex: 1;
+      min-inline-size: 0;
+      block-size: 2.5rem;
+      border: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-body);
+      outline: none;
+    }
+
+    & > input::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+  /* —— Sidebar nav ——
+   * Grouped app navigation (portal, admin, docs).
+   *   <nav class="fh-sidenav" aria-label="Portal">
+   *     <section><p class="fh-label">Portal</p>
+   *       <a href="…" aria-current="page">Overview</a>
+   *       <a href="…">Invoices <span class="fh-badge">2</span></a>
+   *     </section>
+   *   </nav> */
+  .fh-sidenav {
+    display: grid;
+    gap: var(--fh-space-5);
+    min-inline-size: 12rem;
+
+    & > section {
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    & .fh-label {
+      margin-block-end: var(--fh-space-2);
+      padding-inline: var(--fh-space-3);
+    }
+
+    & a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-space-3);
+      padding: var(--fh-space-2) var(--fh-space-3);
+      border-radius: var(--fh-radius-sm);
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+      text-decoration: none;
+      transition:
+        background-color var(--fh-duration-fast) var(--fh-ease-standard),
+        color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+        color: var(--fh-color-text);
+      }
+
+      &[aria-current]:not([aria-current="false"]) {
+        background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
+        box-shadow: inset 2px 0 0 var(--fh-tone);
+        color: var(--fh-color-text);
+      }
+    }
+  }
+}
