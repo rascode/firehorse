@@ -1,11 +1,11 @@
 # Firehorse — agent contract
 
-> Firehorse is a dark-first, container-native CSS design system (v1.0, MIT).
+> Firehorse is a dark-first, container-native CSS design system (v1.1, MIT).
 > Read this file before writing any markup or CSS with it. Component markup
 > lives in [`components.md`](components.md). Every token is in
 > [`tokens.json`](https://firehorse.rascode.dev/tokens.json).
 
-kind: system-index · version: 1.0.0 · package: `@rascode/firehorse`
+kind: system-index · version: 1.1.0 · package: `@rascode/firehorse`
 home: https://firehorse.rascode.dev · source: https://github.com/rascode/firehorse
 
 ## Install
