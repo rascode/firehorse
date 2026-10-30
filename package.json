@@ -1,7 +1,7 @@
 {
   "name": "@rascode/firehorse",
   "version": "1.1.0",
-  "description": "Firehorse — a dark-first, container-native CSS design system. Cascade layers, container queries, light-dark() theming, zero JavaScript.",
+  "description": "Firehorse — a dark-first, container-native CSS design system. Cascade layers, container queries, light-dark() theming, no JavaScript required.",
   "license": "MIT",
   "author": "Rascode (https://rascode.dev)",
   "homepage": "https://firehorse.rascode.dev",
@@ -43,6 +43,7 @@
     "./themes/*": "./dist/themes/*",
     "./themes.css": "./dist/themes.css",
     "./themes.json": "./dist/themes.json",
+    "./email": "./src/email/email.js",
     "./index.json": "./dist/index.json",
     "./src/*": "./src/*",
     "./tokens": {
@@ -81,7 +82,7 @@
     "lint": "node scripts/lint.mjs",
     "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check",
     "prepublishOnly": "npm test && node scripts/gen-index.mjs",
-    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
+    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
     "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
     "schema": "node scripts/schema.mjs $(node scripts/pages.mjs --dist)",
     "tokens:adaptive": "node scripts/gen-adaptive.mjs"

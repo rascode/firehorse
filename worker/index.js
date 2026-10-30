@@ -1,10 +1,15 @@
 // firehorse.rascode.dev — static assets plus one route: POST /api/lead.
 // The lead is forwarded to whichever destinations are configured as secrets:
 //   LEAD_WEBHOOK_URL       any JSON webhook (Slack, Discord, n8n, Zapier, your CRM)
-//   RESEND_API_KEY + LEAD_TO (+ LEAD_FROM)   an email via Resend
+//   RESEND_API_KEY + LEAD_TO (+ LEAD_FROM, EMAIL_THEME)   an email via Resend,
+//                          drawn with the Firehorse email templates (src/email)
 // Set them with `npx wrangler secret put <NAME>`.
 
-const NEEDS = new Set(["design-system", "website", "product-ui", "ai-agents", "automation", "architecture", "consulting"]);
+import { leadNotification } from "../src/email/email.js";
+
+const NEEDS = new Set(["design-system", "website", "product-ui", "ai-agents", "automation", "architecture", "consulting", "firehorse-pro", "system-from-url"]);
+const PLANS = new Set(["pro", "team", "custom-build", "question"]);
+const BILLING = new Set(["monthly", "annual"]);
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 const clean = (v, max) => String(v ?? "").trim().slice(0, max);
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -26,6 +31,8 @@ export default {
       timeline: clean(input.timeline, 40),
       budget: clean(input.budget, 40),
       needs: (Array.isArray(input.needs) ? input.needs : []).map(String).filter((n) => NEEDS.has(n)),
+      plan: PLANS.has(input.plan) ? input.plan : "",
+      billing: BILLING.has(input.billing) ? input.billing : "",
       message: clean(input.message, 5000),
       page: clean(input.page, 300),
       at: new Date().toISOString(),
@@ -35,8 +42,10 @@ export default {
     const ATTR = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "utm_id", "ref", "first_utm_source", "first_utm_medium", "first_utm_campaign", "landing_page", "referrer", "placement", "page_path", "page_title"];
     const attr = input.attribution && typeof input.attribution === "object" ? input.attribution : {};
     for (const k of ATTR) { const v = clean(attr[k], 500); if (v) lead[k] = v; }
-    if (!lead.name || !lead.message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) {
-      return json({ error: "Name, a valid email and a message are required." }, 422);
+    // Pro plan requests can come without a message; everything else needs one.
+    const needsMessage = !lead.plan || lead.plan === "custom-build";
+    if (!lead.name || (needsMessage && !lead.message) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) {
+      return json({ error: needsMessage ? "Name, a valid email and a message are required." : "Name and a valid email are required." }, 422);
     }
 
     const jobs = [];
@@ -44,11 +53,12 @@ export default {
       jobs.push(fetch(env.LEAD_WEBHOOK_URL, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: `New lead from ${lead.name} <${lead.email}>: ${lead.needs.join(", ") || "general"}`, lead }),
+        body: JSON.stringify({ text: `New lead from ${lead.name} <${lead.email}>: ${lead.plan ? `Pro plan: ${lead.plan}${lead.billing ? ` (${lead.billing})` : ""}` : lead.needs.join(", ") || "general"}`, lead }),
       }));
     }
     if (env.RESEND_API_KEY && env.LEAD_TO) {
-      const rows = Object.entries(lead).map(([k, v]) => `<tr><th align="left">${k}</th><td>${esc(Array.isArray(v) ? v.join(", ") : v)}</td></tr>`).join("");
+      // Eat our own hay: the notification is a Firehorse email template (src/email).
+      const mail = leadNotification(lead, { theme: env.EMAIL_THEME || "firehorse" });
       jobs.push(fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
@@ -56,8 +66,9 @@ export default {
           from: env.LEAD_FROM ?? "Firehorse <leads@rascode.dev>",
           to: env.LEAD_TO.split(","),
           reply_to: lead.email,
-          subject: `Firehorse lead: ${lead.name}${lead.company ? ` (${lead.company})` : ""}`,
-          html: `<table cellpadding="6">${rows}</table>`,
+          subject: mail.subject,
+          html: mail.html,
+          text: mail.text,
         }),
       }));
     }

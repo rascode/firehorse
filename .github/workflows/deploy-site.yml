@@ -14,7 +14,8 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm test
-      - run: node scripts/site.mjs
+      # The whole site: docs pages, The Stable, email previews and generated JSON-LD.
+      - run: npm run site
       - name: Deploy to Cloudflare Workers (static assets)
         run: npx wrangler@4 deploy
         env:
