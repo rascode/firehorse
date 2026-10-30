@@ -805,6 +805,49 @@ body::before {
   .site-lead__aside { display: none; }
 }
 
+/* Side sheet: on pages with [data-lead-sheet] (Pro) the lead dialog slides in from the inline end. */
+.site-lead--sheet { --fh-dialog-size: 34rem; }
+.site-lead--sheet :is(.site-lead__form, .site-lead__split) { block-size: 100%; }
+.site-lead--sheet .site-lead__main { block-size: 100dvh; max-block-size: 100dvh; }
+.site-lead__plan[hidden], .site-lead__needs[hidden], [data-lead-budget][hidden] { display: none; }
+.site-lead__plan-note { margin: var(--fh-space-2) 0 0; font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
+
+/* Pro side tab: a fixed pull tab on the inline end that opens the lead sheet. */
+.site-lead-tab {
+  /* Physical insets: writing-mode below would remap logical ones onto the vertical axis. */
+  position: fixed; z-index: 40; right: 0; top: 50%; translate: 0 -50%;
+  display: inline-flex; align-items: center; gap: var(--fh-space-2);
+  writing-mode: vertical-rl;
+  padding: var(--fh-space-4) var(--fh-space-2);
+  border: var(--fh-border-thin) solid var(--fh-tone); border-right: 0;
+  border-radius: var(--fh-radius-md) 0 0 var(--fh-radius-md);
+  background: var(--fh-tone); color: var(--fh-color-on-tone);
+  font: var(--fh-weight-semibold) var(--fh-text-small) / 1 var(--fh-font-sans); letter-spacing: var(--fh-tracking-wide);
+  cursor: pointer;
+  transition: padding var(--fh-duration-fast, 150ms) var(--fh-ease-out);
+}
+.site-lead-tab:hover { padding-left: var(--fh-space-3); }
+.site-lead-tab:focus-visible { outline: 2px solid var(--fh-color-focus, var(--fh-tone)); outline-offset: 2px; }
+.site-lead-tab .fh-icon { --fh-icon-size: 1rem; }
+:root:has(#lead[open]) .site-lead-tab { visibility: hidden; }
+
+/* —— Pro pricing —— */
+.site-pricing { display: grid; gap: var(--fh-space-8); scroll-margin-block-start: var(--fh-space-12, 6rem); }
+.site-pricing__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--fh-space-5); }
+.site-pricing__head > .fh-stack { max-inline-size: 40rem; }
+.site-pricing__billing { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-3); }
+/* Two short options always fit on one row, even where fh-segmented would stack. */
+.site-pricing__billing .fh-segmented { display: inline-flex; flex-direction: row; flex-wrap: nowrap; inline-size: auto; border-radius: var(--fh-radius-pill); }
+.site-pricing__billing .fh-segmented > label { border-radius: var(--fh-radius-pill); }
+.site-pricing:has(input[name="billing"][value="annual"]:checked) [data-price-monthly],
+.site-pricing:has(input[name="billing"][value="monthly"]:checked) [data-price-annual] { display: none; }
+.site-pricing__tiers { --fh-tiers-min: 15rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.site-pricing__brief { justify-self: center; font-size: var(--fh-text-small); }
+.site-pricing__fine { display: flex; flex-wrap: wrap; gap: var(--fh-space-3) var(--fh-space-7); margin: 0; padding: 0; list-style: none; font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
+.site-pricing__fine li { display: inline-flex; align-items: center; gap: var(--fh-space-2); }
+.site-pricing__fine .fh-icon { color: var(--fh-tone-fuchsia); }
+.site-pricing__faq { align-items: start; }
+
 /* ═══════════════ Structured data ═══════════════ */
 .site-schema-col { display: grid; gap: var(--fh-space-5); align-content: start; min-inline-size: 0; }
 .site-schema-col .fh-window { margin: 0; }

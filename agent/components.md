@@ -904,7 +904,7 @@ Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
 
 ```html
 <div class="fh-stack fh-stack--lg">
-  <div class="fh-banner" data-tone="accent"><span>Firehorse 1.0 is out. Container-native, zero JavaScript.</span><a href="#top">Read the notes</a></div>
+  <div class="fh-banner" data-tone="accent"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
   <div class="fh-empty" data-tone="violet">
     <span class="fh-empty__icon">∅</span>
     <h4>No leads yet</h4>

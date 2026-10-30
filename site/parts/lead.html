@@ -21,15 +21,27 @@
       <div class="site-lead__main">
         <div class="fh-dialog__header">
           <div class="fh-stack fh-stack--xs">
-            <p class="fh-label">Work with Rascode</p>
-            <h2 class="fh-subheading" id="lead-title">Tell us what you're building</h2>
+            <p class="fh-label" data-lead-kicker>Work with Rascode</p>
+            <h2 class="fh-subheading" id="lead-title" data-lead-title>Tell us what you're building</h2>
           </div>
           <button class="fh-close" type="button" data-lead-close aria-label="Close"></button>
         </div>
 
         <div class="fh-dialog__body site-lead__body" data-lead-step="form">
           <div class="fh-form">
-            <fieldset class="site-lead__needs">
+            <div class="fh-field site-lead__plan" data-lead-plan hidden>
+              <span class="fh-label site-lead__legend" id="lead-plan-label">Plan</span>
+              <fieldset class="fh-segmented site-lead__budget" aria-labelledby="lead-plan-label" disabled>
+                <label><input type="radio" name="plan" value="pro"> Pro</label>
+                <label><input type="radio" name="plan" value="team"> Team</label>
+                <label><input type="radio" name="plan" value="custom-build"> Custom build</label>
+                <label><input type="radio" name="plan" value="question"> Not sure yet</label>
+              </fieldset>
+              <p class="site-lead__plan-note" data-lead-plan-note></p>
+              <input type="hidden" name="billing" value="" disabled>
+            </div>
+
+            <fieldset class="site-lead__needs" data-lead-needs>
               <legend class="fh-label">What do you need? <span>Pick any</span></legend>
               <div class="fh-chips fh-chips--wrap">
                 <label class="fh-chip fh-chip--tone" data-tone="fuchsia"><input type="checkbox" name="needs" value="design-system"> Design system</label>
@@ -76,7 +88,7 @@
               </div>
             </div>
 
-            <div class="fh-field fh-field--optional">
+            <div class="fh-field fh-field--optional" data-lead-budget>
               <span class="fh-label site-lead__legend" id="lead-budget-label">Budget</span>
               <fieldset class="fh-segmented site-lead__budget" aria-labelledby="lead-budget-label">
                 <label><input type="radio" name="budget" value="under-5k"> Under $5k</label>
@@ -86,7 +98,7 @@
               </fieldset>
             </div>
 
-            <div class="fh-field">
+            <div class="fh-field" data-lead-message>
               <label for="lead-message">What's going on?</label>
               <textarea class="fh-textarea" id="lead-message" name="message" required rows="4" placeholder="What you're building, where you're stuck, and any links we should see."></textarea>
               <p class="fh-field__error">A sentence or two is plenty.</p>

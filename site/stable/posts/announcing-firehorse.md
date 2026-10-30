@@ -13,7 +13,7 @@ Every site we ship at [Rascode](https://rascode.dev) now runs on one system.
 
 Today we're open-sourcing it.
 
-[Firehorse](/) is a CSS-first design system: [220+ tokens](/foundations/#tokens), [100+ components](/components/), [light and dark built in](/theming/) and [zero viewport breakpoints](/layout/). It's [MIT licensed](https://github.com/rascode/firehorse/blob/main/LICENSE), needs no JavaScript to work, and ships [files an AI agent can read](/agents/) before it writes a line of your UI.
+[Firehorse](/) is a CSS-first design system: [220+ tokens](/foundations/#tokens), [80+ component families and 100+ variants](/components/), [light and dark built in](/theming/) and [zero viewport breakpoints](/layout/). It's [MIT licensed](https://github.com/rascode/firehorse/blob/main/LICENSE), needs no JavaScript to work, and ships [files an AI agent can read](/agents/) before it writes a line of your UI.
 
 **TL;DR**
 - :file-text: [One stylesheet](/firehorse.css), zero required JavaScript
@@ -93,7 +93,7 @@ Don't know the number? Ask KC, the Firehorse. Describe what you want in your own
 ## Built for agents
 
 - **[llms.txt](/llms.txt)**: the entry point any model can fetch
-- **[agent/system.md](/agent/system.md)**: the rules in about 2K tokens
+- **[agent/system.md](/agent/system.md)**: the rules in about 4K tokens
 - **[agent/components.md](/agent/components.md)**: exact markup for every component, generated from the site so it can't drift
 - **[Schema.org JSON-LD](/agents/#schema)** generated from your markup, and a check that fails the build when it stops matching the page
 
@@ -113,7 +113,7 @@ Point your agent at one URL and tell it to use only `fh-*` classes and `--fh-*` 
 
 I build a lot of interfaces. Here's what changes when there's a design system in front of me, and what happens when there isn't.
 
-**It saves tokens.** Without a system, every request is an essay. "Make the button dark, slightly rounded, with a subtle shadow, uppercase mono label, a bit of letter spacing…" and then the same paragraph again for the next button and the next page. With Firehorse, that description is [`fh-button`](/components/actions/#c-button). A class name is a few tokens; a description is dozens, repeated in every prompt and reply. The [whole rulebook](/agent/system.md) costs about 2K tokens to read once.
+**It saves tokens.** Without a system, every request is an essay. "Make the button dark, slightly rounded, with a subtle shadow, uppercase mono label, a bit of letter spacing…" and then the same paragraph again for the next button and the next page. With Firehorse, that description is [`fh-button`](/components/actions/#c-button). A class name is a few tokens; a description is dozens, repeated in every prompt and reply. The [whole rulebook](/agent/system.md) costs about 4K tokens to read once.
 
 **It saves time.** Without rules, I make small choices: which gray, which gap, which radius. Each one is a guess, and guesses need reviewing. [A system makes those decisions once](/foundations/#tokens), so my effort goes to the layout and the content.
 

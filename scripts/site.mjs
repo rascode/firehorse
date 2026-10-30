@@ -78,9 +78,15 @@ const base = "https://firehorse.rascode.dev";
 const themes = JSON.parse(readFileSync(join(root, "dist/themes.json"), "utf8")).themes;
 const themeList = themes.filter((t) => !t.base).map((t) => t.label).join(", ");
 const themeLinks = themes.map((t) => `- [themes/${t.name}.css](${base}/themes/${t.name}.css): ${t.label}${t.base ? " (restores the defaults inside a themed page)" : ""}. ${t.tagline}`).join("\n");
+// The Stable's posts (front matter slug and date), for the sitemap and llms.txt; drafts stay out.
+const stablePosts = readdirSync(join(root, "site/stable/posts")).filter((f) => f.endsWith(".md")).map((f) => {
+  const fm = readFileSync(join(root, "site/stable/posts", f), "utf8").match(/^---\n([\s\S]*?)\n---/)?.[1] ?? "";
+  const get = (k) => fm.match(new RegExp(`^${k}:\\s*(.*)$`, "m"))?.[1]?.trim();
+  return { slug: get("slug"), date: get("date"), title: get("title"), draft: get("draft") === "true" };
+}).filter((p) => p.slug && p.date && !p.draft).sort((a, b) => b.date.localeCompare(a.date));
 const llms = `# Firehorse
 
-> Firehorse (v${pkg.version}, MIT) is a dark-first, container-native CSS design system by Rascode. Components respond to the container they sit in, not the viewport. It uses cascade layers, light-dark() schemes, data-tone category colors and native HTML (details, dialog, popover). No JavaScript is required.
+> Firehorse (v${pkg.version}, MIT) is a dark-first, container-native CSS design system by Rascode. Components respond to the container they sit in, not the viewport. It uses cascade layers, light-dark() schemes, data-tone category colors and native HTML (details, dialog, popover). The core needs no JavaScript; optional modules (firehorse.js, datatable.js, audio.js) add behavior.
 
 Use it by linking ${base}/firehorse.css (or \`npm i ${pkg.name}\`), then writing HTML with the fh-* classes documented below. Read the agent contract before generating markup.
 
@@ -108,16 +114,21 @@ ${themeLinks}
 
 ${docPages.filter((p) => p.path !== "/").map((p) => `- [${p.meta.parent ? docPages.find((x) => x.path === p.meta.parent).meta.name + " › " : ""}${p.meta.name}](${base}${p.path}): ${p.meta.description}`).join("\n")}
 
+## The Stable (blog)
+
+- [The Stable](${base}/stable/): release notes and articles ([RSS](${base}/stable/feed.xml))
+${stablePosts.map((p) => `- [${p.title}](${base}/stable/${p.slug}/)`).join("\n")}
+
 ## Optional
 
-- [Full context in one file](${base}/llms-full.txt): system.md + components.md concatenated
+- [Full context in one file](${base}/llms-full.txt): system.md, patterns.md, index.md, schema.md and components.md in one file
 - [Source repository](https://github.com/rascode/firehorse)
 `;
 writeFileSync(join(out, "llms.txt"), llms);
 writeFileSync(join(out, "llms-full.txt"),
-  readFileSync(join(root, "agent/system.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/index.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/schema.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/components.md"), "utf8"));
+  readFileSync(join(root, "agent/system.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/patterns.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/index.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/schema.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/components.md"), "utf8"));
 writeFileSync(join(out, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`);
-writeFileSync(join(out, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...docPages.map((p) => p.path), "/playground.html", "/stable/"].map((u) => `  <url><loc>${base}${u}</loc></url>`).join("\n")}\n</urlset>\n`);
+writeFileSync(join(out, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...docPages.map((p) => p.path), "/playground.html", "/stable/"].map((u) => `  <url><loc>${base}${u}</loc></url>`).concat(stablePosts.map((p) => `  <url><loc>${base}/stable/${p.slug}/</loc><lastmod>${p.date}</lastmod></url>`)).join("\n")}\n</urlset>\n`);
 // Cloudflare Pages / Workers static assets headers
 writeFileSync(join(out, "_headers"), `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n/*.css\n  Access-Control-Allow-Origin: *\n  Cache-Control: public, max-age=3600\n/tokens.json\n  Access-Control-Allow-Origin: *\n/themes.json\n  Access-Control-Allow-Origin: *\n/schema.json\n  Access-Control-Allow-Origin: *\n/index.json\n  Access-Control-Allow-Origin: *\n/llms*.txt\n  Access-Control-Allow-Origin: *\n  Content-Type: text/plain; charset=utf-8\n/agent/*\n  Access-Control-Allow-Origin: *\n  Content-Type: text/markdown; charset=utf-8\n`);
 

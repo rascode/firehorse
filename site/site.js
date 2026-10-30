@@ -174,40 +174,91 @@
     }).catch(() => { rows.innerHTML = `<tr><td colspan="3">Couldn't load tokens.json. <a class="fh-link" href="/tokens.json">Open it directly</a>.</td></tr>`; });
   }
 
-  /* —— Work with Rascode: lead dialog —— */
+  /* —— Work with Rascode: lead dialog ——
+   * On pages that carry [data-lead-sheet] (Pro), the dialog slides in from the side
+   * as a sheet, and the Pro presets swap the copy and show a plan picker. */
   const lead = $("#lead"), leadForm = $("#lead-form");
   if (lead && leadForm) {
-    const presets = { design: ["design-system", "website"], ai: ["ai-agents", "automation"], consulting: ["architecture", "consulting"], pro: ["firehorse-pro", "system-from-url"] };
+    const presets = { design: ["design-system", "website"], ai: ["ai-agents", "automation"], consulting: ["architecture", "consulting"], pro: ["firehorse-pro"], "pro-build": ["firehorse-pro", "design-system", "system-from-url"] };
     const steps = { form: $('[data-lead-step="form"]', lead), done: $('[data-lead-step="done"]', lead) };
     const submit = $("[data-lead-submit]", lead), cancel = $("[data-lead-cancel]", lead), status = $("[data-lead-status]", lead);
     const note = status.textContent;
-    const setStatus = (text, tone) => { status.textContent = text; tone ? status.setAttribute("data-tone", tone) : status.removeAttribute("data-tone"); };
+    const ui = {
+      kicker: $("[data-lead-kicker]", lead), title: $("[data-lead-title]", lead), plan: $("[data-lead-plan]", lead),
+      planSet: $("[data-lead-plan] fieldset", lead), planNote: $("[data-lead-plan-note]", lead), billing: $('input[name="billing"]', lead),
+      needs: $("[data-lead-needs]", lead), budget: $("[data-lead-budget]", lead), message: $("#lead-message"),
+      messageLabel: $('[data-lead-message] label', lead), submitLabel: $("span", submit),
+    };
+    const base = { kicker: ui.kicker.textContent, title: ui.title.textContent, label: ui.messageLabel.textContent, placeholder: ui.message.placeholder, submit: ui.submitLabel.textContent };
+    let submitText = base.submit;
+    if (document.querySelector("[data-lead-sheet]")) lead.classList.add("fh-dialog--sheet", "site-lead--sheet");
+    // .fh-main is a size container, which traps position: fixed; lift the side tab to <body>.
+    $$(".site-lead-tab").forEach((t) => document.body.append(t));
+    // Plan copy shown under the picker; prices follow the billing toggle on the page.
+    const billingNow = () => $('input[name="billing"]:checked')?.value || "annual";
+    const planCopy = {
+      pro: () => billingNow() === "annual" ? "$24/mo per project, billed $290 yearly." : "$29/mo per project, billed monthly.",
+      team: () => billingNow() === "annual" ? "$82/mo for up to 5 projects, billed $990 yearly." : "$99/mo for up to 5 projects, billed monthly.",
+      "custom-build": () => "From $7,500, fixed scope. We send a written brief and price before any work starts.",
+      question: () => "Tell us what you're weighing and we'll point you to the right plan.",
+    };
+    const setPlan = (plan) => {
+      ui.planNote.textContent = planCopy[plan]?.() ?? "";
+      const build = plan === "custom-build";
+      ui.budget.hidden = !build;
+      ui.messageLabel.textContent = build ? "What are you building?" : "Anything we should know?";
+      ui.message.placeholder = build ? "The product, the sites involved, and any links we should see." : "Your site, which fields you'd use first, or a question. Optional.";
+      ui.message.required = build;
+      ui.message.closest(".fh-field").classList.toggle("fh-field--optional", !build);
+    };
+    $$('input[name="plan"]', lead).forEach((r) => r.addEventListener("change", () => setPlan(r.value)));
+    const setMode = (plan) => {
+      const pro = Boolean(plan);
+      ui.plan.hidden = !pro; ui.planSet.disabled = !pro; ui.billing.disabled = !pro;
+      ui.needs.hidden = pro;
+      ui.kicker.textContent = pro ? "Firehorse Pro" : base.kicker;
+      ui.title.textContent = pro ? (plan === "custom-build" ? "Scope a custom build" : plan === "question" ? "Ask us anything" : "Get Firehorse Pro") : base.title;
+      submitText = pro ? (plan === "custom-build" ? "Request a brief" : plan === "question" ? "Send question" : "Get started") : base.submit;
+      ui.submitLabel.textContent = submitText;
+      if (pro) {
+        ui.billing.value = billingNow();
+        const r = $(`input[name="plan"][value="${plan}"]`, lead) ?? $('input[name="plan"][value="pro"]', lead);
+        r.checked = true; setPlan(r.value);
+      } else {
+        ui.budget.hidden = false; ui.message.required = true;
+        ui.messageLabel.textContent = base.label; ui.message.placeholder = base.placeholder;
+        ui.message.closest(".fh-field").classList.remove("fh-field--optional");
+      }
+    };
     const reset = () => {
       leadForm.reset(); leadForm.removeAttribute("data-checked");
       steps.form.hidden = false; steps.done.hidden = true; submit.hidden = false;
       cancel.textContent = "Cancel"; setStatus(note);
     };
-    // placement = the section the button sits in + which offer it opened (e.g. "pro:pro", "hero:design").
+    const setStatus = (text, tone) => { status.textContent = text; tone ? status.setAttribute("data-tone", tone) : status.removeAttribute("data-tone"); };
+    // placement = the section the button sits in + which offer it opened (e.g. "pricing:pro", "side-tab:pro").
     const openLead = (preset, from) => {
       if (lead.open) return;
-      leadForm.dataset.placement = `${from?.closest("section[id], header, footer")?.id || from?.closest("header, footer")?.localName || (from ? "page" : "deep-link")}:${preset || "general"}`;
+      const plan = from?.dataset.plan || (preset?.startsWith("pro") ? "pro" : "");
+      leadForm.dataset.placement = `${from?.dataset.leadPlacement || from?.closest("[data-lead-sheet][id], section[id], header, footer")?.id || from?.closest("header, footer")?.localName || (from ? "page" : "deep-link")}:${plan || preset || "general"}`;
       if (!steps.done.hidden) reset();
       const pick = presets[preset];
       if (pick) $$('input[name="needs"]', leadForm).forEach((c) => { if (pick.includes(c.value)) c.checked = true; });
+      setMode(plan);
       lead.showModal();
       requestAnimationFrame(() => $("#lead-name").focus());
     };
     $$("[data-lead]").forEach((b) => b.addEventListener("click", () => openLead(b.dataset.lead, b)));
-    // Deep links: #work opens the form; #work-design, #work-ai, #work-consulting preselect a service.
+    // Deep links: #work opens the form; #work-design, #work-ai, #work-consulting, #work-pro preselect a service.
     const fromHash = () => {
-      const m = location.hash.match(/^#work(?:-(design|ai|consulting))?$/);
+      const m = location.hash.match(/^#work(?:-(design|ai|consulting|pro))?$/);
       if (!m) return;
       $("#services")?.scrollIntoView({ block: "start" });
       openLead(m[1]);
     };
     fromHash();
     addEventListener("hashchange", fromHash);
-    lead.addEventListener("close", () => { if (/^#work/.test(location.hash)) history.replaceState(null, "", location.pathname + location.search + "#services"); });
+    lead.addEventListener("close", () => { if (/^#work/.test(location.hash)) history.replaceState(null, "", location.pathname + location.search + ($("#services") ? "#services" : "")); });
     $$("[data-lead-close]", lead).forEach((b) => b.addEventListener("click", () => lead.close()));
     lead.addEventListener("click", (e) => { if (e.target === lead) lead.close(); });
 
@@ -233,7 +284,7 @@
       } catch { preview = location.hostname !== "firehorse.rascode.dev"; }
       submit.removeAttribute("aria-busy");
       submit.querySelector(".fh-spinner")?.remove();
-      submit.querySelector("span").textContent = "Send to Rascode";
+      submit.querySelector("span").textContent = submitText;
       if (!sent && !preview) { setStatus("That didn't go through. Try again in a minute, or reach us at rascode.dev.", "danger"); return; }
       const first = String(data.name).trim().split(/\s+/)[0];
       $("[data-lead-thanks]", lead).textContent = `Got it, ${first}. We'll be in touch.`;
