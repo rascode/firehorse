@@ -100,7 +100,7 @@ export function renderEmail({ theme = "firehorse", preheader = "", eyebrow = "",
   <tr><td style="padding:0 4px 16px;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
       <td width="22" height="22" style="width:22px;height:22px;background:${BRAND_RED};border-radius:3px;vertical-align:bottom;padding:0 4px 4px;"><div style="height:4px;line-height:4px;font-size:0;background:${INK};">&nbsp;</div></td>
-      <td class="fh-t" style="padding-left:10px;font:700 15px/1 ${t.sans};letter-spacing:-.01em;color:${c.text};">_firehorse</td>
+      <td class="fh-t" style="padding-left:10px;font:700 15px/1 ${t.sans};letter-spacing:-.01em;color:${c.text};">firehorse</td>
     </tr></table>
   </td></tr>
   <tr><td class="fh-card fh-pad" style="background:${c.surface};border:1px solid ${c.rule};border-radius:${r}px;padding:32px 36px;">
