@@ -4,8 +4,14 @@
 //   RESEND_API_KEY + LEAD_TO (+ LEAD_FROM, EMAIL_THEME)   an email via Resend,
 //                          drawn with the Firehorse email templates (src/email)
 // Set them with `npx wrangler secret put <NAME>`.
+//
+// POST /api/subscribe — The Stable mailing list. Forwarded server-to-server to
+// the Rascode forms API (api.rascode.dev/v1/forms/firehorse/stable-subscribe),
+// so sign-ups and their campaign attribution land in Rascode admin and the
+// browser never needs CORS. Optional: STABLE_WELCOME_FROM (a verified Resend
+// sender) sends the Firehorse "welcome" email after a successful sign-up.
 
-import { leadNotification } from "../src/email/email.js";
+import { leadNotification, stableWelcome } from "../src/email/email.js";
 
 const NEEDS = new Set(["design-system", "website", "product-ui", "ai-agents", "automation", "architecture", "consulting", "firehorse-pro", "system-from-url"]);
 const PLANS = new Set(["pro", "team", "custom-build", "question"]);
@@ -17,6 +23,7 @@ const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">"
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === "/api/subscribe") return subscribe(request, env);
     if (url.pathname !== "/api/lead") return env.ASSETS.fetch(request);
     if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
@@ -79,3 +86,56 @@ export default {
     return delivered ? json({ ok: true }) : json({ error: "Couldn't deliver the lead." }, 502);
   },
 };
+
+const ATTRIBUTION = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "utm_id", "ref", "first_utm_source", "first_utm_medium", "first_utm_campaign", "landing_page", "referrer", "placement", "page_path", "page_title"];
+const LISTS = new Set(["highlights", "pro"]);
+
+async function subscribe(request, env) {
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  let input;
+  try { input = await request.json(); } catch { return json({ error: "Send JSON." }, 400); }
+  const f = input.fields && typeof input.fields === "object" ? input.fields : {};
+  if (clean(f._hp, 200)) return json({ ok: true }); // honeypot filled: drop quietly
+  const email = clean(f.email, 200);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "Enter a valid email address." }, 422);
+  const fields = {
+    name: clean(f.name, 120),
+    email,
+    list: LISTS.has(f.list) ? f.list : "highlights",
+    mailing_list: true,
+    source: clean(f.source, 120),
+    _hp: "",
+  };
+  for (const k of ATTRIBUTION) { const v = clean(f[k], 500); if (v) fields[k] = v; }
+  const sourceUrl = clean(input.source_url, 500);
+
+  const api = (env.RASCODE_API_URL || "https://api.rascode.dev").replace(/\/$/, "");
+  let res;
+  try {
+    res = await fetch(`${api}/v1/forms/firehorse/stable-subscribe`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "user-agent": request.headers.get("user-agent") ?? "firehorse-site",
+        "x-forwarded-for": request.headers.get("cf-connecting-ip") ?? "",
+      },
+      body: JSON.stringify({ source_url: sourceUrl, fields }),
+    });
+  } catch { return json({ error: "Couldn't reach the mailing list. Try again in a minute." }, 502); }
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const msg = res.status === 429 ? "Too many sign-ups from here. Try again shortly." : res.status === 400 ? body.error || "Check the form and try again." : "Couldn't subscribe. Try again in a minute.";
+    return json({ error: msg }, res.status === 400 || res.status === 429 ? res.status : 502);
+  }
+
+  if (env.RESEND_API_KEY && env.STABLE_WELCOME_FROM) {
+    const mail = stableWelcome({ name: fields.name, list: fields.list }, { theme: env.EMAIL_THEME || "firehorse" });
+    // A welcome that fails to send doesn't undo the sign-up.
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
+      body: JSON.stringify({ from: env.STABLE_WELCOME_FROM, to: [email], subject: mail.subject, html: mail.html, text: mail.text }),
+    }).catch(() => {});
+  }
+  return json({ ok: true });
+}

@@ -94,7 +94,7 @@ const head = ({ title, description, path, type = "website", image, jsonld }) => 
 <meta name="theme-color" content="#161616">
 <meta name="fh-kc-endpoint" content="">
 <!-- Subscribe endpoint (POST JSON {fields:{name,email,list,source}}). Empty: the form explains it isn't open yet. -->
-<meta name="fh-subscribe-endpoint" content="https://api.rascode.dev/v1/forms/firehorse/stable-subscribe">
+<meta name="fh-subscribe-endpoint" content="/api/subscribe">
 <link rel="canonical" href="${BASE}${path}">
 <link rel="alternate" type="application/rss+xml" title="The Stable" href="${BASE}/stable/feed.xml">
 <meta property="og:type" content="${type}">
