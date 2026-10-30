@@ -5,37 +5,74 @@
 
 @layer fh.components {
   /* —— Pricing tiers ——
-   * Plans side by side, as many as fit; the featured plan carries the
-   * tone. Prices line up because every tier uses the same anatomy.
+   * One etched sheet: the tiers share dashed rules (like the stats strip),
+   * each is numbered 01, 02… and carries a rule in its tone along the top.
+   * The price block sits over an edge-to-edge dashed baseline, features run
+   * one per row between full-width rules with a bare tone check, and the
+   * featured tier gets a tone wash, a tone outline, a heavier top rule and
+   * its tag on the name line.
    *   <div class="fh-tiers">
-   *     <article class="fh-tier" data-tone="sky" data-featured>
+   *     <article class="fh-tier" data-tone="sky" data-featured="Most picked">
    *       <header><p class="fh-tier__name">Agent</p><p class="fh-tier__price"><b>$1,695</b>/mo</p>
    *         <p class="fh-tier__note">3-day free trial</p></header>
+   *       <p class="fh-tier__pitch">…</p>
    *       <ul class="fh-checklist" data-tone>…</ul>
    *       <a class="fh-button fh-button--block">Start trial</a>
    *     </article>
-   *   </div> */
+   *   </div>
+   * Knob: --fh-tier-pad (the tier's side padding; rules run past it). */
   .fh-tiers {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-    gap: var(--fh-space-4);
+    gap: 0;
     align-items: stretch;
+    counter-reset: fh-tier;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
   }
 
   .fh-tier {
+    --_pad: var(--fh-tier-pad, var(--fh-space-6));
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--fh-space-6);
-    padding: var(--fh-space-7) var(--fh-space-6);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-radius: var(--fh-radius-md);
+    gap: var(--fh-space-5);
+    padding: var(--fh-space-7) var(--_pad) var(--fh-space-6);
+    border: 0;
+    border-radius: 0;
+    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    counter-increment: fh-tier;
     container: fh-tier / inline-size;
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    /* The tone rule along the top edge. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -1px 0 auto;
+      block-size: 2px;
+      background-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      pointer-events: none;
+    }
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-tone) 3%, transparent); }
 
     & > header {
       display: grid;
       gap: var(--fh-space-2);
     }
+
+    /* The price block's baseline runs edge to edge. */
+    & > header,
+    & > .fh-tier__price {
+      margin-inline: calc(var(--_pad) * -1);
+      padding-inline: var(--_pad);
+      padding-block-end: var(--fh-space-5);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & > header > .fh-tier__price { margin-inline: 0; padding: 0; border: 0; }
 
     & > .fh-button,
     & > .fh-tier__actions {
@@ -43,19 +80,20 @@
     }
 
     &:is([data-featured], .fh-tier--featured) {
-      border-style: solid;
-      border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
-      background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-tone) 45%, transparent);
+
+      &::after { block-size: 3px; background-color: var(--fh-tone); }
     }
 
+    /* data-featured="Most picked": the tag on the name line, at the right. */
     &[data-featured]::before {
       content: attr(data-featured);
       position: absolute;
-      inset-block-start: 0;
-      inset-inline-end: var(--fh-space-5);
-      translate: 0 -50%;
-      padding: 0.15rem 0.5rem;
-      border-radius: var(--fh-radius-sm);
+      inset-block-start: calc(var(--fh-space-7) - 0.1rem);
+      inset-inline-end: var(--_pad);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone);
       color: var(--fh-color-on-tone);
       font-family: var(--fh-font-mono);
@@ -71,6 +109,9 @@
   }
 
   .fh-tier__name {
+    display: flex;
+    align-items: baseline;
+    gap: var(--fh-space-2);
     margin: 0;
     color: var(--fh-tone);
     font-family: var(--fh-font-mono);
@@ -78,6 +119,11 @@
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
+
+    &::before {
+      content: counter(fh-tier, decimal-leading-zero);
+      color: var(--fh-color-text-subtle);
+    }
   }
 
   .fh-tier__price {
@@ -86,21 +132,23 @@
     font-size: var(--fh-text-small);
 
     & > b {
+      margin-inline-end: 0.15em;
       color: var(--fh-color-text);
-      font-size: clamp(2rem, 1.4rem + 4cqi, 2.75rem);
+      font-size: clamp(2.3rem, 1.5rem + 4cqi, 2.9rem);
       font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-tightest);
+      letter-spacing: -0.045em;
       font-variant-numeric: tabular-nums;
     }
   }
 
   .fh-tier__note {
     margin: 0;
-    color: var(--fh-color-text-subtle);
+    color: var(--fh-tone);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
+    opacity: 0.85;
   }
 
   /* —— Feature ——
@@ -290,16 +338,15 @@
     }
   }
 
-  /* Explicit featured flag element (instead of the data-featured label). */
-  /* The flag sits on the tier's top edge: opaque, filled with the tier's
-   * own tone and above the border so the line never runs through it. */
+  /* Explicit featured flag element (instead of the data-featured label):
+   * a tone pill on the name line, at the right, like data-featured. */
   .fh-tier__flag {
     position: absolute;
     z-index: 1;
-    inset-block-start: 0;
-    inset-inline-end: var(--fh-space-5);
-    translate: 0 -50%;
+    inset-block-start: calc(var(--fh-space-7) - 0.1rem);
+    inset-inline-end: var(--fh-tier-pad, var(--fh-space-6));
     border: var(--fh-border-thin) solid var(--fh-tone);
+    border-radius: var(--fh-radius-pill);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
     font-weight: var(--fh-weight-semibold);
@@ -312,9 +359,27 @@
     line-height: var(--fh-leading-normal);
   }
 
+  /* Features: one per row between full-width etched rules, a bare tone check. */
   .fh-tier > .fh-checklist {
     flex: 1;
     align-content: start;
+    gap: 0;
+    margin-inline: calc(var(--fh-tier-pad, var(--fh-space-6)) * -1);
+    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > li {
+      min-block-size: 0;
+      padding: var(--fh-space-2-5, 0.625rem) var(--fh-tier-pad, var(--fh-space-6)) var(--fh-space-2-5, 0.625rem) calc(var(--fh-tier-pad, var(--fh-space-6)) + 1.5rem);
+    }
+    & > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+    & > li::before { display: none; }
+    & > li::after {
+      inset-block-start: 50%;
+      inset-inline-start: var(--fh-tier-pad, var(--fh-space-6));
+      inline-size: 0.85rem;
+      translate: 0 -50%;
+      mask-size: 0.85rem;
+    }
   }
 
   /* —— Carousel ——

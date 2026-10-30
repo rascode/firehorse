@@ -25,7 +25,10 @@
       "label": "Builder skill",
       "blurb": "Hand it a URL and get a design system back."
     }
-  ]
+  ],
+  "heroCta": "<div class=\"site-hero-cta\"><button class=\"fh-button fh-button--lg\" type=\"button\" data-lead=\"pro\" data-plan=\"pro\" data-lead-placement=\"hero\">Request early access<span class=\"site-hero-cta__price\">from $24/mo</span></button></div>",
+  "dockCta": "<button class=\"fh-button fh-button--sm site-dock-cta\" type=\"button\" data-lead=\"pro\" data-plan=\"pro\" data-lead-placement=\"dock\"><span class=\"site-dock-cta__label\"><span class=\"site-dock-cta__verb\">Request </span>early access</span><span class=\"site-hero-cta__price\">from $24/mo</span></button>",
+  "dockBadge": "<button class=\"site-dock-link\" type=\"button\" data-lead=\"pro\" data-plan=\"pro\" data-lead-placement=\"dock-pill\">Early access now<i class=\"fh-icon fh-icon--arrow-up-right\" aria-hidden=\"true\"></i></button>"
 }-->
 <!--@main-->
     <!-- ═══════════════ PRO ═══════════════ -->
@@ -179,7 +182,7 @@
             </ul>
             <div class="fh-tier__actions fh-stack fh-stack--xs">
               <button class="fh-button fh-button--secondary fh-button--block" type="button" data-lead="pro-build" data-plan="custom-build">Scope a build</button>
-              <a class="fh-link site-pricing__brief" href="#brief">See a sample brief</a>
+              <a class="fh-chip fh-chip--tone site-pricing__brief" data-tone="amber" href="#brief"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i>See our own brief<i class="fh-icon fh-icon--chevron-down site-pricing__brief-go" aria-hidden="true"></i></a>
             </div>
           </article>
         </div>
@@ -218,29 +221,24 @@
         </div>
       </div>
 
-      <!-- Sample brief -->
+      <!-- The brief: Rascode's own, for building Firehorse with Firehorse -->
       <article class="site-brief" id="brief" aria-labelledby="brief-title" data-tone="fuchsia">
         <header class="site-brief__head">
           <div>
-            <p class="fh-label">Sample client brief · custom design system build</p>
-            <h3 id="brief-title" class="fh-heading">Harbor &amp; Pine Outfitters</h3>
+            <p class="fh-label">Our own brief · design system build</p>
+            <h3 id="brief-title" class="fh-heading">Firehorse, built with Firehorse</h3>
           </div>
-          <span class="fh-badge fh-badge--solid" data-tone="amber">Fictional, for illustration</span>
+          <span class="fh-badge fh-badge--solid" data-tone="lime">Client: Rascode</span>
         </header>
-        <p class="site-brief__note"><i class="fh-icon fh-icon--info" aria-hidden="true"></i>This brief is made up. Harbor &amp; Pine isn't a real company. It shows the shape of what you get before any work starts: goals, scope, deliverables, milestones and what's out of scope, agreed in writing.</p>
+        <p class="site-brief__note"><i class="fh-icon fh-icon--info" aria-hidden="true"></i>This is the real brief Rascode worked from to turn its own design system into Firehorse. The site you're reading is the result: every page, demo and email here is built with the package it documents.</p>
         <div class="site-brief__grid">
-          <section><h4>The ask</h4><p>A regional outdoor retailer with 14 stores is relaunching its site and app. Today: three codebases, two button styles, product cards built five different ways and a checkout that fails contrast. They want one system their in-house team and their AI agents can build on.</p></section>
-          <section><h4>Goals</h4><ul class="fh-checklist" data-tone><li>One design system across web, app and in-store kiosks</li><li>WCAG 2.2 AA on every page, checked in CI</li><li>Agents can generate on-brand pages without review rounds</li><li>Seasonal re-skins without engineering tickets</li></ul></section>
-          <section><h4>Scope</h4><dl class="fh-dl"><div><dt>Audit</dt><dd>40 key screens, 3 codebases, analytics review</dd></div><div><dt>Tokens</dt><dd>Brand theme on Firehorse, light and dark, 9 tones mapped to departments</dd></div><div><dt>Config</dt><dd>Global presets: avatar, card, button, density; seasonal theme switch</dd></div><div><dt>Components</dt><dd>Store, cart, checkout, store locator, loyalty card, product datatable for staff</dd></div><div><dt>Agents</dt><dd>llms.txt, agent contract and schema rules for their own agents</dd></div></dl></section>
-          <section><h4>Deliverables</h4><ul class="fh-checklist" data-tone><li><code>@harborpine/design</code> package and theme file</li><li>Documentation site in the style of this one</li><li>24 page templates in the playground</li><li>Migration plan with a ranked backlog</li><li>Two training sessions for designers and engineers</li></ul></section>
-          <section><h4>Milestones</h4><ol class="fh-timeline"><li data-tone="sky"><time>Week 1–2</time><p>Audit, token extraction with the builder, direction review</p></li><li data-tone="teal"><time>Week 3–5</time><p>Theme, config presets and core components</p></li><li data-tone="lime"><time>Week 6–7</time><p>Commerce and staff datatables, accessibility pass</p></li><li data-tone="amber"><time>Week 8</time><p>Docs, agent files, handover and training</p></li></ol></section>
-          <section><h4>Not included</h4><ul class="site-brief__out"><li>Rebuilding their e-commerce backend</li><li>Photography and copywriting</li><li>Ongoing support after 30 days (available as a retainer)</li></ul><p class="fh-muted" style="margin:var(--fh-space-3) 0 0">Every engagement starts with a 20-minute call and a written, fixed-scope proposal like this one. You know the deliverables and the price before anything begins.</p></section>
+          <section><h4>The ask</h4><p>rascode.dev ran on an in-house design system. Turn it into an open package that any team, and their AI agents, can build on, with a documentation site built on the package itself, so every demo is the real component.</p></section>
+          <section><h4>Goals</h4><ul class="fh-checklist" data-tone><li>One package behind rascode.dev and this site</li><li>Components size to their box: no viewport breakpoints</li><li>Light and dark in every theme, AA contrast checked in the test suite</li><li>Agents build on-system from llms.txt, an agent contract and Index IDs</li></ul></section>
+          <section><h4>Scope</h4><dl class="fh-dl"><div><dt>Tokens</dt><dd>{{TOKENS}} tokens, primitive → semantic → component</dd></div><div><dt>Cascade</dt><dd>Layered CSS, so overrides never need <code>!important</code></dd></div><div><dt>Themes</dt><dd>Firehorse, Mustang, Friesian and Akhal-Teke, each light and dark</dd></div><div><dt>Components</dt><dd>82 families, 106 variants, each with an Index ID</dd></div><div><dt>Agents</dt><dd>llms.txt, agent contract, index.json and schema checks</dd></div><div><dt>Email</dt><dd>Lead and welcome emails built from the same tokens</dd></div></dl></section>
+          <section><h4>Deliverables</h4><ul class="fh-checklist" data-tone><li>The <code>firehorse</code> package, v1.1.0, MIT licensed</li><li>This documentation site, built with Firehorse</li><li>The playground for building pages from the library</li><li>Agent files and the Firehorse Index</li><li>The Stable newsletter, wired into Rascode admin</li></ul></section>
+          <section><h4>Milestones</h4><ol class="fh-timeline"><li data-tone="sky"><time>Phase 1</time><p>Extract tokens and components from rascode.dev</p></li><li data-tone="teal"><time>Phase 2</time><p>Package, themes and agent files</p></li><li data-tone="lime"><time>Phase 3</time><p>Docs site, playground and emails, all on Firehorse</p></li><li data-tone="amber"><time>Nov 4, 2026</time><p>Public launch at firehorse.rascode.dev</p></li></ol></section>
+          <section><h4>Not included</h4><ul class="site-brief__out"><li>Pro fields: shipping separately, in early access</li><li>The wider Rascode design library (design.rascode.dev, coming soon)</li></ul><p class="fh-muted" style="margin:var(--fh-space-3) 0 0">Every engagement starts with a 20-minute call and a written, fixed-scope proposal like this one. You know the deliverables and the price before anything begins.</p></section>
         </div>
         <footer class="site-brief__foot"><button class="fh-button" type="button" data-lead="pro-build" data-plan="custom-build">Get a brief like this for your project</button><span class="fh-muted">Reply within one business day.</span></footer>
       </article>
     </section>
-
-    <!-- Side tab: the Pro lead sheet, one click from anywhere on the page -->
-    <button class="site-lead-tab" type="button" data-lead="pro" data-plan="pro" data-lead-sheet data-lead-placement="side-tab" data-tone="fuchsia">
-      <i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i><span>Get Pro</span>
-    </button>

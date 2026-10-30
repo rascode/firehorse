@@ -20,6 +20,24 @@
   const saved = store.get("fh-scheme");
   if (saved) $$(`input[name="scheme"][value="${saved}"], input[name="scheme-m"][value="${saved}"]`).forEach((r) => (r.checked = true));
   $$('input[name="scheme"], input[name="scheme-m"]').forEach((r) => r.addEventListener("change", () => setScheme(r.value)));
+  // Clicking a label would focus its radio, and focusing a control in the
+  // sticky header scrolls the page. Check it ourselves and focus without scrolling.
+  $$('input[name="scheme"], input[name="scheme-m"]').forEach((r) => r.closest("label")?.addEventListener("click", (e) => {
+    if (e.target === r) return;
+    e.preventDefault();
+    if (!r.checked) { r.checked = true; r.dispatchEvent(new Event("change", { bubbles: true })); }
+    r.focus({ preventScroll: true });
+  }));
+
+  /* —— Dock call to action: as wide as the header's actions ——
+   * The dock's CTA (.site-dock-cta) spans from the left edge of the header's
+   * scheme switch to the right edge of its Download button, so the two line up. */
+  const dockCta = $(".site-dock-cta"), hdrActions = $(".fh-header__actions");
+  if (dockCta && hdrActions) {
+    const fit = () => dockCta.style.setProperty("--site-hdr-actions-w", `${Math.round(hdrActions.getBoundingClientRect().width)}px`);
+    new ResizeObserver(fit).observe(hdrActions);
+    fit();
+  }
 
   /* —— Avatar shuffle: rotate the photos among data-face avatars —— */
   $("#avatar-shuffle")?.addEventListener("click", () => {

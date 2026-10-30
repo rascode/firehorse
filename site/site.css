@@ -931,92 +931,96 @@ body::before {
 .site-pricing__billing .fh-segmented > label { border-radius: var(--fh-radius-pill); }
 .site-pricing:has(input[name="billing"][value="annual"]:checked) [data-price-monthly],
 .site-pricing:has(input[name="billing"][value="monthly"]:checked) [data-price-annual] { display: none; }
-.site-pricing__tiers { --fh-tiers-min: 15rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
-/* Pricing, Firehorse-style: one etched sheet instead of four loose cards.
- * Tiers share dashed rules like the stats strip, each numbered (01-04) with a
- * tone rule along its top edge; the price sits over a dashed baseline, and the
- * featured tier gets a tone wash, a heavier edge and its tag on the sheet line. */
-.site-pricing__tiers {
-  gap: 0;
-  counter-reset: site-tier;
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: var(--fh-radius-md);
-  background-color: var(--site-frost);
-}
+.site-pricing__tiers { grid-template-columns: minmax(0, 1fr); }
+/* Four across, two by two, or one: never three plus an orphan. */
+@container fh-frame (inline-size >= 36rem) { .site-pricing__tiers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container fh-frame (inline-size >= 68rem) { .site-pricing__tiers { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Pricing: the etched tier sheet is the package's own (fh-tiers). The site
+ * only adds the frost behind it and lines the rows up across tiers. */
+.site-pricing__tiers { background-color: var(--site-frost); }
 .site-pricing__tiers > .fh-tier {
-  counter-increment: site-tier;
-  gap: var(--fh-space-5);
-  padding: var(--fh-space-7) var(--fh-space-6) var(--fh-space-6);
-  border: 0;
-  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: 0;
-  background-color: transparent;
-  transition: background-color var(--fh-duration-fast);
+  /* Every tier shares the sheet's row tracks (header, pitch, features,
+     actions), so prices, lists and buttons line up across the row.
+     (Subgrid needs the tier to drop its own container: a query container
+     can't share its parent's rows.) */
+  container-type: normal;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  align-content: start;
 }
-.site-pricing__tiers > .fh-tier::after {
-  content: "";
-  position: absolute;
-  inset: -1px 0 auto;
-  block-size: 2px;
-  background-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+.site-pricing__tiers .fh-tier__price > b { font-size: clamp(2.3rem, 1.6rem + 1.4vw, 2.9rem); }
+.site-pricing__tiers .fh-tier > .fh-checklist { align-self: stretch; }
+.site-pricing__tiers .fh-tier > :is(.fh-button, .fh-tier__actions) { align-self: start; margin-block-start: 0; }
+
+/* Hero call to action (meta.heroCta): one button, to the right of the
+ * title and lede on wide screens, under them on narrow ones. */
+.site-hero-cta { display: flex; align-items: center; }
+/* The price rides in the button, after a thin rule, a step quieter. */
+.site-hero-cta__price {
+  padding-inline-start: var(--fh-space-3);
+  border-inline-start: var(--fh-border-thin) solid color-mix(in oklab, currentColor 30%, transparent);
+  font-weight: var(--fh-weight-medium);
+  letter-spacing: var(--fh-tracking-wide);
+  opacity: 0.7;
 }
-.site-pricing__tiers > .fh-tier:hover { background-color: color-mix(in oklab, var(--fh-tone) 3%, transparent); }
-.site-pricing__tiers .fh-tier__name { display: flex; align-items: baseline; gap: var(--fh-space-2); }
-.site-pricing__tiers .fh-tier__name::before {
-  content: counter(site-tier, decimal-leading-zero);
-  color: var(--fh-color-text-subtle);
-}
-.site-pricing__tiers .fh-tier > header {
-  gap: var(--fh-space-2);
-  /* Rule runs edge to edge, like the feature rows. */
-  margin-inline: calc(var(--fh-space-6) * -1);
-  padding-inline: var(--fh-space-6);
-  padding-block-end: var(--fh-space-5);
-  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-}
-.site-pricing__tiers .fh-tier__price > b { font-size: clamp(2.3rem, 1.5rem + 4cqi, 3.1rem); letter-spacing: -0.045em; margin-inline-end: 0.15em; }
-.site-pricing__tiers .fh-tier__note { color: var(--fh-tone); opacity: 0.85; }
-.site-pricing__tiers .fh-tier__pitch { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: var(--fh-leading-relaxed); }
-/* Features: one per row, etched rules running the full width of the tier,
-   marked with a bare tone check (no circle). */
-.site-pricing__tiers .fh-tier > .fh-checklist {
-  gap: 0;
-  margin-inline: calc(var(--fh-space-6) * -1);
-  border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-}
-.site-pricing__tiers .fh-checklist > li {
-  min-block-size: 0;
-  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-6) var(--fh-space-2-5, 0.625rem) calc(var(--fh-space-6) + 1.5rem);
-}
-.site-pricing__tiers .fh-checklist > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
-.site-pricing__tiers .fh-checklist > li::before { display: none; }
-.site-pricing__tiers .fh-checklist > li::after {
-  inset-block-start: 50%;
-  inset-inline-start: var(--fh-space-6);
-  inline-size: 0.85rem;
-  translate: 0 -50%;
-  mask-size: 0.85rem;
-}
-/* Featured: a tone wash, a tone outline and a heavier top edge. */
-.site-pricing__tiers > .fh-tier:is([data-featured], .fh-tier--featured) {
-  border-style: dashed;
-  border-color: var(--fh-color-etch-soft);
-  background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-tone) 45%, transparent);
-}
-.site-pricing__tiers > .fh-tier:is([data-featured], .fh-tier--featured)::after { block-size: 3px; background-color: var(--fh-tone); }
-/* The tag sits on the name line, at the right, inside the sheet. */
-.site-pricing__tiers > .fh-tier[data-featured]::before {
-  inset-block-start: calc(var(--fh-space-7) - 0.1rem);
-  inset-inline-end: var(--fh-space-6);
-  translate: none;
-  border-radius: var(--fh-radius-pill);
-  padding: 0.2rem 0.6rem;
+@container fh-frame (inline-size >= 60rem) {
+  .site-page-hero .fh-hero:has(> .site-hero-cta) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--fh-space-12);
+    max-inline-size: none;
+  }
+  .site-page-hero .fh-hero:has(> .site-hero-cta) > :not(.site-hero-cta) { grid-column: 1; }
+  .site-page-hero .fh-hero > .site-hero-cta { grid-column: 2; grid-row: 1 / span 3; align-self: end; }
 }
 
-.site-pricing__brief { justify-self: center; font-size: var(--fh-text-small); }
+/* Dock CTA spans the header's actions (scheme switch + Download); site.js
+   measures them into --site-hdr-actions-w. */
+.site-page-dock .site-dock-cta { inline-size: var(--site-hdr-actions-w, auto); justify-content: center; }
+
+/* The same call to action in the page dock (meta.dockCta). On narrow docks
+ * Firehorse shrinks dock buttons to an icon; this one keeps its label and
+ * drops the price instead. */
+@container fh-frame (inline-size < 48rem) {
+  .site-page-dock .fh-dock__actions .site-dock-cta { inline-size: auto; padding-inline: var(--fh-space-3); }
+  .site-page-dock .fh-dock__actions .site-dock-cta > .site-dock-cta__label { position: static; inline-size: auto; block-size: auto; overflow: visible; clip-path: none; }
+  .site-page-dock .fh-dock__actions .site-dock-cta::after { display: none; }
+  .site-page-dock .site-dock-cta__verb { display: none; }
+  /* With the pill link there, the button would say the same thing twice. */
+  .site-page-dock:has(.site-dock-link) .fh-dock__actions { display: none; }
+}
+
+/* The dock pill's second segment as a link (meta.dockBadge): reads as text,
+ * underlined in the page tone, and opens the early-access form. */
+.site-dock-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fh-color-text);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+  transition: color var(--fh-duration-fast), text-decoration-color var(--fh-duration-fast);
+}
+.site-dock-link .fh-icon { color: var(--fh-tone); font-size: 0.7rem; transition: translate var(--fh-duration-fast) var(--fh-ease-out); }
+.site-dock-link:is(:hover, :focus-visible) { color: var(--fh-tone); text-decoration-color: currentColor; outline: none; }
+.site-dock-link:hover .fh-icon { translate: 1px -1px; }
+.site-dock-link:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; border-radius: 2px; }
+
+/* "See our own brief": a tone chip with a document icon and a down chevron
+   (it jumps to the brief below), centred under the Custom build button. */
+.site-pricing__brief { justify-self: center; }
+.site-pricing__brief::before { display: none; }
+.site-pricing__brief .fh-icon { font-size: 0.85rem; }
+.site-pricing__brief-go { transition: translate var(--fh-duration-fast) var(--fh-ease-out); }
+.site-pricing__brief:hover .site-pricing__brief-go { translate: 0 2px; }
 .site-pricing__fine { display: flex; flex-wrap: wrap; gap: var(--fh-space-3) var(--fh-space-7); margin: 0; padding: 0; list-style: none; font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
 .site-pricing__fine li { display: inline-flex; align-items: center; gap: var(--fh-space-2); }
 .site-pricing__fine .fh-icon { color: var(--fh-tone-fuchsia); }

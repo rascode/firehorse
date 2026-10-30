@@ -670,16 +670,18 @@
     }
   }
 
-  /* Header hand-off: while a dock is engaged, the header's own CTA
-   * slides away so there is only ever one primary action on screen.
+  /* Header hand-off: while a dock is engaged, the header's own CTA steps
+   * back to an inverted fill (canvas behind, text colour on top) so the
+   * dock's action is the one primary on screen; it stays clickable.
    * (Needs data-active — set by the enhancer.) */
   :root:has(.fh-dock[data-active="true"]) .fh-header__actions > .fh-button:not(.fh-button--secondary, .fh-button--ghost) {
-    translate: 0 -220%;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      translate var(--fh-duration-slow) var(--fh-ease-out) 0.3s,
-      visibility 0s linear 0.8s;
+    --fh-button-bg: var(--fh-color-canvas);
+    --fh-button-fg: var(--fh-color-text);
+    --fh-button-border: color-mix(in oklab, var(--fh-color-text) 35%, transparent);
+    --fh-button-shadow: none;
+    --fh-button-shadow-hover: none;
+    --fh-button-sheen: 0;
+    transition: background-color var(--fh-duration-slow) var(--fh-ease-out), color var(--fh-duration-slow) var(--fh-ease-out), border-color var(--fh-duration-slow) var(--fh-ease-out);
   }
 
   /* Narrow docks: the pill yields to the small title, cubes hide,

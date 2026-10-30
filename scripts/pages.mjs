@@ -1,5 +1,5 @@
 // Docs-site pages. Each site/pages/**/*.html file is one page:
-//   <!--@meta {json}-->   path, order, name, tone, title, description, headline, lede, scripts[]
+//   <!--@meta {json}-->   path, order, name, tone, title, description, headline, lede, scripts[], heroCta (raw HTML under the lede), dockCta (raw HTML: replaces the dock's chips and Next button), dockBadge (raw HTML: replaces the dock pill's section count)
 //                         panel: true → the offset panel from [data-fh-panel-start] down, with a tall footer
 //                         optional: parent (hub path), hub, chips [[id, label]], labels {id: label}, aliases [old ids → this page]
 //   <!--@jsonld-->        the page's JSON-LD <script> (optional)
@@ -153,6 +153,7 @@ const pageHead = (p, chips, all) => {
         </nav>
         <h1 class="fh-display" id="page-title">${m.headline ?? escHtml(m.name)}</h1>
         ${m.lede ? `<p class="fh-lede">${m.lede}</p>` : ""}
+        ${m.heroCta ?? ""}
       </div>
 ${summary(p, chips, kids, all)}
     </section>
@@ -160,12 +161,12 @@ ${summary(p, chips, kids, all)}
     <div class="fh-dock fh-frame site-page-dock" data-tone="${tone}" data-follow data-engage="#top">
       <div class="fh-dock__bar">
         <div class="fh-dock__identity">
-          <p class="fh-eyebrow-pill fh-dock__heading" data-tone="${tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><span class="fh-rollover" data-fh-rollover="sections" data-fh-default="${escHtml(m.name)}" aria-live="polite"><span class="fh-rollover__item">${escHtml(m.name)}</span></span></span><span class="fh-eyebrow-pill__seg"><strong><span class="fh-rollover" data-fh-rollover="sections" data-fh-part="index" data-fh-default="${pad(chips.length)}" aria-hidden="true"><span class="fh-rollover__item">${pad(chips.length)}</span></span></strong></span></p>
+          <p class="fh-eyebrow-pill fh-dock__heading" data-tone="${tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><span class="fh-rollover" data-fh-rollover="sections" data-fh-default="${escHtml(m.name)}" aria-live="polite"><span class="fh-rollover__item">${escHtml(m.name)}</span></span></span><span class="fh-eyebrow-pill__seg">${m.dockBadge ?? `<strong><span class="fh-rollover" data-fh-rollover="sections" data-fh-part="index" data-fh-default="${pad(chips.length)}" aria-hidden="true"><span class="fh-rollover__item">${pad(chips.length)}</span></span></strong>`}</span></p>
         </div>
-        <nav class="fh-chips" aria-label="On this page">
+${m.dockCta ? "" : `        <nav class="fh-chips" aria-label="On this page">
 ${chipHtml}
         </nav>
-${next ? `        <div class="fh-dock__actions">
+`}${m.dockCta ? `        <div class="fh-dock__actions">${m.dockCta}</div>` : next ? `        <div class="fh-dock__actions">
           <a class="fh-button fh-button--sm fh-button--outline" href="${next.path}"><span class="fh-roll">Next · ${escHtml(next.meta.name)}</span></a>
         </div>` : ""}
       </div>
