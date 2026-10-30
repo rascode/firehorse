@@ -235,7 +235,7 @@ export const assemble = (list = pages()) => {
     }
     main = main.replace("{{GROUP_CARDS}}", () => cards(list.filter((x) => x.meta.parent === p.path)))
       .replace("{{CATEGORY_CARDS}}", () => `    <section id="explore" class="fh-section fh-section--ruled site-anchor" data-tone="accent" aria-labelledby="explore-title" data-fh-label="Explore" data-fh-index="02">
-      <header class="fh-section-head"><div><p class="site-chapter" data-tone="accent"><b>02</b> Explore</p><h2 id="explore-title" class="fh-heading">Everything in Firehorse, one category at a time</h2><p class="fh-lede">Each category has its own page and a dock of its sections. Every component carries an Index ID.</p></div></header>
+      <header class="fh-section-head"><div><p class="site-chapter" data-tone="accent"><b>02</b> Explore</p><h2 id="explore-title" class="fh-heading">Everything in Firehorse, one category at a time</h2><p class="fh-lede">Good artists copy: every component here copies its markup, with its Index ID, in one click. Great artists clone: <code>git clone</code> the whole system and make it yours.</p></div></header>
 ${cards(list.filter((x) => x.path !== "/" && !x.meta.parent))}
     </section>`);
     p.built = main;
