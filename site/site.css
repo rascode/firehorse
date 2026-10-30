@@ -932,6 +932,67 @@ body::before {
 .site-pricing:has(input[name="billing"][value="annual"]:checked) [data-price-monthly],
 .site-pricing:has(input[name="billing"][value="monthly"]:checked) [data-price-annual] { display: none; }
 .site-pricing__tiers { --fh-tiers-min: 15rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+/* Pricing, Firehorse-style: one etched sheet instead of four loose cards.
+ * Tiers share dashed rules like the stats strip, each numbered (01-04) with a
+ * tone rule along its top edge; the price sits over a dashed baseline, and the
+ * featured tier gets a tone wash, a heavier edge and its tag on the sheet line. */
+.site-pricing__tiers {
+  gap: 0;
+  counter-reset: site-tier;
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-md);
+  background-color: var(--site-frost);
+}
+.site-pricing__tiers > .fh-tier {
+  counter-increment: site-tier;
+  gap: var(--fh-space-5);
+  padding: var(--fh-space-7) var(--fh-space-6) var(--fh-space-6);
+  border: 0;
+  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: 0;
+  background-color: transparent;
+  transition: background-color var(--fh-duration-fast);
+}
+.site-pricing__tiers > .fh-tier::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  block-size: 2px;
+  background-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+}
+.site-pricing__tiers > .fh-tier:hover { background-color: color-mix(in oklab, var(--fh-tone) 3%, transparent); }
+.site-pricing__tiers .fh-tier__name { display: flex; align-items: baseline; gap: var(--fh-space-2); }
+.site-pricing__tiers .fh-tier__name::before {
+  content: counter(site-tier, decimal-leading-zero);
+  color: var(--fh-color-text-subtle);
+}
+.site-pricing__tiers .fh-tier > header {
+  gap: var(--fh-space-2);
+  padding-block-end: var(--fh-space-5);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+}
+.site-pricing__tiers .fh-tier__price > b { font-size: clamp(2.3rem, 1.5rem + 4cqi, 3.1rem); letter-spacing: -0.045em; margin-inline-end: 0.15em; }
+.site-pricing__tiers .fh-tier__note { color: var(--fh-tone); opacity: 0.85; }
+.site-pricing__tiers .fh-tier__pitch { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: var(--fh-leading-relaxed); }
+/* Featured: a tone wash, a tone outline and a heavier top edge. */
+.site-pricing__tiers > .fh-tier:is([data-featured], .fh-tier--featured) {
+  border-style: dashed;
+  border-color: var(--fh-color-etch-soft);
+  background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-tone) 45%, transparent);
+}
+.site-pricing__tiers > .fh-tier:is([data-featured], .fh-tier--featured)::after { block-size: 3px; background-color: var(--fh-tone); }
+/* The tag sits on the name line, at the right, inside the sheet. */
+.site-pricing__tiers > .fh-tier[data-featured]::before {
+  inset-block-start: calc(var(--fh-space-7) - 0.1rem);
+  inset-inline-end: var(--fh-space-6);
+  translate: none;
+  border-radius: var(--fh-radius-pill);
+  padding: 0.2rem 0.6rem;
+}
+
 .site-pricing__brief { justify-self: center; font-size: var(--fh-text-small); }
 .site-pricing__fine { display: flex; flex-wrap: wrap; gap: var(--fh-space-3) var(--fh-space-7); margin: 0; padding: 0; list-style: none; font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
 .site-pricing__fine li { display: inline-flex; align-items: center; gap: var(--fh-space-2); }
