@@ -50,7 +50,7 @@ export const palette = {
       "mono": ""
     },
     "radius": 7,
-    "button": "convex"
+    "button": "flat"
   },
   "friesian": {
     "label": "Friesian",

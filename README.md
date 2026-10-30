@@ -144,7 +144,7 @@ A theme is every design decision in one file: type, color in light and dark, rad
 
 | Theme | Character | Decisions |
 | --- | --- | --- |
-| *(none)* | Firehorse base: etched lines, ember on charcoal | rounded avatars, etched cards, convex buttons, dashed chips, comfortable, lined tables |
+| *(none)* | Firehorse base: etched lines, ember on charcoal | rounded avatars, etched cards, flat buttons, dashed chips, comfortable, lined tables |
 | `mustang` | Bred on open range, built for work: slate and denim, condensed display | square avatars, solid cards, flat buttons, solid chips, compact, zebra tables |
 | `friesian` | Jet black, feathered, formal: monochrome, serif display | circle avatars, outline cards, sharp buttons, underline chips, sharp corners, spacious, lined tables |
 | `akhal-teke` | The golden horse of the desert: sand and burnished gold, humanist sans | squircle avatars, tonal cards, flat pill buttons, soft chips, soft corners, borderless tables |

@@ -1,10 +1,10 @@
 /*
  * Firehorse — button
  * ---------------------------------------------------------------
- * The Firehorse CTA is a flat rounded rect (3px), mono uppercase,
- * with a convex fill: it bends toward the visitor at rest, the
- * shadow inverts on hover, and it sinks on press. One timing curve
- * across all three states so it reads as a single gesture.
+ * The Firehorse CTA is a flat rounded rect (3px), mono uppercase, a
+ * solid fill with no sheen or shadow. data-fh-button="convex" (or a
+ * theme) brings back the convex fill: it bends toward the visitor at
+ * rest, the shadow inverts on hover, and it sinks on press.
  *
  *   <a class="fh-button" href="/contact">Discuss a project</a>
  *   <button class="fh-button fh-button--secondary">Cancel</button>
@@ -13,7 +13,9 @@
  * `fh-button--plain`. Add `data-tone="sky"` for a tone-lit top edge.
  *
  * Public knobs: --fh-button-bg, --fh-button-fg, --fh-button-border,
- * --fh-button-radius, --fh-button-font.
+ * --fh-button-radius, --fh-button-font. Depth (set by data-fh-button):
+ * --fh-button-sheen, --fh-button-shadow, --fh-button-shadow-hover,
+ * --fh-button-shadow-active, --fh-button-lift.
  */
 
 @layer fh.components {
@@ -21,11 +23,11 @@
     --_bg: var(--fh-button-bg, var(--fh-color-primary));
     --_fg: var(--fh-button-fg, var(--fh-color-on-primary));
     --_border: var(--fh-button-border, var(--_bg));
-    --_shadow: var(--fh-button-shadow, var(--fh-shadow-convex));
-    --_sheen: var(--fh-button-sheen, 1);
-    --_shadow-hover: var(--fh-shadow-convex-hover);
-    --_shadow-active: var(--fh-shadow-convex-active);
-    --_lift: -1px;
+    --_shadow: var(--fh-button-shadow, none);
+    --_sheen: var(--fh-button-sheen, 0);
+    --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+    --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
+    --_lift: var(--fh-button-lift, 0px);
 
     position: relative;
     display: inline-flex;

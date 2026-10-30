@@ -1301,6 +1301,24 @@ export const tokens = {
     "tier": "config",
     "group": "button"
   },
+  "--fh-button-shadow-hover": {
+    "$value": "none",
+    "$type": "shadow",
+    "tier": "config",
+    "group": "button"
+  },
+  "--fh-button-shadow-active": {
+    "$value": "none",
+    "$type": "shadow",
+    "tier": "config",
+    "group": "button"
+  },
+  "--fh-button-lift": {
+    "$value": "0px",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "button"
+  },
   "--fh-chip-border-style": {
     "$value": "none",
     "$type": "dimension",

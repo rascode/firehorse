@@ -1068,11 +1068,11 @@
     --_bg: var(--fh-button-bg, var(--fh-color-primary));
     --_fg: var(--fh-button-fg, var(--fh-color-on-primary));
     --_border: var(--fh-button-border, var(--_bg));
-    --_shadow: var(--fh-button-shadow, var(--fh-shadow-convex));
-    --_sheen: var(--fh-button-sheen, 1);
-    --_shadow-hover: var(--fh-shadow-convex-hover);
-    --_shadow-active: var(--fh-shadow-convex-active);
-    --_lift: -1px;
+    --_shadow: var(--fh-button-shadow, none);
+    --_sheen: var(--fh-button-sheen, 0);
+    --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+    --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
+    --_lift: var(--fh-button-lift, 0px);
     justify-content: center;
     align-items: center;
     gap: var(--fh-space-2);
@@ -11895,30 +11895,45 @@
     --fh-button-radius: var(--fh-radius-sm);
     --fh-button-sheen: 1;
     --fh-button-shadow: var(--fh-shadow-convex);
+    --fh-button-shadow-hover: var(--fh-shadow-convex-hover);
+    --fh-button-shadow-active: var(--fh-shadow-convex-active);
+    --fh-button-lift: -1px;
   }
 
   [data-fh-button="flat"] {
     --fh-button-radius: var(--fh-radius-sm);
     --fh-button-sheen: 0;
     --fh-button-shadow: none;
+    --fh-button-shadow-hover: none;
+    --fh-button-shadow-active: none;
+    --fh-button-lift: 0px;
   }
 
   [data-fh-button="soft"] {
     --fh-button-radius: var(--fh-radius-md);
     --fh-button-sheen: .4;
     --fh-button-shadow: var(--fh-shadow-raised);
+    --fh-button-shadow-hover: var(--fh-shadow-convex-hover);
+    --fh-button-shadow-active: var(--fh-shadow-convex-active);
+    --fh-button-lift: -1px;
   }
 
   [data-fh-button="pill"] {
     --fh-button-radius: var(--fh-radius-pill);
     --fh-button-sheen: .6;
     --fh-button-shadow: var(--fh-shadow-convex);
+    --fh-button-shadow-hover: var(--fh-shadow-convex-hover);
+    --fh-button-shadow-active: var(--fh-shadow-convex-active);
+    --fh-button-lift: -1px;
   }
 
   [data-fh-button="sharp"] {
     --fh-button-radius: var(--fh-radius-none);
     --fh-button-sheen: 0;
     --fh-button-shadow: none;
+    --fh-button-shadow-hover: none;
+    --fh-button-shadow-active: none;
+    --fh-button-lift: 0px;
   }
 
   [data-fh-chip="dashed"] {
