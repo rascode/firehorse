@@ -970,12 +970,35 @@ body::before {
 }
 .site-pricing__tiers .fh-tier > header {
   gap: var(--fh-space-2);
+  /* Rule runs edge to edge, like the feature rows. */
+  margin-inline: calc(var(--fh-space-6) * -1);
+  padding-inline: var(--fh-space-6);
   padding-block-end: var(--fh-space-5);
   border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
 }
 .site-pricing__tiers .fh-tier__price > b { font-size: clamp(2.3rem, 1.5rem + 4cqi, 3.1rem); letter-spacing: -0.045em; margin-inline-end: 0.15em; }
 .site-pricing__tiers .fh-tier__note { color: var(--fh-tone); opacity: 0.85; }
 .site-pricing__tiers .fh-tier__pitch { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: var(--fh-leading-relaxed); }
+/* Features: one per row, etched rules running the full width of the tier,
+   marked with a bare tone check (no circle). */
+.site-pricing__tiers .fh-tier > .fh-checklist {
+  gap: 0;
+  margin-inline: calc(var(--fh-space-6) * -1);
+  border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+}
+.site-pricing__tiers .fh-checklist > li {
+  min-block-size: 0;
+  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-6) var(--fh-space-2-5, 0.625rem) calc(var(--fh-space-6) + 1.5rem);
+}
+.site-pricing__tiers .fh-checklist > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+.site-pricing__tiers .fh-checklist > li::before { display: none; }
+.site-pricing__tiers .fh-checklist > li::after {
+  inset-block-start: 50%;
+  inset-inline-start: var(--fh-space-6);
+  inline-size: 0.85rem;
+  translate: 0 -50%;
+  mask-size: 0.85rem;
+}
 /* Featured: a tone wash, a tone outline and a heavier top edge. */
 .site-pricing__tiers > .fh-tier:is([data-featured], .fh-tier--featured) {
   border-style: dashed;
@@ -1070,7 +1093,55 @@ body::before {
     linear-gradient(var(--_mark), var(--_mark)) right bottom / 1px 14px no-repeat,
     radial-gradient(circle, color-mix(in oklab, var(--fh-color-text) 9%, transparent) 1px, transparent 1.5px) 0 0 / 16px 16px;
 }
-.site-cat > figcaption { display: flex; align-items: center; gap: var(--fh-space-2); padding-block-start: var(--fh-space-2); color: var(--fh-color-text-muted); font-size: 0.8rem; }
+/* Caption: a small ruled table under each card. Row 1 the group, row 2 what
+ * the card shows, row 3 a full-width "Copy markup" action carrying its ID. */
+.site-cat > figcaption {
+  display: grid;
+  margin-block-start: var(--fh-space-3);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-sm);
+  color: var(--fh-color-text-muted);
+  font-size: 0.8rem;
+}
+.site-cat > figcaption > .fh-chip { justify-self: start; margin: var(--fh-space-2) var(--fh-space-3); }
+.site-cat > figcaption > span:not(.fh-chip) {
+  padding: var(--fh-space-2) var(--fh-space-3);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  line-height: 1.45;
+}
+.site-cat > figcaption > .site-id {
+  display: flex;
+  inline-size: 100%;
+  margin: 0;
+  padding: var(--fh-space-2) var(--fh-space-3);
+  border: 0;
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: 0 0 var(--fh-radius-sm) var(--fh-radius-sm);
+  background: none;
+  color: var(--fh-color-text-subtle);
+  box-shadow: none;
+}
+.site-cat > figcaption > .site-id > span:first-child {
+  padding: 0.05rem 0.4rem;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 50%, transparent);
+  border-radius: var(--fh-radius-sm);
+  color: var(--fh-tone);
+}
+.site-cat > figcaption > .site-id { align-items: center; gap: var(--fh-space-2); }
+.site-cat > figcaption > .site-id > .site-id__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fh-space-1-5);
+  margin-inline-start: auto;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font-family: var(--fh-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: var(--fh-tracking-wider);
+  text-transform: uppercase;
+}
+.site-cat > figcaption > .site-id:is(:hover, :focus-visible) { background: color-mix(in oklab, var(--fh-tone) 8%, transparent); color: var(--fh-color-text); }
 .site-cat__swatches { display: flex; gap: var(--fh-space-1-5); margin-block: var(--fh-space-3); }
 .site-cat__swatches i { inline-size: 2rem; aspect-ratio: 1; border-radius: var(--fh-radius-md); background: var(--fh-tone); }
 .site-cat__profile { align-items: center; text-align: center; gap: var(--fh-space-2); }

@@ -127,7 +127,7 @@ function mountTags(list) {
         continue;
       }
       const cap = $(":scope > figcaption", e.el);
-      if (cap) { cap.insertAdjacentHTML("beforeend", tagHtml(e, " site-id--end")); continue; }
+      if (cap) { cap.insertAdjacentHTML("beforeend", tagHtml(e, " site-id--end").replace("</button>", '<span class="site-id__copy">Copy markup<i class="fh-icon fh-icon--copy" aria-hidden="true"></i></span></button>')); continue; }
     }
     // Everything else: an overlay tag, shown in IDs mode.
     const host = e.el.closest(".site-demo__stage, main > section");
