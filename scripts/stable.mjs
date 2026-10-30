@@ -101,7 +101,10 @@ const head = ({ title, description, path, type = "website", image, jsonld }) => 
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${BASE}${path}">
-${image ? `<meta property="og:image" content="${BASE}${image}">\n<meta name="twitter:card" content="summary_large_image">` : ""}
+<meta property="og:site_name" content="Firehorse">
+<meta property="og:image" content="${BASE}${image || "/img/og/firehorse.png"}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${BASE}${image || "/img/og/firehorse.png"}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300..700&display=swap">

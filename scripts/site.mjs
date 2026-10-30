@@ -47,7 +47,7 @@ cp("site/site.css", "site.css");
 cp("site/site.js", "site.js");
 for (const f of readdirSync(join(root, "site"))) if (/\.(js|css)$/.test(f) && !["site.js", "site.css"].includes(f)) cp(`site/${f}`, f);
 for (const f of ["datatable.js", "audio.js", "icons.css", "icons.json", "reveal.css"]) cp(`dist/${f}`, f);
-for (const dir of ["img/supply", "img/backdrop", "audio"]) {
+for (const dir of ["img/supply", "img/backdrop", "img/og", "audio"]) {
   mkdirSync(join(out, dir), { recursive: true });
   for (const f of readdirSync(join(root, `site/${dir}`))) cp(`site/${dir}/${f}`, `${dir}/${f}`);
 }

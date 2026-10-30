@@ -133,17 +133,16 @@ body::before {
   .site-hero .site-breathe-stage {
     animation: site-intro 0.9s var(--fh-ease-out) var(--_intro-at, 0s) both;
   }
-  .site-hero .fh-display { --_intro-at: 0.7s; }
-  .site-hero .fh-hero__actions { --_intro-at: 1.15s; }
-  .site-hero .site-install { --_intro-at: 1.3s; }
-  .site-hero .fh-eyebrow-pill { --_intro-at: 1.6s; }
-  .site-hero .fh-lede { --_intro-at: 1.7s; }
-  .site-hero .site-breathe-stage { --_intro-at: 1.85s; }
+  /* The words lead and never wait for the horse art: the title is up within
+   * a quarter second on any connection; only the backdrop waits for fh-ready. */
+  .site-hero .fh-display { --_intro-at: 0.05s; }
+  .site-hero .fh-hero__actions { --_intro-at: 0.3s; }
+  .site-hero .site-install { --_intro-at: 0.4s; }
+  .site-hero .fh-eyebrow-pill { --_intro-at: 0.55s; }
+  .site-hero .fh-lede { --_intro-at: 0.6s; }
+  .site-hero .site-breathe-stage { --_intro-at: 0.75s; }
 }
 @keyframes site-intro { from { opacity: 0; translate: 0 0.9rem; } }
-@media (prefers-reduced-motion: no-preference) {
-  :root.fh-js:not(.fh-ready) .site-hero :is(.fh-display, .fh-hero__actions, .site-install, .fh-eyebrow-pill, .fh-lede, .site-breathe-stage) { animation-play-state: paused; }
-}
 /* Category pages get the same intro: breadcrumb, title, lede, then the summary
  * strip with its cells one after another. Cards further down (the hub's groups,
  * the home's categories) rise in the same way as they scroll into view; site.js
@@ -154,15 +153,14 @@ body::before {
   .site-page-summary > li {
     animation: site-intro 0.9s var(--fh-ease-out) var(--_intro-at, 0s) both;
   }
-  .site-page-hero .fh-breadcrumb { --_intro-at: 0.55s; }
-  .site-page-hero .fh-display { --_intro-at: 0.7s; }
-  .site-page-hero .fh-lede { --_intro-at: 0.95s; }
-  .site-page-summary { --_intro-at: 1.1s; animation-name: site-fade; }
-  .site-page-summary > li:nth-child(1) { --_intro-at: 1.15s; }
-  .site-page-summary > li:nth-child(2) { --_intro-at: 1.25s; }
-  .site-page-summary > li:nth-child(3) { --_intro-at: 1.35s; }
-  .site-page-summary > li:nth-child(4) { --_intro-at: 1.45s; }
-  :root.fh-js:not(.fh-ready) :is(.site-page-hero :is(.fh-breadcrumb, .fh-display, .fh-lede), .site-page-summary, .site-page-summary > li) { animation-play-state: paused; }
+  .site-page-hero .fh-breadcrumb { --_intro-at: 0s; }
+  .site-page-hero .fh-display { --_intro-at: 0.05s; }
+  .site-page-hero .fh-lede { --_intro-at: 0.25s; }
+  .site-page-summary { --_intro-at: 0.4s; animation-name: site-fade; }
+  .site-page-summary > li:nth-child(1) { --_intro-at: 0.45s; }
+  .site-page-summary > li:nth-child(2) { --_intro-at: 0.55s; }
+  .site-page-summary > li:nth-child(3) { --_intro-at: 0.65s; }
+  .site-page-summary > li:nth-child(4) { --_intro-at: 0.75s; }
 
   :root.fh-js .site-page-cards > .fh-card {
     transition: opacity 0.9s var(--fh-ease-out), translate 0.9s var(--fh-ease-out);
@@ -185,6 +183,8 @@ body::before {
 .site-hero .site-install code { flex: 1; }
 .site-install code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-inline-size: 0; }
 .site-install code::before { content: "$ "; color: var(--fh-color-text-subtle); }
+/* The self-hosted install URL is long: on phones it wraps instead of hiding the Copy button. */
+@media (width < 48rem) { .site-install code { white-space: normal; overflow-wrap: anywhere; text-overflow: clip; } }
 
 /* —— The breathing window: a container that animates its own width
  *    so the components inside reflow by container query, live. —— */
@@ -937,6 +937,9 @@ body::before {
 
 /* Config */
 pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-md); white-space: pre-wrap; overflow-wrap: anywhere; }
+/* Phones: the floating bar owns the bottom edge, and the theme select lives in
+ * the menu, so the floating Theme button steps aside. */
+@media (width < 48rem) { .site-config-fab { display: none; } }
 .site-config-fab { position: fixed; inset-block-end: calc(var(--fh-space-4) + env(safe-area-inset-bottom, 0px)); inset-inline-start: calc(var(--fh-space-4) + env(safe-area-inset-left, 0px)); z-index: 40; box-shadow: var(--fh-shadow-overlay); }
 
 /* Adaptive */

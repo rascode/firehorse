@@ -82,7 +82,7 @@
     "lint": "node scripts/lint.mjs",
     "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check",
     "prepublishOnly": "npm test && node scripts/gen-index.mjs",
-    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/pack-site.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
+    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/pack-site.mjs && node scripts/not-found.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
     "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
     "schema": "node scripts/schema.mjs $(node scripts/pages.mjs --dist)",
     "tokens:adaptive": "node scripts/gen-adaptive.mjs"
