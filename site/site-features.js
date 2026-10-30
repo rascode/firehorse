@@ -137,6 +137,37 @@ fab.setAttribute("aria-label", "Choose a theme");
 fab.addEventListener("click", () => drawer.showModal());
 document.body.append(fab);
 $$("[data-opens='themes']").forEach((b) => b.addEventListener("click", () => drawer.showModal()));
+// Floating theme picker (bottom right): a trigger with the current theme's
+// swatches, opening an etched table of every theme. Each row is a radio
+// (firehorse.js does the switching); its swatch strip renders inside that
+// theme, so the colors are the theme's own. Replaces the plain <select>.
+const float = $(".site-float");
+if (float) {
+  const swatch = (t) => `<span class="site-tp__swatches"${(t.scope ?? t.name) ? ` data-fh-theme="${t.scope ?? t.name}"` : ""} aria-hidden="true"><i style="background: var(--fh-color-canvas)"></i><i style="background: var(--fh-color-surface-raised)"></i><i style="background: var(--fh-color-text)"></i><i style="background: var(--fh-color-accent)"></i></span>`;
+  float.innerHTML = `<button class="site-tp__trigger" type="button" popovertarget="theme-picker" style="anchor-name: --theme-picker" aria-label="Choose a theme"><span class="site-tp__now"></span><span class="site-tp__label">Theme</span><b class="site-tp__name"></b><i class="fh-icon fh-icon--chevron-up" aria-hidden="true"></i></button>
+    <div class="fh-menu site-tp" id="theme-picker" popover style="position-anchor: --theme-picker" aria-label="Themes">
+      <header class="site-agents__head"><span class="site-agents__title">Themes</span><span class="site-agents__hint site-tp__saved"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Saved in this browser</span></header>
+      <div class="site-tp__table" role="radiogroup" aria-label="Theme">
+        <div class="site-tp__row site-tp__row--head" aria-hidden="true"><span>Theme</span><span>Button</span><span>Card</span><span>Density</span></div>
+        ${THEMES.map((t, i) => `<label class="site-tp__row" style="--_i:${i}">
+          <input class="site-tp__radio" type="radio" name="theme-picker" value="${t.name}" data-fh-theme-select>
+          <span class="site-tp__theme">${swatch(t)}<span><b>${escHtml(t.label)}</b><small>${escHtml(t.tagline)}</small></span></span>
+          <span>${escHtml(t.config?.button ?? "default")}</span><span>${escHtml(t.config?.card ?? "default")}</span><span>${escHtml(t.config?.density ?? "default")}</span>
+          <i class="fh-icon fh-icon--check site-tp__check" aria-hidden="true"></i>
+        </label>`).join("")}
+      </div>
+      <button class="site-agents__copy" type="button" data-tp-more>Everything a theme decides</button>
+    </div>`;
+  const paintNow = () => {
+    const t = themeOf(document.documentElement.getAttribute("data-fh-theme"));
+    $(".site-tp__now", float).innerHTML = swatch(t);
+    $(".site-tp__name", float).textContent = t.label;
+  };
+  paintNow();
+  document.addEventListener("fh:theme", paintNow);
+  new MutationObserver(paintNow).observe(document.documentElement, { attributes: true, attributeFilter: ["data-fh-theme"] });
+  $("[data-tp-more]", float).addEventListener("click", () => { $("#theme-picker").hidePopover?.(); drawer.showModal(); });
+}
 // Forms demo: the sample sign-in/up forms post nowhere on this site; confirm in place instead.
 $$(".site-auth .fh-auth__form").forEach((f) => f.addEventListener("submit", (e) => {
   e.preventDefault();
