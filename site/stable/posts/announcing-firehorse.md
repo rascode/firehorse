@@ -2,7 +2,7 @@
 title: Announcing Firehorse, the flagship design system from Rascode and Company
 slug: announcing-firehorse
 date: 2026-10-28
-description: Every site we ship at Rascode now runs on one system, and today it's open source. Container queries, adaptive color, themes, datatables, an index of every component and files your agent can read.
+description: The design system that scales. Every site we ship at Rascode now runs on one system, and today it's open source: container queries, adaptive color, themes, datatables, an index of every component and files your agent can read.
 topics: [release, agents]
 version: 1.1
 cover: card-00
@@ -11,7 +11,7 @@ role: Founder, Rascode
 ---
 Every site we ship at [Rascode](https://rascode.dev) now runs on one system.
 
-Today we're open-sourcing it.
+Today we're open-sourcing it. Firehorse is the design system that scales, adapts and fits wherever you put it.
 
 [Firehorse](/) is a CSS-first design system: [220+ tokens](/foundations/#tokens), [80+ component families and 100+ variants](/components/), [light and dark built in](/theming/) and [zero viewport breakpoints](/layout/). It's [MIT licensed](https://github.com/rascode/firehorse/blob/main/LICENSE), needs no JavaScript to work, and ships [files an AI agent can read](/agents/) before it writes a line of your UI.
 
@@ -22,6 +22,7 @@ Today we're open-sourcing it.
 - :sliders-horizontal: [Themes](/theming/): every design decision in one file, switchable from a dropdown
 - :table-2: [Datatables](/data/) with 22 field types, filters, grouping and board views
 - :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-03` instead of describing a chip
+- :sparkles: [A word rotator](/foundations/#rotator) for headlines, in plain markup: no library, no script to configure
 - :terminal: `npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz` · [firehorse.rascode.dev](/)
 
 
@@ -47,7 +48,7 @@ So we pulled out what the site actually uses (the [tokens](/foundations/), [card
 
 ## Container queries, baked in
 
-Firehorse has no media queries. Every section is a container, and every component measures the slot it's in. A [stats block](/components/content/#c-stats) in a 270px sidebar stacks; the same markup in a 780px column sits in a row. Type scales with `cqi` units, so headlines grow with their container too.
+Firehorse has no viewport breakpoints. Media queries are kept for what only the browser knows: reduced motion, high contrast, touch and print. Layout is never one of them. Every section is a container, and every component measures the slot it's in. A [stats block](/components/content/#c-stats) in a 270px sidebar stacks; the same markup in a 780px column sits in a row. Type scales with `cqi` units, so headlines grow with their container too.
 
 Write the markup once and it adapts wherever you put it. See how it works on the [Layout page](/layout/).
 
@@ -67,7 +68,7 @@ Firehorse uses math. Every surface declares its background, and every text token
 
 How round are your avatars? Are cards outlined, elevated or glass? Are buttons pills? In most systems those decisions live in every component, and changing your mind means editing a hundred files.
 
-In Firehorse they live in a [theme](/theming/): type, color in light and dark, radius, density and the avatar, card, button, chip and table styles, in one file. Set `data-fh-theme` on `<html>` and the whole site follows. Three themes ship today, named after horses: Mustang, Friesian and Akhal-Teke. Build your own on top.
+In Firehorse they live in a [theme](/theming/): type, color in light and dark, radius, density and the avatar, card, button, chip and table styles, in one file. Set `data-fh-theme` on `<html>` and the whole site follows. Three themes ship today, named after horses: Mustang, Friesian and Akhal-Teke, on top of the Firehorse base with its etched lines and flat buttons. Switch between them from the picker on [any page of the docs](/theming/), or build your own.
 
 That's also how you keep up with design trends without a rebuild. A trend is mostly a radius, a shadow, a border and a type pairing, and those are tokens. Change the theme, and the contrast tests run against the new look.
 
@@ -101,6 +102,14 @@ Point your agent at one URL and tell it to use only `fh-*` classes and `--fh-*` 
 
 ![Built for agents](../img/card-05.webp)
 
+
+## The word that won't sit still
+
+The rolling word in a headline is everywhere right now: the design system that scales, then adapts, then grows. It looks simple. Building it usually isn't: a JavaScript library, an array of words in a script, a timer, a measuring trick so the sentence doesn't jump, and a fix so screen readers don't announce every word.
+
+In Firehorse it's markup. The [word rotator](/foundations/#rotator), `ROT`, is a `fh-rotator` span with one `<span>` per word. Write the words and they take turns. Change them by editing the HTML. The roll is pure CSS, and screen readers and anyone with reduced motion get the first word.
+
+Give each word its own [tone](/foundations/#c-tones), or set the word apart with a modifier: script, mono, highlight, gradient, underline. Load `firehorse.js` and the slot eases to each word's width, so the sentence glides instead of jumping. The headline on [our homepage](/) is one.
 
 ## Also in the box
 
@@ -144,7 +153,7 @@ If you're building with AI, give it a design system. It's one of the most reliab
 
 ## Firehorse Pro
 
-The core is free and stays that way. [Firehorse Pro](/pro/) adds AI-powered fields, starting with a [profile finder](/pro/#c-profile-finder), and a [builder skill](/pro/#builder) that reads any site and builds a Firehorse theme from its real colors, type and spacing.
+The core is free and stays that way. [Firehorse Pro](/pro/) adds AI-powered fields, starting with a [profile finder](/pro/#c-profile-finder), and a [builder skill](/pro/#builder) that reads any site and builds a Firehorse theme from its real colors, type and spacing. Pro is in early access from $24 a month per project, on your own model key or ours, under a budget you set. [Request early access](/pro/).
 
 
 ## Get started
@@ -162,7 +171,7 @@ No build step? One `<link>` to [firehorse.css](/firehorse.css) works too. React 
 
 Firehorse is design system No. 01, the base layer for every Rascode build, starting with [rascode.dev](https://rascode.dev). Release notes, new components and new IDs will live here in [The Stable](/stable/).
 
-Want something like it built for you, or help with AI in your product? [Work with me](/#services). You'll hear back within one business day.
+Want a custom design system, site or agent? [Hire the studio that built Firehorse](/#services). You'll hear back within one business day, with a fixed scope before any work starts. Here's [the brief we wrote for Firehorse itself](/pro/#brief).
 
 🐎 [firehorse.rascode.dev](/)
 ⭐ [github.com/rascode/firehorse](https://github.com/rascode/firehorse)

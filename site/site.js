@@ -34,7 +34,7 @@
    * scheme switch to the right edge of its Download button, so the two line up. */
   const dockCta = $(".site-dock-cta"), hdrActions = $(".fh-header__actions");
   if (dockCta && hdrActions) {
-    const fit = () => dockCta.style.setProperty("--site-hdr-actions-w", `${Math.round(hdrActions.getBoundingClientRect().width)}px`);
+    const fit = () => dockCta.style.setProperty("--site-hdr-actions-w", `${hdrActions.getBoundingClientRect().width}px`);
     new ResizeObserver(fit).observe(hdrActions);
     fit();
   }
@@ -263,6 +263,12 @@
       const pick = presets[preset];
       if (pick) $$('input[name="needs"]', leadForm).forEach((c) => { if (pick.includes(c.value)) c.checked = true; });
       setMode(plan);
+      // data-lead-side="end" (or "start") on the button: this time the form is a
+      // full-height sheet from the right (or left) instead of the centred dialog.
+      clearTimeout(lead._sideTimer);
+      const side = from?.dataset.leadSide;
+      lead.classList.toggle("site-lead--start", side === "start");
+      if (side && !lead.classList.contains("site-lead--sheet")) lead.classList.add("fh-dialog--sheet", "site-lead--sheet", "site-lead--temp");
       lead.showModal();
       requestAnimationFrame(() => $("#lead-name").focus());
     };
@@ -276,6 +282,11 @@
     };
     fromHash();
     addEventListener("hashchange", fromHash);
+    // A one-off left sheet goes back to the page's normal dialog once it has slid away.
+    lead.addEventListener("close", () => {
+      if (!lead.classList.contains("site-lead--temp")) return;
+      lead._sideTimer = setTimeout(() => { if (!lead.open) lead.classList.remove("fh-dialog--sheet", "site-lead--sheet", "site-lead--start", "site-lead--temp"); }, 450);
+    });
     lead.addEventListener("close", () => { if (/^#work/.test(location.hash)) history.replaceState(null, "", location.pathname + location.search + ($("#services") ? "#services" : "")); });
     $$("[data-lead-close]", lead).forEach((b) => b.addEventListener("click", () => lead.close()));
     lead.addEventListener("click", (e) => { if (e.target === lead) lead.close(); });

@@ -22,6 +22,9 @@
  *      transcribes into the textarea. Hidden where it can't transcribe.
  *  13. Theme select ([data-fh-theme-select]): a dropdown (or radios)
  *      that switches data-fh-theme and remembers the choice.
+ *  14. Word rotators (.fh-rotator): the slot eases to each word's width,
+ *      extra words are hidden from screen readers, and the roll pauses
+ *      off screen. The roll itself is CSS and runs without this.
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -712,4 +715,33 @@ ready(() => {
     { rootMargin: `-${Math.round(headerOffset() + 64)}px 0px -55% 0px` },
   );
   sections.forEach((s) => io.observe(s));
+});
+
+/* —— 14. Word rotator ————————————————————————————————————————
+ * The roll is CSS (see .fh-rotator). This adds the finish: the slot eases to
+ * the width of the word coming in, so the text after it glides instead of
+ * sitting beside the widest word's gap; words after the first get
+ * aria-hidden; and rotators off screen pause. */
+ready(() => {
+  const rotators = [...document.querySelectorAll(".fh-rotator")];
+  if (!rotators.length) return;
+  for (const r of rotators) {
+    const words = [...r.children];
+    words.slice(1).forEach((w) => w.setAttribute("aria-hidden", "true"));
+    const fit = (w) => { r.style.inlineSize = `${w.getBoundingClientRect().width}px`; };
+    fit(words[0]);
+    document.fonts?.ready.then(() => fit(r.querySelector(":scope > [data-fh-in]") ?? words[0]));
+    const on = (e) => {
+      if (e.target.parentElement !== r) return;
+      r.querySelector(":scope > [data-fh-in]")?.removeAttribute("data-fh-in");
+      e.target.setAttribute("data-fh-in", "");
+      fit(e.target);
+    };
+    r.addEventListener("animationstart", on);
+    r.addEventListener("animationiteration", on);
+  }
+  if ("IntersectionObserver" in globalThis) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.toggleAttribute("data-fh-paused", !e.isIntersecting)));
+    rotators.forEach((r) => io.observe(r));
+  }
 });

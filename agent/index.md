@@ -28,6 +28,7 @@
 | `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#ELV) |
 | `MOT` | Motion | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#MOT) |
 | `MTL` | The motion layer | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#MTL) |
+| `ROT` | Word rotator | Foundations | ROT-01…ROT-06 | [open](https://firehorse.rascode.dev/foundations/#ROT) |
 | `STK` | Stack | Layout | — | [open](https://firehorse.rascode.dev/layout/#STK) |
 | `CLS` | Cluster | Layout | — | [open](https://firehorse.rascode.dev/layout/#CLS) |
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/#GRD) |
@@ -166,6 +167,48 @@ Motion you opt into, not a library you load. It runs on the platform (transition
 Classes: `fh-dl` `fh-cluster` `fh-button` `fh-button--plain` `fh-roll` `fh-nav__link` `fh-chip` `fh-chip--indexed` `fh-chip__index` `fh-rollover` `fh-rollover__item` `fh-button--sm` `fh-button--secondary` `fh-card` `fh-reveal` `fh-card__meta` `fh-card__title` `fh-reveal--scale` `fh-reveal--left` `fh-reveal--blur` `fh-checklist`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#MTL.
+
+## ROT · Word rotator
+
+The rolling word in a headline, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns. Change them by editing the HTML. Style the word apart from the sentence with a modifier, a tone or a knob: colour, font, size, weight, italic, underline, highlight, gradient, and which way it rolls.
+
+Classes: `fh-title` `fh-rotator` `fh-lede` `fh-heading` `fh-rotator--script` `fh-rotator--accent` `fh-rotator--mono` `fh-rotator--highlight` `fh-rotator--fade` `fh-rotator--gradient` `fh-rotator--down` `fh-rotator--italic` `fh-rotator--underline` `fh-rotator--display`
+
+### ROT-01 · The design system that scalesadaptsfitsflexesgrows.
+
+```html
+<h3 class="fh-title">The design system that <span class="fh-rotator"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">flexes</span><span aria-hidden="true">grows</span></span>.</h3>
+```
+
+### ROT-02 · Built for studiosstartupsagencies, shipped in a week.
+
+```html
+<p class="fh-lede" style="--fh-rotator-step: 1.8s">Built for <span class="fh-rotator" data-tone="sky"><span>studios</span><span aria-hidden="true">startups</span><span aria-hidden="true">agencies</span></span>, shipped in a week.</p>
+```
+
+### ROT-03 · Made by handpeopleRascode
+
+```html
+<p class="fh-heading">Made by <span class="fh-rotator fh-rotator--script fh-rotator--accent"><span>hand</span><span aria-hidden="true">people</span><span aria-hidden="true">Rascode</span></span></p>
+```
+
+### ROT-04 · Ship it todaytonightnow
+
+```html
+<p class="fh-heading">Ship it <span class="fh-rotator fh-rotator--mono fh-rotator--highlight fh-rotator--fade" data-tone="lime"><span>today</span><span aria-hidden="true">tonight</span><span aria-hidden="true">now</span></span></p>
+```
+
+### ROT-05 · Every tonethemescheme included
+
+```html
+<p class="fh-heading">Every <span class="fh-rotator fh-rotator--gradient fh-rotator--down"><span>tone</span><span aria-hidden="true">theme</span><span aria-hidden="true">scheme</span></span> included</p>
+```
+
+### ROT-06 · Looks sharpcalmbold anywhere
+
+```html
+<p class="fh-heading">Looks <span class="fh-rotator fh-rotator--italic fh-rotator--underline fh-rotator--display" data-tone="amber" style="--fh-rotator-scale: 1.2"><span>sharp</span><span aria-hidden="true">calm</span><span aria-hidden="true">bold</span></span> anywhere</p>
+```
 
 ## STK · Stack
 

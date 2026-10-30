@@ -129,6 +129,24 @@ Motion you opt into, not a library you load. It runs on the platform (transition
 </dl>
 ```
 
+### ROT · Word rotator
+
+The rolling word in a headline, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns. Change them by editing the HTML. Style the word apart from the sentence with a modifier, a tone or a knob: colour, font, size, weight, italic, underline, highlight, gradient, and which way it rolls.
+
+```html
+<dl class="fh-dl site-variants">
+  <div><dt>Headline<code>.fh-rotator</code></dt><dd>
+    <h3 class="fh-title">The design system that <span class="fh-rotator"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">flexes</span><span aria-hidden="true">grows</span></span>.</h3></dd></div>
+  <div><dt>In a sentence<code>--fh-rotator-step</code></dt><dd>
+    <p class="fh-lede" style="--fh-rotator-step: 1.8s">Built for <span class="fh-rotator" data-tone="sky"><span>studios</span><span aria-hidden="true">startups</span><span aria-hidden="true">agencies</span></span>, shipped in a week.</p></dd></div>
+  <div><dt>Styles<code>--script · --mono · --highlight · --gradient</code></dt><dd>
+    <p class="fh-heading">Made by <span class="fh-rotator fh-rotator--script fh-rotator--accent"><span>hand</span><span aria-hidden="true">people</span><span aria-hidden="true">Rascode</span></span></p>
+    <p class="fh-heading">Ship it <span class="fh-rotator fh-rotator--mono fh-rotator--highlight fh-rotator--fade" data-tone="lime"><span>today</span><span aria-hidden="true">tonight</span><span aria-hidden="true">now</span></span></p>
+    <p class="fh-heading">Every <span class="fh-rotator fh-rotator--gradient fh-rotator--down"><span>tone</span><span aria-hidden="true">theme</span><span aria-hidden="true">scheme</span></span> included</p>
+    <p class="fh-heading">Looks <span class="fh-rotator fh-rotator--italic fh-rotator--underline fh-rotator--display" data-tone="amber" style="--fh-rotator-scale: 1.2"><span>sharp</span><span aria-hidden="true">calm</span><span aria-hidden="true">bold</span></span> anywhere</p></dd></div>
+</dl>
+```
+
 ### STK · Stack
 
 `.fh-stack`

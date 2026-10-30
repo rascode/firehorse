@@ -111,6 +111,11 @@ body::before {
   /* A faint halo in the page colour, just enough to lift the letters off the lines behind. */
   text-shadow: 0 0 0.5em color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
 }
+/* The rolling verb never re-wraps the title: "that ___." is always its own
+ * unbreakable line, so whatever the word, the lines above stay exactly as
+ * they are; a longer word only pushes the period. */
+.site-hero .fh-display:has(.site-hero__turn) { max-inline-size: 18ch; }
+.site-hero__turn { display: block; white-space: nowrap; }
 .site-hero .fh-display em {
   font-style: normal;
   color: var(--fh-color-text-muted);
@@ -819,15 +824,89 @@ body::before {
 .site-services__grid .site-service { display: flex; flex-direction: column; gap: var(--fh-space-4); }
 .site-services__grid .site-service .fh-card__footer { margin-block-start: auto; }
 .site-services__grid .fh-checklist { font-size: var(--fh-text-small); }
-.site-services__strip {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: var(--fh-space-6); margin-block-start: var(--fh-space-8);
-  padding: var(--fh-space-6) var(--fh-space-7);
-  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-lg);
-  background: radial-gradient(120% 140% at 0% 0%, color-mix(in oklab, var(--fh-tone) 12%, transparent), transparent 60%);
+/* Fixed card padding, so the rules and footer below can run edge to edge
+ * (the card's own padding is in cqi, which resolves differently inside it). */
+.site-services__grid .site-service { --site-svc-pad: var(--fh-space-6); padding: var(--site-svc-pad); }
+/* What's included: one per row between edge-to-edge etched rules, a bare tone
+ * check instead of the circled one (same as the pricing tiers). */
+.site-services__grid .site-service > .fh-checklist {
+  gap: 0;
+  margin-inline: calc(var(--site-svc-pad) * -1);
+  border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
 }
-.site-services__steps { display: flex; flex-wrap: wrap; gap: var(--fh-space-4) var(--fh-space-8); }
-.site-services__steps p { margin: 0; }
+.site-services__grid .site-service > .fh-checklist > li {
+  min-block-size: 0;
+  padding: var(--fh-space-2-5, 0.625rem) var(--site-svc-pad) var(--fh-space-2-5, 0.625rem) calc(var(--site-svc-pad) + 1.5rem);
+}
+.site-services__grid .site-service > .fh-checklist > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+.site-services__grid .site-service > .fh-checklist > li::before { display: none; }
+.site-services__grid .site-service > .fh-checklist > li::after { inset-block-start: 50%; inset-inline-start: var(--site-svc-pad); inline-size: 0.85rem; translate: 0 -50%; mask-size: 0.85rem; }
+/* The footer: a tone-tinted strip along the card's bottom edge, the promise on
+ * the left and a clear action on the right (tone outline, arrow that moves,
+ * fills with the tone on hover). */
+.site-services__grid .site-service > .fh-card__footer {
+  align-items: center;
+  margin: auto calc(var(--site-svc-pad) * -1) calc(var(--site-svc-pad) * -1);
+  padding: var(--fh-space-4) var(--site-svc-pad);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  background-color: color-mix(in oklab, var(--fh-tone) 6%, transparent);
+}
+/* Phones: the service cards stand apart instead of stacking edge to edge,
+ * each with its own etched outline. */
+@container fh-frame (inline-size < 40rem) {
+  .site-services__grid { gap: var(--fh-space-5); border: 0; }
+  .site-services__grid > .site-service { border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-md); overflow: hidden; }
+}
+.site-service__go {
+  --fh-button-border: color-mix(in oklab, var(--fh-tone) 60%, transparent);
+  gap: var(--fh-space-2);
+}
+.site-service__go .fh-icon { color: var(--fh-tone); transition: translate var(--fh-duration-fast) var(--fh-ease-out), color var(--fh-duration-fast); }
+.site-service__go:is(:hover, :focus-visible) {
+  --fh-button-bg: var(--fh-tone);
+  --fh-button-fg: var(--fh-color-on-tone);
+  --fh-button-border: var(--fh-tone);
+  background-color: var(--fh-tone);
+  color: var(--fh-color-on-tone);
+}
+.site-service__go:is(:hover, :focus-visible) .fh-icon { color: currentColor; translate: 0.2rem 0; }
+/* How it works: the same etched cells as the hero facts (fh-stats). Three
+ * steps share dashed rules, each with an indexed eyebrow pill (EYE-17) over its title,
+ * and the button sits in a fourth cell. No gradient. */
+.site-services__strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-block-start: var(--fh-space-8);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-md);
+  overflow: hidden;
+}
+@container fh-frame (inline-size >= 56rem) { .site-services__strip { grid-template-columns: minmax(0, 3fr) minmax(14rem, 1fr); } }
+.site-services__steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0;
+  counter-reset: site-step;
+}
+.site-services__steps > li,
+.site-services__go {
+  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+}
+.site-services__steps > li {
+  display: block;
+  counter-increment: site-step;
+  padding: var(--fh-space-5) var(--fh-space-5) var(--fh-space-6);
+  background-color: color-mix(in oklab, var(--fh-tone) 2.5%, transparent);
+}
+.site-services__steps .fh-steps__mark { display: none; }
+.site-services__steps > li > div { display: grid; gap: var(--fh-space-2); justify-items: start; }
+.site-services__steps .fh-eyebrow-pill { margin-block-end: var(--fh-space-1); font-size: var(--fh-text-label); }
+.site-services__steps h3 { margin: 0; font-size: var(--fh-text-lede); font-weight: var(--fh-weight-medium); letter-spacing: var(--fh-tracking-heading); }
+.site-services__steps p { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+/* The fourth cell holds a real, filled button with its arrow. */
+.site-services__go { display: grid; align-content: center; gap: var(--fh-space-2); padding: var(--fh-space-5); }
 
 /* —— Lead dialog —— */
 .site-lead { --fh-dialog-size: 60rem; overflow: hidden; }
@@ -862,6 +941,39 @@ body::before {
 .site-lead__needs legend { padding: 0; margin-block-end: var(--fh-space-3); }
 .site-lead__needs legend span { color: var(--fh-color-text-subtle); text-transform: none; letter-spacing: 0; margin-inline-start: var(--fh-space-2); }
 .site-lead__needs .fh-chip { position: relative; }
+/* "What do you need?": multi-select chips that read as choices, not as
+ * answers. Unpicked: a quiet dashed chip with an empty checkbox square.
+ * Picked: the tone fills in, the border goes solid and the square ticks. */
+.site-lead__needs .fh-chip.fh-chip--tone {
+  border-style: dashed;
+  border-color: color-mix(in oklab, var(--fh-color-text) 24%, transparent);
+  background-color: transparent;
+  color: var(--fh-color-text-muted);
+  cursor: pointer;
+}
+.site-lead__needs .fh-chip.fh-chip--tone::before {
+  inline-size: 0.8rem;
+  block-size: 0.8rem;
+  border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 45%, transparent);
+  border-radius: 3px;
+  background: none;
+  mask: none;
+}
+.site-lead__needs .fh-chip.fh-chip--tone:hover { border-color: var(--fh-tone); color: var(--fh-color-text); }
+.site-lead__needs .fh-chip.fh-chip--tone:hover::before { border-color: var(--fh-tone); }
+.site-lead__needs .fh-chip.fh-chip--tone:has(:checked) {
+  border-style: solid;
+  border-color: var(--fh-tone);
+  background-color: color-mix(in oklab, var(--fh-tone) 16%, transparent);
+  color: var(--fh-color-text);
+}
+.site-lead__needs .fh-chip.fh-chip--tone:has(:checked)::before {
+  border-color: var(--fh-tone);
+  background:
+    var(--fh-tone);
+  mask: var(--fh-icon-check) center / 0.7rem no-repeat, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
 .site-lead__legend { display: block; }
 .site-lead__budget { inline-size: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); border-radius: var(--fh-radius-lg); }
 .site-lead__budget > label { flex: 1 1 auto; justify-content: center; }
@@ -899,6 +1011,17 @@ body::before {
 .site-lead--sheet { --fh-dialog-size: 34rem; }
 .site-lead--sheet :is(.site-lead__form, .site-lead__split) { block-size: 100%; }
 .site-lead--sheet .site-lead__main { block-size: 100dvh; max-block-size: 100dvh; }
+/* The same sheet from the left edge (data-lead-side="start"). */
+.site-lead--sheet.site-lead--start {
+  margin: 0 auto 0 0;
+  translate: -100%;
+  border-inline-start: 0;
+  border-inline-end: var(--fh-border-thin) solid var(--fh-color-border);
+}
+.site-lead--sheet.site-lead--start[open] {
+  translate: 0;
+  @starting-style { translate: -100%; }
+}
 .site-lead__plan[hidden], .site-lead__needs[hidden], [data-lead-budget][hidden] { display: none; }
 .site-lead__plan-note { margin: var(--fh-space-2) 0 0; font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
 

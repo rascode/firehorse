@@ -2251,6 +2251,320 @@
     }
   }
 
+  .fh-rotator {
+    --_step: var(--fh-rotator-step, 2.6s);
+    overflow-clip-margin: .06em;
+    transition: inline-size .5s var(--fh-ease-out);
+    color: var(--fh-rotator-color, inherit);
+    font-family: var(--fh-rotator-font, inherit);
+    font-size: calc(1em * var(--fh-rotator-scale, 1));
+    font-style: var(--fh-rotator-style, inherit);
+    font-weight: var(--fh-rotator-weight, inherit);
+    letter-spacing: var(--fh-rotator-tracking, inherit);
+    justify-items: start;
+    display: inline-grid;
+    overflow: clip;
+
+    & > * {
+      white-space: nowrap;
+      grid-area: 1 / 1;
+    }
+
+    & > :not(:first-child) {
+      opacity: 0;
+      translate: 0 100%;
+    }
+  }
+
+  .fh-rotator > :first-child {
+    --_k: 0;
+  }
+
+  .fh-rotator > :nth-child(2) {
+    --_k: 1;
+  }
+
+  .fh-rotator > :nth-child(3) {
+    --_k: 2;
+  }
+
+  .fh-rotator > :nth-child(4) {
+    --_k: 3;
+  }
+
+  .fh-rotator > :nth-child(5) {
+    --_k: 4;
+  }
+
+  .fh-rotator > :nth-child(6) {
+    --_k: 5;
+  }
+
+  .fh-rotator > :nth-child(7) {
+    --_k: 6;
+  }
+
+  .fh-rotator > :nth-child(8) {
+    --_k: 7;
+  }
+
+  .fh-rotator > :nth-child(9) {
+    --_k: 8;
+  }
+
+  .fh-rotator[data-tone] {
+    --fh-rotator-color: var(--fh-tone);
+  }
+
+  .fh-rotator > [data-tone] {
+    color: var(--fh-tone);
+  }
+
+  .fh-rotator--accent {
+    --fh-rotator-color: var(--fh-color-accent);
+  }
+
+  .fh-rotator--script {
+    --fh-rotator-font: var(--fh-font-script);
+    --fh-rotator-scale: 1.15;
+    --fh-rotator-tracking: 0;
+  }
+
+  .fh-rotator--display {
+    --fh-rotator-font: var(--fh-font-display);
+  }
+
+  .fh-rotator--mono {
+    --fh-rotator-font: var(--fh-font-mono);
+    --fh-rotator-scale: .9;
+    --fh-rotator-tracking: -.02em;
+  }
+
+  .fh-rotator--italic {
+    --fh-rotator-style: italic;
+  }
+
+  .fh-rotator--underline > * {
+    text-decoration: underline;
+    -webkit-text-decoration-color: var(--fh-tone, var(--fh-color-accent));
+    text-decoration-color: var(--fh-tone, var(--fh-color-accent));
+    text-underline-offset: .12em;
+    text-decoration-thickness: .06em;
+  }
+
+  .fh-rotator--highlight > * {
+    border-radius: var(--fh-radius-sm);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 22%, transparent);
+    padding-inline: .12em;
+  }
+
+  .fh-rotator--gradient > * {
+    background: linear-gradient(90deg, var(--fh-tone-sky), var(--fh-tone-fuchsia), var(--fh-tone-amber));
+    color: #0000;
+    background-clip: text;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-rotator > * {
+      animation-duration: calc(var(--_step) * var(--_n, 1));
+      animation-timing-function: var(--fh-ease-out);
+      animation-iteration-count: infinite;
+      animation-fill-mode: both;
+      animation-delay: calc(var(--_k, 0) * var(--_step) - var(--_step) * .1923);
+    }
+
+    .fh-rotator:has( > :nth-child(2):last-child) > * {
+      --_n: 2;
+      animation-name: fh-rotator-2;
+    }
+
+    .fh-rotator:has( > :nth-child(3):last-child) > * {
+      --_n: 3;
+      animation-name: fh-rotator-3;
+    }
+
+    .fh-rotator:has( > :nth-child(4):last-child) > * {
+      --_n: 4;
+      animation-name: fh-rotator-4;
+    }
+
+    .fh-rotator:has( > :nth-child(5):last-child) > * {
+      --_n: 5;
+      animation-name: fh-rotator-5;
+    }
+
+    .fh-rotator:has( > :nth-child(6):last-child) > * {
+      --_n: 6;
+      animation-name: fh-rotator-6;
+    }
+
+    .fh-rotator:has( > :nth-child(7):last-child) > * {
+      --_n: 7;
+      animation-name: fh-rotator-7;
+    }
+
+    .fh-rotator:has( > :nth-child(8):last-child) > * {
+      --_n: 8;
+      animation-name: fh-rotator-8;
+    }
+
+    .fh-rotator:has( > :nth-child(9):last-child) > * {
+      --_n: 9;
+      animation-name: fh-rotator-9;
+    }
+
+    .fh-rotator--down > * {
+      --_from: -100%;
+      --_to: 100%;
+      animation-direction: normal;
+    }
+
+    .fh-rotator--fade > * {
+      --_from: 0;
+      --_to: 0;
+    }
+
+    .fh-rotator:not(:hover)[data-fh-paused] > * {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes fh-rotator-2 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    9.62%, 50% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    59.62%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-3 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    6.41%, 33.33% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    39.74%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-4 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    4.81%, 25% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    29.81%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-5 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    3.85%, 20% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    23.85%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-6 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    3.21%, 16.67% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    19.87%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-7 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    2.75%, 14.29% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    17.03%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-8 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    2.4%, 12.5% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    14.9%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
+  @keyframes fh-rotator-9 {
+    0% {
+      opacity: 0;
+      translate: 0 var(--_from, 100%);
+    }
+
+    2.14%, 11.11% {
+      opacity: 1;
+      translate: 0;
+    }
+
+    13.25%, 100% {
+      opacity: 0;
+      translate: 0 var(--_to, -100%);
+    }
+  }
+
   .fh-accordion {
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
