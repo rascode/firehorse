@@ -1052,8 +1052,9 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
    and one plain bar to copy the prompt. Items rise in one after another. */
 .fh-menu.site-agents__menu {
   inline-size: min(27rem, calc(100vi - 2rem));
-  /* Shown whole: on open, site-features.js scrolls the page just enough to fit it. */
-  max-block-size: min(44rem, calc(100dvh - 2rem));
+  /* Fits the room on its side of the button (site-features.js picks the side
+     with more room); the page never moves, the menu scrolls inside if it must. */
+  max-block-size: min(44rem, calc(100% - var(--fh-space-3)));
   padding: 0;
   border-color: color-mix(in oklab, var(--fh-color-text) 18%, transparent);
   border-radius: var(--fh-radius-md);
@@ -1062,23 +1063,57 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
   box-shadow: 0 24px 60px -12px rgb(0 0 0 / 0.55), 0 0 0 1px color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
   scrollbar-width: thin;
 }
-.site-agents__head {
-  display: grid;
-  gap: 0.2rem;
-  padding: var(--fh-space-4) var(--fh-space-4) var(--fh-space-3);
-  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  background: color-mix(in oklab, var(--fh-color-surface-chrome) 70%, transparent);
+@supports (position-area: bottom) {
+  .fh-menu.site-agents__menu[data-up] { position-area: block-start span-inline-end; margin-block: 0 var(--fh-space-1-5); }
 }
-.site-agents__title {
+/* Header: the same window chrome as the live demo, three dots and a mono
+   title, with a lime "copied" tag on the right. */
+.site-agents__head {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
-  gap: var(--fh-space-2);
-  font-size: var(--fh-text-body);
-  font-weight: var(--fh-weight-medium);
-  letter-spacing: -0.01em;
+  gap: var(--fh-space-3);
+  min-block-size: 2.5rem;
+  padding-inline: var(--fh-space-4) var(--fh-space-3);
+  border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+  background-color: var(--fh-color-surface-chrome);
 }
-.site-agents__title .fh-icon { color: var(--fh-color-accent, var(--fh-tone-orange)); }
-.site-agents__hint { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption, 0.72rem); }
+.site-agents__head::before {
+  content: "";
+  flex: none;
+  inline-size: 0.55rem;
+  aspect-ratio: 1;
+  border-radius: var(--fh-radius-round);
+  background-color: var(--fh-tone-rose);
+  box-shadow: 0.85rem 0 0 var(--fh-tone-amber), 1.7rem 0 0 var(--fh-tone-lime);
+  margin-inline-end: 1.9rem;
+}
+.site-agents__title {
+  color: var(--fh-color-text);
+  font-family: var(--fh-font-mono);
+  font-size: 0.68rem;
+  font-weight: var(--fh-weight-medium);
+  letter-spacing: var(--fh-tracking-wider);
+  text-transform: uppercase;
+}
+.site-agents__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-inline-start: auto;
+  padding: 0.15rem 0.5rem;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone-lime) 55%, transparent);
+  border-radius: var(--fh-radius-pill);
+  color: var(--fh-tone-lime);
+  font-family: var(--fh-font-mono);
+  font-size: 0.58rem;
+  letter-spacing: var(--fh-tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-agents__hint .fh-icon { font-size: 0.7rem; }
 .site-agents__menu .fh-menu__label { margin: var(--fh-space-4) var(--fh-space-4) var(--fh-space-2); }
 
 .site-agents__grid {

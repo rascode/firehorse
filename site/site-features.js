@@ -43,20 +43,19 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
   const id = `agents-${++menuSeq}`;
   host.innerHTML = `<button class="fh-button fh-button--${host.classList.contains("site-agents--sm") ? "sm" : size} fh-button--secondary" type="button" popovertarget="${id}" style="anchor-name: --${id}"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>${label}<i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
     <div class="fh-menu site-agents__menu" id="${id}" popover style="position-anchor: --${id}" aria-label="Choose an agent">
-      <header class="site-agents__head"><span class="site-agents__title"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>Send to an agent</span><span class="site-agents__hint">The prompt is copied with every choice</span></header>
+      <header class="site-agents__head"><span class="site-agents__title">Send to an agent</span><span class="site-agents__hint"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Prompt copied on every pick</span></header>
       <p class="fh-menu__label">Open with the prompt</p>
       <div class="site-agents__grid">${AGENTS.filter((a) => !a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span><span class="site-agents__name"><b>${a.name}</b><small>${a.note}</small></span><i class="fh-icon fh-icon--arrow-up-right site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
       <p class="fh-menu__label">From your terminal</p>
       <div class="site-agents__cli">${AGENTS.filter((a) => a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b>${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
       <button type="button" class="site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button>
     </div>`;
-  // Opening near the bottom of the screen: scroll just enough to show the whole menu.
-  $(`#${id}`).addEventListener("toggle", (e) => {
+  // Open on whichever side of the button has more room; never scroll the page.
+  // The menu fits that room and scrolls inside itself if it has to.
+  $(`#${id}`).addEventListener("beforetoggle", (e) => {
     if (e.newState !== "open") return;
-    requestAnimationFrame(() => {
-      const over = e.target.getBoundingClientRect().bottom - (innerHeight - 16);
-      if (over > 0) scrollBy({ top: over, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    });
+    const r = host.getBoundingClientRect();
+    e.target.toggleAttribute("data-up", r.top > innerHeight - r.bottom);
   });
   host.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-agent]");
