@@ -100,11 +100,15 @@
           <p class="site-chapter" data-tone="teal">Container-native, live</p>
           <h2 id="adapt-title" class="fh-heading">One window. Three layouts. No media queries.</h2>
           <p class="fh-lede">The window here is changing its own width on a loop. Nothing inside it knows the size of the screen; each component asks only how much room its box has, and lays itself out to match.</p>
-          <ul class="site-adapt__watch">
-            <li data-tone="lime"><b>Watch the readout.</b> The S, M and L pills light up as the window crosses 22rem and 34rem.</li>
-            <li data-tone="amber"><b>Watch the stats.</b> Three figures sit in a row, then stack when the room runs out.</li>
-            <li data-tone="sky"><b>Watch the cards.</b> Two columns fold into one, without a breakpoint in sight.</li>
-          </ul>
+          <table class="site-adapt__table">
+            <caption class="fh-sr-only">What changes as the window resizes</caption>
+            <thead><tr><th scope="col">Watch</th><th scope="col">What happens</th><th scope="col">Container width</th></tr></thead>
+            <tbody>
+              <tr data-tone="lime"><th scope="row"><span class="fh-icon-tile"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i></span>Readout</th><td>The S, M and L pills light up in turn</td><td><code>22rem · 34rem</code></td></tr>
+              <tr data-tone="amber"><th scope="row"><span class="fh-icon-tile"><i class="fh-icon fh-icon--chart-bar" aria-hidden="true"></i></span>Stats</th><td>Three figures sit in a row, then stack</td><td><code>34rem</code></td></tr>
+              <tr data-tone="sky"><th scope="row"><span class="fh-icon-tile"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span>Cards</th><td>Two columns fold into one</td><td><code>19rem</code></td></tr>
+            </tbody>
+          </table>
           <p class="site-note">Hover the window to pause it. The same rules hold in a sidebar, a modal or a full-width grid.</p>
         </header>
           <!-- The breathing window: pinned in a fixed-height stage so its reflow never moves the page -->

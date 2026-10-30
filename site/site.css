@@ -196,21 +196,69 @@ body::before {
 @container fh-frame (inline-size >= 64rem) {
   .site-adapt__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
 }
-.site-adapt__copy { display: grid; gap: var(--fh-space-4); align-content: start; }
+.site-adapt__copy { container-type: inline-size; display: grid; gap: var(--fh-space-4); align-content: start; }
 .site-adapt__copy .fh-lede { max-inline-size: 48ch; }
-.site-adapt__watch {
-  display: grid;
+/* What to watch: a ruled table, one tone per row, the threshold in mono. */
+.site-adapt__table {
+  inline-size: 100%;
+  margin-block-start: var(--fh-space-2);
+  border-collapse: separate;
+  border-spacing: 0;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-md);
+  background-color: var(--site-frost);
+  font-size: var(--fh-text-small);
+  overflow: hidden;
+}
+.site-adapt__table :is(th, td) {
+  padding: var(--fh-space-3) var(--fh-space-4);
+  text-align: start;
+  vertical-align: middle;
+}
+.site-adapt__table thead th {
+  padding-block: var(--fh-space-2-5, 0.625rem);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  background: color-mix(in oklab, var(--fh-color-surface-chrome) 60%, transparent);
+  color: var(--fh-color-text-subtle);
+  font-family: var(--fh-font-mono);
+  font-size: 0.62rem;
+  font-weight: var(--fh-weight-medium);
+  letter-spacing: var(--fh-tracking-wider);
+  text-transform: uppercase;
+}
+.site-adapt__table tbody tr + tr > * { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+.site-adapt__table tbody th {
+  display: flex;
+  align-items: center;
   gap: var(--fh-space-3);
-  margin: var(--fh-space-2) 0 0;
-  padding: 0;
-  list-style: none;
-  color: var(--fh-color-text-muted);
+  color: var(--fh-color-text);
+  font-weight: var(--fh-weight-medium);
+  white-space: nowrap;
 }
-.site-adapt__watch li {
-  padding-inline-start: var(--fh-space-4);
-  border-inline-start: 2px solid var(--fh-tone);
+.site-adapt__table .fh-icon-tile { --fh-icon-tile: 1.9rem; flex: none; }
+.site-adapt__table td { color: var(--fh-color-text-muted); }
+.site-adapt__table td:last-child { text-align: end; white-space: nowrap; }
+.site-adapt__table code {
+  padding: 0.15rem 0.45rem;
+  border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone) 45%, transparent);
+  border-radius: var(--fh-radius-pill);
+  background: color-mix(in oklab, var(--fh-tone) 8%, transparent);
+  color: var(--fh-tone);
+  font-family: var(--fh-font-mono);
+  font-size: 0.68rem;
 }
-.site-adapt__watch b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+.site-adapt__table tbody tr { box-shadow: inset 2px 0 0 transparent; transition: box-shadow var(--fh-duration-fast), background-color var(--fh-duration-fast); }
+.site-adapt__table tbody tr:hover { box-shadow: inset 2px 0 0 var(--fh-tone); background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent); }
+/* Narrow: each row becomes a small card, threshold under the description. */
+@container (inline-size < 30rem) {
+  .site-adapt__table thead { display: none; }
+  .site-adapt__table tbody tr { display: grid; gap: var(--fh-space-1-5); padding: var(--fh-space-3) var(--fh-space-4); }
+  .site-adapt__table tbody tr + tr { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+  .site-adapt__table tbody :is(tr, tr + tr) > * { padding: 0; border: 0; }
+  /* Description and width line up under the name, past the icon. */
+  .site-adapt__table td { margin-inline-start: calc(1.9rem + var(--fh-space-3)); }
+  .site-adapt__table td:last-child { text-align: start; }
+}
 
 /* —— The breathing window: a container that animates its own width
  *    so the components inside reflow by container query, live. —— */
