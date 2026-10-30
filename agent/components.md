@@ -129,7 +129,7 @@ Motion you opt into, not a library you load. It runs on the platform (transition
 </dl>
 ```
 
-### ROT · Word rotator
+### WRT · Word rotator
 
 The rolling word in a headline, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns. Change them by editing the HTML. Style the word apart from the sentence with a modifier, a tone or a knob: colour, font, size, weight, italic, underline, highlight, gradient, and which way it rolls.
 
@@ -648,7 +648,7 @@ Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and 
       <p class="site-slide__big">Ink, etch<br>&amp; ember.</p>
     </figure>
     <figure class="fh-carousel__slide site-slide site-slide--ui" data-tone="teal" aria-label="3 of 4">
-      <dl class="fh-stats"><div><dt>Tokens</dt><dd>{{TOKENS}}</dd></div><div><dt>Layers</dt><dd>8</dd></div><div><dt>Breakpoints</dt><dd>0</dd></div></dl>
+      <dl class="fh-stats"><div><dt>Tokens</dt><dd>{{TOKENS}}</dd></div><div><dt>Layers</dt><dd>9</dd></div><div><dt>Breakpoints</dt><dd>0</dd></div></dl>
     </figure>
     <figure class="fh-carousel__slide site-slide site-slide--tones" aria-label="4 of 4">
       <i data-tone="sky"></i><i data-tone="teal"></i><i data-tone="lime"></i><i data-tone="amber"></i><i data-tone="orange"></i><i data-tone="accent"></i><i data-tone="rose"></i><i data-tone="fuchsia"></i><i data-tone="violet"></i>

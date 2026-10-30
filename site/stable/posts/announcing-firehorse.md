@@ -107,7 +107,7 @@ Point your agent at one URL and tell it to use only `fh-*` classes and `--fh-*` 
 
 The rolling word in a headline is everywhere right now: the design system that scales, then adapts, then grows. It looks simple. Building it usually isn't: a JavaScript library, an array of words in a script, a timer, a measuring trick so the sentence doesn't jump, and a fix so screen readers don't announce every word.
 
-In Firehorse it's markup. The [word rotator](/foundations/#rotator), `ROT`, is a `fh-rotator` span with one `<span>` per word. Write the words and they take turns. Change them by editing the HTML. The roll is pure CSS, and screen readers and anyone with reduced motion get the first word.
+In Firehorse it's markup. The [word rotator](/foundations/#rotator), `WRT`, is a `fh-rotator` span with one `<span>` per word. Write the words and they take turns. Change them by editing the HTML. The roll is pure CSS, and screen readers and anyone with reduced motion get the first word.
 
 Give each word its own [tone](/foundations/#c-tones), or set the word apart with a modifier: script, mono, highlight, gradient, underline. Load `firehorse.js` and the slot eases to each word's width, so the sentence glides instead of jumping. The headline on [our homepage](/) is one.
 
