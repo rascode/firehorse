@@ -941,13 +941,12 @@ body::before {
 .site-lead__needs legend { padding: 0; margin-block-end: var(--fh-space-3); }
 .site-lead__needs legend span { color: var(--fh-color-text-subtle); text-transform: none; letter-spacing: 0; margin-inline-start: var(--fh-space-2); }
 /* Field labels in the lead form: full-strength text (black on light, white
- * on dark) and heavier, so the form scans at a glance. The Required /
- * Optional tags keep their own quieter colour and weight. */
+ * on dark), so the form scans at a glance. The Required / Optional tags
+ * keep their own quieter colour. */
 .site-lead :is(.fh-field > label, .fh-field > .fh-field__label, .fh-field > legend, .site-lead__needs > legend, fieldset > legend.fh-label, .site-lead__legend) {
   color: var(--fh-color-text-strong);
-  font-weight: var(--fh-weight-bold);
+  font-weight: var(--fh-weight-medium);
 }
-.site-lead .fh-field > label::after { font-weight: var(--fh-weight-medium); }
 .site-lead__needs .fh-chip { position: relative; }
 /* "What do you need?": multi-select chips that read as choices, not as
  * answers. Unpicked: a quiet dashed chip with an empty checkbox square.
@@ -986,8 +985,21 @@ body::before {
 .site-lead__budget { inline-size: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); border-radius: var(--fh-radius-lg); }
 .site-lead__budget > label { flex: 1 1 auto; justify-content: center; }
 .site-lead__trap { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
-.site-lead__footer { align-items: center; }
-.site-lead__note { margin: 0 auto 0 0; font-size: var(--fh-text-caption); color: var(--fh-color-text-subtle); }
+/* Footer: the note on its own line, then Cancel and Send side by side,
+ * both full height, Send taking the rest of the row. */
+.site-lead__footer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: var(--fh-space-3);
+}
+.site-lead__footer > .site-lead__note { grid-column: 1 / -1; margin: 0; }
+.site-lead__footer > [data-lead-submit] { justify-content: center; }
+.site-lead__footer > .fh-button[hidden] { display: none; }
+.site-lead__footer:has(> [data-lead-submit][hidden]) { grid-template-columns: minmax(0, 1fr); }
+/* The kicker is a live eyebrow pill. */
+.site-lead__kicker { margin: 0 0 var(--fh-space-1); }
+.site-lead__note { font-size: var(--fh-text-caption); color: var(--fh-color-text-subtle); }
 .site-lead__note[data-tone] { color: var(--fh-tone); }
 .site-lead__form[data-checked] .fh-field:has(:invalid) .fh-field__error { display: block; }
 .site-lead__form[data-checked] .fh-field:has(:invalid) > label { color: var(--fh-color-danger); }

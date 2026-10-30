@@ -237,6 +237,7 @@
       ui.plan.hidden = !pro; ui.planSet.disabled = !pro; ui.billing.disabled = !pro;
       ui.needs.hidden = pro;
       ui.kicker.textContent = pro ? "Firehorse Pro" : base.kicker;
+      ui.kicker.closest(".site-lead__kicker")?.setAttribute("data-tone", pro ? "fuchsia" : "accent");
       ui.title.textContent = pro ? (plan === "custom-build" ? "Scope a custom build" : plan === "question" ? "Ask us anything" : "Get Firehorse Pro") : base.title;
       submitText = pro ? (plan === "custom-build" ? "Request a brief" : plan === "question" ? "Send question" : "Get started") : base.submit;
       ui.submitLabel.textContent = submitText;
