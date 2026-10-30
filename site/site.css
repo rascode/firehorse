@@ -1037,7 +1037,8 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
 @container fh-dl (inline-size >= 28rem) { .fh-dl.site-variants > div { align-items: center; grid-template-columns: 12rem minmax(0, 1fr); gap: var(--fh-space-6); } }
 
 /* —— Hero backdrop ——
- * The Apothekarean horse, etched on a blueprint sheet and facing right.
+ * Three horses at the gallop, drawn in pencil on a blueprint sheet with
+ * dimension marks, facing right (original Rascode artwork).
  * Fixed behind the whole page and full height. The art is an alpha mask
  * (site/img/backdrop/firehorse-horse.webp) filled with the ink colour, so
  * it follows the theme in light and dark. On load it draws in left to
@@ -1053,13 +1054,14 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
   --_glint-b: linear-gradient(90deg, transparent 0%, var(--fh-tone-violet) 6%, var(--fh-tone-rose) 12%, var(--fh-tone-amber) 17%, var(--fh-tone-teal) 23%, var(--fh-tone-sky) 27%, transparent 33%, transparent 100%);
   --_cycle: 9s;
   --_cycle-b: 14.3s;
-  --_art: url("img/backdrop/firehorse-horse.webp?v=3");
-  /* The art is trimmed to the ear tips and the ground line; the horse fills
-     about 91% of the viewport height (capped by width so the head stays in). */
-  --_art-w: min(94vw, calc(91vh * 1.645));
+  --_art: url("img/backdrop/firehorse-horse.webp?v=4");
+  /* The art is trimmed to the drawing and its dimension marks (1453 x 920);
+     it fills about 84% of the viewport height, sitting low so the marks clear
+     the header, and is capped by width so the lead horse's head stays in. */
+  --_art-w: min(94vw, calc(84vh * 1.579));
   --_art-xn: 0.6;
   --_art-size: var(--_art-w) auto;
-  --_art-pos: calc(var(--_art-xn) * 100%) 55%;
+  --_art-pos: calc(var(--_art-xn) * 100%) 72%;
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -1148,9 +1150,9 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
 @keyframes site-horse-in { from { translate: 0 100%; } }
 @keyframes site-horse-in-inner { from { translate: 0 -100%; } }
 @keyframes site-flow { to { translate: 0 0; } }
-/* Narrow screens: let the horse run larger than the screen, cropped at the tail (head stays in view). */
+/* Narrow screens: let the horses run larger than the screen, cropped at the left (the lead head stays in view). */
 @media (width < 48rem) {
-  .site-backdrop { --_art-w: calc(71vh * 1.645); --_art-xn: 0.92; --_art-pos: calc(var(--_art-xn) * 100%) 50%; }
+  .site-backdrop { --_art-w: calc(71vh * 1.579); --_art-xn: 0.92; --_art-pos: calc(var(--_art-xn) * 100%) 50%; }
 }
 
 /* —— Footer: the hoof elevation etched behind the right side of the menu —— */
