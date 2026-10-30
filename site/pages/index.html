@@ -59,44 +59,12 @@
             <code id="install-cmd">npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz</code>
             <button class="fh-button fh-button--sm fh-button--ghost" type="button" data-copy="#install-cmd">Copy</button>
           </div>
-        </div>
-
-        <!-- The breathing window: pinned in a fixed-height stage so its reflow never moves the page -->
-        <div class="site-breathe-stage">
-        <div class="site-breathe fh-parallax" style="--fh-depth: -0.12" aria-label="Live demo: a window that changes width while its components adapt">
-          <figure class="fh-window">
-            <div class="fh-window__bar">
-              <span>container: 100cqi</span>
-              <span class="site-readout" aria-hidden="true">
-                <span data-at="s">S &lt;22rem</span><span data-at="m">M</span><span data-at="l">L ≥34rem</span>
-              </span>
-            </div>
-            <div class="fh-window__body">
-              <p class="fh-breadcrumb" data-tone="teal">
-                <span class="fh-breadcrumb__back"><span class="fh-dot fh-dot--live"></span></span>
-                <span><span>Services</span></span>
-              </p>
-              <dl class="fh-stats" data-tone="teal">
-                <div><dt>Timeline</dt><dd>3 wk</dd></div>
-                <div><dt>From</dt><dd>$1.2k</dd></div>
-                <div><dt>Scope</dt><dd>4 docs</dd></div>
-              </dl>
-              <div class="fh-grid fh-grid--ruled site-mini-grid">
-                <article class="fh-card" data-tone="sky">
-                  <p class="fh-card__meta">Agents</p>
-                  <h3 class="fh-card__title">Lead follow-up</h3>
-                  <p class="fh-card__body">Answers, books and follows up.</p>
-                </article>
-                <article class="fh-card" data-tone="orange">
-                  <p class="fh-card__meta">Automation</p>
-                  <h3 class="fh-card__title">Pipelines</h3>
-                  <p class="fh-card__body">Systems that talk to each other.</p>
-                </article>
-              </div>
-            </div>
-          </figure>
-          <p class="site-note" style="margin-block-start: var(--fh-space-3)">This window resizes itself; nothing inside uses a media query. Hover to pause.</p>
-        </div>
+          <dl class="fh-stats site-facts" data-tone="sky">
+            <div><dt>Design tokens</dt><dd>{{TOKENS}}</dd><dd>Primitive → semantic → component</dd></div>
+            <div><dt>Cascade layers</dt><dd>8</dd><dd>Override anything without !important</dd></div>
+            <div><dt>Viewport breakpoints</dt><dd>0</dd><dd>Layout responds to containers</dd></div>
+            <div><dt>Runtime</dt><dd>0<small>KB JS</small></dd><dd>Native details, dialog, popover</dd></div>
+          </dl>
         </div>
       </div>
     </section>
@@ -125,14 +93,57 @@
       <i data-tone="sky"></i><i data-tone="teal"></i><i data-tone="lime"></i><i data-tone="amber"></i><i data-tone="orange"></i><i data-tone="accent"></i><i data-tone="rose"></i><i data-tone="fuchsia"></i><i data-tone="violet"></i>
     </div>
 
-    <!-- ═══════════════ FACTS ═══════════════ -->
-    <section class="fh-section fh-section--tight" aria-label="At a glance">
-      <dl class="fh-stats site-facts" data-tone="sky">
-        <div><dt>Design tokens</dt><dd>{{TOKENS}}</dd><dd>Primitive → semantic → component</dd></div>
-        <div><dt>Cascade layers</dt><dd>8</dd><dd>Override anything without !important</dd></div>
-        <div><dt>Viewport breakpoints</dt><dd>0</dd><dd>Layout responds to containers</dd></div>
-        <div><dt>Runtime</dt><dd>0<small>KB JS</small></dd><dd>Native details, dialog, popover</dd></div>
-      </dl>
+    <!-- ═══════════════ IN MOTION: the breathing window ═══════════════ -->
+    <section class="fh-section fh-section--ruled site-adapt" aria-labelledby="adapt-title">
+      <div class="site-adapt__grid">
+        <header class="site-adapt__copy">
+          <p class="site-chapter" data-tone="teal">Container-native, live</p>
+          <h2 id="adapt-title" class="fh-heading">One window. Three layouts. No media queries.</h2>
+          <p class="fh-lede">The window here is changing its own width on a loop. Nothing inside it knows the size of the screen; each component asks only how much room its box has, and lays itself out to match.</p>
+          <ul class="site-adapt__watch">
+            <li data-tone="lime"><b>Watch the readout.</b> The S, M and L pills light up as the window crosses 22rem and 34rem.</li>
+            <li data-tone="amber"><b>Watch the stats.</b> Three figures sit in a row, then stack when the room runs out.</li>
+            <li data-tone="sky"><b>Watch the cards.</b> Two columns fold into one, without a breakpoint in sight.</li>
+          </ul>
+          <p class="site-note">Hover the window to pause it. The same rules hold in a sidebar, a modal or a full-width grid.</p>
+        </header>
+          <!-- The breathing window: pinned in a fixed-height stage so its reflow never moves the page -->
+          <div class="site-breathe-stage">
+          <div class="site-breathe fh-parallax" style="--fh-depth: -0.12" aria-label="Live demo: a window that changes width while its components adapt">
+            <figure class="fh-window">
+              <div class="fh-window__bar">
+                <span>container: 100cqi</span>
+                <span class="site-readout" aria-hidden="true">
+                  <span data-at="s">S &lt;22rem</span><span data-at="m">M</span><span data-at="l">L ≥34rem</span>
+                </span>
+              </div>
+              <div class="fh-window__body">
+                <p class="fh-breadcrumb" data-tone="teal">
+                  <span class="fh-breadcrumb__back"><span class="fh-dot fh-dot--live"></span></span>
+                  <span><span>Services</span></span>
+                </p>
+                <dl class="fh-stats" data-tone="teal">
+                  <div><dt>Timeline</dt><dd>3 wk</dd></div>
+                  <div><dt>From</dt><dd>$1.2k</dd></div>
+                  <div><dt>Scope</dt><dd>4 docs</dd></div>
+                </dl>
+                <div class="fh-grid fh-grid--ruled site-mini-grid">
+                  <article class="fh-card" data-tone="sky">
+                    <p class="fh-card__meta">Agents</p>
+                    <h3 class="fh-card__title">Lead follow-up</h3>
+                    <p class="fh-card__body">Answers, books and follows up.</p>
+                  </article>
+                  <article class="fh-card" data-tone="orange">
+                    <p class="fh-card__meta">Automation</p>
+                    <h3 class="fh-card__title">Pipelines</h3>
+                    <p class="fh-card__body">Systems that talk to each other.</p>
+                  </article>
+                </div>
+              </div>
+            </figure>
+            </div>
+          </div>
+      </div>
     </section>
 
     <!-- ═══════════════ PRINCIPLES ═══════════════ -->

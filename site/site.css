@@ -122,15 +122,15 @@ body::before {
 }
 /* —— Hero intro ——
  * Plays once on load, in order: the horse draws in (see Hero backdrop),
- * then the title, then the buttons, then the descriptions (eyebrow, lede
- * and the live window with its note). Opacity and transform only. */
+ * then the title, then the buttons and the install bar, then the
+ * descriptions (eyebrow, lede) and the facts. Opacity and transform only. */
 @media (prefers-reduced-motion: no-preference) {
   .site-hero .fh-display,
   .site-hero .fh-hero__actions,
   .site-hero .site-install,
   .site-hero .fh-eyebrow-pill,
   .site-hero .fh-lede,
-  .site-hero .site-breathe-stage {
+  .site-hero .site-facts {
     animation: site-intro 0.9s var(--fh-ease-out) var(--_intro-at, 0s) both;
   }
   /* The words lead and never wait for the horse art: the title is up within
@@ -140,7 +140,7 @@ body::before {
   .site-hero .site-install { --_intro-at: 0.4s; }
   .site-hero .fh-eyebrow-pill { --_intro-at: 0.55s; }
   .site-hero .fh-lede { --_intro-at: 0.6s; }
-  .site-hero .site-breathe-stage { --_intro-at: 0.75s; }
+  .site-hero .site-facts { --_intro-at: 0.75s; }
 }
 @keyframes site-intro { from { opacity: 0; translate: 0 0.9rem; } }
 /* Category pages get the same intro: breadcrumb, title, lede, then the summary
@@ -186,6 +186,32 @@ body::before {
 /* The self-hosted install URL is long: on phones it wraps instead of hiding the Copy button. */
 @media (width < 48rem) { .site-install code { white-space: normal; overflow-wrap: anywhere; text-overflow: clip; } }
 
+/* —— Container-native, live: the section under the hero that holds the
+ *    breathing window, with the copy that says what to watch. —— */
+.site-adapt__grid {
+  display: grid;
+  gap: var(--fh-space-10) var(--fh-space-12);
+  align-items: start;
+}
+@container fh-frame (inline-size >= 64rem) {
+  .site-adapt__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+}
+.site-adapt__copy { display: grid; gap: var(--fh-space-4); align-content: start; }
+.site-adapt__copy .fh-lede { max-inline-size: 48ch; }
+.site-adapt__watch {
+  display: grid;
+  gap: var(--fh-space-3);
+  margin: var(--fh-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--fh-color-text-muted);
+}
+.site-adapt__watch li {
+  padding-inline-start: var(--fh-space-4);
+  border-inline-start: 2px solid var(--fh-tone);
+}
+.site-adapt__watch b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+
 /* —— The breathing window: a container that animates its own width
  *    so the components inside reflow by container query, live. —— */
 .site-breathe {
@@ -204,8 +230,6 @@ body::before {
   88%, 100% { inline-size: 38%; }
 }
 .site-breathe-stage { position: relative; min-inline-size: 0; }
-/* Phones: drop the live window; the hero is just the copy and buttons. */
-@media (width < 48rem) { .site-breathe-stage { display: none; } }
 /* Once script has measured the tallest frame, the window is lifted out of flow
    and the stage keeps that height, so the animation can't shift anything below it. */
 .site-breathe-stage[data-pinned] { block-size: var(--site-breathe-h); overflow-anchor: none; }
@@ -269,8 +293,15 @@ body::before {
 .site-auth__item--wide { grid-column: 1 / -1; }
 .site-auth__item figcaption { display: flex; align-items: center; gap: var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
 
-/* —— Facts strip ——
+/* —— Facts strip: in the hero, under the install bar ——
  * Solid enough over the horse and its colour flow that the figures read cleanly. */
+.site-hero .site-facts {
+  /* Two by two, the same width as the button row and install bar above it. */
+  justify-self: stretch;
+  max-inline-size: 27.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block-start: var(--fh-space-4);
+}
 .site-facts > div { /* frosted with every other box: see "Frost" at the end */ }
 .site-facts dd small {
   font-size: 0.45em;
