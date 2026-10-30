@@ -197,7 +197,8 @@ body::before {
   .site-adapt__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
 }
 .site-adapt__copy { container-type: inline-size; display: grid; gap: var(--fh-space-4); align-content: start; }
-.site-adapt__copy .fh-lede { max-inline-size: 48ch; }
+/* Lede, table and note share one measure so their edges line up. */
+.site-adapt__copy :is(.fh-lede, .site-adapt__table, .site-note) { max-inline-size: 32rem; }
 /* What to watch: a ruled table, one tone per row, the threshold in mono. */
 .site-adapt__table {
   inline-size: 100%;

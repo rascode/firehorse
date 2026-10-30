@@ -260,8 +260,9 @@ ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", 
     .replace(/\{\{> ([\w-]+)\}\}/g, (_, n) => part(n))
     // meta.panel: the offset panel (src/patterns/panel.css) runs from [data-fh-panel-start] to the page bottom,
     // and the footer runs tall under it.
-    .replace("{{PANEL}}", () => (m.panel ? `  <div class="fh-panel" aria-hidden="true"></div>\n` : ""))
-    .replace('class="fh-footer fh-frame site-footer"', () => (m.panel ? 'class="fh-footer fh-footer--tall fh-frame site-footer"' : 'class="fh-footer fh-frame site-footer"'))
+    // Every other page gets the same footer: tall, with the panel starting at the footer itself.
+    .replace("{{PANEL}}", () => `  <div class="fh-panel" aria-hidden="true"></div>\n`)
+    .replace('class="fh-footer fh-frame site-footer"', () => (m.panel ? 'class="fh-footer fh-footer--tall fh-frame site-footer"' : 'class="fh-footer fh-footer--tall fh-frame site-footer" data-fh-panel-start'))
     .replaceAll("{{TITLE}}", m.title)
     .replaceAll("{{DESCRIPTION}}", escHtml(m.description))
     .replaceAll("{{OG_TITLE}}", m.ogTitle ?? m.title)
