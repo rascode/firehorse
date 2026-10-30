@@ -317,7 +317,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 
 ### BTN · Button
 
-Flat 3px rect, mono caps, convex fill. Primary buttons get an arrow; `data-tone` lights the top edge.
+Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge.
 
 ```html
 <dl class="fh-dl site-variants">

@@ -145,7 +145,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## ELV · Elevation
 
-The convex CTA: bends out at rest, the shadow inverts on hover, it sinks on press.
+The convex button style (data-fh-button="convex"): bends out at rest, the shadow inverts on hover, it sinks on press.
 
 Classes: `fh-cluster` `fh-button`
 
@@ -233,7 +233,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## BTN · Button
 
-Flat 3px rect, mono caps, convex fill. Primary buttons get an arrow; data-tone lights the top edge.
+Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge.
 
 Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--outline` `fh-button--ghost` `fh-button--accent` `fh-button--sm`
 
