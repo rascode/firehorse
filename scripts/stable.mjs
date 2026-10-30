@@ -5,15 +5,32 @@
 //   stable/feed.xml            RSS
 // Run after scripts/site.mjs (it writes into site/dist).
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
+import { assemble, part, absolutize } from "./pages.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "site/dist/stable");
 const BASE = "https://firehorse.rascode.dev";
+// Cache stamps so a deploy never serves a stale stylesheet or script.
+const stamp = (f) => createHash("sha1").update(readFileSync(join(root, "site/stable", f))).digest("hex").slice(0, 8);
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const horse = readFileSync(join(root, "site/parts/horse.svg"), "utf8").trim();
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+// The site header is shared: site/parts/header.html, same as every docs page.
+const ctx = assemble();
+const header = (() => {
+  let h = part("header");
+  for (const [k, v] of Object.entries(ctx.nav)) h = h.replace(k, () => v);
+  h = absolutize(h).replace(/href="#([^"]+)"/g, (t, id) => {
+    const to = ctx.where.get(id) ?? "/";
+    return to.endsWith("#") ? `href="${to.slice(0, -1)}"` : `href="${to}#${id}"`;
+  });
+  return h.replace(/(<a class="fh-nav__link") (href="\/stable\/")/, '$1 aria-current="page" $2')
+    .replace(/(<li><a) (href="\/stable\/")/, '$1 aria-current="page" $2');
+})();
 const TOPICS = {
   release: { name: "Release", tone: "accent" },
   agents: { name: "Agents", tone: "sky" },
@@ -28,6 +45,8 @@ const posts = readdirSync(join(root, "site/stable/posts")).filter((f) => f.endsW
   const [, fm, body] = src.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   const meta = Object.fromEntries(fm.split("\n").map((l) => l.match(/^(\w+):\s*(.*)$/)).filter(Boolean).map(([, k, v]) => [k, v.startsWith("[") ? v.slice(1, -1).split(",").map((x) => x.trim()) : v]));
   const words = body.replace(/```[\s\S]*?```/g, "").split(/\s+/).length;
+  // Release posts carry the version they announce (front matter `version: 1.1`).
+  if (meta.topics?.includes("release") && !meta.version) throw new Error(`stable: ${f} is a release post but has no \`version:\` in its front matter`);
   return { ...meta, body, minutes: Math.max(1, Math.round(words / 230)), words };
 }).sort((a, b) => b.date.localeCompare(a.date));
 
@@ -48,7 +67,16 @@ function render(md) {
   };
   r.image = ({ href, text }) => `</p><figure class="stable-figure"><img src="${href}" alt="${esc(text)}" loading="lazy" decoding="async"></figure><p>`;
   let html = marked.parse(md, { renderer: r }).replace(/<p><\/p>/g, "").replace(/<p>\s*<\/p>/g, "");
-  html = html.replace(/<p><strong>TL;DR<\/strong><\/p>\s*<ul>([\s\S]*?)<\/ul>/, '<aside class="stable-tldr" aria-label="In short"><p class="fh-label">In short</p><ul class="fh-checklist" data-tone>$1</ul></aside>');
+  // TL;DR → "In short": a ruled table of numbered rows. Each item may lead
+  // with an icon name in colons (`- :palette: Themes …`).
+  html = html.replace(/<p><strong>TL;DR<\/strong><\/p>\s*<ul>([\s\S]*?)<\/ul>/, (_, list) => {
+    const items = [...list.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, t]) => t.trim());
+    const rows = items.map((t, i) => {
+      const [, icon = "check", text] = t.match(/^(?::([a-z0-9-]+):\s*)?([\s\S]*)$/);
+      return `<li><span class="fh-cube fh-cube--outline stable-tldr__n">${String(i + 1).padStart(2, "0")}</span><span class="fh-icon fh-icon--${icon} stable-tldr__icon" aria-hidden="true"></span><span class="stable-tldr__text">${text}</span></li>`;
+    }).join("");
+    return `<aside class="stable-tldr" aria-labelledby="tldr-title"><header class="stable-tldr__head"><p class="fh-label" id="tldr-title">In short</p><span class="fh-label stable-tldr__count">${items.length} points</span></header><ol class="stable-tldr__rows">${rows}</ol></aside>`;
+  });
   // Section rhythm: a rule before every h2 except the first.
   let first = true;
   html = html.replace(/<h2 /g, (m) => (first ? ((first = false), m) : `<hr class="stable-rule">\n${m}`));
@@ -83,33 +111,15 @@ ${image ? `<meta property="og:image" content="${BASE}${image}">\n<meta name="twi
 <link rel="stylesheet" href="/themes.css">
 <script>try{var t=localStorage.getItem("fh-theme");if(t!==null)t?document.documentElement.setAttribute("data-fh-theme",t):document.documentElement.removeAttribute("data-fh-theme")}catch(e){}</script>
 <link rel="stylesheet" href="/icons.css">
-<link rel="stylesheet" href="/site.css">
-<link rel="stylesheet" href="/stable/stable.css">
+<link rel="stylesheet" href="/site.css?v=${createHash("sha1").update(readFileSync(join(root, "site/site.css"))).digest("hex").slice(0, 8)}">
+<link rel="stylesheet" href="/stable/stable.css?v=${stamp("stable.css")}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ""}
 </head>
 <body>
 <a class="fh-skip" href="#main">Skip to content</a>
 <div class="fh-page">
 ${horse}
-<header class="fh-header fh-frame">
-  <div class="fh-header__bar">
-    <a class="site-mark fh-header__brand" href="/" aria-label="Firehorse home"><span class="site-mark__bar">_</span>firehorse<span class="site-mark__sub">v${pkg.version.replace(/\.0$/, "")}</span></a>
-    <nav class="fh-nav" aria-label="Site">
-      <a class="fh-nav__link" href="/#components"><span class="fh-roll">Components</span></a>
-      <a class="fh-nav__link" href="/#c-index"><span class="fh-roll">Index</span></a>
-      <a class="fh-nav__link" href="/playground.html"><span class="fh-roll">Playground</span></a>
-      <a class="fh-nav__link" href="/stable/" aria-current="page"><span class="fh-roll">The Stable</span></a>
-      <a class="fh-nav__link" href="/#pro"><span class="fh-roll">Pro</span></a>
-    </nav>
-    <div class="fh-header__actions"><a class="fh-button fh-button--sm fh-button--plain" href="#subscribe"><span class="fh-roll">Subscribe</span></a></div>
-    <button class="fh-header__toggle" type="button" popovertarget="stable-drawer" aria-label="Open menu"></button>
-  </div>
-</header>
-<div id="stable-drawer" popover class="fh-drawer">
-  <div class="fh-drawer__group"><p class="fh-label">Firehorse</p><ul>
-    <li><a href="/#components">Components</a></li><li><a href="/#c-index">The Index</a></li><li><a href="/playground.html">Playground</a></li><li><a href="/stable/">The Stable</a></li><li><a href="/#pro">Pro</a></li><li><a href="/#services">Work with us</a></li>
-  </ul></div>
-</div>
+${header}
 <main id="main" class="fh-main">`;
 
 const subscribe = (source, placement) => `
@@ -143,12 +153,15 @@ const foot = () => `</main>
 <div class="fh-toaster" role="region" aria-label="Notifications" id="toaster"></div>
 <script type="module" src="/firehorse.js"></script>
 <script src="/attribution.js" defer></script>
-<script src="/stable/stable.js" defer></script>
+<script src="/site.js?v=${createHash("sha1").update(readFileSync(join(root, "site/site.js"))).digest("hex").slice(0, 8)}" defer></script>
+<script src="/stable/stable.js?v=${stamp("stable.js")}" defer></script>
 <script type="module" src="/site-index.js"></script>
 </body>
 </html>
 `;
 
+// The post's eyebrow pill: The Stable · Topic · vX.Y (release posts).
+const postPill = (p, topic) => `<p class="fh-eyebrow-pill" data-tone="${topic.tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><a href="/stable/">The Stable</a></span><span class="fh-eyebrow-pill__seg"><strong>${esc(topic.name)}</strong></span>${p.version ? `<span class="fh-eyebrow-pill__seg">v${esc(String(p.version).replace(/^v/i, ""))}</span>` : ""}</p>`;
 const topicChips = (keys = []) => `<ul class="fh-chips fh-chips--wrap stable-topics" aria-label="Topics">${keys.map((k) => TOPICS[k] ?? { name: k, tone: "neutral" }).map((t) => `<li><span class="fh-chip fh-chip--sm" data-tone="${t.tone}">${esc(t.name)}</span></li>`).join("")}</ul>`;
 const initials = (n) => n.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).slice(-2).map((w) => w[0]).join("");
 
@@ -167,11 +180,12 @@ for (const p of posts) {
     { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Firehorse", item: `${BASE}/` }, { "@type": "ListItem", position: 2, name: "The Stable", item: `${BASE}/stable/` }, { "@type": "ListItem", position: 3, name: p.title, item: `${BASE}${path}` }] },
   ] };
   const page = head({ title: `${p.title} · The Stable`, description: p.description, path, type: "article", image: p.cover ? `/stable/img/${p.cover}.webp` : null, jsonld }) + `
+<script>document.documentElement.toggleAttribute("data-stable-top", scrollY < 1)</script>
 <article class="stable-post" data-tone="${topic.tone}">
   <div class="fh-dock fh-frame stable-dock" data-tone="${topic.tone}" data-follow>
     <div class="fh-dock__bar">
       <div class="fh-dock__identity">
-        <p class="fh-eyebrow-pill" data-tone="${topic.tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><a href="/stable/">The Stable</a></span><span class="fh-eyebrow-pill__seg"><strong>${esc(topic.name)}</strong></span></p>
+        ${postPill(p, topic)}
         <p class="fh-dock__title stable-dock__title">${esc(p.title)}</p>
       </div>
       <ul class="fh-cubes stable-dock__cubes" aria-label="Reading">
@@ -180,27 +194,28 @@ for (const p of posts) {
       </ul>
       <div class="fh-dock__actions"><a class="fh-button fh-button--sm fh-button--outline" href="#subscribe"><span class="fh-roll">Subscribe</span></a></div>
     </div>
+    <span class="fh-dock__progress" aria-hidden="true"></span>
   </div>
 
   <header class="fh-section stable-head">
-    <p class="fh-label stable-crumb"><a href="/stable/">The Stable</a><span aria-hidden="true">/</span><span>${esc(topic.name)}</span></p>
-    <h1 class="fh-display stable-title">${esc(p.title)}</h1>
-    <p class="fh-lede stable-deck">${esc(p.description)}</p>
-    <div class="stable-byline">
+    <div class="stable-measure stable-head__top">
+      ${postPill(p, topic)}
+      <h1 class="fh-display stable-title">${esc(p.title)}</h1>
+    </div>
+    <div class="fh-frame stable-byline-strip"><div class="stable-measure"><div class="stable-byline">
       <span class="stable-author"><span class="fh-avatar fh-avatar--circle stable-author__mark" aria-hidden="true">${initials(p.author)}</span><span><b>${esc(p.author)}</b><small>${esc(p.role ?? "")}</small></span></span>
       <ul class="fh-cubes" data-tone="${topic.tone}">
         <li><b class="fh-cube"><time datetime="${p.date}">${fmtDate(p.date, { month: "short", day: "numeric" })}</time></b> ${fmtDate(p.date, { year: "numeric" })}</li>
         <li><b class="fh-cube">${p.minutes}</b> min read</li>
       </ul>
       ${topicChips(p.topics)}
-    </div>
+    </div></div></div>
+    <div class="stable-measure"><p class="fh-lede stable-deck">${esc(p.description)}</p></div>
   </header>
-
-  ${p.cover ? `<figure class="stable-cover fh-frame"><img src="/stable/img/${p.cover}.webp" alt="${esc(p.title)}" fetchpriority="high"></figure>` : ""}
 
   <div class="fh-section stable-body">
     <div class="stable-layout">
-      <nav class="fh-toc stable-toc" aria-label="In this post"><p class="fh-label">In this post</p><ol>${toc.map((t) => `<li><a href="#${t.id}">${esc(t.text)}</a></li>`).join("")}</ol></nav>
+      <nav class="fh-toc stable-toc" aria-label="In this post"><p class="fh-label">In this post</p><ol>${toc.map((t) => `<li><a href="#${t.id}">${esc(t.text)}</a></li>`).join("")}</ol><span class="stable-toc__marker" aria-hidden="true"></span></nav>
       <div class="fh-prose stable-prose">
 ${html}
       </div>

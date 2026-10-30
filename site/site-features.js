@@ -70,7 +70,7 @@ $$("[data-agent-menu]:not([data-agent-menu=\"manual\"])").forEach((h) => agentMe
  * remembers it. This file only draws the pickers. */
 const ORDER = ["mustang", "friesian", "akhal-teke"];
 let manifest = [];
-try { manifest = (await (await fetch(new URL("themes.json", document.baseURI))).json()).themes ?? []; } catch {}
+try { manifest = (await (await fetch(new URL("/themes.json", document.baseURI))).json()).themes ?? []; } catch {}
 manifest.sort((a, b) => (ORDER.indexOf(a.name) + 1 || 99) - (ORDER.indexOf(b.name) + 1 || 99));
 // The base theme is "no theme" in the picker (value ""); its CSS only scopes the preview card.
 const base = manifest.find((t) => t.base);
@@ -129,6 +129,13 @@ fab.setAttribute("aria-label", "Choose a theme");
 fab.addEventListener("click", () => drawer.showModal());
 document.body.append(fab);
 $$("[data-opens='themes']").forEach((b) => b.addEventListener("click", () => drawer.showModal()));
+// Forms demo: the sample sign-in/up forms post nowhere on this site; confirm in place instead.
+$$(".site-auth .fh-auth__form").forEach((f) => f.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const b = f.querySelector('[type="submit"]'), was = b.textContent;
+  b.textContent = f.dataset.fhAuth === "up" ? "Account created (demo)" : "Signed in (demo)";
+  setTimeout(() => (b.textContent = was), 1800);
+}));
 $$("[data-opens='cart']").forEach((b) => b.addEventListener("click", () => document.getElementById("cart")?.showModal()));
 document.addEventListener("fh:theme", paintTheme);
 // Also catch themes set without the enhancer (a direct setAttribute).
@@ -224,7 +231,7 @@ if (finder) {
       });
       status.innerHTML = `<span class="fh-badge" data-tone="lime">${items.length} profiles</span><span class="fh-muted">Sample results · ranked by match</span>`;
       out.innerHTML = items.map((it) => `<li data-tone="${it.tone}">
-        <span class="fh-avatar fh-avatar--circle"><img src="img/avatars/${it.face}.webp" alt=""></span>
+        <span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/${it.face}.webp" alt=""></span>
         <div style="flex:1;min-inline-size:0"><p class="fh-list__title">${name.replace(/[<>&]/g, "")} <span class="fh-icon-tile" style="--fh-icon-tile:1.3rem;vertical-align:middle"><i class="fh-icon fh-icon--${it.icon}" aria-hidden="true"></i></span></p>
         <p class="fh-list__meta">${it.handle} · ${it.label} · ${it.role} · ${it.count.toLocaleString()} ${it.unit}</p></div>
         <span class="fh-badge" data-tone="${it.match > 90 ? "lime" : "amber"}">${it.match}% match</span>

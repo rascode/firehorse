@@ -11,12 +11,44 @@
     toaster.append(t); setTimeout(() => t.remove(), 4800);
   };
 
-  // Reading progress
-  const prose = $(".stable-prose"), meter = $("[data-progress]");
+  // The floating bar stays hidden until the reader starts scrolling.
+  const atTop = () => document.documentElement.toggleAttribute("data-stable-top", scrollY < 1);
+  if (document.querySelector(".stable-dock")) { atTop(); addEventListener("scroll", atTop, { passive: true }); }
+
+  // Reading progress (the "% read" cube and the dock's progress line) and
+  // the "In this post" marker: the last heading scrolled past is current.
+  const prose = $(".stable-prose"), meter = $("[data-progress]"), dock = $(".stable-dock");
+  const toc = $(".stable-toc"), marker = $(".stable-toc__marker");
+  const links = toc ? [...toc.querySelectorAll('a[href^="#"]')] : [];
+  const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
   if (prose && meter) {
-    let raf = 0;
-    const tick = () => { raf = 0; const r = prose.getBoundingClientRect(); const p = Math.min(1, Math.max(0, (innerHeight * 0.4 - r.top) / r.height)); meter.textContent = `${Math.round(p * 100)}%`; };
-    addEventListener("scroll", () => { raf ||= requestAnimationFrame(tick); }, { passive: true }); tick();
+    let raf = 0, last = null;
+    const tick = () => {
+      raf = 0;
+      const r = prose.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (innerHeight * 0.4 - r.top) / r.height));
+      meter.textContent = `${Math.round(p * 100)}%`;
+      dock?.style.setProperty("--stable-read", p.toFixed(4));
+      if (!marker) return;
+      const line = Math.max((dock?.getBoundingClientRect().bottom ?? 0) + 32, innerHeight * 0.4);
+      let i = -1;
+      heads.forEach((h, j) => { if (h && h.getBoundingClientRect().top <= line) i = j; });
+      if (r.bottom < line) i = -1; // past the post
+      const a = links[i] ?? null;
+      if (a === last) return;
+      last?.removeAttribute("data-reading");
+      last = a;
+      if (!a) { marker.removeAttribute("data-on"); return; }
+      a.setAttribute("data-reading", "");
+      const ol = a.closest("ol"), m = ol.getBoundingClientRect(), b = a.getBoundingClientRect(), n = toc.getBoundingClientRect();
+      marker.style.insetInlineStart = `${m.left - n.left}px`;
+      marker.style.setProperty("--_y", `${b.top - n.top}px`);
+      marker.style.blockSize = `${b.height}px`;
+      marker.setAttribute("data-on", "");
+    };
+    addEventListener("scroll", () => { raf ||= requestAnimationFrame(tick); }, { passive: true });
+    addEventListener("resize", () => { last?.removeAttribute("data-reading"); last = null; tick(); });
+    tick();
   }
 
   // Subscribe

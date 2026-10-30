@@ -1,0 +1,83 @@
+<!--@meta {
+  "path": "/layout/",
+  "order": 20,
+  "name": "Layout",
+  "tone": "lime",
+  "title": "Layout · Firehorse",
+  "description": "Firehorse layout: container queries, stack, cluster and auto grid, plus page patterns like the hero, the etched split and the CTA band.",
+  "headline": "A frame, its slots, and the box you're in",
+  "lede": "Every page, section and header is a <code>.fh-frame</code>: a grid with named <code>full</code> and <code>content</code> lines. Each direct child becomes a query container, so whatever you put inside measures its slot.",
+  "scripts": [],
+  "icon": "layout-grid",
+  "summary": [
+    {
+      "value": "0",
+      "label": "Breakpoints",
+      "blurb": "Components read the box they sit in, not the screen."
+    },
+    {
+      "value": "3",
+      "label": "Page patterns",
+      "blurb": "The hero, the etched split and the call-to-action band."
+    }
+  ]
+}-->
+<!--@main-->
+    <!-- ═══════════════ LAYOUT ═══════════════ -->
+    <section id="layout" class="fh-section fh-section--ruled site-anchor" style="--site-h: 1881px; --site-hn: 3653px" data-tone="lime" aria-labelledby="layout-title" data-fh-label="Layout" data-fh-index="02">
+
+      <div class="fh-stack fh-stack--xl">
+        <div class="site-frame-diagram" aria-label="Frame anatomy diagram">
+          <div><span>gutter</span><span>full-start</span></div>
+          <div class="site-frame-diagram__content"><span>content · min(100% − 2 × margin, 1400px)</span><span>container: fh-slot</span></div>
+          <div><span>gutter</span><span>full-end</span></div>
+          <div class="site-frame-diagram__bleed"><span>.fh-bleed spans full-start → full-end · no 100vw hack, no horizontal scroll</span></div>
+        </div>
+
+        <div class="fh-grid" data-cols="3" style="--fh-grid-min: 17rem">
+          <div class="site-demo" data-fh-id="STK">
+            <div class="site-demo__head"><h3>Stack</h3><code>.fh-stack</code></div>
+            <div class="site-demo__stage site-demo__stage--grid" data-demo>
+<div class="fh-stack fh-stack--sm">
+  <p class="fh-label">Flow</p>
+  <p class="fh-body">One gap between siblings, set by <code>--fh-gap</code>.</p>
+  <a class="fh-action" href="#layout">Read more</a>
+</div>
+            </div>
+          </div>
+          <div class="site-demo" data-fh-id="CLS">
+            <div class="site-demo__head"><h3>Cluster</h3><code>.fh-cluster</code></div>
+            <div class="site-demo__stage site-demo__stage--grid" data-demo>
+<div class="fh-cluster">
+  <span class="fh-badge" data-tone="sky">Agents</span>
+  <span class="fh-badge" data-tone="teal">Data</span>
+  <span class="fh-badge" data-tone="orange">Automation</span>
+  <span class="fh-badge">Managed</span>
+</div>
+            </div>
+          </div>
+          <div class="site-demo" data-fh-id="GRD">
+            <div class="site-demo__head"><h3>Auto grid</h3><code>.fh-grid[data-cols]</code></div>
+            <div class="site-demo__stage site-demo__stage--grid" data-demo>
+<div class="fh-grid" data-cols="3" style="--fh-grid-min: 4rem; --fh-gap: 8px">
+  <div class="fh-card fh-card--solid">1</div>
+  <div class="fh-card fh-card--solid">2</div>
+  <div class="fh-card fh-card--solid">3</div>
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PATTERNS ═══════════════ -->
+    <section id="layout-patterns" class="fh-section fh-section--ruled site-anchor" data-tone="orange" aria-labelledby="layout-patterns-title" data-fh-label="Patterns" data-fh-index="11">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="orange"><b>02</b> Patterns</p>
+          <h2 id="layout-patterns-title" class="fh-heading">Patterns have their own page</h2>
+          <p class="fh-lede">The frame, stack, cluster and grid here are the thread. Whole page layouts built from them, with their anatomy, rules and markup, live on <a class="fh-link" href="/patterns/">Patterns</a>: Fender, Cinch, the offset panel, the etched split and the CTA band.</p>
+        </div>
+        <a class="fh-action fh-action--lg" href="/patterns/">Open Patterns</a>
+      </header>
+    </section>

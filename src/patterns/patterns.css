@@ -124,19 +124,114 @@
     }
   }
 
+  /* Roomy: each pane takes the full section rhythm top and bottom (the Cinch pattern, CIN). */
+  .fh-etched-split--roomy > .fh-etched-split__pane {
+    padding-block: var(--fh-section-space);
+  }
+
   /* —— CTA band ——
-   * Closing call to action inside an etched box with corner crosses. */
+   * The closing ask, in an etched box with corner crosses and a short
+   * tone bar riding its top edge.
+   *
+   * Simple: label, heading, lede and actions as direct children; the
+   * actions sit to the right when there's room.
+   *
+   * Split (__main + __aside): a display-size title and the actions on the
+   * left; the proof on the right (fact cubes, the people you'll talk to,
+   * one line of fine print), behind a dashed seam that runs the band's
+   * full height. Stacks when the slot is narrow.
+   *
+   *   <div class="fh-cta-band fh-crosses" data-tone="accent">
+   *     <div class="fh-cta-band__main">
+   *       <p class="fh-eyebrow-pill">…</p>
+   *       <h2 class="fh-cta-band__title">Ready when <em>the path is clear.</em></h2>
+   *       <p class="fh-lede">…</p>
+   *       <div class="fh-hero__actions">…</div>
+   *     </div>
+   *     <aside class="fh-cta-band__aside">
+   *       <ul class="fh-cubes">…</ul>
+   *       <div class="fh-cta-band__people"><div class="fh-avatars">…</div><span>…</span></div>
+   *       <p class="fh-cta-band__fine">…</p>
+   *     </aside>
+   *   </div> */
   .fh-cta-band {
+    --_pad: clamp(var(--fh-space-8), 6cqi, var(--fh-space-16));
+    --_bar: var(--fh-tone, var(--fh-color-accent));
+
     position: relative;
     display: grid;
     gap: var(--fh-space-5);
     justify-items: start;
-    padding: clamp(var(--fh-space-8), 6cqi, var(--fh-space-16));
+    padding: var(--_pad);
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background:
+      linear-gradient(var(--_bar), var(--_bar)) 0 0 / clamp(4rem, 14cqi, 9rem) 2px no-repeat border-box,
+      color-mix(in oklab, var(--_bar) 4%, transparent);
 
     & > .fh-heading {
       max-inline-size: 24ch;
     }
+  }
+
+  .fh-cta-band__main {
+    display: grid;
+    gap: var(--fh-space-6);
+    align-content: start;
+    justify-items: start;
+    min-inline-size: 0;
+
+    & > .fh-hero__actions { margin-block-start: var(--fh-space-2); }
+  }
+
+  .fh-cta-band__title {
+    max-inline-size: 15ch;
+    margin: 0;
+    color: var(--fh-color-text-strong);
+    font-family: var(--fh-font-display);
+    font-size: var(--fh-text-display);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-tight);
+    letter-spacing: var(--fh-tracking-tight);
+    text-wrap: balance;
+
+    & em { color: var(--fh-color-text-muted); font-style: normal; }
+  }
+
+  .fh-cta-band__aside {
+    display: grid;
+    gap: var(--fh-space-6);
+    align-content: end;
+    justify-self: stretch;
+    min-inline-size: 0;
+    padding-block-start: var(--fh-space-6);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  /* Facts read as a short spec list, one per line. */
+  .fh-cta-band__aside > .fh-cubes {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--fh-space-3);
+  }
+
+  .fh-cta-band__people {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-snug);
+
+    & b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+
+  .fh-cta-band__fine {
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
   }
 
   @container (inline-size >= 52rem) {
@@ -154,6 +249,26 @@
         grid-row: 1 / span 3;
         align-self: end;
       }
+    }
+
+    .fh-cta-band:has(> .fh-cta-band__aside) {
+      grid-template-columns: minmax(0, 1.75fr) minmax(17rem, 1fr);
+      align-items: stretch;
+      column-gap: 0;
+    }
+
+    .fh-cta-band > .fh-cta-band__main {
+      padding-inline-end: var(--_pad);
+    }
+
+    /* The seam runs the band's full height. */
+    .fh-cta-band > .fh-cta-band__aside {
+      grid-column: 2;
+      grid-row: 1;
+      margin-block: calc(-1 * var(--_pad));
+      padding: var(--_pad) 0 var(--_pad) var(--_pad);
+      border-block-start: 0;
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
     }
   }
 

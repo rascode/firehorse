@@ -31,12 +31,44 @@
 .stable-empty { justify-items: start; text-align: start; }
 
 /* Post */
+/* The article spans the frame so the floating bar (and its etch and
+ * progress line) run edge to edge like the header. Its sections are
+ * frames themselves, so their content column doesn't move. */
+.stable-post { grid-column: full; }
+/* Progress follows the "% read" cube, not the whole page. */
+.stable-dock .fh-dock__progress { grid-column: full; animation: none; scale: var(--stable-read, 0) 1; }
 .stable-dock .fh-eyebrow-pill a { color: inherit; text-decoration: none; }
-.stable-dock__title { max-inline-size: 40ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.stable-head { display: grid; gap: var(--fh-space-6); padding-block: var(--fh-space-10) var(--fh-space-8); }
-.stable-title { max-inline-size: 22ch; font-size: clamp(2.2rem, 1.2rem + 4cqi, 4.4rem); letter-spacing: -0.04em; line-height: 1.02; }
+/* The floating bar overlays the head (no reserved row) and stays out of
+ * sight until the reader scrolls; the header keeps its CTA meanwhile. */
+.stable-dock {
+  margin-block-end: calc(-1 * var(--fh-dock-height, 0px));
+  transition: background-color var(--fh-duration-base) var(--fh-ease-standard), border-color var(--fh-duration-base) var(--fh-ease-standard), opacity var(--fh-duration-base) var(--fh-ease-standard), translate var(--fh-duration-base) var(--fh-ease-out), visibility 0s linear 0s;
+}
+:root[data-stable-top] .stable-dock { opacity: 0; translate: 0 -0.75rem; visibility: hidden; pointer-events: none; transition-delay: 0s, 0s, 0s, 0s, var(--fh-duration-base); }
+:root[data-stable-top] .fh-header__actions > .fh-button { translate: none; visibility: visible; pointer-events: auto; }
+/* The whole title shows: it wraps (balanced) instead of truncating. */
+.stable-dock .stable-dock__title { flex: 1 1 auto; min-inline-size: 0; max-inline-size: 46rem; overflow: visible; white-space: normal; text-wrap: balance; font-size: var(--fh-text-body); line-height: 1.3; }
+@container fh-frame (inline-size < 48rem) { .stable-dock .stable-dock__title { font-size: var(--fh-text-small); } }
+.stable-head { display: grid; row-gap: var(--fh-space-6); padding-block: var(--fh-space-10) var(--fh-space-8); }
+/* The head (pill, title, byline, summary) starts on the same line as the
+ * article column: the measure repeats .stable-layout's tracks. */
+.stable-measure { display: grid; grid-template-columns: minmax(0, 1fr); }
+.stable-measure > * { grid-column: 1; }
+@container fh-frame (inline-size >= 64rem) {
+  .stable-measure { grid-template-columns: minmax(0, 42rem) 15rem; justify-content: center; column-gap: var(--fh-space-12); }
+  .stable-head__top > .stable-title { grid-column: 1 / -1; }
+}
+.stable-head__top { row-gap: var(--fh-space-6); }
+.stable-head__top > .fh-eyebrow-pill { justify-self: start; }
+.stable-title { max-inline-size: 26ch; font-size: clamp(1.9rem, 1.1rem + 2.4cqi, 3rem); letter-spacing: -0.035em; line-height: 1.06; }
+/* The head sets its own tight rhythm instead of the site's section rhythm. */
+.stable-head.fh-section > * + * { margin-block-start: 0; }
+.stable-head .stable-byline-strip { margin-block-start: var(--fh-space-2); }
 .stable-deck { max-inline-size: 60ch; margin: 0; }
-.stable-byline { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-4) var(--fh-space-6); padding-block-start: var(--fh-space-5); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
+/* Authorship strip: a nested frame, so its etched rules run edge to edge
+ * while the byline stays on the content column. */
+.stable-byline-strip { padding-block: var(--fh-space-5); border-block: var(--fh-border-thin) dashed var(--fh-color-etch); }
+.stable-byline { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-4) var(--fh-space-6); }
 .stable-author { display: inline-flex; align-items: center; gap: var(--fh-space-3); }
 .stable-author > span:last-child { display: grid; gap: 0.1rem; }
 .stable-author b { font-weight: var(--fh-weight-medium); }
@@ -44,24 +76,47 @@
 .stable-author__mark { display: inline-grid; place-items: center; background: color-mix(in oklab, var(--fh-tone) 18%, var(--fh-color-surface)); color: var(--fh-color-text); font: var(--fh-weight-semibold) var(--fh-text-label) var(--fh-font-mono); letter-spacing: var(--fh-tracking-wide); }
 .stable-author--lg .stable-author__mark { inline-size: 3rem; block-size: 3rem; }
 
-.stable-cover { margin: 0; padding-inline: var(--fh-page-margin); }
-.stable-cover img { inline-size: 100%; max-inline-size: var(--fh-content-max); margin-inline: auto; border: var(--fh-border-thin) solid var(--fh-color-border); border-radius: var(--fh-radius-lg); }
 
 .stable-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--fh-space-8); }
 @container fh-frame (inline-size >= 64rem) {
-  .stable-layout { grid-template-columns: 15rem minmax(0, 42rem); justify-content: center; gap: var(--fh-space-12); }
+  .stable-layout { grid-template-columns: minmax(0, 42rem) 15rem; justify-content: center; gap: var(--fh-space-12); }
+  .stable-prose { grid-column: 1; grid-row: 1; }
+  .stable-toc { grid-column: 2; grid-row: 1; }
 }
 @container fh-frame (inline-size < 64rem) { .stable-toc { display: none; } }
 .stable-toc { inset-block-start: calc(var(--fh-header-height) + var(--fh-dock-height) + var(--fh-space-6)); max-block-size: calc(100dvh - var(--fh-header-height) - var(--fh-dock-height) - var(--fh-space-10)); overflow: auto; }
+/* Where you are: the current section's link takes the tone, and a tone
+ * line rides on the list's etch beside it. stable.js places it. */
+.stable-toc ol { position: relative; }
+.stable-toc a[aria-current] { border-inline-start-color: transparent; color: var(--fh-color-text-muted); }
+.stable-toc a[data-reading] { color: var(--fh-tone); }
+.stable-toc__marker {
+  position: absolute; inset-inline-start: 0; inset-block-start: 0; inline-size: 2px; block-size: 0;
+  background: var(--fh-tone); opacity: 0; pointer-events: none;
+  translate: 0 var(--_y, 0);
+  transition: translate var(--fh-duration-base) var(--fh-ease-standard), block-size var(--fh-duration-base) var(--fh-ease-standard), opacity var(--fh-duration-fast) linear;
+}
+.stable-toc__marker[data-on] { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .stable-toc__marker { transition: none; } }
 .stable-prose { min-inline-size: 0; max-inline-size: 42rem; overflow-wrap: anywhere; }
 .stable-prose h2 { scroll-margin-block-start: calc(var(--fh-header-height) + var(--fh-dock-height) + var(--fh-space-6)); }
 .stable-prose ul { padding-inline-start: 1.1em; }
 .stable-prose ul li::marker { color: var(--fh-tone); }
 .stable-rule { margin-block: 2.6em 0 !important; border: 0; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
+/* In short: a ruled table, no fill. Numbered square chips, then an icon. */
+.stable-tldr { border-block: var(--fh-border-thin) solid var(--fh-color-etch); }
+.stable-tldr__head { display: flex; align-items: center; justify-content: space-between; gap: var(--fh-space-4); padding-block: var(--fh-space-3); border-block-end: var(--fh-border-thin) solid var(--fh-color-etch); }
+.stable-tldr__head .fh-label { margin: 0; color: var(--fh-color-text); }
+.stable-tldr__head .stable-tldr__count { color: var(--fh-color-text-subtle); }
+.stable-prose .stable-tldr__rows { margin: 0; padding: 0; list-style: none; font-size: var(--fh-text-body); }
+.stable-tldr__rows > li { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: var(--fh-space-4); padding-block: var(--fh-space-3); margin: 0; }
+.stable-tldr__rows > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+.stable-tldr__n { inline-size: 2rem; min-inline-size: 2rem; aspect-ratio: 1; padding: 0; }
+.stable-tldr__icon { color: var(--fh-tone); --fh-icon-size: 1.1rem; }
+.stable-tldr__text { color: var(--fh-color-text-muted); line-height: 1.5; }
+.stable-tldr__text a { color: var(--fh-color-text); }
 .stable-figure { margin: 1.6em 0; }
 .stable-figure img { inline-size: 100%; border: var(--fh-border-thin) solid var(--fh-color-border); border-radius: var(--fh-radius-md); }
-.stable-tldr { padding: var(--fh-space-5) var(--fh-space-6); border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 50%, transparent); border-radius: var(--fh-radius-md); background: color-mix(in oklab, var(--fh-tone) 5%, transparent); }
-.stable-tldr .fh-checklist { margin-block-start: var(--fh-space-3); font-size: var(--fh-text-body); }
 .stable-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-5); max-inline-size: 42rem; margin: var(--fh-space-12) auto 0; padding-block-start: var(--fh-space-6); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
 @container fh-frame (inline-size >= 64rem) { .stable-foot { max-inline-size: calc(15rem + 42rem + var(--fh-space-12)); } }
 
@@ -71,6 +126,3 @@
 .stable-lists legend { margin-block-end: var(--fh-space-2); }
 .stable-form__status:empty { display: none; }
 .stable-form__status { margin: 0; }
-.stable-crumb { display: flex; gap: var(--fh-space-2); margin: 0; color: var(--fh-color-text-subtle); }
-.stable-crumb a { color: var(--fh-tone); text-decoration: none; }
-.stable-crumb a:hover { text-decoration: underline; text-underline-offset: 0.25em; }

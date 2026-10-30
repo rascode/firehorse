@@ -1,0 +1,238 @@
+<!--@meta {
+  "path": "/components/navigation/",
+  "order": 33,
+  "parent": "/components/",
+  "name": "Navigation",
+  "tone": "violet",
+  "title": "Navigation · Firehorse",
+  "description": "Firehorse navigation: the floating bar, floating action bar, tabs, search, stepper, pagination, hamburgers, dropdown menus, drawers and the tab bar.",
+  "headline": "Bars, tabs and menus that keep people oriented",
+  "lede": "The floating bar, floating actions, tabs, search, steppers and pagination, then hamburgers, dropdowns, drawers and the tab bar.",
+  "scripts": [],
+  "icon": "menu",
+  "summary": [
+    {
+      "value": "7",
+      "label": "Burger morphs",
+      "blurb": "Hamburgers that morph seven ways, with full states."
+    },
+    {
+      "value": "0",
+      "label": "Menu scripts",
+      "blurb": "Menus and drawers open with the native popover."
+    }
+  ]
+}-->
+<!--@main-->
+    <section id="navigation" class="fh-section fh-section--ruled site-anchor" data-tone="violet" data-fh-label="Bars & tabs" aria-label="Bars & tabs">
+      <div class="fh-stack fh-stack--xl">
+
+        <div class="site-demo site-anchor" id="c-dock" data-fh-id="DCK">
+          <div class="site-demo__head"><h3>Floating bar</h3><p>The masthead from rascode.dev. It rides quietly under the header, then engages when it pins: the small title slides in, the cubes and chips appear in the section's tone, and the outline CTA fills. Scroll this page to watch the real one change color by section.</p></div>
+          <div class="site-demo__stage site-demo__stage--grid" data-demo>
+<div class="fh-dock fh-frame site-dock-demo" data-tone="sky" data-active="true">
+  <div class="fh-dock__bar">
+    <div class="fh-dock__identity">
+      <p class="fh-eyebrow-pill" data-tone="sky"><span class="fh-dot fh-dot--live"></span><span>Agents</span></p>
+      <span class="fh-dock__avatar"><img src="img/avatars/cole.webp" alt=""></span>
+      <div class="fh-dock__text">
+        <p class="fh-dock__title">Landscaping agent</p>
+        <p class="fh-dock__meta">Wes · Landscaping agent</p>
+      </div>
+    </div>
+    <ul class="fh-cubes" aria-label="Snapshot">
+      <li><b class="fh-cube">$1,695</b> per month</li>
+      <li><b class="fh-cube">3</b> day free trial</li>
+      <li><b class="fh-cube">5</b> channels wired</li>
+    </ul>
+    <div class="fh-dock__actions"><a class="fh-button fh-button--sm fh-button--outline" href="#c-dock">Talk to Wes</a></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-float" data-fh-id="FAB">
+          <div class="site-demo__head"><h3>Floating action bar</h3><p>A pill that surfaces after the first screen, using a scroll-driven animation. Shown here inside a phone frame.</p></div>
+          <div class="site-demo__stage site-float-stage">
+            <div class="site-phone">
+              <div class="site-phone__screen">
+                <p class="fh-label">Agents · Dental</p>
+                <h4 class="fh-subheading">Maya keeps every chair full</h4>
+                <div class="fh-skeleton" style="--fh-lines: 6"></div>
+                <nav class="fh-float site-float-demo" aria-label="Quick actions" data-tone="sky">
+                  <span class="fh-avatar fh-avatar--sm fh-avatar--circle"><img src="img/avatars/maya.webp" alt=""></span>
+                  <b class="fh-cube">$1,495</b>
+                  <a class="fh-button fh-button--sm" href="#c-float">Add Maya</a>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-tabs" data-fh-id="TAB">
+          <div class="site-demo__head"><h3>Tabs</h3><p>Underline tabs that scroll sideways when they run out of room. <code>fh-tabs--mono</code> for chrome.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-tabs" role="tablist" aria-label="Portal">
+    <button role="tab" aria-selected="true" type="button">Overview</button>
+    <button role="tab" aria-selected="false" type="button">Invoices</button>
+    <button role="tab" aria-selected="false" type="button">Proposals</button>
+    <button role="tab" aria-selected="false" type="button">Activity</button>
+  </div>
+  <nav class="fh-tabs fh-tabs--mono" aria-label="Sections">
+    <a href="#c-tabs" aria-current="page">Scope</a>
+    <a href="#c-tabs">Pricing</a>
+    <a href="#c-tabs">FAQ</a>
+  </nav>
+</div>
+          </div>
+        </div>
+
+          <div class="site-demo site-anchor" id="c-nav" data-fh-id="NAV">
+            <div class="site-demo__head"><h3>Navigation</h3><p>Pagination, a wizard stepper, search and a side nav.</p></div>
+            <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+  <label class="fh-search"><span class="fh-sr-only">Search</span><input type="search" placeholder="Search components"><kbd class="fh-kbd">⌘K</kbd></label>
+  <ol class="fh-stepper" data-tone="lime">
+    <li data-state="done">Details</li>
+    <li data-state="current" aria-current="step">Scope</li>
+    <li>Review</li>
+    <li>Sign</li>
+  </ol>
+  <nav class="fh-pagination" aria-label="Pages">
+    <a href="#c-nav" rel="prev">Prev</a><a href="#c-nav">1</a><a href="#c-nav" aria-current="page">2</a><a href="#c-nav">3</a><span>…</span><a href="#c-nav">9</a><a href="#c-nav" rel="next">Next</a>
+  </nav>
+  <nav class="fh-sidenav" aria-label="Portal" data-tone="sky">
+    <section><p class="fh-label">Portal</p>
+      <a href="#c-nav" aria-current="page">Overview</a>
+      <a href="#c-nav">Invoices <span class="fh-badge" data-tone="amber">2</span></a>
+      <a href="#c-nav">Agents</a>
+    </section>
+  </nav>
+</div>
+            </div>
+          </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ DRAWERS & MENUS ═══════════════ -->
+    <section id="menus" class="fh-section fh-section--ruled site-anchor" style="--site-h: 1238px; --site-hn: 2376px" data-tone="violet" aria-labelledby="menus-title" data-fh-label="Drawers &amp; menus" data-fh-index="05">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="violet"><b>02</b> Drawers &amp; menus</p>
+          <h2 id="menus-title" class="fh-heading">Menus you don't have to build. Ever again.</h2>
+          <p class="fh-lede">A hamburger with real states, seven ways to open, a full-screen overlay menu, a command palette, richer dropdowns, a phone tab bar and a floating detail drawer. They open with native <code>popover</code> and <code>&lt;dialog&gt;</code>, so focus, Escape and the backdrop are handled for you.</p>
+        </div>
+        <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)">
+          <button class="fh-button fh-button--secondary" type="button" onclick="window.fhPipeline &amp;&amp; window.fhPipeline.openRow(window.fhPipeline.result[0].id)"><i class="fh-icon fh-icon--panel-right" aria-hidden="true"></i>Open a record drawer</button>
+          <button class="fh-button fh-button--plain" type="button" onclick="document.getElementById('cmdk').showModal()"><i class="fh-icon fh-icon--command" aria-hidden="true"></i>Command menu <kbd class="fh-kbd">⌘K</kbd></button>
+        </span>
+      </header>
+
+      <div class="site-demo site-anchor" id="c-burger" data-fh-id="BRG">
+        <div class="site-demo__head"><h3>Hamburger</h3><p>Three bars, seven morphs, every state. Open comes from <code>aria-expanded</code>, a sibling <code>:popover-open</code>, or <code>fh-burger--open</code>. Click any of them.</p></div>
+        <div class="site-demo__stage">
+          <div class="site-burgers">
+            <div class="site-burger-row"><span class="site-burger-name">States</span>
+              <figure><button class="fh-burger fh-burger--boxed" type="button" aria-label="Menu"><span></span></button><figcaption>Closed</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed site-hover" type="button" aria-label="Menu"><span></span></button><figcaption>Hover</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed site-focus" type="button" aria-label="Menu"><span></span></button><figcaption>Focus</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--open" type="button" aria-label="Close"><span></span></button><figcaption>Open</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed" type="button" aria-label="Menu" disabled><span></span></button><figcaption>Disabled</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--label" type="button" aria-label="Menu" data-toggle><span></span></button><figcaption>With label</figcaption></figure>
+            </div>
+            <div class="site-burger-row"><span class="site-burger-name">Morphs</span>
+              <figure><button class="fh-burger fh-burger--boxed" type="button" aria-label="Menu" aria-expanded="false" data-toggle><span></span></button><figcaption>Cross</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--arrow" type="button" aria-label="Menu" aria-expanded="false" data-toggle><span></span></button><figcaption>Arrow</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--spin" type="button" aria-label="Menu" aria-expanded="false" data-toggle><span></span></button><figcaption>Spin</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--squeeze" type="button" aria-label="Menu" aria-expanded="false" data-toggle><span></span></button><figcaption>Squeeze</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--minus" type="button" aria-label="Menu" aria-expanded="false" data-toggle><span></span></button><figcaption>Minus</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--plus" type="button" aria-label="Add" aria-expanded="false" data-toggle><span></span></button><figcaption>Plus</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--dots" type="button" aria-label="More" aria-expanded="false" data-toggle><span></span></button><figcaption>Dots</figcaption></figure>
+            </div>
+            <div class="site-burger-row"><span class="site-burger-name">Opens</span>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--tone fh-burger--label" type="button" popovertarget="overlay-nav" aria-label="Open the overlay menu" style="--fh-burger-label: 'Overlay'"><span></span></button><figcaption>Full-screen menu</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--arrow fh-burger--label" type="button" popovertarget="site-drawer" aria-label="Open the side drawer" style="--fh-burger-label: 'Drawer'"><span></span></button><figcaption>Side drawer</figcaption></figure>
+              <figure><button class="fh-burger fh-burger--boxed fh-burger--dots" type="button" popovertarget="actions-menu" aria-label="Actions" style="anchor-name: --actions-menu"><span></span></button><figcaption>Dropdown</figcaption></figure>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fh-split">
+        <div class="site-demo site-anchor" id="c-dropdown" data-fh-id="DRP">
+          <div class="site-demo__head"><h3>Dropdown menu</h3><p>Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning.</p></div>
+          <div class="site-demo__stage">
+            <button class="fh-button fh-button--secondary" type="button" popovertarget="actions-menu-2" style="anchor-name: --actions-menu-2"><i class="fh-icon fh-icon--settings" aria-hidden="true"></i>View options</button>
+            <div class="fh-menu site-menu-static" role="menu" aria-label="Sample menu (static)">
+              <p class="fh-menu__label">View</p>
+              <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
+              <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>
+              <hr>
+              <p class="fh-menu__label">Show</p>
+              <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Owners</button>
+              <button type="button" role="menuitemcheckbox" aria-checked="false"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Health</button>
+              <hr>
+              <button type="button" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete view</button>
+            </div>
+          </div>
+        </div>
+        <div class="site-demo site-anchor" id="c-tabbar" data-fh-id="TBR">
+          <div class="site-demo__head"><h3>Tab bar</h3><p>Phone navigation with icons, a current marker and a count badge. Respects the home-indicator inset.</p></div>
+          <div class="site-demo__stage">
+            <div class="site-phone">
+              <div class="site-phone__screen">
+                <p class="fh-label">Inbox</p>
+                <div class="fh-stack fh-stack--sm">
+                  <div class="fh-chip-card" data-tone="sky"><span class="fh-chip-card__block"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i></span><span class="fh-chip-card__text"><b>New inquiry</b><small>Firehorse · 2m</small></span></div>
+                  <div class="fh-chip-card" data-tone="lime"><span class="fh-chip-card__block"><i class="fh-icon fh-icon--circle-check" aria-hidden="true"></i></span><span class="fh-chip-card__text"><b>Proposal signed</b><small>Northwind · 1h</small></span></div>
+                </div>
+              </div>
+              <nav class="fh-tabbar" aria-label="App" data-tone="accent">
+                <a href="#c-tabbar"><i class="fh-icon fh-icon--house" aria-hidden="true"></i>Home</a>
+                <a href="#c-tabbar" aria-current="page"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Inbox<b>3</b></a>
+                <a href="#c-tabbar"><i class="fh-icon fh-icon--search" aria-hidden="true"></i>Search</a>
+                <a href="#c-tabbar"><i class="fh-icon fh-icon--user" aria-hidden="true"></i>You</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!--@after-->
+<!-- Overlay navigation (opened by the hamburger demo) -->
+<nav class="fh-overlay-nav" id="overlay-nav" popover aria-label="Overlay menu" data-tone="violet">
+  <button class="fh-burger fh-burger--open fh-burger--label fh-overlay-nav__close" type="button" popovertarget="overlay-nav" popovertargetaction="hide" aria-label="Close menu"><span></span></button>
+  <ol>
+    <li><a href="#data" aria-current="page">Data</a></li>
+    <li><a href="#menus">Menus</a></li>
+    <li><a href="#commerce">Commerce</a></li>
+    <li><a href="#catalog">Cards</a></li>
+    <li><a href="playground.html">Playground</a></li>
+    <li><a href="#services">Work with us</a></li>
+  </ol>
+  <div class="fh-overlay-nav__aside">
+    <p class="fh-label">Rascode and Company</p>
+    <p>Design systems, AI agents and consulting. Built on Firehorse.</p>
+    <div class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><a class="fh-chip" href="https://github.com/rascode/firehorse"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</a><a class="fh-chip" href="llms.txt"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i>llms.txt</a></div>
+  </div>
+</nav>
+
+<!-- Dropdowns -->
+<div class="fh-menu" id="actions-menu" popover style="position-anchor: --actions-menu">
+  <p class="fh-menu__label">Record</p>
+  <button type="button"><i class="fh-icon fh-icon--square-pen" aria-hidden="true"></i>Edit<kbd>E</kbd></button>
+  <button type="button"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Duplicate<kbd>⌘D</kbd></button>
+  <button type="button"><i class="fh-icon fh-icon--share-2" aria-hidden="true"></i>Share</button>
+  <hr>
+  <button type="button" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete</button>
+</div>
+<div class="fh-menu" id="actions-menu-2" popover style="position-anchor: --actions-menu-2">
+  <p class="fh-menu__label">View</p>
+  <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
+  <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>
+  <hr>
+  <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Owners</button>
+  <button type="button" role="menuitemcheckbox" aria-checked="false"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Health</button>
+</div>

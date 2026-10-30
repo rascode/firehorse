@@ -1,0 +1,405 @@
+<!--@meta {
+  "path": "/components/content/",
+  "order": 32,
+  "parent": "/components/",
+  "name": "Content",
+  "tone": "teal",
+  "title": "Content · Firehorse",
+  "description": "Firehorse content components: cards, stats, checklists, steps, carousels, lists, timelines, chat, pricing tiers, features, testimonials and the card catalog.",
+  "headline": "Cards, lists and everything that fills a page",
+  "lede": "Cards in ruled grids, stats, checklists and steps, carousels, lists, timelines and chat, pricing, features and quotes, plus the card catalog.",
+  "scripts": [],
+  "icon": "file-text",
+  "summary": [
+    {
+      "value": "0",
+      "label": "Breakpoints",
+      "blurb": "Cards, lists and tiers reflow by the width of their slot."
+    },
+    {
+      "value": "9",
+      "label": "Tones",
+      "blurb": "Each card, list and tier takes its color from data-tone."
+    }
+  ]
+}-->
+<!--@main-->
+    <section id="content" class="fh-section fh-section--ruled site-anchor" data-tone="teal" data-fh-label="Content" aria-label="Content">
+      <div class="fh-stack fh-stack--xl">
+
+        <div class="site-demo site-anchor" id="c-card" data-fh-id="CRD">
+          <div class="site-demo__head"><h3>Card in a ruled grid</h3><p>Dashed cells that share their rules, a tone-colored meta line, and a title link that covers the whole card. Narrow cards stack their footer.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-grid fh-grid--ruled fh-grid--etched" data-cols="3">
+  <article class="fh-card" data-tone="sky">
+    <p class="fh-card__meta">Agents</p>
+    <h3 class="fh-card__title"><a href="#c-card">Lead follow-up agent</a></h3>
+    <p class="fh-card__body">Answers, books and follows up on your own channels, around the clock.</p>
+    <footer class="fh-card__footer">
+      <p class="fh-card__price">Monthly <b>$1,700</b></p>
+      <span class="fh-action" data-tone>Meet Wes</span>
+    </footer>
+  </article>
+  <article class="fh-card" data-tone="teal">
+    <p class="fh-card__meta">Data architecture</p>
+    <h3 class="fh-card__title"><a href="#c-card">Schema design</a></h3>
+    <p class="fh-card__body">Data models that match how the business actually runs.</p>
+    <footer class="fh-card__footer">
+      <p class="fh-card__price">From <b>$1,250</b></p>
+      <span class="fh-action" data-tone>View</span>
+    </footer>
+  </article>
+  <article class="fh-card" data-tone="orange">
+    <p class="fh-card__meta">Automation</p>
+    <h3 class="fh-card__title"><a href="#c-card">Process automation</a></h3>
+    <p class="fh-card__body">Hand-offs that happen on their own, with an audit trail.</p>
+    <footer class="fh-card__footer">
+      <p class="fh-card__price">From <b>$2,400</b></p>
+      <span class="fh-action" data-tone>View</span>
+    </footer>
+  </article>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-stats" data-fh-id="STA">
+          <div class="site-demo__head"><h3>Stats strip</h3><p>One column, two, or a row, depending on the slot.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-stats" data-tone="teal">
+  <div><dt>Timeline</dt><dd>2–3 wk</dd><dd>From kickoff to handover</dd></div>
+  <div><dt>Investment</dt><dd>$1,250</dd><dd>Fixed scope</dd></div>
+  <div><dt>Deliverables</dt><dd>4</dd><dd>Docs, diagrams, migration plan</dd></div>
+  <div><dt>Follow-up</dt><dd>30 d</dd><dd>Questions answered</dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="fh-split site-anchor" id="c-lists">
+          <div class="site-demo" data-fh-id="CKL">
+            <div class="site-demo__head"><h3>Checklist</h3></div>
+            <div class="site-demo__stage" data-demo>
+<ul class="fh-checklist" data-tone="lime">
+  <li>Current-state schema review</li>
+  <li>Risk register with severity</li>
+  <li>Migration plan you can hand to any team</li>
+</ul>
+            </div>
+          </div>
+          <div class="site-demo" data-fh-id="STP">
+            <div class="site-demo__head"><h3>Steps</h3><p>Numbered because order matters.</p></div>
+            <div class="site-demo__stage" data-demo>
+<ol class="fh-steps">
+  <li data-tone="sky"><span class="fh-steps__mark"></span><div><h3>Assess</h3><p>Understand the current state and its risks.</p></div></li>
+  <li data-tone="teal"><span class="fh-steps__mark"></span><div><h3>Build</h3><p>Ship the foundation, then connect the systems.</p></div></li>
+  <li data-tone="orange"><span class="fh-steps__mark"></span><div><h3>Operate</h3><p>Keep it healthy as you grow.</p></div></li>
+</ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-carousel" data-fh-id="CAR">
+          <div class="site-demo__head"><h3>Carousel</h3><p>Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and the current dot stretches into a longer bubble. Native CSS dots in Chromium; the enhancer draws the same dots elsewhere.</p></div>
+          <div class="site-demo__stage" data-demo>
+<section class="fh-carousel" aria-roledescription="carousel" aria-label="Firehorse in four panels">
+  <div class="fh-carousel__track" tabindex="0">
+    <figure class="fh-carousel__slide site-slide site-slide--faces" aria-label="1 of 4">
+      <img src="img/avatars/ava.webp" alt="Ava"><img src="img/avatars/cole.webp" alt="Cole"><img src="img/avatars/maya.webp" alt="Maya"><img src="img/avatars/mateo.webp" alt="Mateo"><img src="img/avatars/isla.webp" alt="Isla"><img src="img/avatars/ray.webp" alt="Ray">
+      <figcaption>Ten agents, one system. Every portrait sits in the same plate.</figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-slide site-slide--poster" data-tone="accent" aria-label="2 of 4">
+      <p class="fh-label">Firehorse · 01</p>
+      <p class="site-slide__big">Ink, etch<br>&amp; ember.</p>
+    </figure>
+    <figure class="fh-carousel__slide site-slide site-slide--ui" data-tone="teal" aria-label="3 of 4">
+      <dl class="fh-stats"><div><dt>Tokens</dt><dd>{{TOKENS}}</dd></div><div><dt>Layers</dt><dd>8</dd></div><div><dt>Breakpoints</dt><dd>0</dd></div></dl>
+    </figure>
+    <figure class="fh-carousel__slide site-slide site-slide--tones" aria-label="4 of 4">
+      <i data-tone="sky"></i><i data-tone="teal"></i><i data-tone="lime"></i><i data-tone="amber"></i><i data-tone="orange"></i><i data-tone="accent"></i><i data-tone="rose"></i><i data-tone="fuchsia"></i><i data-tone="violet"></i>
+      <figcaption>Nine tones. One attribute.</figcaption>
+    </figure>
+  </div>
+  <span class="fh-carousel__count"></span>
+</section>
+          </div>
+        </div>
+
+        <div class="fh-split">
+          <div class="site-demo site-anchor" id="c-list" data-fh-id="LST">
+            <div class="site-demo__head"><h3>List &amp; timeline</h3><p>Rows with a visual, text and a trailing slot. A dashed timeline for activity.</p></div>
+            <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--xl">
+  <ul class="fh-list" role="list">
+    <li><span class="fh-avatar" data-status="online"><img src="img/avatars/eleanor.webp" alt=""></span><div><p class="fh-list__title"><a class="fh-list__link" href="#c-list">Eleanor</a></p><p class="fh-list__meta">Legal intake · 14 leads today</p></div><span class="fh-badge" data-tone="lime">Live</span></li>
+    <li><span class="fh-avatar" data-status="away"><img src="img/avatars/sam.webp" alt=""></span><div><p class="fh-list__title"><a class="fh-list__link" href="#c-list">Sam</a></p><p class="fh-list__meta">Medical front desk · paused</p></div><span class="fh-badge" data-tone="amber">Away</span></li>
+    <li><span class="fh-avatar fh-avatar--generated" data-tone="violet">RT</span><div><p class="fh-list__title"><a class="fh-list__link" href="#c-list">Ruth</a></p><p class="fh-list__meta">Property management · setup</p></div><span class="fh-badge">Draft</span></li>
+  </ul>
+  <ol class="fh-timeline">
+    <li data-tone="lime"><time>Today · 9:41</time><p><strong>Wes</strong> booked an estimate for 14 Oak Lane.</p></li>
+    <li data-tone="sky"><time>Today · 9:12</time><p><strong>Wes</strong> replied to a new inquiry in 4 seconds.</p></li>
+    <li data-tone="amber"><time>Yesterday</time><p>Quote follow-up sequence started for 6 open quotes.</p></li>
+  </ol>
+</div>
+            </div>
+          </div>
+          <div class="site-demo site-anchor" id="c-chat" data-fh-id="CHT">
+            <div class="site-demo__head"><h3>Chat</h3><p>Message bubbles, names in tone, a typing indicator.</p></div>
+            <div class="site-demo__stage" data-demo>
+<div class="fh-chat" role="log" aria-label="Conversation">
+  <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt=""></span><div class="fh-message__bubble"><p class="fh-message__name">Reginald</p><p>Good evening. Which of your channels gets the most inquiries?</p></div></div>
+  <div class="fh-message" data-from="me"><div class="fh-message__bubble"><p>Facebook Messenger, mostly after 6pm.</p></div></div>
+  <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt=""></span><div class="fh-message__bubble"><p class="fh-message__name">Reginald</p><p>Then Wes should cover evenings first. I can have him live by Monday.</p></div></div>
+  <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt=""></span><div class="fh-message__bubble"><span class="fh-typing" aria-label="Reginald is typing"><i></i></span></div></div>
+</div>
+            </div>
+          </div>
+        </div>
+
+          <div class="site-demo" id="c-dl" data-fh-id="DET">
+            <div class="site-demo__head"><h3>Details, code, divider</h3></div>
+            <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+  <dl class="fh-dl">
+    <div><dt>Plan</dt><dd>Agents · Monthly</dd></div>
+    <div><dt>Renews</dt><dd>November 28, 2026</dd></div>
+    <div><dt>Channels</dt><dd>Messenger, WhatsApp, SMS</dd></div>
+  </dl>
+  <p class="fh-divider">or install</p>
+  <figure class="fh-code">
+    <figcaption>terminal <button class="fh-button fh-button--sm fh-button--ghost" type="button">Copy</button></figcaption>
+    <pre><code>npm i @rascode/firehorse</code></pre>
+  </figure>
+  <p class="fh-small fh-muted">Open the command menu with <kbd class="fh-kbd">⌘</kbd> <kbd class="fh-kbd">K</kbd>.</p>
+</div>
+            </div>
+          </div>
+
+        <div class="site-demo site-anchor" id="c-pricing" data-fh-id="TIR">
+          <div class="site-demo__head"><h3>Pricing tiers</h3><p>The featured tier glows in its tone; every tier stacks or sits side by side by container.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-tiers">
+  <article class="fh-tier" data-tone="sky">
+    <h4 class="fh-tier__name">Assessment</h4>
+    <p class="fh-tier__price"><b>$750</b> one time</p>
+    <p class="fh-tier__pitch">Find the risks before they find you.</p>
+    <ul class="fh-checklist" data-tone><li>Backend review</li><li>Risk register</li><li>30-minute readout</li></ul>
+    <a class="fh-button fh-button--secondary fh-button--block" href="#c-pricing">Book assessment</a>
+  </article>
+  <article class="fh-tier fh-tier--featured" data-tone="accent">
+    <span class="fh-tier__flag fh-badge">Most chosen</span>
+    <h4 class="fh-tier__name">Agent</h4>
+    <p class="fh-tier__price"><b>$1,695</b> per month</p>
+    <p class="fh-tier__pitch">A trained agent on your channels, live in days.</p>
+    <ul class="fh-checklist" data-tone><li>Voice and text</li><li>5 channels wired</li><li>3-day free trial</li></ul>
+    <a class="fh-button fh-button--block" href="#c-pricing">Add an agent</a>
+  </article>
+  <article class="fh-tier" data-tone="lime">
+    <h4 class="fh-tier__name">Managed</h4>
+    <p class="fh-tier__price"><b>$400</b> per month</p>
+    <p class="fh-tier__pitch">A steady hand on the systems you already run.</p>
+    <ul class="fh-checklist" data-tone><li>Monitoring</li><li>Monthly report</li><li>Priority fixes</li></ul>
+    <a class="fh-button fh-button--secondary fh-button--block" href="#c-pricing">Talk to us</a>
+  </article>
+</div>
+          </div>
+        </div>
+
+        <div class="fh-split">
+          <div class="site-demo site-anchor" id="c-feature" data-fh-id="FEA">
+            <div class="site-demo__head"><h3>Features</h3></div>
+            <div class="site-demo__stage" data-demo>
+<div class="fh-grid" data-cols="2" style="--fh-grid-min: 12rem; --fh-gap: var(--fh-space-8)">
+  <div class="fh-feature" data-tone="teal"><span class="fh-feature__icon">CQ</span><h3>Container queries</h3><p>Every slot is a query container.</p></div>
+  <div class="fh-feature" data-tone="amber"><span class="fh-feature__icon">L8</span><h3>Eight layers</h3><p>Override without !important.</p></div>
+  <div class="fh-feature" data-tone="fuchsia"><span class="fh-feature__icon">◐</span><h3>Two schemes</h3><p>light-dark() on every role.</p></div>
+  <div class="fh-feature" data-tone="violet"><span class="fh-feature__icon">AI</span><h3>Agent-ready</h3><p>Contract, markup and tokens.</p></div>
+</div>
+            </div>
+          </div>
+          <div class="site-demo site-anchor" id="c-testimonial" data-fh-id="TST">
+            <div class="site-demo__head"><h3>Testimonial</h3></div>
+            <div class="site-demo__stage" data-demo>
+<figure class="fh-testimonial" data-tone="orange">
+  <blockquote>We stopped losing quotes in the follow-up. Wes answers at 9pm, books the estimate, and I wake up to a full route.</blockquote>
+  <figcaption class="fh-person"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/cole.webp" alt=""></span><span class="fh-person__text"><b>Cole Brennan</b><span>Owner · Brennan Landscapes (sample)</span></span></figcaption>
+</figure>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ CARD CATALOG ═══════════════ -->
+    <section id="catalog" class="fh-section fh-section--ruled site-anchor" style="--site-h: 851px; --site-hn: 945px" data-tone="rose" aria-labelledby="catalog-title" data-fh-label="Card catalog" data-fh-index="09">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="rose"><b>02</b> Card catalog</p>
+          <h2 id="catalog-title" class="fh-heading">24 cards. One component, configured.</h2>
+          <p class="fh-lede">Every card here is <code>fh-card</code>, <code>fh-product</code>, <code>fh-tier</code> or <code>fh-testimonial</code> with a config attribute, a tone and a surface. Backgrounds, avatar stacks, tokens, media, data: scroll through the combinations, then use them anywhere.</p>
+        </div>
+      </header>
+      <div class="fh-chips fh-chips--wrap site-cat-filter" role="toolbar" aria-label="Filter cards">
+        <button class="fh-chip fh-chip--solid" type="button" data-cat="All" data-tone="rose" aria-pressed="true">All</button>
+        <button class="fh-chip" type="button" data-cat="Catalog" data-tone="rose" aria-pressed="false">Catalog</button>
+        <button class="fh-chip" type="button" data-cat="Commerce" data-tone="rose" aria-pressed="false">Commerce</button>
+        <button class="fh-chip" type="button" data-cat="Content" data-tone="rose" aria-pressed="false">Content</button>
+        <button class="fh-chip" type="button" data-cat="Data" data-tone="rose" aria-pressed="false">Data</button>
+        <button class="fh-chip" type="button" data-cat="Feedback" data-tone="rose" aria-pressed="false">Feedback</button>
+        <button class="fh-chip" type="button" data-cat="Media" data-tone="rose" aria-pressed="false">Media</button>
+        <button class="fh-chip" type="button" data-cat="People" data-tone="rose" aria-pressed="false">People</button>
+        <button class="fh-chip" type="button" data-cat="Surfaces" data-tone="rose" aria-pressed="false">Surfaces</button>
+        <button class="fh-chip" type="button" data-cat="Tokens" data-tone="rose" aria-pressed="false">Tokens</button>
+      </div>
+      <section class="fh-carousel site-catalog" aria-roledescription="carousel" aria-label="Card catalog" style="--fh-carousel-slide: min(19rem, 86%); --fh-carousel-height: 24rem" data-fh-id="CAT" data-fh-name="Card catalog">
+        <div class="fh-carousel__track" tabindex="0">
+    <figure class="fh-carousel__slide site-cat" data-group="Catalog" data-tone="teal" data-fh-id="CAT-01">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="teal"><p class="fh-card__meta">Data</p><h3 class="fh-card__title">Schema design</h3><p class="fh-card__body">Models that match how you work.</p><footer class="fh-card__footer"><p class="fh-card__price">From <b>$1,250</b></p><span class="fh-action" data-tone>View</span></footer></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="teal"><b class="fh-chip__index">01</b>Catalog</span><span>Etched · price · action</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="People" data-tone="sky" data-fh-card="elevated" data-fh-id="CAT-02">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Team</p><h3 class="fh-card__title">Agent squad</h3><span class="fh-avatars"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/ava.webp" alt=""></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/cole.webp" alt=""></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/maya.webp" alt=""></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/mateo.webp" alt=""></span></span><dl class="fh-stats" style="margin-top:var(--fh-space-4)"><div><dt>Live</dt><dd>4</dd></div><div><dt>Replies</dt><dd>2.1k</dd></div></dl></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">02</b>People</span><span>Elevated · avatar stack · stats</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Media" data-tone="amber" data-fh-id="CAT-03">
+      <div class="site-cat__stage">
+<article class="fh-card fh-card--cover" data-tone="violet"><figure class="fh-card__media"><img src="img/supply/poster.svg" alt=""></figure><p class="fh-card__meta">Journal</p><h3 class="fh-card__title">Printing in nine tones</h3><p class="fh-card__body">How the Firehorse palette made it to paper.</p></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="amber"><b class="fh-chip__index">03</b>Media</span><span>Cover · background image · scrim</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Surfaces" data-tone="violet" data-fh-card="glass" data-fh-id="CAT-04">
+      <div class="site-cat__stage" style="background:radial-gradient(80% 80% at 20% 10%,color-mix(in oklab,var(--fh-tone) 55%,transparent),transparent 60%),radial-gradient(70% 90% at 90% 90%,color-mix(in oklab,var(--fh-tone-violet) 45%,transparent),transparent 60%),var(--fh-color-surface-sunken)">
+<article class="fh-card" data-tone="violet"><p class="fh-card__meta">Glass</p><h3 class="fh-card__title">Frosted panel</h3><p class="fh-card__body">Backdrop blur over any art. One attribute.</p><footer class="fh-card__footer"><span class="fh-badge" data-tone="violet">data-fh-card="glass"</span></footer></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="violet"><b class="fh-chip__index">04</b>Surfaces</span><span>Glass · mesh background</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Media" data-tone="rose" data-fh-card="solid" data-fh-card-media="classic" data-fh-id="CAT-05">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="rose"><figure class="fh-card__media"><img src="img/supply/mug.svg" alt=""></figure><p class="fh-card__meta">Desk</p><h3 class="fh-card__title">Enamel mug</h3><div class="fh-cluster" style="--fh-gap:var(--fh-space-1);margin-top:var(--fh-space-3)"><span class="fh-pill" data-tone="rose">Speckled</span><span class="fh-pill" data-tone="amber">12 oz</span></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="rose"><b class="fh-chip__index">05</b>Media</span><span>Solid · media top · tags</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Tokens" data-tone="fuchsia" data-fh-card="tonal" data-fh-id="CAT-06">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="fuchsia"><p class="fh-card__meta">Tokens</p><h3 class="fh-card__title">--fh-tone-fuchsia</h3><div class="site-cat__swatches"><i data-tone="fuchsia"></i><i data-tone="violet"></i><i data-tone="rose"></i><i data-tone="sky"></i></div><p class="fh-card__body"><code>oklch(from bg …)</code> · adapts to any surface</p></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="fuchsia"><b class="fh-chip__index">06</b>Tokens</span><span>Tonal · token swatches</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="People" data-tone="lime" data-fh-card="outline" data-fh-avatar="oval" data-fh-id="CAT-07">
+      <div class="site-cat__stage">
+<article class="fh-card site-cat__profile" data-tone="lime"><span class="fh-avatar fh-avatar--xl"><img src="img/avatars/isla.webp" alt=""></span><h3 class="fh-card__title">Isla Romero</h3><p class="fh-card__body">Design lead · Charlotte</p><div class="fh-chips" style="justify-content:center"><span class="fh-chip fh-chip--sm" data-tone="lime">Design</span><span class="fh-chip fh-chip--sm" data-tone="sky">Systems</span></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="lime"><b class="fh-chip__index">07</b>People</span><span>Outline · oval avatar · person</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Commerce" data-tone="rose" data-fh-id="CAT-08">
+      <div class="site-cat__stage">
+<article class="fh-product" data-tone="lime"><a class="fh-product__media" href="#commerce"><img src="img/supply/notebook.svg" alt=""></a><span class="fh-product__badge" data-tone="rose">−20%</span><p class="fh-product__meta">A5 · pack of 3</p><h3 class="fh-product__title"><a href="#commerce">Dot Grid Notebook</a></h3><div class="fh-cluster" style="justify-content:space-between;--fh-gap:var(--fh-space-2)"><p class="fh-price" data-tone="rose"><b>$22</b><s>$28</s></p><div class="fh-swatches fh-swatches--sm"><label data-tone="lime" style="--swatch:var(--fh-tone)"><input type="radio" name="cat8" checked aria-label="Lime"></label><label data-tone="neutral" style="--swatch:var(--fh-tone)"><input type="radio" name="cat8" aria-label="Graphite"></label></div></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="rose"><b class="fh-chip__index">08</b>Commerce</span><span>Product · swatches · sale</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Data" data-tone="teal" data-fh-card="solid" data-fh-id="CAT-09">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="teal"><p class="fh-card__meta">Win rate</p><div class="site-cat__metric"><span class="fh-ring" style="--fh-value:64" role="img" aria-label="64%"><b>64%</b></span><div><p class="fh-card__title">$184k</p><p class="fh-card__body"><span style="color:var(--fh-color-success)">▲ 12%</span> vs last quarter</p></div></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="teal"><b class="fh-chip__index">09</b>Data</span><span>Metric · ring · trend</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Data" data-tone="sky" data-fh-card="elevated" data-fh-id="CAT-10">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Inquiries</p><p class="site-cat__kpi">1,284</p><svg class="fh-sparkline" style="inline-size:100%;block-size:3rem" viewBox="0 0 88 22" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 L10 15 L20 16 L30 11 L40 12 L50 8 L60 9 L70 5 L80 6 L88 2 L88 22 L0 22Z" fill="currentColor" opacity=".14"/><path d="M0 18 L10 15 L20 16 L30 11 L40 12 L50 8 L60 9 L70 5 L80 6 L88 2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><p class="fh-card__body">Last 30 days · sample</p></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">10</b>Data</span><span>KPI · sparkline</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="People" data-tone="orange" data-fh-id="CAT-11">
+      <div class="site-cat__stage" style="background:linear-gradient(160deg,#f2c58a 0%,#d77a4a 45%,#5b2a3a 100%)" data-fh-surface="tone-solid">
+<figure class="fh-testimonial" data-tone="orange"><blockquote>The cards just fit. Sidebar, modal, full width. We stopped writing breakpoints.</blockquote><figcaption class="fh-person"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt=""></span><span class="fh-person__text"><b>Ray Okafor</b><span>Sample quote</span></span></figcaption></figure>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="orange"><b class="fh-chip__index">11</b>People</span><span>Quote · avatar · dune background</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Commerce" data-tone="accent" data-fh-id="CAT-12">
+      <div class="site-cat__stage">
+<article class="fh-tier fh-tier--featured" data-tone="accent"><span class="fh-tier__flag">Popular</span><h4 class="fh-tier__name">Build</h4><p class="fh-tier__price"><b>$4,800</b> fixed</p><p class="fh-tier__pitch">A design system on Firehorse, themed and shipped.</p><ul class="fh-checklist" data-tone><li>Tokens &amp; theme</li><li>12 page templates</li></ul></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="accent"><b class="fh-chip__index">12</b>Commerce</span><span>Pricing tier · featured</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Content" data-tone="amber" data-fh-card="solid" data-fh-id="CAT-13">
+      <div class="site-cat__stage">
+<article class="fh-card site-cat__event" data-tone="amber"><div class="site-cat__date"><b>14</b><span>Nov</span></div><div><p class="fh-card__meta">Workshop</p><h3 class="fh-card__title">Design systems for agents</h3><p class="fh-card__body">Charlotte · 6 pm</p><div class="fh-chips" style="margin-top:var(--fh-space-2)"><span class="fh-chip fh-chip--solid fh-chip--sm" data-tone="amber">RSVP</span><span class="fh-chip fh-chip--underline fh-chip--sm">Details</span></div></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="amber"><b class="fh-chip__index">13</b>Content</span><span>Event · date block · chips</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Content" data-tone="violet" data-fh-id="CAT-14">
+      <div class="site-cat__stage">
+<div class="fh-stack fh-stack--sm"><div class="fh-chip-card" data-tone="rose"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>scope.pdf</b><small>212 KB · signed</small></span></div><div class="fh-chip-card" data-tone="sky"><span class="fh-chip-card__block">DOC</span><span class="fh-chip-card__text"><b>brief.docx</b><small>Edited 2h ago</small></span></div><div class="fh-chip-card" data-tone="violet"><span class="fh-chip-card__block">PNG</span><span class="fh-chip-card__text"><b>moodboard.png</b><small>4.1 MB</small></span></div></div>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="violet"><b class="fh-chip__index">14</b>Content</span><span>Chip cards · files</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="People" data-tone="teal" data-fh-card="solid" data-fh-avatar="squircle" data-fh-id="CAT-15">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="teal"><p class="fh-card__meta">Studio</p><h3 class="fh-card__title">The team</h3><div class="site-cat__faces"><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/ava.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/cole.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/eleanor.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/isla.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/mateo.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/ruth.webp" alt=""></span></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="teal"><b class="fh-chip__index">15</b>People</span><span>Squircle avatars · grid</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Feedback" data-tone="lime" data-fh-id="CAT-16">
+      <div class="site-cat__stage">
+<div class="fh-stack fh-stack--sm"><div class="fh-alert" data-tone="lime" role="status"><b>Proposal signed</b><p>Northwind Labs accepted the Build plan.</p></div><div class="fh-alert" data-tone="amber" role="status"><b>Follow up today</b><p>Halcyon Health opened the proposal 3 times.</p></div></div>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="lime"><b class="fh-chip__index">16</b>Feedback</span><span>Notification · alert</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Content" data-tone="sky" data-fh-id="CAT-17">
+      <div class="site-cat__stage" style="background:linear-gradient(var(--fh-color-scaffold) 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,var(--fh-color-scaffold) 1px,transparent 1px) 0 0/22px 22px,var(--fh-color-surface)">
+<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Essay · 6 min</p><h3 class="fh-card__title">Don't make the agent think</h3><p class="fh-card__body">Why design systems are prompts in disguise.</p><footer class="fh-card__footer"><span class="fh-person"><span class="fh-avatar fh-avatar--sm fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt=""></span><span class="fh-person__text"><b>Eleanor</b><span>Oct 2026</span></span></span></footer></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">17</b>Content</span><span>Article · author · grid paper</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Media" data-tone="accent" data-fh-id="CAT-18">
+      <div class="site-cat__stage">
+<article class="fh-card fh-card--cover site-cat__video" data-tone="accent"><figure class="fh-card__media"><span style="display:block;inline-size:100%;block-size:100%;background:radial-gradient(120% 80% at 50% 110%,#ec4412 0%,transparent 55%),linear-gradient(#0d0f1a,#1b1430)"></span></figure><span class="site-cat__play"><i class="fh-icon fh-icon--play" aria-hidden="true"></i></span><p class="fh-card__meta">Film · 2:14</p><h3 class="fh-card__title">Firehorse in motion</h3></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="accent"><b class="fh-chip__index">18</b>Media</span><span>Video · play · night sky</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Content" data-tone="fuchsia" data-fh-card="outline" data-fh-id="CAT-19">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="fuchsia"><span class="fh-icon-tile fh-icon-tile--solid" style="--fh-icon-tile:2.75rem"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><h3 class="fh-card__title" style="margin-top:var(--fh-space-4)">Theme from any URL</h3><p class="fh-card__body">Point the Pro builder at a site and get a Firehorse theme back.</p><footer class="fh-card__footer"><span class="fh-badge fh-badge--solid" data-tone="fuchsia">Pro</span></footer></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="fuchsia"><b class="fh-chip__index">19</b>Content</span><span>Feature · icon tile</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Data" data-tone="sky" data-fh-card="solid" data-fh-id="CAT-20">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Top deals</p><table class="site-cat__table"><tbody><tr><td>Northwind</td><td><span class="fh-status" data-tone="lime">Won</span></td><td>$38k</td></tr><tr><td>Halcyon</td><td><span class="fh-status" data-tone="amber">Proposal</span></td><td>$21k</td></tr><tr><td>Kestrel</td><td><span class="fh-status" data-tone="teal">Qualified</span></td><td>$14k</td></tr></tbody></table></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">20</b>Data</span><span>Data · mini table</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Surfaces" data-tone="sky" data-fh-card="minimal" data-fh-id="CAT-21">
+      <div class="site-cat__stage" style="background:linear-gradient(200deg,#7dd3fc 0%,#0e7490 55%,#082f49 100%)" data-fh-surface="tone-solid">
+<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Travel</p><h3 class="fh-card__title">Tidewater Marine</h3><p class="fh-card__body">Text tokens computed from the background.</p></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">21</b>Surfaces</span><span>Minimal · sea gradient · on-media text</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Content" data-tone="lime" data-fh-card="tonal" data-fh-id="CAT-22">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="lime"><p class="fh-card__meta">Onboarding</p><h3 class="fh-card__title">Three steps</h3><div class="fh-chips fh-chips--indexed fh-chips--wrap" style="margin-top:var(--fh-space-3)"><span class="fh-chip fh-chip--tone" data-tone="lime">Install</span><span class="fh-chip fh-chip--tone" data-tone="teal">Theme</span><span class="fh-chip fh-chip--tone" data-tone="sky">Ship</span></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="lime"><b class="fh-chip__index">22</b>Content</span><span>Steps · indexed chips</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="Feedback" data-tone="amber" data-fh-id="CAT-23">
+      <div class="site-cat__stage" data-fh-surface="sunken">
+<article class="fh-card" data-tone="amber"><p class="fh-card__meta">Launch</p><h3 class="fh-card__title">Relaunch readiness</h3><div class="fh-stack fh-stack--sm" style="margin-top:var(--fh-space-3)"><div class="fh-ship-meter" data-tone="amber" style="--v:72"><span>Design <b>72%</b></span><i></i></div><div class="fh-ship-meter" data-tone="lime" style="--v:94"><span>Content <b>94%</b></span><i></i></div></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="amber"><b class="fh-chip__index">23</b>Feedback</span><span>Progress · meter · sunken</span></figcaption>
+    </figure>
+    <figure class="fh-carousel__slide site-cat" data-group="People" data-tone="rose" data-fh-card="elevated" data-fh-avatar="circle" data-fh-button="pill" data-fh-id="CAT-24">
+      <div class="site-cat__stage">
+<article class="fh-card" data-tone="rose"><div class="fh-person"><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/maya.webp" alt=""></span><span class="fh-person__text"><b>Maya</b><span>Dental front desk agent</span></span></div><div class="fh-cluster" style="--fh-gap:var(--fh-space-2);margin-top:var(--fh-space-4)"><span class="fh-button fh-button--sm">Message</span><span class="fh-button fh-button--sm fh-button--secondary">Call</span></div></article>
+      </div>
+      <figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="rose"><b class="fh-chip__index">24</b>People</span><span>Contact · circle avatar · actions</span></figcaption>
+    </figure>
+        </div>
+        <div class="fh-cluster" style="justify-content:space-between">
+          <span class="fh-carousel__count"></span>
+          <span class="fh-cluster" style="--fh-gap:var(--fh-space-2)"><button class="site-cat-prev fh-button fh-button--sm fh-button--secondary" type="button" aria-label="Previous cards">←</button><button class="site-cat-next fh-button fh-button--sm fh-button--secondary" type="button" aria-label="Next cards">→</button></span>
+        </div>
+      </section>
+    </section>

@@ -136,6 +136,16 @@ exactly: same classes and structure, new content. Never invent an ID; if one
 isn't listed, say so. When you describe what you built, cite the IDs you used.
 KC (the Firehorse guide, [kc.md](kc.md)) turns plain descriptions into IDs.
 
+## Patterns (page layouts)
+
+Patterns are whole page layouts with an ID, like components (named for the parts
+of a saddle; Firehorse is the horse, themes are the saddles, patterns are the trees): `FND` Fender,
+`CIN` Cinch, built from blocks such as `PNL` offset panel and `ESP` etched split.
+Each has a spec in [patterns.md](patterns.md): what it's built from, what to
+**keep** (the fit: never change these), what to **change freely** (theme,
+tones, content, the listed knobs) and how it behaves on phones. When a person
+names a pattern, build that composition with its markup and keep every Keep rule.
+
 ## Floating bar (dock)
 
 Put a `.fh-dock.fh-frame` right after the hero (inside `main`). It pins under

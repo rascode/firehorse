@@ -34,6 +34,11 @@ sizes["firehorse.compat.min.css"] = build(entry, join(dist, "firehorse.compat.mi
 // Optional icon set, shipped as its own stylesheet.
 sizes["icons.css"] = build(join(src, "icons/icons.css"), join(dist, "icons.css"), modern, true);
 writeFileSync(join(dist, "icons.json"), readFileSync(join(src, "icons/icons.json")));
+// reveal.js adapter: load after firehorse.css in a reveal deck.
+sizes["reveal.css"] = build(join(src, "integrations/reveal.css"), join(dist, "reveal.css"), modern, true);
+// Art the components point at by default (e.g. the auth panel's etched contours).
+mkdirSync(join(dist, "art"), { recursive: true });
+for (const f of readdirSync(join(src, "art"))) writeFileSync(join(dist, "art", f), readFileSync(join(src, "art", f)));
 for (const f of readdirSync(join(src, "themes"))) {
   if (!f.endsWith(".css") || f.startsWith("_")) continue;
   sizes[`themes/${f}`] = build(join(src, "themes", f), join(dist, "themes", f), modern, false);

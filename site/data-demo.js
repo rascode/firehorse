@@ -3,7 +3,7 @@
 import { FirehorseTable } from "./datatable.js";
 
 const people = ["ava", "cole", "eleanor", "isla", "mateo", "maya", "ray", "reginald", "ruth", "sam", "wes"];
-const person = (n) => ({ name: n[0].toUpperCase() + n.slice(1), image: `img/avatars/${n}.webp` });
+const person = (n) => ({ name: n[0].toUpperCase() + n.slice(1), image: `/img/avatars/${n}.webp` });
 const team = ["ava", "mateo", "ruth", "sam"].map(person);
 const companies = ["Northwind Labs", "Halcyon Health", "Tastin & Co", "Brennan Landscapes", "Oak & Ember", "Juniper Dental", "Kestrel Freight", "Marigold Studio", "Lumen Legal", "Cobalt Analytics", "Saltwater Supply", "Pioneer Roofing", "Atlas Wealth", "Verdant Farms", "Quill & Ink", "Summit Physio", "Harbor Coffee", "Nimbus Air", "Fernwood Realty", "Copperline Electric", "Bluebird Bakery", "Granite Works", "Meridian Clinic", "Wildflower Events", "Ironclad Security", "Lighthouse Learning", "Redwood Dental", "Sable & Stone", "Orbit Logistics", "Thistle Botanicals", "Vantage Capital", "Willow Pet Care", "Ember Hospitality", "Keystone Builders", "Lark Audio", "Mosaic Media", "Prairie Supply", "Riverbend Vet", "Solstice Yoga", "Tidewater Marine", "Upland Outfitters", "Zephyr Wind"];
 const stages = [{ value: "Lead", tone: "sky" }, { value: "Qualified", tone: "teal" }, { value: "Proposal", tone: "amber" }, { value: "Won", tone: "lime" }, { value: "Lost", tone: "rose" }];

@@ -1,0 +1,149 @@
+    <!-- ═══════════════ FORMS ═══════════════ -->
+    <section id="forms" class="fh-section fh-section--ruled site-anchor" style="--site-h: 2600px; --site-hn: 3600px" data-tone="teal" aria-labelledby="forms-title" data-fh-label="Forms" data-fh-index="06">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="teal"><b>06</b> Forms</p>
+          <h2 id="forms-title" class="fh-heading">Sign in and sign up, <em>ready to drop in</em></h2>
+          <p class="fh-lede">One block holds both forms. The switch flips between them with no JavaScript, and the title, lede and footer follow it. The art is an etched contour sheet with the tone palette flowing through it, the same treatment as the horse up top. Point <code>--fh-auth-art</code> at your own linework to make it yours.</p>
+        </div>
+        <code class="site-config-code">fh-auth · fh-auth--card · fh-auth--plain · data-fh-auth · --fh-auth-art</code>
+      </header>
+
+      <div class="site-demo site-auth" data-fh-id="AUT" data-fh-name="Sign in &amp; sign up">
+        <div class="site-demo__head"><h3>Sign in &amp; sign up</h3><p>Three layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Plain is the form alone.</p></div>
+        <div class="site-auth__grid">
+          <figure class="site-auth__item site-auth__item--wide"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="teal"><b class="fh-chip__index">01</b>Split</span><span>Etched art beside the form</span></figcaption>
+<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account" data-fh-id="AUT-01" data-fh-name="Split · etched art">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-split" id="auth-split-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-split" id="auth-split-up" value="up"> Sign up</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">Two minutes. No card needed.</p>
+    </header>
+    <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-split-email">Email</label><input class="fh-input" id="auth-split-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-split-pass">Password</label><input class="fh-input" id="auth-split-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
+      <button class="fh-button" type="submit">Sign in</button>
+      <p class="fh-divider">or</p>
+      <div class="fh-auth__social">
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</button>
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Email a link</button>
+      </div>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-split-name">Name</label><input class="fh-input" id="auth-split-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
+      <div class="fh-field"><label for="auth-split-new-email">Email</label><input class="fh-input" id="auth-split-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-split-new-pass">Password</label><input class="fh-input" id="auth-split-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><p class="fh-field__hint">8 characters or more.</p></div>
+      <label class="fh-check"><input type="checkbox" name="terms" required> I agree to the terms and privacy policy</label>
+      <button class="fh-button" type="submit">Create account</button>
+      <p class="fh-divider">or</p>
+      <div class="fh-auth__social">
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</button>
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Email a link</button>
+      </div>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-split-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-split-in">Sign in</label></p>
+  </div>
+</section>
+          </figure>
+          <figure class="site-auth__item"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="violet"><b class="fh-chip__index">02</b>Card</span><span>Form floating on full-bleed art</span></figcaption>
+<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account" data-fh-id="AUT-02" data-fh-name="Card · full-bleed art">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-card" id="auth-card-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-card" id="auth-card-up" value="up"> Sign up</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">Two minutes. No card needed.</p>
+    </header>
+    <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-card-email">Email</label><input class="fh-input" id="auth-card-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-card-pass">Password</label><input class="fh-input" id="auth-card-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
+      <button class="fh-button" type="submit">Sign in</button>
+      <p class="fh-divider">or</p>
+      <div class="fh-auth__social">
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</button>
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Email a link</button>
+      </div>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-card-name">Name</label><input class="fh-input" id="auth-card-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
+      <div class="fh-field"><label for="auth-card-new-email">Email</label><input class="fh-input" id="auth-card-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-card-new-pass">Password</label><input class="fh-input" id="auth-card-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><p class="fh-field__hint">8 characters or more.</p></div>
+      <label class="fh-check"><input type="checkbox" name="terms" required> I agree to the terms and privacy policy</label>
+      <button class="fh-button" type="submit">Create account</button>
+      <p class="fh-divider">or</p>
+      <div class="fh-auth__social">
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</button>
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Email a link</button>
+      </div>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-card-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-card-in">Sign in</label></p>
+  </div>
+</section>
+          </figure>
+          <figure class="site-auth__item"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">03</b>Plain</span><span>The form alone, for tight spaces</span></figcaption>
+<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account" data-fh-id="AUT-03" data-fh-name="Plain · no art">
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-plain" id="auth-plain-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-plain" id="auth-plain-up" value="up"> Sign up</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">Two minutes. No card needed.</p>
+    </header>
+    <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-plain-email">Email</label><input class="fh-input" id="auth-plain-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-plain-pass">Password</label><input class="fh-input" id="auth-plain-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
+      <button class="fh-button" type="submit">Sign in</button>
+      <p class="fh-divider">or</p>
+      <div class="fh-auth__social">
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</button>
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Email a link</button>
+      </div>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-plain-name">Name</label><input class="fh-input" id="auth-plain-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
+      <div class="fh-field"><label for="auth-plain-new-email">Email</label><input class="fh-input" id="auth-plain-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-plain-new-pass">Password</label><input class="fh-input" id="auth-plain-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><p class="fh-field__hint">8 characters or more.</p></div>
+      <label class="fh-check"><input type="checkbox" name="terms" required> I agree to the terms and privacy policy</label>
+      <button class="fh-button" type="submit">Create account</button>
+      <p class="fh-divider">or</p>
+      <div class="fh-auth__social">
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--github" aria-hidden="true"></i>GitHub</button>
+        <button class="fh-button fh-button--secondary" type="button"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i>Email a link</button>
+      </div>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-plain-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-plain-in">Sign in</label></p>
+  </div>
+</section>
+          </figure>
+        </div>
+      </div>
+    </section>
+

@@ -1,0 +1,77 @@
+/*!
+ * Firehorse for reveal.js — https://firehorse.rascode.dev/media/#slide-layouts
+ *
+ *   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6/dist/reveal.css">
+ *   <link rel="stylesheet" href="@rascode/firehorse/dist/firehorse.min.css">
+ *   <link rel="stylesheet" href="@rascode/firehorse/dist/reveal.css">   ← this file, last
+ *
+ *   <div class="reveal"><div class="slides">
+ *     <section class="fh-canvas fh-slide fh-slide--title" data-tone="accent">…</section>
+ *   </div></div>
+ *
+ *   Reveal.initialize({ width: 1280, height: 720, margin: 0.04, center: false });
+ *
+ * No reveal theme is needed: this sheet points reveal's variables at
+ * Firehorse tokens, so the active Firehorse theme and scheme apply.
+ * It is unlayered on purpose. reveal.js ships unlayered CSS, which
+ * beats every Firehorse layer; inside a slide this sheet hands the
+ * content back to Firehorse with `all: revert-layer`, at a specificity
+ * reveal's fragment, stack and highlight rules still beat.
+ */
+
+:root {
+  --r-background-color: var(--fh-color-canvas);
+  --r-main-font: var(--fh-font-sans);
+  --r-main-font-size: 28px;
+  --r-main-color: var(--fh-color-text);
+  --r-heading-font: var(--fh-font-display);
+  --r-heading-color: var(--fh-color-text-strong);
+  --r-heading-font-weight: 500;
+  --r-heading-text-transform: none;
+  --r-heading-letter-spacing: -0.03em;
+  --r-heading-text-shadow: none;
+  --r-code-font: var(--fh-font-mono);
+  --r-link-color: var(--fh-color-accent-text);
+  --r-link-color-dark: var(--fh-color-accent);
+  --r-link-color-hover: var(--fh-color-accent-hover);
+  --r-selection-background-color: var(--fh-color-selection);
+  --r-selection-color: var(--fh-color-text-strong);
+}
+
+.reveal-viewport {
+  background-color: var(--fh-color-canvas);
+  color: var(--fh-color-text);
+}
+
+.reveal { font-family: var(--fh-font-sans); color: var(--fh-color-text); }
+.reveal .slides { text-align: start; }
+
+/* A Firehorse slide fills reveal's 1280 × 720 stage. */
+.reveal .slides > section.fh-canvas,
+.reveal .slides > section > section.fh-canvas {
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+/* Content: reveal's element rules out, Firehorse's back in. */
+.reveal .slides :where(.fh-canvas) :where(h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, blockquote, q, pre, code, figure, figcaption, img, a, b, strong, em, i, mark, small, span, cite, div, nav, header, footer, article, aside:not(.notes), table, caption, thead, tbody, tfoot, tr, th, td, button, input, select, textarea, label, fieldset, legend, time, svg) {
+  all: revert-layer;
+}
+
+/* Chrome */
+.reveal .progress { block-size: 2px; color: var(--fh-color-accent); background: transparent; }
+.reveal .controls { color: var(--fh-color-accent); }
+.reveal .slide-number {
+  inset: auto 20px 18px auto;
+  padding: 0;
+  background: transparent;
+  color: var(--fh-color-text-subtle);
+  font: 500 12px/1 var(--fh-font-mono);
+  letter-spacing: 0.12em;
+}
+
+/* Speaker notes stay out of the slide. */
+.reveal .slides aside.notes { display: none; }

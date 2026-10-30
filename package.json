@@ -22,7 +22,10 @@
     "schema-org",
     "structured-data",
     "json-ld",
-    "themes"
+    "themes",
+    "social-media",
+    "slides",
+    "reveal.js"
   ],
   "type": "module",
   "sideEffects": [
@@ -54,6 +57,7 @@
     "./schema/mappings.json": "./schema/mappings.json",
     "./icons.css": "./dist/icons.css",
     "./icons.json": "./dist/icons.json",
+    "./reveal.css": "./dist/reveal.css",
     "./datatable": "./dist/datatable.js",
     "./datatable.js": "./dist/datatable.js",
     "./audio": "./dist/audio.js",
@@ -68,16 +72,18 @@
     "CHANGELOG.md",
     "schema",
     "scripts/schema.mjs",
-    "scripts/gen-themes.mjs"
+    "scripts/gen-themes.mjs",
+    "scripts/export-media.mjs",
+    "templates"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "lint": "node scripts/lint.mjs",
     "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check",
     "prepublishOnly": "npm test && node scripts/gen-index.mjs",
-    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/site.mjs && node scripts/stable.mjs && node scripts/schema.mjs site/dist/index.html --write",
+    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
     "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
-    "schema": "node scripts/schema.mjs site/dist/index.html",
+    "schema": "node scripts/schema.mjs $(node scripts/pages.mjs --dist)",
     "tokens:adaptive": "node scripts/gen-adaptive.mjs"
   },
   "devDependencies": {
@@ -98,6 +104,7 @@
   },
   "bin": {
     "firehorse-schema": "./scripts/schema.mjs",
-    "firehorse-theme": "./scripts/gen-themes.mjs"
+    "firehorse-theme": "./scripts/gen-themes.mjs",
+    "firehorse-export": "./scripts/export-media.mjs"
   }
 }

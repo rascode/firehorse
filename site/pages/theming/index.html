@@ -1,0 +1,126 @@
+<!--@meta {
+  "path": "/theming/",
+  "order": 80,
+  "name": "Theming",
+  "tone": "fuchsia",
+  "title": "Theming · Firehorse",
+  "description": "Firehorse theming: build a theme on top of the defaults, switch with data-fh-theme, and the built-in horse-breed themes.",
+  "headline": "One attribute per scheme, one file per brand",
+  "lede": "Schemes come from <code>light-dark()</code>, so a single attribute flips any subtree. Brands are small files that re-point tokens and never add component selectors; for a whole look, type, color, shape and density together, start from a <a class=\"fh-link\" href=\"#themes\">theme</a>. Firehorse is the base layer for every site built on it.",
+  "scripts": [],
+  "icon": "palette",
+  "summary": [
+    {
+      "value": "3",
+      "label": "Built-in themes",
+      "blurb": "Mustang, Friesian and Akhal-Teke, named after horse breeds."
+    },
+    {
+      "value": "1",
+      "label": "Attribute",
+      "blurb": "data-fh-theme on &lt;html&gt; switches the whole look."
+    }
+  ]
+}-->
+<!--@main-->
+    <!-- ═══════════════ THEMING ═══════════════ -->
+    <section id="theming" class="fh-section fh-section--ruled site-anchor" style="--site-h: 611px; --site-hn: 1194px" data-tone="fuchsia" aria-labelledby="theming-title" data-fh-label="Theming" data-fh-index="13">
+      <div class="fh-split">
+        <div class="fh-stack fh-stack--lg">
+          <div class="fh-grid" data-cols="2" style="--fh-grid-min: 12rem; --fh-gap: var(--fh-space-4)">
+            <div data-fh-scheme="dark" class="site-demo" style="background: var(--fh-color-canvas); color: var(--fh-color-text)">
+              <div class="site-demo__stage fh-stack">
+                <p class="fh-label">data-fh-scheme="dark"</p>
+                <p class="fh-subheading">Schema design</p>
+                <a class="fh-button fh-button--sm" href="#theming">View</a>
+              </div>
+            </div>
+            <div data-fh-scheme="light" class="site-demo" style="background: var(--fh-color-canvas); color: var(--fh-color-text)">
+              <div class="site-demo__stage fh-stack">
+                <p class="fh-label">data-fh-scheme="light"</p>
+                <p class="fh-subheading">Schema design</p>
+                <a class="fh-button fh-button--sm" href="#theming">View</a>
+              </div>
+            </div>
+          </div>
+          <div class="fh-stack fh-stack--sm">
+            <p class="fh-label">Built on Firehorse</p>
+            <div class="fh-table-wrap">
+              <table class="fh-table">
+                <tbody>
+                  <tr><td><a class="fh-link" href="https://rascode.dev">rascode.dev</a></td><td>Rascode theme</td><td><span class="fh-badge" data-tone="lime">Live</span></td></tr>
+                  <tr><td>Apothecaraen Cowboy</td><td>Brand theme</td><td><span class="fh-badge" data-tone="amber">In progress</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="site-demo" data-fh-id="THM">
+          <div class="site-demo__head"><h3>themes/brand.css</h3><code>@layer fh.themes</code></div>
+          <pre class="site-pre"><code><span class="c">/* Load after firehorse.css */</span>
+<span class="t">@layer</span> fh.themes {
+  [data-fh-theme=<span class="v">"brand"</span>] {
+    <span class="a">--fh-font-sans</span>: <span class="v">"Your Sans"</span>, system-ui;
+    <span class="a">--fh-font-mono</span>: <span class="v">"Your Mono"</span>, ui-monospace;
+
+    <span class="c">/* light canvas, dark canvas */</span>
+    <span class="a">--fh-color-accent</span>: light-dark(#1d4ed8, #60a5fa);
+
+    <span class="a">--fh-button-radius</span>: var(--fh-radius-md);
+    <span class="a">--fh-card-radius</span>: var(--fh-radius-md);
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ THEMES ═══════════════ -->
+    <section id="themes" class="fh-section fh-section--ruled site-anchor" style="--site-h: 808px; --site-hn: 2345px" data-tone="fuchsia" aria-labelledby="themes-title" data-fh-label="Themes" data-fh-index="14">
+      <span id="config" aria-hidden="true"></span>
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="fuchsia"><b>02</b> Themes</p>
+          <h2 id="themes-title" class="fh-heading">Pick a horse. The whole site changes.</h2>
+          <p class="fh-lede">A theme is every design decision in one file: type, color in light and dark, corner radius, density, and how avatars, cards, buttons, chips and tables look. Apply it with one attribute, <code>data-fh-theme</code>, and switch it with a dropdown. Firehorse ships three to start. Build your own on top of Firehorse the same way.</p>
+        </div>
+        <button class="fh-button fh-button--plain" type="button" data-opens="themes"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i>Open the theme drawer</button>
+      </header>
+
+      <div class="fh-split fh-split--wide-end">
+        <div class="site-theme-panel" data-theme-panel>
+          <!-- filled by site-features.js from themes.json -->
+        </div>
+        <div class="fh-stack fh-stack--lg">
+          <div class="site-demo" data-fh-id="THS" data-fh-name="Theme select">
+            <div class="site-demo__head"><h3>Theme select</h3><p>A native select. firehorse.js sets data-fh-theme on &lt;html&gt; and remembers it.</p></div>
+            <div class="site-demo__stage" data-demo>
+              <div class="fh-field"><label for="theme-select-demo">Theme</label><select class="fh-select" id="theme-select-demo" data-fh-theme-select><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select></div>
+            </div>
+          </div>
+          <figure class="fh-window site-terminal">
+            <div class="fh-window__bar"><span>themes/appaloosa.json</span></div>
+            <div class="fh-window__body"><pre class="site-pre"><code>{
+  <span class="a">"name"</span>: <span class="v">"appaloosa"</span>,
+  <span class="a">"label"</span>: <span class="v">"Appaloosa"</span>,
+  <span class="a">"config"</span>: {
+    <span class="a">"avatar"</span>: <span class="v">"circle"</span>, <span class="a">"card"</span>: <span class="v">"outline"</span>,
+    <span class="a">"button"</span>: <span class="v">"flat"</span>, <span class="a">"chip"</span>: <span class="v">"solid"</span>,
+    <span class="a">"radius"</span>: <span class="v">"soft"</span>, <span class="a">"density"</span>: <span class="v">"compact"</span>,
+    <span class="a">"table"</span>: <span class="v">"zebra"</span>
+  },
+  <span class="a">"color"</span>: {
+    <span class="a">"neutral"</span>: { <span class="a">"hue"</span>: 250, <span class="a">"chroma"</span>: 0.012 },
+    <span class="a">"accent"</span>: { <span class="a">"light"</span>: <span class="v">"#1d4ed8"</span>, <span class="a">"dark"</span>: <span class="v">"#60a5fa"</span> },
+    <span class="a">"onAccent"</span>: { <span class="a">"light"</span>: <span class="v">"#ffffff"</span>, <span class="a">"dark"</span>: <span class="v">"#0b1220"</span> }
+  },
+  <span class="a">"font"</span>: { <span class="a">"display"</span>: <span class="v">"Georgia, serif"</span> }
+}</code></pre></div>
+          </figure>
+          <pre class="site-pre site-config-code"><span class="c"># compile it (checks AA contrast in both schemes)</span>
+npx firehorse-theme themes/appaloosa.json
+<span class="c"># then</span>
+&lt;link rel="stylesheet" href="themes/appaloosa.css"&gt;
+&lt;html data-fh-theme="appaloosa"&gt;</pre>
+        </div>
+      </div>
+    </section>

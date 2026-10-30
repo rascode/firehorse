@@ -1,0 +1,153 @@
+<!--@meta {
+  "path": "/audio/",
+  "order": 70,
+  "name": "Audio",
+  "tone": "sky",
+  "title": "Audio · Firehorse",
+  "description": "Firehorse audio: players, waveforms, transcripts and stems, styled from one set of tokens.",
+  "headline": "Audio, <em>without the plumbing</em>",
+  "lede": "A player, a seekable waveform, a play button that draws its own progress, playlists, synced captions, a multitrack mixer with meters, and the parameter and render readouts that sit around them. It's plain <code>&lt;audio&gt;</code> underneath: without <code>audio.js</code> you still get the native player.",
+  "scripts": [
+    "audio.js"
+  ],
+  "icon": "audio-lines",
+  "summary": [
+    {
+      "value": "4",
+      "label": "Mixer stems",
+      "blurb": "Bass, melody, pad and texture, each with gain, mute and solo."
+    },
+    {
+      "value": "0",
+      "label": "Scripts required",
+      "blurb": "Without audio.js the native player still plays."
+    }
+  ]
+}-->
+<!--@main-->
+    <!-- ═══════════════ AUDIO ═══════════════ -->
+    <section id="audio" class="fh-section fh-section--ruled site-anchor" style="--site-h: 1409px; --site-hn: 2688px" data-tone="sky" aria-labelledby="audio-title" data-fh-label="Audio" data-fh-index="08">
+
+      <div class="site-audio">
+        <div class="site-audio__main">
+          <div class="fh-player" id="audio-player" data-fh-player data-tone="sky" data-fh-id="PLY" data-fh-name="Audio player">
+            <audio src="audio/drift.mp3" preload="metadata" controls></audio>
+            <figure class="fh-player__art"><span class="site-audio__art"><i class="fh-icon fh-icon--audio-lines" aria-hidden="true"></i></span></figure>
+            <div class="fh-player__meta">
+              <p class="fh-player__kicker"><span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Now playing · sample</p>
+              <h3 class="fh-player__title">Drift</h3>
+              <p class="fh-player__by">Rascode Studio</p>
+            </div>
+            <button class="fh-play fh-play--lg" type="button" data-fh-play aria-label="Play"></button>
+            <div class="fh-wave fh-wave--lg" data-fh-wave data-peaks="0.32,0.38,0.30,0.52,0.55,0.65,0.57,0.70,0.72,0.83,0.95,0.68,0.44,0.45,0.20,0.28,0.41,0.53,0.85,0.70,0.68,0.59,0.57,0.61,1.00,1.00,0.57,0.37,0.23,0.43,0.45,0.44,0.51,0.60,0.42,0.55,0.60,0.82,0.67,0.66,0.53,0.42,0.51,0.28,0.31,0.33,0.44,0.42,0.43,0.43,0.44,0.41,0.54,0.58,0.73,0.82,0.54,0.34,0.39,0.42,0.40,0.36,0.41,0.36,0.43,0.42,0.58,0.85,0.79,0.64,0.55,0.48,0.35,0.39,0.43,0.53,0.57,0.67,0.57,0.40,0.36,0.60,0.66,0.72,0.44,0.40,0.40,0.35,0.37,0.44,0.46,0.63,0.60,0.61,0.60,0.60,0.55,0.52,0.51,0.50,0.29,0.29,0.47,0.54,0.57,0.75,0.88,0.70,0.67,0.59,0.51,0.36,0.45,0.44,0.28,0.23,0.21,0.17,0.11,0.06"></div>
+            <p class="fh-player__time"><span data-fh-time>0:00</span><span data-fh-duration>0:34</span></p>
+            <div class="fh-player__tools">
+              <button class="fh-audio-btn" type="button" data-fh-skip="-10" aria-label="Back 10 seconds"><i class="fh-icon fh-icon--rotate-ccw" aria-hidden="true"></i>10</button>
+              <button class="fh-audio-btn" type="button" data-fh-skip="10" aria-label="Forward 10 seconds">10<i class="fh-icon fh-icon--rotate-cw" aria-hidden="true"></i></button>
+              <button class="fh-audio-btn" type="button" data-fh-loop aria-pressed="false" aria-label="Loop"><i class="fh-icon fh-icon--repeat" aria-hidden="true"></i></button>
+              <fieldset class="fh-segmented fh-segmented--sm" data-fh-speed aria-label="Playback speed"><label><input type="radio" name="audio-speed" value="0.75"> 0.75×</label><label><input type="radio" name="audio-speed" value="1" checked> 1×</label><label><input type="radio" name="audio-speed" value="1.5"> 1.5×</label></fieldset>
+              <span class="fh-volume"><button class="fh-audio-btn" type="button" data-fh-mute aria-pressed="false" aria-label="Mute"><i class="fh-icon fh-icon--volume-2" aria-hidden="true"></i></button><input class="fh-scrub" type="range" min="0" max="100" value="80" data-fh-volume aria-label="Volume"></span>
+            </div>
+          </div>
+
+          <div class="fh-captions" data-fh-captions="#audio-player" aria-live="polite" data-fh-id="CAP" data-fh-name="Captions">
+            <script type="application/json">[{"start": 0.6, "end": 5.6, "text": "Every surface reads the tone it sits in."}, {"start": 5.8, "end": 11.2, "text": "The waveform is a mask, so one gradient colors it."}, {"start": 11.4, "end": 17.0, "text": "Progress lives in a single property: --p."}, {"start": 17.2, "end": 23.0, "text": "Levels arrive as --level, straight from the analyser."}, {"start": 23.2, "end": 29.0, "text": "No audio script? The native player still plays."}, {"start": 29.2, "end": 34.0, "text": "Drift by Rascode Studio. Sample track."}]</script>
+            <p class="fh-captions__line">Every surface reads the tone it sits in.</p>
+          </div>
+
+          <ol class="fh-tracks" data-fh-playlist="#audio-player" aria-label="Sample tracks" data-fh-id="TRK" data-fh-name="Playlist">
+            <li><button class="fh-track" type="button" data-src="audio/drift.mp3" data-title="Drift" data-by="Rascode Studio" data-tone="sky" data-peaks="0.32,0.38,0.30,0.52,0.55,0.65,0.57,0.70,0.72,0.83,0.95,0.68,0.44,0.45,0.20,0.28,0.41,0.53,0.85,0.70,0.68,0.59,0.57,0.61,1.00,1.00,0.57,0.37,0.23,0.43,0.45,0.44,0.51,0.60,0.42,0.55,0.60,0.82,0.67,0.66,0.53,0.42,0.51,0.28,0.31,0.33,0.44,0.42,0.43,0.43,0.44,0.41,0.54,0.58,0.73,0.82,0.54,0.34,0.39,0.42,0.40,0.36,0.41,0.36,0.43,0.42,0.58,0.85,0.79,0.64,0.55,0.48,0.35,0.39,0.43,0.53,0.57,0.67,0.57,0.40,0.36,0.60,0.66,0.72,0.44,0.40,0.40,0.35,0.37,0.44,0.46,0.63,0.60,0.61,0.60,0.60,0.55,0.52,0.51,0.50,0.29,0.29,0.47,0.54,0.57,0.75,0.88,0.70,0.67,0.59,0.51,0.36,0.45,0.44,0.28,0.23,0.21,0.17,0.11,0.06" aria-current="true"><span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="fh-track__art" data-tone="sky"></span><span><b>Drift</b><small>Rascode Studio</small></span><span>0:34</span></button></li>
+            <li><button class="fh-track" type="button" data-src="audio/pulse.mp3" data-title="Pulse" data-by="Rascode Studio" data-tone="lime" data-peaks="0.46,0.48,0.35,0.32,0.27,0.41,0.50,0.33,0.31,0.34,0.57,0.45,0.37,0.33,0.48,0.43,0.39,0.31,0.40,0.71,0.42,0.72,0.49,0.25,0.71,0.32,0.62,0.33,0.78,0.40,0.60,0.56,0.43,1.00,0.28,0.67,0.40,0.78,0.71,0.43,0.63,0.31,0.88,0.50,0.59,0.43,0.28,0.78,0.35,0.62,0.30,0.86,0.46,0.38,0.74,0.27,0.77,0.33,0.76,0.38,0.78,0.58,0.42,0.73,0.38,0.74,0.59,0.60,0.43,0.29,0.89,0.56,0.68,0.28,0.85,0.64,0.29,0.77,0.30,0.87,0.36,0.87,0.47,0.24,0.65,0.40,0.75,0.34,0.85,0.40,0.88,0.75,0.26,0.92,0.49,0.72,0.26,0.82,0.57,0.54,0.70,0.38,0.98,0.63,0.74,0.42,0.36,0.78,0.48,0.78,0.28,0.85,0.58,0.48,0.60,0.29,0.22,0.06,0.06,0.06"><span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="fh-track__art" data-tone="lime"></span><span><b>Pulse</b><small>Rascode Studio</small></span><span>0:26</span></button></li>
+            <li><button class="fh-track" type="button" data-src="audio/tide.mp3" data-title="Tide" data-by="Rascode Studio" data-tone="violet" data-peaks="0.17,0.27,0.32,0.58,0.69,0.92,0.89,0.96,0.80,0.78,0.79,0.61,0.37,0.25,0.20,0.15,0.13,0.13,0.18,0.17,0.15,0.14,0.14,0.14,0.16,0.18,0.14,0.14,0.15,0.13,0.18,0.26,0.36,0.51,0.67,0.71,0.82,0.89,0.85,0.79,0.59,0.50,0.35,0.26,0.18,0.16,0.17,0.13,0.16,0.14,0.16,0.14,0.14,0.16,0.13,0.13,0.14,0.15,0.15,0.14,0.19,0.29,0.41,0.51,0.74,0.84,0.84,0.98,0.96,0.82,0.58,0.48,0.42,0.27,0.17,0.13,0.14,0.15,0.14,0.14,0.14,0.14,0.17,0.13,0.15,0.14,0.15,0.14,0.17,0.14,0.19,0.26,0.38,0.57,0.63,0.93,0.81,0.86,1.00,0.85,0.73,0.68,0.33,0.30,0.18,0.14,0.15,0.14,0.15,0.14,0.15,0.15,0.13,0.15,0.15,0.14,0.14,0.15,0.15,0.15"><span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="fh-track__art" data-tone="violet"></span><span><b>Tide</b><small>Rascode Studio</small></span><span>0:30</span></button></li>
+          </ol>
+          <p class="site-note">Sample tracks synthesized for this page.</p>
+        </div>
+
+        <div class="site-audio__side">
+          <div class="site-demo">
+            <div class="site-demo__stage fh-stack">
+              <p class="fh-label">Bar player · reel</p>
+              <div class="fh-player fh-player--bar" id="audio-bar" data-fh-player data-tone="lime">
+                <audio src="audio/pulse.mp3" preload="metadata" controls></audio>
+                <figure class="fh-player__art"><span class="site-audio__art"><i class="fh-icon fh-icon--music" aria-hidden="true"></i></span></figure>
+                <div class="fh-player__meta"><h3 class="fh-player__title">Pulse</h3></div>
+                <button class="fh-play fh-play--sm" type="button" data-fh-play aria-label="Play"></button>
+                <div class="fh-wave" data-fh-wave data-fh-wave-style="bottom" data-peaks="0.46,0.48,0.35,0.32,0.27,0.41,0.50,0.33,0.31,0.34,0.57,0.45,0.37,0.33,0.48,0.43,0.39,0.31,0.40,0.71,0.42,0.72,0.49,0.25,0.71,0.32,0.62,0.33,0.78,0.40,0.60,0.56,0.43,1.00,0.28,0.67,0.40,0.78,0.71,0.43,0.63,0.31,0.88,0.50,0.59,0.43,0.28,0.78,0.35,0.62,0.30,0.86,0.46,0.38,0.74,0.27,0.77,0.33,0.76,0.38,0.78,0.58,0.42,0.73,0.38,0.74,0.59,0.60,0.43,0.29,0.89,0.56,0.68,0.28,0.85,0.64,0.29,0.77,0.30,0.87,0.36,0.87,0.47,0.24,0.65,0.40,0.75,0.34,0.85,0.40,0.88,0.75,0.26,0.92,0.49,0.72,0.26,0.82,0.57,0.54,0.70,0.38,0.98,0.63,0.74,0.42,0.36,0.78,0.48,0.78,0.28,0.85,0.58,0.48,0.60,0.29,0.22,0.06,0.06,0.06"></div>
+                <p class="fh-player__time"><span data-fh-time>0:00</span><span data-fh-duration>0:26</span></p>
+                <div class="fh-player__tools"><button class="fh-audio-btn" type="button" data-fh-mute aria-pressed="false" aria-label="Mute"><i class="fh-icon fh-icon--volume-2" aria-hidden="true"></i></button></div>
+              </div>
+              <div class="fh-reel" data-fh-reel="#audio-bar" data-fh-id="REL" data-fh-name="Reel"><template><p>Count in on the one.</p><p>Keep the hi-hat loose.</p><p>Drop the bass for a bar.</p><p>Bring it back, half time.</p><p>Out on the downbeat.</p></template></div>
+            </div>
+          </div>
+
+          <div class="site-demo">
+            <div class="site-demo__stage fh-stack">
+              <p class="fh-label">Waveform styles</p>
+              <div class="fh-wave fh-wave--sm site-wave-static" data-tone="sky" style="--p:.42" data-peaks="0.17,0.27,0.32,0.58,0.69,0.92,0.89,0.96,0.80,0.78,0.79,0.61,0.37,0.25,0.20,0.15,0.13,0.13,0.18,0.17,0.15,0.14,0.14,0.14,0.16,0.18,0.14,0.14,0.15,0.13,0.18,0.26,0.36,0.51,0.67,0.71,0.82,0.89,0.85,0.79,0.59,0.50,0.35,0.26,0.18,0.16,0.17,0.13,0.16,0.14,0.16,0.14,0.14,0.16,0.13,0.13,0.14,0.15,0.15,0.14,0.19,0.29,0.41,0.51,0.74,0.84,0.84,0.98,0.96,0.82,0.58,0.48,0.42,0.27,0.17,0.13,0.14,0.15,0.14,0.14,0.14,0.14,0.17,0.13,0.15,0.14,0.15,0.14,0.17,0.14,0.19,0.26,0.38,0.57,0.63,0.93,0.81,0.86,1.00,0.85,0.73,0.68,0.33,0.30,0.18,0.14,0.15,0.14,0.15,0.14,0.15,0.15,0.13,0.15,0.15,0.14,0.14,0.15,0.15,0.15"></div>
+              <div class="fh-wave fh-wave--sm site-wave-static" data-tone="fuchsia" data-fh-wave-style="bottom" style="--p:.66" data-peaks="0.46,0.48,0.35,0.32,0.27,0.41,0.50,0.33,0.31,0.34,0.57,0.45,0.37,0.33,0.48,0.43,0.39,0.31,0.40,0.71,0.42,0.72,0.49,0.25,0.71,0.32,0.62,0.33,0.78,0.40,0.60,0.56,0.43,1.00,0.28,0.67,0.40,0.78,0.71,0.43,0.63,0.31,0.88,0.50,0.59,0.43,0.28,0.78,0.35,0.62,0.30,0.86,0.46,0.38,0.74,0.27,0.77,0.33,0.76,0.38,0.78,0.58,0.42,0.73,0.38,0.74,0.59,0.60,0.43,0.29,0.89,0.56,0.68,0.28,0.85,0.64,0.29,0.77,0.30,0.87,0.36,0.87,0.47,0.24,0.65,0.40,0.75,0.34,0.85,0.40,0.88,0.75,0.26,0.92,0.49,0.72,0.26,0.82,0.57,0.54,0.70,0.38,0.98,0.63,0.74,0.42,0.36,0.78,0.48,0.78,0.28,0.85,0.58,0.48,0.60,0.29,0.22,0.06,0.06,0.06"></div>
+              <div class="fh-wave fh-wave--sm site-wave-static" data-tone="amber" data-fh-wave-style="line" style="--p:.3" data-peaks="0.32,0.38,0.30,0.52,0.55,0.65,0.57,0.70,0.72,0.83,0.95,0.68,0.44,0.45,0.20,0.28,0.41,0.53,0.85,0.70,0.68,0.59,0.57,0.61,1.00,1.00,0.57,0.37,0.23,0.43,0.45,0.44,0.51,0.60,0.42,0.55,0.60,0.82,0.67,0.66,0.53,0.42,0.51,0.28,0.31,0.33,0.44,0.42,0.43,0.43,0.44,0.41,0.54,0.58,0.73,0.82,0.54,0.34,0.39,0.42,0.40,0.36,0.41,0.36,0.43,0.42,0.58,0.85,0.79,0.64,0.55,0.48,0.35,0.39,0.43,0.53,0.57,0.67,0.57,0.40,0.36,0.60,0.66,0.72,0.44,0.40,0.40,0.35,0.37,0.44,0.46,0.63,0.60,0.61,0.60,0.60,0.55,0.52,0.51,0.50,0.29,0.29,0.47,0.54,0.57,0.75,0.88,0.70,0.67,0.59,0.51,0.36,0.45,0.44,0.28,0.23,0.21,0.17,0.11,0.06"></div>
+              <div class="fh-cluster" style="--fh-gap:var(--fh-space-3)">
+                <button class="fh-play fh-play--sm" type="button" style="--p:.25" data-tone="teal" aria-label="Play (static demo)"></button>
+                <button class="fh-play" type="button" style="--p:.6" data-tone="accent" aria-pressed="true" aria-label="Pause (static demo)"></button>
+                <button class="fh-play fh-play--lg fh-play--solid" type="button" style="--p:.85" data-tone="violet" aria-label="Play (static demo)"></button>
+                <span class="fh-eq fh-eq--on" data-tone="lime" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-audio__grid">
+        <div class="fh-mixer" data-fh-mixer data-tone="sky" data-fh-id="MIX" data-fh-name="Mixer">
+          <div class="fh-mixer__bar">
+            <button class="fh-play" type="button" data-fh-play aria-label="Play mix"></button>
+            <div class="fh-wave" data-peaks="0.32,0.38,0.30,0.52,0.55,0.65,0.57,0.70,0.72,0.83,0.95,0.68,0.44,0.45,0.20,0.28,0.41,0.53,0.85,0.70,0.68,0.59,0.57,0.61,1.00,1.00,0.57,0.37,0.23,0.43,0.45,0.44,0.51,0.60,0.42,0.55,0.60,0.82,0.67,0.66,0.53,0.42,0.51,0.28,0.31,0.33,0.44,0.42,0.43,0.43,0.44,0.41,0.54,0.58,0.73,0.82,0.54,0.34,0.39,0.42,0.40,0.36,0.41,0.36,0.43,0.42,0.58,0.85,0.79,0.64,0.55,0.48,0.35,0.39,0.43,0.53,0.57,0.67,0.57,0.40,0.36,0.60,0.66,0.72,0.44,0.40,0.40,0.35,0.37,0.44,0.46,0.63,0.60,0.61,0.60,0.60,0.55,0.52,0.51,0.50,0.29,0.29,0.47,0.54,0.57,0.75,0.88,0.70,0.67,0.59,0.51,0.36,0.45,0.44,0.28,0.23,0.21,0.17,0.11,0.06"></div>
+            <p class="fh-player__time"><span data-fh-time>0:00</span><span data-fh-duration>0:34</span></p>
+          </div>
+            <div class="fh-channel" data-src="audio/stem-pad.mp3" data-tone="sky">
+              <div class="fh-channel__name"><b>Pad</b><small>Chords · always on</small></div>
+              <div class="fh-wave" data-peaks="0.10,0.18,0.55,0.61,0.66,0.77,0.77,0.88,0.56,0.45,0.26,0.19,0.16,0.46,0.59,0.64,0.57,0.60,1.00,0.98,0.31,0.25,0.23,0.24,0.39,0.40,0.64,0.84,0.89,0.72,0.52,0.51,0.32,0.22,0.26,0.40,0.40,0.50,0.50,0.53,0.66,0.89,0.57,0.26,0.31,0.33,0.34,0.39,0.53,0.53,0.56,0.65,0.66,0.55,0.38,0.34,0.33,0.47,0.62,0.38,0.38,0.58,0.58,0.46,0.44,0.38,0.37,0.47,0.54,0.50,0.46,0.36,0.47,0.49,0.53,0.35,0.41,0.46,0.59,0.81,0.74,0.52,0.40,0.44,0.51,0.43,0.28,0.26,0.15,0.09" aria-label="Pad position"></div>
+              <div class="fh-channel__gain"><input class="fh-scrub" type="range" min="0" max="150" value="100" aria-label="Pad gain"><output class="fh-channel__value">0.0 dB</output><span class="fh-meter-level" aria-hidden="true"></span></div>
+              <div class="fh-channel__buttons"><button class="fh-audio-btn" type="button" data-fh-mute aria-pressed="false" aria-label="Mute Pad">M</button><button class="fh-audio-btn" type="button" data-fh-solo aria-pressed="false" aria-label="Solo Pad">S</button></div>
+            </div>
+            <div class="fh-channel" data-src="audio/stem-melody.mp3" data-tone="fuchsia">
+              <div class="fh-channel__name"><b>Melody</b><small>Lead · plucks</small></div>
+              <div class="fh-wave" data-peaks="0.06,0.06,0.43,0.88,0.69,0.44,0.11,0.40,0.90,0.67,0.50,0.25,0.06,0.90,0.85,0.63,0.25,0.06,0.73,0.88,0.66,0.36,0.11,0.31,0.97,0.70,0.60,0.20,0.06,0.66,0.98,0.52,0.27,0.08,0.78,0.93,0.52,0.48,0.07,0.83,0.74,0.78,0.40,0.24,0.06,0.85,0.73,0.50,0.28,0.06,0.91,0.77,0.71,0.33,0.12,0.97,1.00,0.64,0.36,0.26,0.31,0.92,0.69,0.41,0.18,0.06,0.87,0.70,0.65,0.35,0.06,0.95,0.82,0.77,0.42,0.14,0.53,0.86,0.85,0.44,0.13,0.06,0.80,0.68,0.45,0.25,0.06,0.06,0.06,0.06" aria-label="Melody position"></div>
+              <div class="fh-channel__gain"><input class="fh-scrub" type="range" min="0" max="150" value="90" aria-label="Melody gain"><output class="fh-channel__value">0.0 dB</output><span class="fh-meter-level" aria-hidden="true"></span></div>
+              <div class="fh-channel__buttons"><button class="fh-audio-btn" type="button" data-fh-mute aria-pressed="false" aria-label="Mute Melody">M</button><button class="fh-audio-btn" type="button" data-fh-solo aria-pressed="false" aria-label="Solo Melody">S</button></div>
+            </div>
+            <div class="fh-channel" data-src="audio/stem-bass.mp3" data-tone="amber">
+              <div class="fh-channel__name"><b>Bass</b><small>Sub · root notes</small></div>
+              <div class="fh-wave" data-peaks="0.87,0.80,0.47,0.31,0.33,0.35,0.74,0.75,0.59,0.32,0.07,0.57,0.84,0.86,0.78,0.61,0.46,0.63,0.62,0.42,0.18,0.28,1.00,0.99,0.75,0.48,0.49,0.51,0.42,0.26,0.29,0.27,0.35,0.54,0.34,0.43,0.52,0.50,0.24,0.40,0.47,0.47,0.30,0.69,0.88,0.47,0.34,0.42,0.35,0.70,0.74,0.72,0.48,0.12,0.39,0.40,0.56,0.57,0.54,0.49,0.54,0.59,0.55,0.40,0.17,0.43,0.41,0.45,0.80,0.96,0.96,0.79,0.41,0.17,0.17,0.07,0.46,0.44,0.57,0.80,0.89,0.89,0.69,0.45,0.24,0.19,0.08,0.06,0.06,0.06" aria-label="Bass position"></div>
+              <div class="fh-channel__gain"><input class="fh-scrub" type="range" min="0" max="150" value="110" aria-label="Bass gain"><output class="fh-channel__value">0.0 dB</output><span class="fh-meter-level" aria-hidden="true"></span></div>
+              <div class="fh-channel__buttons"><button class="fh-audio-btn" type="button" data-fh-mute aria-pressed="false" aria-label="Mute Bass">M</button><button class="fh-audio-btn" type="button" data-fh-solo aria-pressed="false" aria-label="Solo Bass">S</button></div>
+            </div>
+            <div class="fh-channel" data-src="audio/stem-texture.mp3" data-tone="violet" data-muted>
+              <div class="fh-channel__name"><b>Texture</b><small>Filtered noise bed</small></div>
+              <div class="fh-wave" data-peaks="0.39,0.54,0.69,0.76,0.88,0.79,0.68,0.40,0.37,0.40,0.54,0.72,1.00,0.89,0.67,0.53,0.38,0.36,0.53,0.61,0.88,0.92,0.79,0.60,0.50,0.31,0.42,0.51,0.80,0.80,0.84,0.95,0.56,0.41,0.36,0.44,0.60,0.92,0.85,0.71,0.66,0.50,0.36,0.36,0.56,0.65,0.95,0.81,0.90,0.69,0.48,0.31,0.38,0.49,0.80,0.80,0.94,0.75,0.50,0.44,0.34,0.54,0.65,0.93,0.99,0.77,0.68,0.52,0.41,0.41,0.52,0.76,0.87,0.83,0.79,0.54,0.42,0.40,0.55,0.69,0.94,0.88,0.85,0.79,0.57,0.42,0.41,0.49,0.70,0.79" aria-label="Texture position"></div>
+              <div class="fh-channel__gain"><input class="fh-scrub" type="range" min="0" max="150" value="60" aria-label="Texture gain"><output class="fh-channel__value">0.0 dB</output><span class="fh-meter-level" aria-hidden="true"></span></div>
+              <div class="fh-channel__buttons"><button class="fh-audio-btn" type="button" data-fh-mute aria-pressed="true" aria-label="Mute Texture">M</button><button class="fh-audio-btn" type="button" data-fh-solo aria-pressed="false" aria-label="Solo Texture">S</button></div>
+            </div>
+        </div>
+
+        <div class="fh-stack fh-stack--lg">
+          <div class="fh-card">
+            <p class="fh-card__meta">Processing</p>
+            <div class="fh-params" style="margin-top:var(--fh-space-4)" data-fh-id="PRM" data-fh-name="Parameters">
+              <label class="fh-param"><span class="fh-param__label">High-pass</span><input class="fh-scrub" type="range" min="40" max="2000" step="10" value="80" data-unit="Hz"><output class="fh-param__value">80 Hz</output></label>
+              <label class="fh-param"><span class="fh-param__label">Low-pass</span><input class="fh-scrub" type="range" min="200" max="12000" step="50" value="8000" data-unit="Hz"><output class="fh-param__value">8 kHz</output></label>
+              <label class="fh-param"><span class="fh-param__label">Gain</span><input class="fh-scrub" type="range" min="-24" max="12" step="0.5" value="-3" data-unit="dB"><output class="fh-param__value">−3.0 dB</output></label>
+              <label class="fh-param"><span class="fh-param__label">Speech rate</span><input class="fh-scrub" type="range" min="0.5" max="1.5" step="0.01" value="0.92" data-unit="x"><output class="fh-param__value">0.92×</output><p class="fh-param__hint">Slower reads feel calmer.</p></label>
+            </div>
+          </div>
+          <div class="fh-card">
+            <div class="fh-stages" id="audio-render" data-tone="violet" data-state="active" style="--p:.46" data-fh-id="STG" data-fh-name="Render stages">
+              <div class="fh-stages__head"><b>Rendering “Drift”</b><span data-stage-pct>46%</span></div>
+              <span class="fh-stages__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="46" aria-label="Render progress"></span>
+              <ol class="fh-stages__list"><li data-state="done">Voice</li><li data-state="done">Layers</li><li data-state="active">Mix</li><li>Master</li><li>Export</li></ol>
+              <p class="fh-stages__meta"><span data-stage-label>Mixing background…</span><span data-stage-eta>~40s left</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

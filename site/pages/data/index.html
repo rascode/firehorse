@@ -1,0 +1,167 @@
+<!--@meta {
+  "path": "/data/",
+  "order": 50,
+  "name": "Data",
+  "tone": "sky",
+  "title": "Data · Firehorse",
+  "description": "Firehorse data: tables and full datatables with sorting, filters, bulk actions and a record drawer.",
+  "headline": "Your data, in tables that feel like a database",
+  "lede": "Typed fields, filters, multi-sort, grouping with totals, field visibility, density, column resizing, selection with bulk actions, and three views of the same records. Define the fields once in JSON; the table, the gallery and the board all follow. Click any row to open its record.",
+  "scripts": [
+    "data-demo.js"
+  ],
+  "icon": "table-2",
+  "summary": [
+    {
+      "value": "22",
+      "label": "Field types",
+      "blurb": "Every datatable column is typed, and you can add your own."
+    },
+    {
+      "value": "3",
+      "label": "Views",
+      "blurb": "Grid, gallery and board, with drag between lanes."
+    }
+  ]
+}-->
+<!--@main-->
+    <!-- ═══════════════ DATA ═══════════════ -->
+    <section id="data" class="fh-section fh-section--ruled site-anchor" style="--site-h: 1545px; --site-hn: 2741px" data-tone="sky" aria-labelledby="data-title" data-fh-label="Data" data-fh-index="04">
+
+      <div class="fh-dt site-dt" id="pipeline" data-tone="sky" aria-label="Client pipeline (sample data)" data-fh-id="DTB" data-fh-name="Datatable"></div>
+      <p class="site-note">Sample data. Try: <kbd class="fh-kbd">Filter</kbd> Stage is any of Proposal, Won · <kbd class="fh-kbd">Group</kbd> by Owner · shift-click two headers · drag a card on the board · select rows for the bulk bar · drag a column edge to resize.</p>
+
+      <div class="fh-grid site-dt-types" style="--fh-grid-min: 10rem; --fh-grid-max-cols: 6">
+        <div class="site-type" data-tone="sky"><i class="fh-icon fh-icon--type" aria-hidden="true"></i><b>text</b><span>long · url · email · phone</span></div>
+        <div class="site-type" data-tone="teal"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i><b>number</b><span>currency · percent · rating</span></div>
+        <div class="site-type" data-tone="lime"><i class="fh-icon fh-icon--circle-dot" aria-hidden="true"></i><b>select</b><span>status · multi · tags</span></div>
+        <div class="site-type" data-tone="amber"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i><b>date</b><span>relative · overdue</span></div>
+        <div class="site-type" data-tone="rose"><i class="fh-icon fh-icon--users" aria-hidden="true"></i><b>people</b><span>user · users</span></div>
+        <div class="site-type" data-tone="violet"><i class="fh-icon fh-icon--sigma" aria-hidden="true"></i><b>computed</b><span>formula · sparkline · link · files</span></div>
+      </div>
+
+      <div class="fh-split">
+        <figure class="fh-window site-terminal">
+          <div class="fh-window__bar"><span>pipeline.json</span></div>
+          <div class="fh-window__body"><pre class="site-pre"><code>{
+  <span class="a">"title"</span>: <span class="v">"Client pipeline"</span>,
+  <span class="a">"fields"</span>: [
+    { <span class="a">"key"</span>: <span class="v">"company"</span>, <span class="a">"type"</span>: <span class="v">"text"</span> },
+    { <span class="a">"key"</span>: <span class="v">"stage"</span>, <span class="a">"type"</span>: <span class="v">"status"</span>, <span class="a">"options"</span>: [
+        { <span class="a">"value"</span>: <span class="v">"Lead"</span>, <span class="a">"tone"</span>: <span class="v">"sky"</span> },
+        { <span class="a">"value"</span>: <span class="v">"Won"</span>, <span class="a">"tone"</span>: <span class="v">"lime"</span> } ] },
+    { <span class="a">"key"</span>: <span class="v">"value"</span>, <span class="a">"type"</span>: <span class="v">"currency"</span> },
+    { <span class="a">"key"</span>: <span class="v">"owner"</span>, <span class="a">"type"</span>: <span class="v">"user"</span> }
+  ],
+  <span class="a">"rows"</span>: [ … ]
+}</code></pre></div>
+        </figure>
+        <figure class="fh-window site-terminal">
+          <div class="fh-window__bar"><span>custom-type.js</span></div>
+          <div class="fh-window__body"><pre class="site-pre"><code><span class="p">import</span> { FirehorseTable } <span class="p">from</span> <span class="v">"@rascode/firehorse/datatable"</span>;
+
+<span class="c">// Your own field type: renders, sorts and filters like the rest.</span>
+FirehorseTable.defineType(<span class="v">"sku"</span>, {
+  <span class="a">icon</span>: <span class="v">"barcode"</span>,
+  <span class="a">kind</span>: <span class="v">"text"</span>,
+  <span class="a">render</span>: (v) =&gt; <span class="v">`&lt;code&gt;${v}&lt;/code&gt;`</span>,
+});
+
+table.addEventListener(<span class="v">"fh:row-open"</span>, (e) =&gt; drawer.show(e.detail.row));</code></pre></div>
+        </figure>
+      </div>
+    </section>
+
+    <section id="tables" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Table" aria-label="Table">
+      <div class="fh-stack fh-stack--xl">
+
+        <div class="site-demo site-anchor" id="c-table" data-fh-id="TBL">
+          <div class="site-demo__head"><h3>Table</h3><p>With <code>fh-table--reflow</code>, rows turn into labelled cards when the slot is under 36rem.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-table-wrap">
+  <table class="fh-table fh-table--reflow">
+    <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="fh-num">Amount</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Invoice">RC-0142</td><td data-label="Client">Northwind</td><td data-label="Status"><span class="fh-badge" data-tone="lime">Paid</span></td><td data-label="Amount" class="fh-num">$4,800.00</td></tr>
+      <tr><td data-label="Invoice">RC-0143</td><td data-label="Client">Tastin</td><td data-label="Status"><span class="fh-badge" data-tone="amber">Sent</span></td><td data-label="Amount" class="fh-num">$1,250.00</td></tr>
+      <tr><td data-label="Invoice">RC-0144</td><td data-label="Client">Halcyon</td><td data-label="Status"><span class="fh-badge">Draft</span></td><td data-label="Amount" class="fh-num">$750.00</td></tr>
+    </tbody>
+  </table>
+</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+<!--@after-->
+<!-- ═══════════════ RECORD DRAWER ═══════════════ -->
+<dialog class="fh-dialog fh-dialog--float fh-detail" id="record" aria-labelledby="record-title" data-tone="sky" style="--fh-dialog-size: 32rem">
+  <header class="fh-detail__header">
+    <div class="fh-detail__bar">
+      <span data-r="crumb">Client pipeline · Record</span>
+      <span class="fh-detail__nav">
+        <button class="fh-dt__tool" type="button" data-r-step="-1" aria-label="Previous record"><i class="fh-icon fh-icon--chevron-up" aria-hidden="true"></i></button>
+        <button class="fh-dt__tool" type="button" data-r-step="1" aria-label="Next record"><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+        <button class="fh-dt__tool" type="button" popovertarget="record-more" aria-label="More actions" style="anchor-name: --record-more"><i class="fh-icon fh-icon--ellipsis" aria-hidden="true"></i></button>
+        <button class="fh-close" type="button" data-r-close aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-detail__identity">
+      <span class="fh-avatar fh-avatar--lg" data-r="logo">NW</span>
+      <div><h2 id="record-title" data-r="title">Company</h2><p data-r="subtitle">Contact</p></div>
+    </div>
+    <div class="fh-cluster" style="--fh-gap: var(--fh-space-1-5)" data-r="chips"></div>
+    <dl class="fh-detail__facts" data-r="facts"></dl>
+  </header>
+  <div class="fh-menu" id="record-more" popover style="position-anchor: --record-more">
+    <button type="button"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Duplicate<kbd>⌘D</kbd></button>
+    <button type="button"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Copy link</button>
+    <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--bell" aria-hidden="true"></i>Watch record</button>
+    <hr>
+    <button type="button" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete</button>
+  </div>
+  <div class="fh-detail__body">
+    <nav class="fh-chips" aria-label="Record sections">
+      <a class="fh-chip fh-chip--underline" href="#r-overview" aria-current="true">Overview</a>
+      <a class="fh-chip fh-chip--underline" href="#r-activity">Activity</a>
+      <a class="fh-chip fh-chip--underline" href="#r-files">Files</a>
+    </nav>
+    <section class="fh-detail__section" id="r-overview">
+      <h3><i class="fh-icon fh-icon--briefcase" aria-hidden="true"></i>Deal</h3>
+      <dl class="fh-detail__fields" data-r="deal"></dl>
+    </section>
+    <section class="fh-detail__section">
+      <h3><i class="fh-icon fh-icon--contact" aria-hidden="true"></i>Contact</h3>
+      <dl class="fh-detail__fields" data-r="contact"></dl>
+    </section>
+    <section class="fh-detail__section">
+      <h3><i class="fh-icon fh-icon--settings" aria-hidden="true"></i>Edit</h3>
+      <dl class="fh-detail__fields">
+        <div><dt><i class="fh-icon fh-icon--activity" aria-hidden="true"></i>Stage</dt><dd><div class="fh-select-wrap"><select class="fh-select" data-r-edit="stage" aria-label="Stage"></select></div></dd></div>
+        <div><dt><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i>Next step</dt><dd><input class="fh-input" type="date" data-r-edit="next" aria-label="Next step date"></dd></div>
+        <div><dt><i class="fh-icon fh-icon--toggle-right" aria-hidden="true"></i>Signed</dt><dd><label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" data-r-edit="signed"> <span>Contract signed</span></label></dd></div>
+        <div><dt><i class="fh-icon fh-icon--star" aria-hidden="true"></i>Priority</dt><dd><fieldset class="fh-segmented fh-segmented--sm" aria-label="Priority" data-r-edit="priority">
+          <label><input type="radio" name="r-priority" value="1"> 1</label><label><input type="radio" name="r-priority" value="2"> 2</label><label><input type="radio" name="r-priority" value="3"> 3</label><label><input type="radio" name="r-priority" value="4"> 4</label><label><input type="radio" name="r-priority" value="5"> 5</label></fieldset></dd></div>
+      </dl>
+    </section>
+    <section class="fh-detail__section">
+      <h3><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i>Notes</h3>
+      <div class="fh-field"><label class="fh-sr-only" for="r-notes">Notes</label><textarea class="fh-textarea" id="r-notes" rows="3" data-r="notes"></textarea></div>
+    </section>
+    <section class="fh-detail__section" id="r-activity">
+      <h3><i class="fh-icon fh-icon--activity" aria-hidden="true"></i>Activity</h3>
+      <ol class="fh-timeline" data-r="activity"></ol>
+    </section>
+    <section class="fh-detail__section" id="r-files">
+      <h3><i class="fh-icon fh-icon--paperclip" aria-hidden="true"></i>Files</h3>
+      <div class="fh-stack fh-stack--sm" data-r="files"></div>
+    </section>
+  </div>
+  <footer class="fh-detail__footer">
+    <span class="fh-dt__count" data-r="updated">Updated just now</span>
+    <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)">
+      <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-r-close>Close</button>
+      <button class="fh-button fh-button--sm" type="button" data-r-save>Save changes</button>
+    </span>
+  </footer>
+</dialog>

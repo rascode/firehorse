@@ -1,0 +1,271 @@
+<!--@meta {
+  "path": "/",
+  "title": "Firehorse Design System",
+  "description": "Firehorse is a dark-first, container-native CSS design system from Rascode: cascade layers, container queries, light-dark() theming and zero JavaScript.",
+  "ogTitle": "Firehorse Design System",
+  "ogDescription": "A dark-first, container-native CSS design system. Components that fit wherever you put them.",
+  "scripts": []
+}-->
+<!--@jsonld-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://rascode.dev/#org",
+      "name": "Rascode and Company",
+      "url": "https://rascode.dev"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://firehorse.rascode.dev/#website",
+      "name": "Firehorse Design System",
+      "url": "https://firehorse.rascode.dev/",
+      "publisher": { "@id": "https://rascode.dev/#org" }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://firehorse.rascode.dev/#software",
+      "name": "Firehorse",
+      "description": "A dark-first, container-native CSS design system with cascade layers, container queries, light-dark() theming and Schema.org structured data tooling.",
+      "url": "https://firehorse.rascode.dev/",
+      "codeRepository": "https://github.com/rascode/firehorse",
+      "programmingLanguage": "CSS",
+      "license": "https://opensource.org/licenses/MIT",
+      "version": "1.1.0",
+      "author": { "@id": "https://rascode.dev/#org" }
+    }
+  ]
+}
+</script>
+<!--@main-->
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section id="top" class="fh-section fh-section--flush site-hero">
+      <div class="site-hero__grid">
+        <div class="fh-hero">
+          <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="live">
+            <span class="fh-dot fh-dot--live"></span>
+            <span>v1.1 · MIT · zero JavaScript · <strong>{{GZIP}} KB</strong> gzipped</span>
+          </p>
+          <h1 class="fh-display">Components that fit <em>wherever you put them.</em></h1>
+          <p class="fh-lede">Firehorse is the design system behind rascode.dev, rebuilt as an open package. Every component sizes itself to the box it's in, not the screen. Drop a card into a sidebar, a modal or a full-width grid and it lays itself out. You don't write breakpoints.</p>
+          <div class="fh-hero__actions">
+            <a class="fh-button fh-button--lg fh-button--plain site-git" href="https://github.com/rascode/firehorse"><span class="fh-roll">Download from Git</span></a>
+            <span class="site-agents" data-agent-menu="hero"></span>
+          </div>
+          <div class="site-install">
+            <code id="install-cmd">npm i @rascode/firehorse</code>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" data-copy="#install-cmd">Copy</button>
+          </div>
+        </div>
+
+        <!-- The breathing window: pinned in a fixed-height stage so its reflow never moves the page -->
+        <div class="site-breathe-stage">
+        <div class="site-breathe fh-parallax" style="--fh-depth: -0.12" aria-label="Live demo: a window that changes width while its components adapt">
+          <figure class="fh-window">
+            <div class="fh-window__bar">
+              <span>container: 100cqi</span>
+              <span class="site-readout" aria-hidden="true">
+                <span data-at="s">S &lt;22rem</span><span data-at="m">M</span><span data-at="l">L ≥34rem</span>
+              </span>
+            </div>
+            <div class="fh-window__body">
+              <p class="fh-breadcrumb" data-tone="teal">
+                <span class="fh-breadcrumb__back"><span class="fh-dot fh-dot--live"></span></span>
+                <span><span>Services</span></span>
+              </p>
+              <dl class="fh-stats" data-tone="teal">
+                <div><dt>Timeline</dt><dd>3 wk</dd></div>
+                <div><dt>From</dt><dd>$1.2k</dd></div>
+                <div><dt>Scope</dt><dd>4 docs</dd></div>
+              </dl>
+              <div class="fh-grid fh-grid--ruled site-mini-grid">
+                <article class="fh-card" data-tone="sky">
+                  <p class="fh-card__meta">Agents</p>
+                  <h3 class="fh-card__title">Lead follow-up</h3>
+                  <p class="fh-card__body">Answers, books and follows up.</p>
+                </article>
+                <article class="fh-card" data-tone="orange">
+                  <p class="fh-card__meta">Automation</p>
+                  <h3 class="fh-card__title">Pipelines</h3>
+                  <p class="fh-card__body">Systems that talk to each other.</p>
+                </article>
+              </div>
+            </div>
+          </figure>
+          <p class="site-note" style="margin-block-start: var(--fh-space-3)">This window resizes itself; nothing inside uses a media query. Hover to pause.</p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ DOCK (floating bar) ═══════════════ -->
+    <div class="fh-dock fh-frame" data-tone="accent" data-follow>
+      <div class="fh-dock__bar">
+        <div class="fh-dock__identity">
+          <p class="fh-eyebrow-pill fh-dock__heading" data-tone="accent"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><span class="fh-rollover" data-fh-rollover="sections" data-fh-default="Firehorse" aria-live="polite"><span class="fh-rollover__item">Firehorse</span></span></span><span class="fh-eyebrow-pill__seg"><strong><span class="fh-rollover" data-fh-rollover="sections" data-fh-part="index" data-fh-default="v1.1" aria-hidden="true"><span class="fh-rollover__item">v1.1</span></span></strong></span></p>
+        </div>
+        <nav class="fh-chips" aria-label="On this page">
+          <a class="fh-chip fh-chip--indexed" data-tone="sky" href="#principles"><b class="fh-chip__index">01</b><span class="fh-roll">Principles</span></a>
+          <a class="fh-chip fh-chip--indexed" data-tone="accent" href="#explore"><b class="fh-chip__index">02</b><span class="fh-roll">Explore</span></a>
+          <a class="fh-chip fh-chip--indexed" data-tone="lime" href="#playground"><b class="fh-chip__index">03</b><span class="fh-roll">Playground</span></a>
+          <a class="fh-chip fh-chip--indexed" data-tone="neutral" href="#systems"><b class="fh-chip__index">04</b><span class="fh-roll">Library</span></a>
+          <a class="fh-chip fh-chip--indexed" data-tone="accent" href="#services"><b class="fh-chip__index">05</b><span class="fh-roll">Work with Rascode</span></a>
+        </nav>
+        <div class="fh-dock__actions">
+          <a class="fh-button fh-button--sm fh-button--outline site-git fh-button--plain" href="https://github.com/rascode/firehorse"><span class="fh-roll">Download from Git</span></a>
+        </div>
+      </div>
+      <span class="fh-dock__progress" aria-hidden="true"></span>
+    </div>
+
+    <div class="site-spectrum fh-bleed" aria-hidden="true">
+      <i data-tone="sky"></i><i data-tone="teal"></i><i data-tone="lime"></i><i data-tone="amber"></i><i data-tone="orange"></i><i data-tone="accent"></i><i data-tone="rose"></i><i data-tone="fuchsia"></i><i data-tone="violet"></i>
+    </div>
+
+    <!-- ═══════════════ FACTS ═══════════════ -->
+    <section class="fh-section fh-section--tight" aria-label="At a glance">
+      <dl class="fh-stats site-facts" data-tone="sky">
+        <div><dt>Design tokens</dt><dd>{{TOKENS}}</dd><dd>Primitive → semantic → component</dd></div>
+        <div><dt>Cascade layers</dt><dd>8</dd><dd>Override anything without !important</dd></div>
+        <div><dt>Viewport breakpoints</dt><dd>0</dd><dd>Layout responds to containers</dd></div>
+        <div><dt>Runtime</dt><dd>0<small>KB JS</small></dd><dd>Native details, dialog, popover</dd></div>
+      </dl>
+    </section>
+
+    <!-- ═══════════════ PRINCIPLES ═══════════════ -->
+    <section id="principles" class="fh-section fh-section--ruled site-anchor" style="--site-h: 429px; --site-hn: 795px" aria-labelledby="principles-title" data-fh-label="Principles" data-fh-index="01">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="sky"><b>01</b> Principles</p>
+          <h2 id="principles-title" class="fh-heading">Six rules the whole system follows</h2>
+        </div>
+      </header>
+      <ol class="fh-steps fh-steps--grid" style="--fh-grid-min: 19rem">
+        <li data-tone="sky"><span class="fh-steps__mark"></span><div><h3>Container-native</h3><p>Components query the slot they sit in. Viewport media queries are reserved for user preferences and print.</p></div></li>
+        <li data-tone="teal"><span class="fh-steps__mark"></span><div><h3>Layered</h3><p>Eight cascade layers. Your unlayered CSS always wins, so overrides never need <code>!important</code>.</p></div></li>
+        <li data-tone="lime"><span class="fh-steps__mark"></span><div><h3>Scheme-aware</h3><p>Every color role is a <code>light-dark()</code> pair. One attribute flips a page, or a single card.</p></div></li>
+        <li data-tone="amber"><span class="fh-steps__mark"></span><div><h3>Native first</h3><p><code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code> and popovers do the work. Keyboard and screen-reader behavior come from the browser.</p></div></li>
+        <li data-tone="orange"><span class="fh-steps__mark"></span><div><h3>Accessible by default</h3><p>Every text token clears WCAG AA on its canvas. Focus is always visible. Motion is opt-in.</p></div></li>
+        <li data-tone="fuchsia"><span class="fh-steps__mark"></span><div><h3>Agent-ready</h3><p>Ships with an agent contract, <code>llms.txt</code> and a token manifest, so a coding agent builds on-system the first time.</p></div></li>
+      </ol>
+    </section>
+
+
+{{CATEGORY_CARDS}}
+
+    <!-- ═══════════════ PLAYGROUND TEASER ═══════════════ -->
+    <section id="playground" class="fh-section fh-section--ruled site-anchor" style="--site-h: 711px; --site-hn: 973px" data-tone="lime" aria-labelledby="playground-title" data-fh-label="Playground" data-fh-index="03">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="lime"><b>03</b> Playground</p>
+          <h2 id="playground-title" class="fh-heading">Drag the system onto a page. Send the page to your agent.</h2>
+          <p class="fh-lede">Start from a preset layout or a blank canvas, drag blocks from the library, reorder them, flip the global config and preview at phone, tablet and desktop widths. When it looks right, copy the HTML, download it, or send it straight to Claude, ChatGPT, Cursor, v0 or the agent of your choice.</p>
+        </div>
+        <a class="fh-button fh-button--plain fh-button--lg" href="playground.html"><i class="fh-icon fh-icon--mouse-pointer-click" aria-hidden="true"></i>Open the playground</a>
+      </header>
+      <div class="site-pg-teaser">
+        <div class="site-pg-teaser__rail">
+          <p class="fh-label">Presets</p>
+          <div class="fh-chips fh-chips--indexed fh-chips--wrap">
+            <a class="fh-chip fh-chip--tone" data-tone="sky" href="playground.html#preset-landing">Landing page</a>
+            <a class="fh-chip fh-chip--tone" data-tone="teal" href="playground.html#preset-services">Agency services</a>
+            <a class="fh-chip fh-chip--tone" data-tone="amber" href="playground.html#preset-store">Storefront</a>
+            <a class="fh-chip fh-chip--tone" data-tone="rose" href="playground.html#preset-product">Product page</a>
+            <a class="fh-chip fh-chip--tone" data-tone="lime" href="playground.html#preset-checkout">Checkout</a>
+            <a class="fh-chip fh-chip--tone" data-tone="violet" href="playground.html#preset-data">Data app</a>
+            <a class="fh-chip fh-chip--tone" data-tone="fuchsia" href="playground.html#preset-pricing">Pricing</a>
+            <a class="fh-chip fh-chip--tone" data-tone="orange" href="playground.html#preset-article">Article</a>
+          </div>
+        </div>
+        <div class="site-pg-teaser__canvas" aria-hidden="true">
+          <div class="site-pg-teaser__block" data-tone="sky"><span></span><span></span><span></span></div>
+          <div class="site-pg-teaser__block site-pg-teaser__block--grid" data-tone="teal"><i></i><i></i><i></i></div>
+          <div class="site-pg-teaser__block site-pg-teaser__block--drop" data-tone="lime"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i> Drop a block here</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ LIBRARY ═══════════════ -->
+    <section id="systems" class="fh-section fh-section--ruled site-anchor" style="--site-h: 239px; --site-hn: 292px" data-tone="neutral" aria-labelledby="systems-title" data-fh-label="Library" data-fh-index="04">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="neutral"><b>04</b> Library</p>
+          <h2 id="systems-title" class="fh-heading">Part of the Rascode design library</h2>
+          <p class="fh-lede">Firehorse is system No. 01. Every Rascode system lives in its own repository and is listed at design.rascode.dev with its site, source and download.</p>
+        </div>
+        <a class="fh-action fh-action--lg" href="https://design.rascode.dev">design.rascode.dev</a>
+      </header>
+    </section>
+
+    <section class="fh-section" aria-label="Download">
+      <div class="fh-cta-band fh-crosses">
+        <p class="fh-eyebrow-pill" data-tone="accent"><span class="fh-dot fh-dot--live"></span>MIT licensed</p>
+        <h2 class="fh-heading">Take it and build something.</h2>
+        <p class="fh-lede">Clone it, fork it, theme it. Pull requests are welcome; the lint and contrast checks run on every one.</p>
+        <div class="fh-hero__actions">
+          <a class="fh-button fh-button--plain site-git" href="https://github.com/rascode/firehorse">Download from Git</a>
+          <a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse/archive/refs/heads/main.zip">Download ZIP</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WORK WITH RASCODE ═══════════════ -->
+    <section id="services" class="fh-section fh-section--ruled site-anchor site-services" style="--site-h: 789px; --site-hn: 1826px" data-tone="accent" aria-labelledby="services-title" data-fh-label="Work with Rascode" data-fh-index="05">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="accent"><b>05</b> Work with Rascode</p>
+          <h2 id="services-title" class="fh-heading">Want it built for you? Hire the studio that made it.</h2>
+          <p class="fh-lede">Firehorse came out of real client work at Rascode and Company. We design systems and sites, build AI agents and automation, and help teams make the call before they write the code.</p>
+        </div>
+        <button class="fh-button fh-button--lg" type="button" data-lead>Start a project</button>
+      </header>
+
+      <div class="fh-grid fh-grid--ruled fh-grid--etched site-services__grid" style="--fh-grid-min: 18rem; --fh-grid-max-cols: 3">
+        <article class="fh-card site-service" data-tone="fuchsia" data-schema="service">
+          <p class="fh-card__meta">Design</p>
+          <h3 class="fh-card__title">Design systems &amp; sites</h3>
+          <p class="fh-card__body">Your brand as tokens, components and pages that stay consistent, whoever builds the next screen.</p>
+          <ul class="fh-checklist" data-tone>
+            <li>Design systems on Firehorse or from scratch</li>
+            <li>Marketing sites and landing pages</li>
+            <li>Product UI and dashboards</li>
+          </ul>
+          <footer class="fh-card__footer"><p class="fh-card__price">Scoped <b>in one call</b></p><button class="fh-action" data-tone type="button" data-lead="design">Start design</button></footer>
+        </article>
+        <article class="fh-card site-service" data-tone="violet" data-schema="service">
+          <p class="fh-card__meta">AI</p>
+          <h3 class="fh-card__title">Agents &amp; automation</h3>
+          <p class="fh-card__body">Agents that answer, book and follow up on your channels, plus the pipelines that keep your data moving.</p>
+          <ul class="fh-checklist" data-tone>
+            <li>Voice and text agents for your business</li>
+            <li>Workflow and data automation</li>
+            <li>AI visibility audits</li>
+          </ul>
+          <footer class="fh-card__footer"><p class="fh-card__price">Live <b>in days</b></p><button class="fh-action" data-tone type="button" data-lead="ai">Start AI</button></footer>
+        </article>
+        <article class="fh-card site-service" data-tone="teal" data-schema="service">
+          <p class="fh-card__meta">Consulting</p>
+          <h3 class="fh-card__title">Architecture &amp; advisory</h3>
+          <p class="fh-card__body">A senior second opinion on data, APIs and platform choices, written up so your team can act on it.</p>
+          <ul class="fh-checklist" data-tone>
+            <li>Backend and API reviews</li>
+            <li>Data modeling and schema design</li>
+            <li>Design system adoption plans</li>
+          </ul>
+          <footer class="fh-card__footer"><p class="fh-card__price">Fixed <b>scope</b></p><button class="fh-action" data-tone type="button" data-lead="consulting">Start consulting</button></footer>
+        </article>
+      </div>
+
+      <div class="site-services__strip">
+        <ol class="fh-steps site-services__steps">
+          <li data-tone="sky"><span class="fh-steps__mark"></span><div><h3>Tell us the job</h3><p>Two minutes in the form.</p></div></li>
+          <li data-tone="lime"><span class="fh-steps__mark"></span><div><h3>Get a reply</h3><p>Within one business day.</p></div></li>
+          <li data-tone="amber"><span class="fh-steps__mark"></span><div><h3>Get a fixed scope</h3><p>Price and dates before any work starts.</p></div></li>
+        </ol>
+        <button class="fh-button fh-button--plain" type="button" data-lead>Tell us what you're building</button>
+      </div>
+    </section>
+<!--@after-->

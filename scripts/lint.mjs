@@ -19,6 +19,8 @@ const PRIMITIVE = /--fh-(gray|ember|sky|lime|orange|teal|fuchsia|violet|rose|amb
 for (const f of files) {
   const rel = relative(src, f);
   const isToken = rel.startsWith("tokens/") || rel.startsWith("themes/");
+  // integrations/ style a third-party library (reveal.js), so its own class names are allowed.
+  const isIntegration = rel.startsWith("integrations/");
   const css = read(f);
   const lines = css.split("\n");
   lines.forEach((line, i) => {
@@ -37,7 +39,7 @@ for (const f of files) {
       const cls = m[1];
       if (/^\d/.test(cls) || /^(5|25|35|55|65|75|85|95)/.test(cls)) continue;
       if (/:\s*[^{]*$/.test(line.split(m[0])[0]) && !line.trim().startsWith(".") && !line.includes("{") && !line.trim().startsWith("&") && !line.trim().startsWith(":")) continue; // inside a value
-      if (!cls.startsWith("fh-")) errors.push(`${at} class .${cls} is not fh- prefixed`);
+      if (!cls.startsWith("fh-") && !isIntegration) errors.push(`${at} class .${cls} is not fh- prefixed`);
     }
   });
 }

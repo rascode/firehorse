@@ -46,7 +46,7 @@ function fromPage() {
 }
 async function fromJson() {
   try {
-    const r = await fetch(new URL("index.json", document.baseURI.replace(/stable\/.*$/, "")));
+    const r = await fetch(new URL("/index.json", document.baseURI));
     const j = await r.json();
     return j.families.map((f) => { const fam = { ...f, markup: () => f.markup }; fam.variants = f.variants.map((v) => ({ ...v, family: fam, markup: () => v.markup })); return fam; });
   } catch { return []; }
@@ -109,7 +109,13 @@ function mountTags(list) {
       if (h3) { h3.insertAdjacentHTML("afterbegin", tagHtml(e)); continue; }
     } else {
       const dt = e.el.parentElement?.tagName === "DD" ? e.el.parentElement.previousElementSibling : null;
-      if (dt) { dt.insertAdjacentHTML("afterbegin", tagHtml(e)); continue; }
+      if (dt) {
+        // One row can hold several variants: their tags share a strip at the top of the label.
+        let ids = dt.querySelector(":scope > .site-ids");
+        if (!ids) { dt.insertAdjacentHTML("afterbegin", '<span class="site-ids"></span>'); ids = dt.firstElementChild; }
+        ids.insertAdjacentHTML("beforeend", tagHtml(e));
+        continue;
+      }
       const cap = $(":scope > figcaption", e.el);
       if (cap) { cap.insertAdjacentHTML("beforeend", tagHtml(e, " site-id--end")); continue; }
     }
@@ -154,6 +160,10 @@ function goToId(byId, id, flash = true) {
   return true;
 }
 
+/* —— Where an ID lives: #ID on this page, /page/#ID elsewhere (the docs are split into category pages). —— */
+const pageOf = (e) => e.page ?? e.family?.page ?? "/";
+const hrefOf = (e) => (pageOf(e) === location.pathname || e.el ? "" : pageOf(e)) + "#" + e.id;
+
 /* —— 5. Index table —— */
 function renderIndex(list, byId) {
   const box = $("#site-index");
@@ -170,9 +180,9 @@ function renderIndex(list, byId) {
       <thead><tr><th scope="col">ID</th><th scope="col">Component</th><th scope="col">Section</th><th scope="col">Variants</th></tr></thead>
       <tbody>${fams.map((f) => `<tr data-q="${esc([f.id, f.name, f.section, f.summary, ...f.variants.flatMap((v) => [v.id, v.name])].join(" ").toLowerCase())}">
         <td>${tagHtml(f)}</td>
-        <td><a class="fh-link fh-link--quiet" href="#${f.id}">${esc(f.name)}</a></td>
+        <td><a class="fh-link fh-link--quiet" href="${hrefOf(f)}">${esc(f.name)}</a></td>
         <td class="site-index__section">${esc(f.section)}</td>
-        <td><span class="site-index__variants">${f.variants.map((v) => `<a href="#${v.id}" title="${esc(v.name)}">${v.id.slice(4)}</a>`).join("") || "<span>—</span>"}</span></td>
+        <td><span class="site-index__variants">${f.variants.map((v) => `<a href="${hrefOf(v)}" title="${esc(v.name)}">${v.id.slice(4)}</a>`).join("") || "<span>—</span>"}</span></td>
       </tr>`).join("")}</tbody>
     </table></div>`;
   const q = $("[data-index-q]", box), count = $(".site-index__count", box);
@@ -186,13 +196,13 @@ function renderIndex(list, byId) {
 
 /* —— 6. KC, the Firehorse guide —— */
 const KC_LINKS = [
-  { re: /\b(install|npm|setup|set up|get started|cdn|link)\b/, a: `One line: <code>npm i @rascode/firehorse</code>, or link <code>firehorse.css</code> from the CDN. No build step, no JavaScript required.`, href: "#top", label: "Install" },
+  { re: /\b(install|npm|setup|set up|get started|cdn|link)\b/, a: `One line: <code>npm i @rascode/firehorse</code>, or link <code>firehorse.css</code> from the CDN. No build step, no JavaScript required.`, href: "/#top", label: "Install" },
   { re: /\b(licen[cs]e|mit|free|open source)\b/, a: "MIT. Use it anywhere, commercial work included.", href: "https://github.com/rascode/firehorse/blob/main/LICENSE", label: "License" },
-  { re: /\b(pro|price|pricing|cost|buy|purchase|paid)\b/, a: "Firehorse is free. Pro adds AI-powered fields and a skill that builds a design system from any URL.", href: "#pro", label: "Firehorse Pro" },
-  { re: /\b(stable|blog|news|updates?|subscribe|newsletter|changelog|release)\b/, a: "News, release notes and deep dives live in The Stable. Subscribe there and they come to you.", href: "stable/", label: "The Stable" },
-  { re: /\b(human|person|hire|custom|build it for me|work with|consult|justin)\b/, a: "For a build, a theme or a second pair of eyes, Rascode does that work. I'll point you to the door.", href: "#services", label: "Work with Rascode" },
-  { re: /\b(agent|claude|cursor|chatgpt|llm|ai)\b.*\b(read|use|build|files?)\b|\bllms\.txt\b/, a: "Your agent reads three files: the contract, the markup and the index. Hand it an ID and it knows exactly what to build.", href: "agent/index.md", label: "agent/index.md" },
-  { re: /\b(who are you|your name|what are you|kc)\b/, a: "KC. I'm the Firehorse: wild by nature, steady at work. I know every component by name and number. Describe what you're after and I'll give you its ID.", href: "#site-index", label: "The index" },
+  { re: /\b(pro|price|pricing|cost|buy|purchase|paid)\b/, a: "Firehorse is free. Pro adds AI-powered fields and a skill that builds a design system from any URL.", href: "/pro/", label: "Firehorse Pro" },
+  { re: /\b(stable|blog|news|updates?|subscribe|newsletter|changelog|release)\b/, a: "News, release notes and deep dives live in The Stable. Subscribe there and they come to you.", href: "/stable/", label: "The Stable" },
+  { re: /\b(human|person|hire|custom|build it for me|work with|consult|justin)\b/, a: "For a build, a theme or a second pair of eyes, Rascode does that work. I'll point you to the door.", href: "/#services", label: "Work with Rascode" },
+  { re: /\b(agent|claude|cursor|chatgpt|llm|ai)\b.*\b(read|use|build|files?)\b|\bllms\.txt\b/, a: "Your agent reads three files: the contract, the markup and the index. Hand it an ID and it knows exactly what to build.", href: "/agent/index.md", label: "agent/index.md" },
+  { re: /\b(who are you|your name|what are you|kc)\b/, a: "KC. I'm the Firehorse: wild by nature, steady at work. I know every component by name and number. Describe what you're after and I'll give you its ID.", href: "/components/#index", label: "The index" },
 ];
 function kcAnswer(q, list) {
   const id = q.toUpperCase().match(/\b[A-Z]{3}(?:-\d{2})?\b/g)?.find((x) => list.some((e) => e.id === x));
@@ -208,7 +218,7 @@ function kcAnswer(q, list) {
     if (e.kind === "variant") s += 0.2;
     return [s, e];
   }).filter(([s]) => s >= 3).sort((a, b) => b[0] - a[0]).slice(0, 4).map(([, e]) => e);
-  if (!scored.length) return { text: "Nothing in the index answers to that. Try another word, or browse the full index.", link: { href: "#site-index", label: "Open the index" } };
+  if (!scored.length) return { text: "Nothing in the index answers to that. Try another word, or browse the full index.", link: { href: "/components/#index", label: "Open the index" } };
   return { text: scored.length === 1 ? "That's this one:" : "Here's what fits, best first:", hits: scored };
 }
 function mountKC(list) {
@@ -231,7 +241,7 @@ function mountKC(list) {
   </div>
   <footer class="fh-detail__footer site-kc__footer">
     <form class="site-kc__form" data-kc-form><label class="fh-sr-only" for="kc-q">Ask KC</label><input class="fh-input" id="kc-q" autocomplete="off" placeholder="Describe a component, or give an ID"><button class="fh-button fh-button--sm" type="submit">Ask</button></form>
-    <p class="site-kc__note">KC answers from the Firehorse Index on this page.</p>
+    <p class="site-kc__note">KC answers from the Firehorse Index.</p>
   </footer>
 </dialog>`);
   const dlg = $("#kc"), log = $(".site-kc__log", dlg), input = $("#kc-q", dlg);
@@ -243,7 +253,7 @@ function mountKC(list) {
       : `<div class="fh-message" data-from="me"><div class="fh-message__bubble"><p>${esc(html)}</p></div></div>`);
     log.lastElementChild.scrollIntoView({ block: "nearest" });
   };
-  const hitsHtml = (hits) => `<ul class="site-kc__hits">${hits.map((e) => `<li>${tagHtml(e)}<a href="#${e.id}" data-kc-go>${esc(e.family ? `${e.family.name} › ${e.name}` : e.name)}</a></li>`).join("")}</ul><p class="site-kc__hint">Click an ID to copy it with its markup.</p>`;
+  const hitsHtml = (hits) => `<ul class="site-kc__hits">${hits.map((e) => `<li>${tagHtml(e)}<a href="${hrefOf(e)}" data-kc-go>${esc(e.family ? `${e.family.name} › ${e.name}` : e.name)}</a></li>`).join("")}</ul><p class="site-kc__hint">Click an ID to copy it with its markup.</p>`;
   say("kc", `<p>Hey. I'm KC. Describe the piece you want in your own words and I'll give you its ID, so you and your agent are talking about the same thing.</p>`);
   async function ask(q) {
     q = q.trim(); if (!q) return;
@@ -271,13 +281,26 @@ function mountKC(list) {
 /* —— Boot —— */
 (async () => {
   const onPage = $$("[data-fh-id]").length > 0;
-  const fams = onPage ? fromPage() : await fromJson();
-  const list = entries(fams);
-  // Variants need the family object (fromPage builds them that way).
-  for (const e of list) if (e.kind === "variant" && !e.family) e.family = fams.find((f) => f.id === e.id.slice(0, 3));
+  // The whole Index (every page) feeds the Index table and KC; this page's own demos get the ID tags.
+  const all = await fromJson();
+  const pageFams = onPage ? fromPage() : [];
+  const where = new Map(all.map((f) => [f.id, f.page]));
+  for (const f of pageFams) f.page = where.get(f.id) ?? location.pathname;
+  const ensureFamily = (list, fams) => { for (const e of list) if (e.kind === "variant" && !e.family) e.family = fams.find((f) => f.id === e.id.slice(0, 3)); return list; };
+  const allList = ensureFamily(entries(all.length ? all : pageFams), all.length ? all : pageFams);
+  const list = onPage ? ensureFamily(entries(pageFams), pageFams) : allList;
+  renderIndex(allList);
+  // Copy buttons for IDs that live on other pages (the hub's Index table, KC's answers).
+  const byAll = new Map(allList.map((e) => [e.id, e]));
+  const local = new Set(list.filter(() => onPage).map((e) => e.id));
+  document.addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-copy-id]");
+    if (!b || local.has(b.dataset.copyId)) return;
+    ev.preventDefault(); ev.stopPropagation();
+    const e = byAll.get(b.dataset.copyId); if (e) copyEntry(e);
+  }, true);
   if (onPage) {
     const byId = mountTags(list);
-    renderIndex(list, byId);
     const fromHash = () => { const id = decodeURIComponent(location.hash.slice(1)); if (/^[A-Z]{3}(-\d{2})?$/.test(id)) goToId(byId, id); };
     document.addEventListener("click", (ev) => {
       const a = ev.target.closest('a[href^="#"]'); if (!a) return;
@@ -287,5 +310,8 @@ function mountKC(list) {
     addEventListener("popstate", fromHash);
     if (location.hash) setTimeout(fromHash, 400);
   }
-  mountKC(list);
+  mountKC(allList);
+  // Keep the theme/mode controls snug to the left of Ask KC.
+  const kcBtn = document.querySelector(".site-kc-launch");
+  if (kcBtn) new ResizeObserver(() => document.documentElement.style.setProperty("--site-kc-w", `${kcBtn.offsetWidth}px`)).observe(kcBtn);
 })();

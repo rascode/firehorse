@@ -1,0 +1,248 @@
+/*
+ * Firehorse — auth (sign in / sign up)
+ * ---------------------------------------------------------------
+ * A drop-in login block: one component holds both forms, and a
+ * segmented switch flips between them with no JavaScript (radios +
+ * :has()). Any element marked data-fh-auth="in" or "up" shows only in
+ * that mode, so titles, ledes and footers follow the switch too.
+ *
+ * The art panel is an etched contour sheet (art/etch-contours.svg)
+ * drawn in the ink colour, with a slow band of the tone palette
+ * flowing through it, the same treatment as the Firehorse hero. Point
+ * --fh-auth-art at any SVG or PNG with transparency to use your own.
+ *
+ *   <section class="fh-auth" aria-label="Account">
+ *     <div class="fh-auth__art" aria-hidden="true"></div>
+ *     <div class="fh-auth__panel">
+ *       <fieldset class="fh-segmented fh-auth__switch">
+ *         <legend class="fh-sr-only">Account</legend>
+ *         <label><input type="radio" name="auth" value="in" checked> Sign in</label>
+ *         <label><input type="radio" name="auth" value="up"> Sign up</label>
+ *       </fieldset>
+ *       <form class="fh-auth__form" data-fh-auth="in">…</form>
+ *       <form class="fh-auth__form" data-fh-auth="up">…</form>
+ *     </div>
+ *   </section>
+ *
+ * Layouts: default is split (art beside the form, art on top in narrow
+ * slots); --card floats the form over full-bleed art; --plain drops
+ * the art. All of them respond to the container, not the viewport.
+ */
+
+@layer fh.components {
+  .fh-auth {
+    --fh-auth-art: url("art/etch-contours.svg");
+    --fh-auth-ink: color-mix(in oklab, var(--fh-color-text) 34%, transparent);
+    --fh-auth-flow: 16s;
+    position: relative;
+    display: grid;
+    container: fh-auth / inline-size;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    isolation: isolate;
+  }
+
+  /* —— Art: ink linework + a band of the tone palette, cut to the art's shape —— */
+  .fh-auth__art {
+    position: relative;
+    min-block-size: 9rem;
+    overflow: hidden;
+    mask: var(--fh-auth-art) center / cover no-repeat;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: var(--fh-auth-ink);
+    }
+
+    /* A strip three tiles wide with one palette band per tile, skewed so
+       the band leans; it slides one tile per cycle and loops seamlessly. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: -10%;
+      inset-inline-start: -100%;
+      inline-size: 300%;
+      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-sky) 6%, var(--fh-tone-teal) 11%, var(--fh-tone-lime) 16%, var(--fh-tone-amber) 22%, var(--fh-tone-orange) 27%, var(--fh-tone-rose) 33%, var(--fh-tone-fuchsia) 38%, var(--fh-tone-violet) 43%, transparent 50%, transparent 100%) 0 0 / calc(100% / 3) 100% repeat-x;
+      transform: skewX(-14deg);
+      translate: -33.3333% 0;
+      opacity: 0.55;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-auth__art::after {
+      will-change: translate;
+      animation: fh-auth-flow var(--fh-auth-flow) linear infinite;
+    }
+  }
+
+  @keyframes fh-auth-flow {
+    to { translate: 0 0; }
+  }
+
+  /* —— Panel —— */
+  .fh-auth__panel {
+    position: relative;
+    display: grid;
+    align-content: center;
+    gap: var(--fh-space-5);
+    inline-size: 100%;
+    max-inline-size: 27rem;
+    margin-inline: auto;
+    padding: clamp(var(--fh-space-6), 6cqi, var(--fh-space-12)) clamp(var(--fh-space-5), 5cqi, var(--fh-space-10));
+  }
+
+  .fh-auth__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+
+  .fh-auth__head {
+    display: grid;
+    gap: var(--fh-space-2);
+
+    & h2,
+    & h3 {
+      margin: 0;
+      font-size: clamp(1.5rem, 1.2rem + 1.6cqi, 2rem);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    & p {
+      margin: 0;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+    }
+  }
+
+  /* Login fields are all required; skip the per-field Required chips. */
+  .fh-auth .fh-field:has([required]) > label::after { display: none; }
+
+  .fh-auth__switch {
+    inline-size: 100%;
+  }
+
+  .fh-auth__form {
+    display: grid;
+    gap: var(--fh-space-4);
+    margin: 0;
+
+    & .fh-button[type="submit"] { inline-size: 100%; justify-content: center; }
+  }
+
+  /* Remember me · forgot password */
+  .fh-auth__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2) var(--fh-space-4);
+    font-size: var(--fh-text-small);
+
+    & a { color: var(--fh-color-text-muted); }
+    & a:hover { color: var(--fh-tone, var(--fh-color-text)); }
+  }
+
+  .fh-auth__social {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+    gap: var(--fh-space-2);
+
+    & .fh-button { justify-content: center; }
+  }
+
+  .fh-auth__foot {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    text-align: center;
+
+    /* The "Sign up" / "Sign in" link is a <label for> the switch's radio. */
+    & label {
+      color: var(--fh-color-text);
+      text-decoration: underline;
+      text-decoration-color: var(--fh-color-etch);
+      text-underline-offset: 0.2em;
+      cursor: pointer;
+    }
+    & label:hover { text-decoration-color: currentColor; }
+  }
+
+  .fh-auth__fine {
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-micro);
+    text-align: center;
+  }
+
+  /* —— Mode: show only what belongs to the checked side —— */
+  .fh-auth:has(.fh-auth__switch input[value="up"]:checked) [data-fh-auth="in"],
+  .fh-auth:not(:has(.fh-auth__switch input[value="up"]:checked)) [data-fh-auth="up"] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-auth [data-fh-auth] { animation: fh-auth-in var(--fh-duration-base) var(--fh-ease-out); }
+  }
+
+  @keyframes fh-auth-in {
+    from { opacity: 0; translate: 0 0.35rem; }
+  }
+
+  /* —— Split (default): art beside the form when there's room, on top when not.
+   *    The columns come from auto-fit (the block can't query its own width);
+   *    the art's divider follows the layout through a query on fh-auth. —— */
+  .fh-auth:not(.fh-auth--card, .fh-auth--plain) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr));
+  }
+
+  .fh-auth:not(.fh-auth--card, .fh-auth--plain) .fh-auth__art {
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  @container fh-auth (inline-size >= 46rem) {
+    .fh-auth__panel { min-block-size: 36rem; }
+
+    .fh-auth:not(.fh-auth--card, .fh-auth--plain) .fh-auth__art {
+      border-block-end: 0;
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  /* —— Card: the form floats on full-bleed art —— */
+  .fh-auth--card {
+    min-block-size: 38rem;
+    padding: clamp(var(--fh-space-4), 5cqi, var(--fh-space-12));
+    place-items: center;
+
+    & .fh-auth__art {
+      position: absolute;
+      inset: 0;
+      min-block-size: 0;
+    }
+
+    & .fh-auth__panel {
+      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border-radius: var(--fh-radius-lg);
+      background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
+      box-shadow: var(--fh-shadow-overlay);
+    }
+  }
+
+  /* —— Plain: no art —— */
+  .fh-auth--plain .fh-auth__art { display: none; }
+}

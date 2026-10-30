@@ -1,10 +1,11 @@
-// Generates agent/components.md from the live demos in site/index.html,
+// Generates agent/components.md from the live demos on every docs page (site/pages/**),
 // so the markup agents copy is exactly the markup the docs render.
+import { allMain } from "./pages.mjs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const html = readFileSync(join(root, "site/index.html"), "utf8");
+const html = allMain();
 const strip = (s = "") => s.replace(/<code>(.*?)<\/code>/g, "`$1`").replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').trim();
 const re = /<div class="site-demo__head"><h3>(.*?)<\/h3>(?:<p>(.*?)<\/p>|<code>(.*?)<\/code>)?(?:(?!site-demo__head)[\s\S])*?<div class="site-demo__stage[^"]*" data-demo>\n([\s\S]*?)\n {8,}<\/div>/g;
 const blocks = [];
@@ -32,7 +33,9 @@ let md = `# Firehorse — component markup
 | Forms | \`fh-form\` (\`__row\` \`__actions\`) \`fh-field\` (\`--optional\` \`__hint\` \`__error\`) \`fh-input\` \`fh-textarea\` \`fh-select\` \`fh-select-wrap\` \`fh-input-group\` \`fh-check\` \`fh-switch\` \`fh-segmented\` |
 | Disclosure | \`fh-accordion\` \`fh-tabs\` (\`--mono\`) \`fh-dialog\` (\`__header\` \`__body\` \`__footer\`) \`fh-menu\` \`fh-toaster\` \`fh-toast\` |
 | Chrome | \`fh-header\` (\`__bar\` \`__brand\` \`__actions\` \`__toggle\`) \`fh-nav\` \`fh-nav__link\` \`fh-drawer\` (\`__group\`) \`fh-mega\` (\`__grid\` \`__rail\`) \`fh-footer\` (\`__columns\` \`__column\` \`__base\`) |
-| Patterns | \`fh-hero\` \`fh-hero__actions\` \`fh-hero-split\` \`fh-section-head\` \`fh-etched-split\` (\`__pane\`) \`fh-cta-band\` \`fh-window\` (\`__bar\` \`__body\`) \`fh-letter\` (\`__portrait\`) |
+| Patterns | \`fh-hero\` \`fh-hero__actions\` \`fh-hero-split\` \`fh-section-head\` \`fh-etched-split\` (\`__pane\`) \`fh-cta-band\` (\`__main\` \`__title\` \`__aside\` \`__people\` \`__fine\`) \`fh-window\` (\`__bar\` \`__body\`) \`fh-letter\` (\`__portrait\`) \`fh-panel\` \`fh-panel-inset\` \`[data-fh-panel-start]\` \`fh-footer--tall\` |
+| Media | \`fh-canvas\` (\`__body\` \`__top\` \`__main\` \`__foot\` \`__title\` \`__sub\` \`__eyebrow\` \`__mark\` \`__badge\` \`__index\` \`__cubes\` \`__media\` \`__ui\` (\`--crop\`) \`--og\` \`--yt-thumb\` \`--yt-banner\` \`--x-header\` \`--li-banner\` \`--post\` \`--square\` \`--story\` \`--cover\` \`--card\` \`--center\` \`--split\` \`--row\` \`--plain\` \`--plate\` \`--native\` \`__cubes--rows\`) \`[data-fh-guides]\` |
+| Slides | \`fh-slide\` (\`--title\` \`--section\` \`--middle\` \`__list\` \`__stats\` \`__quote\` \`__cite\` \`__code\`) on an \`fh-canvas\`; reveal.js: \`dist/reveal.css\` |
 | Helpers | \`fh-sr-only\` \`fh-skip\` \`fh-reveal\` \`fh-reveal-children\` \`fh-hide-narrow\` \`fh-hide-wide\` \`fh-tone-text\` \`fh-text-start|center|end\` \`fh-nowrap\` \`fh-tabular\` \`fh-full\` |
 
 Attributes: \`data-tone\` (tone), \`data-fh-scheme\` (light | dark | auto),

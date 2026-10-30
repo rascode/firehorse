@@ -1,0 +1,81 @@
+<!-- Firehorse docs page layout. scripts/site.mjs fills {{SLOTS}} from each site/pages/*.html file and {{> part}} from site/parts/. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="theme-color" content="#161616">
+<!-- KC's live endpoint (POST {agent, message, history, page} → {reply}). Empty: KC answers from the index on the page. -->
+<meta name="fh-kc-endpoint" content="">
+<meta property="og:title" content="{{OG_TITLE}}">
+<meta property="og:description" content="{{OG_DESCRIPTION}}">
+<meta property="og:url" content="{{URL}}">
+<link rel="canonical" href="{{URL}}">
+{{JSONLD}}
+<link rel="alternate" type="text/plain" title="LLM index" href="llms.txt">
+<link rel="alternate" type="application/json" title="Design tokens" href="tokens.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300..700&display=swap">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="/img/backdrop/firehorse-horse.webp?v=3" fetchpriority="high">
+<script>/* Hero intro: hold the animation until the horse art is decoded, so it plays smoothly. */(()=>{const d=document.documentElement,go=()=>d.classList.add("fh-ready");d.classList.add("fh-js");const i=new Image();i.src="/img/backdrop/firehorse-horse.webp?v=3";(i.decode?i.decode():Promise.reject()).then(go,go);setTimeout(go,2000)})();</script>
+<link rel="stylesheet" href="firehorse.css">
+<link rel="stylesheet" href="themes/rascode.css">
+<link rel="stylesheet" href="themes.css">
+<script>try{var t=localStorage.getItem("fh-theme");if(t!==null)t?document.documentElement.setAttribute("data-fh-theme",t):document.documentElement.removeAttribute("data-fh-theme")}catch(e){}</script>
+<link rel="stylesheet" href="icons.css">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="fh-skip" href="#main">Skip to content</a>
+
+<div class="fh-page">
+{{HORSE}}
+<!-- Hero backdrop: the Apothekarean horse, etched on a blueprint sheet, facing right. Fixed behind the page; it frosts over once you scroll. -->
+<div class="site-backdrop" aria-hidden="true">
+  <div class="site-backdrop__art">
+    <div class="site-backdrop__reveal">
+      <div class="site-backdrop__horse"></div>
+      <div class="site-backdrop__sweep"><div class="site-backdrop__glint"></div><div class="site-backdrop__glint site-backdrop__glint--b"></div></div>
+    </div>
+  </div>
+  <div class="site-backdrop__frost"></div>
+</div>
+
+{{> header}}
+  <main id="main" class="fh-main">
+{{MAIN}}
+  </main>
+
+{{> footer}}
+{{PANEL}}</div>
+
+{{> lead}}
+
+{{> cmdk}}
+
+{{AFTER}}
+
+<div class="fh-toaster" role="region" aria-label="Notifications" id="toaster"></div>
+
+<script type="module" src="firehorse.js"></script>
+<script src="attribution.js" defer></script>
+<!-- Display settings: theme, then mode, sitting to the left of Ask KC (bottom right). -->
+<div class="site-float" role="group" aria-label="Display settings">
+  <select class="fh-select site-theme-select" data-fh-theme-select aria-label="Theme"><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select>
+  <fieldset class="fh-segmented site-scheme" aria-label="Color scheme">
+    <legend class="fh-sr-only">Color scheme</legend>
+    <label><input type="radio" name="scheme" id="scheme-dark" value="dark"> Dark</label>
+    <label><input type="radio" name="scheme" id="scheme-light" value="light"> Light</label>
+    <label><input type="radio" name="scheme" id="scheme-auto" value="auto"> Auto</label>
+  </fieldset>
+</div>
+<script src="site.js" defer></script>
+<script type="module" src="site-features.js"></script>
+<script type="module" src="site-index.js"></script>
+{{SCRIPTS}}
+</body>
+</html>

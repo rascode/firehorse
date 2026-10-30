@@ -1,6 +1,6 @@
 // Firehorse Index: every component family and variant on the docs site
 // carries a stable ID (data-fh-id="CHP", "CHP-02"). This script reads them
-// from site/index.html, validates them and writes:
+// from every docs page (site/pages/**), validates them and writes:
 //   dist/index.json   — the registry (shipped in the package)
 //   agent/index.md    — the lookup table agents read when a person names an ID
 // Run: node scripts/gen-index.mjs [--check]   (--check only validates)
@@ -8,10 +8,11 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "node-html-parser";
+import { allMain, pageOf } from "./pages.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
-const doc = parse(readFileSync(join(root, "site/index.html"), "utf8"));
+const doc = parse(allMain());
 const check = process.argv.includes("--check");
 
 const text = (el) => (el?.text ?? "").replace(/\s+/g, " ").trim();
@@ -43,7 +44,7 @@ for (const el of all) {
   const name = el.getAttribute("data-fh-name") || text(head?.querySelector("h3")) || id;
   const summary = text(head?.querySelector("p")) || text(head?.querySelector("code"));
   const markup = clean(stage ? stage.innerHTML : el.outerHTML);
-  families.set(id, { id, name, section: sectionOf(el), anchor: anchorOf(el), summary, classes: classesOf(markup), markup, variants: [], el });
+  families.set(id, { id, name, section: sectionOf(el), anchor: anchorOf(el), page: pageOf(el), url: `${base}${pageOf(el)}#${id}`, summary, classes: classesOf(markup), markup, variants: [], el });
 }
 for (const el of all) {
   const id = el.getAttribute("data-fh-id");
@@ -111,14 +112,14 @@ let md = `# Firehorse Index
 
 | ID | Name | Section | Variants | Demo |
 |---|---|---|---|---|
-${list.map((f) => `| \`${f.id}\` | ${esc(f.name)} | ${esc(f.section)} | ${f.variants.length ? `${f.variants[0].id}…${f.variants.at(-1).id}` : "—"} | [open](${base}/#${f.id}) |`).join("\n")}
+${list.map((f) => `| \`${f.id}\` | ${esc(f.name)} | ${esc(f.section)} | ${f.variants.length ? `${f.variants[0].id}…${f.variants.at(-1).id}` : "—"} | [open](${f.url}) |`).join("\n")}
 
 `;
 for (const f of list) {
   md += `## ${f.id} · ${f.name}\n\n`;
   if (f.summary) md += `${f.summary}\n\n`;
   md += `Classes: ${f.classes.map((c) => `\`${c}\``).join(" ")}\n\n`;
-  if (!f.variants.length) { md += `Markup: see [components.md](components.md) or copy from ${base}/#${f.id}.\n\n`; continue; }
+  if (!f.variants.length) { md += `Markup: see [components.md](components.md) or copy from ${f.url}.\n\n`; continue; }
   for (const v of f.variants) {
     md += `### ${v.id} · ${v.name}\n\n`;
     const cfg = Object.entries(v.config).map(([k, val]) => `\`${k}="${val}"\``).join(" ");

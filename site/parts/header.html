@@ -1,0 +1,78 @@
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="fh-header fh-frame">
+    <div class="fh-header__bar">
+      <a class="site-mark site-mark--tagged fh-header__brand" href="/" aria-label="Firehorse home, premium design system, version 1.1"><span class="site-mark__word"><span class="site-mark__bar">_</span>firehorse</span><span class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sm site-mark__tag" data-tone="neutral"><span class="fh-eyebrow-pill__index">Premium design system</span>v1.1</span></a>
+
+      <nav class="fh-nav" aria-label="Site">
+        <button class="fh-nav__link" type="button" popovertarget="mega-docs"><span class="fh-roll">Docs</span></button>
+        <a class="fh-nav__link" href="playground.html"><span class="fh-roll">Playground</span></a>
+        <a class="fh-nav__link" href="stable/"><span class="fh-roll">The Stable</span></a>
+        <a class="fh-nav__link" href="/pro/"><span class="fh-roll">Pro</span></a>
+        <a class="fh-nav__link" href="#services"><span class="fh-roll">Work with us</span></a>
+      </nav>
+
+      <div class="fh-header__actions">
+        <a class="fh-button fh-button--sm fh-button--plain site-git" href="https://github.com/rascode/firehorse" rel="noopener"><span class="fh-roll">Download from Git</span></a>
+      </div>
+
+      <button class="fh-header__toggle" type="button" popovertarget="site-drawer" aria-label="Open menu"></button>
+    </div>
+  </header>
+
+  <!-- Mega panel: the docs map (native popover). The grid is generated from site/pages by scripts/pages.mjs. -->
+  <div id="mega-docs" popover class="fh-mega fh-frame">
+{{DOCS_MEGA}}
+    <div class="fh-mega__rail">
+      <a class="fh-action" data-tone="amber" href="/components/#index">The Firehorse Index</a>
+      <a class="fh-action" data-tone="lime" href="/playground.html">Open the playground</a>
+      <section data-tone="fuchsia">
+        <h3>New</h3>
+        <ul>
+          <li><a href="/media/"><span class="fh-roll">Media &amp; slides</span></a></li>
+          <li><a href="#motion"><span class="fh-roll">Motion layer</span></a></li>
+          <li><a href="#data"><span class="fh-roll">Datatables</span></a></li>
+          <li><a href="#menus"><span class="fh-roll">Drawers, hamburgers &amp; menus</span></a></li>
+          <li><a href="#forms"><span class="fh-roll">Sign-in forms</span></a></li>
+          <li><a href="#catalog"><span class="fh-roll">Card catalog</span></a></li>
+          <li><a href="#icons"><span class="fh-roll">Icons</span></a></li>
+          <li><a href="#themes"><span class="fh-roll">Themes</span></a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <!-- Drawer (narrow header) -->
+  <div id="site-drawer" popover class="fh-drawer">
+    <div class="fh-drawer__group">
+      <p class="fh-label">Docs</p>
+      <ul>
+{{DOCS_LIST}}
+        <li><a href="playground.html"><span class="fh-roll">Playground</span></a></li>
+        <li><a href="stable/"><span class="fh-roll">The Stable</span></a></li>
+        <li><a href="https://design.rascode.dev"><span class="fh-roll">Design library</span></a></li>
+        <li><a href="#services"><span class="fh-roll">Work with Rascode</span></a></li>
+      </ul>
+    </div>
+    <div class="fh-drawer__group">
+      <p class="fh-label">Theme</p>
+      <select class="fh-select" data-fh-theme-select aria-label="Theme" style="margin-block-start: var(--fh-space-3)"><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select>
+    </div>
+    <div class="fh-drawer__group">
+      <p class="fh-label">Scheme</p>
+      <fieldset class="fh-segmented site-scheme" aria-label="Color scheme" style="margin-block-start: var(--fh-space-3)">
+        <legend class="fh-sr-only">Color scheme</legend>
+        <label><input type="radio" name="scheme-m" value="dark"> Dark</label>
+        <label><input type="radio" name="scheme-m" value="light"> Light</label>
+        <label><input type="radio" name="scheme-m" value="auto"> Auto</label>
+      </fieldset>
+    </div>
+    <div class="fh-drawer__group">
+      <p class="fh-label">Get it</p>
+      <ul>
+        <li><a href="https://github.com/rascode/firehorse"><span class="fh-roll">GitHub repository</span></a></li>
+        <li><a href="https://github.com/rascode/firehorse/archive/refs/heads/main.zip"><span class="fh-roll">Download ZIP</span></a></li>
+        <li><a href="llms.txt"><span class="fh-roll">llms.txt</span></a></li>
+      </ul>
+    </div>
+  </div>
+

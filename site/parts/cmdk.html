@@ -1,0 +1,15 @@
+<!-- Command menu: ⌘K / Ctrl+K -->
+<dialog class="fh-dialog fh-command" id="cmdk" data-hotkey aria-label="Command menu" data-tone="violet">
+  <label class="fh-command__search"><span class="fh-sr-only">Search commands</span><input type="search" placeholder="Jump to a page or run a command…" autofocus></label>
+  <div class="fh-command__list" role="listbox">
+    <p class="fh-menu__label">Pages</p>
+{{CMDK_PAGES}}
+    <p class="fh-menu__label">Actions</p>
+    <a href="playground.html" data-tone="lime"><span class="fh-icon-tile"><i class="fh-icon fh-icon--mouse-pointer-click" aria-hidden="true"></i></span>Open the playground</a>
+    <button type="button" data-tone="accent" onclick="document.getElementById('cmdk').close(); document.querySelector('[data-lead]').click()"><span class="fh-icon-tile"><i class="fh-icon fh-icon--send" aria-hidden="true"></i></span>Start a project with Rascode</button>
+    <button type="button" data-tone="neutral" onclick="document.querySelector('#scheme-light').click()"><span class="fh-icon-tile"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span>Switch to light</button>
+    <button type="button" data-tone="neutral" onclick="document.querySelector('#scheme-dark').click()"><span class="fh-icon-tile"><i class="fh-icon fh-icon--moon" aria-hidden="true"></i></span>Switch to dark</button>
+  </div>
+  <div class="fh-command__foot"><span>↑↓ to move</span><span>↵ to open</span><span>esc to close</span></div>
+</dialog>
+

@@ -29,10 +29,27 @@
     faces.forEach((img, i) => img.setAttribute("src", srcs[i]));
   });
 
+  /* —— Old single-page links: /#c-button now lives on /components/actions/ —— */
+  const lost = decodeURIComponent(location.hash.slice(1));
+  if (lost && !/^work/.test(lost) && !document.getElementById(lost) && !document.querySelector(`[data-fh-id="${CSS.escape(lost)}"]`)) {
+    fetch("/anchors.json").then((r) => r.json()).then((map) => {
+      const to = map[lost];
+      if (to && to !== location.pathname) location.replace(`${to}#${lost}`);
+    }).catch(() => {});
+  }
+
   /* —— Hero backdrop: frost over once the hero has mostly scrolled away —— */
   const backdrop = $(".site-backdrop"), hero = $("#top");
   if (backdrop && hero) {
     new IntersectionObserver(([e]) => backdrop.classList.toggle("is-frosted", !e.isIntersecting), { rootMargin: "0px 0px -55% 0px" }).observe(hero);
+  }
+
+  /* —— Cards rise in as they scroll into view (category cards, component groups) —— */
+  const rise = $$(".site-page-cards > .fh-card");
+  if (rise.length) {
+    rise.forEach((c, i) => c.style.setProperty("--_i", String(i % 3)));
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -10% 0px" });
+    rise.forEach((c) => io.observe(c));
   }
 
   /* —— Toasts —— */
@@ -138,7 +155,7 @@
   /* —— Token explorer —— */
   const rows = $("#token-rows");
   if (rows) {
-    fetch("tokens.json").then((r) => r.json()).then(({ tokens }) => {
+    fetch("/tokens.json").then((r) => r.json()).then(({ tokens }) => {
       const all = Object.entries(tokens);
       const q = $("#token-q"), count = $("#token-count");
       const render = () => {
@@ -154,7 +171,7 @@
       q.addEventListener("input", render);
       $$('input[name="tier"]').forEach((r) => r.addEventListener("change", render));
       render();
-    }).catch(() => { rows.innerHTML = `<tr><td colspan="3">Couldn't load tokens.json. <a class="fh-link" href="tokens.json">Open it directly</a>.</td></tr>`; });
+    }).catch(() => { rows.innerHTML = `<tr><td colspan="3">Couldn't load tokens.json. <a class="fh-link" href="/tokens.json">Open it directly</a>.</td></tr>`; });
   }
 
   /* —— Work with Rascode: lead dialog —— */

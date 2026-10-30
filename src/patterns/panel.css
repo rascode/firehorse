@@ -1,0 +1,81 @@
+/*
+ * Offset panel — the split layout from design/records/2026-10-29-offset-panel.
+ *
+ * A tinted column, set in from the right, that begins at an element you
+ * mark and runs to the bottom of the page: through every section below
+ * it and through the footer. Its fill against the plain canvas splits
+ * the page into two tones; its dashed edges run the full height, and
+ * section rules cross it. Content keeps its own width and runs across
+ * both tones; only what starts on the panel's edge takes an inset.
+ *
+ *   <div class="fh-page">
+ *     <header>…</header>
+ *     <main>
+ *       …
+ *       <aside data-fh-panel-start>…</aside>       where the panel begins
+ *       <section class="fh-section fh-section--ruled">
+ *         <header class="fh-section-head fh-panel-inset">…</header>   off the edge
+ *         …
+ *       </section>
+ *     </main>
+ *     <footer class="fh-footer fh-footer--tall">…</footer>
+ *     <div class="fh-panel" aria-hidden="true"></div>   last child of the page
+ *   </div>
+ *
+ * Placement: CSS anchor positioning (anchor-name on [data-fh-panel-start]);
+ * dist/firehorse.js places it where that isn't supported. With no start
+ * element the panel runs the full page height. Each .fh-page scopes its
+ * own start point, so a page can hold demo pages with panels of their own.
+ *
+ * Knobs: --fh-panel-size (width, 52rem), --fh-panel-gutter (the plain strip
+ * always left on the right on narrow screens, 3rem), --fh-panel-fill,
+ * --fh-panel-pad (the inset), --fh-footer-tail (room under a tall footer).
+ */
+
+@layer fh.patterns {
+  .fh-page {
+    --fh-panel-size: 52rem;
+    --fh-panel-gutter: 3rem;
+    /* The canvas at 62%: it veils whatever sits behind the page (art, scaffold), so the panel side reads flat and the open side keeps the art. */
+    --fh-panel-fill: color-mix(in oklab, var(--fh-color-canvas) 62%, transparent);
+    --fh-panel-pad: clamp(var(--fh-space-6), 1rem + 2.5vw, var(--fh-space-12));
+
+    /* A page inside a page (a demo) keeps its own start point. */
+    anchor-scope: --fh-panel;
+  }
+
+  [data-fh-panel-start] {
+    anchor-name: --fh-panel;
+  }
+
+  .fh-panel {
+    position: absolute;
+    z-index: -1;
+    grid-column: content;
+    inset-block: var(--fh-panel-top, 0) 0;
+    inline-size: min(var(--fh-panel-size), 100% - var(--fh-panel-gutter));
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: 0;
+    background-color: var(--fh-panel-fill);
+    pointer-events: none;
+  }
+
+  @supports (anchor-name: --fh-a) {
+    .fh-panel:not([style*="--fh-panel-top"]) {
+      inset-block-start: anchor(--fh-panel top, 0);
+    }
+  }
+
+  /* Content that starts on the panel's left edge steps off it, and stays
+   * inside the panel's width, so text never runs across the edge line. */
+  .fh-panel-inset {
+    box-sizing: border-box;
+    max-inline-size: min(var(--fh-panel-size), 100% - var(--fh-panel-gutter));
+    padding-inline: var(--fh-panel-pad);
+  }
+
+  /* A footer that takes its time: the columns, then open room to the bottom of the page. */
+  .fh-footer--tall {
+    padding-block-end: var(--fh-footer-tail, clamp(16rem, 60vh, 36rem));
+  }
+}

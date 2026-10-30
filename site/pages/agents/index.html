@@ -1,0 +1,135 @@
+<!--@meta {
+  "path": "/agents/",
+  "order": 90,
+  "name": "Agents",
+  "tone": "violet",
+  "title": "Agents · Firehorse",
+  "description": "Firehorse for agents: the agent contract, the Index, llms.txt and Schema.org structured data from your components.",
+  "headline": "Built for agents: hand over the contract, not a screenshot",
+  "lede": "Firehorse publishes the rules an agent needs: what to import, which classes exist, what never to do, and every token with its value. Point the agent at one URL and it can follow the rest.",
+  "scripts": [],
+  "icon": "bot",
+  "summary": [
+    {
+      "value": "3",
+      "label": "Agent files",
+      "blurb": "The contract, the markup and the Index."
+    },
+    {
+      "value": "{{FAMILIES_TOTAL}}",
+      "label": "Index IDs",
+      "blurb": "Every family by ID, in agent/index.md and index.json."
+    },
+    {
+      "value": "8",
+      "label": "Schema mappings",
+      "blurb": "Components that publish Schema.org JSON-LD."
+    }
+  ]
+}-->
+<!--@main-->
+    <!-- ═══════════════ AGENTS ═══════════════ -->
+    <section id="agents" class="fh-section fh-section--ruled site-anchor" style="--site-h: 760px; --site-hn: 1203px" data-tone="violet" aria-labelledby="agents-title" data-fh-label="For agents" data-fh-index="17">
+      <div class="fh-split fh-split--wide-start">
+        <figure class="fh-window site-terminal">
+          <div class="fh-window__bar"><span>prompt.md</span><span class="site-agents site-agents--sm" data-agent-menu="agents" style="margin-inline-start: auto"></span><button class="fh-button fh-button--sm fh-button--ghost" type="button" data-copy="#agent-prompt">Copy</button></div>
+          <div class="fh-window__body"><pre class="site-pre" id="agent-prompt"><code>Build this page with the Firehorse design system.
+
+Before writing markup, read:
+  https://firehorse.rascode.dev/llms.txt
+
+Rules:
+- Import @rascode/firehorse (dist/firehorse.css), then the brand theme.
+- Use only fh-* classes from agent/components.md.
+- Never hard-code colors; use --fh-color-* and data-tone.
+- No viewport media queries for layout. Put content in a
+  frame slot and let components respond to their container.
+- One filled accent button per view at most.</code></pre></div>
+        </figure>
+        <div class="site-files">
+          <a href="llms.txt"><code>llms.txt</code><em>start here</em><span>Index for language models: what Firehorse is and which files to read.</span></a>
+          <a href="agent/system.md"><code>agent/system.md</code><em>rules</em><span>The agent contract: imports, priorities, MUST and NEVER rules.</span></a>
+          <a href="agent/components.md"><code>agent/components.md</code><em>markup</em><span>Every component with its canonical markup and variants.</span></a>
+          <a href="tokens.json"><code>tokens.json</code><em>data</em><span>All {{TOKENS}} tokens with value, type, tier and group.</span></a>
+          <a href="firehorse.css"><code>firehorse.css</code><em>source</em><span>The built stylesheet, layered and readable.</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STRUCTURED DATA ═══════════════ -->
+    <section id="schema" class="fh-section fh-section--ruled site-anchor" style="--site-h: 1372px; --site-hn: 3685px" data-tone="teal" aria-labelledby="schema-title" data-fh-label="Structured data" data-fh-index="18">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="teal"><b>02</b> Structured data</p>
+          <h2 id="schema-title" class="fh-heading">Schema-ready: the page and its metadata always match</h2>
+          <p class="fh-lede">Mark a component with <code>data-schema</code> and Firehorse builds the matching Schema.org JSON-LD from what's on the screen, then checks that the two agree. Search engines and AI systems read the same facts your visitors see.</p>
+        </div>
+      </header>
+
+      <div class="fh-split">
+        <div class="site-schema-col">
+          <figure class="fh-window site-terminal">
+            <div class="fh-window__bar"><span>faq.html</span></div>
+            <div class="fh-window__body"><pre class="site-pre"><code>&lt;div class="fh-accordion" <b>data-schema="faq"</b>&gt;
+  &lt;details name="faq"&gt;
+    &lt;summary&gt;Is Firehorse free to use?&lt;/summary&gt;
+    &lt;p&gt;Yes. It's MIT licensed…&lt;/p&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre></div>
+          </figure>
+          <figure class="fh-window site-terminal">
+            <div class="fh-window__bar"><span>terminal</span><button class="fh-button fh-button--sm fh-button--ghost" type="button" data-copy="#schema-cmd" style="margin-inline-start: auto">Copy</button></div>
+            <div class="fh-window__body"><pre class="site-pre"><code><span id="schema-cmd">npx firehorse-schema dist/index.html --write</span>
+
+✓ dist/index.html: Organization, WebSite,
+  SoftwareSourceCode, FAQPage, Service
+  (wrote 4 generated nodes)</code></pre></div>
+          </figure>
+          <ul class="fh-checklist" data-tone>
+            <li>Generated from the visible content, so it can't drift</li>
+            <li>Checks required properties, prices, currencies and positions</li>
+            <li>Fails the build when the JSON-LD and the page disagree</li>
+            <li>Never invents reviews, ratings or people</li>
+          </ul>
+        </div>
+
+        <div class="site-schema-col">
+          <p class="fh-label">Firehorse FAQ · published as FAQPage</p>
+          <div class="fh-accordion" data-schema="faq">
+            <details name="fh-faq" open>
+              <summary>Is Firehorse free to use?</summary>
+              <p>Yes. It's MIT licensed, so you can use it in personal and commercial projects, change it and ship it.</p>
+            </details>
+            <details name="fh-faq">
+              <summary>Do I need JavaScript?</summary>
+              <p>No. Every component works with HTML and CSS alone. The optional firehorse.js adds the floating bar's engage timing, carousel controls, scroll spy and the aria wiring for form errors.</p>
+            </details>
+            <details name="fh-faq">
+              <summary>Which browsers does it support?</summary>
+              <p>The main build targets current browsers: Chrome 123, Firefox 128 and Safari 17.5 and newer. A compat build covers Chrome 108 and Safari 16.4 with simpler fallbacks.</p>
+            </details>
+            <details name="fh-faq">
+              <summary>Can I use it with React, Vue or Tailwind?</summary>
+              <p>Yes. Firehorse is plain CSS classes and custom properties, so it works with any framework or none, and next to Tailwind if you already use it.</p>
+            </details>
+            <details name="fh-faq">
+              <summary>How do I hand it to an AI agent?</summary>
+              <p>Point the agent at firehorse.rascode.dev/llms.txt and tell it to use only fh-* classes and --fh-* tokens. The agent contract covers the rest, including structured data.</p>
+            </details>
+            <details name="fh-faq">
+              <summary>Does it handle Schema.org structured data?</summary>
+              <p>Yes. Add data-schema to breadcrumbs, FAQs, pricing, service cards, steps, people or articles, then run npx firehorse-schema --write. It builds the JSON-LD from the page and checks that the two match.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="fh-table-wrap site-schema-map">
+        <table class="fh-table fh-table--reflow">
+          <thead><tr><th>Component</th><th>Attribute</th><th>Schema.org type</th><th>Built from</th></tr></thead>
+          <tbody>
+{{SCHEMA_ROWS}}
+          </tbody>
+        </table>
+      </div>
+    </section>

@@ -1,0 +1,252 @@
+<!--@meta {
+  "path": "/components/actions/",
+  "order": 31,
+  "parent": "/components/",
+  "name": "Actions",
+  "tone": "sky",
+  "title": "Actions · Firehorse",
+  "description": "Firehorse actions: buttons, action links, markers, breadcrumbs, eyebrow pills, chips, chip cards, cubes and cube cards.",
+  "headline": "Buttons, links and the marks people click first",
+  "lede": "Buttons, action links, markers and breadcrumbs, eyebrow pills, chips and cubes. Small parts that tell people where to go next.",
+  "scripts": [],
+  "icon": "mouse-pointer-click",
+  "summary": [
+    {
+      "value": "9",
+      "label": "Tones",
+      "blurb": "Every variant takes its color from data-tone."
+    },
+    {
+      "value": "0",
+      "label": "Scripts",
+      "blurb": "Plain HTML and CSS. Links and buttons stay native."
+    }
+  ]
+}-->
+<!--@main-->
+    <section id="actions" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Actions" aria-label="Actions">
+      <div class="fh-stack fh-stack--xl">
+
+        <div class="site-demo site-anchor" id="c-button" data-fh-id="BTN">
+          <div class="site-demo__head"><h3>Button</h3><p>Flat 3px rect, mono caps, convex fill. Primary buttons get an arrow; <code>data-tone</code> lights the top edge.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Primary<code>.fh-button</code></dt><dd>
+    <a class="fh-button" href="#c-button" data-fh-id="BTN-01" data-fh-name="Primary"><span class="fh-roll">Discuss a project</span></a></dd></div>
+  <div><dt>Tone edge<code>.fh-button · data-tone</code></dt><dd>
+    <a class="fh-button" href="#c-button" data-tone="sky" data-fh-id="BTN-02" data-fh-name="Tone edge">Tone edge</a></dd></div>
+  <div><dt>Secondary<code>--secondary</code></dt><dd>
+    <button class="fh-button fh-button--secondary" type="button" data-fh-id="BTN-03" data-fh-name="Secondary">Secondary</button></dd></div>
+  <div><dt>Outline<code>--outline</code></dt><dd>
+    <button class="fh-button fh-button--outline" type="button" data-fh-id="BTN-04" data-fh-name="Outline">Outline</button></dd></div>
+  <div><dt>Ghost<code>--ghost</code></dt><dd>
+    <button class="fh-button fh-button--ghost" type="button" data-fh-id="BTN-05" data-fh-name="Ghost">Ghost</button></dd></div>
+  <div><dt>Accent<code>--accent</code></dt><dd>
+    <button class="fh-button fh-button--accent" type="button" data-fh-id="BTN-06" data-fh-name="Accent">Accent</button></dd></div>
+  <div><dt>Busy<code>aria-busy="true"</code></dt><dd>
+    <button class="fh-button" type="button" aria-busy="true" data-fh-id="BTN-07" data-fh-name="Busy">Saving</button></dd></div>
+  <div><dt>Small, disabled<code>--sm · disabled</code></dt><dd>
+    <button class="fh-button fh-button--sm" type="button" disabled data-fh-id="BTN-08" data-fh-name="Small, disabled">Disabled</button></dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="fh-split">
+          <div class="site-demo site-anchor" id="c-action" data-fh-id="ACT">
+            <div class="site-demo__head"><h3>Action &amp; link</h3><p>Section CTAs and card actions.</p></div>
+            <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-rows">
+  <div><dt>Large</dt><dd><a class="fh-action fh-action--lg" href="#c-action">View all services</a></dd></div>
+  <div><dt>Toned</dt><dd><a class="fh-action" data-tone="teal" href="#c-action">Explore data architecture</a></dd></div>
+  <div><dt>Text link</dt><dd><a class="fh-link" href="#c-action">Read the case study</a></dd></div>
+  <div><dt>Quiet link</dt><dd><a class="fh-link fh-link--quiet" href="#c-action">Privacy policy</a></dd></div>
+</dl>
+            </div>
+          </div>
+          <div class="site-demo site-anchor" id="c-markers" data-fh-id="MRK">
+            <div class="site-demo__head"><h3>Markers</h3><p>Dots, eyebrow pills, breadcrumbs and badges.</p></div>
+            <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-rows">
+  <div><dt>Eyebrow pill</dt><dd><p class="fh-eyebrow-pill" data-tone="fuchsia" data-fh-id="MRK-01" data-fh-name="Eyebrow pill"><span class="fh-dot fh-dot--live"></span>AI services</p></dd></div>
+  <div><dt>Breadcrumb</dt><dd>
+    <nav class="fh-breadcrumb" aria-label="Breadcrumb" data-tone="teal" data-fh-id="MRK-02" data-fh-name="Breadcrumb">
+      <a class="fh-breadcrumb__back" href="#c-markers" aria-label="Back"><span class="fh-dot fh-dot--live"></span></a>
+      <ol>
+        <li><a href="#c-markers">Services</a></li>
+        <li><a href="#c-markers">Data</a></li>
+        <li><span aria-current="page">Schema design</span></li>
+      </ol>
+    </nav></dd></div>
+  <div><dt>Badges</dt><dd>
+    <div class="fh-cluster" data-fh-id="MRK-03" data-fh-name="Badges">
+      <span class="fh-badge">Required</span>
+      <span class="fh-badge" data-tone="lime">Live</span>
+      <span class="fh-badge fh-badge--solid" data-tone="amber">Beta</span>
+    </div></dd></div>
+</dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-eyebrow" data-fh-id="EYE">
+          <div class="site-demo__head"><h3>Eyebrow pill</h3><p>The Doppler pill from the top of this page, as a full component. Combine a shape, a line and any of the parts. Every variant takes the tone from <code>data-tone</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants site-variants--grouped">
+  <div><dt>Lines<code>.fh-eyebrow-pill · --etched · --dotted · --double</code></dt><dd>
+    <p class="fh-eyebrow-pill" data-tone="sky" data-fh-id="EYE-02"><span class="fh-dot fh-dot--live"></span>Solid line</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh-id="EYE-03"><span class="fh-dot fh-dot--live"></span>Etched line</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh-id="EYE-04"><span class="fh-dot"></span>Dotted line</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh-id="EYE-05"><span class="fh-dot fh-dot--square"></span>Double line</p></dd></div>
+  <div><dt>Shapes<code>--rounded · --sharp · --oval · --tab</code></dt><dd>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="orange" data-fh-id="EYE-06"><span class="fh-dot"></span>Rounded</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--sharp fh-eyebrow-pill--etched" data-tone="rose" data-fh-id="EYE-07"><span class="fh-dot fh-dot--diamond"></span>Sharp</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--oval fh-eyebrow-pill--etched" data-tone="fuchsia" data-fh-id="EYE-08"><span class="fh-dot fh-dot--live"></span>Oval</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--tab fh-eyebrow-pill--etched" data-tone="sky" data-fh-id="EYE-16"><span class="fh-dot"></span>Tab</p></dd></div>
+  <div><dt>Fills<code>--tone · --solid · --gradient · --glass · --ghost</code></dt><dd>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh-id="EYE-09"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh-id="EYE-10"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh-id="EYE-11"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh-id="EYE-12"><span class="fh-dot fh-dot--ring"></span>Glass</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh-id="EYE-15"><span class="fh-dot fh-dot--live"></span>Ghost</p></dd></div>
+  <div><dt>Edges<code>--bracket · --underline</code></dt><dd>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--bracket" data-tone="amber" data-fh-id="EYE-13"><span class="fh-dot fh-dot--bar"></span>Bracketed</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--underline" data-tone="orange" data-fh-id="EYE-14"><span class="fh-dot"></span>Underline</p></dd></div>
+  <div><dt>Parts<code>__index · __seg · __count</code></dt><dd>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh-id="EYE-17"><span class="fh-eyebrow-pill__index">02</span>Indexed section</p>
+    <p class="fh-eyebrow-pill" data-tone="orange" data-fh-id="EYE-18"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose" data-fh-id="EYE-19"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p></dd></div>
+  <div><dt>Sentences<code>--sentence · __action · .fh-kbd</code></dt><dd>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="live" data-fh-id="EYE-01"><span class="fh-dot fh-dot--live"></span><span>Now accepting proposals · <strong>Book a call</strong></span></p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="sky" data-fh-id="EYE-20"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/reginald.webp" alt=""></span><span>Reginald is online</span><a class="fh-eyebrow-pill__action" href="#c-eyebrow">Talk</a></p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sentence" data-tone="neutral" data-fh-id="EYE-21"><span>Search the docs</span><kbd class="fh-kbd">⌘K</kbd></p></dd></div>
+  <div><dt>Sizes<code>--sm · --lg</code></dt><dd>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--sm" data-tone="lime" data-fh-id="EYE-22"><span class="fh-dot"></span>Small</p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--etched" data-tone="accent" data-fh-id="EYE-23"><span class="fh-dot fh-dot--live"></span>Large</p></dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-chips" data-fh-id="CHP">
+          <div class="site-demo__head"><h3>Chips</h3><p>Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from <code>data-tone</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Filter<code>.fh-chip · aria-current</code></dt><dd>
+    <div class="fh-chips fh-chips--wrap" data-fh-id="CHP-01" data-fh-name="Filter">
+      <a class="fh-chip" data-tone="sky" href="#c-chips" aria-current="true">Agents</a>
+      <a class="fh-chip" data-tone="teal" href="#c-chips">Data</a>
+      <a class="fh-chip" data-tone="orange" href="#c-chips">Automation</a>
+      <a class="fh-chip" data-tone="fuchsia" href="#c-chips">AI</a>
+    </div></dd></div>
+  <div><dt>Choice<code>.fh-chips--track · radio</code></dt><dd>
+    <div class="fh-chips fh-chips--track" role="group" aria-label="Contact task" data-fh-id="CHP-02" data-fh-name="Choice">
+      <label class="fh-chip" data-tone="lime"><input type="radio" name="task" checked> Start a project</label>
+      <label class="fh-chip" data-tone="sky"><input type="radio" name="task"> Book a call</label>
+      <label class="fh-chip" data-tone="rose"><input type="radio" name="task"> Support</label>
+    </div></dd></div>
+  <div><dt>Fill<code>--solid · --tone · --plain</code></dt><dd>
+    <div class="fh-chips fh-chips--wrap" data-fh-id="CHP-03" data-fh-name="Fill">
+      <span class="fh-chip fh-chip--solid" data-tone="sky"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i>Solid tone</span>
+      <span class="fh-chip fh-chip--tone" data-tone="orange"><i class="fh-icon fh-icon--workflow" aria-hidden="true"></i>Soft tone</span>
+      <span class="fh-chip fh-chip--plain">Plain</span>
+    </div></dd></div>
+  <div><dt>Tabs<code>.fh-chip--underline</code></dt><dd>
+    <div class="fh-chips fh-chips--wrap" data-fh-id="CHP-04" data-fh-name="Tabs">
+      <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips" aria-current="true">Overview</a>
+      <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips">Pricing</a>
+      <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips">FAQ</a>
+    </div></dd></div>
+  <div><dt>Indexed<code>.fh-chip--indexed · __index</code></dt><dd>
+    <div class="fh-chips fh-chips--wrap" data-fh-id="CHP-05" data-fh-name="Indexed">
+      <span class="fh-chip fh-chip--indexed" data-tone="violet"><b class="fh-chip__index">01</b>Foundations</span>
+      <span class="fh-chip fh-chip--indexed" data-tone="amber"><b class="fh-chip__index">03</b>Components</span>
+      <span class="fh-chip fh-chip--indexed" data-tone="sky"><b class="fh-chip__index">04</b>Data</span>
+    </div></dd></div>
+  <div><dt>Counted<code>.fh-chips--indexed</code></dt><dd>
+    <div class="fh-chips fh-chips--indexed fh-chips--wrap" aria-label="Open roles" data-fh-id="CHP-06" data-fh-name="Counted">
+      <a class="fh-chip fh-chip--tone" data-tone="fuchsia" href="#services">Design engineer</a>
+      <a class="fh-chip fh-chip--tone" data-tone="sky" href="#services">AI agent builder</a>
+      <a class="fh-chip fh-chip--tone" data-tone="orange" href="#services">Automation lead</a>
+    </div></dd></div>
+  <div><dt>Removable<code>.fh-chip__remove</code></dt><dd>
+    <div class="fh-chips fh-chips--wrap" data-fh-id="CHP-07" data-fh-name="Removable">
+      <span class="fh-chip fh-chip--plain">Website <button class="fh-chip__remove" type="button" aria-label="Remove Website"></button></span>
+      <span class="fh-chip fh-chip--plain">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span>
+    </div></dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-chip-cards" data-fh-id="CHC">
+          <div class="site-demo__head"><h3>Chip cards</h3><p>Compact cards led by a tone block: categories, people, files.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Category<code>.fh-chip-card · __block</code></dt><dd>
+    <a class="fh-chip-card" data-tone="teal" href="#c-chip-cards" data-fh-id="CHC-01" data-fh-name="Data architecture"><span class="fh-chip-card__block">DA</span><span class="fh-chip-card__text"><b>Data architecture</b><small>4 services</small></span></a></dd></div>
+  <div><dt>Category, other tone<code>data-tone</code></dt><dd>
+    <a class="fh-chip-card" data-tone="orange" href="#c-chip-cards" data-fh-id="CHC-02" data-fh-name="Automation"><span class="fh-chip-card__block">AU</span><span class="fh-chip-card__text"><b>Automation</b><small>6 services</small></span></a></dd></div>
+  <div><dt>Person<code>__block img</code></dt><dd>
+    <a class="fh-chip-card" data-tone="sky" href="#c-chip-cards" data-fh-id="CHC-03" data-fh-name="Maya"><span class="fh-chip-card__block"><img src="img/avatars/maya.webp" alt=""></span><span class="fh-chip-card__text"><b>Maya</b><small>Dental agent</small></span></a></dd></div>
+  <div><dt>File<code>__text small</code></dt><dd>
+    <a class="fh-chip-card" data-tone="rose" href="#c-chip-cards" data-fh-id="CHC-04" data-fh-name="Scope-of-work.pdf"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a></dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-cubes" data-fh-id="CUB">
+          <div class="site-demo__head"><h3>Cubes</h3><p>Tone blocks that carry one value. In a row they walk the hue wheel by 28°, so three facts read as one family.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Facts<code>.fh-cubes > li > .fh-cube</code></dt><dd>
+    <ul class="fh-cubes" data-tone="teal" data-fh-id="CUB-01" data-fh-name="Facts">
+      <li><b class="fh-cube">$1,250</b> fixed</li>
+      <li><b class="fh-cube">14</b> days</li>
+      <li><b class="fh-cube">4</b> deliverables</li>
+    </ul></dd></div>
+  <div><dt>Large<code>.fh-cube--lg</code></dt><dd>
+    <ul class="fh-cubes" data-tone="fuchsia" data-fh-id="CUB-02" data-fh-name="Large">
+      <li><b class="fh-cube fh-cube--lg">98</b> score</li>
+      <li><b class="fh-cube fh-cube--lg">A+</b> grade</li>
+      <li><b class="fh-cube fh-cube--lg">12</b> fixes</li>
+    </ul></dd></div>
+  <div><dt>Icons<code>.fh-cube--sm · .fh-icon</code></dt><dd>
+    <ul class="fh-cubes" data-tone="sky" data-fh-id="CUB-03" data-fh-name="Icons">
+      <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--clock" aria-hidden="true"></i></b> 30 min</li>
+      <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--video" aria-hidden="true"></i></b> Video call</li>
+      <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></b> This week</li>
+    </ul></dd></div>
+  <div><dt>Outline<code>.fh-cube--outline</code></dt><dd>
+    <ul class="fh-cubes" data-tone="amber" data-fh-id="CUB-04" data-fh-name="Outline">
+      <li><b class="fh-cube fh-cube--outline">v1.1</b> release</li>
+      <li><b class="fh-cube fh-cube--outline">MIT</b> license</li>
+      <li><b class="fh-cube fh-cube--outline">183</b> icons</li>
+    </ul></dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-cube-cards" data-fh-id="CUC">
+          <div class="site-demo__head"><h3>Cube cards</h3><p>Cards led by a cube: the value is the headline, the text says what it measures.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Row<code>.fh-cube-cards > .fh-cube-card</code></dt><dd>
+    <div class="fh-cube-cards" data-tone="lime" style="--fh-cube-card-min: 12rem" data-fh-id="CUC-01" data-fh-name="Row">
+      <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">14</b><div class="fh-cube-card__text"><b>Days</b><small>Kickoff to handoff</small></div></article>
+      <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">4</b><div class="fh-cube-card__text"><b>Deliverables</b><small>Docs you keep</small></div></article>
+      <a class="fh-cube-card" href="#c-cube-cards"><b class="fh-cube fh-cube--xl"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></b><div class="fh-cube-card__text"><b>Book a call</b><small>30 min, this week</small></div></a>
+    </div></dd></div>
+  <div><dt>Trend<code>.fh-cube-card__trend · data-dir</code></dt><dd>
+    <div class="fh-cube-cards" data-tone="orange" style="--fh-cube-card-min: 12rem" data-fh-id="CUC-02" data-fh-name="Trend">
+      <article class="fh-cube-card"><b class="fh-cube fh-cube--lg">$184k</b><div class="fh-cube-card__text"><b>Pipeline</b><small>Open deals · sample</small></div><span class="fh-cube-card__trend" data-dir="up">▲ 12%</span></article>
+      <article class="fh-cube-card"><b class="fh-cube fh-cube--lg">2.4h</b><div class="fh-cube-card__text"><b>First reply</b><small>Median · sample</small></div><span class="fh-cube-card__trend" data-dir="down">▼ 8%</span></article>
+    </div></dd></div>
+  <div><dt>Stacked<code>.fh-cube-card--stack</code></dt><dd>
+    <div class="fh-cube-cards" data-tone="violet" style="--fh-cube-card-min: 14rem" data-fh-id="CUC-03" data-fh-name="Stacked">
+      <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">$1,695</b><div class="fh-cube-card__text"><b>AI agent</b><small>Per month, after setup</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">24/7</b> coverage</li><li><b class="fh-cube fh-cube--sm">3</b> channels</li></ul></article>
+      <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">1,284</b><div class="fh-cube-card__text"><b>Inquiries</b><small>Last 30 days · sample</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">+12%</b> vs last</li><li><b class="fh-cube fh-cube--sm">64%</b> booked</li></ul></article>
+    </div></dd></div>
+</dl>
+          </div>
+        </div>
+
+      </div>
+    </section>

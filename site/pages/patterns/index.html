@@ -1,0 +1,257 @@
+<!--@meta {
+  "path": "/patterns/",
+  "order": 25,
+  "name": "Patterns",
+  "tone": "orange",
+  "title": "Patterns · Firehorse",
+  "description": "Firehorse patterns: page layouts with Index IDs, live demos, anatomy, rules and full markup. Fender, Cinch, the offset panel, the etched split and the CTA band.",
+  "headline": "Patterns, <em>the tree under every saddle</em>",
+  "lede": "Every saddle is built on a tree: the rigid frame inside it that sets how it fits the horse. The saddler covers it in your leather, your tooling and your rigging, and the tree stays true. Firehorse is the horse; themes are the saddles you swap. These are the trees: page layouts with an ID, a live demo, their anatomy, the rules that keep the fit, and the markup in one piece. Each is named for a part of the saddle.",
+  "scripts": [],
+  "icon": "layers",
+  "panel": true,
+  "summary": [
+    { "value": "∞", "label": "Configuration options", "blurb": "Any theme, tone and content. The tree stays." }
+  ],
+  "aliases": ["patterns", "offset-panel"]
+}-->
+<!--@main-->
+    <!-- ═══════════════ PAGE PATTERNS ═══════════════ -->
+    <section id="page-patterns" class="fh-section fh-section--ruled site-anchor" data-tone="orange" aria-labelledby="page-patterns-title" data-fh-label="Page patterns" data-fh-index="01">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="orange"><b>01</b> Page patterns</p>
+          <h2 id="page-patterns-title" class="fh-heading">Whole compositions, taken from pages that work</h2>
+          <p class="fh-lede">Each one was recorded from a real page before it was rebuilt, so the proportions are measured, not remembered. Keep what the rules say to keep; change the rest.</p>
+        </div>
+      </header>
+
+      <div class="fh-stack fh-stack--xl">
+
+        <div class="site-demo" id="fender" data-fh-id="FND" data-fh-name="Fender">
+          <div class="site-demo__head"><h3>Fender</h3><p>A long page that changes gear partway. A note closes the first chapter and opens a tinted band that hangs down the rest of the page, the way a fender hangs down the side of a saddle: through the next section, under its full-width content and through a tall footer to the bottom.</p></div>
+          <div class="site-pattern">
+            <figure class="site-anatomy" aria-label="Fender anatomy">
+              <svg viewBox="0 0 320 236" role="img" aria-labelledby="fnd-svg-t"><title id="fnd-svg-t">A page with a tinted band starting at a note and running to the bottom, crossed by a section rule, with an inset heading, a wide gallery and a tall footer</title>
+                <rect class="a-page" x="4" y="4" width="312" height="228"/>
+                <g class="a-block"><rect x="20" y="18" width="84" height="40"/><rect x="118" y="18" width="84" height="40"/><rect x="216" y="18" width="84" height="40"/></g>
+                <rect class="a-panel" x="20" y="72" width="176" height="160"/>
+                <g class="a-text"><rect x="30" y="80" width="70" height="4"/><rect x="30" y="88" width="120" height="3"/></g>
+                <line class="a-rule" x1="4" y1="104" x2="316" y2="104"/>
+                <g class="a-text"><rect x="36" y="114" width="40" height="3"/><rect x="36" y="121" width="110" height="7"/><rect x="36" y="132" width="96" height="3"/></g>
+                <g class="a-block"><rect x="20" y="146" width="136" height="30"/><rect x="164" y="146" width="136" height="30"/></g>
+                <line class="a-rule" x1="20" y1="196" x2="300" y2="196"/>
+                <g class="a-text"><rect x="28" y="203" width="30" height="3"/><rect x="98" y="203" width="30" height="3"/><rect x="168" y="203" width="30" height="3"/><rect x="238" y="203" width="30" height="3"/></g>
+                <g class="a-mark"><circle cx="198" cy="72" r="7"/><text x="198" y="75">1</text><circle cx="306" cy="104" r="7"/><text x="306" y="107">2</text><circle cx="152" cy="124" r="7"/><text x="152" y="127">3</text><circle cx="306" cy="161" r="7"/><text x="306" y="164">4</text><circle cx="198" cy="224" r="7"/><text x="198" y="227">5</text></g>
+              </svg>
+              <figcaption>
+                <ol class="site-anatomy__legend">
+                  <li>A note ends the first chapter and opens the panel: <code>data-fh-panel-start</code>.</li>
+                  <li>The next section's rule crosses the panel.</li>
+                  <li>That section's head steps onto it: <code>.fh-panel-inset</code>.</li>
+                  <li>Wide content keeps its width and runs across both tones.</li>
+                  <li>A tall footer: a large gap above its columns, open room below, the panel's edge running to the bottom.</li>
+                </ol>
+              </figcaption>
+            </figure>
+            <dl class="fh-dl site-spec" data-spec>
+              <div><dt>Use it for</dt><dd>Docs, product and service pages that move from showing to explaining: a gallery, then a second chapter; a feature tour, then pricing.</dd></div>
+              <div><dt>Built from</dt><dd><a class="fh-link" href="#offset-panel"><code>PNL</code> offset panel</a>, ruled sections, <code>.fh-footer--tall</code>. On a docs page, <code>"panel": true</code> in the page meta.</dd></div>
+              <div><dt>Keep</dt><dd>One panel per page. Width 52rem from the content edge. The fill is the canvas at 62%, so art behind the page shows only on the open side. Dashed edges, no bottom edge. Nothing sits under the edge line: content is either inset inside the panel or full width across it.</dd></div>
+              <div><dt>Change freely</dt><dd>Where it starts. The theme, tones and content. The footer's tail (<code>--fh-footer-tail</code>). The panel's width (<code>--fh-panel-size</code>), if it still leaves a clear open side.</dd></div>
+              <div><dt>Phones</dt><dd>The panel stops 3rem short of the right edge (<code>--fh-panel-gutter</code>), so the split still shows; inset content stays inside it.</dd></div>
+              <div><dt>Recorded</dt><dd>Media page, 2026-10-29. <code>design/records/2026-10-29-offset-panel</code></dd></div>
+            </dl>
+          </div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-page site-panel-demo">
+  <main class="fh-main">
+    <section class="fh-section">
+      <div class="fh-grid" data-cols="3" style="--fh-grid-min: 6rem">
+        <div class="fh-card fh-card--solid">Example</div>
+        <div class="fh-card fh-card--solid">Example</div>
+        <div class="fh-card fh-card--solid">Example</div>
+      </div>
+      <aside class="site-panel-demo__start" data-fh-panel-start>
+        <p class="fh-label">Closing note</p>
+        <p class="fh-small fh-muted">Ends the first chapter and opens the panel.</p>
+      </aside>
+    </section>
+    <section class="fh-section fh-section--ruled">
+      <header class="fh-section-head fh-panel-inset">
+        <div><p class="site-chapter" data-tone="violet"><b>02</b> Next chapter</p><h3 class="fh-subheading">Stepped onto the panel</h3></div>
+      </header>
+      <div class="fh-grid" data-cols="2" style="--fh-grid-min: 8rem">
+        <div class="fh-card">Wide content runs across both tones</div>
+        <div class="fh-card">and keeps its own width</div>
+      </div>
+    </section>
+  </main>
+  <footer class="fh-footer fh-footer--tall">
+    <nav class="fh-footer__columns" aria-label="Sample footer">
+      <div class="fh-footer__column" data-tone="teal"><h2>Docs</h2><ul><li><a href="#fender">Patterns</a></li></ul></div>
+      <div class="fh-footer__column" data-tone="violet"><h2>Agents</h2><ul><li><a href="#fender">Index</a></li></ul></div>
+      <div class="fh-footer__column" data-tone="accent"><h2>Studio</h2><ul><li><a href="#fender">Contact</a></li></ul></div>
+    </nav>
+  </footer>
+  <div class="fh-panel" aria-hidden="true"></div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo" id="cinch" data-fh-id="CIN" data-fh-name="Cinch">
+          <div class="site-demo__head"><h3>Cinch</h3><p>A page's opening argument, right under its sub-nav: the claim on the left, the substance on the right, held together by one line the way a cinch holds both sides of a saddle. Two panes, two tones, one number to end on.</p></div>
+          <div class="site-pattern">
+            <figure class="site-anatomy" aria-label="Cinch anatomy">
+              <svg viewBox="0 0 320 150" role="img" aria-labelledby="cin-svg-t"><title id="cin-svg-t">Two equal panes edge to edge, joined by a dashed seam, a pill and heading on the left, a pill, lede and bold fact on the right</title>
+                <line class="a-rule" x1="0" y1="14" x2="320" y2="14"/><line class="a-rule" x1="0" y1="136" x2="320" y2="136"/><line class="a-rule" x1="160" y1="14" x2="160" y2="136"/>
+                <g class="a-cross"><path d="M156 14h8M160 10v8M156 136h8M160 132v8"/></g>
+                <g class="a-pill a-pill--a"><rect x="20" y="34" width="44" height="10" rx="5"/></g>
+                <g class="a-text"><rect x="20" y="54" width="120" height="9"/><rect x="20" y="67" width="112" height="9"/><rect x="20" y="80" width="96" height="9"/></g>
+                <g class="a-pill a-pill--b"><rect x="174" y="34" width="44" height="10" rx="5"/></g>
+                <g class="a-text"><rect x="174" y="54" width="124" height="5"/><rect x="174" y="63" width="118" height="5"/><rect x="174" y="72" width="80" height="5"/><rect x="174" y="88" width="60" height="4"/></g>
+                <rect class="a-num" x="236" y="87" width="26" height="6"/>
+                <g class="a-mark"><circle cx="12" cy="58" r="7"/><text x="12" y="61">1</text><circle cx="306" cy="58" r="7"/><text x="306" y="61">2</text><circle cx="160" cy="118" r="7"/><text x="160" y="121">3</text><circle cx="272" cy="90" r="7"/><text x="272" y="93">4</text></g>
+              </svg>
+              <figcaption>
+                <ol class="site-anatomy__legend">
+                  <li>The claim: a pill in one tone, then one <code>fh-heading</code>, four lines at most.</li>
+                  <li>The substance: a pill in a second tone, an <code>fh-lede</code> that explains it.</li>
+                  <li>The cinch: one dashed line between two equal panes, rules above and below, crosses at the joints.</li>
+                  <li>One muted fact that ends on a bold number.</li>
+                </ol>
+              </figcaption>
+            </figure>
+            <dl class="fh-dl site-spec" data-spec>
+              <div><dt>Use it for</dt><dd>The top of a service, product or assessment page, under the sub-nav: why it matters, and what you get.</dd></div>
+              <div><dt>Built from</dt><dd><a class="fh-link" href="#etched-split"><code>ESP</code> etched split</a> with <code>--roomy</code>, eyebrow pills, <code>fh-heading</code>, <code>fh-lede</code>. In a flush section, full bleed.</dd></div>
+              <div><dt>Keep</dt><dd>Full bleed, split exactly in half. Copy lines up with the content edge (the panes' outer padding is the page margin). Each pane gets the full section rhythm top and bottom. Two different tones. Claim on the left, facts on the right. One number.</dd></div>
+              <div><dt>Change freely</dt><dd>The words, the tones, the fact. A checklist on the right instead of the lede, as long as one fact still closes it.</dd></div>
+              <div><dt>Phones</dt><dd>The panes stack; the line becomes a dashed rule between them.</dd></div>
+              <div><dt>Recorded</dt><dd>rascode.dev, AI Visibility Audit, 2026-10-29. <code>design/records/2026-10-29-cinch</code></dd></div>
+            </dl>
+          </div>
+          <div class="site-demo__stage site-demo__stage--flush" data-demo>
+<section class="fh-section fh-section--flush" aria-labelledby="cinch-demo-heading">
+  <div class="fh-etched-split fh-etched-split--roomy fh-bleed">
+    <div class="fh-etched-split__pane fh-crosses">
+      <div class="fh-stack">
+        <p class="fh-eyebrow-pill" data-tone="rose"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>Why it matters</span></p>
+        <h2 id="cinch-demo-heading" class="fh-heading">A design system that ships the layouts, not only the parts.</h2>
+      </div>
+    </div>
+    <div class="fh-etched-split__pane fh-crosses">
+      <div class="fh-stack">
+        <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The pattern</span></p>
+        <p class="fh-lede">Every pattern has an ID, a live demo and the rules that keep its fit, so a person or an agent can cut it again in any theme.</p>
+        <p class="fh-body fh-muted">Patterns at launch: <strong>2</strong>, plus 3 building blocks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+          </div>
+        </div>
+
+        <aside class="site-media__export site-patterns__note" data-fh-panel-start>
+          <p class="fh-label">Reading a pattern</p>
+          <p class="fh-body">Every pattern lists what it's <b>built from</b>, what to <b>keep</b> (that's the tree), what to <b>change freely</b> (that's the leather, the tooling and the rigging), and how it behaves on <b>phones</b>. Agents get the same spec in <a class="fh-link" href="agent/patterns.md">agent/patterns.md</a>: name a pattern by its ID and they follow it. This page is a Fender itself: the panel opens here.</p>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ BUILDING BLOCKS ═══════════════ -->
+    <section id="building-blocks" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="blocks-title" data-fh-label="Building blocks" data-fh-index="02">
+      <header class="fh-section-head fh-panel-inset">
+        <div>
+          <p class="site-chapter" data-tone="lime"><b>02</b> Building blocks</p>
+          <h2 id="blocks-title" class="fh-heading">The pieces patterns are cut from</h2>
+          <p class="fh-lede">Section-sized layouts you can use on their own. Patterns combine them with the frame and fix their proportions.</p>
+        </div>
+      </header>
+
+      <div class="fh-stack fh-stack--xl">
+        <div class="site-demo" id="offset-panel" data-fh-id="PNL">
+          <div class="site-demo__head"><h3>Offset panel</h3><p>A tinted column that begins where you mark it and runs to the bottom of the page, through every section below and the footer. Its fill against the open canvas splits the page in two tones; its dashed edges run the full height. Content stepping onto it takes <code>.fh-panel-inset</code>. Fender is built on it.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-page site-panel-demo">
+  <main class="fh-main">
+    <section class="fh-section">
+      <p class="fh-label">Section</p>
+      <aside class="site-panel-demo__start" data-fh-panel-start>
+        <p class="fh-label">The panel starts here</p>
+        <p class="fh-small fh-muted">data-fh-panel-start on any element.</p>
+      </aside>
+    </section>
+    <section class="fh-section fh-section--ruled">
+      <header class="fh-section-head fh-panel-inset">
+        <div><h3 class="fh-subheading">Next section</h3><p class="fh-small fh-muted">On the panel, stepped off its edge.</p></div>
+      </header>
+    </section>
+  </main>
+  <footer class="fh-footer fh-footer--tall">
+    <nav class="fh-footer__columns" aria-label="Sample footer">
+      <div class="fh-footer__column" data-tone="teal"><h2>Docs</h2><ul><li><a href="#offset-panel">Layout</a></li></ul></div>
+      <div class="fh-footer__column" data-tone="violet"><h2>Agents</h2><ul><li><a href="#offset-panel">Index</a></li></ul></div>
+    </nav>
+  </footer>
+  <div class="fh-panel" aria-hidden="true"></div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo" id="etched-split" data-fh-id="ESP">
+          <div class="site-demo__head"><h3>Etched split</h3><p>A full-bleed pair that breaks out of the content column while its copy still lines up with the content edge on both sides. Stacks when the page is narrow. <code>--roomy</code> gives each pane the full section rhythm. Cinch is built on it.</p></div>
+          <div class="site-demo__stage site-demo__stage--flush" data-demo>
+<div class="fh-etched-split fh-bleed">
+  <div class="fh-etched-split__pane fh-crosses">
+    <div class="fh-stack fh-stack--lg">
+      <p class="fh-eyebrow-pill" data-tone="rose"><span class="fh-dot fh-dot--live"></span>Why it matters</p>
+      <h3 class="fh-heading">Most systems fail at the seams, not the center</h3>
+      <p class="fh-lede">Each tool works on its own. The cost shows up where data crosses from one to the next: re-keyed orders, stale reports, follow-ups nobody owns.</p>
+    </div>
+  </div>
+  <div class="fh-etched-split__pane fh-crosses">
+    <div class="fh-stack fh-stack--lg">
+      <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live"></span>The approach</p>
+      <ul class="fh-checklist" data-tone="orange">
+        <li>Map every hand-off between systems</li>
+        <li>Fix the model before adding automation</li>
+        <li>Instrument it so problems surface first</li>
+      </ul>
+    </div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo" id="cta-band" data-fh-id="CTB">
+          <div class="site-demo__head"><h3>CTA band</h3><p>The closing ask. A display-size title and the actions on the left; the proof on the right behind a dashed seam: what it costs and takes, who you'll talk to, one line of fine print. A short tone bar rides the top edge. Stacks when the slot is narrow; label, heading, lede and actions on their own still make the simple band.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-cta-band fh-crosses" data-tone="accent">
+  <div class="fh-cta-band__main">
+    <p class="fh-eyebrow-pill" data-tone="live"><span class="fh-dot fh-dot--live" aria-hidden="true"></span>Booking November</p>
+    <h2 class="fh-cta-band__title">Ready when <em>the path is clear.</em></h2>
+    <p class="fh-lede">Two weeks from kickoff to a site your team can run. Fixed price, no retainer, and everything we build is yours.</p>
+    <div class="fh-hero__actions">
+      <a class="fh-button" href="#cta-band">Book a call</a>
+      <a class="fh-button fh-button--secondary" href="#cta-band">See pricing</a>
+    </div>
+  </div>
+  <aside class="fh-cta-band__aside" aria-label="What to expect">
+    <ul class="fh-cubes">
+      <li><b class="fh-cube fh-cube--lg">$1,250</b> fixed</li>
+      <li><b class="fh-cube fh-cube--lg">14</b> days</li>
+      <li><b class="fh-cube fh-cube--lg">4</b> deliverables</li>
+    </ul>
+    <div class="fh-cta-band__people">
+      <div class="fh-avatars" role="group" aria-label="Your team"><span class="fh-avatar" data-face><img src="img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar" data-face><img src="img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar" data-face><img src="img/avatars/maya.webp" alt="Maya"></span></div>
+      <span>Talk to <b>Ava, Cole or Maya</b>. Replies within a day.</span>
+    </div>
+    <p class="fh-cta-band__fine">30-minute call · No prep needed</p>
+  </aside>
+</div>
+          </div>
+        </div>
+      </div>
+    </section>

@@ -657,6 +657,20 @@ ready(() => {
     });
   }
 
+  /* —— 14. Offset panel ——
+   * Placed by CSS anchor positioning where it's supported; here, measured. */
+  if (!CSS.supports("anchor-name: --fh-a")) {
+    for (const panel of document.querySelectorAll(".fh-panel")) {
+      const page = panel.parentElement;
+      const start = [...(page?.querySelectorAll("[data-fh-panel-start]") ?? [])].find((el) => el.closest(".fh-page") === page);
+      if (!start) continue;
+      const place = () =>
+        panel.style.setProperty("--fh-panel-top", `${start.getBoundingClientRect().top - page.getBoundingClientRect().top}px`);
+      place();
+      new ResizeObserver(place).observe(page);
+    }
+  }
+
   /* —— 2 & 5. Tone follow + scroll spy —— */
   const spyLinks = [...document.querySelectorAll('.fh-dock .fh-chips a[href^="#"], .fh-toc a[href^="#"], [data-spy] a[href^="#"]')];
   const followers = [...document.querySelectorAll(".fh-dock[data-follow]")];
