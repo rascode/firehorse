@@ -6,7 +6,8 @@ Components size themselves to the box they're in, not the screen.
 [firehorse.rascode.dev](https://firehorse.rascode.dev) · [Agent contract](agent/system.md) · [Component markup](agent/components.md) · [Design library](https://design.rascode.dev)
 
 ```
-npm i @rascode/firehorse
+npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz
+# installs as @rascode/firehorse; npm registry release to follow
 ```
 
 Firehorse is the system behind [rascode.dev](https://rascode.dev), extracted from production and rebuilt as a standalone package:

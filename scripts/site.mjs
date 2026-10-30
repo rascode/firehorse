@@ -88,7 +88,7 @@ const llms = `# Firehorse
 
 > Firehorse (v${pkg.version}, MIT) is a dark-first, container-native CSS design system by Rascode. Components respond to the container they sit in, not the viewport. It uses cascade layers, light-dark() schemes, data-tone category colors and native HTML (details, dialog, popover). The core needs no JavaScript; optional modules (firehorse.js, datatable.js, audio.js) add behavior.
 
-Use it by linking ${base}/firehorse.css (or \`npm i ${pkg.name}\`), then writing HTML with the fh-* classes documented below. Read the agent contract before generating markup.
+Use it by linking ${base}/firehorse.css (or \`npm i ${base}/npm/firehorse-${pkg.version}.tgz\`; installs as ${pkg.name}), then writing HTML with the fh-* classes documented below. Read the agent contract before generating markup.
 
 ## Agent files
 

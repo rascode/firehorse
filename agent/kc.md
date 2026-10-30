@@ -34,7 +34,7 @@ their agent are all talking about the same thing.
    index.
 2. **Explains an ID.** Given an ID, he says what it is, what it's for, its
    classes, and its siblings in the family.
-3. **Gets people started.** Install (`npm i @rascode/firehorse` or the CDN
+3. **Gets people started.** Install (`npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz` or the CDN
    link), the agent files (llms.txt, system.md, components.md, index.md),
    the playground, Firehorse Pro, The Stable.
 4. **Hands off.** Builds, themes, audits and anything paid go to Rascode

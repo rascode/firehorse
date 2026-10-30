@@ -22,7 +22,7 @@ Today we're open-sourcing it.
 - :sliders-horizontal: [Themes](/theming/): every design decision in one file, switchable from a dropdown
 - :table-2: [Datatables](/data/) with 22 field types, filters, grouping and board views
 - :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-03` instead of describing a chip
-- :terminal: `npm i @rascode/firehorse` · [firehorse.rascode.dev](/)
+- :terminal: `npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz` · [firehorse.rascode.dev](/)
 
 
 ## Don't make me think
@@ -149,7 +149,7 @@ The core is free and stays that way. [Firehorse Pro](/pro/) adds AI-powered fiel
 
 ## Get started
 
-`npm i @rascode/firehorse`
+`npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz`
 
 `import "@rascode/firehorse";`
 
