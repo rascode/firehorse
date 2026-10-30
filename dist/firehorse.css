@@ -3856,7 +3856,7 @@
     min-block-size: var(--_ctl);
     padding: 0 var(--fh-space-2);
     border: var(--fh-border-thin) solid transparent;
-    border-radius: var(--fh-radius-sm);
+    border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     color: var(--fh-color-text-muted);
     font: inherit;
     font-size: var(--fh-text-small);
@@ -6036,9 +6036,9 @@
     & .fh-dock__actions .fh-button--outline {
       --_bg: var(--fh-color-primary);
       --_fg: var(--fh-color-on-primary);
-      --_shadow: var(--fh-shadow-convex);
-      --_shadow-hover: var(--fh-shadow-convex-hover);
-      --_shadow-active: var(--fh-shadow-convex-active);
+      --_shadow: var(--fh-button-shadow, none);
+      --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+      --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
       transition-delay: .35s;
     }
   }
@@ -6060,9 +6060,9 @@
     .fh-dock__actions .fh-button--outline {
       --_bg: var(--fh-color-primary);
       --_fg: var(--fh-color-on-primary);
-      --_shadow: var(--fh-shadow-convex);
-      --_shadow-hover: var(--fh-shadow-convex-hover);
-      --_shadow-active: var(--fh-shadow-convex-active);
+      --_shadow: var(--fh-button-shadow, none);
+      --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+      --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
       transition-delay: .35s;
     }
 
@@ -9549,7 +9549,7 @@
       align-items: center;
       gap: var(--fh-space-2);
       border: var(--fh-border-thin) dashed var(--fh-color-etch);
-      border-radius: var(--fh-radius-sm);
+      border-radius: var(--fh-button-radius, var(--fh-radius-sm));
       background-color: var(--fh-color-surface-raised);
       min-block-size: 2.75rem;
       color: var(--fh-color-text);
@@ -10113,7 +10113,7 @@
     min-inline-size: 2rem;
     padding-inline: var(--fh-space-2);
     border: var(--fh-border-thin) dashed transparent;
-    border-radius: var(--fh-radius-sm);
+    border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);

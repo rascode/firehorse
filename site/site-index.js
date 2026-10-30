@@ -80,6 +80,12 @@ async function copyEntry(e) {
 const tagHtml = (e, extra = "") => `<button class="site-id${extra}" type="button" data-copy-id="${e.id}" title="Copy ${e.id}: ${esc(e.name)}, with markup"><span>${e.id}</span></button>`;
 
 /* —— 3. Tags beside implementations —— */
+// What sets this variant apart: its modifier classes (--rounded), or the base class.
+const modifierOf = (el) => {
+  const cls = [...el.classList].filter((c) => /^fh-/.test(c) && !/^fh-icon--/.test(c));
+  const mods = cls.filter((c) => c.includes("--")).map((c) => c.slice(c.indexOf("--")));
+  return mods.length ? mods.slice(0, 2).join(" ") : cls[0] ? `.${cls[0]}` : "";
+};
 const root = document.documentElement;
 const IDS_KEY = "fh-site-ids";
 const overlays = [];
@@ -108,12 +114,16 @@ function mountTags(list) {
       const h3 = $(":scope > .site-demo__head h3", e.el);
       if (h3) { h3.insertAdjacentHTML("afterbegin", tagHtml(e)); continue; }
     } else {
-      const dt = e.el.parentElement?.tagName === "DD" ? e.el.parentElement.previousElementSibling : null;
-      if (dt) {
-        // One row can hold several variants: their tags share a strip at the top of the label.
-        let ids = dt.querySelector(":scope > .site-ids");
-        if (!ids) { dt.insertAdjacentHTML("afterbegin", '<span class="site-ids"></span>'); ids = dt.firstElementChild; }
-        ids.insertAdjacentHTML("beforeend", tagHtml(e));
+      const dd = e.el.parentElement?.tagName === "DD" ? e.el.parentElement : null;
+      if (dd) {
+        // Each variant gets its own cell in an etched table: the element on
+        // top, its ID and modifier right under it, so code and element pair up.
+        dd.classList.add("site-specs");
+        const cell = document.createElement("figure");
+        cell.className = "site-spec";
+        e.el.replaceWith(cell);
+        cell.innerHTML = `<div class="site-spec__stage"></div><figcaption class="site-spec__cap">${tagHtml(e)}<code>${esc(modifierOf(e.el))}</code></figcaption>`;
+        cell.firstElementChild.append(e.el);
         continue;
       }
       const cap = $(":scope > figcaption", e.el);

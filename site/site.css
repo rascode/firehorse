@@ -1210,26 +1210,10 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
   outline: none;
 }
 
-.site-agents__copy {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--fh-space-2);
-  inline-size: calc(100% - 2 * var(--fh-space-3));
-  margin: var(--fh-space-4) var(--fh-space-3) var(--fh-space-3);
-  padding: 0.6rem;
-  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: var(--fh-radius-sm);
-  background: none;
-  color: var(--fh-color-text-muted);
-  font-family: var(--fh-font-mono);
-  font-size: 0.68rem;
-  letter-spacing: var(--fh-tracking-wider);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color var(--fh-duration-fast), border-color var(--fh-duration-fast);
-}
-.site-agents__copy:is(:hover, :focus-visible) { color: var(--fh-color-text); border-style: solid; border-color: var(--fh-color-border-strong); outline: none; }
+/* The bottom bar is a standard button (fh-button--secondary), so it takes the
+   theme's button style; this only sets its place and width. */
+.site-agents__foot { padding: var(--fh-space-4) var(--fh-space-3) var(--fh-space-3); }
+.site-agents__copy { inline-size: 100%; }
 .site-agents__menu :is(.site-agents__grid, .site-agents__cli) > button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1470,6 +1454,54 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
 .site-variants dt .site-ids { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-self: start; margin-block-end: 0.15rem; }
 /* Grouped rows: several related variants side by side in one row. */
 .site-variants--grouped dd { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-3) var(--fh-space-4); }
+/* Variant cells: an etched table, one cell per variant, the element on top and
+   its ID (click to copy) with its modifier underneath. Cells grow to fill each
+   row, so every row reads as a ruled table row. */
+.site-variants dd.site-specs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0;
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-sm);
+}
+.site-spec {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: min(100%, 10rem);
+  margin: 0;
+  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  transition: background-color var(--fh-duration-fast);
+}
+.site-spec__stage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 4.5rem;
+  padding: var(--fh-space-5) var(--fh-space-4);
+}
+.site-spec__cap {
+  display: flex;
+  align-items: center;
+  gap: var(--fh-space-2);
+  padding: 0.4rem var(--fh-space-3);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  background: color-mix(in oklab, var(--fh-color-surface-chrome) 45%, transparent);
+}
+.site-spec__cap code {
+  overflow: hidden;
+  color: var(--fh-color-text-subtle);
+  font-family: var(--fh-font-mono);
+  font-size: 0.64rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.site-spec:hover { background-color: color-mix(in oklab, var(--fh-color-text) 3%, transparent); }
+.site-spec:hover .site-id { border-style: solid; color: var(--fh-color-text); }
 figcaption .site-id--end { margin-inline-start: auto; }
 .site-id-host { position: relative; }
 .site-id--float { position: absolute; z-index: 5; display: none; translate: -4px -50%; box-shadow: 0 4px 14px -6px var(--fh-color-scrim); }
@@ -1636,7 +1668,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   color: var(--fh-color-text);
 }
 .site-tp__row:has(input:checked) .site-tp__check { opacity: 1; }
-.site-tp .site-agents__copy { margin-block-start: 0; }
+.site-tp .site-agents__foot { padding-block-start: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .site-tp__row:not(.site-tp__row--head) { transition-property: background-color, box-shadow, opacity, translate; transition-duration: var(--fh-duration-fast), var(--fh-duration-fast), 0.35s, 0.35s; }
   .site-tp:popover-open .site-tp__row:not(.site-tp__row--head) {
@@ -1693,6 +1725,39 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-theme__swatches i { inline-size: 0.85rem; aspect-ratio: 1; border: var(--fh-border-thin) solid var(--fh-color-border-strong); border-radius: 2px; }
 .site-theme__tagline { color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: 1.4; }
 .site-theme__sample { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-2); padding-block-start: var(--fh-space-2); border-block-start: var(--fh-border-thin) solid var(--fh-color-rule); }
+/* Theme drawer: light chrome. A see-through panel with dashed rules, no icon
+   tile or select (the cards pick), and etched cards that tint only faintly
+   with their theme's canvas; the chosen one gets the accent edge. */
+#themes-drawer.fh-detail {
+  border-color: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+  background-color: color-mix(in oklab, var(--fh-color-surface) 74%, transparent);
+  backdrop-filter: blur(18px) saturate(1.15);
+  box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.5);
+}
+#themes-drawer :is(.fh-detail__header, .fh-detail__footer) { border-color: var(--fh-color-etch-soft); border-style: dashed; border-inline: 0; background: none; }
+#themes-drawer .fh-detail__header { border-block-start: 0; }
+#themes-drawer .fh-detail__footer { border-block-end: 0; }
+#themes-drawer .fh-detail__identity h2 { font-size: var(--fh-text-h4, 1.15rem); font-weight: var(--fh-weight-regular, 400); }
+#themes-drawer .fh-detail__body { gap: var(--fh-space-5); }
+#themes-drawer .site-themes { gap: var(--fh-space-2); }
+#themes-drawer .site-theme {
+  gap: 0.35rem;
+  padding: 0.7rem var(--fh-space-4);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-sm);
+  background-color: color-mix(in oklab, var(--fh-color-canvas) 45%, transparent);
+  transition: border-color var(--fh-duration-fast), box-shadow var(--fh-duration-fast), background-color var(--fh-duration-fast);
+}
+#themes-drawer .site-theme:hover { border-color: var(--fh-color-text-subtle); }
+#themes-drawer .site-theme:has(input:checked) {
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--fh-color-text) 30%, transparent);
+  box-shadow: inset 2px 0 0 var(--fh-color-accent);
+}
+#themes-drawer .site-theme__head b { font-size: var(--fh-text-small); }
+#themes-drawer .site-theme__swatches i { inline-size: 0.7rem; border-color: color-mix(in oklab, var(--fh-color-text) 18%, transparent); }
+#themes-drawer .site-theme__tagline { font-size: 0.78rem; }
+#themes-drawer .site-theme__sample { padding-block-start: var(--fh-space-2); border-block-start-style: dashed; border-color: var(--fh-color-etch-soft); }
 /* The base preview keeps this site's brand type (themes/rascode.css sets it on :root). */
 .site-theme[data-fh-theme="firehorse"] {
   --fh-font-sans: var(--font-rascode-sans, "Inter"), ui-sans-serif, system-ui, sans-serif;

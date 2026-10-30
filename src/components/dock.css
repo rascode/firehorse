@@ -618,9 +618,10 @@
     & .fh-dock__actions .fh-button--outline {
       --_bg: var(--fh-color-primary);
       --_fg: var(--fh-color-on-primary);
-      --_shadow: var(--fh-shadow-convex);
-      --_shadow-hover: var(--fh-shadow-convex-hover);
-      --_shadow-active: var(--fh-shadow-convex-active);
+      /* Depth comes from the theme's button style (data-fh-button), like every other CTA. */
+      --_shadow: var(--fh-button-shadow, none);
+      --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+      --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
 
       transition-delay: 0.35s;
     }
@@ -643,9 +644,10 @@
     .fh-dock__actions .fh-button--outline {
       --_bg: var(--fh-color-primary);
       --_fg: var(--fh-color-on-primary);
-      --_shadow: var(--fh-shadow-convex);
-      --_shadow-hover: var(--fh-shadow-convex-hover);
-      --_shadow-active: var(--fh-shadow-convex-active);
+      /* Depth comes from the theme's button style (data-fh-button), like every other CTA. */
+      --_shadow: var(--fh-button-shadow, none);
+      --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+      --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
 
       transition-delay: 0.35s;
     }

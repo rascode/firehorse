@@ -48,7 +48,7 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
       <div class="site-agents__grid">${AGENTS.filter((a) => !a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span><span class="site-agents__name"><b>${a.name}</b><small>${a.note}</small></span><i class="fh-icon fh-icon--arrow-up-right site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
       <p class="fh-menu__label">From your terminal</p>
       <div class="site-agents__cli">${AGENTS.filter((a) => a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b>${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
-      <button type="button" class="site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button>
+      <div class="site-agents__foot"><button type="button" class="fh-button fh-button--sm fh-button--secondary site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button></div>
     </div>`;
   // Open on whichever side of the button has more room; never scroll the page.
   // The menu fits that room and scrolls inside itself if it has to.
@@ -111,17 +111,16 @@ const paintTheme = () => {
   $$("[data-theme-code]").forEach((c) => (c.textContent = t.name ? `<html data-fh-theme="${t.name}">` : `<html>  <!-- Firehorse base -->`));
 };
 $$("[data-theme-panel]").forEach((p) => (p.innerHTML = `<div class="fh-field"><label for="theme-select-page">Theme</label>${themeSelect('id="theme-select-page"')}</div>${themeCards()}`));
-// Drawer + floating button
+// Theme drawer: opened from the theme picker (bottom right) and [data-opens='themes']
 const drawer = document.createElement("dialog");
-drawer.className = "fh-dialog fh-dialog--float fh-dialog--start fh-detail";
+drawer.className = "fh-dialog fh-dialog--float fh-detail"; // slides in from the right, over the theme picker
 drawer.id = "themes-drawer";
 drawer.dataset.tone = "fuchsia";
 drawer.setAttribute("aria-labelledby", "themes-drawer-title");
 drawer.style.setProperty("--fh-dialog-size", "24rem");
 drawer.innerHTML = `<header class="fh-detail__header"><div class="fh-detail__bar"><span>Themes</span><button class="fh-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()"></button></div>
-  <div class="fh-detail__identity"><span class="fh-icon-tile"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i></span><div><h2 id="themes-drawer-title">Theme this site</h2><p>A theme sets type, color, shape and density. Light and dark come with every one.</p></div></div></header>
+  <div class="fh-detail__identity"><div><h2 id="themes-drawer-title">Theme this site</h2><p>A theme sets type, color, shape and density. Light and dark come with every one.</p></div></div></header>
   <div class="fh-detail__body">
-    <div class="fh-field"><label for="theme-select-drawer">Theme</label>${themeSelect('id="theme-select-drawer"')}</div>
     ${themeCards()}
     <section class="fh-detail__section"><h3>What <span data-theme-name></span> decides</h3><dl class="fh-detail__fields" data-theme-decisions></dl></section>
     <pre class="site-pre site-config-code" data-theme-code></pre>
@@ -129,13 +128,6 @@ drawer.innerHTML = `<header class="fh-detail__header"><div class="fh-detail__bar
   <footer class="fh-detail__footer"><span class="fh-dt__count">Saved in this browser</span><a class="fh-button fh-button--sm fh-button--secondary" href="#themes">Make your own</a></footer>`;
 document.body.append(drawer);
 drawer.addEventListener("click", (e) => { if (e.target.closest('a[href^="#"]')) drawer.close(); });
-const fab = document.createElement("button");
-fab.className = "site-config-fab fh-button fh-button--sm fh-button--secondary";
-fab.type = "button";
-fab.innerHTML = `<i class="fh-icon fh-icon--palette" aria-hidden="true"></i><span>Theme</span>`;
-fab.setAttribute("aria-label", "Choose a theme");
-fab.addEventListener("click", () => drawer.showModal());
-document.body.append(fab);
 $$("[data-opens='themes']").forEach((b) => b.addEventListener("click", () => drawer.showModal()));
 // Floating theme picker (bottom right): a trigger with the current theme's
 // swatches, opening an etched table of every theme. Each row is a radio
@@ -156,7 +148,7 @@ if (float) {
           <i class="fh-icon fh-icon--check site-tp__check" aria-hidden="true"></i>
         </label>`).join("")}
       </div>
-      <button class="site-agents__copy" type="button" data-tp-more>Everything a theme decides</button>
+      <div class="site-agents__foot"><button class="fh-button fh-button--sm fh-button--secondary site-agents__copy" type="button" data-tp-more>All theme options</button></div>
     </div>`;
   const paintNow = () => {
     const t = themeOf(document.documentElement.getAttribute("data-fh-theme"));
