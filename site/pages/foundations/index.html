@@ -265,20 +265,23 @@
         </div>
         <a class="fh-action fh-action--lg" href="tokens.json">tokens.json</a>
       </header>
+      <!-- Token explorer: the three tiers are the filter; every row previews its value live. -->
+      <fieldset class="site-tiers" id="token-tier">
+        <legend class="fh-sr-only">Show tokens from</legend>
+        <label class="site-tiers__cell" data-tone="neutral"><input class="site-tiers__radio" type="radio" name="tier" value="all" checked><span class="site-tiers__k">All</span><b data-tier-count="all">–</b><span class="site-tiers__d">Every custom property in the package</span></label>
+        <label class="site-tiers__cell" data-tone="sky"><input class="site-tiers__radio" type="radio" name="tier" value="primitives"><span class="site-tiers__k">01 · Primitives</span><b data-tier-count="primitives">–</b><span class="site-tiers__d">Raw values: the gray ramp, tones, space, type</span></label>
+        <label class="site-tiers__cell" data-tone="lime"><input class="site-tiers__radio" type="radio" name="tier" value="semantic"><span class="site-tiers__k">02 · Semantic</span><b data-tier-count="semantic">–</b><span class="site-tiers__d">Roles that point at primitives and switch with light and dark</span></label>
+        <label class="site-tiers__cell" data-tone="amber"><input class="site-tiers__radio" type="radio" name="tier" value="config"><span class="site-tiers__k">03 · Component</span><b data-tier-count="config">–</b><span class="site-tiers__d">The knobs a theme turns: card, button, avatar, chip</span></label>
+      </fieldset>
       <div class="site-tokens-tools">
         <label class="fh-sr-only" for="token-q">Filter tokens</label>
-        <input class="fh-input" id="token-q" type="search" placeholder="Filter: color, space, tone…" autocomplete="off">
-        <fieldset class="fh-segmented" id="token-tier">
-          <legend class="fh-sr-only">Tier</legend>
-          <label><input type="radio" name="tier" value="all" checked> All</label>
-          <label><input type="radio" name="tier" value="semantic"> Semantic</label>
-          <label><input type="radio" name="tier" value="primitives"> Primitive</label>
-        </fieldset>
+        <input class="fh-input" id="token-q" type="search" placeholder="Search: text, space, radius, sky…" autocomplete="off">
         <span class="site-note" id="token-count" aria-live="polite"></span>
+        <span class="site-note site-tokens__hint">Click a name to copy <code>var(--…)</code>. Click a reference to follow it.</span>
       </div>
       <div class="fh-table-wrap site-tokens">
         <table class="fh-table">
-          <thead><tr><th>Token</th><th>Value</th><th>Type</th></tr></thead>
+          <thead><tr><th>Token</th><th>Preview</th><th>Value</th></tr></thead>
           <tbody id="token-rows"><tr><td colspan="3" class="fh-muted">Loading tokens.json…</td></tr></tbody>
         </table>
       </div>

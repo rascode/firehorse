@@ -171,23 +171,57 @@
   matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", paintContrast);
 
   /* —— Token explorer —— */
+  /* —— Token explorer ——
+   * Tiers filter (and explain) the list; each row previews its value live in
+   * this page's theme and scheme; values that point at other tokens become
+   * links you can follow; clicking a name copies var(--name). */
   const rows = $("#token-rows");
   if (rows) {
     fetch("/tokens.json").then((r) => r.json()).then(({ tokens }) => {
-      const all = Object.entries(tokens);
+      // Primitives, then semantic, then component; each group kept together.
+      const tierOrder = { primitives: 0, semantic: 1, config: 2 }, groupOrder = new Map();
+      Object.values(tokens).forEach((t) => { const g = `${t.tier}·${t.group}`; if (!groupOrder.has(g)) groupOrder.set(g, groupOrder.size); });
+      const all = Object.entries(tokens).map((e, i) => [...e, i]).sort((a, b) => (tierOrder[a[1].tier] ?? 9) - (tierOrder[b[1].tier] ?? 9) || groupOrder.get(`${a[1].tier}·${a[1].group}`) - groupOrder.get(`${b[1].tier}·${b[1].group}`) || a[2] - b[2]).map(([n, t]) => [n, t]);
       const q = $("#token-q"), count = $("#token-count");
+      for (const el of $$("[data-tier-count]")) { const t = el.dataset.tierCount; el.textContent = t === "all" ? all.length : all.filter(([, v]) => v.tier === t).length; }
+      const refs = (v) => escapeHtml(v).replace(/var\((--fh-[\w-]+)\)/g, (m, n) => tokens[n] ? `var(<button class="site-tok__ref" type="button" data-tok="${n}">${n}</button>)` : m);
+      const preview = (n, t) => {
+        const v = String(t.$value);
+        if (t.$type === "color") return /light-dark\(/.test(v)
+          ? `<span class="site-tok__pair" title="Light and dark"><i style="--sw: var(${n}); color-scheme: light"></i><i style="--sw: var(${n}); color-scheme: dark"></i></span>`
+          : `<span class="site-tok__sw" style="--sw: var(${n})"></span>`;
+        if (t.$type === "shadow") return `<span class="site-tok__shadow" style="box-shadow: var(${n})"></span>`;
+        if (t.$type === "fontFamily") return `<span class="site-tok__font" style="font-family: var(${n})">Aa</span>`;
+        if (t.$type === "fontWeight") return `<span class="site-tok__font" style="font-weight: var(${n})">Aa</span>`;
+        if (t.$type === "dimension" && /radius/.test(n)) return `<span class="site-tok__radius" style="border-radius: var(${n})"></span>`;
+        if (t.$type === "dimension") return `<span class="site-tok__bar"><i style="inline-size: min(var(${n}), 100%)"></i></span>`;
+        if (t.$type === "duration" || t.$type === "cubicBezier") return `<span class="site-tok__ease" style="--d: ${t.$type === "duration" ? `var(${n})` : "0.8s"}; --e: ${t.$type === "cubicBezier" ? `var(${n})` : "ease"}"><i></i></span>`;
+        return `<span class="site-tok__type">${escapeHtml(t.$type)}</span>`;
+      };
+      const tierName = { primitives: "Primitive", semantic: "Semantic", config: "Component" };
       const render = () => {
         const term = q.value.trim().toLowerCase();
         const tier = $('input[name="tier"]:checked')?.value ?? "all";
-        const list = all.filter(([n, t]) => (tier === "all" || t.tier === tier) && (!term || n.includes(term) || t.$value.toLowerCase().includes(term) || t.$type.toLowerCase().includes(term)));
+        const list = all.filter(([n, t]) => (tier === "all" || t.tier === tier) && (!term || n.includes(term) || String(t.$value).toLowerCase().includes(term) || t.$type.toLowerCase().includes(term) || (t.group ?? "").includes(term)));
+        let group = "";
         rows.innerHTML = list.map(([n, t]) => {
-          const sw = t.$type === "color" ? `<i class="site-sw" style="--sw: var(${n})"></i>` : "";
-          return `<tr><td data-label="Token">${sw}${n}</td><td data-label="Value">${escapeHtml(t.$value.length > 90 ? t.$value.slice(0, 90) + "…" : t.$value)}</td><td data-label="Type"><span class="fh-badge">${t.$type}</span></td></tr>`;
+          const g = `${t.tier}·${t.group ?? ""}`;
+          const head = g !== group ? `<tr class="site-tok__group"><th colspan="3"><span class="site-tok__tier" data-tier="${t.tier}">${tierName[t.tier] ?? t.tier}</span>${escapeHtml(t.group ?? "")}</th></tr>` : "";
+          group = g;
+          const v = String(t.$value);
+          return `${head}<tr><td data-label="Token"><button class="site-tok__name" type="button" data-copy-tok="${n}" title="Copy var(${n})">${n}<i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></td><td data-label="Preview">${preview(n, t)}</td><td data-label="Value"><code>${refs(v.length > 140 ? v.slice(0, 140) + "…" : v)}</code></td></tr>`;
         }).join("") || `<tr><td colspan="3" class="fh-muted">No tokens match “${escapeHtml(term)}”.</td></tr>`;
         count.textContent = `${list.length} of ${all.length}`;
       };
-      q.addEventListener("input", render);
+      // Searching looks across every tier.
+      q.addEventListener("input", () => { if (q.value.trim()) $('input[name="tier"][value="all"]').checked = true; render(); });
       $$('input[name="tier"]').forEach((r) => r.addEventListener("change", render));
+      rows.addEventListener("click", async (e) => {
+        const ref = e.target.closest("[data-tok]");
+        if (ref) { $('input[name="tier"][value="all"]').checked = true; q.value = ref.dataset.tok; render(); rows.closest(".site-tokens").scrollTop = 0; return; }
+        const nm = e.target.closest("[data-copy-tok]");
+        if (nm) { try { await navigator.clipboard.writeText(`var(${nm.dataset.copyTok})`); window.fhToast?.(`Copied var(${nm.dataset.copyTok})`, "success"); } catch {} }
+      });
       render();
     }).catch(() => { rows.innerHTML = `<tr><td colspan="3">Couldn't load tokens.json. <a class="fh-link" href="/tokens.json">Open it directly</a>.</td></tr>`; });
   }

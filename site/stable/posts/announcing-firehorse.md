@@ -158,6 +158,12 @@ The core is free and stays that way. [Firehorse Pro](/pro/) adds AI-powered fiel
 
 ## Get started
 
+Good artists copy. Great artists clone.
+
+Copy any component from [the site](/components/): every demo copies its markup and Index ID in one click. Or take the whole system:
+
+`git clone https://github.com/rascode/firehorse.git`
+
 `npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz`
 
 `import "@rascode/firehorse";`
