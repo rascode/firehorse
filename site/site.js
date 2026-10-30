@@ -193,8 +193,9 @@
   }
 
   /* —— Work with Rascode: lead dialog ——
-   * On pages that carry [data-lead-sheet] (Pro), the dialog slides in from the side
-   * as a sheet, and the Pro presets swap the copy and show a plan picker. */
+   * The form slides in from the right as a full-height sheet everywhere
+   * (data-lead-side="start" flips it to the left), and the Pro presets swap
+   * the copy and show a plan picker. */
   const lead = $("#lead"), leadForm = $("#lead-form");
   if (lead && leadForm) {
     const presets = { design: ["design-system", "website"], ai: ["ai-agents", "automation"], consulting: ["architecture", "consulting"], pro: ["firehorse-pro"], "pro-build": ["firehorse-pro", "design-system", "system-from-url"] };
@@ -209,7 +210,8 @@
     };
     const base = { kicker: ui.kicker.textContent, title: ui.title.textContent, label: ui.messageLabel.textContent, placeholder: ui.message.placeholder, submit: ui.submitLabel.textContent };
     let submitText = base.submit;
-    if (document.querySelector("[data-lead-sheet]")) lead.classList.add("fh-dialog--sheet", "site-lead--sheet");
+    // The lead form is always a full-height sheet from the right, on every page.
+    lead.classList.add("fh-dialog--sheet", "site-lead--sheet");
     // .fh-main is a size container, which traps position: fixed; lift the side tab to <body>.
     $$(".site-lead-tab").forEach((t) => document.body.append(t));
     // Plan copy shown under the picker; prices follow the billing toggle on the page.
