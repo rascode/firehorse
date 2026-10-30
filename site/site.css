@@ -940,6 +940,14 @@ body::before {
 .site-lead__needs { margin: 0; padding: 0; border: 0; display: grid; gap: var(--fh-space-3); }
 .site-lead__needs legend { padding: 0; margin-block-end: var(--fh-space-3); }
 .site-lead__needs legend span { color: var(--fh-color-text-subtle); text-transform: none; letter-spacing: 0; margin-inline-start: var(--fh-space-2); }
+/* Field labels in the lead form: full-strength text (black on light, white
+ * on dark) and heavier, so the form scans at a glance. The Required /
+ * Optional tags keep their own quieter colour and weight. */
+.site-lead :is(.fh-field > label, .fh-field > .fh-field__label, .fh-field > legend, .site-lead__needs > legend, fieldset > legend.fh-label, .site-lead__legend) {
+  color: var(--fh-color-text-strong);
+  font-weight: var(--fh-weight-bold);
+}
+.site-lead .fh-field > label::after { font-weight: var(--fh-weight-medium); }
 .site-lead__needs .fh-chip { position: relative; }
 /* "What do you need?": multi-select chips that read as choices, not as
  * answers. Unpicked: a quiet dashed chip with an empty checkbox square.
