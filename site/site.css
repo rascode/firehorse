@@ -998,9 +998,157 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
 
 /* Agents menu */
 .site-agents { display: inline-flex; }
-.site-agents__menu { min-inline-size: 17rem; }
-.site-agents__menu > button > span:last-child { display: grid; gap: 0.05rem; text-align: start; }
-.site-agents__menu > button small { color: var(--fh-color-text-subtle); font-size: 0.7rem; }
+/* A drafting sheet, not a list: frosted panel with a ruled header, the web
+   agents on a two-column dashed grid (each lights in its own tone on hover,
+   with an arrow that slides in), the terminal agents as real command lines,
+   and one plain bar to copy the prompt. Items rise in one after another. */
+.fh-menu.site-agents__menu {
+  inline-size: min(27rem, calc(100vi - 2rem));
+  /* Shown whole: on open, site-features.js scrolls the page just enough to fit it. */
+  max-block-size: min(44rem, calc(100dvh - 2rem));
+  padding: 0;
+  border-color: color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+  border-radius: var(--fh-radius-md);
+  background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 24px 60px -12px rgb(0 0 0 / 0.55), 0 0 0 1px color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
+  scrollbar-width: thin;
+}
+.site-agents__head {
+  display: grid;
+  gap: 0.2rem;
+  padding: var(--fh-space-4) var(--fh-space-4) var(--fh-space-3);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  background: color-mix(in oklab, var(--fh-color-surface-chrome) 70%, transparent);
+}
+.site-agents__title {
+  display: flex;
+  align-items: center;
+  gap: var(--fh-space-2);
+  font-size: var(--fh-text-body);
+  font-weight: var(--fh-weight-medium);
+  letter-spacing: -0.01em;
+}
+.site-agents__title .fh-icon { color: var(--fh-color-accent, var(--fh-tone-orange)); }
+.site-agents__hint { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption, 0.72rem); }
+.site-agents__menu .fh-menu__label { margin: var(--fh-space-4) var(--fh-space-4) var(--fh-space-2); }
+
+.site-agents__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-inline: var(--fh-space-3);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-sm);
+  overflow: hidden;
+}
+.site-agents__grid > button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--fh-space-2-5, 0.625rem);
+  min-inline-size: 0;
+  padding: var(--fh-space-3);
+  border: 0;
+  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  background: none;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color var(--fh-duration-fast), box-shadow var(--fh-duration-fast);
+}
+.site-agents__grid .fh-icon-tile { --fh-icon-tile: 1.9rem; flex: none; transition: scale var(--fh-duration-fast) var(--fh-ease-out); }
+.site-agents__name { display: grid; gap: 0.1rem; min-inline-size: 0; }
+.site-agents__name b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
+.site-agents__name small {
+  overflow: hidden;
+  color: var(--fh-color-text-subtle);
+  font-size: 0.68rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.site-agents__go {
+  margin-inline-start: auto;
+  flex: none;
+  color: var(--fh-tone, var(--fh-color-text));
+  font-size: 0.8rem;
+  opacity: 0;
+  translate: -0.3rem 0.3rem;
+  transition: opacity var(--fh-duration-fast), translate var(--fh-duration-fast) var(--fh-ease-out);
+}
+.site-agents__grid > button:is(:hover, :focus-visible) {
+  background-color: color-mix(in oklab, var(--fh-tone) 9%, transparent);
+  box-shadow: inset 2px 0 0 var(--fh-tone);
+  outline: none;
+}
+.site-agents__grid > button:is(:hover, :focus-visible) .fh-icon-tile { scale: 1.06; }
+.site-agents__menu button:is(:hover, :focus-visible) .site-agents__go { opacity: 1; translate: 0 0; }
+
+.site-agents__cli { display: grid; gap: var(--fh-space-1); margin-inline: var(--fh-space-3); }
+.site-agents__cli > button {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--fh-space-3);
+  padding: 0.55rem var(--fh-space-3);
+  border: var(--fh-border-thin) solid var(--fh-color-border);
+  border-radius: var(--fh-radius-sm);
+  background: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
+}
+.site-agents__cli b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
+.site-agents__cli code {
+  overflow: hidden;
+  color: var(--fh-color-text-muted);
+  font-family: var(--fh-font-mono);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.site-agents__cli code::before { content: "$ "; color: var(--fh-tone); }
+.site-agents__cli > button:is(:hover, :focus-visible) {
+  border-color: color-mix(in oklab, var(--fh-tone) 55%, transparent);
+  background-color: color-mix(in oklab, var(--fh-tone) 7%, var(--fh-color-canvas));
+  outline: none;
+}
+
+.site-agents__copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fh-space-2);
+  inline-size: calc(100% - 2 * var(--fh-space-3));
+  margin: var(--fh-space-4) var(--fh-space-3) var(--fh-space-3);
+  padding: 0.6rem;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-sm);
+  background: none;
+  color: var(--fh-color-text-muted);
+  font-family: var(--fh-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: var(--fh-tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--fh-duration-fast), border-color var(--fh-duration-fast);
+}
+.site-agents__copy:is(:hover, :focus-visible) { color: var(--fh-color-text); border-style: solid; border-color: var(--fh-color-border-strong); outline: none; }
+.site-agents__menu :is(.site-agents__grid, .site-agents__cli) > button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-agents__menu :is(.site-agents__grid, .site-agents__cli) > button {
+    transition-property: background-color, box-shadow, border-color, opacity, translate;
+    transition-duration: var(--fh-duration-fast), var(--fh-duration-fast), var(--fh-duration-fast), 0.35s, 0.35s;
+    transition-timing-function: ease, ease, ease, var(--fh-ease-out), var(--fh-ease-out);
+  }
+  .site-agents__menu:popover-open :is(.site-agents__grid, .site-agents__cli) > button {
+    transition-delay: 0s, 0s, 0s, calc(var(--_i, 0) * 22ms), calc(var(--_i, 0) * 22ms);
+    @starting-style { opacity: 0; translate: 0 0.4rem; }
+  }
+}
 
 /* Playground teaser */
 .site-pg-teaser { display: grid; gap: var(--fh-space-6); padding: var(--fh-space-6); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-lg); container: fh-pgt / inline-size; }

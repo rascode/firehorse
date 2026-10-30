@@ -16,8 +16,8 @@ export const AGENTS = [
   { id: "v0", name: "v0", note: "Vercel", tone: "neutral", icon: "layout-grid", url: (p) => `https://v0.app/chat?q=${encodeURIComponent(p)}` },
   { id: "lovable", name: "Lovable", note: "Builds the app", tone: "rose", icon: "heart", url: (p) => `https://lovable.dev/#prompt=${encodeURIComponent(p)}` },
   { id: "bolt", name: "Bolt", note: "StackBlitz", tone: "sky", icon: "zap", url: (p) => `https://bolt.new/?prompt=${encodeURIComponent(p)}` },
-  { id: "copilot", name: "GitHub Copilot", note: "Prompt copied, then opens", tone: "violet", icon: "github", url: () => "https://github.com/copilot" },
-  { id: "gemini", name: "Gemini", note: "Prompt copied, then opens", tone: "sky", icon: "sparkles", url: () => "https://gemini.google.com/app" },
+  { id: "copilot", name: "GitHub Copilot", note: "Copies, then opens", tone: "violet", icon: "github", url: () => "https://github.com/copilot" },
+  { id: "gemini", name: "Gemini", note: "Copies, then opens", tone: "sky", icon: "sparkles", url: () => "https://gemini.google.com/app" },
   { id: "perplexity", name: "Perplexity", note: "Research the brief", tone: "teal", icon: "search", url: (p) => `https://www.perplexity.ai/search?q=${encodeURIComponent(p)}` },
   { id: "grok", name: "Grok", note: "xAI", tone: "neutral", icon: "bot", url: (p) => `https://grok.com/?q=${encodeURIComponent(p)}` },
   { id: "claude-code", name: "Claude Code", note: "Copies a terminal command", tone: "accent", icon: "terminal", command: (p) => `claude ${JSON.stringify(p)}` },
@@ -43,12 +43,21 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
   const id = `agents-${++menuSeq}`;
   host.innerHTML = `<button class="fh-button fh-button--${host.classList.contains("site-agents--sm") ? "sm" : size} fh-button--secondary" type="button" popovertarget="${id}" style="anchor-name: --${id}"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>${label}<i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
     <div class="fh-menu site-agents__menu" id="${id}" popover style="position-anchor: --${id}" aria-label="Choose an agent">
+      <header class="site-agents__head"><span class="site-agents__title"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>Send to an agent</span><span class="site-agents__hint">The prompt is copied with every choice</span></header>
       <p class="fh-menu__label">Open with the prompt</p>
-      ${AGENTS.filter((a) => !a.command).map((a) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}"><span class="fh-icon-tile" style="--fh-icon-tile:1.6rem"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span><span><b>${a.name}</b><small>${a.note}</small></span></button>`).join("")}
-      <hr><p class="fh-menu__label">From your terminal</p>
-      ${AGENTS.filter((a) => a.command).map((a) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}"><span class="fh-icon-tile" style="--fh-icon-tile:1.6rem"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span><span><b>${a.name}</b><small>${a.note}</small></span></button>`).join("")}
-      <hr><button type="button" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button>
+      <div class="site-agents__grid">${AGENTS.filter((a) => !a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span><span class="site-agents__name"><b>${a.name}</b><small>${a.note}</small></span><i class="fh-icon fh-icon--arrow-up-right site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
+      <p class="fh-menu__label">From your terminal</p>
+      <div class="site-agents__cli">${AGENTS.filter((a) => a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b>${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
+      <button type="button" class="site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button>
     </div>`;
+  // Opening near the bottom of the screen: scroll just enough to show the whole menu.
+  $(`#${id}`).addEventListener("toggle", (e) => {
+    if (e.newState !== "open") return;
+    requestAnimationFrame(() => {
+      const over = e.target.getBoundingClientRect().bottom - (innerHeight - 16);
+      if (over > 0) scrollBy({ top: over, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
+  });
   host.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-agent]");
     if (!b) return;
