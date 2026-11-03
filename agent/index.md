@@ -1,34 +1,37 @@
 # Firehorse Index
 
-> Every Firehorse component and variant has a stable ID, v1.1.0. People
-> name what they want by ID instead of describing it ("use CHP-02", "swap the
+> Every Firehorse component, group and variant has a stable ID, v1.1.0. People
+> name what they want by ID instead of describing it ("use CHP-1.3", "swap the
 > pricing badge for TIR"). Look the ID up here and use the markup exactly.
 > Generated from https://firehorse.rascode.dev. Rules: [system.md](system.md). Full markup for each
 > family: [components.md](components.md). Machine-readable: [index.json](../index.json).
 
 ## How IDs work
 
-- A **family** ID is three letters: `CHP` is the chip family.
-- A **variant** ID adds a two-digit number: `CHP-02` is one specific chip treatment.
-- IDs are stable. A retired ID is never reused; new variants take the next number.
+- A **family** ID is three letters: `EYE` is the eyebrow pill family.
+- A **group** adds a number: `EYE-5` is the eyebrow pill's parts (index, segments, count).
+- A **variant** adds a dot: `EYE-5.2` is one specific treatment in that group.
+  Variants that share the number before the dot are siblings.
+- IDs are stable. A retired ID is never reused; new variants take the next number
+  in their group. Retired IDs that moved are listed under [Former IDs](#former-ids).
 - On the site, every demo shows its ID. Click an ID to copy it with its markup.
-- When a person gives you an ID, use that family or variant's markup and classes,
-  keep its structure, and change only the content. If an ID isn't listed here,
-  say so; don't guess.
+- When a person gives you an ID, use that family, group or variant's markup and
+  classes, keep its structure, and change only the content. If an ID isn't listed
+  here (or under Former IDs), say so; don't guess.
 
 ## Families
 
-| ID | Name | Section | Variants | Demo |
+| ID | Name | Section | Groups | Demo |
 |---|---|---|---|---|
 | `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#NEU) |
 | `TON` | Tones | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#TON) |
-| `TYP` | Type | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#TYP) |
+| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.rascode.dev/foundations/#TYP) |
 | `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#SPC) |
 | `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#RAD) |
 | `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#ELV) |
 | `MOT` | Motion | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#MOT) |
 | `MTL` | The motion layer | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#MTL) |
-| `WRT` | Word rotator | Foundations | WRT-01…WRT-06 | [open](https://firehorse.rascode.dev/foundations/#WRT) |
+| `WRT` | Word rotator | Foundations | 1 Word rotator (6) | [open](https://firehorse.rascode.dev/foundations/#WRT) |
 | `STK` | Stack | Layout | — | [open](https://firehorse.rascode.dev/layout/#STK) |
 | `CLS` | Cluster | Layout | — | [open](https://firehorse.rascode.dev/layout/#CLS) |
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/#GRD) |
@@ -37,46 +40,49 @@
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#PNL) |
 | `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#ESP) |
 | `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#CTB) |
-| `BTN` | Button | Actions | BTN-01…BTN-08 | [open](https://firehorse.rascode.dev/components/actions/#BTN) |
+| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.rascode.dev/components/actions/#BTN) |
 | `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/#ACT) |
-| `MRK` | Markers | Actions | MRK-01…MRK-03 | [open](https://firehorse.rascode.dev/components/actions/#MRK) |
-| `EYE` | Eyebrow pill | Actions | EYE-01…EYE-23 | [open](https://firehorse.rascode.dev/components/actions/#EYE) |
-| `CHP` | Chips | Actions | CHP-01…CHP-07 | [open](https://firehorse.rascode.dev/components/actions/#CHP) |
-| `CHC` | Chip cards | Actions | CHC-01…CHC-04 | [open](https://firehorse.rascode.dev/components/actions/#CHC) |
-| `CUB` | Cubes | Actions | CUB-01…CUB-04 | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
-| `CUC` | Cube cards | Actions | CUC-01…CUC-03 | [open](https://firehorse.rascode.dev/components/actions/#CUC) |
+| `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/#MRK) |
+| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (3) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/#EYE) |
+| `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CHP) |
+| `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (3) | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/#CKL) |
 | `STP` | Steps | Content | — | [open](https://firehorse.rascode.dev/components/content/#STP) |
 | `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/#CAR) |
+| `DEK` | Stacking deck | Content | 1 Stacking deck (1) · 2 Hero handoff (1) · 3 Recede styles (4) · 4 Cards and captions (3) · 5 Direction (2) | [open](https://firehorse.rascode.dev/components/content/#DEK) |
+| `MBR` | Member card | Content | 1 Pass (3) · 2 Plates (3) | [open](https://firehorse.rascode.dev/components/content/#MBR) |
+| `STY` | Story card | Content | 1 Solid (6) · 2 Picture and glare (4) · 3 In the field (4) | [open](https://firehorse.rascode.dev/components/content/#STY) |
+| `SPD` | Speed blur | Content | 1 Speed blur (3) | [open](https://firehorse.rascode.dev/components/content/#SPD) |
+| `DTH` | Dither | Content | 1 Dither (4) | [open](https://firehorse.rascode.dev/components/content/#DTH) |
+| `LQG` | Liquid glass | Content | 1 Liquid glass (4) | [open](https://firehorse.rascode.dev/components/content/#LQG) |
 | `LST` | List & timeline | Content | — | [open](https://firehorse.rascode.dev/components/content/#LST) |
 | `CHT` | Chat | Content | — | [open](https://firehorse.rascode.dev/components/content/#CHT) |
 | `DET` | Details, code, divider | Content | — | [open](https://firehorse.rascode.dev/components/content/#DET) |
 | `TIR` | Pricing tiers | Content | — | [open](https://firehorse.rascode.dev/components/content/#TIR) |
 | `FEA` | Features | Content | — | [open](https://firehorse.rascode.dev/components/content/#FEA) |
 | `TST` | Testimonial | Content | — | [open](https://firehorse.rascode.dev/components/content/#TST) |
-| `CAT` | Card catalog | Card catalog | CAT-01…CAT-24 | [open](https://firehorse.rascode.dev/components/content/#CAT) |
+| `CAT` | Card catalog | Card catalog | 1 Catalog (1) · 2 People (1) · 3 Media (1) · 4 Surfaces (1) · 5 Tokens (1) · 6 Commerce (2) · 7 Data (1) | [open](https://firehorse.rascode.dev/components/content/#CAT) |
 | `DCK` | Floating bar | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#DCK) |
 | `FAB` | Floating action bar | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#FAB) |
 | `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#TAB) |
 | `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#NAV) |
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#BRG) |
+| `PRF` | Profile picker | Drawers & menus | 1 Profile picker (4) | [open](https://firehorse.rascode.dev/components/navigation/#PRF) |
 | `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#DRP) |
 | `TBR` | Tab bar | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#TBR) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#ACC) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#DLG) |
 | `FBK` | Feedback | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#FBK) |
 | `EMP` | Empty state & banner | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#EMP) |
-| `AVS` | Shapes | Avatars | AVS-01…AVS-05 | [open](https://firehorse.rascode.dev/components/avatars/#AVS) |
-| `AVZ` | Sizes & presence | Avatars | — | [open](https://firehorse.rascode.dev/components/avatars/#AVZ) |
-| `AVR` | Rings & halos | Avatars | — | [open](https://firehorse.rascode.dev/components/avatars/#AVR) |
-| `AVG` | Generated | Avatars | — | [open](https://firehorse.rascode.dev/components/avatars/#AVG) |
-| `AVK` | Groups | Avatars | — | [open](https://firehorse.rascode.dev/components/avatars/#AVK) |
-| `AUT` | Sign in & sign up | Forms | AUT-01…AUT-03 | [open](https://firehorse.rascode.dev/forms/#AUT) |
+| `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/#AVT) |
+| `SCD` | Social card | Profile cards | 1 Social card (3) | [open](https://firehorse.rascode.dev/components/avatars/#SCD) |
+| `AUT` | Sign in & sign up | Forms | 1 Layouts (3) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/#AUT) |
 | `FLD` | Fields | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#FLD) |
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#CHO) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#UPL) |
+| `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/#TAG) |
 | `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/#DTB) |
 | `TBL` | Table | Table | — | [open](https://firehorse.rascode.dev/data/#TBL) |
 | `PRD` | Product grid | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PRD) |
@@ -88,6 +94,7 @@
 | `CRT` | Cart line items | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CRT) |
 | `SUM` | Order summary | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#SUM) |
 | `CNF` | Order confirmation | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CNF) |
+| `INV` | Invoice | Invoice | 1 Sheet (3) · 2 Pay (1) | [open](https://firehorse.rascode.dev/commerce/#INV) |
 | `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
 | `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
 | `TRK` | Playlist | Audio | — | [open](https://firehorse.rascode.dev/audio/#TRK) |
@@ -95,14 +102,16 @@
 | `MIX` | Mixer | Audio | — | [open](https://firehorse.rascode.dev/audio/#MIX) |
 | `PRM` | Parameters | Audio | — | [open](https://firehorse.rascode.dev/audio/#PRM) |
 | `STG` | Render stages | Audio | — | [open](https://firehorse.rascode.dev/audio/#STG) |
-| `THB` | Thumbnails & link cards | Social | THB-01…THB-02 | [open](https://firehorse.rascode.dev/media/#THB) |
-| `SOC` | Posts & stories | Social | SOC-01…SOC-03 | [open](https://firehorse.rascode.dev/media/#SOC) |
-| `HDR` | Profile headers | Social | HDR-01…HDR-03 | [open](https://firehorse.rascode.dev/media/#HDR) |
-| `CVR` | Cover art | Social | CVR-01…CVR-02 | [open](https://firehorse.rascode.dev/media/#CVR) |
-| `BIZ` | Business cards | Social | BIZ-01…BIZ-02 | [open](https://firehorse.rascode.dev/media/#BIZ) |
-| `SLD` | Slide layouts | Slides | SLD-01…SLD-10 | [open](https://firehorse.rascode.dev/media/#SLD) |
-| `THM` | themes/brand.css | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
+| `THB` | Thumbnails & link cards | Social | 1 Thumbnails & link cards (2) | [open](https://firehorse.rascode.dev/media/#THB) |
+| `SOC` | Posts & stories | Social | 1 Posts & stories (5) | [open](https://firehorse.rascode.dev/media/#SOC) |
+| `HDR` | Profile headers | Social | 1 Profile headers (3) | [open](https://firehorse.rascode.dev/media/#HDR) |
+| `CVR` | Cover art | Social | 1 Cover art (2) | [open](https://firehorse.rascode.dev/media/#CVR) |
+| `BIZ` | Business cards | Social | 1 Business cards (2) | [open](https://firehorse.rascode.dev/media/#BIZ) |
+| `SLD` | Slide layouts | Slides | 1 Openers (3) · 2 Content (6) · 3 Close (1) | [open](https://firehorse.rascode.dev/media/#SLD) |
+| `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
 | `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
+| `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
+| `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
 
 ## NEU · Neutral ramp
 
@@ -124,9 +133,35 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid roles scale with their container.
 
-Classes: `fh-label` `fh-display` `fh-title` `fh-heading` `fh-lede` `fh-price` `fh-signature`
+Classes: `fh-label` `fh-title` `fh-body`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#TYP.
+### TYP-1 · Type presets
+
+Four faces as one attribute: data-fh-type sets the sans and display families and the heading tracking each face wants (Hanken Grotesk at −5%, Archivo at −3%). A theme picks one with config.type. Presets name the family only: load the font yourself.
+
+#### TYP-1.1 · Geist
+
+```html
+<div class="site-type-row" data-fh-type="geist"><div class="site-type-row__meta"><span class="fh-label">Geist</span><code>data-fh-type="geist" · −4% display</code></div><div><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+```
+
+#### TYP-1.2 · Inter
+
+```html
+<div class="site-type-row" data-fh-type="inter"><div class="site-type-row__meta"><span class="fh-label">Inter</span><code>data-fh-type="inter" · −3.5% display</code></div><div><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+```
+
+#### TYP-1.3 · Hanken Grotesk
+
+```html
+<div class="site-type-row" data-fh-type="hanken"><div class="site-type-row__meta"><span class="fh-label">Hanken Grotesk</span><code>data-fh-type="hanken" · −5% display</code></div><div><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+```
+
+#### TYP-1.4 · Archivo
+
+```html
+<div class="site-type-row" data-fh-type="archivo"><div class="site-type-row__meta"><span class="fh-label">Archivo</span><code>data-fh-type="archivo" · −3% display</code></div><div><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+```
 
 ## SPC · Space
 
@@ -174,40 +209,42 @@ The rolling word in a headline, without the usual wiring: no library, no word ar
 
 Classes: `fh-title` `fh-rotator` `fh-lede` `fh-heading` `fh-rotator--script` `fh-rotator--accent` `fh-rotator--mono` `fh-rotator--highlight` `fh-rotator--fade` `fh-rotator--gradient` `fh-rotator--down` `fh-rotator--italic` `fh-rotator--underline` `fh-rotator--display`
 
-### WRT-01 · The design system that scalesadaptsfitsflexesgrows.
+### WRT-1 · Word rotator
+
+#### WRT-1.1 · Title
 
 ```html
-<h3 class="fh-title">The design system that <span class="fh-rotator"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">flexes</span><span aria-hidden="true">grows</span></span>.</h3>
+<h3 class="fh-title">The design system that <span class="fh-rotator" data-fh="WRT-1.1"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">flexes</span><span aria-hidden="true">grows</span></span>.</h3>
 ```
 
-### WRT-02 · Built for studiosstartupsagencies, shipped in a week.
+#### WRT-1.2 · Lede · tone
 
 ```html
-<p class="fh-lede" style="--fh-rotator-step: 1.8s">Built for <span class="fh-rotator" data-tone="sky"><span>studios</span><span aria-hidden="true">startups</span><span aria-hidden="true">agencies</span></span>, shipped in a week.</p>
+<p class="fh-lede" style="--fh-rotator-step: 1.8s">Built for <span class="fh-rotator" data-tone="sky" data-fh="WRT-1.2"><span>studios</span><span aria-hidden="true">startups</span><span aria-hidden="true">agencies</span></span>, shipped in a week.</p>
 ```
 
-### WRT-03 · Made by handpeopleRascode
+#### WRT-1.3 · Script · accent
 
 ```html
-<p class="fh-heading">Made by <span class="fh-rotator fh-rotator--script fh-rotator--accent"><span>hand</span><span aria-hidden="true">people</span><span aria-hidden="true">Rascode</span></span></p>
+<p class="fh-heading">Made by <span class="fh-rotator fh-rotator--script fh-rotator--accent" data-fh="WRT-1.3"><span>hand</span><span aria-hidden="true">people</span><span aria-hidden="true">Rascode</span></span></p>
 ```
 
-### WRT-04 · Ship it todaytonightnow
+#### WRT-1.4 · Mono · highlight · fade
 
 ```html
-<p class="fh-heading">Ship it <span class="fh-rotator fh-rotator--mono fh-rotator--highlight fh-rotator--fade" data-tone="lime"><span>today</span><span aria-hidden="true">tonight</span><span aria-hidden="true">now</span></span></p>
+<p class="fh-heading">Ship it <span class="fh-rotator fh-rotator--mono fh-rotator--highlight fh-rotator--fade" data-tone="lime" data-fh="WRT-1.4"><span>today</span><span aria-hidden="true">tonight</span><span aria-hidden="true">now</span></span></p>
 ```
 
-### WRT-05 · Every tonethemescheme included
+#### WRT-1.5 · Gradient · down
 
 ```html
-<p class="fh-heading">Every <span class="fh-rotator fh-rotator--gradient fh-rotator--down"><span>tone</span><span aria-hidden="true">theme</span><span aria-hidden="true">scheme</span></span> included</p>
+<p class="fh-heading">Every <span class="fh-rotator fh-rotator--gradient fh-rotator--down" data-fh="WRT-1.5"><span>tone</span><span aria-hidden="true">theme</span><span aria-hidden="true">scheme</span></span> included</p>
 ```
 
-### WRT-06 · Looks sharpcalmbold anywhere
+#### WRT-1.6 · Italic · underline · display
 
 ```html
-<p class="fh-heading">Looks <span class="fh-rotator fh-rotator--italic fh-rotator--underline fh-rotator--display" data-tone="amber" style="--fh-rotator-scale: 1.2"><span>sharp</span><span aria-hidden="true">calm</span><span aria-hidden="true">bold</span></span> anywhere</p>
+<p class="fh-heading">Looks <span class="fh-rotator fh-rotator--italic fh-rotator--underline fh-rotator--display" data-tone="amber" style="--fh-rotator-scale: 1.2" data-fh="WRT-1.6"><span>sharp</span><span aria-hidden="true">calm</span><span aria-hidden="true">bold</span></span> anywhere</p>
 ```
 
 ## STK · Stack
@@ -276,56 +313,68 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## BTN · Button
 
-Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge.
+Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge. --flat is solid black with white text in every scheme.
 
-Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--outline` `fh-button--ghost` `fh-button--accent` `fh-button--sm`
+Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-button--flat` `fh-button--outline` `fh-button--ghost` `fh-button--sm`
 
-### BTN-01 · Primary
+### BTN-1 · Solid
+
+#### BTN-1.1 · Primary
 
 ```html
-<a class="fh-button" href="#c-button"><span class="fh-roll">Discuss a project</span></a>
+<a class="fh-button" href="#c-button" data-fh="BTN-1.1"><span class="fh-roll">Discuss a project</span></a>
 ```
 
-### BTN-02 · Tone edge
+#### BTN-1.2 · Tone edge
 
 ```html
-<a class="fh-button" href="#c-button" data-tone="sky">Tone edge</a>
+<a class="fh-button" href="#c-button" data-tone="sky" data-fh="BTN-1.2">Tone edge</a>
 ```
 
-### BTN-03 · Secondary
+#### BTN-1.3 · Secondary
 
 ```html
-<button class="fh-button fh-button--secondary" type="button">Secondary</button>
+<button class="fh-button fh-button--secondary" type="button" data-fh="BTN-1.3">Secondary</button>
 ```
 
-### BTN-04 · Outline
+#### BTN-1.4 · Accent
 
 ```html
-<button class="fh-button fh-button--outline" type="button">Outline</button>
+<button class="fh-button fh-button--accent" type="button" data-fh="BTN-1.4">Accent</button>
 ```
 
-### BTN-05 · Ghost
+#### BTN-1.5 · Flat
 
 ```html
-<button class="fh-button fh-button--ghost" type="button">Ghost</button>
+<button class="fh-button fh-button--flat" type="button" data-fh="BTN-1.5">Flat</button>
 ```
 
-### BTN-06 · Accent
+### BTN-2 · Line
+
+#### BTN-2.1 · Outline
 
 ```html
-<button class="fh-button fh-button--accent" type="button">Accent</button>
+<button class="fh-button fh-button--outline" type="button" data-fh="BTN-2.1">Outline</button>
 ```
 
-### BTN-07 · Busy
+#### BTN-2.2 · Ghost
 
 ```html
-<button class="fh-button" type="button" aria-busy="true">Saving</button>
+<button class="fh-button fh-button--ghost" type="button" data-fh="BTN-2.2">Ghost</button>
 ```
 
-### BTN-08 · Small, disabled
+### BTN-3 · States
+
+#### BTN-3.1 · Busy
 
 ```html
-<button class="fh-button fh-button--sm" type="button" disabled>Disabled</button>
+<button class="fh-button" type="button" aria-busy="true" data-fh="BTN-3.1">Saving</button>
+```
+
+#### BTN-3.2 · Small, disabled
+
+```html
+<button class="fh-button fh-button--sm" type="button" disabled data-fh="BTN-3.2">Disabled</button>
 ```
 
 ## ACT · Action & link
@@ -340,18 +389,14 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Dots, eyebrow pills, breadcrumbs and badges.
 
-Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-breadcrumb` `fh-breadcrumb__back` `fh-cluster` `fh-badge` `fh-badge--solid`
+Classes: `fh-breadcrumb` `fh-breadcrumb__back` `fh-dot` `fh-dot--live` `fh-cluster` `fh-badge` `fh-badge--solid`
 
-### MRK-01 · Eyebrow pill
+### MRK-1 · Markers
 
-```html
-<p class="fh-eyebrow-pill" data-tone="fuchsia"><span class="fh-dot fh-dot--live"></span>AI services</p>
-```
-
-### MRK-02 · Breadcrumb
+#### MRK-1.1 · Breadcrumb
 
 ```html
-<nav class="fh-breadcrumb" aria-label="Breadcrumb" data-tone="teal">
+<nav class="fh-breadcrumb" aria-label="Breadcrumb" data-tone="teal" data-fh="MRK-1.1">
   <a class="fh-breadcrumb__back" href="#c-markers" aria-label="Back"><span class="fh-dot fh-dot--live"></span></a>
   <ol>
     <li><a href="#c-markers">Services</a></li>
@@ -361,13 +406,13 @@ Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-breadcrumb` `fh-breadcrum
 </nav>
 ```
 
-### MRK-03 · Badges
+#### MRK-1.2 · Badges
 
 ```html
 <div class="fh-cluster">
-  <span class="fh-badge">Required</span>
-  <span class="fh-badge" data-tone="lime">Live</span>
-  <span class="fh-badge fh-badge--solid" data-tone="amber">Beta</span>
+  <span class="fh-badge" data-fh="MRK-1.2">Required</span>
+  <span class="fh-badge" data-tone="lime" data-fh="MRK-1.2">Live</span>
+  <span class="fh-badge fh-badge--solid" data-tone="amber" data-fh="MRK-1.2">Beta</span>
 </div>
 ```
 
@@ -377,154 +422,184 @@ The Doppler pill from the top of this page, as a full component. Combine a shape
 
 Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh-eyebrow-pill--dotted` `fh-eyebrow-pill--double` `fh-dot--square` `fh-eyebrow-pill--rounded` `fh-eyebrow-pill--sharp` `fh-dot--diamond` `fh-eyebrow-pill--oval` `fh-eyebrow-pill--tab` `fh-eyebrow-pill--tone` `fh-eyebrow-pill--solid` `fh-dot--blink` `fh-eyebrow-pill--gradient` `fh-eyebrow-pill--glass` `fh-dot--ring` `fh-eyebrow-pill--ghost` `fh-eyebrow-pill--bracket` `fh-dot--bar` `fh-eyebrow-pill--underline` `fh-eyebrow-pill__index` `fh-eyebrow-pill__seg` `fh-eyebrow-pill__count` `fh-eyebrow-pill--sentence` `fh-avatar` `fh-avatar--circle` `fh-eyebrow-pill__action` `fh-kbd` `fh-eyebrow-pill--sm` `fh-eyebrow-pill--lg`
 
-### EYE-01 · Now accepting proposals · Book a call
+### EYE-1 · Lines
+
+.fh-eyebrow-pill · --etched · --dotted · --double
+
+#### EYE-1.1 · Solid line
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="live"><span class="fh-dot fh-dot--live"></span><span>Now accepting proposals · <strong>Book a call</strong></span></p>
+<p class="fh-eyebrow-pill" data-tone="sky" data-fh="EYE-1.1"><span class="fh-dot fh-dot--live"></span>Solid line</p>
 ```
 
-### EYE-02 · Solid line
+#### EYE-1.2 · Etched line
 
 ```html
-<p class="fh-eyebrow-pill" data-tone="sky"><span class="fh-dot fh-dot--live"></span>Solid line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-1.2"><span class="fh-dot fh-dot--live"></span>Etched line</p>
 ```
 
-### EYE-03 · Etched line
+#### EYE-1.3 · Dotted line
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal"><span class="fh-dot fh-dot--live"></span>Etched line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh="EYE-1.3"><span class="fh-dot"></span>Dotted line</p>
 ```
 
-### EYE-04 · Dotted line
+#### EYE-1.4 · Double line
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime"><span class="fh-dot"></span>Dotted line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh="EYE-1.4"><span class="fh-dot fh-dot--square"></span>Double line</p>
 ```
 
-### EYE-05 · Double line
+### EYE-2 · Shapes
+
+--rounded · --sharp · --oval · --tab
+
+#### EYE-2.1 · Rounded
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber"><span class="fh-dot fh-dot--square"></span>Double line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="orange" data-fh="EYE-2.1"><span class="fh-dot"></span>Rounded</p>
 ```
 
-### EYE-06 · Rounded
+#### EYE-2.2 · Sharp
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="orange"><span class="fh-dot"></span>Rounded</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--sharp fh-eyebrow-pill--etched" data-tone="rose" data-fh="EYE-2.2"><span class="fh-dot fh-dot--diamond"></span>Sharp</p>
 ```
 
-### EYE-07 · Sharp
+#### EYE-2.3 · Oval
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--sharp fh-eyebrow-pill--etched" data-tone="rose"><span class="fh-dot fh-dot--diamond"></span>Sharp</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--oval fh-eyebrow-pill--etched" data-tone="fuchsia" data-fh="EYE-2.3"><span class="fh-dot fh-dot--live"></span>Oval</p>
 ```
 
-### EYE-08 · Oval
+#### EYE-2.4 · Tab
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--oval fh-eyebrow-pill--etched" data-tone="fuchsia"><span class="fh-dot fh-dot--live"></span>Oval</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--tab fh-eyebrow-pill--etched" data-tone="sky" data-fh="EYE-2.4"><span class="fh-dot"></span>Tab</p>
 ```
 
-### EYE-09 · Tone tinted
+### EYE-3 · Fills
+
+--tone · --solid · --gradient · --glass · --ghost
+
+#### EYE-3.1 · Tone tinted
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh="EYE-3.1"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
 ```
 
-### EYE-10 · Solid tone
+#### EYE-3.2 · Solid tone
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh="EYE-3.2"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
 ```
 
-### EYE-11 · Gradient sweep
+#### EYE-3.3 · Gradient sweep
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh="EYE-3.3"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
 ```
 
-### EYE-12 · Glass
+#### EYE-3.4 · Glass
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal"><span class="fh-dot fh-dot--ring"></span>Glass</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh="EYE-3.4"><span class="fh-dot fh-dot--ring"></span>Glass</p>
 ```
 
-### EYE-13 · Bracketed
+#### EYE-3.5 · Ghost
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--bracket" data-tone="amber"><span class="fh-dot fh-dot--bar"></span>Bracketed</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh="EYE-3.5"><span class="fh-dot fh-dot--live"></span>Ghost</p>
 ```
 
-### EYE-14 · Underline
+### EYE-4 · Edges
+
+--bracket · --underline
+
+#### EYE-4.1 · Bracketed
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--underline" data-tone="orange"><span class="fh-dot"></span>Underline</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--bracket" data-tone="amber" data-fh="EYE-4.1"><span class="fh-dot fh-dot--bar"></span>Bracketed</p>
 ```
 
-### EYE-15 · Ghost
+#### EYE-4.2 · Underline
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime"><span class="fh-dot fh-dot--live"></span>Ghost</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--underline" data-tone="orange" data-fh="EYE-4.2"><span class="fh-dot"></span>Underline</p>
 ```
 
-### EYE-16 · Tab
+### EYE-5 · Parts
+
+__index · __seg · __count
+
+#### EYE-5.1 · Indexed
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--tab fh-eyebrow-pill--etched" data-tone="sky"><span class="fh-dot"></span>Tab</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-5.1"><span class="fh-eyebrow-pill__index">02</span>Indexed section</p>
 ```
 
-### EYE-17 · 02Indexed section
+#### EYE-5.2 · Segmented
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal"><span class="fh-eyebrow-pill__index">02</span>Indexed section</p>
+<p class="fh-eyebrow-pill" data-tone="orange" data-fh="EYE-5.2"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p>
 ```
 
-### EYE-18 · Automation4 services
+#### EYE-5.3 · Counted
 
 ```html
-<p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose" data-fh="EYE-5.3"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p>
 ```
 
-### EYE-19 · Open roles 3
+### EYE-6 · Sentences
+
+--sentence · __action · .fh-kbd
+
+#### EYE-6.1 · Accepting · action
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="live" data-fh="EYE-6.1"><span class="fh-dot fh-dot--live"></span><span>Now accepting proposals · <strong>Book a call</strong></span></p>
 ```
 
-### EYE-20 · Reginald is onlineTalk
+#### EYE-6.2 · Agent · avatar
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="sky"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/reginald.webp" alt=""></span><span>Reginald is online</span><a class="fh-eyebrow-pill__action" href="#c-eyebrow">Talk</a></p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="sky" data-fh="EYE-6.2"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/reginald.webp" alt></span><span>Reginald is online</span><a class="fh-eyebrow-pill__action" href="#c-eyebrow">Talk</a></p>
 ```
 
-### EYE-21 · Search the docs⌘K
+#### EYE-6.3 · Search · shortcut
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sentence" data-tone="neutral"><span>Search the docs</span><kbd class="fh-kbd">⌘K</kbd></p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sentence" data-tone="neutral" data-fh="EYE-6.3"><span>Search the docs</span><kbd class="fh-kbd">⌘K</kbd></p>
 ```
 
-### EYE-22 · Small
+### EYE-7 · Sizes
+
+--sm · --lg
+
+#### EYE-7.1 · Small
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--sm" data-tone="lime"><span class="fh-dot"></span>Small</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--sm" data-tone="lime" data-fh="EYE-7.1"><span class="fh-dot"></span>Small</p>
 ```
 
-### EYE-23 · Large
+#### EYE-7.2 · Large
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--etched" data-tone="accent"><span class="fh-dot fh-dot--live"></span>Large</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--etched" data-tone="accent" data-fh="EYE-7.2"><span class="fh-dot fh-dot--live"></span>Large</p>
 ```
 
 ## CHP · Chips
 
 Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from data-tone.
 
-Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove`
+Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text`
 
-### CHP-01 · Filter
+### CHP-1 · Kinds
+
+#### CHP-1.1 · Filter
 
 ```html
-<div class="fh-chips fh-chips--wrap">
+<div class="fh-chips fh-chips--wrap" data-fh="CHP-1.1">
   <a class="fh-chip" data-tone="sky" href="#c-chips" aria-current="true">Agents</a>
   <a class="fh-chip" data-tone="teal" href="#c-chips">Data</a>
   <a class="fh-chip" data-tone="orange" href="#c-chips">Automation</a>
@@ -532,170 +607,170 @@ Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid
 </div>
 ```
 
-### CHP-02 · Choice
+#### CHP-1.2 · Choice
 
 ```html
-<div class="fh-chips fh-chips--track" role="group" aria-label="Contact task">
+<div class="fh-chips fh-chips--track" role="group" aria-label="Contact task" data-fh="CHP-1.2">
   <label class="fh-chip" data-tone="lime"><input type="radio" name="task" checked> Start a project</label>
   <label class="fh-chip" data-tone="sky"><input type="radio" name="task"> Book a call</label>
   <label class="fh-chip" data-tone="rose"><input type="radio" name="task"> Support</label>
 </div>
 ```
 
-### CHP-03 · Fill
+#### CHP-1.3 · Fill
 
 ```html
-<div class="fh-chips fh-chips--wrap">
+<div class="fh-chips fh-chips--wrap" data-fh="CHP-1.3">
   <span class="fh-chip fh-chip--solid" data-tone="sky"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i>Solid tone</span>
   <span class="fh-chip fh-chip--tone" data-tone="orange"><i class="fh-icon fh-icon--workflow" aria-hidden="true"></i>Soft tone</span>
   <span class="fh-chip fh-chip--plain">Plain</span>
 </div>
 ```
 
-### CHP-04 · Tabs
+#### CHP-1.4 · Tabs
 
 ```html
-<div class="fh-chips fh-chips--wrap">
+<div class="fh-chips fh-chips--wrap" data-fh="CHP-1.4">
   <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips" aria-current="true">Overview</a>
   <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips">Pricing</a>
   <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips">FAQ</a>
 </div>
 ```
 
-### CHP-05 · Indexed
+### CHP-2 · Parts
+
+#### CHP-2.1 · Indexed
 
 ```html
-<div class="fh-chips fh-chips--wrap">
+<div class="fh-chips fh-chips--wrap" data-fh="CHP-2.1">
   <span class="fh-chip fh-chip--indexed" data-tone="violet"><b class="fh-chip__index">01</b>Foundations</span>
   <span class="fh-chip fh-chip--indexed" data-tone="amber"><b class="fh-chip__index">03</b>Components</span>
   <span class="fh-chip fh-chip--indexed" data-tone="sky"><b class="fh-chip__index">04</b>Data</span>
 </div>
 ```
 
-### CHP-06 · Counted
+#### CHP-2.2 · Counted
 
 ```html
-<div class="fh-chips fh-chips--indexed fh-chips--wrap" aria-label="Open roles">
+<div class="fh-chips fh-chips--indexed fh-chips--wrap" aria-label="Open roles" data-fh="CHP-2.2">
   <a class="fh-chip fh-chip--tone" data-tone="fuchsia" href="#services">Design engineer</a>
   <a class="fh-chip fh-chip--tone" data-tone="sky" href="#services">AI agent builder</a>
   <a class="fh-chip fh-chip--tone" data-tone="orange" href="#services">Automation lead</a>
 </div>
 ```
 
-### CHP-07 · Removable
+#### CHP-2.3 · Removable
 
 ```html
-<div class="fh-chips fh-chips--wrap">
+<div class="fh-chips fh-chips--wrap" data-fh="CHP-2.3">
   <span class="fh-chip fh-chip--plain">Website <button class="fh-chip__remove" type="button" aria-label="Remove Website"></button></span>
   <span class="fh-chip fh-chip--plain">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span>
 </div>
 ```
 
-## CHC · Chip cards
+### CHP-3 · Chip cards
 
 Compact cards led by a tone block: categories, people, files.
 
-Classes: `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text`
-
-### CHC-01 · Data architecture
+#### CHP-3.1 · Data architecture
 
 ```html
-<a class="fh-chip-card" data-tone="teal" href="#c-chip-cards"><span class="fh-chip-card__block">DA</span><span class="fh-chip-card__text"><b>Data architecture</b><small>4 services</small></span></a>
+<a class="fh-chip-card" data-tone="teal" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">DA</span><span class="fh-chip-card__text"><b>Data architecture</b><small>4 services</small></span></a>
 ```
 
-### CHC-02 · Automation
+#### CHP-3.2 · Automation
 
 ```html
-<a class="fh-chip-card" data-tone="orange" href="#c-chip-cards"><span class="fh-chip-card__block">AU</span><span class="fh-chip-card__text"><b>Automation</b><small>6 services</small></span></a>
+<a class="fh-chip-card" data-tone="orange" href="#c-chip-cards" data-fh="CHP-3.2"><span class="fh-chip-card__block">AU</span><span class="fh-chip-card__text"><b>Automation</b><small>6 services</small></span></a>
 ```
 
-### CHC-03 · Maya
+#### CHP-3.3 · Maya
 
 ```html
-<a class="fh-chip-card" data-tone="sky" href="#c-chip-cards"><span class="fh-chip-card__block"><img src="img/avatars/maya.webp" alt=""></span><span class="fh-chip-card__text"><b>Maya</b><small>Dental agent</small></span></a>
+<a class="fh-chip-card" data-tone="sky" href="#c-chip-cards" data-fh="CHP-3.3"><span class="fh-chip-card__block"><img src="img/avatars/maya.webp" alt></span><span class="fh-chip-card__text"><b>Maya</b><small>Dental agent</small></span></a>
 ```
 
-### CHC-04 · Scope-of-work.pdf
+#### CHP-3.4 · Scope-of-work.pdf
 
 ```html
-<a class="fh-chip-card" data-tone="rose" href="#c-chip-cards"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a>
+<a class="fh-chip-card" data-tone="rose" href="#c-chip-cards" data-fh="CHP-3.4"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a>
 ```
 
 ## CUB · Cubes
 
 Tone blocks that carry one value. In a row they walk the hue wheel by 28°, so three facts read as one family.
 
-Classes: `fh-cubes` `fh-cube` `fh-cube--lg` `fh-cube--sm` `fh-icon` `fh-cube--outline`
+Classes: `fh-cubes` `fh-cube` `fh-cube--lg` `fh-cube--sm` `fh-icon` `fh-cube--outline` `fh-cube-cards` `fh-cube-card` `fh-cube--xl` `fh-cube-card__text` `fh-cube-card__trend` `fh-cube-card--stack`
 
-### CUB-01 · Facts
+### CUB-1 · Cubes
+
+#### CUB-1.1 · Facts
 
 ```html
-<ul class="fh-cubes" data-tone="teal">
+<ul class="fh-cubes" data-tone="teal" data-fh="CUB-1.1">
   <li><b class="fh-cube">$1,250</b> fixed</li>
   <li><b class="fh-cube">14</b> days</li>
   <li><b class="fh-cube">4</b> deliverables</li>
 </ul>
 ```
 
-### CUB-02 · Large
+#### CUB-1.2 · Large
 
 ```html
-<ul class="fh-cubes" data-tone="fuchsia">
+<ul class="fh-cubes" data-tone="fuchsia" data-fh="CUB-1.2">
   <li><b class="fh-cube fh-cube--lg">98</b> score</li>
   <li><b class="fh-cube fh-cube--lg">A+</b> grade</li>
   <li><b class="fh-cube fh-cube--lg">12</b> fixes</li>
 </ul>
 ```
 
-### CUB-03 · Icons
+#### CUB-1.3 · Icons
 
 ```html
-<ul class="fh-cubes" data-tone="sky">
+<ul class="fh-cubes" data-tone="sky" data-fh="CUB-1.3">
   <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--clock" aria-hidden="true"></i></b> 30 min</li>
   <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--video" aria-hidden="true"></i></b> Video call</li>
   <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></b> This week</li>
 </ul>
 ```
 
-### CUB-04 · Outline
+#### CUB-1.4 · Outline
 
 ```html
-<ul class="fh-cubes" data-tone="amber">
+<ul class="fh-cubes" data-tone="amber" data-fh="CUB-1.4">
   <li><b class="fh-cube fh-cube--outline">v1.1</b> release</li>
   <li><b class="fh-cube fh-cube--outline">MIT</b> license</li>
   <li><b class="fh-cube fh-cube--outline">183</b> icons</li>
 </ul>
 ```
 
-## CUC · Cube cards
+### CUB-2 · Cube cards
 
 Cards led by a cube: the value is the headline, the text says what it measures.
 
-Classes: `fh-cube-cards` `fh-cube-card` `fh-cube` `fh-cube--xl` `fh-cube-card__text` `fh-icon` `fh-cube--lg` `fh-cube-card__trend` `fh-cube-card--stack` `fh-cubes` `fh-cube--sm`
-
-### CUC-01 · Row
+#### CUB-2.1 · Row
 
 ```html
-<div class="fh-cube-cards" data-tone="lime" style="--fh-cube-card-min: 12rem">
+<div class="fh-cube-cards" data-tone="lime" style="--fh-cube-card-min: 12rem" data-fh="CUB-2.1">
   <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">14</b><div class="fh-cube-card__text"><b>Days</b><small>Kickoff to handoff</small></div></article>
   <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">4</b><div class="fh-cube-card__text"><b>Deliverables</b><small>Docs you keep</small></div></article>
   <a class="fh-cube-card" href="#c-cube-cards"><b class="fh-cube fh-cube--xl"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></b><div class="fh-cube-card__text"><b>Book a call</b><small>30 min, this week</small></div></a>
 </div>
 ```
 
-### CUC-02 · Trend
+#### CUB-2.2 · Trend
 
 ```html
-<div class="fh-cube-cards" data-tone="orange" style="--fh-cube-card-min: 12rem">
+<div class="fh-cube-cards" data-tone="orange" style="--fh-cube-card-min: 12rem" data-fh="CUB-2.2">
   <article class="fh-cube-card"><b class="fh-cube fh-cube--lg">$184k</b><div class="fh-cube-card__text"><b>Pipeline</b><small>Open deals · sample</small></div><span class="fh-cube-card__trend" data-dir="up">▲ 12%</span></article>
   <article class="fh-cube-card"><b class="fh-cube fh-cube--lg">2.4h</b><div class="fh-cube-card__text"><b>First reply</b><small>Median · sample</small></div><span class="fh-cube-card__trend" data-dir="down">▼ 8%</span></article>
 </div>
 ```
 
-### CUC-03 · Stacked
+#### CUB-2.3 · Stacked
 
 ```html
-<div class="fh-cube-cards" data-tone="violet" style="--fh-cube-card-min: 14rem">
+<div class="fh-cube-cards" data-tone="violet" style="--fh-cube-card-min: 14rem" data-fh="CUB-2.3">
   <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">$1,695</b><div class="fh-cube-card__text"><b>AI agent</b><small>Per month, after setup</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">24/7</b> coverage</li><li><b class="fh-cube fh-cube--sm">3</b> channels</li></ul></article>
   <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">1,284</b><div class="fh-cube-card__text"><b>Inquiries</b><small>Last 30 days · sample</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">+12%</b> vs last</li><li><b class="fh-cube fh-cube--sm">64%</b> booked</li></ul></article>
 </div>
@@ -738,6 +813,679 @@ Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and 
 Classes: `fh-carousel` `fh-carousel__track` `fh-carousel__slide` `fh-label` `fh-stats` `fh-carousel__count`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CAR.
+
+## DEK · Stacking deck
+
+Panels that pin as you scroll: each next one slides up over the last, and the ones behind shrink and darken into a deck with their top edges showing. Here it opens with a hero handoff (--hero): a full-height first card the deck slides in over. Pure CSS: sticky for the stack, a scroll-driven animation for the recede. Scroll the page.
+
+Classes: `fh-deck` `fh-deck__card` `fh-deck__media` `fh-deck__caption` `fh-deck__index` `fh-deck__title` `fh-deck__body` `fh-label` `fh-lede` `fh-deck--hero` `fh-title` `fh-deck--fade` `fh-deck--blur` `fh-deck--lift` `fh-deck--fan` `fh-deck__card--split` `fh-body` `fh-deck__caption--top` `fh-deck__meta` `fh-deck--count` `fh-deck--x` `fh-deck--reverse`
+
+### DEK-1 · Stacking deck
+
+The same deck without the hero: every card is the same size and starts the stack. Number left, title right, a hairline under both; a card is a tone surface or fills with __media.
+
+#### DEK-1.1 · Tone cards · media
+
+```html
+<ol class="fh-deck" data-fh="DEK-1.1">
+  <li class="fh-deck__card" data-tone="orange">
+    <img class="fh-deck__media" src="img/backdrop/firehorse-horse.webp" alt>
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <div class="fh-deck__body"><p class="fh-label">Practice 02</p><p class="fh-lede">Sites and products that hold up on every screen.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <div class="fh-deck__body"><p class="fh-label">Practice 03</p><p class="fh-lede">Motion systems, from a hover to a launch film.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <div class="fh-deck__body"><p class="fh-label">Practice 04</p><p class="fh-lede">Shoots, casting and art direction for campaigns.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+### DEK-2 · Hero handoff
+
+#### DEK-2.1 · Hero handoff
+
+```html
+<ol class="fh-deck fh-deck--hero" data-fh="DEK-2.1">
+  <li class="fh-deck__card" data-tone="orange">
+    <img class="fh-deck__media" src="img/backdrop/firehorse-horse.webp" alt>
+    <div class="fh-deck__body"><p class="fh-title">Ink, etch &amp; ember. A studio in four practices.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">Studio</span><span class="fh-deck__title">(Scroll)</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="amber">
+    <div class="fh-deck__body"><p class="fh-label">Practice 01</p><p class="fh-lede">Marks, type and systems that hold together.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <div class="fh-deck__body"><p class="fh-label">Practice 02</p><p class="fh-lede">Sites and products that hold up on every screen.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <div class="fh-deck__body"><p class="fh-label">Practice 03</p><p class="fh-lede">Motion systems, from a hover to a launch film.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <div class="fh-deck__body"><p class="fh-label">Practice 04</p><p class="fh-lede">Shoots, casting and art direction for campaigns.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+### DEK-3 · Recede styles
+
+How the cards behind go back. --fade fades them, --blur blurs them, --lift tilts them back in 3D, --fan turns each a degree or two and shows more of it. Each has a knob, and they combine. Scroll inside each box.
+
+#### DEK-3.1 · Fade
+
+```html
+<ol class="fh-deck fh-deck--fade" style="--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-3.1">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+#### DEK-3.2 · Blur
+
+```html
+<ol class="fh-deck fh-deck--blur" style="--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-3.2">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+#### DEK-3.3 · Lift
+
+```html
+<ol class="fh-deck fh-deck--lift" style="--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-3.3">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+#### DEK-3.4 · Fan
+
+```html
+<ol class="fh-deck fh-deck--fan" style="--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-3.4">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+### DEK-4 · Cards and captions
+
+__card--split puts the picture on one half and the words on the other (picture over text in a narrow slot). __caption--top moves the caption up; __meta adds a small mono line. --count adds a 01 / 04 readout that follows the card in front.
+
+#### DEK-4.1 · Split card
+
+```html
+<ol class="fh-deck" style="--fh-deck-top: 0.75rem; --fh-deck-height: 20rem; --fh-deck-gap: 5rem" data-fh="DEK-4.1">
+  <li class="fh-deck__card fh-deck__card--split" data-tone="orange">
+    <img class="fh-deck__media" src="img/backdrop/firehorse-horse.webp" alt>
+    <div class="fh-deck__body"><p class="fh-label">Case 01</p><p class="fh-body">A mark and a system that hold together.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card fh-deck__card--split" data-tone="sky">
+    <img class="fh-deck__media" src="img/backdrop/firehorse-hoof.webp" alt>
+    <div class="fh-deck__body"><p class="fh-label">Case 02</p><p class="fh-body">Sites and products for every screen.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card fh-deck__card--split" data-tone="violet">
+    <img class="fh-deck__media" src="img/backdrop/lipizzaner-horse.webp" alt>
+    <div class="fh-deck__body"><p class="fh-label">Case 03</p><p class="fh-body">A house style, set in motion.</p></div>
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+</ol>
+```
+
+#### DEK-4.2 · Caption top · meta
+
+```html
+<ol class="fh-deck" style="--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-4.2">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption fh-deck__caption--top"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding<small class="fh-deck__meta">2026 · Identity</small></span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption fh-deck__caption--top"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital<small class="fh-deck__meta">2025 · Web, product</small></span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption fh-deck__caption--top"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion<small class="fh-deck__meta">2025 · Film, UI</small></span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption fh-deck__caption--top"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction<small class="fh-deck__meta">2024 · Campaign</small></span></p>
+  </li>
+</ol>
+```
+
+#### DEK-4.3 · Count
+
+```html
+<ol class="fh-deck fh-deck--count" style="--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-4.3">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+### DEK-5 · Direction
+
+--x runs the deck sideways in its own scroll row; cards pin at the left edge and recede to the left. --reverse keeps the cards in a pile at the bottom, and the front one rises off it as you scroll.
+
+#### DEK-5.1 · Sideways
+
+```html
+<ol class="fh-deck fh-deck--x" style="--fh-deck-height: 16rem; --fh-deck-width: min(80%, 22rem)" data-fh="DEK-5.1">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+#### DEK-5.2 · Reverse
+
+```html
+<ol class="fh-deck fh-deck--reverse" style="--fh-deck-bottom: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem" data-fh="DEK-5.2">
+  <li class="fh-deck__card" data-tone="orange">
+    <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="sky">
+    <p class="fh-deck__caption"><span class="fh-deck__index">02</span><span class="fh-deck__title">Digital</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="violet">
+    <p class="fh-deck__caption"><span class="fh-deck__index">03</span><span class="fh-deck__title">Motion</span></p>
+  </li>
+  <li class="fh-deck__card" data-tone="lime">
+    <p class="fh-deck__caption"><span class="fh-deck__index">04</span><span class="fh-deck__title">Art direction</span></p>
+  </li>
+</ol>
+```
+
+## MBR · Member card
+
+A pass for one person: art on top, a big name with an ID number, a dotted rule, mono facts and a round "made by" stamp; --plates splits art and body into two pieces with a tagline, a quiet ID row and a holographic __badge. The art glitches (--smear drags it sideways) (blocks of the picture shift colour, ASCII glyphs flicker) and the stamp turns slowly; all still under reduced motion. data-fh-scheme="light" gives the paper look on a dark page; data-tone colours the stamp and the --glow.
+
+Classes: `fh-member` `fh-member--glow` `fh-member__art` `fh-member__glyphs` `fh-member__body` `fh-member__name` `fh-member__id` `fh-member__facts` `fh-member__role` `fh-member__stamp` `fh-member--plates` `fh-member--smear` `fh-member__tagline` `fh-member__meta` `fh-member__badge`
+
+### MBR-1 · Pass
+
+#### MBR-1.1 · Paper · glow
+
+```html
+<article class="fh-member fh-member--glow" data-tone="orange" data-fh-scheme="light" data-fh="MBR-1.1">
+  <div class="fh-member__art"><img src="img/backdrop/firehorse-horse.webp" alt><span class="fh-member__glyphs" aria-hidden="true"></span></div>
+  <div class="fh-member__body">
+    <h3 class="fh-member__name">Maya Okafor</h3>
+    <span class="fh-member__id">#291832</span>
+    <dl class="fh-member__facts">
+      <div><dt>Account creation</dt><dd>Fri 10 Apr, 2026</dd></div>
+      <div><dt>Current</dt><dd>Active</dd></div>
+    </dl>
+    <p class="fh-member__role">Studio team<br>Senior developer</p>
+    <svg class="fh-member__stamp" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="stamp-mbr-1-1" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0"></path></defs><circle cx="50" cy="50" r="47"></circle><circle cx="50" cy="50" r="27"></circle><text><textPath href="#stamp-mbr-1-1">Made by Firehorse · Made by Firehorse ·</textPath></text><path d="M50 38l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"></path></svg>
+  </div>
+</article>
+```
+
+#### MBR-1.2 · Follows the scheme
+
+```html
+<article class="fh-member" data-tone="violet" data-fh="MBR-1.2">
+  <div class="fh-member__art"><img src="img/backdrop/lipizzaner-horse.webp" alt><span class="fh-member__glyphs" aria-hidden="true"></span></div>
+  <div class="fh-member__body">
+    <h3 class="fh-member__name">Mateo Alvarez</h3>
+    <span class="fh-member__id">#291847</span>
+    <dl class="fh-member__facts">
+      <div><dt>Account creation</dt><dd>Mon 2 Nov, 2026</dd></div>
+      <div><dt>Current</dt><dd>Active</dd></div>
+    </dl>
+    <p class="fh-member__role">Design team<br>Art director</p>
+    <svg class="fh-member__stamp" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="stamp-mbr-1-2" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0"></path></defs><circle cx="50" cy="50" r="47"></circle><circle cx="50" cy="50" r="27"></circle><text><textPath href="#stamp-mbr-1-2">Made by Firehorse · Made by Firehorse ·</textPath></text><path d="M50 38l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"></path></svg>
+  </div>
+</article>
+```
+
+#### MBR-1.3 · Clean art · no stamp
+
+```html
+<article class="fh-member" data-tone="sky" data-fh="MBR-1.3">
+  <div class="fh-member__art"><img src="img/backdrop/firehorse-hoof.webp" alt></div>
+  <div class="fh-member__body">
+    <h3 class="fh-member__name">Isla Moreau</h3>
+    <span class="fh-member__id">#291903</span>
+    <dl class="fh-member__facts">
+      <div><dt>Account creation</dt><dd>Tue 14 Jul, 2026</dd></div>
+      <div><dt>Current</dt><dd>Away</dd></div>
+    </dl>
+    <p class="fh-member__role">Ops team<br>Producer</p>
+  </div>
+</article>
+```
+
+### MBR-2 · Plates
+
+#### MBR-2.1 · Plates · smear · badge
+
+```html
+<article class="fh-member fh-member--plates fh-member--smear" data-tone="sky" data-fh="MBR-2.1">
+  <div class="fh-member__art"><img src="img/backdrop/lipizzaner-horse.webp" alt><span class="fh-member__glyphs" aria-hidden="true"></span></div>
+  <div class="fh-member__body">
+    <h3 class="fh-member__name">Ruben</h3>
+    <p class="fh-member__tagline">Gifted big shot</p>
+    <p class="fh-member__meta"><span>#291832</span><span>Owner</span></p>
+    <p class="fh-member__role">Fri 10 Apr, 2026</p>
+    <span class="fh-member__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v16M12 9l-4-3M12 9l4-3M12 13l-5-3M12 13l5-3M12 17l-4-3M12 17l4-3"></path></svg></span>
+  </div>
+</article>
+```
+
+#### MBR-2.2 · Plates · paper · glow
+
+```html
+<article class="fh-member fh-member--plates fh-member--glow" data-tone="amber" data-fh-scheme="light" data-fh="MBR-2.2">
+  <div class="fh-member__art"><img src="img/backdrop/firehorse-horse.webp" alt><span class="fh-member__glyphs" aria-hidden="true"></span></div>
+  <div class="fh-member__body">
+    <h3 class="fh-member__name">Noor</h3>
+    <p class="fh-member__tagline">Quiet operator</p>
+    <p class="fh-member__meta"><span>#291856</span><span>Admin</span></p>
+    <p class="fh-member__role">Sat 2 May, 2026</p>
+    <span class="fh-member__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v16M12 9l-4-3M12 9l4-3M12 13l-5-3M12 13l5-3M12 17l-4-3M12 17l4-3"></path></svg></span>
+  </div>
+</article>
+```
+
+#### MBR-2.3 · Plates · recolour
+
+```html
+<article class="fh-member fh-member--plates" data-tone="fuchsia" data-fh="MBR-2.3">
+  <div class="fh-member__art"><img src="img/backdrop/firehorse-hoof.webp" alt><span class="fh-member__glyphs" aria-hidden="true"></span></div>
+  <div class="fh-member__body">
+    <h3 class="fh-member__name">Theo</h3>
+    <p class="fh-member__tagline">First rider</p>
+    <p class="fh-member__meta"><span>#291871</span><span>Member</span></p>
+    <p class="fh-member__role">Sun 7 Jun, 2026</p>
+    <span class="fh-member__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v16M12 9l-4-3M12 9l4-3M12 13l-5-3M12 13l5-3M12 17l-4-3M12 17l4-3"></path></svg></span>
+  </div>
+</article>
+```
+
+## STY · Story card
+
+A tall card in three parts: a logo on top, a quote and a link at the bottom, and a wide open field between them that carries the story. Here the field draws a brand mark in shimmering vertical lines; hover brings it up. Solid fills come from the Firehorse palette: data-tone on its own, --deep toward ink, --ink, --paper. The whole card is the link.
+
+Classes: `fh-story` `fh-story--deep` `fh-story__head` `fh-story__logo` `fh-story__field` `fh-story__field--lines` `fh-story__mark` `fh-story__foot` `fh-story__quote` `fh-story__link` `fh-story--ink` `fh-story__figure` `fh-story__figure-label` `fh-story--paper` `fh-story__media` `fh-story__tag` `fh-story--glare` `fh-story--duotone` `fh-progress-field` `fh-progress` `fh-story__ring-wrap` `fh-story__ring` `fh-story__chart`
+
+### STY-1 · Solid
+
+#### STY-1.1 · Violet · deep · lines
+
+```html
+<article class="fh-story fh-story--deep" data-tone="violet" data-fh="STY-1.1">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="33" fill="none" stroke-width="16"></circle></svg>Halcyon</span></header>
+  <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="33" fill="none" stroke-width="16"></circle></svg></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Halcyon keeps a million rooms in sync with Firehorse.</p>
+    <a class="fh-story__link" href="#STY">Read Halcyon's story</a>
+  </footer>
+</article>
+```
+
+#### STY-1.2 · Ink · lines
+
+```html
+<article class="fh-story fh-story--ink" data-tone="violet" data-fh="STY-1.2">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="38,6 74,6 52,42 78,42 30,96 44,56 22,56"></polygon></svg>Voltline</span></header>
+  <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100"><polygon points="38,6 74,6 52,42 78,42 30,96 44,56 22,56"></polygon></svg></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Voltline ships every dashboard on one design system.</p>
+    <a class="fh-story__link" href="#STY">Read Voltline's story</a>
+  </footer>
+</article>
+```
+
+#### STY-1.3 · Ember · lines
+
+```html
+<article class="fh-story" data-tone="accent" data-fh="STY-1.3">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27"></polygon></svg>Hexwork</span></header>
+  <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27"></polygon></svg></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Hexwork cut its UI code in half in a quarter.</p>
+    <a class="fh-story__link" href="#STY">Read Hexwork's story</a>
+  </footer>
+</article>
+```
+
+#### STY-1.4 · Lime · figure
+
+```html
+<article class="fh-story" data-tone="lime" data-fh="STY-1.4">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 90V46a28 28 0 0 1 56 0v44" fill="none" stroke-width="16"></path></svg>Stirrup</span></header>
+  <div class="fh-story__field"><p class="fh-story__figure">98%</p><p class="fh-story__figure-label">Screens moved</p></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Stirrup moved 98% of its screens in six weeks.</p>
+    <a class="fh-story__link" href="#STY">Read Stirrup's story</a>
+  </footer>
+</article>
+```
+
+#### STY-1.5 · Sky · deep · lines
+
+```html
+<article class="fh-story fh-story--deep" data-tone="sky" data-fh="STY-1.5">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M6 60c14-28 30-28 44 0s30 28 44 0" fill="none" stroke-width="16"></path></svg>Northwind</span></header>
+  <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100"><path d="M6 60c14-28 30-28 44 0s30 28 44 0" fill="none" stroke-width="16"></path></svg></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Northwind reads every surface the same, light or dark.</p>
+    <a class="fh-story__link" href="#STY">Read Northwind's story</a>
+  </footer>
+</article>
+```
+
+#### STY-1.6 · Paper · lines
+
+```html
+<article class="fh-story fh-story--paper" data-tone="teal" data-fh="STY-1.6">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="10" y="14" width="80" height="18" rx="9"></rect><rect x="10" y="41" width="80" height="18" rx="9"></rect><rect x="10" y="68" width="80" height="18" rx="9"></rect></svg>Lumen</span></header>
+  <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100"><rect x="10" y="14" width="80" height="18" rx="9"></rect><rect x="10" y="41" width="80" height="18" rx="9"></rect><rect x="10" y="68" width="80" height="18" rx="9"></rect></svg></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Lumen builds its docs, app and emails from one set of tokens.</p>
+    <a class="fh-story__link" href="#STY">Read Lumen's story</a>
+  </footer>
+</article>
+```
+
+### STY-2 · Picture and glare
+
+__media puts a picture behind the card with a scrim top and bottom; --duotone washes it in the tone. --glare sends a band of light across the card every few seconds, and quickly on hover, over a picture or a solid fill.
+
+#### STY-2.1 · Picture
+
+```html
+<article class="fh-story" data-tone="orange" data-fh="STY-2.1">
+  <img class="fh-story__media" src="img/backdrop/firehorse-horse.webp" alt>
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 90V46a28 28 0 0 1 56 0v44" fill="none" stroke-width="16"></path></svg>Stirrup</span><span class="fh-story__tag">Case study</span></header>
+  <div class="fh-story__field" aria-hidden="true"></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Stirrup's riders book a lesson in under a minute.</p>
+    <a class="fh-story__link" href="#STY">Read Stirrup's story</a>
+  </footer>
+</article>
+```
+
+#### STY-2.2 · Picture · glare
+
+```html
+<article class="fh-story fh-story--glare" data-tone="amber" data-fh="STY-2.2">
+  <img class="fh-story__media" src="img/backdrop/lipizzaner-horse.webp" alt>
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="33" fill="none" stroke-width="16"></circle></svg>Halcyon</span><span class="fh-story__tag">Launch</span></header>
+  <div class="fh-story__field" aria-hidden="true"></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Halcyon launched its new site in a single sprint.</p>
+    <a class="fh-story__link" href="#STY">Read Halcyon's story</a>
+  </footer>
+</article>
+```
+
+#### STY-2.3 · Duotone
+
+```html
+<article class="fh-story fh-story--deep fh-story--duotone" data-tone="violet" data-fh="STY-2.3">
+  <img class="fh-story__media" src="img/backdrop/firehorse-hoof.webp" alt>
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M6 60c14-28 30-28 44 0s30 28 44 0" fill="none" stroke-width="16"></path></svg>Northwind</span><span class="fh-story__tag">Archive</span></header>
+  <div class="fh-story__field" aria-hidden="true"></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Northwind's archive, re-set in its own type.</p>
+    <a class="fh-story__link" href="#STY">Read Northwind's story</a>
+  </footer>
+</article>
+```
+
+#### STY-2.4 · Fuchsia · deep · glare · lines
+
+```html
+<article class="fh-story fh-story--deep fh-story--glare" data-tone="fuchsia" data-fh="STY-2.4">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="38,6 74,6 52,42 78,42 30,96 44,56 22,56"></polygon></svg>Voltline</span></header>
+  <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100"><polygon points="38,6 74,6 52,42 78,42 30,96 44,56 22,56"></polygon></svg></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Voltline's team ships twice as often since the move.</p>
+    <a class="fh-story__link" href="#STY">Read Voltline's story</a>
+  </footer>
+</article>
+```
+
+### STY-3 · In the field
+
+The open middle holds what the story needs: Firehorse progress fields, a __ring that fills to --value as it scrolls in, a __chart of columns drawn in lines, a live indeterminate bar with a count. Anything else fits too.
+
+#### STY-3.1 · Progress
+
+```html
+<article class="fh-story fh-story--deep" data-tone="amber" data-fh="STY-3.1">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27"></polygon></svg>Hexwork</span><span class="fh-story__tag">Week 4</span></header>
+  <div class="fh-story__field">
+    <div class="fh-progress-field"><span>Migration</span><output>72%</output><progress class="fh-progress" value="72" max="100">72%</progress></div>
+    <div class="fh-progress-field"><span>Tests</span><output>100%</output><progress class="fh-progress" value="100" max="100">100%</progress></div>
+    <div class="fh-progress-field"><span>Docs</span><output>40%</output><progress class="fh-progress" value="40" max="100">40%</progress></div>
+  </div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Hexwork's move to Firehorse, week four.</p>
+    <a class="fh-story__link" href="#STY">Read Hexwork's story</a>
+  </footer>
+</article>
+```
+
+#### STY-3.2 · Ring
+
+```html
+<article class="fh-story fh-story--deep" data-tone="teal" data-fh="STY-3.2">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="10" y="14" width="80" height="18" rx="9"></rect><rect x="10" y="41" width="80" height="18" rx="9"></rect><rect x="10" y="68" width="80" height="18" rx="9"></rect></svg>Lumen</span><span class="fh-story__tag">Tokens</span></header>
+  <div class="fh-story__field"><div class="fh-story__ring-wrap"><span class="fh-story__ring" style="--value: 72" role="img" aria-label="72% complete"></span><p class="fh-story__figure">72%</p></div><p class="fh-story__figure-label" style="text-align: center">Complete</p></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Lumen's token migration is nearly there.</p>
+    <a class="fh-story__link" href="#STY">Read Lumen's story</a>
+  </footer>
+</article>
+```
+
+#### STY-3.3 · Chart
+
+```html
+<article class="fh-story" data-tone="sky" data-fh="STY-3.3">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M6 60c14-28 30-28 44 0s30 28 44 0" fill="none" stroke-width="16"></path></svg>Northwind</span><span class="fh-story__tag">Releases</span></header>
+  <div class="fh-story__field" aria-hidden="true"><div class="fh-story__chart"><span style="--value: 18"></span><span style="--value: 26"></span><span style="--value: 22"></span><span style="--value: 38"></span><span style="--value: 34"></span><span style="--value: 52"></span><span style="--value: 61"></span><span style="--value: 78"></span></div></div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Northwind's weekly releases, up eight weeks running.</p>
+    <a class="fh-story__link" href="#STY">Read Northwind's story</a>
+  </footer>
+</article>
+```
+
+#### STY-3.4 · Live
+
+```html
+<article class="fh-story fh-story--ink fh-story--glare" data-tone="rose" data-fh="STY-3.4">
+  <header class="fh-story__head"><span class="fh-story__logo"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="38,6 74,6 52,42 78,42 30,96 44,56 22,56"></polygon></svg>Voltline</span><span class="fh-story__tag">Live</span></header>
+  <div class="fh-story__field">
+    <p class="fh-story__figure-label">Deploying · 2 of 5</p>
+    <progress class="fh-progress" aria-label="Deploying"></progress>
+    <p class="fh-story__figure">02<span style="opacity: 0.4">/05</span></p>
+  </div>
+  <footer class="fh-story__foot">
+    <p class="fh-story__quote">Voltline is rolling out its new dashboard now.</p>
+    <a class="fh-story__link" href="#STY">Read Voltline's story</a>
+  </footer>
+</article>
+```
+
+## SPD · Speed blur
+
+A picture caught at speed: a sideways motion blur with the subject kept sharp at --fh-speed-focus, fine scanline grain, and a slow drift. Pure CSS: the streaked copy is squeezed, blurred and stretched back, so it blurs along one axis only. --orbit adds a dashed ring.
+
+Classes: `fh-speed` `fh-speed--orbit` `fh-speed__smear` `fh-speed__img` `fh-chip` `fh-title` `fh-speed--still`
+
+### SPD-1 · Speed blur
+
+#### SPD-1.1 · Hero · orbit
+
+```html
+<figure class="fh-speed fh-speed--orbit" style="--fh-speed-focus: 38% 38%; --fh-speed-focus-x: 50%; --fh-speed-focus-y: 55%" data-fh="SPD-1.1">
+  <span class="fh-speed__smear" aria-hidden="true"><img src="img/backdrop/lipizzaner-horse.webp" alt></span>
+  <img class="fh-speed__img" src="img/backdrop/lipizzaner-horse.webp" alt="A horse at full gallop">
+  <figcaption style="place-self: end center; display: grid; justify-items: center; gap: var(--fh-space-3); padding: var(--fh-space-8); text-align: center">
+    <span class="fh-chip">Adventure starts here</span>
+    <span class="fh-title">Born to ride</span>
+  </figcaption>
+</figure>
+```
+
+#### SPD-1.2 · Long streak
+
+```html
+<figure class="fh-speed" style="--fh-speed-focus: 55% 35%; --fh-speed-amount: 28px; --fh-speed-ratio: 4 / 3" data-fh="SPD-1.2">
+  <span class="fh-speed__smear" aria-hidden="true"><img src="img/backdrop/firehorse-horse.webp" alt></span>
+  <img class="fh-speed__img" src="img/backdrop/firehorse-horse.webp" alt="Three horses running">
+</figure>
+```
+
+#### SPD-1.3 · Short · still
+
+```html
+<figure class="fh-speed fh-speed--still" style="--fh-speed-focus: 40% 50%; --fh-speed-amount: 10px; --fh-speed-ratio: 4 / 3" data-fh="SPD-1.3">
+  <span class="fh-speed__smear" aria-hidden="true"><img src="img/backdrop/firehorse-hoof.webp" alt></span>
+  <img class="fh-speed__img" src="img/backdrop/firehorse-hoof.webp" alt="A hoof drawn in blueprint lines">
+</figure>
+```
+
+## DTH · Dither
+
+A picture as a halftone: dots that grow where it's light, on a dark ground. A tone colours the dots; --paper flips to dark dots on light, --lines uses a line screen, --fine and --coarse set the pitch. Pure CSS: blend with a dot screen, then contrast.
+
+Classes: `fh-dither` `fh-dither__plate` `fh-dither--paper` `fh-dither--fine` `fh-dither--lines` `fh-dither--coarse`
+
+### DTH-1 · Dither
+
+#### DTH-1.1 · Dots
+
+```html
+<figure class="fh-dither" data-fh="DTH-1.1"><span class="fh-dither__plate"><img src="img/avatars/cole.webp" alt="Cole, dithered"></span></figure>
+```
+
+#### DTH-1.2 · Tone
+
+```html
+<figure class="fh-dither" data-tone="lime" data-fh="DTH-1.2"><span class="fh-dither__plate"><img src="img/avatars/maya.webp" alt="Maya, dithered in lime"></span></figure>
+```
+
+#### DTH-1.3 · Paper · fine
+
+```html
+<figure class="fh-dither fh-dither--paper fh-dither--fine" data-fh="DTH-1.3"><span class="fh-dither__plate"><img src="img/avatars/ray.webp" alt="Ray, dithered on paper"></span></figure>
+```
+
+#### DTH-1.4 · Lines · coarse
+
+```html
+<figure class="fh-dither fh-dither--lines fh-dither--coarse" data-tone="sky" data-fh="DTH-1.4"><span class="fh-dither__plate"><img src="img/avatars/isla.webp" alt="Isla in a line screen"></span></figure>
+```
+
+## LQG · Liquid glass
+
+A pane of thick glass: what's behind it goes soft and bright, the rim catches a white highlight on top and a faint prism of colour at the corners. A panel, a --pill button with a stronger --prism, --dark and --clear.
+
+Classes: `fh-glass` `fh-label` `fh-heading` `fh-body` `fh-glass--pill` `fh-glass--prism` `fh-glass--dark` `fh-glass--clear`
+
+### LQG-1 · Liquid glass
+
+#### LQG-1.1 · Panel
+
+```html
+<div class="fh-glass" style="inline-size: min(22rem, 100%); padding: var(--fh-space-6)" data-fh="LQG-1.1">
+  <p class="fh-label">Glass</p>
+  <p class="fh-heading" style="margin-block: var(--fh-space-2)">Soft behind, bright at the rim.</p>
+  <p class="fh-body">Whatever sits under the pane goes soft; the edge catches the light.</p>
+</div>
+```
+
+#### LQG-1.2 · Pill · prism
+
+```html
+<a class="fh-glass fh-glass--pill fh-glass--prism" href="#LQG" data-fh="LQG-1.2">Join now</a>
+```
+
+#### LQG-1.3 · Dark
+
+```html
+<div class="fh-glass fh-glass--dark" style="padding: var(--fh-space-4) var(--fh-space-5)" data-fh="LQG-1.3"><p class="fh-label" style="color: inherit">Smoked</p><p class="fh-body" style="color: inherit; margin: 0">--dark</p></div>
+```
+
+#### LQG-1.4 · Clear
+
+```html
+<div class="fh-glass fh-glass--clear" style="padding: var(--fh-space-4) var(--fh-space-5)" data-fh="LQG-1.4"><p class="fh-label">Clear</p><p class="fh-body" style="margin: 0">--clear</p></div>
+```
 
 ## LST · List & timeline
 
@@ -783,178 +1531,76 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## CAT · Card catalog
 
-Classes: `fh-card` `fh-card__meta` `fh-card__title` `fh-card__body` `fh-card__footer` `fh-card__price` `fh-action` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-stats` `fh-card--cover` `fh-card__media` `fh-badge` `fh-cluster` `fh-pill` `fh-avatar--xl` `fh-chips` `fh-chip` `fh-chip--sm` `fh-product` `fh-product__media` `fh-product__badge` `fh-product__meta` `fh-product__title` `fh-price` `fh-swatches` `fh-swatches--sm` `fh-ring` `fh-sparkline` `fh-testimonial` `fh-person` `fh-avatar--circle` `fh-person__text` `fh-tier` `fh-tier--featured` `fh-tier__flag` `fh-tier__name` `fh-tier__price` `fh-tier__pitch` `fh-checklist` `fh-chip--solid` `fh-chip--underline` `fh-stack` `fh-stack--sm` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text` `fh-avatar--lg` `fh-alert` `fh-icon` `fh-icon-tile` `fh-icon-tile--solid` `fh-badge--solid` `fh-status` `fh-chips--indexed` `fh-chips--wrap` `fh-chip--tone` `fh-ship-meter` `fh-button` `fh-button--sm` `fh-button--secondary`
+Classes: `fh-card` `fh-card__content` `fh-card__meta` `fh-card__title` `fh-card__body` `fh-card__footer` `fh-card__price` `fh-action` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-stats` `fh-card--cover` `fh-card__media` `fh-badge` `fh-product` `fh-product__media` `fh-product__badge` `fh-product__meta` `fh-product__title` `fh-cluster` `fh-price` `fh-swatches` `fh-swatches--sm` `fh-tier` `fh-tier--featured` `fh-tier__flag` `fh-tier__name` `fh-tier__price` `fh-tier__pitch` `fh-checklist` `fh-ring`
 
-### CAT-01 · Etched · price · action
+### CAT-1 · Catalog
+
+#### CAT-1.1 · Etched · price · action
 
 ```html
-<article class="fh-card" data-tone="teal"><p class="fh-card__meta">Data</p><h3 class="fh-card__title">Schema design</h3><p class="fh-card__body">Models that match how you work.</p><footer class="fh-card__footer"><p class="fh-card__price">From <b>$1,250</b></p><span class="fh-action" data-tone>View</span></footer></article>
+<article class="fh-card" data-tone="teal" data-fh="CAT-1.1"><div class="fh-card__content"><p class="fh-card__meta">Data</p><h3 class="fh-card__title">Schema design</h3><p class="fh-card__body">Models that match how you work.</p><footer class="fh-card__footer"><p class="fh-card__price">From <b>$1,250</b></p><span class="fh-action" data-tone>View</span></footer></div></article>
 ```
 
-### CAT-02 · Elevated · avatar stack · stats
+### CAT-2 · People
+
+#### CAT-2.1 · Elevated · avatar stack · stats
 
 Config on the parent: `data-fh-card="elevated"`
 
 ```html
-<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Team</p><h3 class="fh-card__title">Agent squad</h3><span class="fh-avatars"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/ava.webp" alt=""></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/cole.webp" alt=""></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/maya.webp" alt=""></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/mateo.webp" alt=""></span></span><dl class="fh-stats" style="margin-top:var(--fh-space-4)"><div><dt>Live</dt><dd>4</dd></div><div><dt>Replies</dt><dd>2.1k</dd></div></dl></article>
+<article class="fh-card" data-tone="sky" data-fh="CAT-2.1"><div class="fh-card__content"><p class="fh-card__meta">Team</p><h3 class="fh-card__title">Agent squad</h3><span class="fh-avatars"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/ava.webp" alt></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/cole.webp" alt></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/maya.webp" alt></span><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/mateo.webp" alt></span></span><dl class="fh-stats" style="margin-top:var(--fh-space-4)"><div><dt>Live</dt><dd>4</dd></div><div><dt>Replies</dt><dd>2.1k</dd></div></dl></div></article>
 ```
 
-### CAT-03 · Cover · background image · scrim
+### CAT-3 · Media
+
+#### CAT-3.1 · Cover · background image · scrim
 
 ```html
-<article class="fh-card fh-card--cover" data-tone="violet"><figure class="fh-card__media"><img src="img/supply/poster.svg" alt=""></figure><p class="fh-card__meta">Journal</p><h3 class="fh-card__title">Printing in nine tones</h3><p class="fh-card__body">How the Firehorse palette made it to paper.</p></article>
+<article class="fh-card fh-card--cover" data-tone="violet" data-fh="CAT-3.1"><figure class="fh-card__media"><img src="img/supply/poster.svg" alt></figure><div class="fh-card__content"><p class="fh-card__meta">Journal</p><h3 class="fh-card__title">Printing in nine tones</h3><p class="fh-card__body">How the Firehorse palette made it to paper.</p></div></article>
 ```
 
-### CAT-04 · Glass · mesh background
+### CAT-4 · Surfaces
+
+#### CAT-4.1 · Glass · mesh background
 
 Config on the parent: `data-fh-card="glass"`
 
 ```html
-<article class="fh-card" data-tone="violet"><p class="fh-card__meta">Glass</p><h3 class="fh-card__title">Frosted panel</h3><p class="fh-card__body">Backdrop blur over any art. One attribute.</p><footer class="fh-card__footer"><span class="fh-badge" data-tone="violet">data-fh-card="glass"</span></footer></article>
+<article class="fh-card" data-tone="violet" data-fh="CAT-4.1"><div class="fh-card__content"><p class="fh-card__meta">Glass</p><h3 class="fh-card__title">Frosted panel</h3><p class="fh-card__body">Backdrop blur over any art. One attribute.</p><footer class="fh-card__footer"><span class="fh-badge" data-tone="violet">data-fh-card="glass"</span></footer></div></article>
 ```
 
-### CAT-05 · Solid · media top · tags
+### CAT-5 · Tokens
 
-Config on the parent: `data-fh-card="solid"` `data-fh-card-media="classic"`
-
-```html
-<article class="fh-card" data-tone="rose"><figure class="fh-card__media"><img src="img/supply/mug.svg" alt=""></figure><p class="fh-card__meta">Desk</p><h3 class="fh-card__title">Enamel mug</h3><div class="fh-cluster" style="--fh-gap:var(--fh-space-1);margin-top:var(--fh-space-3)"><span class="fh-pill" data-tone="rose">Speckled</span><span class="fh-pill" data-tone="amber">12 oz</span></div></article>
-```
-
-### CAT-06 · Tonal · token swatches
+#### CAT-5.1 · Tonal · token swatches
 
 Config on the parent: `data-fh-card="tonal"`
 
 ```html
-<article class="fh-card" data-tone="fuchsia"><p class="fh-card__meta">Tokens</p><h3 class="fh-card__title">--fh-tone-fuchsia</h3><div class="site-cat__swatches"><i data-tone="fuchsia"></i><i data-tone="violet"></i><i data-tone="rose"></i><i data-tone="sky"></i></div><p class="fh-card__body"><code>oklch(from bg …)</code> · adapts to any surface</p></article>
+<article class="fh-card" data-tone="fuchsia" data-fh="CAT-5.1"><div class="fh-card__content"><p class="fh-card__meta">Tokens</p><h3 class="fh-card__title">--fh-tone-fuchsia</h3><div class="site-cat__swatches"><i data-tone="fuchsia"></i><i data-tone="violet"></i><i data-tone="rose"></i><i data-tone="sky"></i></div><p class="fh-card__body"><code>oklch(from bg …)</code> · adapts to any surface</p></div></article>
 ```
 
-### CAT-07 · Outline · oval avatar · person
+### CAT-6 · Commerce
 
-Config on the parent: `data-fh-card="outline"` `data-fh-avatar="oval"`
+#### CAT-6.1 · Product · swatches · sale
 
 ```html
-<article class="fh-card site-cat__profile" data-tone="lime"><span class="fh-avatar fh-avatar--xl"><img src="img/avatars/isla.webp" alt=""></span><h3 class="fh-card__title">Isla Romero</h3><p class="fh-card__body">Design lead · Charlotte</p><div class="fh-chips" style="justify-content:center"><span class="fh-chip fh-chip--sm" data-tone="lime">Design</span><span class="fh-chip fh-chip--sm" data-tone="sky">Systems</span></div></article>
+<article class="fh-product" data-tone="lime" data-fh="CAT-6.1"><a class="fh-product__media" href="#commerce"><img src="img/supply/notebook.svg" alt></a><span class="fh-product__badge" data-tone="rose">−20%</span><p class="fh-product__meta">A5 · pack of 3</p><h3 class="fh-product__title"><a href="#commerce">Dot Grid Notebook</a></h3><div class="fh-cluster" style="justify-content:space-between;--fh-gap:var(--fh-space-2)"><p class="fh-price" data-tone="rose"><b>$22</b><s>$28</s></p><div class="fh-swatches fh-swatches--sm"><label data-tone="lime" style="--swatch:var(--fh-tone)"><input type="radio" name="cat8" checked aria-label="Lime"></label><label data-tone="neutral" style="--swatch:var(--fh-tone)"><input type="radio" name="cat8" aria-label="Graphite"></label></div></div></article>
 ```
 
-### CAT-08 · Product · swatches · sale
+#### CAT-6.2 · Pricing tier · featured
 
 ```html
-<article class="fh-product" data-tone="lime"><a class="fh-product__media" href="#commerce"><img src="img/supply/notebook.svg" alt=""></a><span class="fh-product__badge" data-tone="rose">−20%</span><p class="fh-product__meta">A5 · pack of 3</p><h3 class="fh-product__title"><a href="#commerce">Dot Grid Notebook</a></h3><div class="fh-cluster" style="justify-content:space-between;--fh-gap:var(--fh-space-2)"><p class="fh-price" data-tone="rose"><b>$22</b><s>$28</s></p><div class="fh-swatches fh-swatches--sm"><label data-tone="lime" style="--swatch:var(--fh-tone)"><input type="radio" name="cat8" checked aria-label="Lime"></label><label data-tone="neutral" style="--swatch:var(--fh-tone)"><input type="radio" name="cat8" aria-label="Graphite"></label></div></div></article>
+<article class="fh-tier fh-tier--featured" data-tone="accent" data-fh="CAT-6.2"><span class="fh-tier__flag">Popular</span><h4 class="fh-tier__name">Build</h4><p class="fh-tier__price"><b>$4,800</b> fixed</p><p class="fh-tier__pitch">A design system on Firehorse, themed and shipped.</p><ul class="fh-checklist" data-tone><li>Tokens &amp; theme</li><li>12 page templates</li></ul></article>
 ```
 
-### CAT-09 · Metric · ring · trend
+### CAT-7 · Data
+
+#### CAT-7.1 · Metric · ring · trend
 
 Config on the parent: `data-fh-card="solid"`
 
 ```html
-<article class="fh-card" data-tone="teal"><p class="fh-card__meta">Win rate</p><div class="site-cat__metric"><span class="fh-ring" style="--fh-value:64" role="img" aria-label="64%"><b>64%</b></span><div><p class="fh-card__title">$184k</p><p class="fh-card__body"><span style="color:var(--fh-color-success)">▲ 12%</span> vs last quarter</p></div></div></article>
-```
-
-### CAT-10 · KPI · sparkline
-
-Config on the parent: `data-fh-card="elevated"`
-
-```html
-<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Inquiries</p><p class="site-cat__kpi">1,284</p><svg class="fh-sparkline" style="inline-size:100%;block-size:3rem" viewBox="0 0 88 22" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 L10 15 L20 16 L30 11 L40 12 L50 8 L60 9 L70 5 L80 6 L88 2 L88 22 L0 22Z" fill="currentColor" opacity=".14"></path><path d="M0 18 L10 15 L20 16 L30 11 L40 12 L50 8 L60 9 L70 5 L80 6 L88 2" fill="none" stroke="currentColor" stroke-width="1.4"></path></svg><p class="fh-card__body">Last 30 days · sample</p></article>
-```
-
-### CAT-11 · Ray OkaforSample quote
-
-```html
-<figure class="fh-testimonial" data-tone="orange"><blockquote>The cards just fit. Sidebar, modal, full width. We stopped writing breakpoints.</blockquote><figcaption class="fh-person"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt=""></span><span class="fh-person__text"><b>Ray Okafor</b><span>Sample quote</span></span></figcaption></figure>
-```
-
-### CAT-12 · Pricing tier · featured
-
-```html
-<article class="fh-tier fh-tier--featured" data-tone="accent"><span class="fh-tier__flag">Popular</span><h4 class="fh-tier__name">Build</h4><p class="fh-tier__price"><b>$4,800</b> fixed</p><p class="fh-tier__pitch">A design system on Firehorse, themed and shipped.</p><ul class="fh-checklist" data-tone><li>Tokens &amp; theme</li><li>12 page templates</li></ul></article>
-```
-
-### CAT-13 · Event · date block · chips
-
-Config on the parent: `data-fh-card="solid"`
-
-```html
-<article class="fh-card site-cat__event" data-tone="amber"><div class="site-cat__date"><b>14</b><span>Nov</span></div><div><p class="fh-card__meta">Workshop</p><h3 class="fh-card__title">Design systems for agents</h3><p class="fh-card__body">Charlotte · 6 pm</p><div class="fh-chips" style="margin-top:var(--fh-space-2)"><span class="fh-chip fh-chip--solid fh-chip--sm" data-tone="amber">RSVP</span><span class="fh-chip fh-chip--underline fh-chip--sm">Details</span></div></div></article>
-```
-
-### CAT-14 · Chip cards · files
-
-```html
-<div class="fh-stack fh-stack--sm"><div class="fh-chip-card" data-tone="rose"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>scope.pdf</b><small>212 KB · signed</small></span></div><div class="fh-chip-card" data-tone="sky"><span class="fh-chip-card__block">DOC</span><span class="fh-chip-card__text"><b>brief.docx</b><small>Edited 2h ago</small></span></div><div class="fh-chip-card" data-tone="violet"><span class="fh-chip-card__block">PNG</span><span class="fh-chip-card__text"><b>moodboard.png</b><small>4.1 MB</small></span></div></div>
-```
-
-### CAT-15 · Squircle avatars · grid
-
-Config on the parent: `data-fh-card="solid"` `data-fh-avatar="squircle"`
-
-```html
-<article class="fh-card" data-tone="teal"><p class="fh-card__meta">Studio</p><h3 class="fh-card__title">The team</h3><div class="site-cat__faces"><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/ava.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/cole.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/eleanor.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/isla.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/mateo.webp" alt=""></span><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/ruth.webp" alt=""></span></div></article>
-```
-
-### CAT-16 · Notification · alert
-
-```html
-<div class="fh-stack fh-stack--sm"><div class="fh-alert" data-tone="lime" role="status"><b>Proposal signed</b><p>Northwind Labs accepted the Build plan.</p></div><div class="fh-alert" data-tone="amber" role="status"><b>Follow up today</b><p>Halcyon Health opened the proposal 3 times.</p></div></div>
-```
-
-### CAT-17 · Article · author · grid paper
-
-```html
-<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Essay · 6 min</p><h3 class="fh-card__title">Don't make the agent think</h3><p class="fh-card__body">Why design systems are prompts in disguise.</p><footer class="fh-card__footer"><span class="fh-person"><span class="fh-avatar fh-avatar--sm fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt=""></span><span class="fh-person__text"><b>Eleanor</b><span>Oct 2026</span></span></span></footer></article>
-```
-
-### CAT-18 · Video · play · night sky
-
-```html
-<article class="fh-card fh-card--cover site-cat__video" data-tone="accent"><figure class="fh-card__media"><span style="display:block;inline-size:100%;block-size:100%;background:radial-gradient(120% 80% at 50% 110%,#ec4412 0%,transparent 55%),linear-gradient(#0d0f1a,#1b1430)"></span></figure><span class="site-cat__play"><i class="fh-icon fh-icon--play" aria-hidden="true"></i></span><p class="fh-card__meta">Film · 2:14</p><h3 class="fh-card__title">Firehorse in motion</h3></article>
-```
-
-### CAT-19 · Feature · icon tile
-
-Config on the parent: `data-fh-card="outline"`
-
-```html
-<article class="fh-card" data-tone="fuchsia"><span class="fh-icon-tile fh-icon-tile--solid" style="--fh-icon-tile:2.75rem"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><h3 class="fh-card__title" style="margin-top:var(--fh-space-4)">Theme from any URL</h3><p class="fh-card__body">Point the Pro builder at a site and get a Firehorse theme back.</p><footer class="fh-card__footer"><span class="fh-badge fh-badge--solid" data-tone="fuchsia">Pro</span></footer></article>
-```
-
-### CAT-20 · Data · mini table
-
-Config on the parent: `data-fh-card="solid"`
-
-```html
-<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Top deals</p><table class="site-cat__table"><tbody><tr><td>Northwind</td><td><span class="fh-status" data-tone="lime">Won</span></td><td>$38k</td></tr><tr><td>Halcyon</td><td><span class="fh-status" data-tone="amber">Proposal</span></td><td>$21k</td></tr><tr><td>Kestrel</td><td><span class="fh-status" data-tone="teal">Qualified</span></td><td>$14k</td></tr></tbody></table></article>
-```
-
-### CAT-21 · Minimal · sea gradient · on-media text
-
-Config on the parent: `data-fh-card="minimal"`
-
-```html
-<article class="fh-card" data-tone="sky"><p class="fh-card__meta">Travel</p><h3 class="fh-card__title">Tidewater Marine</h3><p class="fh-card__body">Text tokens computed from the background.</p></article>
-```
-
-### CAT-22 · Steps · indexed chips
-
-Config on the parent: `data-fh-card="tonal"`
-
-```html
-<article class="fh-card" data-tone="lime"><p class="fh-card__meta">Onboarding</p><h3 class="fh-card__title">Three steps</h3><div class="fh-chips fh-chips--indexed fh-chips--wrap" style="margin-top:var(--fh-space-3)"><span class="fh-chip fh-chip--tone" data-tone="lime">Install</span><span class="fh-chip fh-chip--tone" data-tone="teal">Theme</span><span class="fh-chip fh-chip--tone" data-tone="sky">Ship</span></div></article>
-```
-
-### CAT-23 · Progress · meter · sunken
-
-```html
-<article class="fh-card" data-tone="amber"><p class="fh-card__meta">Launch</p><h3 class="fh-card__title">Relaunch readiness</h3><div class="fh-stack fh-stack--sm" style="margin-top:var(--fh-space-3)"><div class="fh-ship-meter" data-tone="amber" style="--v:72"><span>Design <b>72%</b></span><i></i></div><div class="fh-ship-meter" data-tone="lime" style="--v:94"><span>Content <b>94%</b></span><i></i></div></div></article>
-```
-
-### CAT-24 · Contact · circle avatar · actions
-
-Config on the parent: `data-fh-card="elevated"` `data-fh-avatar="circle"` `data-fh-button="pill"`
-
-```html
-<article class="fh-card" data-tone="rose"><div class="fh-person"><span class="fh-avatar fh-avatar--lg"><img src="img/avatars/maya.webp" alt=""></span><span class="fh-person__text"><b>Maya</b><span>Dental front desk agent</span></span></div><div class="fh-cluster" style="--fh-gap:var(--fh-space-2);margin-top:var(--fh-space-4)"><span class="fh-button fh-button--sm">Message</span><span class="fh-button fh-button--sm fh-button--secondary">Call</span></div></article>
+<article class="fh-card" data-tone="teal" data-fh="CAT-7.1"><div class="fh-card__content"><p class="fh-card__meta">Win rate</p><div class="site-cat__metric"><span class="fh-ring" style="--fh-value:64" role="img" aria-label="64%"><b>64%</b></span><div><p class="fh-card__title">$184k</p><p class="fh-card__body"><span style="color:var(--fh-color-success)">▲ 12%</span> vs last quarter</p></div></div></div></article>
 ```
 
 ## DCK · Floating bar
@@ -996,6 +1642,51 @@ Three bars, seven morphs, every state. Open comes from aria-expanded, a sibling 
 Classes: `fh-burger` `fh-burger--boxed` `fh-burger--open` `fh-burger--label` `fh-burger--arrow` `fh-burger--spin` `fh-burger--squeeze` `fh-burger--minus` `fh-burger--plus` `fh-burger--dots` `fh-burger--tone`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#BRG.
+
+## PRF · Profile picker
+
+Who's signed in and everything about their session: an identity card, a few facts, account links, a setting row, a profile switcher and sign out. A popover anchored to an etched pill; no JavaScript.
+
+Classes: `fh-profile` `fh-avatar` `fh-avatar--circle` `fh-profile__who` `fh-profile--compact` `fh-menu` `fh-profile-menu` `fh-profile-menu__card` `fh-profile-menu__id` `fh-badge` `fh-badge--solid` `fh-profile-menu__facts` `fh-menu__label` `fh-icon` `fh-profile-menu__row` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-profile-menu__option` `fh-menu__danger`
+
+### PRF-1 · Profile picker
+
+#### PRF-1.1 · Ava Marlow@ava · Owner
+
+```html
+<button class="fh-profile" type="button" popovertarget="profile-demo" style="anchor-name: --profile-demo" data-fh="PRF-1.1"><span class="fh-avatar fh-avatar--circle" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><span class="fh-profile__who"><b>Ava Marlow</b><small>@ava · Owner</small></span></button>
+```
+
+#### PRF-1.2 · PRF-1.2
+
+```html
+<button class="fh-profile fh-profile--compact" type="button" popovertarget="profile-demo" aria-label="Ava Marlow, account" data-fh="PRF-1.2"><span class="fh-avatar fh-avatar--circle" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span></button>
+```
+
+#### PRF-1.3 · MOMateo OrtizClient · Halcyon
+
+```html
+<button class="fh-profile" type="button" data-fh="PRF-1.3"><span class="fh-avatar fh-avatar--circle" data-tone="violet">MO</span><span class="fh-profile__who"><b>Mateo Ortiz</b><small>Client · Halcyon</small></span></button>
+```
+
+#### PRF-1.4 · Ava Marlowava@northwind.studioOwner Member2021Projects14PlanPro Account Profile⌘P Settings⌘, ThemeColour scheme Dark Light Auto Switch profile Northwind StudioOwner HHHalcyon HealthClient · viewer Sign out⇧⌘Q
+
+```html
+<div class="fh-menu fh-profile-menu site-menu-static" role="menu" aria-label="Profile menu (static)" data-fh="PRF-1.4">
+  <div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><span class="fh-profile-menu__id"><b>Ava Marlow</b><small>ava@northwind.studio</small></span><span class="fh-badge fh-badge--solid" data-tone="sky">Owner</span></div>
+  <dl class="fh-profile-menu__facts"><div><dt>Member</dt><dd>2021</dd></div><div><dt>Projects</dt><dd>14</dd></div><div><dt>Plan</dt><dd>Pro</dd></div></dl>
+  <p class="fh-menu__label">Account</p>
+  <button type="button" role="menuitem"><i class="fh-icon fh-icon--user" aria-hidden="true"></i>Profile<kbd>⌘P</kbd></button>
+  <button type="button" role="menuitem"><i class="fh-icon fh-icon--settings" aria-hidden="true"></i>Settings<kbd>⌘,</kbd></button>
+  <div class="fh-profile-menu__row"><span><i class="fh-icon fh-icon--moon" aria-hidden="true"></i>Theme</span><fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Colour scheme</legend><label><input type="radio" name="prf-static-scheme" value="dark" checked> Dark</label><label><input type="radio" name="prf-static-scheme" value="light"> Light</label><label><input type="radio" name="prf-static-scheme" value="auto"> Auto</label></fieldset></div>
+  <hr>
+  <p class="fh-menu__label">Switch profile</p>
+  <button class="fh-profile-menu__option" type="button" role="menuitemradio" aria-checked="true"><span class="fh-avatar fh-avatar--circle" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><span class="fh-profile-menu__id"><b>Northwind Studio</b><small>Owner</small></span></button>
+  <button class="fh-profile-menu__option" type="button" role="menuitemradio" aria-checked="false"><span class="fh-avatar fh-avatar--circle" data-tone="amber">HH</span><span class="fh-profile-menu__id"><b>Halcyon Health</b><small>Client · viewer</small></span></button>
+  <hr>
+  <button class="fh-menu__danger" type="button" role="menuitem"><i class="fh-icon fh-icon--log-out" aria-hidden="true"></i>Sign out<kbd>⇧⌘Q</kbd></button>
+</div>
+```
 
 ## DRP · Dropdown menu
 
@@ -1043,84 +1734,205 @@ Classes: `fh-stack` `fh-stack--lg` `fh-banner` `fh-empty` `fh-empty__icon` `fh-b
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#EMP.
 
-## AVS · Shapes
+## AVT · Avatars
+
+Shapes, sizes and presence, rings and halos, generated avatars and groups.
+
+Classes: `fh-avatar` `fh-avatar--2xl` `fh-avatar--circle` `fh-avatar--oval` `fh-avatar--squircle` `fh-avatar--square` `fh-cluster` `fh-avatar--xs` `fh-avatar--sm` `fh-avatar--lg` `fh-avatar--xl` `fh-avatar--ring` `fh-avatar--halo` `fh-avatar--generated` `fh-avatars` `fh-avatars__more` `fh-avatars--spread` `fh-avatars--lg` `fh-avatars--grid` `fh-avatars--row` `fh-person` `fh-person__text`
+
+### AVT-1 · Shapes
 
 --rounded (default) · --circle · --oval · --squircle · --square
 
-Classes: `fh-avatar` `fh-avatar--2xl` `fh-avatar--circle` `fh-avatar--oval` `fh-avatar--squircle` `fh-avatar--square`
-
-### AVS-01 · Rounded rect
+#### AVT-1.1 · Rounded rect
 
 ```html
-<figure><span class="fh-avatar fh-avatar--2xl" data-face><img src="img/avatars/ava.webp" alt="Ava"></span><figcaption>Rounded rect</figcaption></figure>
+<figure><span class="fh-avatar fh-avatar--2xl" data-face data-fh="AVT-1.1"><img src="img/avatars/ava.webp" alt="Ava"></span><figcaption>Rounded rect</figcaption></figure>
 ```
 
-### AVS-02 · Circle
+#### AVT-1.2 · Circle
 
 ```html
-<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--circle" data-face><img src="img/avatars/mateo.webp" alt="Mateo"></span><figcaption>Circle</figcaption></figure>
+<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--circle" data-face data-fh="AVT-1.2"><img src="img/avatars/mateo.webp" alt="Mateo"></span><figcaption>Circle</figcaption></figure>
 ```
 
-### AVS-03 · Oval
+#### AVT-1.3 · Oval
 
 ```html
-<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--oval" data-face><img src="img/avatars/eleanor.webp" alt="Eleanor"></span><figcaption>Oval</figcaption></figure>
+<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--oval" data-face data-fh="AVT-1.3"><img src="img/avatars/eleanor.webp" alt="Eleanor"></span><figcaption>Oval</figcaption></figure>
 ```
 
-### AVS-04 · Squircle
+#### AVT-1.4 · Squircle
 
 ```html
-<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--squircle" data-face><img src="img/avatars/ray.webp" alt="Ray"></span><figcaption>Squircle</figcaption></figure>
+<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--squircle" data-face data-fh="AVT-1.4"><img src="img/avatars/ray.webp" alt="Ray"></span><figcaption>Squircle</figcaption></figure>
 ```
 
-### AVS-05 · Square
+#### AVT-1.5 · Square
 
 ```html
-<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--square" data-face><img src="img/avatars/isla.webp" alt="Isla"></span><figcaption>Square</figcaption></figure>
+<figure><span class="fh-avatar fh-avatar--2xl fh-avatar--square" data-face data-fh="AVT-1.5"><img src="img/avatars/isla.webp" alt="Isla"></span><figcaption>Square</figcaption></figure>
 ```
 
-## AVZ · Sizes & presence
+### AVT-2 · Sizes & presence
 
 --xs → --2xl · data-status
 
-Classes: `fh-cluster` `fh-avatar` `fh-avatar--xs` `fh-avatar--sm` `fh-avatar--lg` `fh-avatar--xl` `fh-avatar--circle`
+```html
+<div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: flex-end">
+  <span class="fh-avatar fh-avatar--xs" data-face data-fh="AVT-2"><img src="img/avatars/sam.webp" alt="Sam"></span>
+  <span class="fh-avatar fh-avatar--sm" data-status="online" data-face data-fh="AVT-2"><img src="img/avatars/maya.webp" alt="Maya"></span>
+  <span class="fh-avatar" data-status="away" data-face data-fh="AVT-2"><img src="img/avatars/cole.webp" alt="Cole"></span>
+  <span class="fh-avatar fh-avatar--lg" data-status="busy" data-face data-fh="AVT-2"><img src="img/avatars/ruth.webp" alt="Ruth"></span>
+  <span class="fh-avatar fh-avatar--xl" data-status="online" data-face data-fh="AVT-2"><img src="img/avatars/cole.webp" alt="Wes"></span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--circle" data-status="offline" data-face data-fh="AVT-2"><img src="img/avatars/reginald.webp" alt="Reginald"></span>
+</div>
+```
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/avatars/#AVZ.
-
-## AVR · Rings & halos
+### AVT-3 · Rings & halos
 
 --ring · --halo · data-tone
 
-Classes: `fh-cluster` `fh-avatar` `fh-avatar--xl` `fh-avatar--ring` `fh-avatar--circle` `fh-avatar--halo`
+```html
+<div class="fh-cluster" style="--fh-gap: var(--fh-space-6)">
+  <span class="fh-avatar fh-avatar--xl fh-avatar--ring" data-tone="sky" data-face data-fh="AVT-3"><img src="img/avatars/isla.webp" alt="Isla"></span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--circle fh-avatar--ring" data-tone="lime" data-face data-fh="AVT-3"><img src="img/avatars/mateo.webp" alt="Mateo"></span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--circle fh-avatar--halo" data-tone="fuchsia" data-face data-fh="AVT-3"><img src="img/avatars/ava.webp" alt="Ava"></span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--halo" data-tone="orange" data-face data-fh="AVT-3"><img src="img/avatars/cole.webp" alt="Wes"></span>
+</div>
+```
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/avatars/#AVR.
-
-## AVG · Generated
+### AVT-4 · Generated
 
 No photo? A tone mesh behind initials. Each tone walks its own neighbours on the wheel, so a team reads as a family.
 
-Classes: `fh-cluster` `fh-avatar` `fh-avatar--xl` `fh-avatar--generated` `fh-avatar--circle` `fh-avatar--oval` `fh-avatar--squircle`
+```html
+<div class="fh-cluster" style="--fh-gap: var(--fh-space-4)" id="generated-avatars">
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated" data-tone="sky" role="img" aria-label="Ada Lovelace" data-fh="AVT-4">AL</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated fh-avatar--circle" data-tone="teal" role="img" aria-label="Grace Hopper" data-fh="AVT-4">GH</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated fh-avatar--oval" data-tone="lime" role="img" aria-label="Alan Turing" data-fh="AVT-4">AT</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated fh-avatar--squircle" data-tone="amber" role="img" aria-label="Katherine Johnson" data-fh="AVT-4">KJ</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated" data-tone="orange" role="img" aria-label="Dennis Ritchie" data-fh="AVT-4">DR</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated fh-avatar--circle" data-tone="rose" role="img" aria-label="Margaret Hamilton" data-fh="AVT-4">MH</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated" data-tone="fuchsia" role="img" aria-label="Linus Torvalds" data-fh="AVT-4">LT</span>
+  <span class="fh-avatar fh-avatar--xl fh-avatar--generated fh-avatar--squircle" data-tone="violet" role="img" aria-label="Radia Perlman" data-fh="AVT-4">RP</span>
+</div>
+```
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/avatars/#AVG.
-
-## AVK · Groups
+### AVT-5 · Groups
 
 Overlapping stack with a counter, a stack that fans out on hover, a packed cluster, a plain row, and a person with name and role.
 
-Classes: `fh-avatars` `fh-avatar` `fh-avatars__more` `fh-avatars--spread` `fh-avatars--lg` `fh-avatar--circle` `fh-avatars--grid` `fh-avatar--sm` `fh-avatar--generated` `fh-avatars--row` `fh-avatar--oval` `fh-person` `fh-avatar--lg` `fh-person__text`
+```html
+<div class="site-avatar-groups">
+  <div class="fh-avatars" role="group" aria-label="Team" data-fh="AVT-5">
+    <span class="fh-avatar" data-face><img src="img/avatars/ava.webp" alt="Ava"></span>
+    <span class="fh-avatar" data-face><img src="img/avatars/cole.webp" alt="Cole"></span>
+    <span class="fh-avatar" data-face><img src="img/avatars/maya.webp" alt="Maya"></span>
+    <span class="fh-avatar" data-face><img src="img/avatars/ray.webp" alt="Ray"></span>
+    <span class="fh-avatar fh-avatars__more">+6</span>
+  </div>
+  <div class="fh-avatars fh-avatars--spread fh-avatars--lg" role="group" aria-label="Agents on shift" tabindex="0" data-fh="AVT-5">
+    <span class="fh-avatar fh-avatar--circle" data-face><img src="img/avatars/isla.webp" alt="Isla"></span>
+    <span class="fh-avatar fh-avatar--circle" data-face><img src="img/avatars/mateo.webp" alt="Mateo"></span>
+    <span class="fh-avatar fh-avatar--circle" data-face><img src="img/avatars/eleanor.webp" alt="Eleanor"></span>
+    <span class="fh-avatar fh-avatar--circle" data-face><img src="img/avatars/cole.webp" alt="Wes"></span>
+    <span class="fh-avatar fh-avatar--circle" data-face><img src="img/avatars/sam.webp" alt="Sam"></span>
+  </div>
+  <div class="fh-avatars fh-avatars--grid" role="group" aria-label="Clients" data-fh="AVT-5">
+    <span class="fh-avatar fh-avatar--sm" data-face><img src="img/avatars/ruth.webp" alt="Ruth"></span>
+    <span class="fh-avatar fh-avatar--sm fh-avatar--generated" data-tone="teal">NW</span>
+    <span class="fh-avatar fh-avatar--sm" data-face><img src="img/avatars/ray.webp" alt="Ray"></span>
+    <span class="fh-avatar fh-avatar--sm fh-avatar--generated" data-tone="amber">HC</span>
+    <span class="fh-avatar fh-avatar--sm" data-face><img src="img/avatars/maya.webp" alt="Maya"></span>
+    <span class="fh-avatar fh-avatar--sm fh-avatar--generated" data-tone="violet">TJ</span>
+  </div>
+  <div class="fh-avatars fh-avatars--row" role="group" aria-label="Reviewers" data-fh="AVT-5">
+    <span class="fh-avatar fh-avatar--oval" data-face><img src="img/avatars/cole.webp" alt="Cole"></span>
+    <span class="fh-avatar fh-avatar--oval" data-face><img src="img/avatars/isla.webp" alt="Isla"></span>
+    <span class="fh-avatar fh-avatar--oval" data-face><img src="img/avatars/ava.webp" alt="Ava"></span>
+  </div>
+  <a class="fh-person" href="#avatars" data-tone="sky" data-fh="AVT-5"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/reginald.webp" alt></span><span class="fh-person__text"><b>Reginald</b><span>Head of agent services</span></span></a>
+</div>
+```
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/avatars/#AVK.
+## SCD · Social card
+
+A portrait, the name with a verified mark, a short bio, two counts and Follow. The same markup three ways (the first two set data-fh-scheme="light" here): the portrait framed above a plain body; --fade runs it the full card into a frosted body (a blur that grows toward the bottom); --dark fades it into ink with an inverted Follow.
+
+Classes: `fh-social` `fh-social__photo` `fh-social__body` `fh-social__name` `fh-icon` `fh-social__check` `fh-social__bio` `fh-social__foot` `fh-social__stats` `fh-sr-only` `fh-button` `fh-button--sm` `fh-social--fade` `fh-social--dark`
+
+### SCD-1 · Social card
+
+#### SCD-1.1 · Framed
+
+```html
+<article class="fh-social" data-fh-scheme="light" data-fh="SCD-1.1">
+  <img class="fh-social__photo" src="img/avatars/cole.webp" alt="Cole Bennett">
+  <div class="fh-social__body">
+    <h3 class="fh-social__name">cole. <i class="fh-icon fh-icon--circle-check fh-social__check" role="img" aria-label="Verified"></i></h3>
+    <p class="fh-social__bio">Product engineer and designer building useful products.</p>
+    <div class="fh-social__foot">
+      <dl class="fh-social__stats">
+        <div><dt><i class="fh-icon fh-icon--user" aria-hidden="true"></i><span class="fh-sr-only">Following</span></dt><dd>24</dd></div>
+        <div><dt><i class="fh-icon fh-icon--eye" aria-hidden="true"></i><span class="fh-sr-only">Followers</span></dt><dd>1.8K</dd></div>
+      </dl>
+      <button class="fh-button fh-button--sm" type="button">Follow</button>
+    </div>
+  </div>
+</article>
+```
+
+#### SCD-1.2 · Fade
+
+```html
+<article class="fh-social fh-social--fade" data-fh-scheme="light" data-fh="SCD-1.2">
+  <img class="fh-social__photo" src="img/avatars/maya.webp" alt="Maya Okafor">
+  <div class="fh-social__body">
+    <h3 class="fh-social__name">maya. <i class="fh-icon fh-icon--circle-check fh-social__check" role="img" aria-label="Verified"></i></h3>
+    <p class="fh-social__bio">Designer and writer. Systems, type and the space between.</p>
+    <div class="fh-social__foot">
+      <dl class="fh-social__stats">
+        <div><dt><i class="fh-icon fh-icon--user" aria-hidden="true"></i><span class="fh-sr-only">Following</span></dt><dd>41</dd></div>
+        <div><dt><i class="fh-icon fh-icon--eye" aria-hidden="true"></i><span class="fh-sr-only">Followers</span></dt><dd>3.2K</dd></div>
+      </dl>
+      <button class="fh-button fh-button--sm" type="button">Follow</button>
+    </div>
+  </div>
+</article>
+```
+
+#### SCD-1.3 · Dark
+
+```html
+<article class="fh-social fh-social--dark" data-fh="SCD-1.3">
+  <img class="fh-social__photo" src="img/avatars/mateo.webp" alt="Mateo Alvarez">
+  <div class="fh-social__body">
+    <h3 class="fh-social__name">mateo. <i class="fh-icon fh-icon--circle-check fh-social__check" role="img" aria-label="Verified"></i></h3>
+    <p class="fh-social__bio">Art director. Shoots, campaigns and the odd short film.</p>
+    <div class="fh-social__foot">
+      <dl class="fh-social__stats">
+        <div><dt><i class="fh-icon fh-icon--user" aria-hidden="true"></i><span class="fh-sr-only">Following</span></dt><dd>18</dd></div>
+        <div><dt><i class="fh-icon fh-icon--eye" aria-hidden="true"></i><span class="fh-sr-only">Followers</span></dt><dd>9.4K</dd></div>
+      </dl>
+      <button class="fh-button fh-button--sm" type="button">Follow</button>
+    </div>
+  </div>
+</article>
+```
 
 ## AUT · Sign in & sign up
 
 Three layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Plain is the form alone.
 
-Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `fh-segmented` `fh-auth__switch` `fh-sr-only` `fh-auth__head` `fh-auth__form` `fh-field` `fh-input` `fh-auth__row` `fh-check` `fh-button` `fh-divider` `fh-auth__social` `fh-button--secondary` `fh-field__hint` `fh-auth__foot` `fh-auth--card` `fh-auth--plain`
+Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `fh-segmented` `fh-auth__switch` `fh-sr-only` `fh-auth__head` `fh-auth__form` `fh-field` `fh-input` `fh-auth__row` `fh-check` `fh-button` `fh-divider` `fh-auth__social` `fh-button--secondary` `fh-field__hint` `fh-auth__foot` `fh-auth--card` `fh-auth--plain` `fh-segmented--sm` `fh-auth__method` `fh-auth__forgot` `fh-input-group` `fh-auth__rules`
 
-### AUT-01 · Split · etched art
+### AUT-1 · Layouts
+
+#### AUT-1.1 · Split · etched art
 
 ```html
-<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account">
+<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account" data-fh="AUT-1.1">
   <div class="fh-auth__art" aria-hidden="true"></div>
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
@@ -1164,10 +1976,10 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 </section>
 ```
 
-### AUT-02 · Card · full-bleed art
+#### AUT-1.2 · Card · full-bleed art
 
 ```html
-<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account">
+<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account" data-fh="AUT-1.2">
   <div class="fh-auth__art" aria-hidden="true"></div>
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
@@ -1211,10 +2023,10 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 </section>
 ```
 
-### AUT-03 · Plain · no art
+#### AUT-1.3 · Plain · no art
 
 ```html
-<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account">
+<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account" data-fh="AUT-1.3">
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
     <fieldset class="fh-segmented fh-auth__switch">
@@ -1257,6 +2069,59 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 </section>
 ```
 
+### AUT-2 · Method
+
+#### AUT-2.1 · Method · password or email link
+
+```html
+<section class="fh-auth" data-tone="lime" aria-label="Sign in or create an account" data-fh="AUT-2.1">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind</b> Admin</p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-method-mode" id="auth-method-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-method-mode" id="auth-method-up" value="up"> Create account</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">We email you a link to verify your address.</p>
+    </header>
+    <fieldset class="fh-segmented fh-segmented--sm fh-auth__method" data-fh-auth="in">
+      <legend class="fh-sr-only">Sign in with</legend>
+      <label><input type="radio" name="auth-method-how" value="password" checked> Password</label>
+      <label><input type="radio" name="auth-method-how" value="link"> Email link</label>
+    </fieldset>
+    <form class="fh-auth__form" data-fh-auth="in" data-fh-method="password" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-method-id">Username or email</label><input class="fh-input" id="auth-method-id" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
+      <div class="fh-field"><label for="auth-method-pass">Password</label><input class="fh-input" id="auth-method-pass" name="password" type="password" autocomplete="current-password" required></div>
+      <button class="fh-button" type="submit">Sign in</button>
+    </form>
+    <details class="fh-auth__forgot" data-fh-auth="in" data-fh-method="password">
+      <summary>Forgot password?</summary>
+      <form class="fh-auth__form" method="post" action="/auth/forgot">
+        <div class="fh-field"><label for="auth-method-reset">Username or email</label><input class="fh-input" id="auth-method-reset" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
+        <button class="fh-button fh-button--secondary" type="submit">Send reset link</button>
+      </form>
+    </details>
+    <form class="fh-auth__form" data-fh-auth="in" data-fh-method="link" method="post" action="/auth/link">
+      <div class="fh-field"><label for="auth-method-link">Username or email</label><input class="fh-input" id="auth-method-link" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"><p class="fh-field__hint">We email a one-time link to the address on your account.</p></div>
+      <button class="fh-button" type="submit">Email me a link</button>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-method-new-email">Email</label><input class="fh-input" id="auth-method-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-method-user">Username</label><div class="fh-input-group"><span aria-hidden="true">@</span><input class="fh-input" id="auth-method-user" name="username" autocomplete="username" required placeholder="yourname" aria-describedby="auth-method-rules"></div>
+        <ul class="fh-auth__rules" id="auth-method-rules"><li data-state="met">3–32 chars</li><li data-state="met">Starts with a letter</li><li data-state="met">Letters, numbers, _ only</li><li data-state="checking">Checking…</li></ul></div>
+      <button class="fh-button" type="submit">Send verification link</button>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-method-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-method-in">Sign in</label></p>
+  </div>
+</section>
+```
+
 ## FLD · Fields
 
 The "Required" chip comes from the input's own required attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted.
@@ -1267,7 +2132,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## CHO · Choices
 
-Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard.
+Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add fh-segmented--stack to stack its options.
 
 Classes: `fh-stack` `fh-stack--lg` `fh-segmented` `fh-sr-only` `fh-check` `fh-switch`
 
@@ -1280,6 +2145,63 @@ A dropzone over a real file input, a styled range, a tag field, and a dialog tha
 Classes: `fh-grid` `fh-dropzone` `fh-dropzone__title` `fh-dropzone__hint` `fh-stack` `fh-stack--lg` `fh-field` `fh-range` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `fh-button` `fh-button--secondary` `fh-dialog` `fh-dialog--sheet` `fh-dialog__header` `fh-subheading` `fh-close` `fh-dialog__body` `fh-check` `fh-switch` `fh-dl` `fh-dialog__footer`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#UPL.
+
+## TAG · Tag field
+
+Toned chips with a remove button and an input in one field. The inline variant adds no chrome until it is used: a text link with no tags, then a small round plus that opens room for one more.
+
+Classes: `fh-field` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `fh-cluster` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-icon` `fh-tags--inline` `fh-tags__add` `fh-tags__entry` `fh-tags__prefix`
+
+### TAG-1 · Field
+
+#### TAG-1.1 · Field
+
+```html
+<div class="fh-field fh-field--optional" data-fh="TAG-1.1"><label for="tg-channels">Channels</label>
+  <div class="fh-tags">
+    <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
+    <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
+    <input id="tg-channels" placeholder="Add a channel">
+  </div>
+</div>
+```
+
+### TAG-2 · Inline
+
+#### TAG-2.1 · Inline · empty
+
+```html
+<div class="fh-cluster">
+  <button type="button" class="fh-button fh-button--sm fh-button--ghost" data-fh="TAG-2.1"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i>Tag</button>
+</div>
+```
+
+#### TAG-2.2 · Inline · adding
+
+```html
+<div class="fh-tags fh-tags--inline" data-fh="TAG-2.2">
+  <input aria-label="Add a tag" placeholder="Add a tag">
+</div>
+```
+
+#### TAG-2.3 · Inline · with tags
+
+```html
+<div class="fh-tags fh-tags--inline" data-fh="TAG-2.3">
+  <span class="fh-chip" data-tone="orange">applications <button class="fh-chip__remove" type="button" aria-label="Remove applications"></button></span>
+  <span class="fh-chip" data-tone="lime">health <button class="fh-chip__remove" type="button" aria-label="Remove health"></button></span>
+  <button class="fh-tags__add" type="button" aria-label="Add a tag"></button>
+</div>
+```
+
+#### TAG-2.4 · Inline · link entry
+
+```html
+<div class="fh-tags fh-tags--inline" data-fh="TAG-2.4">
+  <span class="fh-chip" data-tone="sky">utbms.com <button class="fh-chip__remove" type="button" aria-label="Remove utbms.com"></button></span>
+  <span class="fh-tags__entry"><button class="fh-tags__prefix" type="button" aria-label="Protocol: https, click for http">https://</button><input aria-label="Link" placeholder="example.com/page"></span>
+</div>
+```
 
 ## DTB · Datatable
 
@@ -1349,6 +2271,149 @@ Classes: `fh-confirm` `fh-icon-tile` `fh-icon-tile--solid` `fh-icon` `fh-label` 
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#CNF.
 
+## INV · Invoice
+
+The sheet: logo and number, title, from and bill-to with the dates, line items, totals, a signature, payment details and notes. __cover adds a picture band; --classic centres the logo and sets a small-caps title. data-fh-scheme="light" keeps it paper on a dark page, and it prints on its own. The pay bar (fh-pay --float) sticks to the bottom; Pay opens the payment panel up out of it.
+
+Classes: `fh-invoice` `fh-invoice__cover` `fh-invoice__head` `fh-invoice__logo` `fh-invoice__number` `fh-invoice__title` `fh-invoice__parties` `fh-invoice__label` `fh-invoice__dates` `fh-invoice__items` `fh-invoice__totals` `fh-invoice__total` `fh-invoice__sign` `fh-invoice__foot` `fh-invoice--classic` `fh-pay` `fh-pay--float` `fh-pay__mark` `fh-pay__doc` `fh-pay__amount` `fh-chip` `fh-chip--tone` `fh-pay__icon` `fh-icon` `fh-button` `fh-button--sm` `fh-pay__panel` `fh-pay__head` `fh-pay__route` `fh-pay__party` `fh-pay__sum` `fh-pay__total` `fh-pay__details` `fh-pay__actions`
+
+### INV-1 · Sheet
+
+#### INV-1.1 · Cover
+
+```html
+<article class="fh-invoice" data-fh-scheme="light" data-fh="INV-1.1">
+  <img class="fh-invoice__cover" src="img/backdrop/lipizzaner-horse.webp" alt>
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0513-0057</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Maya Okafor</b><br>Northwind Studio<br>maya@northwind.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Firehorse theme<small>Tokens, type and colour for your brand</small></td><td>1</td><td>$2,400.00</td><td>$2,400.00</td></tr>
+      <tr><td>Client portal build<small>Invoices, files and messages</small></td><td>1</td><td>$1,800.00</td><td>$1,800.00</td></tr>
+      <tr><td>Support<small>Per month</small></td><td>3</td><td>$200.00</td><td>$600.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$4,800.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$720.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$5,520.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0513-0057</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+```
+
+#### INV-1.2 · Modern
+
+```html
+<article class="fh-invoice" data-fh-scheme="light" data-fh="INV-1.2">
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0602-0061</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Theo Laurent</b><br>Hexwork<br>theo@hexwork.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Design review<small>Two rounds</small></td><td>1</td><td>$900.00</td><td>$900.00</td></tr>
+      <tr><td>Audit<small>AI visibility audit</small></td><td>1</td><td>$600.00</td><td>$600.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$1,500.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$225.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$1,725.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0602-0061</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+```
+
+#### INV-1.3 · Classic
+
+```html
+<article class="fh-invoice fh-invoice--classic" data-fh-scheme="light" data-fh="INV-1.3">
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0611-0064</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Isla Moreau</b><br>Lumen<br>isla@lumen.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Retainer<small>June</small></td><td>1</td><td>$1,200.00</td><td>$1,200.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$1,200.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$180.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$1,380.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0611-0064</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+```
+
+### INV-2 · Pay
+
+#### INV-2.1 · Pay bar · panel
+
+```html
+<div class="fh-pay fh-pay--float" data-fh-scheme="dark" data-fh="INV-2.1">
+  <span class="fh-pay__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+  <span class="fh-pay__doc"><b>Invoice</b><small>INV-0513-0057</small></span>
+  <b class="fh-pay__amount">$5,520</b>
+  <span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span>
+  <a class="fh-pay__icon" href="#invoice" aria-label="Download PDF"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></a>
+  <button class="fh-button fh-button--sm" type="button" popovertarget="pay-inv-1">Pay</button>
+  <div class="fh-pay__panel" id="pay-inv-1" popover>
+    <header class="fh-pay__head"><span class="fh-pay__doc"><b>Invoice</b><small>INV-0513-0057</small></span><span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span></header>
+    <p class="fh-pay__route"><span class="fh-pay__party"><span class="fh-pay__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>Rascode</span><span aria-hidden="true">→</span><span class="fh-pay__party"><img src="img/avatars/maya.webp" alt>Maya Okafor</span></p>
+    <div class="fh-pay__sum">
+      <p class="fh-pay__total" style="margin: 0"><span>Total</span><b>$5,520</b></p>
+      <dl><div><dt>Issued</dt><dd>May 13</dd></div><div><dt>Due</dt><dd>Jun 12<small>in 30 days</small></dd></div></dl>
+    </div>
+    <details class="fh-pay__details" open>
+      <summary>Payment details</summary>
+      <dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Account</dt><dd>1234 5678 9012</dd></div><div><dt>Reference</dt><dd>INV-0513-0057</dd></div></dl>
+    </details>
+    <footer class="fh-pay__actions">
+      <a class="fh-pay__icon" href="#invoice" aria-label="Download PDF"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></a>
+      <button class="fh-pay__icon" type="button" popovertarget="pay-inv-1" popovertargetaction="hide" aria-label="Close"><i class="fh-icon fh-icon--x" aria-hidden="true"></i></button>
+      <a class="fh-button" href="#invoice">Pay now</a>
+    </footer>
+  </div>
+</div>
+```
+
 ## PLY · Audio player
 
 Classes: `fh-player` `fh-player__art` `fh-icon` `fh-player__meta` `fh-player__kicker` `fh-eq` `fh-player__title` `fh-player__by` `fh-play` `fh-play--lg` `fh-wave` `fh-wave--lg` `fh-player__time` `fh-player__tools` `fh-audio-btn` `fh-segmented` `fh-segmented--sm` `fh-volume` `fh-scrub`
@@ -1369,7 +2434,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## REL · Reel
 
-Classes: `fh-reel`
+Classes: `fh-line-reel`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#REL.
 
@@ -1397,23 +2462,25 @@ A YouTube thumbnail with the host in a tone ring (the timestamp covers the botto
 
 Classes: `fh-canvas` `fh-canvas--yt-thumb` `fh-canvas--split` `fh-canvas__body` `fh-canvas__top` `fh-canvas__badge` `fh-canvas__main` `fh-canvas__title` `fh-canvas__foot` `fh-canvas__media` `fh-canvas__media--round` `fh-canvas--og` `fh-canvas__mark` `fh-canvas__eyebrow` `fh-canvas__sub`
 
-### THB-01 · YouTube thumbnail
+### THB-1 · Thumbnails & link cards
+
+#### THB-1.1 · YouTube thumbnail
 
 ```html
-<article class="fh-canvas fh-canvas--yt-thumb fh-canvas--split" data-tone="accent">
+<article class="fh-canvas fh-canvas--yt-thumb fh-canvas--split" data-tone="accent" data-fh="THB-1.1">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__badge">New</span></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">One file, <mark>every</mark> theme</h2></div>
     <div class="fh-canvas__foot"><span><b>EP 07</b> · Firehorse</span></div>
-    <figure class="fh-canvas__media fh-canvas__media--round"><img src="img/avatars/maya.webp" alt=""></figure>
+    <figure class="fh-canvas__media fh-canvas__media--round"><img src="img/avatars/maya.webp" alt></figure>
   </div>
 </article>
 ```
 
-### THB-02 · Link card
+#### THB-1.2 · Link card
 
 ```html
-<article class="fh-canvas fh-canvas--og" data-tone="sky">
+<article class="fh-canvas fh-canvas--og" data-tone="sky" data-fh="THB-1.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Docs · Media</p></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Media, <em>at the size it ships</em></h2><p class="fh-canvas__sub">Posts, headers, thumbnails, covers and slides from one set of tokens.</p></div>
@@ -1424,14 +2491,16 @@ Classes: `fh-canvas` `fh-canvas--yt-thumb` `fh-canvas--split` `fh-canvas__body` 
 
 ## SOC · Posts & stories
 
-A 4:5 feed post (Instagram, Threads, LinkedIn; the profile grid trims it to 3:4), a square carousel card, and a 9:16 story for Stories, Reels, Shorts and TikTok with the app's top and bottom bands kept clear.
+A 4:5 feed post (Instagram, Threads, LinkedIn; the profile grid trims it to 3:4), a square carousel card, a 9:16 story for Stories, Reels, Shorts and TikTok with the app's top and bottom bands kept clear, and a type specimen (--specimen with data-fh-type): the headline big at the top, the face named at the foot.
 
-Classes: `fh-canvas` `fh-canvas--post` `fh-canvas__body` `fh-canvas__top` `fh-canvas__eyebrow` `fh-canvas__main` `fh-canvas__title` `fh-canvas__cubes` `fh-canvas__foot` `fh-canvas--square` `fh-canvas--center` `fh-canvas__badge` `fh-nowrap` `fh-canvas__ui` `fh-chips` `fh-chips--track` `fh-chip` `fh-canvas__sub` `fh-canvas--story` `fh-canvas__media` `fh-canvas__mark`
+Classes: `fh-canvas` `fh-canvas--post` `fh-canvas__body` `fh-canvas__top` `fh-canvas__eyebrow` `fh-canvas__main` `fh-canvas__title` `fh-canvas__cubes` `fh-canvas__foot` `fh-canvas--square` `fh-canvas--center` `fh-canvas__badge` `fh-nowrap` `fh-canvas__ui` `fh-chips` `fh-chips--track` `fh-chip` `fh-canvas__sub` `fh-canvas--story` `fh-canvas__media` `fh-canvas__mark` `fh-canvas--specimen` `fh-canvas__face`
 
-### SOC-01 · Feed post
+### SOC-1 · Posts & stories
+
+#### SOC-1.1 · Feed post
 
 ```html
-<article class="fh-canvas fh-canvas--post" data-tone="violet">
+<article class="fh-canvas fh-canvas--post" data-tone="violet" data-fh="SOC-1.1">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><p class="fh-canvas__eyebrow">Release notes</p></div>
     <div class="fh-canvas__main">
@@ -1443,16 +2512,16 @@ Classes: `fh-canvas` `fh-canvas--post` `fh-canvas__body` `fh-canvas__top` `fh-ca
 </article>
 ```
 
-### SOC-02 · Square card
+#### SOC-1.2 · Square card
 
 ```html
-<article class="fh-canvas fh-canvas--square fh-canvas--center" data-tone="lime">
+<article class="fh-canvas fh-canvas--square fh-canvas--center" data-tone="lime" data-fh="SOC-1.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__badge">Tip</span></div>
     <div class="fh-canvas__main">
-      <h2 class="fh-canvas__title">Say <span class="fh-nowrap">CHP-02.</span> <em>Not “the green chip.”</em></h2>
+      <h2 class="fh-canvas__title">Say <span class="fh-nowrap">CHP-1.2.</span> <em>Not “the green chip.”</em></h2>
       <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 2">
-        <div class="fh-chips fh-chips--track" role="group" aria-label="CHP-02 sample"><label class="fh-chip" data-tone="lime"><input type="radio" name="soc-chp" checked> Start a project</label><label class="fh-chip" data-tone="sky"><input type="radio" name="soc-chp"> Book a call</label></div>
+        <div class="fh-chips fh-chips--track" role="group" aria-label="CHP-1.2 sample"><label class="fh-chip" data-tone="lime"><input type="radio" name="soc-chp" checked> Start a project</label><label class="fh-chip" data-tone="sky"><input type="radio" name="soc-chp"> Book a call</label></div>
       </div>
       <p class="fh-canvas__sub">Every component has an ID your team and your agent share.</p>
     </div>
@@ -1461,11 +2530,11 @@ Classes: `fh-canvas` `fh-canvas--post` `fh-canvas__body` `fh-canvas__top` `fh-ca
 </article>
 ```
 
-### SOC-03 · Story
+#### SOC-1.3 · Story
 
 ```html
-<article class="fh-canvas fh-canvas--story" data-tone="amber">
-  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-horse.webp" alt=""></figure>
+<article class="fh-canvas fh-canvas--story" data-tone="amber" data-fh="SOC-1.3">
+  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-horse.webp" alt></figure>
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Live</p></div>
     <div class="fh-canvas__main">
@@ -1478,17 +2547,45 @@ Classes: `fh-canvas` `fh-canvas--post` `fh-canvas__body` `fh-canvas__top` `fh-ca
 </article>
 ```
 
+#### SOC-1.4 · Type specimen
+
+```html
+<article class="fh-canvas fh-canvas--post fh-canvas--specimen" data-fh-type="hanken" data-fh="SOC-1.4">
+  <figure class="fh-canvas__media"><img src="img/backdrop/lipizzaner-horse.webp" alt></figure>
+  <div class="fh-canvas__body">
+    <div class="fh-canvas__top"><h2 class="fh-canvas__title">Beyond the ordinary</h2><span>TWF</span></div>
+    <div class="fh-canvas__main"></div>
+    <div class="fh-canvas__foot"><span>−5% letter spacing</span><p class="fh-canvas__face"><small>Font</small><b>Hanken<br>Grotesk</b></p></div>
+  </div>
+</article>
+```
+
+#### SOC-1.5 · Type specimen · Archivo
+
+```html
+<article class="fh-canvas fh-canvas--post fh-canvas--specimen" data-fh-type="archivo" data-fh="SOC-1.5">
+  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-hoof.webp" alt></figure>
+  <div class="fh-canvas__body">
+    <div class="fh-canvas__top"><h2 class="fh-canvas__title">Create something different</h2><span>TWF</span></div>
+    <div class="fh-canvas__main"></div>
+    <div class="fh-canvas__foot"><span>−3% letter spacing</span><p class="fh-canvas__face"><small>Font</small><b>Archivo</b></p></div>
+  </div>
+</article>
+```
+
 ## HDR · Profile headers
 
 Channel and profile banners in one row: the copy sits inside the part every device shows. YouTube shows only the centre 1546 × 423 of its banner on phones; X and LinkedIn put the profile photo over the lower left.
 
 Classes: `fh-canvas` `fh-canvas--yt-banner` `fh-canvas--row` `fh-canvas--plate` `fh-canvas__media` `fh-canvas__body` `fh-canvas__top` `fh-canvas__mark` `fh-canvas__eyebrow` `fh-canvas__main` `fh-canvas__title` `fh-canvas__cubes` `fh-canvas--x-header` `fh-canvas__sub` `fh-canvas--li-banner` `fh-canvas__ui` `fh-avatars` `fh-avatar` `fh-avatars__more`
 
-### HDR-01 · YouTube banner
+### HDR-1 · Profile headers
+
+#### HDR-1.1 · YouTube banner
 
 ```html
-<header class="fh-canvas fh-canvas--yt-banner fh-canvas--row fh-canvas--plate" data-tone="accent">
-  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-horse.webp" alt=""></figure>
+<header class="fh-canvas fh-canvas--yt-banner fh-canvas--row fh-canvas--plate" data-tone="accent" data-fh="HDR-1.1">
+  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-horse.webp" alt></figure>
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">New every Thursday</p></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Design systems, <em>built in public</em></h2></div>
@@ -1497,10 +2594,10 @@ Classes: `fh-canvas` `fh-canvas--yt-banner` `fh-canvas--row` `fh-canvas--plate` 
 </header>
 ```
 
-### HDR-02 · X header
+#### HDR-1.2 · X header
 
 ```html
-<header class="fh-canvas fh-canvas--x-header fh-canvas--row" data-tone="sky">
+<header class="fh-canvas fh-canvas--x-header fh-canvas--row" data-tone="sky" data-fh="HDR-1.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Tokens in, <em>pixels out</em></h2><p class="fh-canvas__sub">Notes on Firehorse, weekly.</p></div>
     <span class="fh-canvas__mark"><i>_</i>firehorse</span>
@@ -1508,10 +2605,10 @@ Classes: `fh-canvas` `fh-canvas--yt-banner` `fh-canvas--row` `fh-canvas--plate` 
 </header>
 ```
 
-### HDR-03 · LinkedIn banner
+#### HDR-1.3 · LinkedIn banner
 
 ```html
-<header class="fh-canvas fh-canvas--li-banner fh-canvas--row" data-tone="teal">
+<header class="fh-canvas fh-canvas--li-banner fh-canvas--row" data-tone="teal" data-fh="HDR-1.3">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Design systems <em>&amp; APIs</em></h2><p class="fh-canvas__sub">Rascode Studio</p></div>
     <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.5"><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar" data-face><img src="img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar" data-face><img src="img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar" data-face><img src="img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar" data-face><img src="img/avatars/ray.webp" alt="Ray"></span><span class="fh-avatar fh-avatars__more">+6</span></div></div>
@@ -1525,11 +2622,13 @@ Classes: `fh-canvas` `fh-canvas--yt-banner` `fh-canvas--row` `fh-canvas--plate` 
 
 Classes: `fh-canvas` `fh-canvas--cover` `fh-canvas__media` `fh-canvas__body` `fh-canvas__top` `fh-canvas__mark` `fh-canvas__badge` `fh-canvas__main` `fh-canvas__title` `fh-canvas__foot` `fh-canvas__eyebrow` `fh-canvas__index` `fh-canvas__sub`
 
-### CVR-01 · Album cover
+### CVR-1 · Cover art
+
+#### CVR-1.1 · Album cover
 
 ```html
-<article class="fh-canvas fh-canvas--cover" data-tone="sky">
-  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-horse.webp" alt=""></figure>
+<article class="fh-canvas fh-canvas--cover" data-tone="sky" data-fh="CVR-1.1">
+  <figure class="fh-canvas__media"><img src="img/backdrop/firehorse-horse.webp" alt></figure>
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>rascode studio</span><span class="fh-canvas__badge">Single</span></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Drift</h2></div>
@@ -1538,10 +2637,10 @@ Classes: `fh-canvas` `fh-canvas--cover` `fh-canvas__media` `fh-canvas__body` `fh
 </article>
 ```
 
-### CVR-02 · Podcast cover
+#### CVR-1.2 · Podcast cover
 
 ```html
-<article class="fh-canvas fh-canvas--cover" data-tone="amber">
+<article class="fh-canvas fh-canvas--cover" data-tone="amber" data-fh="CVR-1.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><p class="fh-canvas__eyebrow">A Firehorse podcast</p></div>
     <div class="fh-canvas__main"><p class="fh-canvas__index">12</p><h2 class="fh-canvas__title">The Stable</h2><p class="fh-canvas__sub">Design systems, out loud.</p></div>
@@ -1556,10 +2655,12 @@ Classes: `fh-canvas` `fh-canvas--cover` `fh-canvas__media` `fh-canvas__body` `fh
 
 Classes: `fh-canvas` `fh-canvas--card` `fh-canvas__body` `fh-canvas__top` `fh-canvas__mark` `fh-canvas__main` `fh-canvas__title` `fh-canvas__sub` `fh-canvas__foot` `fh-canvas--plain` `fh-canvas__eyebrow` `fh-canvas__cubes` `fh-canvas__cubes--rows`
 
-### BIZ-01 · Card front
+### BIZ-1 · Business cards
+
+#### BIZ-1.1 · Card front
 
 ```html
-<article class="fh-canvas fh-canvas--card" data-tone="accent">
+<article class="fh-canvas fh-canvas--card" data-tone="accent" data-fh="BIZ-1.1">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>rascode</span></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Ada Moreno</h2><p class="fh-canvas__sub">Design engineer</p></div>
@@ -1568,10 +2669,10 @@ Classes: `fh-canvas` `fh-canvas--card` `fh-canvas__body` `fh-canvas__top` `fh-ca
 </article>
 ```
 
-### BIZ-02 · Card back
+#### BIZ-1.2 · Card back
 
 ```html
-<article class="fh-canvas fh-canvas--card fh-canvas--plain" data-tone="accent">
+<article class="fh-canvas fh-canvas--card fh-canvas--plain" data-tone="accent" data-fh="BIZ-1.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><p class="fh-canvas__eyebrow">Rascode Studio</p></div>
     <div class="fh-canvas__main">
@@ -1588,10 +2689,12 @@ Ten layouts cover most talks: title, section, agenda, text and live UI, numbers,
 
 Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__top` `fh-canvas__mark` `fh-canvas__eyebrow` `fh-canvas__main` `fh-canvas__title` `fh-canvas__sub` `fh-canvas__foot` `fh-canvas__ui` `fh-cluster` `fh-avatars` `fh-avatar` `fh-small` `fh-muted` `fh-slide--section` `fh-canvas__index` `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chip--indexed` `fh-chip__index` `fh-slide__list` `fh-canvas--split` `fh-window` `fh-window__bar` `fh-window__body` `fh-chat` `fh-message` `fh-avatar--sm` `fh-message__bubble` `fh-message__name` `fh-typing` `fh-slide__stats` `fh-slide--middle` `fh-slide__quote` `fh-slide__cite` `fh-slide__code` `fh-canvas__ui--crop` `fh-header` `fh-header__bar` `fh-header__brand` `fh-nav` `fh-nav__link` `fh-header__actions` `fh-button` `fh-button--sm` `fh-dt` `fh-dt__toolbar` `fh-dt__title` `fh-icon-tile` `fh-icon` `fh-dt__count` `fh-dt__spacer` `fh-dt__tools` `fh-dt__tool` `fh-dt__tool--action` `fh-dt__filters` `fh-chip--tone` `fh-chip--sm` `fh-chip--underline` `fh-dt__body` `fh-dt__scroll` `fh-dt__table` `fh-dt__th` `fh-cell` `fh-cell--text` `fh-cell--status` `fh-status` `fh-cell--currency` `fh-cell--percent` `fh-cell__bar` `fh-cell--user` `fh-cell__user` `fh-avatar--xs` `fh-grid` `fh-person` `fh-avatar--lg` `fh-person__text` `fh-avatar--generated` `fh-canvas--center` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-button--secondary`
 
-### SLD-01 · Title
+### SLD-1 · Openers
+
+#### SLD-1.1 · Title
 
 ```html
-<section class="fh-canvas fh-slide fh-slide--title" data-tone="violet">
+<section class="fh-canvas fh-slide fh-slide--title" data-tone="violet" data-fh="SLD-1.1">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Talk · 2026</p></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Media, <em>at the size it ships</em></h2><p class="fh-canvas__sub">Designing the things you post outside the app.</p></div>
@@ -1608,10 +2711,10 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
 </section>
 ```
 
-### SLD-02 · Section
+#### SLD-1.2 · Section
 
 ```html
-<section class="fh-canvas fh-slide fh-slide--section" data-tone="sky">
+<section class="fh-canvas fh-slide fh-slide--section" data-tone="sky" data-fh="SLD-1.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main">
       <p class="fh-canvas__index">02</p>
@@ -1625,10 +2728,10 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
 </section>
 ```
 
-### SLD-03 · Agenda
+#### SLD-1.3 · Agenda
 
 ```html
-<section class="fh-canvas fh-slide" data-tone="lime">
+<section class="fh-canvas fh-slide" data-tone="lime" data-fh="SLD-1.3">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main">
       <h2 class="fh-canvas__title">Today</h2>
@@ -1643,10 +2746,12 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
 </section>
 ```
 
-### SLD-04 · Text and live UI
+### SLD-2 · Content
+
+#### SLD-2.1 · Text and live UI
 
 ```html
-<section class="fh-canvas fh-slide fh-canvas--split" data-tone="teal">
+<section class="fh-canvas fh-slide fh-canvas--split" data-tone="teal" data-fh="SLD-2.1">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><p class="fh-canvas__eyebrow">Real components</p></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">The chat you ship <em>is the chat you show</em></h2><p class="fh-canvas__sub">That's fh-chat in an fh-window, live markup zoomed with the slide. No screenshots to redo when the product changes.</p></div>
@@ -1656,10 +2761,10 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
         <div class="fh-window__bar">Messages · Reginald</div>
         <div class="fh-window__body">
           <div class="fh-chat" role="log" aria-label="Conversation">
-            <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt=""></span><div class="fh-message__bubble"><p class="fh-message__name">Reginald</p><p>Which channel gets the most inquiries?</p></div></div>
+            <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt></span><div class="fh-message__bubble"><p class="fh-message__name">Reginald</p><p>Which channel gets the most inquiries?</p></div></div>
             <div class="fh-message" data-from="me"><div class="fh-message__bubble"><p>Messenger, mostly after 6pm.</p></div></div>
-            <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt=""></span><div class="fh-message__bubble"><p class="fh-message__name">Reginald</p><p>Then Wes covers evenings first. Live by Monday.</p></div></div>
-            <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt=""></span><div class="fh-message__bubble"><span class="fh-typing" aria-label="Reginald is typing"><i></i></span></div></div>
+            <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt></span><div class="fh-message__bubble"><p class="fh-message__name">Reginald</p><p>Then Wes covers evenings first. Live by Monday.</p></div></div>
+            <div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm"><img src="img/avatars/reginald.webp" alt></span><div class="fh-message__bubble"><span class="fh-typing" aria-label="Reginald is typing"><i></i></span></div></div>
           </div>
         </div>
       </figure>
@@ -1668,10 +2773,10 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
 </section>
 ```
 
-### SLD-05 · Numbers
+#### SLD-2.2 · Numbers
 
 ```html
-<section class="fh-canvas fh-slide" data-tone="accent">
+<section class="fh-canvas fh-slide" data-tone="accent" data-fh="SLD-2.2">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main">
       <h2 class="fh-canvas__title">One system, <em>everywhere</em></h2>
@@ -1686,10 +2791,10 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
 </section>
 ```
 
-### SLD-06 · Quote
+#### SLD-2.3 · Quote
 
 ```html
-<section class="fh-canvas fh-slide fh-slide--middle" data-tone="amber">
+<section class="fh-canvas fh-slide fh-slide--middle" data-tone="amber" data-fh="SLD-2.3">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main">
       <blockquote class="fh-slide__quote">Our banner, our thumbnails and our deck finally look like the product.</blockquote>
@@ -1700,10 +2805,10 @@ Classes: `fh-canvas` `fh-slide` `fh-slide--title` `fh-canvas__body` `fh-canvas__
 </section>
 ```
 
-### SLD-07 · Code
+#### SLD-2.4 · Code
 
 ```html
-<section class="fh-canvas fh-slide" data-tone="fuchsia">
+<section class="fh-canvas fh-slide" data-tone="fuchsia" data-fh="SLD-2.4">
       <div class="fh-canvas__body">
         <div class="fh-canvas__main">
           <h2 class="fh-canvas__title">Three lines to a deck</h2>
@@ -1717,27 +2822,10 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
     </section>
 ```
 
-### SLD-08 · Close
+#### SLD-2.5 · Product screen
 
 ```html
-<section class="fh-canvas fh-slide fh-slide--middle fh-canvas--center" data-tone="violet">
-  <div class="fh-canvas__body">
-    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span></div>
-    <div class="fh-canvas__main">
-      <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><p class="fh-eyebrow-pill" data-tone="live"><span class="fh-dot fh-dot--live"></span>Questions welcome</p></div>
-      <h2 class="fh-canvas__title">Thank you</h2>
-      <p class="fh-canvas__sub">firehorse.rascode.dev/media</p>
-      <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><div class="fh-cluster"><a class="fh-button" href="https://firehorse.rascode.dev/media/">Read the docs</a><a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse">Download from Git</a></div></div>
-    </div>
-    <div class="fh-canvas__foot"><span>Rascode Studio</span><span>10 / 10</span></div>
-  </div>
-</section>
-```
-
-### SLD-09 · Product screen
-
-```html
-<section class="fh-canvas fh-slide" data-tone="sky">
+<section class="fh-canvas fh-slide" data-tone="sky" data-fh="SLD-2.5">
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><p class="fh-canvas__eyebrow">Live markup, not a screenshot</p><span class="fh-canvas__mark"><i>_</i>firehorse</span></div>
     <div class="fh-canvas__ui fh-canvas__ui--crop" style="--fh-canvas-ui-scale: 1.05">
@@ -1762,11 +2850,11 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
           <div class="fh-dt__body"><div class="fh-dt__scroll"><table class="fh-dt__table" aria-label="Client pipeline">
             <thead><tr><th scope="col"><span class="fh-dt__th"><i class="fh-icon fh-icon--type" aria-hidden="true"></i><span>Company</span></span></th><th scope="col"><span class="fh-dt__th"><i class="fh-icon fh-icon--activity" aria-hidden="true"></i><span>Stage</span></span></th><th scope="col" aria-sort="descending"><span class="fh-dt__th"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i><span>Value</span></span></th><th scope="col"><span class="fh-dt__th"><i class="fh-icon fh-icon--percent" aria-hidden="true"></i><span>Probability</span></span></th><th scope="col"><span class="fh-dt__th"><i class="fh-icon fh-icon--user" aria-hidden="true"></i><span>Owner</span></span></th></tr></thead>
             <tbody>
-                <tr><th scope="row" class="fh-cell fh-cell--text">Meridian Clinic</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="amber">Proposal</span></td><td class="fh-cell fh-cell--currency">$39,150</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:69"><i></i><span>69%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/ava.webp" alt=""></span><span>Ava</span></span></td></tr>
-                <tr><th scope="row" class="fh-cell fh-cell--text">Brennan Landscapes</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="lime">Won</span></td><td class="fh-cell fh-cell--currency">$34,800</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:100"><i></i><span>100%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/sam.webp" alt=""></span><span>Sam</span></span></td></tr>
-                <tr><th scope="row" class="fh-cell fh-cell--text">Nimbus Air</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="amber">Proposal</span></td><td class="fh-cell fh-cell--currency">$34,450</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:70"><i></i><span>70%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/mateo.webp" alt=""></span><span>Mateo</span></span></td></tr>
-                <tr><th scope="row" class="fh-cell fh-cell--text">Halcyon Dental</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="sky">Qualified</span></td><td class="fh-cell fh-cell--currency">$31,200</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:45"><i></i><span>45%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/isla.webp" alt=""></span><span>Isla</span></span></td></tr>
-                <tr><th scope="row" class="fh-cell fh-cell--text">Oak &amp; Ember</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="rose">Lost</span></td><td class="fh-cell fh-cell--currency">$28,000</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:0"><i></i><span>0%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/ruth.webp" alt=""></span><span>Ruth</span></span></td></tr>
+                <tr><th scope="row" class="fh-cell fh-cell--text">Meridian Clinic</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="amber">Proposal</span></td><td class="fh-cell fh-cell--currency">$39,150</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:69"><i></i><span>69%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/ava.webp" alt></span><span>Ava</span></span></td></tr>
+                <tr><th scope="row" class="fh-cell fh-cell--text">Brennan Landscapes</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="lime">Won</span></td><td class="fh-cell fh-cell--currency">$34,800</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:100"><i></i><span>100%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/sam.webp" alt></span><span>Sam</span></span></td></tr>
+                <tr><th scope="row" class="fh-cell fh-cell--text">Nimbus Air</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="amber">Proposal</span></td><td class="fh-cell fh-cell--currency">$34,450</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:70"><i></i><span>70%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/mateo.webp" alt></span><span>Mateo</span></span></td></tr>
+                <tr><th scope="row" class="fh-cell fh-cell--text">Halcyon Dental</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="sky">Qualified</span></td><td class="fh-cell fh-cell--currency">$31,200</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:45"><i></i><span>45%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/isla.webp" alt></span><span>Isla</span></span></td></tr>
+                <tr><th scope="row" class="fh-cell fh-cell--text">Oak &amp; Ember</th><td class="fh-cell fh-cell--status"><span class="fh-status" data-tone="rose">Lost</span></td><td class="fh-cell fh-cell--currency">$28,000</td><td class="fh-cell fh-cell--percent"><span class="fh-cell__bar" data-tone="teal" style="--v:0"><i></i><span>0%</span></span></td><td class="fh-cell fh-cell--user"><span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="img/avatars/ruth.webp" alt></span><span>Ruth</span></span></td></tr>
             </tbody>
           </table></div></div>
         </div>
@@ -1777,20 +2865,20 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
 </section>
 ```
 
-### SLD-10 · Team
+#### SLD-2.6 · Team
 
 ```html
-<section class="fh-canvas fh-slide" data-tone="lime">
+<section class="fh-canvas fh-slide" data-tone="lime" data-fh="SLD-2.6">
   <div class="fh-canvas__body">
     <div class="fh-canvas__main">
       <h2 class="fh-canvas__title">Who's on it</h2>
       <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.5">
         <div class="fh-grid" data-cols="3" style="--fh-grid-min: 11rem; --fh-gap: 1.25rem 1.5rem">
-          <a class="fh-person" href="#slide-layouts" data-tone="sky"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/reginald.webp" alt=""></span><span class="fh-person__text"><b>Reginald</b><span>Agent services</span></span></a>
-          <a class="fh-person" href="#slide-layouts" data-tone="lime"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/ava.webp" alt=""></span><span class="fh-person__text"><b>Ava</b><span>Design engineer</span></span></a>
-          <a class="fh-person" href="#slide-layouts" data-tone="amber"><span class="fh-avatar fh-avatar--lg" data-status="away" data-face><img src="img/avatars/mateo.webp" alt=""></span><span class="fh-person__text"><b>Mateo</b><span>Data and APIs</span></span></a>
-          <a class="fh-person" href="#slide-layouts" data-tone="violet"><span class="fh-avatar fh-avatar--lg" data-face><img src="img/avatars/isla.webp" alt=""></span><span class="fh-person__text"><b>Isla</b><span>Research</span></span></a>
-          <a class="fh-person" href="#slide-layouts" data-tone="teal"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/cole.webp" alt=""></span><span class="fh-person__text"><b>Cole</b><span>Front end</span></span></a>
+          <a class="fh-person" href="#slide-layouts" data-tone="sky"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/reginald.webp" alt></span><span class="fh-person__text"><b>Reginald</b><span>Agent services</span></span></a>
+          <a class="fh-person" href="#slide-layouts" data-tone="lime"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/ava.webp" alt></span><span class="fh-person__text"><b>Ava</b><span>Design engineer</span></span></a>
+          <a class="fh-person" href="#slide-layouts" data-tone="amber"><span class="fh-avatar fh-avatar--lg" data-status="away" data-face><img src="img/avatars/mateo.webp" alt></span><span class="fh-person__text"><b>Mateo</b><span>Data and APIs</span></span></a>
+          <a class="fh-person" href="#slide-layouts" data-tone="violet"><span class="fh-avatar fh-avatar--lg" data-face><img src="img/avatars/isla.webp" alt></span><span class="fh-person__text"><b>Isla</b><span>Research</span></span></a>
+          <a class="fh-person" href="#slide-layouts" data-tone="teal"><span class="fh-avatar fh-avatar--lg" data-status="online" data-face><img src="img/avatars/cole.webp" alt></span><span class="fh-person__text"><b>Cole</b><span>Front end</span></span></a>
           <a class="fh-person" href="#slide-layouts" data-tone="rose"><span class="fh-avatar fh-avatar--lg fh-avatar--generated" data-tone="rose">RT</span><span class="fh-person__text"><b>Ruth</b><span>Operations</span></span></a>
         </div>
       </div>
@@ -1800,7 +2888,26 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
 </section>
 ```
 
-## THM · themes/brand.css
+### SLD-3 · Close
+
+#### SLD-3.1 · Close
+
+```html
+<section class="fh-canvas fh-slide fh-slide--middle fh-canvas--center" data-tone="violet" data-fh="SLD-3.1">
+  <div class="fh-canvas__body">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span></div>
+    <div class="fh-canvas__main">
+      <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><p class="fh-eyebrow-pill" data-tone="live"><span class="fh-dot fh-dot--live"></span>Questions welcome</p></div>
+      <h2 class="fh-canvas__title">Thank you</h2>
+      <p class="fh-canvas__sub">firehorse.rascode.dev/media</p>
+      <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><div class="fh-cluster"><a class="fh-button" href="https://firehorse.rascode.dev/media/">Read the docs</a><a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse">Download from Git</a></div></div>
+    </div>
+    <div class="fh-canvas__foot"><span>Rascode Studio</span><span>10 / 10</span></div>
+  </div>
+</section>
+```
+
+## THM · Brand theme file
 
 @layer fh.themes
 
@@ -1816,3 +2923,249 @@ Classes: `fh-field` `fh-select`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THS.
 
+## TML · Timelines
+
+Classes: `fh-milestones` `fh-milestones__item` `fh-milestones__date` `fh-milestones__body` `fh-milestones__title` `fh-phases` `fh-phases__stop` `fh-phases__date` `fh-phases__title` `fh-phases__items` `fh-dot` `fh-dot--live` `fh-schedule` `fh-schedule__grid` `fh-schedule__head` `fh-schedule__row` `fh-schedule__label` `fh-schedule__bar` `fh-activity` `fh-activity__day` `fh-activity__item` `fh-avatar` `fh-activity__body` `fh-activity__line` `fh-status` `fh-activity__time` `fh-activity__remark` `fh-progress`
+
+### TML-1 · Timelines
+
+#### TML-1.1 · Milestones
+
+```html
+<div>
+<ol class="fh-milestones" data-tone="sky" data-fh="TML-1.1">
+  <li class="fh-milestones__item" data-state="done"><time class="fh-milestones__date" datetime="2026-11-01">Nov 1</time><div class="fh-milestones__body"><p class="fh-milestones__title">Shell</p><p>Side navigation, environment band and selector.</p></div></li>
+  <li class="fh-milestones__item" data-state="done"><time class="fh-milestones__date" datetime="2026-11-01">Nov 1</time><div class="fh-milestones__body"><p class="fh-milestones__title">Sign-in</p><p>Glass sign-in with username or email.</p></div></li>
+  <li class="fh-milestones__item" data-state="now"><time class="fh-milestones__date" datetime="2026-11-15">Nov 15</time><div class="fh-milestones__body"><p class="fh-milestones__title">Applications</p><p>The registry everything maps back to.</p></div></li>
+  <li class="fh-milestones__item" data-state="next"><time class="fh-milestones__date" datetime="2026-12-01">Dec 1</time><div class="fh-milestones__body"><p class="fh-milestones__title">Enterprise</p><p>Organisations, their people and sites.</p></div></li>
+  <li class="fh-milestones__item" data-state="next"><time class="fh-milestones__date" datetime="2026-12-15">Dec 15</time><div class="fh-milestones__body"><p class="fh-milestones__title">Identity &amp; access</p><p>People, accounts and roles.</p></div></li>
+</ol>
+</div>
+```
+
+#### TML-1.2 · Horizontal track
+
+```html
+<div style="min-inline-size: 0">
+<ol class="fh-phases" data-tone="violet" aria-label="Project phases" data-fh="TML-1.2">
+  <li class="fh-phases__stop" data-state="done"><time class="fh-phases__date">Oct 6</time><p class="fh-phases__title">Discovery</p><p>Scope signed.</p></li>
+  <li class="fh-phases__stop" data-state="done"><time class="fh-phases__date">Oct 20</time><p class="fh-phases__title">Design</p><p>System approved.</p></li>
+  <li class="fh-phases__stop" data-state="now"><time class="fh-phases__date">Nov 3</time><p class="fh-phases__title">Build</p><p>Sprint 2 of 3.</p><ul class="fh-phases__items"><li><span class="fh-dot fh-dot--live" data-tone="amber" aria-hidden="true"></span><span>Checkout</span></li><li><span class="fh-dot" data-tone="violet" aria-hidden="true"></span><span>Order emails</span></li></ul></li>
+  <li class="fh-phases__stop" data-state="next"><time class="fh-phases__date">Dec 1</time><p class="fh-phases__title">Launch</p><p>Go-live and handover.</p></li>
+</ol>
+</div>
+```
+
+#### TML-1.3 · Schedule
+
+```html
+<div class="site-demo">
+          <div class="site-demo__head"><h3>Schedule</h3><p>Bars across months with a today line. Set <code>--start</code> and <code>--span</code> in columns; <code>--fh-schedule-now</code> places today. Scrolls sideways when narrow, with the labels pinned.</p></div>
+          <div style="padding: var(--fh-space-6)">
+<div class="fh-schedule" data-fh="TML-1.3">
+  <div class="fh-schedule__grid" style="--fh-schedule-cols: 6; --fh-schedule-now: 1.03" data-now="Today">
+    <div class="fh-schedule__head"><span></span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+    <div class="fh-schedule__row" data-tone="lime"><span class="fh-schedule__label">Shell &amp; sign-in</span><span class="fh-schedule__bar" data-state="done" style="--start: 1; --span: 1">Done</span></div>
+    <div class="fh-schedule__row" data-tone="orange"><span class="fh-schedule__label">Applications</span><span class="fh-schedule__bar" data-state="now" style="--start: 1; --span: 2">Registry, domains, deploys</span></div>
+    <div class="fh-schedule__row" data-tone="sky"><span class="fh-schedule__label">Enterprise</span><span class="fh-schedule__bar" data-state="next" style="--start: 2; --span: 2">Organisations</span></div>
+    <div class="fh-schedule__row" data-tone="amber"><span class="fh-schedule__label">Business</span><span class="fh-schedule__bar" data-state="next" style="--start: 3; --span: 2">Entities, money</span></div>
+    <div class="fh-schedule__row" data-tone="violet"><span class="fh-schedule__label">Identity &amp; access</span><span class="fh-schedule__bar" data-state="next" style="--start: 4; --span: 2">People, roles</span></div>
+    <div class="fh-schedule__row" data-tone="teal"><span class="fh-schedule__label">Settings</span><span class="fh-schedule__bar" data-state="next" style="--start: 6; --span: 1">Preferences</span></div>
+  </div>
+</div>
+          </div>
+        </div>
+```
+
+#### TML-1.4 · Activity feed
+
+```html
+<div class="site-demo">
+          <div class="site-demo__head"><h3>Activity feed</h3><p>Who did what, when: an avatar on a rail, the action in one line, a relative time, and anything else (a remark, a progress bar) stacked under it. Day labels split the feed.</p></div>
+          <div style="padding: var(--fh-space-6); max-inline-size: 40rem">
+<ol class="fh-activity" data-fh="TML-1.4">
+  <li class="fh-activity__day">Today</li>
+  <li class="fh-activity__item"><span class="fh-avatar" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Ava</b> moved <a href="#timelines">Northwind Labs</a> to <span class="fh-status" data-tone="lime">Won</span></p><time class="fh-activity__time" datetime="2026-11-01T14:10">2h ago</time></div></li>
+  <li class="fh-activity__item" data-tone="amber"><span class="fh-avatar" data-tone="amber"><img src="/img/avatars/mateo.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Mateo</b> commented on <a href="#timelines">Launch checklist</a></p><time class="fh-activity__time" datetime="2026-11-01T11:42">4h ago</time><blockquote class="fh-activity__remark">DNS is ready; we can flip it Monday morning.</blockquote></div></li>
+  <li class="fh-activity__item"><span class="fh-avatar" data-tone="violet"><img src="/img/avatars/ruth.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Ruth</b> is uploading the brand kit</p><time class="fh-activity__time" datetime="2026-11-01T09:05">7h ago</time><progress class="fh-progress" value="64" max="100">64%</progress></div></li>
+  <li class="fh-activity__day">Yesterday</li>
+  <li class="fh-activity__item"><span class="fh-avatar" data-tone="teal">SL</span><div class="fh-activity__body"><p class="fh-activity__line"><b>Sam</b> created the project <a href="#timelines">Halcyon Health site</a></p><time class="fh-activity__time" datetime="2026-10-31T16:20">Oct 31, 4:20 PM</time></div></li>
+</ol>
+          </div>
+        </div>
+```
+
+## CAL · Calendar pickers
+
+Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full`
+
+### CAL-1 · Pickers
+
+#### CAL-1.1 · Date picker
+
+```html
+<div class="fh-field" data-fh="CAL-1.1">
+  <label for="pm-due">Due date</label>
+  <div class="fh-datepicker" data-fh-datepicker data-mode="single"><input class="fh-input" type="date" id="pm-due" name="due" value="2026-11-14"></div>
+</div>
+```
+
+#### CAL-1.2 · Date and time picker
+
+```html
+<div class="fh-field" data-fh="CAL-1.2">
+  <label for="pm-kickoff">Kickoff call</label>
+  <div class="fh-datepicker" data-fh-datepicker data-mode="datetime"><input class="fh-input" type="datetime-local" id="pm-kickoff" name="kickoff"></div>
+</div>
+```
+
+#### CAL-1.3 · Date range picker
+
+```html
+<div class="fh-field fh-field--full" data-fh="CAL-1.3">
+  <label for="pm-from">Reporting period</label>
+  <div class="fh-datepicker" data-fh-datepicker data-mode="range"><input class="fh-input" type="date" id="pm-from" name="from" aria-label="Start"><input class="fh-input" type="date" id="pm-to" name="to" aria-label="End"></div>
+</div>
+```
+
+### CAL-2 · Inline
+
+#### CAL-2.1 · Inline calendar
+
+```html
+<div class="site-demo">
+  <div class="site-demo__head"><h3>Inline calendar</h3><p>The month grid on its own, for booking and scheduling screens. Listen for <code>fh:change</code>; set <code>data-mode="range"</code> and <code>data-months="2"</code> for ranges.</p></div>
+  <div style="padding: var(--fh-space-6)">
+    <div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
+  </div>
+</div>
+```
+
+## Former IDs
+
+IDs retired before or since release, and what replaced them. Use the new ID.
+
+| Was | Now |
+|---|---|
+| `AUT-01` | `AUT-1.1` |
+| `AUT-02` | `AUT-1.2` |
+| `AUT-03` | `AUT-1.3` |
+| `AUT-04` | `AUT-2.1` |
+| `AVG` | `AVT-4` |
+| `AVK` | `AVT-5` |
+| `AVR` | `AVT-3` |
+| `AVS` | `AVT-1` |
+| `AVS-01` | `AVT-1.1` |
+| `AVS-02` | `AVT-1.2` |
+| `AVS-03` | `AVT-1.3` |
+| `AVS-04` | `AVT-1.4` |
+| `AVS-05` | `AVT-1.5` |
+| `AVZ` | `AVT-2` |
+| `BIZ-01` | `BIZ-1.1` |
+| `BIZ-02` | `BIZ-1.2` |
+| `BTN-01` | `BTN-1.1` |
+| `BTN-02` | `BTN-1.2` |
+| `BTN-03` | `BTN-1.3` |
+| `BTN-04` | `BTN-2.1` |
+| `BTN-05` | `BTN-2.2` |
+| `BTN-06` | `BTN-1.4` |
+| `BTN-07` | `BTN-3.1` |
+| `BTN-08` | `BTN-3.2` |
+| `BTN-09` | `BTN-1.5` |
+| `CAL-01` | `CAL-1.1` |
+| `CAL-02` | `CAL-1.3` |
+| `CAL-03` | `CAL-1.2` |
+| `CAL-04` | `CAL-2.1` |
+| `CAT-01` | `CAT-1.1` |
+| `CAT-02` | `CAT-2.1` |
+| `CAT-03` | `CAT-3.1` |
+| `CAT-04` | `CAT-4.1` |
+| `CAT-06` | `CAT-5.1` |
+| `CAT-08` | `CAT-6.1` |
+| `CAT-09` | `CAT-7.1` |
+| `CAT-12` | `CAT-6.2` |
+| `CHC` | `CHP-3` |
+| `CHC-01` | `CHP-3.1` |
+| `CHC-02` | `CHP-3.2` |
+| `CHC-03` | `CHP-3.3` |
+| `CHC-04` | `CHP-3.4` |
+| `CHP-01` | `CHP-1.1` |
+| `CHP-02` | `CHP-1.2` |
+| `CHP-03` | `CHP-1.3` |
+| `CHP-04` | `CHP-1.4` |
+| `CHP-05` | `CHP-2.1` |
+| `CHP-06` | `CHP-2.2` |
+| `CHP-07` | `CHP-2.3` |
+| `CUB-01` | `CUB-1.1` |
+| `CUB-02` | `CUB-1.2` |
+| `CUB-03` | `CUB-1.3` |
+| `CUB-04` | `CUB-1.4` |
+| `CUC` | `CUB-2` |
+| `CUC-01` | `CUB-2.1` |
+| `CUC-02` | `CUB-2.2` |
+| `CUC-03` | `CUB-2.3` |
+| `CVR-01` | `CVR-1.1` |
+| `CVR-02` | `CVR-1.2` |
+| `EYE-01` | `EYE-6.1` |
+| `EYE-02` | `EYE-1.1` |
+| `EYE-03` | `EYE-1.2` |
+| `EYE-04` | `EYE-1.3` |
+| `EYE-05` | `EYE-1.4` |
+| `EYE-06` | `EYE-2.1` |
+| `EYE-07` | `EYE-2.2` |
+| `EYE-08` | `EYE-2.3` |
+| `EYE-09` | `EYE-3.1` |
+| `EYE-10` | `EYE-3.2` |
+| `EYE-11` | `EYE-3.3` |
+| `EYE-12` | `EYE-3.4` |
+| `EYE-13` | `EYE-4.1` |
+| `EYE-14` | `EYE-4.2` |
+| `EYE-15` | `EYE-3.5` |
+| `EYE-16` | `EYE-2.4` |
+| `EYE-17` | `EYE-5.1` |
+| `EYE-18` | `EYE-5.2` |
+| `EYE-19` | `EYE-5.3` |
+| `EYE-20` | `EYE-6.2` |
+| `EYE-21` | `EYE-6.3` |
+| `EYE-22` | `EYE-7.1` |
+| `EYE-23` | `EYE-7.2` |
+| `HDR-01` | `HDR-1.1` |
+| `HDR-02` | `HDR-1.2` |
+| `HDR-03` | `HDR-1.3` |
+| `MRK-01` | `EYE` |
+| `MRK-02` | `MRK-1.1` |
+| `MRK-03` | `MRK-1.2` |
+| `PRF-01` | `PRF-1.1` |
+| `PRF-02` | `PRF-1.2` |
+| `PRF-03` | `PRF-1.4` |
+| `PRF-04` | `PRF-1.3` |
+| `SLD-01` | `SLD-1.1` |
+| `SLD-02` | `SLD-1.2` |
+| `SLD-03` | `SLD-1.3` |
+| `SLD-04` | `SLD-2.1` |
+| `SLD-05` | `SLD-2.2` |
+| `SLD-06` | `SLD-2.3` |
+| `SLD-07` | `SLD-2.4` |
+| `SLD-08` | `SLD-3.1` |
+| `SLD-09` | `SLD-2.5` |
+| `SLD-10` | `SLD-2.6` |
+| `SOC-01` | `SOC-1.1` |
+| `SOC-02` | `SOC-1.2` |
+| `SOC-03` | `SOC-1.3` |
+| `TAG-01` | `TAG-1.1` |
+| `TAG-02` | `TAG-2.1` |
+| `TAG-03` | `TAG-2.2` |
+| `TAG-04` | `TAG-2.3` |
+| `TAG-05` | `TAG-2.4` |
+| `THB-01` | `THB-1.1` |
+| `THB-02` | `THB-1.2` |
+| `TML-01` | `TML-1.1` |
+| `TML-02` | `TML-1.3` |
+| `TML-03` | `TML-1.4` |
+| `TML-04` | `TML-1.2` |
+| `WRT-01` | `WRT-1.1` |
+| `WRT-02` | `WRT-1.2` |
+| `WRT-03` | `WRT-1.3` |
+| `WRT-04` | `WRT-1.4` |
+| `WRT-05` | `WRT-1.5` |
+| `WRT-06` | `WRT-1.6` |

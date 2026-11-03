@@ -1,0 +1,37 @@
+/*
+ * Firehorse — Auth page (AUT)
+ * components/forms · layer fh.components · docs /forms/#AUT
+ */
+
+@layer fh.components {
+  /* —— Page: the block centred on a full-height canvas —— */
+  .fh-auth-page {
+    display: grid;
+    place-items: center;
+    min-block-size: 100dvh;
+    padding: var(--fh-space-6) var(--fh-space-4);
+    background-color: var(--fh-color-canvas);
+
+    & > .fh-auth {
+      inline-size: 100%;
+      max-inline-size: 64rem;
+    }
+
+    /* Glass fills the screen: no frame, no gutter, art to every edge. */
+    &:has(> .fh-auth--glass) {
+      padding: 0;
+    }
+
+    & > .fh-auth--glass {
+      align-self: stretch;
+      max-inline-size: none;
+      min-block-size: 100dvh;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+
+  @container fh-auth (inline-size >= 46rem) {
+    .fh-auth-page > .fh-auth--glass > .fh-auth__art { min-block-size: 100dvh; }
+  }
+}

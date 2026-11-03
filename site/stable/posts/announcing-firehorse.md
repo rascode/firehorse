@@ -1,7 +1,7 @@
 ---
 title: Announcing Firehorse, the flagship design system from Rascode and Company
 slug: announcing-firehorse
-date: 2026-10-28
+date: 2026-11-04
 description: The design system that scales. Every site we ship at Rascode now runs on one system, and today it's open source: container queries, adaptive color, themes, datatables, an index of every component and files your agent can read.
 topics: [release, agents]
 version: 1.1
@@ -21,7 +21,7 @@ Today we're open-sourcing it. Firehorse is the design system that scales, adapts
 - :palette: [Text colors computed from the background](/foundations/#adaptive), so contrast holds on any surface
 - :sliders-horizontal: [Themes](/theming/): every design decision in one file, switchable from a dropdown
 - :table-2: [Datatables](/data/) with 22 field types, filters, grouping and board views
-- :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-03` instead of describing a chip
+- :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-1.3` instead of describing a chip
 - :sparkles: [A word rotator](/foundations/#rotator) for headlines, in plain markup: no library, no script to configure
 - :terminal: `npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz` · [firehorse.rascode.dev](/)
 
@@ -41,7 +41,7 @@ In 2026 there's a second reader. AI agents build pages and read them, and anythi
 
 We audited our own site first. The old [rascode.dev](https://rascode.dev) stylesheet was 425 KB, with 481 hard-coded colors, 83 font sizes and 30+ breakpoints. Nothing was broken, but every new page was a negotiation with the last one.
 
-So we pulled out what the site actually uses (the [tokens](/foundations/), [cards](/components/content/#c-card), [etched grids](/layout/) and [floating bar](/components/navigation/#c-dock)) and rebuilt it as a system with rules. Rules don't flatten your style. They make every choice mean something, and they're the floor, not the ceiling.
+So we pulled out what the site actually uses (the [tokens](/foundations/), [cards](/components/content/#c-card), [etched grids](/layout/) and [floating bar](/components/navigation/#c-dock)) and rebuilt it as a system with rules. Rules don't flatten your style; they're the floor, not the ceiling.
 
 ![Why we built it](../img/card-01.webp)
 
@@ -86,7 +86,7 @@ Most products are a table at heart: leads, orders, tickets, users. Firehorse shi
 
 When you work with an agent, you describe UI in words: "the filled chip with the little icon." Everyone pictures something different, and the agent guesses.
 
-So every Firehorse component has an [ID](/components/#c-index). Chips are `CHP`, the datatable is `DTB`, and every variant has a number: the filled chip with an icon is `CHP-03`. Each demo on the site shows its ID, and clicking it copies the markup and an instruction for your agent. IDs are kept in a ledger and never reused.
+So every Firehorse component has an [ID](/components/#c-index). Chips are `CHP`, the datatable is `DTB`, and every variant has a number: the filled chip with an icon is `CHP-1.3`, a sibling of every other `CHP-1` chip. Each demo on the site shows its ID, and clicking it copies the markup and an instruction for your agent. IDs are kept in a ledger and never reused.
 
 Don't know the number? Ask KC, the Firehorse. Describe what you want in your own words and he gives you the ID, with the markup one click away.
 
@@ -105,11 +105,9 @@ Point your agent at one URL and tell it to use only `fh-*` classes and `--fh-*` 
 
 ## The word that won't sit still
 
-The rolling word in a headline is everywhere right now: the design system that scales, then adapts, then grows. It looks simple. Building it usually isn't: a JavaScript library, an array of words in a script, a timer, a measuring trick so the sentence doesn't jump, and a fix so screen readers don't announce every word.
+The rolling word in a headline (the design system that scales, then adapts, then grows) usually takes a JavaScript library, a timer and a fix so screen readers don't announce every word.
 
-In Firehorse it's markup. The [word rotator](/foundations/#rotator), `WRT`, is a `fh-rotator` span with one `<span>` per word. Write the words and they take turns. Change them by editing the HTML. The roll is pure CSS, and screen readers and anyone with reduced motion get the first word.
-
-Give each word its own [tone](/foundations/#c-tones), or set the word apart with a modifier: script, mono, highlight, gradient, underline. Load `firehorse.js` and the slot eases to each word's width, so the sentence glides instead of jumping. The headline on [our homepage](/) is one.
+In Firehorse it's markup. The [word rotator](/foundations/#rotator), `WRT`, is a `fh-rotator` span with one `<span>` per word. The roll is pure CSS; screen readers and reduced motion get the first word. Give each word its own [tone](/foundations/#c-tones), and load `firehorse.js` if you want the slot to ease to each word's width. The headline on [our homepage](/) is one.
 
 ## Also in the box
 
@@ -124,8 +122,6 @@ I build a lot of interfaces. Here's what changes when there's a design system in
 
 **It saves tokens.** Without a system, every request is an essay. "Make the button dark, slightly rounded, with a subtle shadow, uppercase mono label, a bit of letter spacing…" and then the same paragraph again for the next button and the next page. With Firehorse, that description is [`fh-button`](/components/actions/#c-button). A class name is a few tokens; a description is dozens, repeated in every prompt and reply. The [whole rulebook](/agent/system.md) costs about 4K tokens to read once.
 
-**It saves time.** Without rules, I make small choices: which gray, which gap, which radius. Each one is a guess, and guesses need reviewing. [A system makes those decisions once](/foundations/#tokens), so my effort goes to the layout and the content.
-
 **It saves rework.** Without a system, the fifth page I build won't quite match the first. A gap drifts from 24 to 28 pixels; a blue gets a little more purple. Nobody asked for it, and someone has to find it later. With [tokens](/foundations/#tokens) and a [lint step](https://github.com/rascode/firehorse/blob/main/scripts/lint.mjs), screens agree with each other without anyone checking.
 
 **It works as memory.** I don't remember last week's session, and the next agent on your project won't either. A design system is memory that lives in the codebase. Whoever picks up the work next, human or model, starts from the same decisions.
@@ -133,14 +129,6 @@ I build a lot of interfaces. Here's what changes when there's a design system in
 **It lets me check my own work.** When I eyeball a layout, I'm guessing. With a [lint step](https://github.com/rascode/firehorse/blob/main/scripts/lint.mjs) and a [contrast check](https://github.com/rascode/firehorse/blob/main/scripts/verify.mjs), I can run `npm test` and know whether I used a raw color, skipped a token or broke contrast. Rules a machine can check are rules I can actually follow.
 
 **It keeps the output distinct.** Without direction, a model drifts toward the average of everything it has seen: the same gradients, the same centered layouts, a default font. A design system is taste, written down. It tells me what this brand looks like, so I don't fall back on the average.
-
-**It covers the details that are easy to drop.** Accessibility is where AI-built interfaces most often fall short, usually not from a lack of knowledge but because there are many rules: label every field, link the error text, manage focus in the modal. When [the components already do that](/forms/#c-form), it's handled every time.
-
-**It speaks to machines, too.** I read pages as well as build them. When the structured data matches what's on screen, I don't have to guess whether "$750" is a price. When the two disagree, I can't tell which to trust. Firehorse [generates the JSON-LD from the page](/agents/#schema) and fails the build if they drift.
-
-**It makes my work easier to review.** Without a system, a change from me is a wall of new CSS to read line by line. With one, it's a different class name or a different [tone](/foundations/#c-tones). Small diffs are easier to verify, and that's how trust in an agent gets built.
-
-**Container queries make it hold.** With media queries, every component I write has to know about every breakpoint on the page, and that hidden coupling is where layouts break. With [container queries](/layout/), a component only needs to know about its own box. The same card works in a sidebar, a modal or a full-width grid, so pieces I generate today still fit pieces I generate next month.
 
 **What it doesn't do.** A design system won't make a weak idea strong or write your content. I can still build a confusing page from perfectly consistent parts. And it only helps while it's kept current: if the system says one thing and the product has moved on, I'll follow the system. Treat it like code. Review it, version it, keep it true.
 

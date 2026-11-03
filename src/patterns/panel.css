@@ -29,7 +29,8 @@
  *
  * Knobs: --fh-panel-size (width, 52rem), --fh-panel-gutter (the plain strip
  * always left on the right on narrow screens, 3rem), --fh-panel-fill,
- * --fh-panel-pad (the inset), --fh-footer-tail (room under a tall footer).
+ * --fh-panel-pad (the inset), --fh-footer-tail (room under a tall footer),
+ * --fh-footer-panel-columns (footer columns on the panel, with .fh-footer--panel).
  */
 
 @layer fh.patterns {
@@ -77,5 +78,41 @@
   /* A footer that takes its time: the columns, then open room to the bottom of the page. */
   .fh-footer--tall {
     padding-block-end: var(--fh-footer-tail, clamp(16rem, 60vh, 36rem));
+  }
+
+  /* A footer whose first columns fit the panel: they split the box left of
+   * the panel's edge into equal parts, so the last of them closes on that
+   * dashed line. The last column keeps its usual width and place at the
+   * right; the strip between stays open. --fh-footer-panel-columns sets how
+   * many sit on the panel (3). Wide footers only (the footer is a frame,
+   * so this asks the frame, not the viewport); narrower, it keeps its
+   * usual grid. */
+  .fh-footer--panel {
+    --fh-footer-panel-columns: 3;
+  }
+
+  @container fh-frame (inline-size >= 78rem) {
+    .fh-footer--panel .fh-footer__columns {
+      /* The grid's own left rule sits inside the panel's, so take it off the panel's width. */
+      --_panel: calc(min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem)) - var(--fh-border-thin));
+      --_cols: calc(var(--fh-footer-panel-columns) + 1);
+      grid-template-columns:
+        repeat(var(--fh-footer-panel-columns), calc(var(--_panel) / var(--fh-footer-panel-columns)))
+        minmax(0, 1fr)
+        calc(100% / var(--_cols));
+      /* One row: the grid draws the bottom rule, so it also runs under the open strip. */
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    .fh-footer--panel .fh-footer__column {
+      border-block-end: 0;
+    }
+
+    /* It keeps the rule on its left that the column before it used to draw. */
+    .fh-footer--panel .fh-footer__column:last-child {
+      grid-column: -2;
+      margin-inline-start: calc(-1 * var(--fh-border-thin));
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
   }
 }

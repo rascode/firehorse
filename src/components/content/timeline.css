@@ -1,0 +1,77 @@
+/*
+ * Firehorse — Timeline (LST)
+ * components/content · layer fh.components · docs /components/content/#LST
+ */
+
+@layer fh.components {
+  /* —— Timeline / activity feed ——
+   *   <ol class="fh-timeline">
+   *     <li data-tone="lime"><time>09:41</time><p><b>Invoice paid</b> by Northwind</p></li>
+   *   </ol> */
+  .fh-timeline {
+    --_when: 5.25rem;
+
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--_when) minmax(0, 1fr);
+      column-gap: calc(var(--fh-space-3) * 2 + 1rem);
+      padding-block-end: var(--fh-space-5);
+
+      /* rail */
+      &:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        inset-block: 1rem 0;
+        inset-inline-start: calc(var(--_when) + var(--fh-space-3) + 0.5rem);
+        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      }
+
+      /* node */
+      &::after {
+        content: "";
+        position: absolute;
+        inset-block-start: 0.4rem;
+        inset-inline-start: calc(var(--_when) + var(--fh-space-3) + 0.5rem - 0.3rem);
+        inline-size: 0.6rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+        box-shadow: 0 0 0 3px var(--fh-color-canvas);
+      }
+
+      & > time,
+      & > .fh-timeline__when {
+        grid-column: 1;
+        padding-block-start: 0.15rem;
+        color: var(--fh-color-text-subtle);
+        font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-micro);
+        letter-spacing: var(--fh-tracking-wider);
+        text-align: end;
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+      }
+
+      & > :not(time, .fh-timeline__when) {
+        grid-column: 2;
+        margin: 0;
+        color: var(--fh-color-text-muted);
+        font-size: var(--fh-text-small);
+        line-height: var(--fh-leading-normal);
+      }
+
+      & b {
+        color: var(--fh-color-text);
+        font-weight: var(--fh-weight-semibold);
+      }
+    }
+  }
+
+}

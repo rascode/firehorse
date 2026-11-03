@@ -1,0 +1,47 @@
+/*
+ * Firehorse — Feature (FEA)
+ * components/content · layer fh.components · docs /components/content/#FEA
+ */
+
+@layer fh.components {
+  /* —— Feature ——
+   *   <div class="fh-feature" data-tone="teal">
+   *     <span class="fh-feature__icon"><svg …/></span>
+   *     <h3>Container-native</h3><p>…</p>
+   *   </div> */
+  .fh-feature {
+    display: grid;
+    align-content: start;
+    gap: var(--fh-space-3);
+
+    & > :is(h3, h4) {
+      margin: 0;
+      font-size: var(--fh-text-lede);
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+    }
+
+    & > p {
+      margin: 0;
+      color: var(--fh-color-text-muted);
+      line-height: var(--fh-leading-relaxed);
+    }
+  }
+
+  .fh-feature__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 2.5rem;
+    aspect-ratio: 1;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 50%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent);
+    color: var(--fh-tone);
+
+    & > svg {
+      inline-size: 1.15rem;
+      block-size: 1.15rem;
+    }
+  }
+
+}

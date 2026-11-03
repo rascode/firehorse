@@ -1,0 +1,32 @@
+/*
+ * Firehorse — Input group (FLD)
+ * components/forms · layer fh.components · docs /forms/#FLD
+ */
+
+@layer fh.components {
+  /* —— Input group (prefix / suffix) —— */
+  .fh-input-group {
+    display: flex;
+    align-items: center;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-field);
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    & > .fh-input {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    & > :not(.fh-input) {
+      padding-inline: var(--fh-space-3);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-caption);
+      white-space: nowrap;
+    }
+  }
+
+}

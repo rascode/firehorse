@@ -1,0 +1,59 @@
+/*
+ * Firehorse — Working indicator (ADM-WRK)
+ * admin · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Working indicator (ADM-WRK): an agent is on it ——
+   * A thinking mark (a sparkle that turns and breathes) beside who is working
+   * and what on. In a top bar, a pill; in a row or cell, the mark alone
+   * (__mark). Calm by design: it should be noticed, not watched.
+   *   <a class="fh-working" data-tone="violet" href="/flow?open=64">
+   *     <i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i>
+   *     <b>Claude</b><span class="fh-working__what">#64 · Editing …</span>
+   *   </a> */
+  .fh-working {
+    --fh-tone: var(--fh-tone-violet);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    max-inline-size: 22rem;
+    min-block-size: 2rem;
+    padding: 0 var(--fh-space-3) 0 var(--fh-space-2-5);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    text-decoration: none;
+    white-space: nowrap;
+
+    & > b { font-weight: var(--fh-weight-medium); }
+    &:hover { background-color: color-mix(in oklab, var(--fh-tone) 18%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
+  }
+
+  .fh-working__what {
+    overflow: hidden;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    text-overflow: ellipsis;
+  }
+
+  .fh-working__mark {
+    --fh-tone: var(--fh-tone-violet);
+    flex: none;
+    color: var(--fh-tone);
+    animation: fh-working-think 2.4s var(--fh-ease-standard) infinite;
+  }
+
+  @keyframes fh-working-think {
+    0%   { rotate: 0deg;   scale: 1;    opacity: 0.85; }
+    50%  { rotate: 90deg;  scale: 1.18; opacity: 1; }
+    100% { rotate: 180deg; scale: 1;    opacity: 0.85; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-working__mark { animation: none; }
+  }
+}

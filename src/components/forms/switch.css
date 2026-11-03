@@ -1,0 +1,54 @@
+/*
+ * Firehorse — Switch (CHO)
+ * components/forms · layer fh.components · docs /forms/#CHO
+ */
+
+@layer fh.components {
+  /* —— Switch: <input type="checkbox" class="fh-switch" role="switch"> —— */
+  .fh-switch {
+    --_track: var(--fh-color-field);
+    --_thumb: var(--fh-color-text-muted);
+
+    appearance: none;
+    position: relative;
+    flex: none;
+    inline-size: 2.25rem;
+    block-size: 1.3rem;
+    margin: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: var(--_track);
+    cursor: pointer;
+    transition: background-color var(--fh-duration-base) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0.2rem;
+      inset-inline-start: 0.2rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--_thumb);
+      transition:
+        translate var(--fh-duration-base) var(--fh-ease-out),
+        background-color var(--fh-duration-base) var(--fh-ease-standard);
+    }
+
+    &:checked {
+      --_track: var(--fh-color-primary);
+      --_thumb: var(--fh-color-on-primary);
+
+      &::before {
+        translate: 0.95rem 0;
+      }
+    }
+
+    &:dir(rtl):checked::before {
+      translate: -0.95rem 0;
+    }
+
+    @media (forced-colors: active) {
+      border: 1px solid ButtonText;
+    }
+  }
+
+}

@@ -1,0 +1,36 @@
+/*
+ * Firehorse — Equalizer (TRK)
+ * components/audio · layer fh.components · docs /audio/#TRK
+ */
+
+@layer fh.components {
+  /* —— Now-playing equalizer ——
+   *   <span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+   * Animates while an ancestor is [data-playing] or it has .fh-eq--on. */
+  .fh-eq {
+    display: inline-flex;
+    align-items: end;
+    gap: 2px;
+    block-size: 0.85rem;
+
+    & > i {
+      inline-size: 3px;
+      block-size: 30%;
+      border-radius: 1px;
+      background-color: var(--fh-tone, var(--fh-color-text));
+      transform-origin: bottom;
+    }
+    & > i:nth-child(2) { block-size: 70%; }
+    & > i:nth-child(3) { block-size: 45%; }
+    & > i:nth-child(4) { block-size: 85%; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :is([data-playing], [aria-current="true"][data-playing]) .fh-eq > i,
+    .fh-eq--on > i { animation: fh-eq 0.9s ease-in-out infinite alternate; }
+    :is([data-playing]) .fh-eq > i:nth-child(2), .fh-eq--on > i:nth-child(2) { animation-duration: 0.62s; }
+    :is([data-playing]) .fh-eq > i:nth-child(3), .fh-eq--on > i:nth-child(3) { animation-duration: 0.78s; animation-delay: -0.2s; }
+    :is([data-playing]) .fh-eq > i:nth-child(4), .fh-eq--on > i:nth-child(4) { animation-duration: 0.54s; animation-delay: -0.35s; }
+  }
+  @keyframes fh-eq { from { scale: 1 0.25; } to { scale: 1 1.15; } }
+
+}

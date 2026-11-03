@@ -1,0 +1,81 @@
+/*
+ * Firehorse — Liquid glass (LQG)
+ * components/content · layer fh.components · docs /components/content/#LQG
+ */
+
+@layer fh.components {
+  /* —— Liquid glass (LQG) ——
+   * A pane of thick glass: whatever is behind it goes soft and bright, the
+   * rim catches light (a white highlight on the top edge, a faint prism of
+   * colour round the corners) and the body has a little depth. Pure CSS.
+   * Put it over something worth blurring: a picture, big type, a pattern.
+   *   <div class="fh-glass">…</div>
+   *   <a class="fh-glass fh-glass--pill" href="…">Join now</a>
+   *   modifiers  --dark (smoked) · --clear (barely tinted)
+   *              --pill (fully rounded, for buttons and bars)
+   *              --prism (a stronger colour fringe on the rim)
+   *   knobs      --fh-glass-blur (22px) · --fh-glass-tint (8%)
+   *              --fh-glass-radius (1.5rem) · --fh-glass-rim (1.5px) */
+  .fh-glass {
+    --_tint: var(--fh-glass-tint, 8%);
+    --_rim: var(--fh-glass-rim, 1.5px);
+    --_prism: 0.35;
+    position: relative;
+    isolation: isolate;
+    border-radius: var(--fh-glass-radius, 1.5rem);
+    background-color: color-mix(in oklab, var(--fh-color-on-ink) var(--_tint), transparent);
+    backdrop-filter: blur(var(--fh-glass-blur, 22px)) saturate(1.6) brightness(1.08);
+    color: var(--fh-color-text);
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--fh-color-on-ink) 45%, transparent),
+      inset 0 -1px 0 color-mix(in oklab, var(--fh-color-ink) 25%, transparent),
+      inset 0 0 2rem color-mix(in oklab, var(--fh-color-on-ink) 6%, transparent),
+      0 1.25rem 3rem -1rem color-mix(in oklab, var(--fh-color-ink) 45%, transparent);
+  }
+
+  /* The rim: a ring of light with a prism of colour at the corners. */
+  .fh-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    padding: var(--_rim);
+    border-radius: inherit;
+    background:
+      conic-gradient(from 210deg,
+        color-mix(in oklab, oklch(0.85 0.15 200) calc(var(--_prism) * 100%), transparent),
+        color-mix(in oklab, var(--fh-color-on-ink) 70%, transparent) 12%,
+        transparent 22% 38%,
+        color-mix(in oklab, oklch(0.85 0.16 330) calc(var(--_prism) * 100%), transparent) 46%,
+        color-mix(in oklab, oklch(0.9 0.14 90) calc(var(--_prism) * 100%), transparent) 52%,
+        transparent 60% 80%,
+        color-mix(in oklab, oklch(0.85 0.15 200) calc(var(--_prism) * 100%), transparent));
+    mask: linear-gradient(var(--fh-color-ink) 0 0) content-box exclude, linear-gradient(var(--fh-color-ink) 0 0);
+    pointer-events: none;
+  }
+
+  .fh-glass--dark {
+    background-color: color-mix(in oklab, var(--fh-color-ink) 38%, transparent);
+    color: var(--fh-color-on-ink);
+  }
+  .fh-glass--clear { --_tint: var(--fh-glass-tint, 2%); }
+  .fh-glass--prism { --_prism: 0.8; --_rim: var(--fh-glass-rim, 2px); }
+  .fh-glass--pill { border-radius: var(--fh-radius-pill); }
+
+  a.fh-glass,
+  button.fh-glass {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.7em 1.3em;
+    border: 0;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.25s var(--fh-ease-out), translate 0.25s var(--fh-ease-out);
+  }
+  a.fh-glass:hover,
+  button.fh-glass:hover {
+    background-color: color-mix(in oklab, var(--fh-color-on-ink) calc(var(--_tint) + 8%), transparent);
+  }
+}

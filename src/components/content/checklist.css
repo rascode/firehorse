@@ -1,0 +1,57 @@
+/*
+ * Firehorse — Checklist (CKL)
+ * components/content · layer fh.components · docs /components/content/#CKL
+ */
+
+@layer fh.components {
+  /* —— Checklist ——
+   * Dashed circular marks; mark color follows the tone.
+   *   <ul class="fh-checklist"><li>Schema review</li></ul>  */
+  .fh-checklist {
+    --_mark: color-mix(in oklab, var(--fh-color-text) 72%, transparent);
+
+    display: grid;
+    gap: var(--fh-space-2-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &[data-tone] {
+      --_mark: var(--fh-tone);
+    }
+
+    & > li {
+      position: relative;
+      min-block-size: 1.55rem;
+      padding-inline-start: calc(1.55rem + var(--fh-space-3));
+      padding-block-start: 0.12rem;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-normal);
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+        inline-size: 1.55rem;
+        aspect-ratio: 1;
+      }
+
+      /* dashed ring */
+      &::before {
+        border: var(--fh-border-thick) dashed color-mix(in oklab, var(--_mark) 48%, transparent);
+        border-radius: var(--fh-radius-round);
+        background-color: color-mix(in oklab, var(--_mark) 6%, transparent);
+      }
+
+      /* check glyph, painted in the mark color */
+      &::after {
+        background-color: var(--_mark);
+        mask: var(--fh-icon-check) center / 0.62rem no-repeat;
+      }
+    }
+  }
+
+}

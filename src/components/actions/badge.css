@@ -1,0 +1,38 @@
+/*
+ * Firehorse — Badge (MRK)
+ * components/actions · layer fh.components · docs /components/actions/#MRK
+ */
+
+@layer fh.components {
+  /* —— Badge ——
+   * Dashed micro pill for status and metadata ("Required", "Beta"). */
+  .fh-badge {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    flex: none;
+    padding: 0.08rem 0.42rem 0.12rem;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+    border-radius: var(--fh-radius-pill);
+    color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
+    font-family: var(--fh-font-mono);
+    font-size: 0.58rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    line-height: 1.35;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &[data-tone] {
+      border-color: color-mix(in oklab, var(--fh-tone) 55%, transparent);
+      color: var(--fh-tone);
+    }
+  }
+
+  .fh-badge--solid {
+    border-style: solid;
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, transparent);
+  }
+}

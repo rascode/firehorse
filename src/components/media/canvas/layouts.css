@@ -1,0 +1,64 @@
+/*
+ * Firehorse — Layouts (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  /* —— Layouts —— */
+  .fh-canvas--center .fh-canvas__body { align-items: center; text-align: center; }
+  .fh-canvas--center .fh-canvas__top { justify-content: center; }
+  .fh-canvas--center .fh-canvas__main { align-items: center; justify-content: center; }
+  .fh-canvas--center .fh-canvas__foot { align-self: stretch; justify-content: center; }
+
+  /* Text left, picture right. */
+  .fh-canvas--split .fh-canvas__body {
+    display: grid;
+    grid-template: "top media" auto "main media" 1fr "foot media" auto / minmax(0, 1fr) var(--fh-canvas-media, 40%);
+    column-gap: calc(var(--fh-canvas-pad) * 0.75 * var(--_u));
+  }
+
+  .fh-canvas--split .fh-canvas__top { grid-area: top; }
+  .fh-canvas--split .fh-canvas__main { grid-area: main; }
+  .fh-canvas--split .fh-canvas__foot { grid-area: foot; }
+  .fh-canvas--split .fh-canvas__body > .fh-canvas__media { grid-area: media; }
+  .fh-canvas--split .fh-canvas__body > .fh-canvas__ui { grid-area: media; align-self: stretch; overflow: hidden; }
+
+  /* One line across: for wide headers. */
+  .fh-canvas--row .fh-canvas__body { flex-direction: row; align-items: center; justify-content: space-between; }
+  .fh-canvas--row .fh-canvas__main { flex: 0 1 auto; justify-content: center; }
+  .fh-canvas--row .fh-canvas__top { flex-direction: column; align-items: flex-start; }
+
+  /* Type specimen: the headline set big at the top, the face named at the
+   * foot with its tracking. Put data-fh-type on the canvas to set the face. */
+  .fh-canvas--specimen .fh-canvas__top { flex-wrap: nowrap; align-items: flex-start; }
+  .fh-canvas--specimen .fh-canvas__title { letter-spacing: var(--fh-tracking-tight); }
+  .fh-canvas--specimen .fh-canvas__foot {
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    border-block-start: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .fh-canvas__face {
+    display: grid;
+    gap: calc(10 * var(--_u));
+    margin: 0;
+    text-align: start;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+  .fh-canvas__face > small {
+    font-size: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .fh-canvas__face > b {
+    color: var(--fh-color-text-strong);
+    font-family: var(--fh-font-display);
+    font-size: calc(var(--fh-canvas-title) * 0.42 * var(--_u));
+    font-weight: var(--fh-weight-medium);
+    line-height: 0.95;
+    letter-spacing: var(--fh-tracking-snug);
+  }
+
+}

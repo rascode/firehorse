@@ -2,10 +2,11 @@ import { gzipSync } from "node:zlib";
 import { createHash } from "node:crypto";
 // Builds the firehorse.rascode.dev static site into site/dist.
 // Run after `npm run build`. Deploy site/dist to any static host.
-import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { pages, assemble, render, absolutize } from "./pages.mjs";
+import { sourceFiles } from "./developer.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = process.env.FH_SITE_OUT ?? join(root, "site/dist"); // FH_SITE_OUT: build elsewhere (e.g. where site/dist can't be cleared)
 rmSync(out, { recursive: true, force: true });
@@ -31,7 +32,7 @@ const bust = (s) => Object.entries(busted).reduce((acc, [f, v]) => acc.replaceAl
 const jsStamp = Object.fromEntries([...readdirSync(join(root, "site")).filter((f) => f.endsWith(".js")).map((f) => [f, stamp(`site/${f}`)]),
   ...["firehorse.js", "audio.js", "datatable.js"].map((f) => [f, stamp(`dist/${f}`)])]);
 const bustJs = (s) => s.replace(/src="(\/?)([\w-]+\.js)"/g, (m, slash, f) => (jsStamp[f] ? `src="${slash}${f}?v=${jsStamp[f]}"` : m));
-const fill = (s) => bustJs(bust(s)).replaceAll('src="site.js"', `src="site.js?v=${siteJs}"`).replaceAll('src="/site.js"', `src="/site.js?v=${siteJs}"`).replaceAll("{{HORSE}}", horse).replaceAll("{{TOKENS}}", String(tokenCount)).replaceAll("{{GZIP}}", gzipKb).replaceAll("{{SCHEMA_ROWS}}", schemaRows);
+const fill = (s) => bustJs(bust(s)).replaceAll('src="site.js"', `src="site.js?v=${siteJs}"`).replaceAll('src="/site.js"', `src="/site.js?v=${siteJs}"`).replaceAll("{{HORSE}}", horse).replaceAll("{{TOKENS}}", String(tokenCount)).replaceAll("{{GZIP}}", gzipKb).replaceAll("{{SCHEMA_ROWS}}", schemaRows).replaceAll("{{DS_VERSION}}", JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version);
 // Docs pages: site/pages/**/*.html wrapped in site/parts/layout.html (see scripts/pages.mjs).
 const docPages = pages();
 const ctx = assemble(docPages);
@@ -46,15 +47,24 @@ writeFileSync(join(out, "anchors.json"), JSON.stringify(Object.fromEntries([...c
 cp("site/site.css", "site.css");
 cp("site/site.js", "site.js");
 for (const f of readdirSync(join(root, "site"))) if (/\.(js|css)$/.test(f) && !["site.js", "site.css"].includes(f)) cp(`site/${f}`, f);
-for (const f of ["datatable.js", "audio.js", "icons.css", "icons.json", "reveal.css"]) cp(`dist/${f}`, f);
+for (const f of ["datatable.js", "audio.js", "icons.css", "icons.json", "reveal.css", "admin.css"]) cp(`dist/${f}`, f);
+// Firehorse Pro (private, git-ignored): its demo page needs the built CSS and calendar.js.
+if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
+  cp("pro/dist/firehorse-pro.min.css", "firehorse-pro.css");
+  cp("pro/dist/calendar.js", "calendar.js");
+}
 for (const dir of ["img/supply", "img/backdrop", "img/og", "audio"]) {
   mkdirSync(join(out, dir), { recursive: true });
   for (const f of readdirSync(join(root, `site/${dir}`))) cp(`site/${dir}/${f}`, `${dir}/${f}`);
 }
 for (const f of readdirSync(join(root, "site"))) if (f.endsWith(".html") && f !== "index.html") writeFileSync(join(out, f), fill(readFileSync(join(root, "site", f), "utf8")));
+// Developer portal: the CSS source and folder READMEs, served raw at /src/… for the viewer.
+for (const f of sourceFiles()) { mkdirSync(join(out, "src", dirname(f)), { recursive: true }); cp(`src/${f}`, `src/${f}`); }
 cp("dist/firehorse.css", "firehorse.css");
 cp("dist/firehorse.min.css", "firehorse.min.css");
 cp("dist/firehorse.js", "firehorse.js");
+mkdirSync(join(out, "fonts"), { recursive: true });
+for (const f of readdirSync(join(root, "site/fonts"))) cp(`site/fonts/${f}`, `fonts/${f}`);
 mkdirSync(join(out, "img/avatars"), { recursive: true });
 for (const f of readdirSync(join(root, "site/img/avatars"))) cp(`site/img/avatars/${f}`, `img/avatars/${f}`);
 cp("dist/tokens.json", "tokens.json");
@@ -95,7 +105,7 @@ Use it by linking ${base}/firehorse.css (or \`npm i ${base}/npm/firehorse-${pkg.
 - [Agent contract](${base}/agent/system.md): imports, mental model, MUST / NEVER rules, theming, self-check
 - [Component markup](${base}/agent/components.md): canonical HTML for every component and the page skeleton
 - [Patterns](${base}/agent/patterns.md): page layouts by ID (Fender, Cinch, …): anatomy, what to keep, what to change, phones, markup
-- [Firehorse Index](${base}/agent/index.md): a stable ID for every component and variant (CHP, CHP-02…). When a person names an ID, look it up here and use that markup
+- [Firehorse Index](${base}/agent/index.md): a stable ID for every component, group and variant (CHP, CHP-1, CHP-1.2…). When a person names an ID, look it up here and use that markup
 - [KC](${base}/agent/kc.md): who KC is (the Firehorse guide) and how he speaks, for agents that answer as him
 - [Structured data](${base}/agent/schema.md): which components map to which Schema.org types, and how to generate and check the JSON-LD
 - [Index registry](${base}/index.json): every family and variant with name, classes and markup, as JSON

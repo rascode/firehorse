@@ -1,0 +1,45 @@
+/*
+ * Firehorse — Toggles (PLY)
+ * components/audio · layer fh.components · docs /audio/#PLY
+ */
+
+@layer fh.components {
+  /* —— Small icon toggles used across audio (mute, loop, captions, skip) ——
+   *   <button class="fh-audio-btn" aria-pressed="false" data-icon="volume">…</button> */
+  .fh-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-1-5);
+    min-inline-size: 2rem;
+    block-size: 2rem;
+    padding-inline: var(--fh-space-2);
+    border: var(--fh-border-thin) dashed transparent;
+    border-radius: var(--fh-button-radius, var(--fh-radius-sm));
+    background: none;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color var(--fh-duration-fast), border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
+
+    & > .fh-icon { font-size: 1rem; }
+    &:hover { color: var(--fh-color-text); background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+    &[aria-pressed="true"] { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  /* Volume: mute toggle + fader. */
+  .fh-volume {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    inline-size: min(100%, 9rem);
+
+    & > .fh-scrub { --_fill: var(--fh-color-text-muted); }
+    &:has([aria-pressed="true"]) > .fh-scrub { opacity: 0.45; }
+  }
+
+}

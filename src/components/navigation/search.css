@@ -1,0 +1,49 @@
+/*
+ * Firehorse — Search (NAV)
+ * components/navigation · layer fh.components · docs /components/navigation/#NAV
+ */
+
+@layer fh.components {
+  /* —— Search field ——
+   *   <label class="fh-search"><span class="fh-sr-only">Search</span>
+   *     <input type="search" placeholder="Search docs"><kbd class="fh-kbd">/</kbd></label> */
+  .fh-search {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    min-block-size: 2.5rem;
+    padding-inline: var(--fh-space-3);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-field);
+    color: var(--fh-color-text-muted);
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.95rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-search) center / contain no-repeat;
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    & > input {
+      flex: 1;
+      min-inline-size: 0;
+      block-size: 2.5rem;
+      border: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-body);
+      outline: none;
+    }
+
+    & > input::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+}

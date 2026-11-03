@@ -1,0 +1,113 @@
+/*
+ * Firehorse — Chat (CHT)
+ * components/content · layer fh.components · docs /components/content/#CHT
+ */
+
+@layer fh.components {
+  /* —— Chat ——
+   *   <div class="fh-chat">
+   *     <div class="fh-message" data-tone="sky">
+   *       <span class="fh-avatar">R</span>
+   *       <div><p class="fh-message__name">Reginald</p><p>Good day…</p></div>
+   *     </div>
+   *     <div class="fh-message fh-message--self"><div><p>How fast can Wes start?</p></div></div>
+   *   </div> */
+  .fh-chat {
+    display: grid;
+    gap: var(--fh-space-4);
+    container: fh-chat / inline-size;
+  }
+
+  .fh-message {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--fh-space-2-5);
+    max-inline-size: min(36rem, 88cqi);
+
+    & > div {
+      display: grid;
+      gap: var(--fh-space-1);
+      padding: var(--fh-space-3) var(--fh-space-4);
+      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border-radius: var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-sm);
+      background-color: var(--fh-color-surface-raised);
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-normal);
+    }
+
+    & p {
+      margin: 0;
+    }
+  }
+
+  .fh-message__name {
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.6rem;
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-message--self,
+  .fh-message[data-from="me"] {
+    flex-direction: row-reverse;
+    justify-self: end;
+
+    & > div {
+      border-color: transparent;
+      border-radius: var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-sm) var(--fh-radius-lg);
+      background-color: var(--fh-color-primary);
+      color: var(--fh-color-on-primary);
+    }
+  }
+
+  /* Typing indicator: <div class="fh-message"><div class="fh-typing"><i></i><i></i><i></i></div></div> */
+  .fh-typing {
+    display: inline-flex;
+    gap: 0.25rem;
+    padding-block: var(--fh-space-4);
+
+    & > i {
+      inline-size: 0.35rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-text-muted);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-typing > i {
+      animation: fh-bounce 1.2s var(--fh-ease-in-out) infinite;
+    }
+
+    .fh-typing > i:nth-child(2) { animation-delay: 0.15s; }
+    .fh-typing > i:nth-child(3) { animation-delay: 0.3s; }
+  }
+
+  @keyframes fh-bounce {
+    0%, 60%, 100% { translate: 0 0; opacity: 0.5; }
+    30% { translate: 0 -0.25rem; opacity: 1; }
+  }
+
+}
+
+@layer fh.components {
+  /* —— Chat bubble class + one-element typing dots —— */
+  .fh-message__bubble {
+    display: grid;
+    gap: var(--fh-space-1);
+  }
+
+  .fh-message__bubble > .fh-typing {
+    display: inline-flex;
+    padding-block: var(--fh-space-2);
+
+    & > i:only-child {
+      margin-inline: 0.45rem;
+      box-shadow:
+        -0.5rem 0 0 var(--fh-color-text-muted),
+        0.5rem 0 0 var(--fh-color-text-muted);
+    }
+  }
+}

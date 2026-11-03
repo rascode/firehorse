@@ -85,7 +85,7 @@ const base = manifest.find((t) => t.base);
 export const BASE_THEME = { ...(base ?? { label: "Firehorse", tagline: "The base system.", config: {} }), name: "", scope: base?.name ?? "" };
 export const THEMES = [BASE_THEME, ...manifest.filter((t) => !t.base)];
 const themeOf = (name) => THEMES.find((t) => t.name === (name || "")) ?? BASE_THEME;
-const LABELS = { avatar: "Avatar", card: "Card", cardMedia: "Card media", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table" };
+const LABELS = { avatar: "Avatar", card: "Card", cardMedia: "Card media", cardContent: "Card content", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table" };
 const escHtml = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 export const themeSelect = (attrs = "") =>
@@ -186,6 +186,10 @@ if (cat) {
     track.scrollTo({ left: 0 });
   }));
   const step = (d) => track.scrollBy({ left: d * track.clientWidth * 0.9, behavior: "smooth" });
+  // Card content: plain or frost, as the config attribute on the catalog.
+  for (const r of $$(".site-cat-content input", cat.parentElement)) r.addEventListener("change", () => {
+    if (r.checked) cat.setAttribute("data-fh-card-content", r.value);
+  });
   $(".site-cat-prev")?.addEventListener("click", () => step(-1));
   $(".site-cat-next")?.addEventListener("click", () => step(1));
 }

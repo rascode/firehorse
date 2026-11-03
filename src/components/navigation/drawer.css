@@ -1,0 +1,192 @@
+/*
+ * Firehorse — Drawer
+ * components/navigation · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Drawer (mobile menu) ——
+   *   <div id="menu" popover class="fh-drawer"> … </div> */
+  .fh-drawer {
+    position: fixed;
+    inset: var(--fh-header-height) 0 0 0;
+    inline-size: 100%;
+    max-inline-size: none;
+    block-size: auto;
+    max-block-size: none;
+    margin: 0;
+    padding: var(--fh-space-6) var(--fh-page-margin) var(--fh-space-12);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    opacity: 0;
+    translate: 0 -0.5rem;
+    transition:
+      opacity var(--fh-duration-base) var(--fh-ease-out),
+      translate var(--fh-duration-base) var(--fh-ease-out),
+      overlay var(--fh-duration-base) allow-discrete,
+      display var(--fh-duration-base) allow-discrete;
+
+    &:popover-open {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.5rem;
+      }
+    }
+
+    &::backdrop {
+      background: transparent;
+    }
+  }
+
+  .fh-drawer__group {
+    padding-block: var(--fh-space-5);
+
+    & + & {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & > ul {
+      display: grid;
+      gap: var(--fh-space-1);
+      margin: var(--fh-space-3) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2-5);
+      padding-block: var(--fh-space-2);
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-lede);
+      letter-spacing: var(--fh-tracking-heading);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--fh-color-accent-text);
+      }
+    }
+  }
+
+  /* Drawer sections: one collapsible per top-level menu, holding the
+   * same groups and rich links as the mega panel.
+   *   <details class="fh-drawer__section" name="menu">
+   *     <summary><svg …/> Services <span class="fh-drawer__count">12</span></summary>
+   *     <div>
+   *       <section data-tone="sky"><h3><a href="…">Agents</a></h3><ul>…fh-mega__link…</ul></section>
+   *       <div class="fh-mega__rail">…</div>
+   *     </div>
+   *   </details> */
+  .fh-drawer__section {
+    & + & {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & > summary {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-3);
+      padding-block: var(--fh-space-4);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      list-style: none;
+      cursor: pointer;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      & > :is(svg, .fh-icon) {
+        inline-size: 1rem;
+        block-size: 1rem;
+        color: var(--fh-color-text-muted);
+      }
+
+      &::after {
+        content: "";
+        inline-size: 0.8rem;
+        aspect-ratio: 1;
+        background-color: currentColor;
+        mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+        opacity: 0.7;
+        transition: rotate var(--fh-duration-base) var(--fh-ease-standard);
+      }
+
+      &:hover {
+        color: var(--fh-color-text-strong);
+      }
+    }
+
+    &[open] > summary::after {
+      rotate: 180deg;
+    }
+
+    & > div {
+      display: grid;
+      gap: var(--fh-space-5);
+      padding-block: 0 var(--fh-space-6);
+    }
+
+    & h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      margin: 0 0 var(--fh-space-2);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--fh-color-text) 78%, transparent);
+
+      &::before {
+        content: "";
+        inline-size: 0.4rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+      }
+
+      & a {
+        padding: 0;
+        color: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        text-decoration: none;
+      }
+    }
+
+    & ul {
+      display: grid;
+      gap: var(--fh-space-0-5);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & .fh-mega__rail {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--fh-space-4) 0 0;
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+  }
+
+  .fh-drawer__count {
+    margin-inline-start: auto;
+    color: var(--fh-color-text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+
+}

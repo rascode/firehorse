@@ -11,8 +11,15 @@ const re = /<div class="site-demo__head"><h3>(.*?)<\/h3>(?:<p>(.*?)<\/p>|<code>(
 const blocks = [];
 for (const m of html.matchAll(re)) blocks.push({ title: strip(m[1]), note: strip(m[2] || (m[3] ? "`" + m[3] + "`" : "")), code: m[4].replace(/ data-fh-(?:id|name)="[^"]*"/g, "").replace(/\s+$/, "") });
 // Firehorse Index IDs, so a heading reads "CHP · Chips".
-let ids = {};
-try { for (const f of JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families) ids[f.name] = f.id; } catch {}
+let ids = {}, tagged = {};
+try {
+  const fams = JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families;
+  for (const f of fams) ids[f.name] = f.id;
+  // Groups that are demos of their own (AVT-1 Shapes, CUB-2 Cube cards) head their own block.
+  for (const f of fams) for (const g of f.groups ?? []) if (g.demo) ids[g.name] ??= g.id;
+  // The Index's markup carries data-fh on every component root; prefer it over the raw demo.
+  for (const f of fams) { if (f.markup) tagged[f.id] = f.markup; for (const g of f.groups ?? []) if (g.markup) tagged[g.id] = g.markup; }
+} catch {}
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 let md = `# Firehorse — component markup
 
@@ -29,7 +36,9 @@ let md = `# Firehorse — component markup
 | Type | \`fh-display\` \`fh-title\` \`fh-heading\` \`fh-subheading\` \`fh-lede\` \`fh-body\` \`fh-small\` \`fh-label\` \`fh-eyebrow\` \`fh-mono\` \`fh-index\` \`fh-price\` \`fh-signature\` \`fh-prose\` \`fh-muted\` \`fh-subtle\` |
 | Actions | \`fh-button\` (\`--secondary\` \`--outline\` \`--ghost\` \`--accent\` \`--plain\` \`--sm\` \`--lg\` \`--block\` \`--icon\`) \`fh-action\` (\`--lg\`) \`fh-link\` (\`--quiet\`) \`fh-roll\` \`fh-close\` |
 | Markers | \`fh-dot\` (\`--live\`) \`fh-eyebrow-pill\` (\`--sentence\`) \`fh-breadcrumb\` \`fh-badge\` (\`--solid\`) |
-| Content | \`fh-card\` (\`__meta\` \`__title\` \`__body\` \`__footer\` \`__price\` \`--solid\`) \`fh-stats\` \`fh-checklist\` \`fh-steps\` (\`--grid\`) \`fh-quote\` \`fh-crosses\` \`fh-table-wrap\` \`fh-table\` (\`--reflow\`) \`fh-matrix\` |
+| Content | \`fh-card\` (\`__meta\` \`__title\` \`__body\` \`__footer\` \`__price\` \`--solid\`) \`fh-stats\` \`fh-checklist\` \`fh-steps\` (\`--grid\`) \`fh-quote\` \`fh-crosses\` \`fh-table-wrap\` \`fh-table\` (\`--reflow\`) \`fh-matrix\` \`fh-deck\` (\`__card\` \`__card--split\` \`__media\` \`__body\` \`__caption\` \`__caption--top\` \`__index\` \`__title\` \`__meta\` \`--hero\` \`--fade\` \`--blur\` \`--lift\` \`--fan\` \`--count\` \`--x\` \`--reverse\` \`--flush\` \`--plain\`) \`fh-member\` (\`__art\` \`__glyphs\` \`__body\` \`__name\` \`__id\` \`__facts\` \`__role\` \`__stamp\` \`__tagline\` \`__meta\` \`__badge\` \`--glow\` \`--square\` \`--plates\` \`--smear\`) \`fh-story\` (\`__head\` \`__logo\` \`__tag\` \`__field\` \`__field--lines\` \`__mark\` \`__figure\` \`__figure-label\` \`__ring\` \`__chart\` \`__foot\` \`__quote\` \`__link\` \`__media\` \`--deep\` \`--ink\` \`--paper\` \`--duotone\` \`--glare\`) \`fh-speed\` (\`__smear\` \`__img\` \`--orbit\` \`--still\`) \`fh-dither\` (\`__plate\` \`--paper\` \`--lines\` \`--fine\` \`--coarse\`) \`fh-glass\` (\`--dark\` \`--clear\` \`--pill\` \`--prism\`) |
+| People | \`fh-social\` (\`__photo\` \`__body\` \`__name\` \`__check\` \`__bio\` \`__foot\` \`__stats\` \`--fade\` \`--dark\`) |
+| Commerce | \`fh-invoice\` (\`__cover\` \`__head\` \`__logo\` \`__number\` \`__title\` \`__parties\` \`__label\` \`__dates\` \`__items\` \`__totals\` \`__total\` \`__sign\` \`__foot\` \`--classic\`) \`fh-pay\` (\`--float\` \`__mark\` \`__doc\` \`__amount\` \`__icon\` \`__panel\` \`__head\` \`__route\` \`__party\` \`__sum\` \`__total\` \`__details\` \`__actions\`) |
 | Forms | \`fh-form\` (\`__row\` \`__actions\`) \`fh-field\` (\`--optional\` \`__hint\` \`__error\`) \`fh-input\` \`fh-textarea\` \`fh-select\` \`fh-select-wrap\` \`fh-input-group\` \`fh-check\` \`fh-switch\` \`fh-segmented\` |
 | Disclosure | \`fh-accordion\` \`fh-tabs\` (\`--mono\`) \`fh-dialog\` (\`__header\` \`__body\` \`__footer\`) \`fh-menu\` \`fh-toaster\` \`fh-toast\` |
 | Chrome | \`fh-header\` (\`__bar\` \`__brand\` \`__actions\` \`__toggle\`) \`fh-nav\` \`fh-nav__link\` \`fh-drawer\` (\`__group\`) \`fh-mega\` (\`__grid\` \`__rail\`) \`fh-footer\` (\`__columns\` \`__column\` \`__base\`) |
@@ -105,6 +114,7 @@ Attributes: \`data-tone\` (tone), \`data-fh-scheme\` (light | dark | auto),
 ## Components
 
 `;
+for (const b of blocks) if (tagged[ids[b.title]]) b.code = tagged[ids[b.title]];
 for (const b of blocks) md += `### ${ids[b.title] ? ids[b.title] + " · " : ""}${b.title}\n\n${b.note ? b.note + "\n\n" : ""}\`\`\`html\n${b.code}\n\`\`\`\n\n`;
 writeFileSync(join(root, "agent/components.md"), md);
 console.log(`agent/components.md: ${blocks.length} components`);

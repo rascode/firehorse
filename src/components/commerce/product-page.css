@@ -1,0 +1,39 @@
+/*
+ * Firehorse — Product page (PDP)
+ * components/commerce · layer fh.components · docs /commerce/#PDP
+ */
+
+@layer fh.components {
+  /* —— Product detail layout —— */
+  .fh-pdp {
+    display: grid;
+    gap: var(--fh-space-8);
+    container: fh-pdp / inline-size;
+  }
+  @container (inline-size >= 52rem) {
+    .fh-pdp { grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr); align-items: start; }
+    .fh-pdp__info { position: sticky; inset-block-start: var(--fh-space-8); }
+  }
+  .fh-pdp__info {
+    display: grid;
+    gap: var(--fh-space-5);
+    align-content: start;
+
+    & h1 { margin: 0; font-family: var(--fh-font-display); font-size: clamp(1.8rem, 5cqi, 2.8rem); font-weight: var(--fh-weight-bold); letter-spacing: -0.04em; line-height: 1; }
+  }
+  .fh-pdp__label {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 var(--fh-space-2);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+  .fh-pdp__buy { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--fh-space-2); }
+  .fh-pdp__buy > .fh-button { min-block-size: 2.75rem; }
+
+}

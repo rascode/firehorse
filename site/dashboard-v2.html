@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en" data-fh-scheme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="design-system" content="firehorse@1.1.0">
+<title>Firehorse · Dashboard V2 concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="firehorse.css">
+<link rel="stylesheet" href="icons.css">
+<style>
+  /* —— Minimal skin: a quiet canvas, white cards, a serif for big words —— */
+  :root {
+    --fh-color-canvas: #f3f3f1;
+    --fh-color-bg: #f3f3f1;
+    --fh-color-surface: #ffffff;
+    --fh-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-display: "Newsreader", ui-serif, Georgia, serif;
+    --d2-line: rgb(0 0 0 / 0.07);
+    --d2-soft: rgb(0 0 0 / 0.045);
+    --d2-muted: #6f6f6c;
+    --d2-ink: #1b1b1a;
+  }
+  body { margin: 0; background: var(--fh-color-canvas); color: var(--d2-ink); font-family: var(--fh-font-sans); }
+  .d2 { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); min-block-size: 100dvh; }
+
+  /* Rail: icons only, a label on hover or focus. */
+  .d2-rail { position: sticky; inset-block-start: 0; display: flex; flex-direction: column; align-items: center; gap: var(--fh-space-2); block-size: 100dvh; padding-block: var(--fh-space-6); }
+  .d2-rail__mark { display: grid; place-items: center; inline-size: 2.5rem; aspect-ratio: 1; margin-block-end: var(--fh-space-10); border-radius: 0.75rem; background: var(--d2-ink); color: #fff; font-family: var(--fh-font-display); font-size: 1.25rem; }
+  .d2-rail__gap { flex: 1; }
+  .d2-rail a { position: relative; display: grid; place-items: center; inline-size: 2.5rem; aspect-ratio: 1; border-radius: 0.65rem; color: var(--d2-muted); --fh-icon-size: 1.15rem; }
+  .d2-rail a:hover, .d2-rail a[aria-current] { background: var(--d2-soft); color: var(--d2-ink); }
+  .d2-rail a::after { content: attr(data-label); position: absolute; inset-inline-start: calc(100% + 0.5rem); padding: 0.3rem 0.55rem; border-radius: 0.4rem; background: var(--d2-ink); color: #fff; font-size: 0.75rem; white-space: nowrap; opacity: 0; translate: -0.25rem 0; pointer-events: none; transition: opacity 0.15s, translate 0.15s; z-index: 3; }
+  .d2-rail a:is(:hover, :focus-visible)::after { opacity: 1; translate: 0 0; }
+
+  .d2-main { padding: clamp(1.25rem, 4vw, 3.5rem) clamp(1rem, 4vw, 3.5rem) 6rem; }
+  .d2-hello { margin: 0; font-family: var(--fh-font-display); font-size: clamp(2rem, 3vw, 2.6rem); font-weight: 400; letter-spacing: -0.02em; }
+  .d2-date { margin: 0.35rem 0 var(--fh-space-8); color: var(--d2-muted); font-size: 0.95rem; }
+
+  .d2-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1rem; align-items: start; }
+  .d2-card { min-inline-size: 0; border-radius: 1.1rem; background: var(--fh-color-surface); box-shadow: 0 0 0 1px var(--d2-line), 0 1px 2px rgb(0 0 0 / 0.03); }
+  .d2-card--wide { grid-column: span 2; }
+  @media (width < 52rem) { .d2-card--wide { grid-column: auto; } }
+  .d2-card__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem 0.5rem; color: var(--d2-muted); font-size: 0.9rem; }
+  .d2-card__head a, .d2-card__head button { display: inline-grid; place-items: center; inline-size: 1.75rem; aspect-ratio: 1; border: 0; border-radius: 0.5rem; background: none; color: var(--d2-muted); cursor: pointer; }
+  .d2-card__head a:hover, .d2-card__head button:hover { background: var(--d2-soft); color: var(--d2-ink); }
+  .d2-card__body { padding: 0.25rem 1.25rem 1.25rem; }
+  .d2-sub { margin: 0; padding: 0.75rem 1.25rem 0.25rem; border-block-start: 1px solid var(--d2-line); color: var(--d2-muted); font-size: 0.8rem; }
+
+  /* Agenda rows: time, a dot, title and place. */
+  .d2-agenda { margin: 0; padding: 0.25rem 1.25rem 0.75rem; list-style: none; }
+  .d2-agenda li { display: grid; grid-template-columns: 4.75rem 0.75rem minmax(0, 1fr); gap: 0.5rem; align-items: baseline; padding-block: 0.45rem; }
+  .d2-agenda time { color: var(--d2-muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .d2-agenda i { inline-size: 0.45rem; aspect-ratio: 1; border-radius: 50%; background: var(--fh-tone); translate: 0 -0.05rem; }
+  .d2-agenda b { display: block; font-weight: 450; }
+  .d2-agenda small { color: var(--d2-muted); font-size: 0.8rem; }
+
+  /* Inbox: round checks. */
+  .d2-inbox { margin: 0; padding: 0 1.25rem 0.75rem; list-style: none; }
+  .d2-inbox li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.75rem; padding-block: 0.7rem; border-block-start: 1px solid var(--d2-line); }
+  .d2-inbox li:first-child { border-block-start: 0; }
+  .d2-inbox input { appearance: none; inline-size: 1.15rem; aspect-ratio: 1; margin: 0.1rem 0 0; border: 1.5px solid #9b9b97; border-radius: 50%; cursor: pointer; }
+  .d2-inbox input:checked { border-color: var(--d2-ink); background: radial-gradient(circle, var(--d2-ink) 45%, transparent 50%); }
+  .d2-inbox input:checked + span { color: var(--d2-muted); text-decoration: line-through; }
+  .d2-inbox small { display: block; color: var(--d2-muted); font-size: 0.8rem; }
+
+  /* Big words. */
+  .d2-pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.55rem; border-radius: 99px; background: var(--d2-soft); color: var(--d2-muted); font-size: 0.75rem; }
+  .d2-big { margin: 0.5rem 0 0.25rem; font-family: var(--fh-font-display); font-size: clamp(2rem, 3.4vw, 2.75rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .d2-big small { color: var(--d2-muted); font-size: 0.55em; }
+  .d2-title { margin: 0.25rem 0 0.15rem; font-family: var(--fh-font-display); font-size: 1.75rem; font-weight: 400; letter-spacing: -0.015em; }
+  .d2-muted { margin: 0; color: var(--d2-muted); font-size: 0.85rem; }
+
+  /* Segmented progress: done, now, to come. */
+  .d2-segs { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 3px; margin-block: 1rem; }
+  .d2-segs span { block-size: 0.4rem; border-radius: 99px; background: var(--d2-soft); }
+  .d2-segs span.is-done { background: var(--fh-tone); }
+  .d2-segs span.is-now { background: linear-gradient(90deg, var(--fh-tone) 50%, var(--d2-soft) 50%); }
+
+  .d2-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: 0.5rem; }
+  .d2-tile { padding: 0.75rem; border-radius: 0.8rem; background: var(--fh-color-canvas); }
+  .d2-tile p { margin: 0; color: var(--d2-muted); font-size: 0.78rem; }
+  .d2-tile b { display: block; margin-block: 0.3rem 0.1rem; font-family: var(--fh-font-display); font-size: 1.35rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+
+  /* Week: one bubble a day. */
+  .d2-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; margin-block-start: 1rem; text-align: center; font-size: 0.75rem; color: var(--d2-muted); }
+  .d2-week b { display: grid; place-items: center; inline-size: 2rem; aspect-ratio: 1; margin: 0.4rem auto 0; border-radius: 50%; background: var(--d2-soft); color: var(--d2-ink); font-weight: 450; }
+  .d2-week b.is-today { box-shadow: inset 0 0 0 1.5px var(--d2-ink); background: none; }
+  .d2-week b.is-empty { background: none; color: #b4b4b0; }
+  .d2-tabs { display: flex; gap: 0.15rem; }
+  .d2-tabs button { padding: 0.15rem 0.45rem; border: 0; border-radius: 0.4rem; background: none; color: var(--d2-muted); font: inherit; font-size: 0.75rem; cursor: pointer; }
+  .d2-tabs button[aria-pressed="true"] { background: var(--d2-soft); color: var(--d2-ink); }
+
+  /* Command bar, floating. */
+  .d2-command { position: fixed; inset: auto clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem) auto; display: flex; align-items: center; gap: 0.6rem; inline-size: min(24rem, calc(100vw - 2rem)); padding: 0.7rem 0.9rem; border-radius: 0.9rem; background: rgb(255 255 255 / 0.85); backdrop-filter: blur(14px); box-shadow: 0 0 0 1px var(--d2-line), 0 1rem 2.5rem -1rem rgb(0 0 0 / 0.25); color: var(--d2-muted); font-size: 0.9rem; }
+  .d2-command input { flex: 1; min-inline-size: 0; border: 0; background: none; color: var(--d2-ink); font: inherit; outline: none; }
+  .d2-command kbd { padding: 0.1rem 0.35rem; border-radius: 0.3rem; background: var(--d2-soft); font-family: "Geist Mono", ui-monospace, monospace; font-size: 0.72rem; }
+
+  @media (width < 40rem) {
+    .d2 { grid-template-columns: 1fr; }
+    .d2-rail { position: fixed; inset: auto 0 0; z-index: 4; flex-direction: row; justify-content: space-around; block-size: auto; padding: 0.5rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(14px); box-shadow: 0 -1px 0 var(--d2-line); }
+    .d2-rail__mark, .d2-rail__gap, .d2-rail a::after { display: none; }
+    .d2-rail__mark { margin: 0; }
+    .d2-command { inset-block-end: 4.75rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .d2-rail a::after { transition: none; } }
+</style>
+</head>
+<body>
+<div class="d2">
+  <nav class="d2-rail" aria-label="Main">
+    <span class="d2-rail__mark" aria-hidden="true">F</span>
+    <a href="#" aria-current="page" aria-label="Home" data-label="Home"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></a>
+    <a href="#" aria-label="Inbox" data-label="Inbox"><i class="fh-icon fh-icon--bell" aria-hidden="true"></i></a>
+    <a href="#" aria-label="Billing" data-label="Billing"><i class="fh-icon fh-icon--wallet" aria-hidden="true"></i></a>
+    <a href="#" aria-label="Releases" data-label="Releases"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i></a>
+    <a href="#" aria-label="Documents" data-label="Documents"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i></a>
+    <a href="#" aria-label="People" data-label="People"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></a>
+    <span class="d2-rail__gap"></span>
+    <a href="#" aria-label="Settings" data-label="Settings"><i class="fh-icon fh-icon--settings" aria-hidden="true"></i></a>
+  </nav>
+
+  <main class="d2-main">
+    <h1 class="d2-hello">Good evening, Rascode</h1>
+    <p class="d2-date">Monday, November 2</p>
+
+    <div class="d2-grid">
+      <section class="d2-card" aria-labelledby="today">
+        <header class="d2-card__head"><span id="today">Today</span><button type="button" aria-label="Add"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button></header>
+        <ol class="d2-agenda">
+          <li><time>10:30 AM</time><i data-tone="violet"></i><span><b>Northwind — launch review</b><small>Video call</small></span></li>
+          <li><time>3:30 PM</time><i data-tone="sky"></i><span><b>Lumen — token handover</b><small>Studio</small></span></li>
+          <li><time>5:30 PM</time><i data-tone="rose"></i><span><b>Stable post — draft due</b><small>The Stable</small></span></li>
+        </ol>
+        <p class="d2-sub">Tomorrow</p>
+        <ol class="d2-agenda">
+          <li><time>All day</time><i data-tone="amber"></i><span><b>Firehorse 1.2 code freeze</b></span></li>
+          <li><time>9:00 AM</time><i data-tone="violet"></i><span><b>Hexwork — kickoff</b><small>Hexwork office</small></span></li>
+        </ol>
+      </section>
+
+      <section class="d2-card" aria-labelledby="inbox">
+        <header class="d2-card__head"><span id="inbox">Inbox</span><a href="#" aria-label="Open inbox"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></a></header>
+        <ul class="d2-inbox">
+          <li><input type="checkbox" aria-label="Done"><span>Approve the Lumen invoice<small>Billing · $1,380</small></span></li>
+          <li><input type="checkbox" aria-label="Done" checked><span>Reply to KC's docs question<small>Agents</small></span></li>
+          <li><input type="checkbox" aria-label="Done"><span>Review the story card glare<small>Firehorse · STY-2</small></span></li>
+          <li><input type="checkbox" aria-label="Done"><span>Send Hexwork the contract<small>Clients</small></span></li>
+        </ul>
+      </section>
+
+      <section class="d2-card" aria-labelledby="next">
+        <header class="d2-card__head"><span id="next">Today · Release</span></header>
+        <div class="d2-card__body">
+          <span class="d2-pill"><i class="fh-icon fh-icon--circle-check" aria-hidden="true"></i> Not done yet</span>
+          <p class="d2-big">6 <small>of</small> 9</p>
+          <p class="d2-muted">Components merged · 3 to review</p>
+        </div>
+      </section>
+
+      <section class="d2-card d2-card--wide" aria-labelledby="build" data-tone="teal">
+        <div class="d2-card__body" style="padding-block-start: 1.1rem">
+          <p class="d2-muted">Current build · Week 11 of 18</p>
+          <h2 class="d2-title" id="build">Firehorse 1.2</h2>
+          <p class="d2-muted">Fri, Dec 4, 2026 · 32 days to go</p>
+          <div class="d2-segs" style="--n: 18" aria-label="Week 11 of 18" role="img">
+            <span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span class="is-now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="d2-tiles">
+            <div class="d2-tile"><p>Goal</p><b>24 new</b><p>components</p></div>
+            <div class="d2-tile"><p>Forecast</p><b>22–26</b><p>at this pace</p></div>
+            <div class="d2-tile"><p>Built</p><b>17</b><p>of 24</p></div>
+            <div class="d2-tile"><p>Checks</p><b>6 / 6</b><p>passing</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="d2-card" aria-labelledby="week">
+        <header class="d2-card__head"><span id="week">Commits · This week</span><span class="d2-tabs"><button type="button" aria-pressed="true">W</button><button type="button" aria-pressed="false">M</button><button type="button" aria-pressed="false">Y</button></span></header>
+        <div class="d2-card__body" data-tone="teal">
+          <p class="d2-big">41 <small>/ 60</small></p>
+          <progress class="fh-progress" value="41" max="60" aria-label="41 of 60 commits">41</progress>
+          <div class="d2-week">
+            <span>M<b>8</b></span><span>T<b class="is-today">12</b></span><span>W<b class="is-empty">–</b></span><span>T<b class="is-empty">–</b></span><span>F<b>17</b></span><span>S<b>4</b></span><span>S<b class="is-empty">–</b></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="d2-card" aria-labelledby="money">
+        <header class="d2-card__head"><span id="money">Invoices</span><a href="#" aria-label="Open billing"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></a></header>
+        <div class="d2-card__body">
+          <p class="d2-big">$18,420</p>
+          <p class="d2-muted">3 open · next due Jun 12</p>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<label class="d2-command"><i class="fh-icon fh-icon--search" aria-hidden="true"></i><input type="search" placeholder="Search, run a command, or ask KC"><kbd>⌘K</kbd></label>
+</body>
+</html>

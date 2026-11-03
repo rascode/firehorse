@@ -1,0 +1,29 @@
+/*
+ * Firehorse — Section head
+ * patterns · layer fh.patterns
+ */
+
+@layer fh.patterns {
+  /* —— Section head: title left, action right ——
+   *   <header class="fh-section-head">
+   *     <div><p class="fh-eyebrow-pill">…</p><h2 class="fh-heading">…</h2></div>
+   *     <a class="fh-action fh-action--lg" href="…">View all</a>
+   *   </header> */
+  .fh-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--fh-space-5) var(--fh-space-8);
+    margin-block-end: clamp(var(--fh-space-8), 5cqi, var(--fh-space-12));
+
+    & > :first-child {
+      display: grid;
+      gap: var(--fh-space-4);
+      justify-items: start;
+      flex: 1 1 28rem;
+      min-inline-size: 0;
+    }
+  }
+
+}

@@ -1,0 +1,146 @@
+/*
+ * Firehorse — Cells (DTB)
+ * components/data/datatable · layer fh.components · docs /data/#DTB
+ */
+
+@layer fh.components {
+  /* —— Cells ——————————————————————————————————————————————— */
+  .fh-cell--number,
+  .fh-cell--currency,
+  .fh-cell--percent { text-align: end; font-family: var(--fh-font-mono); font-size: 0.82rem; }
+  .fh-cell--formula { font-family: var(--fh-font-mono); font-size: 0.8rem; color: var(--fh-color-text-muted); }
+  .fh-cell--long { white-space: normal; }
+  .fh-cell--long > span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--fh-color-text-muted);
+    line-height: var(--fh-leading-snug);
+  }
+  .fh-cell--date time { color: var(--fh-color-text); }
+  .fh-cell--date small { margin-inline-start: var(--fh-space-1-5); color: var(--fh-color-text-subtle); font-size: 0.78em; }
+  .fh-cell--date[data-overdue] time { color: var(--fh-color-danger); }
+  .fh-cell--url a,
+  .fh-cell--email a,
+  .fh-cell--phone a { color: var(--fh-color-text); text-decoration: underline; text-decoration-color: color-mix(in oklab, currentColor 30%, transparent); text-underline-offset: 3px; }
+  .fh-cell--check { text-align: center; }
+
+  /* Pill used by select, multi-select, tags and linked records. */
+  .fh-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    max-inline-size: 100%;
+    padding: 0.12rem 0.5rem;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-tone) 16%, transparent);
+    color: var(--fh-color-text);
+    font-size: 0.78rem;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+  .fh-pill + .fh-pill { margin-inline-start: var(--fh-space-1); }
+  .fh-pill--link {
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone) 35%, transparent);
+    background: none;
+  }
+  .fh-pill--link::before {
+    content: "";
+    inline-size: 0.7rem;
+    aspect-ratio: 1;
+    background-color: var(--fh-tone);
+    mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+  }
+
+  /* Status: a tone dot and label. */
+  .fh-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    font-size: 0.82rem;
+
+    &::before {
+      content: "";
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 22%, transparent);
+    }
+  }
+
+  /* Live status: the dot pulses (the dot's Doppler) for work that's in
+   * progress, so it stands apart from what's queued. In a datatable, give
+   * the option `live: true`. */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-status--live::before { animation: fh-doppler var(--fh-duration-pulse) ease-out infinite; }
+  }
+
+  /* Progress / percent bar. */
+  .fh-cell__bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--fh-space-2);
+
+    & > i {
+      block-size: 0.35rem;
+      border-radius: var(--fh-radius-pill);
+      background:
+        linear-gradient(var(--fh-tone), var(--fh-tone)) 0 / calc(var(--v, 0) * 1%) 100% no-repeat,
+        color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    }
+    & > span { min-inline-size: 2.6rem; text-align: end; font-family: var(--fh-font-mono); font-size: 0.78rem; color: var(--fh-color-text-muted); }
+  }
+
+  /* Rating: five marks, filled up to --v. */
+  .fh-rating {
+    --_star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.3l-5.9 3.2 1.3-6.6-4.9-4.5 6.6-.8z'/%3E%3C/svg%3E");
+    display: inline-block;
+    inline-size: 5.5em;
+    block-size: 1.1em;
+    vertical-align: middle;
+    background:
+      linear-gradient(90deg, var(--fh-tone) calc(var(--v, 0) * 20%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
+    mask: var(--_star) 0 50% / 1.1em 1.1em repeat-x;
+    font-size: 0.85rem;
+  }
+
+  /* Attachments: tiny thumbnails. */
+  .fh-thumbs {
+    display: inline-flex;
+    gap: var(--fh-space-1);
+    vertical-align: middle;
+
+    & > * {
+      inline-size: 1.8rem;
+      block-size: 1.8rem;
+      border-radius: var(--fh-radius-sm);
+      border: var(--fh-border-thin) solid var(--fh-color-border);
+      object-fit: cover;
+      background: var(--fh-color-surface-sunken);
+    }
+    & > span { display: inline-grid; place-items: center; font-family: var(--fh-font-mono); font-size: 0.62rem; color: var(--fh-color-text-muted); }
+  }
+
+  .fh-sparkline {
+    display: inline-block;
+    inline-size: 5.5rem;
+    block-size: 1.4rem;
+    vertical-align: middle;
+    color: var(--fh-tone);
+    overflow: visible;
+  }
+
+  .fh-cell__user {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    --fh-avatar-size: 1.6rem;
+  }
+
+}

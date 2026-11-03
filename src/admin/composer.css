@@ -1,0 +1,118 @@
+/*
+ * Firehorse — Composer (ADM-THR)
+ * admin · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Composer (ADM-THR): a chat-style input for quick capture ——
+   *   <form class="fh-app-composer">
+   *     <textarea class="fh-textarea">…</textarea>
+   *     <button class="fh-button">Add</button>
+   *   </form>
+   * The textarea can be a dictation field (fh-field--dictate) to type or talk.
+   * Group trailing controls on the right with __actions (the field's
+   * Text | Transcribe switch, then the primary button):
+   *   <div class="fh-app-composer__actions"><div class="fh-dictate">…</div><button class="fh-button">…</button></div>
+   * Frosted like the chrome; grows with its text. Pair it with the
+   * dock (ADM-DCK) to keep it in reach while the page scrolls. */
+  .fh-app-composer {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--fh-space-2);
+    padding: var(--fh-space-2);
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-lg);
+    background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.2);
+
+    & > .fh-field--dictate { flex: 1; min-inline-size: 0; gap: var(--fh-space-1); }
+
+    & > .fh-textarea,
+    & > .fh-field--dictate > .fh-textarea {
+      flex: 1;
+      min-block-size: 2.75rem;
+      max-block-size: 12rem;
+      border: 0;
+      background-color: transparent;
+      resize: none;
+      field-sizing: content;
+    }
+
+    & > .fh-textarea:focus-visible,
+    & > .fh-field--dictate > .fh-textarea:focus-visible { box-shadow: none; outline: none; }
+    &:focus-within { border-color: var(--fh-color-border-strong); }
+  }
+
+  /* --attach: a row under the text for what the entry is filed under
+   * (removable chips, add buttons) and a one-line note beneath it. */
+  .fh-app-composer--attach {
+    flex-wrap: wrap;
+    row-gap: var(--fh-space-1-5);
+
+    & > .fh-field--dictate { flex: 1 1 20rem; }
+  }
+
+  /* A details field under the title (__details): same quiet textarea, a full row. */
+  .fh-app-composer > .fh-app-composer__details {
+    flex-basis: 100%;
+    order: 1;
+    min-block-size: 3.5rem;
+    max-block-size: 14rem;
+    border: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: 0;
+    background-color: transparent;
+    resize: none;
+    field-sizing: content;
+
+    &:focus-visible { box-shadow: none; outline: none; }
+  }
+  .fh-app-composer--attach > .fh-app-composer__attach,
+  .fh-app-composer--attach > .fh-app-composer__note { order: 2; }
+
+  .fh-app-composer__attach {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    padding-block-start: var(--fh-space-1-5);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & > .fh-input { min-block-size: 1.75rem; padding-block: 0.2rem; font-size: var(--fh-text-small); }
+    /* A tag field (fh-tags) leads the row and takes the room left over. */
+    & > .fh-tags:not(.fh-tags--inline) { flex: 1 1 22rem; min-block-size: 2.25rem; }
+  }
+
+  .fh-app-composer__note {
+    flex-basis: 100%;
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+  }
+
+  .fh-app-composer__actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin-inline-start: auto;
+  }
+
+  .fh-app-composer__modes:empty { display: none; }
+  .fh-app-composer__modes { display: contents; }
+
+  .fh-app-composer .fh-dictate[data-listening] .fh-dictate__mode[data-mode="voice"]::after {
+    content: "";
+    inline-size: 0.4rem;
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    background-color: var(--fh-color-danger);
+    animation: fh-dictate-blink 1.2s ease-in-out infinite;
+  }
+
+  @container fh-app (inline-size < 40rem) {
+    .fh-app-composer { flex-wrap: wrap; }
+    .fh-app-composer > .fh-field--dictate { flex-basis: 100%; }
+  }
+}

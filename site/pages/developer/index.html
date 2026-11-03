@@ -1,0 +1,127 @@
+<!--@meta {
+  "path": "/developer/",
+  "order": 95,
+  "name": "Developer portal",
+  "tone": "teal",
+  "title": "Developer Portal · Firehorse",
+  "description": "The Firehorse Developer Portal: how the source is organised, every CSS module with its source, the cascade order and what ships in dist.",
+  "headline": "One file per component, one bundle to ship",
+  "lede": "Firehorse is written as small CSS modules, one per component, in folders that match these docs. The build bundles them, in cascade order, into the stylesheets you import. Browse every module, read its source and see what it defines.",
+  "scripts": ["developer.js"],
+  "icon": "code",
+  "summaryFrom": "developer"
+}-->
+<!--@main-->
+    <!-- ═══════════════ THE SOURCE ═══════════════ -->
+    <section id="source" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="source-title" data-fh-label="How it’s built" data-fh-index="01">
+      <div class="fh-stack fh-stack--xl">
+        <header class="fh-stack fh-stack--sm">
+          <p class="fh-eyebrow">Developer portal</p>
+          <h2 class="fh-title" id="source-title">How it’s built</h2>
+          <p class="fh-lede">Layers decide what wins; modules decide where things live. Every number on this page is counted from <code>src/</code> when the site builds.</p>
+        </header>
+        <div class="fh-split">
+          <div class="fh-stack fh-stack--sm">
+            <h3 class="fh-subheading">Layers, lowest first</h3>
+            <p class="fh-muted">Every rule lives in a cascade layer, so order between layers is fixed and anything you write outside a layer wins without <code>!important</code>. Inside a layer, a later module wins a tie with an earlier one.</p>
+<!-- gen:layers -->
+          </div>
+          <div class="fh-stack fh-stack--sm">
+            <h3 class="fh-subheading">How a stylesheet is made</h3>
+            <ol class="fh-steps">
+              <li><b>Modules</b><p>One file per component under <code>src/</code>, native nesting, tokens only. Each opens with its name, Index ID and layer.</p></li>
+              <li><b>Manifests</b><p><code>src/firehorse.css</code> and <code>src/admin/admin.css</code> import every module in cascade order.</p></li>
+              <li><b>Bundle</b><p><code>scripts/build.mjs</code> bundles each manifest with Lightning CSS into <code>dist/</code>: readable, minified and a compat build.</p></li>
+              <li><b>Checks</b><p><code>scripts/lint.mjs</code> holds the rules (tokens only, no viewport queries, fh- prefix); the Index check keeps every ID on the docs.</p></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MODULES ═══════════════ -->
+    <section id="modules" class="fh-section fh-section--ruled site-anchor" data-tone="sky" aria-labelledby="modules-title" data-fh-label="Modules" data-fh-index="02">
+      <div class="fh-stack fh-stack--xl">
+        <header class="fh-section-head">
+          <div class="fh-stack fh-stack--sm">
+            <h2 class="fh-title" id="modules-title">Modules</h2>
+            <p class="fh-lede">Every source file, by folder. Open one to read it; the ID links to its demo.</p>
+          </div>
+          <div class="fh-search site-dev__search">
+            <label class="fh-sr-only" for="dev-search">Find a module</label>
+            <input class="fh-input" id="dev-search" type="search" placeholder="Find a module, ID or class…" data-dev-search autocomplete="off">
+          </div>
+        </header>
+        <p class="fh-muted site-dev__none" data-dev-none hidden>No module matches that.</p>
+        <div class="site-dev__groups">
+<!-- gen:modules -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CASCADE ═══════════════ -->
+    <section id="cascade" class="fh-section fh-section--ruled site-anchor" data-tone="violet" aria-labelledby="cascade-title" data-fh-label="Cascade order" data-fh-index="03">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="cascade-title">Cascade order</h2>
+          <p class="fh-lede">The order the manifests import the modules. Within a layer it decides ties, so a new module goes where it belongs in this list, not at the end.</p>
+        </header>
+        <div class="fh-stack fh-stack--sm">
+<!-- gen:cascade -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BUNDLES ═══════════════ -->
+    <section id="bundles" class="fh-section fh-section--ruled site-anchor" data-tone="amber" aria-labelledby="bundles-title" data-fh-label="What ships" data-fh-index="04">
+      <div class="fh-stack fh-stack--xl">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="bundles-title">What ships</h2>
+          <p class="fh-lede">The files in <code>dist/</code>. Import one bundle; the modules are for reading and contributing, not for importing piecemeal.</p>
+        </header>
+<!-- gen:bundles -->
+      </div>
+    </section>
+
+    <!-- ═══════════════ CONTRIBUTE ═══════════════ -->
+    <section id="contribute" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="contribute-title" data-fh-label="Add a module" data-fh-index="05">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="contribute-title">Add a module</h2>
+          <p class="fh-lede">Every component follows the same five steps, so the source, the docs and the Index stay in step.</p>
+        </header>
+        <ol class="fh-steps">
+          <li><b>Write the file</b><p>One component per file in its category folder, opening with <code>/* Firehorse — Name (ID) */</code>, all rules inside <code>@layer fh.components</code>, tokens only.</p></li>
+          <li><b>Import it</b><p>Add an <code>@import</code> to <code>src/firehorse.css</code> next to the components it relates to.</p></li>
+          <li><b>Demo it</b><p>Add a demo to its docs page with a <code>data-fh-id</code>, and issue the ID in <code>index-ledger.json</code>.</p></li>
+          <li><b>Check it</b><p><code>npm run build</code>, then <code>node scripts/lint.mjs</code> and <code>node scripts/gen-index.mjs --check</code>.</p></li>
+          <li><b>Note it</b><p>Add a line to <code>CHANGELOG.md</code>. This portal picks the module up on the next site build.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Source viewer: filled by developer.js from /src/… -->
+    <dialog class="fh-dialog fh-dialog--float fh-detail site-dev__viewer" id="dev-viewer" aria-labelledby="dev-viewer-title" data-tone="teal" style="--fh-dialog-size: 48rem">
+      <header class="fh-detail__header">
+        <div class="fh-detail__bar">
+          <span>Developer portal · Source</span>
+          <span class="fh-detail__nav"><button class="fh-close" type="button" aria-label="Close" data-dev-close></button></span>
+        </div>
+        <div class="fh-stack fh-stack--xs">
+          <h2 id="dev-viewer-title" data-dev-title>Module</h2>
+          <p class="fh-muted"><code data-dev-path></code></p>
+        </div>
+        <div class="fh-cluster" style="--fh-gap: var(--fh-space-1-5)" data-dev-chips></div>
+      </header>
+      <div class="fh-detail__body">
+        <figure class="fh-code">
+          <figcaption><span data-dev-file>file.css</span>
+            <span class="fh-cluster" style="--fh-gap: var(--fh-space-1)">
+              <a class="fh-button fh-button--sm fh-button--ghost" data-dev-raw href="#" target="_blank" rel="noopener"><i class="fh-icon fh-icon--code" aria-hidden="true"></i>Raw</a>
+              <button class="fh-button fh-button--sm fh-button--ghost" type="button" data-dev-copy><i class="fh-icon fh-icon--copy" aria-hidden="true"></i><span>Copy</span></button>
+            </span>
+          </figcaption>
+          <pre class="site-dev__pre"><code data-dev-code>Loading…</code></pre>
+        </figure>
+      </div>
+    </dialog>

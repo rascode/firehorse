@@ -1,0 +1,348 @@
+/*
+ * Firehorse — Story card (STY)
+ * components/content · layer fh.components · docs /components/content/#STY
+ */
+
+/* The ring's fill, registered so it can animate. */
+@property --fh-story-v {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@layer fh.components {
+  /* —— Story card (STY) ——
+   * A tall card with three parts: a head (a logo, a tag), a wide open
+   * field in the middle, and a foot (a line of copy and a link). The
+   * field is the point: it holds a brand mark drawn in shimmering
+   * vertical lines, a big figure, progress, a ring, a chart, a picture,
+   * whatever the story needs. Pure CSS.
+   *   <article class="fh-story" data-tone="violet">
+   *     <header class="fh-story__head"><span class="fh-story__logo"><svg>…</svg>Halcyon</span></header>
+   *     <div class="fh-story__field fh-story__field--lines" aria-hidden="true"><svg class="fh-story__mark" viewBox="0 0 100 100">…</svg></div>
+   *     <footer class="fh-story__foot">
+   *       <p class="fh-story__quote">Halcyon keeps a million rooms in sync with Firehorse.</p>
+   *       <a class="fh-story__link" href="…">Read Halcyon's story</a>
+   *     </footer>
+   *   </article>
+   * Fill: the card is its data-tone, solid, with a soft vertical light;
+   * text picks ink or white from it. --deep sinks the tone toward ink,
+   * --ink is the dark card, --paper the light one. __media puts a picture
+   * behind everything (with a scrim at top and bottom); --duotone washes it
+   * in the tone. --glare runs a band of light across the card now and then,
+   * and on hover.
+   * Field contents
+   *   __field--lines + __mark   a mark in vertical lines; hover brings it up
+   *   __figure (+ __figure-label)   a big number
+   *   __ring (style="--value: 72")  a ring that fills to a value
+   *   __chart > span (style="--value: 40")  columns of lines
+   *   any Firehorse block: fh-progress-field, fh-progress, fh-stats, a list
+   * The link stretches over the whole card.
+   *   knobs  --fh-story-ratio (4 / 5.4) · --fh-story-pad · --fh-story-radius
+   *          --fh-story-pitch (gap between lines, 6px)
+   *          --fh-story-glare (time between sweeps, 7s) */
+  .fh-story {
+    --_tone: var(--fh-tone, var(--fh-color-accent));
+    --_bg: var(--_tone);
+    --_pad: var(--fh-story-pad, clamp(var(--fh-space-5), 9cqi, var(--fh-space-8)));
+    --_pitch: var(--fh-story-pitch, 6px);
+    position: relative;
+    display: grid;
+    grid-template-rows: auto minmax(6rem, 1fr) auto;
+    aspect-ratio: var(--fh-story-ratio, 4 / 5.4);
+    overflow: clip;
+    isolation: isolate;
+    container: fh-story / inline-size;
+    border-radius: var(--fh-story-radius, var(--fh-card-radius, var(--fh-radius-md)));
+    background:
+      linear-gradient(to bottom,
+        color-mix(in oklab, var(--_bg) 78%, var(--fh-color-ink)),
+        var(--_bg) 62%,
+        color-mix(in oklab, var(--_bg) 88%, var(--fh-color-on-ink)));
+    background-color: var(--_bg);
+    color: var(--fh-color-on-ink);
+    color: oklch(from var(--_bg) clamp(0.2, (0.62 - l) * 999, 1) 0 h);
+    /* Firehorse blocks inside the card draw in the card's own colour. */
+    --fh-color-text: currentColor;
+    --fh-color-text-muted: color-mix(in oklab, currentColor 72%, transparent);
+    --fh-color-text-subtle: color-mix(in oklab, currentColor 60%, transparent);
+    --fh-color-border: color-mix(in oklab, currentColor 18%, transparent);
+  }
+
+  .fh-story--deep { --_bg: color-mix(in oklab, var(--_tone) 52%, var(--fh-color-ink)); }
+  .fh-story--ink { --_bg: color-mix(in oklab, var(--fh-color-ink) 92%, var(--_tone)); }
+  .fh-story--paper { --_bg: color-mix(in oklab, var(--fh-color-on-ink) 94%, var(--_tone)); }
+
+  .fh-story__head,
+  .fh-story__field,
+  .fh-story__foot {
+    position: relative;
+    z-index: 1;
+    padding-inline: var(--_pad);
+  }
+
+  .fh-story__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3);
+    padding-block-start: var(--_pad);
+  }
+  .fh-story__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: var(--fh-font-display);
+    font-size: clamp(1rem, 5.5cqi, 1.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .fh-story__logo > svg {
+    inline-size: 1.15em;
+    block-size: 1.15em;
+    fill: currentColor;
+    stroke: currentColor;
+  }
+  .fh-story__tag {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .fh-story__field {
+    display: grid;
+    align-content: center;
+    gap: var(--fh-space-4);
+    min-block-size: 0;
+    padding-block: var(--fh-space-4);
+    --fh-tone: currentColor;
+  }
+
+  .fh-story__foot {
+    display: grid;
+    gap: var(--fh-space-4);
+    padding-block-end: var(--_pad);
+  }
+  /* data-fh-card-content="frost": the quote and link on a frosted pane. */
+  .fh-story > .fh-story__foot {
+    margin: 0 var(--fh-card-content-inset, 0px) var(--fh-card-content-inset, 0px);
+    padding: var(--fh-card-content-pad, 0 var(--_pad) var(--_pad));
+    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border-radius: var(--fh-card-content-radius, 0);
+    background-color: var(--fh-card-content-bg, transparent);
+    backdrop-filter: var(--fh-card-content-backdrop, none);
+  }
+  .fh-story__quote {
+    margin: 0;
+    font-size: clamp(1.05rem, 6.6cqi, 1.45rem);
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .fh-story__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    inline-size: fit-content;
+    color: inherit;
+    font-size: var(--fh-text-small);
+    text-decoration: none;
+  }
+  .fh-story__link::after {
+    content: "→";
+    transition: translate 0.25s var(--fh-ease-out);
+  }
+  /* The link covers the card. */
+  .fh-story__link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+  }
+  .fh-story:has(.fh-story__link:focus-visible) {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  .fh-story__link:focus-visible { outline: 0; }
+
+  /* —— Picture behind —— */
+  .fh-story__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .fh-story:has(> .fh-story__media) {
+    color: var(--fh-color-on-ink);
+    text-shadow: 0 1px 12px var(--fh-color-scrim);
+  }
+  .fh-story:has(> .fh-story__media)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(to bottom, var(--fh-color-scrim), transparent 26%),
+      linear-gradient(to top, var(--fh-color-scrim), color-mix(in oklab, var(--fh-color-scrim) 70%, transparent) 30%, transparent 62%);
+    pointer-events: none;
+  }
+  .fh-story--duotone > .fh-story__media {
+    filter: grayscale(1) contrast(1.1);
+    mix-blend-mode: luminosity;
+    opacity: 0.85;
+  }
+
+  /* —— Lines: a mark drawn in vertical lines, over a faint rain —— */
+  .fh-story__field--lines {
+    place-items: center;
+  }
+  .fh-story__field--lines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px var(--_pitch));
+    opacity: 0.16;
+    mask-image:
+      linear-gradient(to bottom, transparent, var(--fh-color-ink) 18% 82%, transparent),
+      repeating-linear-gradient(180deg, var(--fh-color-ink) 0 11px, transparent 11px 17px, var(--fh-color-ink) 17px 41px, transparent 41px 46px);
+    mask-composite: intersect;
+  }
+  .fh-story__mark {
+    position: relative;
+    inline-size: min(78%, 16rem);
+    block-size: auto;
+    max-block-size: 100%;
+    fill: currentColor;
+    stroke: currentColor;
+    opacity: 0.55;
+    mask-image:
+      repeating-linear-gradient(90deg, var(--fh-color-ink) 0 1.5px, transparent 1.5px var(--_pitch)),
+      repeating-linear-gradient(180deg, var(--fh-color-ink) 0 9px, transparent 9px 12px, var(--fh-color-ink) 12px 30px, transparent 30px 34px);
+    mask-composite: intersect;
+    transition: opacity 0.4s var(--fh-ease-out);
+  }
+  .fh-story:hover .fh-story__mark { opacity: 0.95; }
+
+  /* —— A big figure —— */
+  .fh-story__figure {
+    margin: 0;
+    font-family: var(--fh-font-figure, var(--fh-font-display));
+    font-size: clamp(3rem, 30cqi, 7rem);
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+  }
+  .fh-story__figure-label {
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  /* —— A ring that fills to --value (0–100) —— */
+  .fh-story__ring {
+    --fh-story-v: calc(var(--value, 0) * 1%);
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    inline-size: min(70%, 11rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: conic-gradient(currentColor var(--fh-story-v), color-mix(in oklab, currentColor 16%, transparent) 0);
+    mask: radial-gradient(farthest-side, transparent calc(100% - 0.6rem), var(--fh-color-ink) calc(100% - 0.6rem + 1px));
+  }
+  .fh-story__ring-wrap {
+    display: grid;
+    place-items: center;
+  }
+  .fh-story__ring-wrap > * { grid-area: 1 / 1; }
+  .fh-story__ring-wrap > .fh-story__figure { font-size: clamp(1.75rem, 14cqi, 3rem); }
+
+  /* —— A chart: columns drawn in lines, each to --value (0–100) —— */
+  .fh-story__chart {
+    display: flex;
+    align-items: end;
+    gap: calc(var(--_pitch) * 1.5);
+    block-size: 100%;
+    min-block-size: 6rem;
+  }
+  .fh-story__chart > span {
+    flex: 1;
+    block-size: calc(var(--value, 50) * 1%);
+    background: repeating-linear-gradient(90deg, currentColor 0 1.5px, transparent 1.5px var(--_pitch));
+    opacity: 0.75;
+    transform-origin: 50% 100%;
+  }
+  .fh-story__chart > span:last-child { opacity: 1; }
+
+  /* —— Glare: a band of light that crosses the card —— */
+  .fh-story--glare::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(120% 60% at 0% 0%, color-mix(in oklab, var(--fh-color-on-ink) 22%, transparent), transparent 60%),
+      linear-gradient(115deg, transparent 38%, color-mix(in oklab, var(--fh-color-on-ink) 38%, transparent) 47%, color-mix(in oklab, var(--fh-color-on-ink) 8%, transparent) 52%, transparent 60%);
+    background-size: 100% 100%, 260% 100%;
+    background-position: 0 0, 120% 0;
+    background-repeat: no-repeat;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+  }
+
+  /* —— Motion —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-story__field--lines::before {
+      animation: fh-story-rain 9s linear infinite;
+    }
+    .fh-story__mark {
+      animation: fh-story-rain 6s linear infinite reverse;
+    }
+    .fh-story--glare::after {
+      animation: fh-story-glare var(--fh-story-glare, 7s) var(--fh-ease-in-out, ease-in-out) infinite;
+    }
+    .fh-story--glare:hover::after {
+      animation-duration: 1.6s;
+    }
+    .fh-story__link:hover::after,
+    .fh-story:hover .fh-story__link::after {
+      translate: 0.25em 0;
+    }
+    @supports (animation-timeline: view()) {
+      .fh-story__chart > span {
+        animation: fh-story-rise both var(--fh-ease-out);
+        animation-timeline: view();
+        animation-range: entry 10% cover 40%;
+      }
+      .fh-story__ring {
+        animation: fh-story-fill both var(--fh-ease-out);
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+      }
+    }
+  }
+
+  @keyframes fh-story-rain {
+    to { mask-position: 0 0, 0 92px; }
+  }
+  @keyframes fh-story-glare {
+    0%, 62% { background-position: 0 0, 120% 0; }
+    100% { background-position: 0 0, -20% 0; }
+  }
+  @keyframes fh-story-rise {
+    from { scale: 1 0; }
+  }
+  @keyframes fh-story-fill {
+    from { --fh-story-v: 0%; }
+  }
+}

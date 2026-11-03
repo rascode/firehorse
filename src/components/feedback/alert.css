@@ -1,0 +1,66 @@
+/*
+ * Firehorse — Alert (FBK)
+ * components/feedback · layer fh.components · docs /components/overlays/#FBK
+ */
+
+@layer fh.components {
+  /* —— Alert / callout ——
+   *   <div class="fh-alert" data-tone="danger" role="alert">
+   *     <p class="fh-alert__title">Payment failed</p>
+   *     <p>Your card was declined. Update it to keep your agent on shift.</p>
+   *   </div>
+   * Tones: neutral (default), sky (info), live/lime (success),
+   * amber (warning), danger. */
+  .fh-alert {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: var(--fh-space-3);
+    row-gap: var(--fh-space-1);
+    align-items: start;
+    padding: var(--fh-space-4) var(--fh-space-5);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    border-inline-start: 3px solid var(--fh-tone);
+    border-radius: var(--fh-radius-sm);
+    background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+
+    /* status dot in the first column */
+    &::before {
+      content: "";
+      grid-row: 1 / span 2;
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      margin-block-start: 0.45em;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone);
+    }
+
+    & > :not(.fh-close, .fh-alert__actions) {
+      grid-column: 2;
+      margin: 0;
+    }
+
+    & > .fh-close {
+      grid-column: 3;
+      grid-row: 1;
+      inline-size: 1.5rem;
+      margin: -0.2rem -0.4rem 0 0;
+    }
+
+    & > .fh-alert__actions {
+      grid-column: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--fh-space-3);
+      margin-block-start: var(--fh-space-2);
+    }
+  }
+
+  .fh-alert__title {
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-semibold);
+  }
+
+}

@@ -1,0 +1,30 @@
+/*
+ * Firehorse — Divider (DET)
+ * components/content · layer fh.components · docs /components/content/#DET
+ */
+
+@layer fh.components {
+  /* —— Divider with a label —— */
+  .fh-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    &:empty {
+      gap: 0;
+    }
+  }
+
+}

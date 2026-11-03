@@ -1,5 +1,5 @@
 // Docs-site pages. Each site/pages/**/*.html file is one page:
-//   <!--@meta {json}-->   path, order, name, tone, title, description, headline, lede, scripts[], heroCta (raw HTML under the lede), dockCta (raw HTML: replaces the dock's chips and Next button), dockBadge (raw HTML: replaces the dock pill's section count)
+//   <!--@meta {json}-->   path, order, name, tone, title, description, headline, lede, scripts[], styles[], heroCta (raw HTML under the lede), dockCta (raw HTML: replaces the dock's chips and Next button), dockBadge (raw HTML: replaces the dock pill's section count)
 //                         panel: true → the offset panel from [data-fh-panel-start] down, with a tall footer
 //                         optional: parent (hub path), hub, chips [[id, label]], labels {id: label}, aliases [old ids → this page]
 //   <!--@jsonld-->        the page's JSON-LD <script> (optional)
@@ -9,6 +9,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { expandGenerated, summaryCells } from "./developer.mjs";
 
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pagesDir = join(root, "site/pages");
@@ -29,7 +30,7 @@ const parse = (file) => {
   const rel = relative(pagesDir, file).replace(/\\/g, "/");
   const path = meta.path ?? "/" + rel.replace(/(^|\/)index\.html$/, "$1").replace(/\.html$/, "/");
   const out = path === "/" ? "index.html" : path.replace(/^\//, "") + "index.html";
-  return { file, rel, out, path, meta, jsonld: block("jsonld"), main: block("main"), after: block("after") };
+  return { file, rel, out, path, meta, jsonld: block("jsonld"), main: expandGenerated(block("main")), after: block("after") };
 };
 
 /** Every page, in site order (meta.order, then path). */
@@ -52,8 +53,8 @@ const slug = (t) => t.toLowerCase().replace(/&amp;|&/g, "and").replace(/<[^>]+>/
 const pad = (n) => String(n).padStart(2, "0");
 const idsIn = (h) => [...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
 const counts = (h) => {
-  const ids = [...h.matchAll(/data-fh-id="([A-Z]{3}(?:-\d{2})?)"/g)].map((m) => m[1]);
-  return { families: ids.filter((i) => !i.includes("-")), variants: ids.filter((i) => i.includes("-")).length };
+  const ids = [...h.matchAll(/data-fh-id="([A-Z]{3}(?:-\d+(?:\.\d+)?)?)"/g)].map((m) => m[1]);
+  return { families: ids.filter((i) => !i.includes("-")), variants: ids.filter((i) => i.includes(".")).length };
 };
 
 /** Give every .site-demo an anchor (id from its heading) so the dock can link to it. */
@@ -83,13 +84,16 @@ const planChips = (p, main) => {
   starts.forEach((sec, k) => {
     const end = k + 1 < starts.length ? starts[k + 1].at : main.length;
     let body = main.slice(sec.at, end);
-    const fams = [...body.matchAll(/<([a-z][\w-]*)\s([^>]*?)data-fh-id="([A-Z]{3})"([^>]*)>/g)];
+    const chipRe = /<([a-z][\w-]*)\s([^>]*?)data-fh-id="([A-Z]{3}(?:-\d+)?)"([^>]*)>/g;
+    const isChip = (tag, attrs, fid) => tag !== "section" && (!fid.includes("-") || /class="site-demo\b/.test(attrs));
+    const fams = [...body.matchAll(chipRe)].filter((m) => isChip(m[1], m[2] + m[4], m[3]));
     if (!fams.length) {
       chips.push({ id: sec.id, label: (p.meta.labels ?? {})[sec.id] ?? sec.tag.match(/data-fh-label="([^"]*)"/)?.[1] ?? sec.id, tone: sec.tag.match(/data-tone="([^"]*)"/)?.[1], tag: sec.tag });
     } else {
       body = body.replace(sec.tag, `<section ${sec.tag.replace(/^<section id="[^"]+"\s*/, "").replace(/\s*data-fh-(label|index)="[^"]*"/g, "").replace(/>$/, "")} data-fh-was="${sec.id}">`);
       const src = body;
-      body = body.replace(/<([a-z][\w-]*)\s([^>]*?)data-fh-id="([A-Z]{3})"([^>]*)>/g, (m, tag, a, fid, b, at) => {
+      body = body.replace(chipRe, (m, tag, a, fid, b, at) => {
+        if (!isChip(tag, a + b, fid)) return m;
         const attrs = a + b, tail = src.slice(at + m.length, at + m.length + 700);
         const h3 = /class="site-demo\b/.test(attrs) ? tail.match(/<div class="site-demo__head"><h3[^>]*>([\s\S]*?)<\/h3>/)?.[1] : null;
         const label = (p.meta.labels ?? {})[fid] ?? attrs.match(/data-fh-name="([^"]*)"/)?.[1] ?? (h3 && stripTags(h3)) ?? fid;
@@ -120,13 +124,13 @@ const summary = (p, chips, kids, all) => {
   const totals = all.reduce((t, x) => { const c = famsOf(x); return { f: t.f + c.families.length, v: t.v + c.variants }; }, { f: 0, v: 0 });
   const c = kids.length ? kids.reduce((t, k) => { const kc = famsOf(k); return { families: [...t.families, ...kc.families], variants: t.variants + kc.variants }; }, { families: [], variants: 0 }) : famsOf(p);
   const names = (arr) => arr.length <= 3 ? arr.join(" · ") : `${arr.slice(0, 3).join(" · ")} and ${arr.length - 3} more`;
-  const example = [...(kids.length ? kids.map((k) => k.main).join("") : p.main).matchAll(/data-fh-id="([A-Z]{3}-\d{2})"/g)].map((m) => m[1])[0];
+  const example = [...(kids.length ? kids.map((k) => k.main).join("") : p.main).matchAll(/data-fh-id="([A-Z]{3}-\d+\.\d+)"/g)].map((m) => m[1])[0];
   const cells = [];
   if (kids.length) cells.push({ value: kids.length, label: "Groups", blurb: names(kids.map((k) => k.meta.name)) + "." });
   if (c.families.length) cells.push({ value: c.families.length, label: "Families", blurb: kids.length ? "Each with an Index ID and its own section." : names(chips.filter((ch) => ch.fid).map((ch) => textOf(ch.label))) + "." });
   if (c.variants) cells.push({ value: c.variants, label: "Variants", blurb: `Each has its own ID${example ? `, like ${example}` : ""}. Copy it with its markup.` });
   // an authored fact can stand in for a counted one ({replaces: "Variants"}) when it says the same thing better
-  for (const x of p.meta.summary ?? []) { const i = cells.findIndex((y) => y.label === x.replaces); i >= 0 ? cells.splice(i, 1, x) : cells.push(x); }
+  for (const x of (p.meta.summaryFrom === "developer" ? summaryCells() : p.meta.summary ?? [])) { const i = cells.findIndex((y) => y.label === x.replaces); i >= 0 ? cells.splice(i, 1, x) : cells.push(x); }
   const fill = (v) => String(v).replace("{{FAMILIES_TOTAL}}", totals.f).replace("{{VARIANTS_TOTAL}}", totals.v);
   if (!cells.length) return "";
   return `      <ul class="fh-cube-cards site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
@@ -194,7 +198,7 @@ ${list.map((x) => {
 /** Site navigation, generated from the pages so it can't drift: the Docs mega, the drawer list,
  *  the footer Docs column, ⌘K pages and the home dock's category chips. */
 const MEGA = [
-  { title: "System", tone: "teal", paths: ["/foundations/", "/layout/", "/patterns/", "/theming/", "/agents/"] },
+  { title: "System", tone: "teal", paths: ["/foundations/", "/layout/", "/patterns/", "/theming/", "/agents/", "/developer/"] },
   { title: "Components", tone: "amber", parent: "/components/" },
   { title: "Product UI", tone: "orange", paths: ["/forms/", "/data/", "/commerce/", "/audio/"] },
   // Links can point into a page: { path, name } (the target id must exist; site.mjs --check fails on a dead #link).
@@ -245,7 +249,13 @@ ${cards(list.filter((x) => x.path !== "/" && !x.meta.parent))}
   for (const p of list) for (const id of idsIn(p.built)) if (!where.has(id)) where.set(id, p.path);
   for (const p of list) for (const m of p.built.matchAll(/data-fh-was="([^"]+)"/g)) if (!where.has(m[1])) where.set(m[1], p.path + "#");
   for (const p of list) for (const id of p.meta.aliases ?? []) if (!where.has(id)) where.set(id, p.path + "#");
-  for (const p of list) for (const m of p.built.matchAll(/data-fh-id="([A-Z]{3}(?:-\d{2})?)"/g)) if (!where.has(m[1])) where.set(m[1], p.path);
+  for (const p of list) for (const m of p.built.matchAll(/data-fh-id="([A-Z]{3}(?:-\d+(?:\.\d+)?)?)"/g)) if (!where.has(m[1])) where.set(m[1], p.path);
+  // Groups named on their family (CAT-2) live where their variants do; retired IDs live where their replacement does.
+  for (const [id, path] of [...where]) { const g = /^([A-Z]{3}-\d+)\.\d+$/.exec(id)?.[1]; if (g && !where.has(g)) where.set(g, path); }
+  try {
+    const moved = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "../index-ledger.json"), "utf8")).moved ?? {};
+    for (const [old, to] of Object.entries(moved)) if (!where.has(old) && where.has(to)) where.set(old, where.get(to));
+  } catch {}
   return { list, where, nav: navParts(list) };
 };
 
@@ -253,6 +263,8 @@ ${cards(list.filter((x) => x.path !== "/" && !x.meta.parent))}
 export const render = (p, ctx, base = "https://firehorse.rascode.dev") => {
   const m = p.meta;
   const scripts = (m.scripts ?? []).map((s) => `<script type="module" src="${s}"></script>`).join("\n");
+  // meta.styles: page-only stylesheets (e.g. Firehorse Pro), loaded after Firehorse and before site.css.
+  const styles = (m.styles ?? []).map((s) => `<link rel="stylesheet" href="${s}">`).join("\n");
   const jsonld = p.jsonld || (p.path === "/" ? "" : `<script type="application/ld+json">
 ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", "@id": base + p.path, name: m.title, description: m.description, url: base + p.path, isPartOf: { "@id": base + "/#website" } }, null, 2)}
 </script>`);
@@ -272,7 +284,8 @@ ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", 
     .replace("{{JSONLD}}", () => jsonld)
     .replace("{{MAIN}}", () => p.built ?? p.main)
     .replace("{{AFTER}}", () => p.after)
-    .replace("{{SCRIPTS}}", () => scripts);
+    .replace("{{SCRIPTS}}", () => scripts)
+    .replace("{{STYLES}}", () => styles);
   if (ctx) {
     for (const [k, v] of Object.entries(ctx.nav)) html = html.replace(k, () => v);
     // mark where we are in the nav lists

@@ -1,0 +1,44 @@
+/*
+ * Firehorse — Code block (DET)
+ * components/content · layer fh.components · docs /components/content/#DET
+ */
+
+@layer fh.components {
+  /* —— Code block ——
+   *   <figure class="fh-code">
+   *     <figcaption>tokens.css <button class="fh-button fh-button--sm fh-button--ghost">Copy</button></figcaption>
+   *     <pre><code>…</code></pre>
+   *   </figure> */
+  .fh-code {
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-sunken);
+
+    & > figcaption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-space-3);
+      min-block-size: 2.5rem;
+      padding: var(--fh-space-1) var(--fh-space-2) var(--fh-space-1) var(--fh-space-4);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+
+    & > pre {
+      margin: 0;
+      padding: var(--fh-space-4) var(--fh-space-5);
+      overflow-x: auto;
+      color: var(--fh-color-text);
+      font-size: 0.78rem;
+      line-height: 1.7;
+      tab-size: 2;
+    }
+  }
+
+}

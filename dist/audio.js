@@ -342,8 +342,8 @@ export function bindReel(box) {
   const player = target && (target.fhPlayer || new FirehorsePlayer(target));
   if (!player) return;
   const lines = $$("template", box)[0]?.content ? [...$$("template", box)[0].content.querySelectorAll("p")].map((p) => p.textContent.trim()) : [];
-  const count = $(".fh-reel__count", box) || box.appendChild(Object.assign(document.createElement("span"), { className: "fh-reel__count" }));
-  const line = $(".fh-reel__line", box) || box.appendChild(Object.assign(document.createElement("p"), { className: "fh-reel__line" }));
+  const count = $(".fh-line-reel__count", box) || box.appendChild(Object.assign(document.createElement("span"), { className: "fh-line-reel__count" }));
+  const line = $(".fh-line-reel__line", box) || box.appendChild(Object.assign(document.createElement("p"), { className: "fh-line-reel__line" }));
   let cur = -1;
   const draw = (f) => {
     const i = Math.min(lines.length - 1, Math.floor(f * lines.length));

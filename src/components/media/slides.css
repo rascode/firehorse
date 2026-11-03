@@ -1,0 +1,162 @@
+/*
+ * Firehorse — Slides (SLD)
+ * components/media · layer fh.components · docs /media/#SLD
+ */
+
+@layer fh.components {
+  /* —— Slides: 16:9 canvases, 1280 × 720 ——
+   * <section class="fh-canvas fh-slide"> works on its own (one per page
+   * in print) and as a reveal.js slide with dist/reveal.css. */
+  .fh-slide {
+    --fh-canvas-w: 1280;
+    --fh-canvas-h: 720;
+    --fh-canvas-pad: 76;
+    --fh-canvas-frame: 20;
+    --fh-canvas-title: 60;
+    --fh-canvas-sub: 28;
+    --fh-canvas-small: 17;
+    --fh-canvas-measure: 22ch;
+
+    & .fh-canvas__main { justify-content: flex-start; }
+  }
+
+  .fh-slide--title { --fh-canvas-title: 104; --fh-canvas-sub: 32; --fh-canvas-measure: 13ch; }
+  .fh-slide--title .fh-canvas__main { justify-content: flex-end; }
+
+  .fh-slide--section { --fh-canvas-title: 84; --fh-canvas-index: 240; --fh-canvas-measure: 12ch; }
+  .fh-slide--section .fh-canvas__main { justify-content: flex-end; }
+
+  /* Content centred top to bottom: quotes, the closing slide. */
+  .fh-slide--middle .fh-canvas__main { justify-content: center; }
+
+  .fh-slide__list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    counter-reset: fh-slide;
+    list-style: none;
+    font-size: calc(30 * var(--_u));
+
+    & > li {
+      display: grid;
+      grid-template-columns: calc(76 * var(--_u)) minmax(0, 1fr);
+      align-items: baseline;
+      padding-block: calc(20 * var(--_u));
+      border-block-start: var(--_hair) dashed var(--fh-color-etch);
+      color: var(--fh-color-text);
+      counter-increment: fh-slide;
+      line-height: 1.3;
+    }
+
+    & > li:last-child { border-block-end: var(--_hair) dashed var(--fh-color-etch); }
+
+    & > li::before {
+      content: counter(fh-slide, decimal-leading-zero);
+      color: var(--fh-tone);
+      font-family: var(--fh-font-mono);
+      font-size: 0.6em;
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-mono);
+    }
+
+    & small { display: block; margin-block-start: 0.3em; color: var(--fh-color-text-muted); font-size: 0.7em; }
+  }
+
+  .fh-slide__stats {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: calc(24 * var(--_u));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: calc(28 * var(--_u));
+      padding: calc(30 * var(--_u));
+      border: var(--_hair) dashed var(--fh-color-etch);
+      border-radius: var(--fh-radius-md);
+      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 55%, transparent);
+    }
+
+    & b {
+      color: var(--_cube, var(--fh-tone));
+      font-family: var(--fh-font-display);
+      font-size: calc(96 * var(--_u));
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.045em;
+      line-height: 0.9;
+    }
+
+    & span {
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: calc(var(--fh-canvas-small) * var(--_u));
+      letter-spacing: var(--fh-tracking-wider);
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    & > li:nth-child(3n + 2) b { --_cube: oklch(from var(--fh-tone) l c calc(h + 28)); }
+    & > li:nth-child(3n + 3) b { --_cube: oklch(from var(--fh-tone) l c calc(h + 56)); }
+  }
+
+  .fh-slide__quote {
+    max-inline-size: 24ch;
+    margin: 0;
+    color: var(--fh-color-text-strong);
+    font-family: var(--fh-font-display);
+    font-size: calc(58 * var(--_u));
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    text-wrap: balance;
+
+    &::before {
+      content: "\201C";
+      display: block;
+      block-size: 0.55em;
+      color: var(--fh-tone);
+      font-size: 2.2em;
+      line-height: 1;
+    }
+  }
+
+  .fh-slide__cite {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--fh-canvas-small) * var(--_u));
+    font-style: normal;
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & b { color: var(--fh-tone); font-weight: var(--fh-weight-medium); }
+  }
+
+  .fh-slide__code {
+    margin: 0;
+    padding: calc(30 * var(--_u)) calc(34 * var(--_u));
+    overflow: hidden;
+    border: var(--_hair) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-sunken);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: calc(22 * var(--_u));
+    line-height: 1.65;
+    tab-size: 2;
+    white-space: pre;
+
+    & mark { border-radius: calc(4 * var(--_u)); background-color: color-mix(in oklab, var(--fh-tone) 24%, transparent); color: inherit; }
+    & i { color: var(--fh-color-text-subtle); font-style: normal; }
+  }
+
+  @media print {
+    .fh-slide { break-after: page; break-inside: avoid; }
+  }
+}

@@ -1,0 +1,56 @@
+/*
+ * Firehorse — Sidenav (NAV)
+ * components/navigation · layer fh.components · docs /components/navigation/#NAV
+ */
+
+@layer fh.components {
+  /* —— Sidebar nav ——
+   * Grouped app navigation (portal, admin, docs).
+   *   <nav class="fh-sidenav" aria-label="Portal">
+   *     <section><p class="fh-label">Portal</p>
+   *       <a href="…" aria-current="page">Overview</a>
+   *       <a href="…">Invoices <span class="fh-badge">2</span></a>
+   *     </section>
+   *   </nav> */
+  .fh-sidenav {
+    display: grid;
+    gap: var(--fh-space-5);
+    min-inline-size: 12rem;
+
+    & > section {
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    & .fh-label {
+      margin-block-end: var(--fh-space-2);
+      padding-inline: var(--fh-space-3);
+    }
+
+    & a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-space-3);
+      padding: var(--fh-space-2) var(--fh-space-3);
+      border-radius: var(--fh-radius-sm);
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+      text-decoration: none;
+      transition:
+        background-color var(--fh-duration-fast) var(--fh-ease-standard),
+        color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+        color: var(--fh-color-text);
+      }
+
+      &[aria-current]:not([aria-current="false"]) {
+        background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
+        box-shadow: inset 2px 0 0 var(--fh-tone);
+        color: var(--fh-color-text);
+      }
+    }
+  }
+}

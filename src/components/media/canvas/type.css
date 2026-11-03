@@ -1,0 +1,158 @@
+/*
+ * Firehorse — Type (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  /* —— Type —— */
+  .fh-canvas__title {
+    max-inline-size: var(--fh-canvas-measure);
+    margin: 0;
+    color: var(--fh-color-text-strong);
+    font-family: var(--fh-font-display);
+    font-size: calc(var(--fh-canvas-title) * var(--_u));
+    font-weight: var(--fh-weight-medium);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+
+    & em { color: var(--fh-color-text-muted); font-style: normal; }
+    & mark { background: none; color: var(--fh-tone); }
+  }
+
+  .fh-canvas__sub {
+    max-inline-size: 34ch;
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: calc(var(--fh-canvas-sub) * var(--_u));
+    line-height: 1.35;
+    text-wrap: pretty;
+  }
+
+  .fh-canvas__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    inline-size: fit-content;
+    margin: 0;
+    padding: 0.6em 1em 0.6em 0.8em;
+    border: var(--_hair) solid var(--fh-color-rule);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--fh-canvas-small) * var(--_u));
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-widest);
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.6em;
+      block-size: 0.6em;
+      border-radius: 50%;
+      background-color: var(--fh-tone);
+    }
+  }
+
+  /* Wordmark: the underscore takes the tone. */
+  .fh-canvas__mark {
+    display: inline-flex;
+    align-items: baseline;
+    color: var(--fh-color-text-strong);
+    font-family: var(--fh-font-display);
+    font-size: calc(var(--fh-canvas-small) * 1.5 * var(--_u));
+    font-weight: var(--fh-weight-semibold);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+
+    & i { color: var(--fh-tone); font-style: normal; }
+  }
+
+  .fh-canvas__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    inline-size: fit-content;
+    padding: 0.45em 0.65em;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--fh-canvas-small) * 1.2 * var(--_u));
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: var(--fh-tracking-mono);
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Outlined numeral: episode, track, chapter. */
+  .fh-canvas__index {
+    margin: 0;
+    color: transparent;
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--fh-canvas-index, 220) * var(--_u));
+    font-weight: var(--fh-weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.05em;
+    line-height: 0.8;
+    -webkit-text-stroke: max(1px, calc(2 * var(--_u))) var(--fh-tone);
+  }
+
+  /* Cubes: tone blocks carrying one value each; the row walks the hue by 28°. */
+  .fh-canvas__cubes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(14 * var(--_u)) calc(28 * var(--_u));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: calc(var(--fh-canvas-small) * var(--_u));
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    & b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-inline-size: 2.2em;
+      padding: 0.45em 0.55em;
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--_cube, var(--fh-tone));
+      color: var(--fh-color-on-tone);
+      font-size: 1.25em;
+      font-weight: var(--fh-weight-heavy);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--fh-tracking-mono);
+      line-height: 1.1;
+    }
+
+    & > li:nth-child(3n + 2) b { --_cube: oklch(from var(--fh-tone) l c calc(h + 28)); }
+    & > li:nth-child(3n + 3) b { --_cube: oklch(from var(--fh-tone) l c calc(h + 56)); }
+  }
+
+  /* One per line, as written: contact details, credits. */
+  .fh-canvas__cubes--rows {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > li { font-size: calc(var(--fh-canvas-small) * 1.1 * var(--_u)); letter-spacing: var(--fh-tracking-mono); text-transform: none; }
+  }
+
+}

@@ -1,0 +1,106 @@
+/*
+ * Firehorse — Speed blur (SPD)
+ * components/content · layer fh.components · docs /components/content/#SPD
+ */
+
+@layer fh.components {
+  /* —— Speed blur (SPD) ——
+   * A picture caught at speed: a sideways motion blur, the subject kept
+   * sharp at a focus point, and a fine grain over it. Pure CSS: the blur is
+   * a plain blur() stretched sideways (the copy is squeezed, blurred, then
+   * stretched back), so it streaks along one axis only.
+   *   <figure class="fh-speed" style="--fh-speed-focus: 42% 30%">
+   *     <span class="fh-speed__smear" aria-hidden="true"><img src="…" alt=""></span>
+   *     <img class="fh-speed__img" src="…" alt="…">
+   *   </figure>
+   * Both images are the same picture. Anything after them (a hero's copy)
+   * sits on top.
+   *   modifiers  --orbit (a thin dashed ring, centred on
+   *              --fh-speed-focus-x / --fh-speed-focus-y)
+   *              --still (no drift)
+   *   knobs      --fh-speed-focus (x y of the sharp spot, 50% 40%)
+   *              --fh-speed-focus-size (how big it is, 34% 40%)
+   *              --fh-speed-amount (streak length, 18px)
+   *              --fh-speed-ratio (16 / 9) · --fh-speed-grain (0.12) */
+  .fh-speed {
+    --_amount: var(--fh-speed-amount, 18px);
+    --_stretch: 12;
+    position: relative;
+    display: grid;
+    aspect-ratio: var(--fh-speed-ratio, 16 / 9);
+    margin: 0;
+    overflow: clip;
+    isolation: isolate;
+    border-radius: var(--fh-speed-radius, var(--fh-card-radius, var(--fh-radius-md)));
+    background-color: var(--fh-color-ink);
+    color: var(--fh-color-on-ink);
+  }
+  .fh-speed > * { grid-area: 1 / 1; }
+
+  /* The streaked copy: squeezed, blurred, stretched back. */
+  .fh-speed__smear {
+    position: absolute;
+    inset: 0 -6%;
+    z-index: -2;
+    transform: scaleX(var(--_stretch));
+    filter: blur(calc(var(--_amount) / var(--_stretch))) saturate(1.1);
+  }
+  .fh-speed__smear > img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transform: scaleX(calc(1 / var(--_stretch)));
+  }
+
+  /* The sharp copy, kept only around the focus. */
+  .fh-speed__img {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    mask-image: radial-gradient(var(--fh-speed-focus-size, 34% 40%) at var(--fh-speed-focus, 50% 40%), var(--fh-color-ink) 35%, transparent 100%);
+  }
+
+  /* Grain: fine scanlines and a soft vignette. */
+  .fh-speed::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      repeating-linear-gradient(180deg, color-mix(in oklab, var(--fh-color-ink) 60%, transparent) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 90% at 50% 45%, transparent 55%, color-mix(in oklab, var(--fh-color-ink) 55%, transparent));
+    opacity: calc(var(--fh-speed-grain, 0.12) * 4);
+    background-size: 100% 3px, 100% 100%;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  .fh-speed--orbit::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset-inline-start: var(--fh-speed-focus-x, 50%);
+    inset-block-start: var(--fh-speed-focus-y, 40%);
+    inline-size: 82%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border: 1px dashed color-mix(in oklab, var(--fh-color-on-ink) 35%, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* —— Motion: the streak drifts a little, as if still moving —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-speed:not(.fh-speed--still) .fh-speed__smear {
+      animation: fh-speed-drift 5s var(--fh-ease-out) infinite alternate;
+    }
+  }
+  @keyframes fh-speed-drift {
+    from { translate: -1.5% 0; }
+    to { translate: 1.5% 0; }
+  }
+}

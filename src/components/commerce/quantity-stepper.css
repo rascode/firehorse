@@ -1,0 +1,46 @@
+/*
+ * Firehorse — Quantity stepper (CRT)
+ * components/commerce · layer fh.components · docs /commerce/#CRT
+ */
+
+@layer fh.components {
+  /* —— Quantity stepper ——
+   *   <div class="fh-qty"><button aria-label="Decrease">−</button><input type="number" value="1" min="1"><button aria-label="Increase">+</button></div> */
+  .fh-qty {
+    display: inline-grid;
+    grid-template-columns: 2.25rem 2.75rem 2.25rem;
+    align-items: stretch;
+    min-block-size: 2.5rem;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-sm);
+    font-family: var(--fh-font-mono);
+
+    & > button {
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: 1.05rem;
+      cursor: pointer;
+      &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); }
+      &:disabled { color: var(--fh-color-text-subtle); cursor: not-allowed; }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    }
+    & > input {
+      inline-size: 100%;
+      border: 0;
+      border-inline: var(--fh-border-thin) solid var(--fh-color-border);
+      background: none;
+      color: var(--fh-color-text);
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      appearance: textfield;
+      &::-webkit-inner-spin-button { appearance: none; }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    }
+  }
+  .fh-qty--sm { grid-template-columns: 1.85rem 2.25rem 1.85rem; min-block-size: 2rem; font-size: var(--fh-text-small); }
+
+}

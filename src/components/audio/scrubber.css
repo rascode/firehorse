@@ -1,0 +1,51 @@
+/*
+ * Firehorse — Scrubber (PLY)
+ * components/audio · layer fh.components · docs /audio/#PLY
+ */
+
+@layer fh.components {
+  /* —— Range scrubber (for simple players, or as a volume/gain fader) ——
+   *   <input class="fh-scrub" type="range" min="0" max="100" value="40" style="--p:.4"> */
+  .fh-scrub {
+    --_track: 0.3rem;
+    --_thumb: 0.9rem;
+    --_fill: var(--fh-tone, var(--fh-color-text));
+
+    inline-size: 100%;
+    min-inline-size: 4rem;
+    block-size: var(--_thumb);
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      block-size: var(--_track);
+      border-radius: var(--fh-radius-pill);
+      background: linear-gradient(90deg, var(--_fill) calc(var(--p) * 100%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
+    }
+    &::-moz-range-track {
+      block-size: var(--_track);
+      border-radius: var(--fh-radius-pill);
+      background: linear-gradient(90deg, var(--_fill) calc(var(--p) * 100%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
+    }
+    &::-webkit-slider-thumb {
+      inline-size: var(--_thumb);
+      block-size: var(--_thumb);
+      margin-block-start: calc((var(--_track) - var(--_thumb)) / 2);
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-pill);
+      background: var(--fh-color-text);
+      appearance: none;
+    }
+    &::-moz-range-thumb {
+      inline-size: var(--_thumb);
+      block-size: var(--_thumb);
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-pill);
+      background: var(--fh-color-text);
+    }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 3px; border-radius: var(--fh-radius-pill); }
+  }
+
+}

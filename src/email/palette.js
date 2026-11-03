@@ -78,6 +78,32 @@ export const palette = {
     "radius": 0,
     "button": "sharp"
   },
+  "lipizzaner": {
+    "label": "Lipizzaner",
+    "light": {
+      "canvas": "#fafafa",
+      "surface": "#ffffff",
+      "text": "#181611",
+      "muted": "#5c5c5c",
+      "accent": "#6b1d2a",
+      "onAccent": "#fbf8f1"
+    },
+    "dark": {
+      "canvas": "#181611",
+      "surface": "#1e1c17",
+      "text": "#f1f0ef",
+      "muted": "#9b9892",
+      "accent": "#d4bc85",
+      "onAccent": "#17130c"
+    },
+    "fonts": {
+      "sans": "\"Geist\", \"Inter\", ui-sans-serif, system-ui, sans-serif",
+      "display": "\"Geist Serif\", \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+      "mono": "\"Geist Mono\", ui-monospace, \"SF Mono\", monospace"
+    },
+    "radius": 0,
+    "button": "sharp"
+  },
   "mustang": {
     "label": "Mustang",
     "light": {

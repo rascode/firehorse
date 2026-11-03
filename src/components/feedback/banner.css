@@ -1,0 +1,31 @@
+/*
+ * Firehorse — Banner (EMP)
+ * components/feedback · layer fh.components · docs /components/overlays/#EMP
+ */
+
+@layer fh.components {
+  /* —— Banner: full-width announcement above the header —— */
+  .fh-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-space-2) var(--fh-space-4);
+    padding: var(--fh-space-2) var(--fh-page-margin);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    background-color: color-mix(in oklab, var(--fh-tone) 9%, var(--fh-color-canvas));
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-caption);
+    text-align: center;
+
+    & a {
+      color: var(--fh-tone);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+}

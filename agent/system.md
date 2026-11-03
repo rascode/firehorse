@@ -63,6 +63,12 @@ Browser floor for the default build: Chrome/Edge 123, Firefox 128, Safari 17.5.
 ## Page skeleton
 
 ```html
+<head>
+  …
+  <!-- Required: the design system this page is built on (audits and agents read it). -->
+  <meta name="design-system" content="firehorse@1.1.0">
+  <link rel="design-system" href="https://firehorse.rascode.dev/index.json">
+</head>
 <body>
   <a class="fh-skip" href="#main">Skip to content</a>
   <div class="fh-page">
@@ -128,13 +134,31 @@ same height.
 
 ## The Firehorse Index (IDs)
 
-Every component family and variant has a stable ID: three letters for the
-family (`CHP` chips, `TIR` pricing tiers, `DTB` datatable), plus a two-digit
-number for a variant (`CHP-03` filled chip with icon). When a person names an
+Every component family, group and variant has a stable ID: three letters for
+the family (`CHP` chips, `TIR` pricing tiers, `DTB` datatable), a number for a
+group of related variants (`CHP-1` chip kinds), and a dot for a variant in that
+group (`CHP-1.3` filled chip with icon). Variants that share the number before
+the dot are siblings. Retired IDs forward to their replacement under "Former
+IDs" in [index.md](index.md); use the new one. When a person names an
 ID, look it up in [index.md](index.md) (or `index.json`) and use that markup
 exactly: same classes and structure, new content. Never invent an ID; if one
 isn't listed, say so. When you describe what you built, cite the IDs you used.
 KC (the Firehorse guide, [kc.md](kc.md)) turns plain descriptions into IDs.
+
+### data-fh: the reference on the page
+
+Every component root you ship carries `data-fh="<ID>"`: the variant when you
+know it (`data-fh="EYE-5.2"`), else the group or family (`data-fh="BTN"`).
+The markup in index.md and components.md already has it; keep it when you copy
+or adapt a block. Parts (`fh-card__title`), layout primitives (`fh-stack`,
+`fh-grid`) and utilities need none. Something you had to build that Firehorse
+doesn't have gets `data-fh="local:<name>"`, never an invented ID: that marks it
+as deliberate custom work and puts it on the list of components to add.
+
+Check a page with `npx firehorse-audit <file | folder | url>`. It reports
+untagged component roots (and names their ID), tags that disagree with their
+classes, retired or unknown IDs, and elements that aren't connected to
+Firehorse at all. `--fix` writes the missing tags; `--json` is for you.
 
 ## Patterns (page layouts)
 
@@ -196,7 +220,7 @@ Never make content depend on it.
 ## Themes (decide once)
 
 A theme is every design decision in one attribute: type, color in light and
-dark, radius, density, and the avatar, card, card-media, button, chip and table
+dark, radius, density, and the avatar, card, card-media, card-content, button, chip and table
 styles. Put it on `<html>`:
 
 ```html
@@ -280,7 +304,7 @@ set the color and add `data-fh-surface`; never hand-pick text colors for it:
 - Audio: `fh-player` (wrap a real `<audio controls>`; it stays as the no-JS fallback),
   `fh-play` (+ `--sm|--lg|--solid`, `aria-pressed` = playing), `fh-wave` (`data-peaks`,
   `data-fh-wave-style="mirror|bottom|line"`), `fh-scrub`, `fh-volume`, `fh-audio-btn`,
-  `fh-eq`, `fh-tracks` + `fh-track`, `fh-captions`, `fh-reel`, `fh-mixer` + `fh-channel`,
+  `fh-eq`, `fh-tracks` + `fh-track`, `fh-captions`, `fh-line-reel`, `fh-mixer` + `fh-channel`,
   `fh-meter-level`, `fh-params` + `fh-param`, `fh-stages`. Load `@rascode/firehorse/audio`
   to wire them; it sets `--p` (progress) and `--level` (live level). Use `data-fh-play`,
   `data-fh-wave`, `data-fh-time`, `data-fh-duration`, `data-fh-volume`, `data-fh-mute`,
@@ -315,6 +339,8 @@ chrome yourself from these rules.
 - [ ] No hex / rgb / px spacing in your CSS
 - [ ] No viewport-width media queries
 - [ ] Every class is `fh-*` (or your own app-prefixed class with token-only values)
+- [ ] `<head>` declares the design system (`<meta name="design-system">` and `<link rel="design-system">`)
+- [ ] Every component root has `data-fh`; custom blocks are `data-fh="local:<name>"`; `npx firehorse-audit` is clean
 - [ ] One accent per view
 - [ ] Narrow the container to ~320px: nothing overflows
 - [ ] Tab through: every control shows focus

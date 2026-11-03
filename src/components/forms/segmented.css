@@ -1,0 +1,99 @@
+/*
+ * Firehorse — Segmented (CHO)
+ * components/forms · layer fh.components · docs /forms/#CHO
+ */
+
+@layer fh.components {
+  /* —— Segmented choice ——
+   * A radio group that looks like a pill switch. Real radios inside,
+   * so it is accessible and form-submittable without script.
+   *   <fieldset class="fh-segmented">
+   *     <legend class="fh-sr-only">Contact by</legend>
+   *     <label><input type="radio" name="c" value="email" checked> Email</label>
+   *     <label><input type="radio" name="c" value="call"> Call</label>
+   *   </fieldset>
+   * --stack stacks the options vertically; --sm is the compact size.  */
+  .fh-segmented {
+    display: flex;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    gap: var(--fh-space-1);
+    margin: 0;
+    padding: var(--fh-space-1);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+    min-inline-size: 0;
+
+    & > label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      gap: var(--fh-space-1-5);
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--fh-radius-pill);
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: 0.66rem;
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+      transition:
+        background-color var(--fh-duration-base) var(--fh-ease-standard),
+        color var(--fh-duration-base) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+
+      &:has(:checked) {
+        background-color: var(--fh-color-primary);
+        color: var(--fh-color-on-primary);
+      }
+
+      &:has(:focus-visible) {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: var(--fh-focus-offset);
+      }
+
+      & > input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .fh-segmented--sm {
+    padding: 2px;
+
+    & > label { padding: 0.32rem 0.6rem; font-size: 0.6rem; }
+  }
+
+  /* Vertical, on purpose: --stack. Otherwise a row holds until the slot
+   * truly can't fit one (a 12rem slot still holds three short labels), so
+   * phone layouts keep the switch horizontal. */
+  .fh-segmented--stack {
+    flex-direction: column;
+    border-radius: var(--fh-radius-xl);
+
+    & > label {
+      border-radius: 0.8rem;
+    }
+  }
+
+  @container (inline-size < 12rem) {
+    .fh-segmented {
+      flex-direction: column;
+      border-radius: var(--fh-radius-xl);
+
+      & > label {
+        border-radius: 0.8rem;
+      }
+    }
+  }
+
+}

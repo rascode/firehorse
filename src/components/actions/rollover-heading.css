@@ -1,0 +1,65 @@
+/*
+ * Firehorse — Rollover heading
+ * components/actions · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Rollover heading ——
+   * A one-line label that rolls to new text: up when you move forward,
+   * down when you move back. Items stack in one grid cell, so the old
+   * and new text animate past each other without moving the layout.
+   *   <span class="fh-rollover" data-fh-rollover="sections" data-fh-default="Firehorse">
+   *     <span class="fh-rollover__item">Firehorse</span>
+   *   </span>
+   * dist/firehorse.js rolls it to the section in view (sections carry
+   * data-fh-label and optional data-fh-index), or call
+   * Firehorse.rollover(el, "New text", "up" | "down"). */
+  .fh-rollover {
+    display: inline-grid;
+    align-items: baseline;
+    max-inline-size: 100%;
+    overflow: clip;
+    overflow-clip-margin: 0.15em;
+    line-height: 1.25;
+    vertical-align: bottom;
+  }
+  .fh-rollover__item {
+    grid-area: 1 / 1;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5em;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & > b {
+      flex: none;
+      color: var(--fh-tone, var(--fh-color-text-subtle));
+      font-family: var(--fh-font-mono);
+      font-size: 0.62em;
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+    }
+    &[data-leave] { pointer-events: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-rollover__item[data-enter="up"] { animation: fh-roll-in-up var(--fh-duration-slow) var(--fh-ease-out) both; }
+    .fh-rollover__item[data-enter="down"] { animation: fh-roll-in-down var(--fh-duration-slow) var(--fh-ease-out) both; }
+    .fh-rollover__item[data-leave="up"] { animation: fh-roll-out-up var(--fh-duration-slow) var(--fh-ease-out) both; }
+    .fh-rollover__item[data-leave="down"] { animation: fh-roll-out-down var(--fh-duration-slow) var(--fh-ease-out) both; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fh-rollover__item[data-leave] { display: none; }
+  }
+  @keyframes fh-roll-in-up { from { translate: 0 105%; opacity: 0; } }
+  @keyframes fh-roll-in-down { from { translate: 0 -105%; opacity: 0; } }
+  @keyframes fh-roll-out-up { to { translate: 0 -105%; opacity: 0; } }
+  @keyframes fh-roll-out-down { to { translate: 0 105%; opacity: 0; } }
+
+  @keyframes fh-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+}

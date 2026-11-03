@@ -1,0 +1,43 @@
+/*
+ * Firehorse — Tab bar (TBR)
+ * components/navigation · layer fh.components · docs /components/navigation/#TBR
+ */
+
+@layer fh.components {
+  /* —— Tab bar (phones) —— */
+  .fh-tabbar {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: var(--fh-space-1-5) var(--fh-space-2) calc(var(--fh-space-1-5) + env(safe-area-inset-bottom, 0px));
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: color-mix(in oklab, var(--fh-color-surface-chrome) 92%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome, 12px));
+
+    & > a {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 0.2rem;
+      padding: var(--fh-space-1-5) 0;
+      border-radius: var(--fh-radius-md);
+      color: var(--fh-color-text-subtle);
+      font-size: 0.66rem;
+      text-decoration: none;
+
+      & > .fh-icon { font-size: 1.25rem; }
+      &[aria-current="page"] { color: var(--fh-tone, var(--fh-color-text)); }
+      &[aria-current="page"]::before { content: ""; position: absolute; inset-block-start: -0.4rem; inline-size: 1.5rem; block-size: 2px; border-radius: 2px; background-color: currentColor; }
+      & > b { position: absolute; inset-block-start: 0.1rem; inset-inline-start: calc(50% + 0.35rem); min-inline-size: 1rem; padding: 0 0.25rem; border-radius: var(--fh-radius-pill); background-color: var(--fh-color-danger); color: var(--fh-color-on-media); font-size: 0.6rem; line-height: 1rem; text-align: center; }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dialog--float,
+    .fh-overlay-nav,
+    .fh-overlay-nav li,
+    .fh-burger > span,
+    .fh-burger > span::before,
+    .fh-burger > span::after { transition-duration: 0.01ms; }
+  }
+}

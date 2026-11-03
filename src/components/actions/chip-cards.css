@@ -1,0 +1,88 @@
+/*
+ * Firehorse — Chip cards (CHC)
+ * components/actions · layer fh.components · docs /components/actions/#CHC
+ */
+
+@layer fh.components {
+  /* —— Chip card ——
+   * A compact card led by a tone block: identity, a fact, a person,
+   * a file. Sits in docks, sidebars, menus and grids.
+   *   <a class="fh-chip-card" data-tone="teal" href="…">
+   *     <span class="fh-chip-card__block">DA</span>
+   *     <span class="fh-chip-card__text"><b>Data architecture</b><small>4 services</small></span>
+   *   </a> */
+  .fh-chip-card {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    min-inline-size: 0;
+    padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) var(--fh-space-2);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
+    color: var(--fh-color-text);
+    text-decoration: none;
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(a, button, label):hover {
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent);
+    }
+  }
+
+  .fh-chip-card__block {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.62rem;
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0.04em;
+
+    & > :is(img, svg) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    & > svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+  }
+
+  .fh-chip-card__text {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > :first-child {
+      overflow: hidden;
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > small {
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: 0.58rem;
+      letter-spacing: var(--fh-tracking-wider);
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+
+}

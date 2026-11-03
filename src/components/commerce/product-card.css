@@ -1,0 +1,146 @@
+/*
+ * Firehorse — Product card (PRD)
+ * components/commerce · layer fh.components · docs /commerce/#PRD
+ */
+
+@layer fh.components {
+  /* —— Product card ——
+   *   <article class="fh-product">
+   *     <a class="fh-product__media" href="…"><img …><img class="fh-product__alt" …></a>
+   *     <span class="fh-product__badge">New</span>
+   *     <button class="fh-product__fav" aria-pressed="false" aria-label="Save"></button>
+   *     <h3 class="fh-product__title"><a href="…">Name</a></h3>
+   *     <p class="fh-price"><b>$48</b></p>
+   *     <div class="fh-swatches">…</div>
+   *     <button class="fh-product__add fh-button">Add to bag</button>
+   *   </article> */
+  .fh-product {
+    position: relative;
+    display: grid;
+    gap: var(--fh-space-2);
+    align-content: start;
+    padding: var(--fh-space-2) var(--fh-space-2) var(--fh-space-4);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    box-shadow: var(--fh-card-shadow, none);
+    backdrop-filter: var(--fh-card-backdrop, none);
+    container: fh-product / inline-size;
+    transition: border-color var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > :not(.fh-product__media, .fh-product__badge, .fh-product__fav) { margin-inline: var(--fh-space-2); }
+    &:hover { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); }
+  }
+  /* Grids of products share their etched rules, like .fh-grid--ruled cards. */
+  .fh-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-product-min, 13rem)), 1fr));
+    gap: var(--fh-gap, var(--fh-space-4));
+  }
+
+  /* Shared by every product tile: a sunken surface and a faint etched grid. */
+  .fh-product__media,
+  .fh-gallery__main,
+  .fh-gallery__thumbs > a,
+  .fh-line-item > :first-child {
+    --_tile: color-mix(in oklab, var(--fh-color-surface-sunken) 55%, var(--fh-color-canvas));
+    --_grid: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+  }
+
+  .fh-product__media {
+    position: relative;
+    display: block;
+    aspect-ratio: var(--fh-product-ratio, 4 / 5);
+    overflow: hidden;
+    border-radius: calc(var(--fh-card-radius, 0px) * 0.6);
+    /* Etched tile: sunken surface, a faint dashed grid, a glow in the product's tone. */
+    background:
+      radial-gradient(70% 55% at 50% 48%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 22%, transparent), transparent 72%),
+      repeating-linear-gradient(90deg, var(--_grid) 0 1px, transparent 1px 2.5rem) 50% 0 / 100% 100%,
+      repeating-linear-gradient(0deg, var(--_grid) 0 1px, transparent 1px 2.5rem) 0 50% / 100% 100%,
+      var(--_tile);
+
+    & > :is(img, svg) {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+      transition: opacity var(--fh-duration-slow, 380ms) var(--fh-ease-standard), scale 900ms var(--fh-ease-out);
+    }
+    & > .fh-product__alt { opacity: 0; }
+  }
+  .fh-product:hover .fh-product__media > :first-child { scale: 1.03; }
+  .fh-product:hover .fh-product__media:has(> .fh-product__alt) > :first-child { opacity: 0; }
+  .fh-product:hover .fh-product__alt { opacity: 1; }
+
+  .fh-product__badge {
+    position: absolute;
+    inset-block-start: var(--fh-space-3);
+    inset-inline-start: var(--fh-space-3);
+    z-index: 1;
+    padding: 0.12rem 0.45rem 0.16rem;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 78%, transparent);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: 0.58rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+  }
+  .fh-product__badge[data-tone] { border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent); color: var(--fh-tone); }
+
+  .fh-product__fav {
+    position: absolute;
+    inset-block-start: var(--fh-space-2);
+    inset-inline-end: var(--fh-space-2);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 80%, transparent);
+    color: var(--fh-color-text);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-heart, var(--fh-icon-plus)) center / contain no-repeat;
+    }
+    &[aria-pressed="true"] { color: var(--fh-color-danger); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  .fh-product__title {
+    margin: var(--fh-space-1) 0 0;
+    font-family: var(--fh-font-display);
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-snug);
+
+    & a { color: inherit; text-decoration: none; }
+    & a::after { content: ""; position: absolute; inset: 0; }
+  }
+  .fh-product__meta { margin: 0; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro, 0.62rem); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+
+  /* Quick add: fades in on hover on pointer devices; always visible on touch. */
+  .fh-product__add {
+    position: relative;
+    z-index: 2;
+    inline-size: 100%;
+  }
+  @media (hover: hover) {
+    .fh-product > .fh-product__add { opacity: 0; translate: 0 0.25rem; transition: opacity var(--fh-duration-base), translate var(--fh-duration-base); }
+    .fh-product:is(:hover, :focus-within) > .fh-product__add { opacity: 1; translate: 0 0; }
+  }
+
+}

@@ -56,6 +56,8 @@
     "./js": "./dist/firehorse.js",
     "./firehorse.js": "./dist/firehorse.js",
     "./schema/mappings.json": "./schema/mappings.json",
+    "./admin.css": "./dist/admin.css",
+    "./admin.min.css": "./dist/admin.min.css",
     "./icons.css": "./dist/icons.css",
     "./icons.json": "./dist/icons.json",
     "./reveal.css": "./dist/reveal.css",
@@ -73,6 +75,7 @@
     "CHANGELOG.md",
     "schema",
     "scripts/schema.mjs",
+    "scripts/audit.mjs",
     "scripts/gen-themes.mjs",
     "scripts/export-media.mjs",
     "templates"
@@ -80,11 +83,12 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "lint": "node scripts/lint.mjs",
-    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check",
+    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check && node scripts/audit-test.mjs",
     "prepublishOnly": "npm test && node scripts/gen-index.mjs",
     "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/pack-site.mjs && node scripts/not-found.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
     "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
     "schema": "node scripts/schema.mjs $(node scripts/pages.mjs --dist)",
+    "audit": "node scripts/audit.mjs",
     "tokens:adaptive": "node scripts/gen-adaptive.mjs"
   },
   "devDependencies": {
@@ -105,6 +109,7 @@
   },
   "bin": {
     "firehorse-schema": "./scripts/schema.mjs",
+    "firehorse-audit": "./scripts/audit.mjs",
     "firehorse-theme": "./scripts/gen-themes.mjs",
     "firehorse-export": "./scripts/export-media.mjs"
   }

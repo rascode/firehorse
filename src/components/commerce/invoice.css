@@ -1,0 +1,459 @@
+/*
+ * Firehorse — Invoice (INV)
+ * components/commerce · layer fh.components · docs /commerce/#INV
+ */
+
+@layer fh.components {
+  /* —— Invoice sheet (INV-1) ——
+   * A printable invoice: logo and number, a title, who it's from and to
+   * with the dates, the line items, totals, a signature, and payment
+   * details and notes at the foot. It prints clean on its own.
+   *   <article class="fh-invoice" data-fh-scheme="light">
+   *     <img class="fh-invoice__cover" src="…" alt="">              (optional)
+   *     <header class="fh-invoice__head">
+   *       <span class="fh-invoice__logo"><svg>…</svg></span>
+   *       <p class="fh-invoice__number">INV-0513-0057</p>
+   *       <h2 class="fh-invoice__title">Invoice</h2>
+   *     </header>
+   *     <div class="fh-invoice__parties">
+   *       <div><h3 class="fh-invoice__label">From</h3><address>…</address></div>
+   *       <div><h3 class="fh-invoice__label">Bill to</h3><address>…</address></div>
+   *       <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>…</dd></div><div><dt>Due</dt><dd>…</dd></div></dl>
+   *     </div>
+   *     <table class="fh-invoice__items">…</table>
+   *     <dl class="fh-invoice__totals">… <div class="fh-invoice__total">…</div></dl>
+   *     <p class="fh-invoice__sign">Rascode</p>
+   *     <footer class="fh-invoice__foot">…</footer>
+   *   </article>
+   * data-fh-scheme="light" gives paper on a dark page.
+   *   modifiers  --classic (logo centred over a rule, a small-caps title
+   *              beside the number, a quieter sheet)
+   *   knobs      --fh-invoice-width (46rem) · --fh-invoice-pad
+   *              --fh-invoice-radius · --fh-invoice-cover (8rem, cover height) */
+  .fh-invoice {
+    --_pad: var(--fh-invoice-pad, clamp(var(--fh-space-5), 6cqi, var(--fh-space-10)));
+    display: grid;
+    gap: clamp(var(--fh-space-6), 5cqi, var(--fh-space-10));
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: var(--fh-invoice-width, 46rem);
+    margin-inline: auto;
+    padding: var(--_pad);
+    container: fh-invoice / inline-size;
+    border-radius: var(--fh-invoice-radius, var(--fh-radius-lg));
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: 0 0 0 1px var(--fh-color-border), 0 2rem 4rem -2rem color-mix(in oklab, var(--fh-color-ink) 40%, transparent);
+    font-size: var(--fh-text-small);
+  }
+
+  .fh-invoice__cover {
+    display: block;
+    inline-size: 100%;
+    block-size: var(--fh-invoice-cover, 8rem);
+    object-fit: cover;
+    border-radius: calc(var(--fh-invoice-radius, var(--fh-radius-lg)) * 0.6);
+  }
+
+  .fh-invoice__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    row-gap: var(--fh-space-6);
+  }
+  .fh-invoice__logo { display: inline-flex; }
+  .fh-invoice__logo > svg {
+    inline-size: 2rem;
+    block-size: 2rem;
+    fill: currentColor;
+  }
+  .fh-invoice__number {
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .fh-invoice__title {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-family: var(--fh-font-display);
+    font-size: clamp(2.5rem, 12cqi, 4.5rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  .fh-invoice__label,
+  .fh-invoice__dates dt,
+  .fh-invoice__items th,
+  .fh-invoice__foot :is(h3, dt) {
+    margin: 0 0 var(--fh-space-2);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .fh-invoice__parties {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--fh-space-6);
+  }
+  @container fh-invoice (inline-size >= 30rem) {
+    .fh-invoice__parties { grid-template-columns: 1fr 1fr auto; }
+  }
+  .fh-invoice__parties address {
+    color: var(--fh-color-text-muted);
+    font-style: normal;
+    line-height: 1.6;
+  }
+  .fh-invoice__parties address b,
+  .fh-invoice__parties address strong {
+    color: var(--fh-color-text);
+    font-weight: 600;
+  }
+  .fh-invoice__dates {
+    display: grid;
+    gap: var(--fh-space-3);
+    margin: 0;
+  }
+  @container fh-invoice (inline-size >= 30rem) {
+    .fh-invoice__dates { text-align: end; }
+  }
+  .fh-invoice__dates dt { margin-block-end: var(--fh-space-1); }
+  .fh-invoice__dates dd { margin: 0; }
+
+  .fh-invoice__items {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .fh-invoice__items th { text-align: start; padding-block: 0 var(--fh-space-3); }
+  .fh-invoice__items :is(th, td) { padding-inline: 0; }
+  .fh-invoice__items :is(th, td):not(:first-child) { padding-inline-start: var(--fh-space-4); text-align: end; white-space: nowrap; }
+  .fh-invoice__items td {
+    padding-block: var(--fh-space-4);
+    border-block-start: 1px solid var(--fh-color-border);
+  }
+  .fh-invoice__items tbody tr:last-child td { border-block-end: 1px solid var(--fh-color-border); }
+  .fh-invoice__items td:not(:first-child) { color: var(--fh-color-text-muted); }
+  .fh-invoice__items td:last-child { color: var(--fh-color-text); font-weight: 600; }
+  .fh-invoice__items small { display: block; color: var(--fh-color-text-subtle); }
+  @container fh-invoice (inline-size < 26rem) {
+    .fh-invoice__items :is(th, td):nth-child(3) { display: none; }
+  }
+
+  .fh-invoice__totals {
+    display: grid;
+    gap: var(--fh-space-3);
+    inline-size: min(100%, 18rem);
+    margin: 0 0 0 auto;
+    font-variant-numeric: tabular-nums;
+  }
+  .fh-invoice__totals > div { display: flex; justify-content: space-between; gap: var(--fh-space-4); }
+  .fh-invoice__totals dt { color: var(--fh-color-text-muted); }
+  .fh-invoice__totals dd { margin: 0; }
+  .fh-invoice__total {
+    padding-block-start: var(--fh-space-3);
+    border-block-start: 1px solid var(--fh-color-text);
+    font-weight: 600;
+  }
+  .fh-invoice__total :is(dt, dd) { color: var(--fh-color-text); }
+
+  .fh-invoice__sign {
+    justify-self: end;
+    margin: calc(var(--fh-space-4) * -1) 0 0;
+    font-family: var(--fh-font-script);
+    font-size: clamp(1.5rem, 6cqi, 2.25rem);
+    line-height: 1;
+  }
+
+  .fh-invoice__foot {
+    display: grid;
+    gap: var(--fh-space-6);
+    color: var(--fh-color-text-muted);
+    line-height: 1.6;
+  }
+  .fh-invoice__foot dl { display: grid; gap: var(--fh-space-1); margin: 0; }
+  .fh-invoice__foot dl > div { display: flex; gap: var(--fh-space-2); }
+  .fh-invoice__foot dt { margin: 0; min-inline-size: 7rem; }
+  .fh-invoice__foot dd { margin: 0; color: var(--fh-color-text); }
+  .fh-invoice__foot p { margin: 0; }
+
+  /* —— Classic: logo centred over a rule, a small-caps title —— */
+  .fh-invoice--classic .fh-invoice__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .fh-invoice--classic .fh-invoice__logo {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    padding-block-end: var(--fh-space-6);
+    border-block-end: 1px solid var(--fh-color-border);
+    inline-size: 100%;
+    justify-content: center;
+  }
+  .fh-invoice--classic .fh-invoice__title {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: var(--fh-text-body);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .fh-invoice--classic .fh-invoice__number {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+  }
+
+  @media print {
+    .fh-invoice {
+      max-inline-size: none;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .fh-pay { display: none; }
+  }
+
+  /* —— Pay bar (INV-2) ——
+   * A floating bar for the invoice on screen: the mark, the document, the
+   * amount, its status, quick actions and Pay. Pay opens the payment panel
+   * up out of the bar (a popover anchored to it).
+   *   <div class="fh-pay fh-pay--float" data-fh-scheme="dark">
+   *     <span class="fh-pay__mark"><svg>…</svg></span>
+   *     <span class="fh-pay__doc"><b>Invoice</b><small>INV-…</small></span>
+   *     <b class="fh-pay__amount">$575</b>
+   *     <span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span>
+   *     <a class="fh-pay__icon" href="…" aria-label="Download PDF"><i class="fh-icon fh-icon--download"></i></a>
+   *     <button class="fh-button fh-button--sm" type="button" popovertarget="pay-1">Pay</button>
+   *     <div class="fh-pay__panel" id="pay-1" popover>…</div>
+   *   </div>
+   *   modifiers  --float (sticks to the bottom of its scroller, centred)
+   *   knobs      --fh-pay-panel-width (24rem) */
+  .fh-pay {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    padding: 0.375rem;
+    anchor-name: --fh-pay;
+    anchor-scope: --fh-pay;
+    border-radius: var(--fh-radius-pill);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: 0 0 0 1px var(--fh-color-border), 0 1rem 2.5rem -1rem color-mix(in oklab, var(--fh-color-ink) 60%, transparent);
+    font-size: var(--fh-text-small);
+  }
+  .fh-pay--float {
+    position: sticky;
+    inset-block-end: var(--fh-space-4);
+    z-index: 5;
+    justify-self: center;
+    margin-inline: auto;
+    inline-size: fit-content;
+  }
+
+  .fh-pay__mark {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--fh-color-text);
+    color: var(--fh-color-surface-raised);
+  }
+  .fh-pay__mark > svg { inline-size: 55%; block-size: auto; fill: currentColor; }
+
+  .fh-pay__doc {
+    display: grid;
+    padding-inline: var(--fh-space-2);
+    line-height: 1.2;
+  }
+  .fh-pay__doc small {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+  }
+  .fh-pay__amount {
+    padding-inline: var(--fh-space-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .fh-pay__icon {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--fh-color-text-muted);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .fh-pay__icon:hover { background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent); color: var(--fh-color-text); }
+  .fh-pay > .fh-button { border-radius: var(--fh-radius-pill); }
+
+  .fh-pay { max-inline-size: 100%; }
+  @container (inline-size < 30rem) {
+    .fh-pay > .fh-pay__doc,
+    .fh-pay > .fh-pay__icon { display: none; }
+  }
+
+  /* —— Payment panel ——
+   * Opens up out of the bar and sits over it. Head, the from → to route,
+   * the total with its dates, collapsible payment details, and actions. */
+  .fh-pay__panel {
+    inline-size: min(var(--fh-pay-panel-width, 24rem), calc(100vw - 2rem));
+    margin: 0;
+    padding: var(--fh-space-4);
+    border: 0;
+    border-radius: 1.5rem;
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: 0 0 0 1px var(--fh-color-border), 0 2rem 4rem -1rem color-mix(in oklab, var(--fh-color-ink) 70%, transparent);
+    font-size: var(--fh-text-small);
+  }
+  .fh-pay__panel:popover-open {
+    display: grid;
+    gap: var(--fh-space-4);
+  }
+  @supports (position-anchor: --fh-pay) {
+    .fh-pay__panel {
+      position-anchor: --fh-pay;
+      inset: auto;
+      inset-block-end: anchor(bottom);
+      justify-self: anchor-center;
+    }
+  }
+
+  .fh-pay__head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--fh-space-3);
+  }
+  .fh-pay__route {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin: 0;
+  }
+  .fh-pay__party {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    min-inline-size: 0;
+    padding: 0.25rem;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .fh-pay__party > :is(img, .fh-pay__mark) {
+    flex: none;
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .fh-pay__route > [aria-hidden] { color: var(--fh-color-text-subtle); }
+
+  .fh-pay__sum {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--fh-space-4);
+  }
+  .fh-pay__total {
+    display: grid;
+    gap: var(--fh-space-1);
+  }
+  .fh-pay__total > span,
+  .fh-pay__sum dt,
+  .fh-pay__details dt {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .fh-pay__total > b {
+    font-family: var(--fh-font-figure, var(--fh-font-display));
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .fh-pay__sum dl { display: flex; gap: var(--fh-space-4); margin: 0; text-align: end; }
+  .fh-pay__sum dd { margin: 0; font-weight: 600; }
+  .fh-pay__sum dd small { display: block; color: var(--fh-color-text-subtle); font-weight: 400; }
+
+  .fh-pay__details {
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+  }
+  .fh-pay__details > summary {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--fh-space-3) var(--fh-space-4);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    list-style: none;
+  }
+  .fh-pay__details > summary::-webkit-details-marker { display: none; }
+  .fh-pay__details > summary::after { content: "+"; }
+  .fh-pay__details[open] > summary::after { content: "−"; }
+  .fh-pay__details dl {
+    display: grid;
+    gap: var(--fh-space-3);
+    margin: 0;
+    padding: 0 var(--fh-space-4) var(--fh-space-4);
+  }
+  .fh-pay__details dd { margin: var(--fh-space-1) 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .fh-pay__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+  }
+  .fh-pay__actions > .fh-button {
+    flex: 1;
+    justify-content: center;
+    border-radius: var(--fh-radius-pill);
+  }
+
+  /* —— Motion: the panel grows up out of the bar —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-pay__panel {
+      transform-origin: 50% 100%;
+      transition:
+        opacity 0.25s var(--fh-ease-out),
+        scale 0.35s var(--fh-ease-out),
+        translate 0.35s var(--fh-ease-out),
+        overlay 0.35s allow-discrete,
+        display 0.35s allow-discrete;
+    }
+    .fh-pay__panel:not(:popover-open) {
+      opacity: 0;
+      scale: 0.6 0.2;
+      translate: 0 1rem;
+    }
+    @starting-style {
+      .fh-pay__panel:popover-open {
+        opacity: 0;
+        scale: 0.6 0.2;
+        translate: 0 1rem;
+      }
+    }
+  }
+}

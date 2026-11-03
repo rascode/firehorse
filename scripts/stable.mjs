@@ -89,6 +89,8 @@ const head = ({ title, description, path, type = "website", image, jsonld }) => 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="design-system" content="firehorse@${pkg.version}">
+<link rel="design-system" href="https://firehorse.rascode.dev/index.json">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <meta name="theme-color" content="#161616">

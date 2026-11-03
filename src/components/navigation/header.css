@@ -1,0 +1,143 @@
+/*
+ * Firehorse — Header
+ * components/navigation · layer fh.components
+ */
+
+/*
+ * Firehorse — site chrome: header, nav, drawer, mega panel, footer
+ * ---------------------------------------------------------------
+ * The header switches between full nav and menu button by querying
+ * its own frame width — not the viewport — so it behaves the same in
+ * a full page, a sidebar preview, or an iframe.
+ *
+ * Menus are native popovers: they open on click, close on Esc and
+ * light-dismiss, and need no JavaScript.
+ */
+
+@layer fh.components {
+  /* —— Header —— */
+  .fh-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--fh-z-sticky);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 88%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-rule);
+
+    /* While a mega panel or the drawer is open, the header goes solid. */
+    :root:has(:is(.fh-mega, .fh-drawer):popover-open) & {
+      background-color: var(--fh-color-surface-raised);
+      backdrop-filter: none;
+      border-block-end-color: transparent;
+    }
+  }
+
+  .fh-header__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "brand nav actions";
+    align-items: center;
+    gap: var(--fh-space-5);
+    min-block-size: var(--fh-header-height);
+  }
+
+  .fh-header__brand {
+    grid-area: brand;
+    justify-self: start;
+    /* A long brand (wordmark + tag) may never push the menu button out. */
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    color: var(--fh-color-text-strong);
+    font-weight: var(--fh-weight-heavy);
+    font-size: 1.25rem;
+    letter-spacing: var(--fh-tracking-tight);
+    text-decoration: none;
+
+    & :is(img, svg) {
+      block-size: 1.55rem;
+      inline-size: auto;
+    }
+  }
+
+  .fh-header__actions {
+    grid-area: actions;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+  }
+
+  .fh-header__toggle {
+    grid-area: toggle;
+    display: none;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+
+    /* two lines → × */
+    &::before,
+    &::after {
+      content: "";
+      grid-area: 1 / 1;
+      inline-size: 1.15rem;
+      block-size: 1.5px;
+      background-color: currentColor;
+      transition:
+        translate var(--fh-duration-base) var(--fh-ease-out),
+        rotate var(--fh-duration-base) var(--fh-ease-out);
+    }
+
+    &::before {
+      translate: 0 -0.28rem;
+    }
+
+    &::after {
+      translate: 0 0.28rem;
+    }
+
+    &:hover {
+      color: var(--fh-color-accent-text);
+    }
+
+    :root:has(.fh-drawer:popover-open) &::before {
+      translate: 0 0;
+      rotate: 45deg;
+    }
+
+    :root:has(.fh-drawer:popover-open) &::after {
+      translate: 0 0;
+      rotate: -45deg;
+    }
+  }
+
+  /* Header collapses by its own width. */
+  @container fh-frame (inline-size < 60rem) {
+    .fh-header__bar {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-areas: "brand actions toggle";
+      gap: var(--fh-space-3);
+    }
+
+    .fh-header__bar > .fh-nav {
+      display: none;
+    }
+
+    .fh-header__toggle {
+      display: grid;
+    }
+  }
+
+  @container fh-frame (inline-size < 26rem) {
+    .fh-header__actions .fh-button:not(:first-child) {
+      display: none;
+    }
+  }
+
+}

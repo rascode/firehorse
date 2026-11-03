@@ -1,0 +1,80 @@
+/*
+ * Firehorse — Waveform (PLY)
+ * components/audio · layer fh.components · docs /audio/#PLY
+ */
+
+@layer fh.components {
+  /* —— Seekable bar waveform ——
+   *   <div class="fh-wave" data-fh-wave data-peaks="0.3,0.6,…" role="slider" tabindex="0"></div>
+   * The script draws the bars as a mask (data-fh-wave-mask) so one
+   * gradient colors the played and unplayed parts with a crisp split. */
+  .fh-wave {
+    --_h: var(--fh-wave-height, 3rem);
+    --_played: var(--fh-tone, var(--fh-color-accent));
+    --_rest: color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+
+    position: relative;
+    block-size: var(--_h);
+    min-inline-size: 0;
+    cursor: pointer;
+    touch-action: none;
+    border-radius: var(--fh-radius-sm);
+
+    & > .fh-wave__bars {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--_played) calc(var(--p) * 100%), var(--_rest) 0);
+      mask: var(--fh-wave-mask, linear-gradient(transparent 46%, black 46% 54%, transparent 54%)) 0 0 / 100% 100% no-repeat;
+    }
+    /* Hover preview shades the bars up to the pointer. */
+    & > .fh-wave__hover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, color-mix(in oklab, var(--fh-color-text) 22%, transparent) calc(var(--hover, 0) * 100%), transparent 0);
+      mask: var(--fh-wave-mask, linear-gradient(transparent 46%, black 46% 54%, transparent 54%)) 0 0 / 100% 100% no-repeat;
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast);
+      pointer-events: none;
+    }
+    &:hover > .fh-wave__hover { opacity: 1; }
+    & > .fh-wave__head {
+      position: absolute;
+      inset-block: -2px;
+      inset-inline-start: calc(var(--p) * 100%);
+      inline-size: 2px;
+      margin-inline-start: -1px;
+      border-radius: 1px;
+      background-color: var(--fh-color-text);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
+      opacity: 0;
+      transition: opacity var(--fh-duration-base);
+      pointer-events: none;
+    }
+    &:is(:hover, :focus-visible, [data-playing]) > .fh-wave__head { opacity: 1; }
+    & > .fh-wave__tip {
+      position: absolute;
+      inset-block-end: calc(100% + 0.35rem);
+      inset-inline-start: calc(var(--hover, 0) * 100%);
+      translate: -50% 0;
+      padding: 0.1rem 0.4rem;
+      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--fh-color-surface-raised);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast);
+      pointer-events: none;
+    }
+    &:hover > .fh-wave__tip { opacity: 1; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 4px; }
+    &[data-loading] > .fh-wave__bars { animation: fh-wave-load 1.2s ease-in-out infinite alternate; }
+  }
+  .fh-wave--sm { --fh-wave-height: 1.75rem; }
+  .fh-wave--lg { --fh-wave-height: 5rem; }
+  @keyframes fh-wave-load { from { opacity: 0.35; } to { opacity: 0.8; } }
+
+}

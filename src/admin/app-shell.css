@@ -1,0 +1,281 @@
+/*
+ * Firehorse — App shell (ADM-SHL)
+ * admin · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— App shell (ADM-SHL) ——————————————————————————————————————
+   *   <div class="fh-app" data-fh-env="local">
+   *     <aside class="fh-app__side"><div class="fh-app__side-inner">
+   *       <a class="fh-app__brand" href="/">…</a>
+   *       <section class="fh-app__focus" aria-label="Now and next">…</section>
+   *       <nav class="fh-sidenav" aria-label="Helm">…</nav>
+   *       <div class="fh-app__side-foot">…</div>
+   *     </div></aside>
+   *     <div class="fh-app__main">
+   *       <header class="fh-app__bar">…</header>
+   *       <main class="fh-app__content">…</main>
+   *     </div>
+   *   </div>
+   * Wide: a sticky full-height sidebar beside the work area. When the
+   * work area would drop under 34rem the sidebar wraps on top and its
+   * navigation runs in a row (the sidebar's own width tells it which).
+   * data-fh-env paints the environment band along the top edge. */
+  .fh-app {
+    --fh-app-side: 15rem;
+    --fh-app-pad: clamp(var(--fh-space-4), 3cqi, var(--fh-space-8));
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-block-size: 100dvh;
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-color-text);
+    container: fh-app / inline-size;
+  }
+
+  .fh-app__side {
+    flex: 1 1 var(--fh-app-side);
+    position: sticky;
+    inset-block-start: 0;
+    max-block-size: 100dvh;
+    overflow: auto;
+    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: var(--fh-color-surface);
+    container: fh-app-side / inline-size;
+  }
+
+  .fh-app__side-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fh-space-6);
+    min-block-size: 100dvh;
+    padding: var(--fh-space-5) var(--fh-space-3);
+  }
+
+  .fh-app__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    padding-inline: var(--fh-space-3);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-decoration: none;
+    text-transform: uppercase;
+
+    & b { font-weight: var(--fh-weight-medium); }
+    & span { color: var(--fh-color-text-muted); }
+  }
+
+  /* —— Focus: what's in progress and what's next, under the brand ——
+   *   <section class="fh-app__focus" aria-label="Now and next">
+   *     <a class="fh-app__focus-item" data-tone="amber" href="…">
+   *       <span class="fh-app__focus-label"><span class="fh-dot fh-dot--live"></span>Now</span>
+   *       <span class="fh-app__focus-title">Build Applications</span>
+   *     </a>
+   *     <p class="fh-app__focus-item" data-tone="violet">…</p>   (nothing to open: a <p>)
+   *   </section>
+   * Titles run to two lines. Hidden when the sidebar wraps into a row. */
+  .fh-app__focus {
+    display: grid;
+    gap: var(--fh-space-1);
+    margin: 0;
+  }
+
+  .fh-app__focus-item {
+    display: grid;
+    gap: var(--fh-space-1);
+    margin: 0;
+    padding: var(--fh-space-2) var(--fh-space-3);
+    border-radius: var(--fh-radius-md);
+    color: var(--fh-color-text);
+    text-decoration: none;
+
+    &:is(a):hover { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+    &:is(a):focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+
+  .fh-app__focus-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    color: var(--fh-tone, var(--fh-color-text-subtle));
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-app__focus-title {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-heading);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    .fh-app__focus-item:is(p) & { color: var(--fh-color-text-subtle); font-weight: var(--fh-weight-regular); }
+  }
+
+  .fh-app__side-foot {
+    margin-block-start: auto;
+    padding-inline: var(--fh-space-3);
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+  }
+
+  /* When the sidebar wraps on top (work area under 34rem beside a 15rem
+   * sidebar: 49rem) it scrolls away with the page instead of sticking,
+   * so it never peeks out under the bar or a pinned dock. */
+  @container fh-app (inline-size < 49rem) {
+    .fh-app__side {
+      position: static;
+      max-block-size: none;
+      overflow: visible;
+      border-inline-end: 0;
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  /* Sidebar wrapped on top (it is far wider than a sidebar): one row. */
+  @container fh-app-side (inline-size >= 18rem) {
+    .fh-app__side-inner {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      min-block-size: 0;
+      padding-block: var(--fh-space-3);
+    }
+
+    .fh-app__side-inner > .fh-sidenav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--fh-space-1) var(--fh-space-4);
+
+      & > section { display: flex; flex-wrap: wrap; }
+      & .fh-label { display: none; }
+    }
+
+    .fh-app__side-foot,
+    .fh-app__focus { display: none; }
+  }
+
+  /* —— Rail: the sidebar collapsed to icons (ADM-SHL) ——
+   *   <div class="fh-app" data-fh-side="rail">…
+   *   <div class="fh-app__side-head">
+   *     <a class="fh-app__brand">…</a>
+   *     <button class="fh-app__side-toggle" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left"></i></button>
+   *   </div>
+   * Nav text sits in .fh-sidenav__label and hides in the rail; links carry
+   * title= for a tooltip. The rail only applies while the sidebar stands
+   * beside the work area: wrapped on top it stays a full row. */
+  .fh-app__side-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2);
+  }
+
+  .fh-app__side-toggle {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: 1.9rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-subtle);
+    cursor: pointer;
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); color: var(--fh-color-text); }
+    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 1px; }
+  }
+
+  .fh-app[data-fh-side="rail"] { --fh-app-side: 4.25rem; }
+  .fh-app[data-fh-side="rail"] > .fh-app__side { flex: 0 0 var(--fh-app-side); }
+
+  /* Only a rail is this narrow: icons only, centred. */
+  @container fh-app-side (inline-size < 8rem) {
+    .fh-app__side-inner { align-items: center; padding-inline: var(--fh-space-2); }
+    .fh-app__side-head { flex-direction: column; }
+    .fh-app__brand { padding-inline: 0; & > :not(.fh-icon) { display: none; } }
+    .fh-app__focus { display: none; }
+    .fh-app__side-inner > .fh-sidenav {
+      min-inline-size: 0;
+      justify-items: center;
+
+      & .fh-label, & .fh-badge, & .fh-sidenav__label { display: none; }
+      & a { justify-content: center; inline-size: 2.6rem; padding-inline: 0; }
+    }
+    .fh-app__side-foot { padding-inline: 0; }
+  }
+
+  /* Wrapped on top, the toggle has nothing to collapse. */
+  @container fh-app-side (inline-size >= 18rem) {
+    .fh-app__side-toggle { display: none; }
+  }
+
+  .fh-app__main {
+    flex: 999 1 34rem;
+    min-inline-size: min(34rem, 100%);
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100dvh;
+  }
+
+  .fh-app__bar {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    min-block-size: 3.5rem;
+    padding-inline: var(--fh-app-pad);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 86%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+  }
+
+  .fh-app__title {
+    margin: 0;
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-medium);
+  }
+
+  .fh-app__bar-end {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin-inline-start: auto;
+  }
+
+  .fh-app__content {
+    flex: 1;
+    padding: var(--fh-app-pad);
+  }
+
+  /* —— Environment band (ADM-ENV) ——
+   * A thin rule in the environment's colour along the top of the app, so
+   * where you are is visible from any screen. Production gets a thicker one. */
+  .fh-app[data-fh-env] {
+    border-block-start: 3px solid var(--fh-env-tone);
+  }
+
+  .fh-app[data-fh-env="production"] {
+    border-block-start-width: 4px;
+  }
+
+  [data-fh-env] {
+    --fh-env-tone: var(--fh-color-text-subtle);
+  }
+  [data-fh-env="local"] { --fh-env-tone: var(--fh-tone-lime); }
+  [data-fh-env="staging"],
+  [data-fh-env="preview"] { --fh-env-tone: var(--fh-tone-amber); }
+  [data-fh-env="production"] { --fh-env-tone: var(--fh-color-danger); }
+
+}

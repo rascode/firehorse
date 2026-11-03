@@ -1,0 +1,82 @@
+/*
+ * Firehorse — Base (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  .fh-canvas {
+    --fh-canvas-w: 1200;
+    --fh-canvas-h: 630;
+    --fh-canvas-safe-t: 0;
+    --fh-canvas-safe-r: 0;
+    --fh-canvas-safe-b: 0;
+    --fh-canvas-safe-l: 0;
+    --fh-canvas-pad: 72;
+    --fh-canvas-frame: 24;
+    --fh-canvas-grid: 32;
+    /* Grid lines: barely there by default. Set to transparent to drop the grid. */
+    --fh-canvas-grid-color: color-mix(in oklab, var(--fh-color-scaffold) 12%, transparent);
+    --fh-canvas-title: 84;
+    --fh-canvas-sub: 30;
+    --fh-canvas-small: 20;
+    --fh-canvas-measure: 15ch;
+    --fh-canvas-art: none;
+    /* one native pixel at the drawn size (cqi resolves against this canvas) */
+    --_u: calc(100cqi / var(--fh-canvas-w));
+    --_hair: max(1px, var(--_u));
+    --_guide: none;
+
+    position: relative;
+    container: fh-canvas / inline-size;
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: var(--fh-canvas-w) / var(--fh-canvas-h);
+    margin: 0;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-sans);
+    line-height: var(--fh-leading-snug);
+    text-align: start;
+
+    /* Blueprint sheet: tone glow, scaffold grid, optional art. Guides paint on top. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        var(--_guide),
+        radial-gradient(ellipse 75% 95% at 92% 0%, color-mix(in oklab, var(--fh-tone) 30%, transparent), transparent 70%),
+        linear-gradient(var(--fh-canvas-grid-color) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid) * var(--_u)) calc(var(--fh-canvas-grid) * var(--_u)),
+        linear-gradient(90deg, var(--fh-canvas-grid-color) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid) * var(--_u)) calc(var(--fh-canvas-grid) * var(--_u)),
+        var(--fh-canvas-art) center / cover no-repeat;
+      background-color: var(--fh-color-canvas);
+    }
+
+    /* Etched frame */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: calc(var(--fh-canvas-frame) * var(--_u));
+      z-index: -1;
+      pointer-events: none;
+      border: var(--_hair) dashed var(--fh-color-etch);
+    }
+  }
+
+  .fh-canvas--plain {
+    &::before { background: var(--_guide), var(--fh-canvas-art) center / cover no-repeat; background-color: var(--fh-color-canvas); }
+    &::after { content: none; }
+  }
+
+  /* Real size, for export. */
+  .fh-canvas--native {
+    flex: none;
+    inline-size: calc(var(--fh-canvas-w) * 1px);
+    max-inline-size: none;
+  }
+
+}

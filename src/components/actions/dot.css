@@ -1,0 +1,38 @@
+/*
+ * Firehorse — Dot (MRK)
+ * components/actions · layer fh.components · docs /components/actions/#MRK
+ */
+
+@layer fh.components {
+  /* —— Dot ——
+   * A 0.4rem tone dot. `fh-dot--live` adds the Doppler pulse. */
+  .fh-dot {
+    display: inline-block;
+    flex: none;
+    inline-size: var(--fh-dot-size, 0.4rem);
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    background-color: var(--fh-tone);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-tone) 35%, transparent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-dot--live {
+      animation: fh-doppler var(--fh-duration-pulse) ease-out infinite;
+    }
+  }
+
+  @keyframes fh-doppler {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 1.25rem transparent;
+      opacity: 0.85;
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+
+}

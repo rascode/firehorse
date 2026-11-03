@@ -1,0 +1,107 @@
+/*
+ * Firehorse — Overlay nav
+ * components/navigation · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Overlay navigation ————————————————————————————————————
+   * A full-screen menu with big links that cascade in.
+   *   <button class="fh-burger" popovertarget="site-nav" aria-label="Menu"><span></span></button>
+   *   <nav class="fh-overlay-nav" id="site-nav" popover>
+   *     <ol><li><a href="/work">Work</a></li>…</ol>
+   *     <div class="fh-overlay-nav__aside">…</div>
+   *   </nav>
+   */
+  .fh-overlay-nav {
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100dvh;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: clamp(var(--fh-space-8), 8vh, var(--fh-space-20)) var(--fh-page-margin, var(--fh-space-6));
+    border: 0;
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 96%, transparent);
+    color: var(--fh-color-text);
+    backdrop-filter: blur(var(--fh-blur-chrome, 12px));
+    opacity: 0;
+    transition: opacity var(--fh-duration-base) var(--fh-ease-out), overlay var(--fh-duration-base) allow-discrete, display var(--fh-duration-base) allow-discrete;
+    container: fh-overlay / inline-size;
+
+    &:popover-open {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: center;
+      gap: var(--fh-space-10);
+      opacity: 1;
+      @starting-style { opacity: 0; }
+    }
+
+    & ol {
+      display: grid;
+      gap: var(--fh-space-1);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: fh-onav;
+    }
+
+    & li {
+      counter-increment: fh-onav;
+      opacity: 0;
+      translate: 0 0.75rem;
+      transition: opacity var(--fh-duration-slow, 380ms) var(--fh-ease-out), translate var(--fh-duration-slow, 380ms) var(--fh-ease-out);
+    }
+    &:popover-open li { opacity: 1; translate: 0 0; @starting-style { opacity: 0; translate: 0 0.75rem; } }
+    & li:nth-child(2) { transition-delay: 40ms; }
+    & li:nth-child(3) { transition-delay: 80ms; }
+    & li:nth-child(4) { transition-delay: 120ms; }
+    & li:nth-child(5) { transition-delay: 160ms; }
+    & li:nth-child(6) { transition-delay: 200ms; }
+    & li:nth-child(n + 7) { transition-delay: 240ms; }
+
+    & ol a {
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--fh-space-4);
+      color: var(--fh-color-text);
+      font-size: clamp(2.25rem, 8cqi, 5.5rem);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: -0.045em;
+      line-height: 1;
+      text-decoration: none;
+      transition: color var(--fh-duration-fast);
+
+      &::before {
+        content: counter(fh-onav, decimal-leading-zero);
+        color: var(--fh-tone);
+        font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-label);
+        letter-spacing: var(--fh-tracking-wider);
+      }
+      &:hover,
+      &[aria-current="page"] { color: var(--fh-tone); }
+    }
+
+    /* Dim the others while hovering one. */
+    & ol:has(a:hover) a:not(:hover) { color: color-mix(in oklab, var(--fh-color-text) 35%, transparent); }
+  }
+
+  @container fh-overlay (inline-size >= 56rem) {
+    .fh-overlay-nav:popover-open { grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr); align-items: end; }
+  }
+
+  .fh-overlay-nav__aside {
+    display: grid;
+    gap: var(--fh-space-4);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+  }
+
+  .fh-overlay-nav__close {
+    position: absolute;
+    inset-block-start: var(--fh-space-4);
+    inset-inline-end: var(--fh-page-margin, var(--fh-space-4));
+  }
+
+}

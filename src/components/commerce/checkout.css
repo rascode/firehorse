@@ -1,0 +1,36 @@
+/*
+ * Firehorse — Checkout (CKO)
+ * components/commerce · layer fh.components · docs /commerce/#CKO
+ */
+
+@layer fh.components {
+  /* —— Checkout layout —— */
+  .fh-checkout {
+    display: grid;
+    gap: var(--fh-space-8);
+    container: fh-checkout / inline-size;
+  }
+  @container (inline-size >= 54rem) {
+    .fh-checkout { grid-template-columns: minmax(0, 1.25fr) minmax(19rem, 0.75fr); align-items: start; }
+    .fh-checkout__aside { position: sticky; inset-block-start: var(--fh-space-6); }
+  }
+  .fh-checkout__aside {
+    display: grid;
+    gap: var(--fh-space-4);
+    padding: var(--fh-space-5);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, var(--fh-color-surface-sunken));
+    box-shadow: var(--fh-card-shadow, none);
+  }
+  .fh-checkout__step {
+    display: grid;
+    gap: var(--fh-space-4);
+    padding-block-end: var(--fh-space-6);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > h3 { display: flex; align-items: center; gap: var(--fh-space-3); margin: 0; font-size: var(--fh-text-body); font-weight: var(--fh-weight-medium); letter-spacing: -0.01em; }
+    & > h3 > span { display: grid; place-items: center; inline-size: 1.6rem; aspect-ratio: 1; border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 60%, transparent); border-radius: var(--fh-radius-sm); color: var(--fh-tone, var(--fh-color-text)); font-family: var(--fh-font-mono); font-size: 0.68rem; }
+  }
+
+}

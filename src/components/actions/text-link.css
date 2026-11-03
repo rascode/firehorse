@@ -1,0 +1,60 @@
+/*
+ * Firehorse — Text link (ACT)
+ * components/actions · layer fh.components · docs /components/actions/#ACT
+ */
+
+@layer fh.components {
+  /* —— Text link —— */
+  .fh-link {
+    color: var(--fh-color-text);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: var(--fh-color-etch);
+    transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  .fh-link--quiet {
+    color: var(--fh-color-text-muted);
+    text-decoration-line: none;
+
+    &:hover {
+      color: var(--fh-color-text);
+    }
+  }
+
+  /*
+   * Slot-machine label roll. The same copy scrolls up and a duplicate
+   * enters from below. No extra markup: the duplicate is a text
+   * shadow, the window is a clip-path.
+   *
+   *   <a class="fh-button"><span class="fh-roll">Book a call</span></a>
+   */
+  .fh-roll {
+    --_line: 1.2em;
+
+    display: inline-block;
+    line-height: var(--_line);
+    text-shadow: 0 var(--_line) currentColor;
+    clip-path: inset(0 -0.25em 0 -0.25em);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-roll {
+      transition:
+        translate var(--fh-duration-slow) var(--fh-ease-out),
+        clip-path var(--fh-duration-slow) var(--fh-ease-out);
+    }
+
+    :is(a, button, .fh-button, .fh-action):is(:hover, :focus-visible) > .fh-roll,
+    :is(a, button):is(:hover, :focus-visible) .fh-roll {
+      translate: 0 calc(-1 * var(--_line));
+      clip-path: inset(var(--_line) -0.25em calc(-1 * var(--_line)) -0.25em);
+    }
+  }
+
+}

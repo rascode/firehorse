@@ -1,0 +1,103 @@
+/*
+ * Firehorse — Stepper (NAV)
+ * components/navigation · layer fh.components · docs /components/navigation/#NAV
+ */
+
+@layer fh.components {
+  /* —— Stepper ——
+   * Multi-step flows (checkout, onboarding, intake).
+   *   <ol class="fh-stepper">
+   *     <li data-state="done">Details</li>
+   *     <li aria-current="step">Scope</li>
+   *     <li>Review</li>
+   *   </ol> */
+  .fh-stepper {
+    display: flex;
+    gap: var(--fh-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fh-stepper;
+
+    & > li {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      flex: 1 1 0;
+      min-inline-size: 0;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      white-space: nowrap;
+      counter-increment: fh-stepper;
+
+      &::before {
+        content: counter(fh-stepper);
+        display: grid;
+        place-items: center;
+        flex: none;
+        inline-size: 1.6rem;
+        aspect-ratio: 1;
+        border: var(--fh-border-thick) dashed var(--fh-color-etch);
+        border-radius: var(--fh-radius-round);
+        font-size: 0.62rem;
+      }
+
+      /* connector */
+      &:not(:last-child)::after {
+        content: "";
+        flex: 1;
+        min-inline-size: 1rem;
+        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      }
+
+      &[aria-current] {
+        color: var(--fh-color-text);
+
+        &::before {
+          border-style: solid;
+          border-color: var(--fh-tone);
+          color: var(--fh-tone);
+        }
+      }
+
+      &[data-state="done"] {
+        color: var(--fh-color-text-muted);
+
+        &::before {
+          content: "✓";
+          border-style: solid;
+          border-color: var(--fh-tone);
+          background-color: var(--fh-tone);
+          color: var(--fh-color-on-tone);
+          font-weight: var(--fh-weight-heavy);
+        }
+
+        &::after {
+          border-block-start-style: solid;
+          border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
+        }
+      }
+    }
+  }
+
+  /* Narrow: only the current step keeps its label. */
+  @container (inline-size < 30rem) {
+    .fh-stepper > li:not([aria-current]) {
+      flex: 0 1 auto;
+      font-size: 0;
+      letter-spacing: 0;
+
+      &::before {
+        font-size: 0.62rem;
+      }
+    }
+
+    .fh-stepper > li:not([aria-current]):not(:last-child)::after {
+      min-inline-size: 0.75rem;
+    }
+  }
+
+}

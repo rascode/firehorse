@@ -31,6 +31,9 @@ const entry = join(src, "firehorse.css");
 sizes["firehorse.css"] = build(entry, join(dist, "firehorse.css"), modern, false);
 sizes["firehorse.min.css"] = build(entry, join(dist, "firehorse.min.css"), modern, true);
 sizes["firehorse.compat.min.css"] = build(entry, join(dist, "firehorse.compat.min.css"), compat, true);
+// Admin category: operator UI, shipped as its own stylesheet (load after firehorse.css).
+sizes["admin.css"] = build(join(src, "admin/admin.css"), join(dist, "admin.css"), modern, false);
+sizes["admin.min.css"] = build(join(src, "admin/admin.css"), join(dist, "admin.min.css"), modern, true);
 // Optional icon set, shipped as its own stylesheet.
 sizes["icons.css"] = build(join(src, "icons/icons.css"), join(dist, "icons.css"), modern, true);
 writeFileSync(join(dist, "icons.json"), readFileSync(join(src, "icons/icons.json")));

@@ -1,0 +1,52 @@
+/*
+ * Firehorse — Product gallery (PDP)
+ * components/commerce · layer fh.components · docs /commerce/#PDP
+ */
+
+@layer fh.components {
+  /* —— Product gallery: scroll-snap main image + thumbnail links —— */
+  .fh-gallery {
+    display: grid;
+    gap: var(--fh-space-3);
+    min-inline-size: 0;
+  }
+  .fh-gallery__main {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background:
+      radial-gradient(60% 50% at 50% 48%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 16%, transparent), transparent 72%),
+      repeating-linear-gradient(90deg, var(--_grid) 0 1px, transparent 1px 3rem),
+      repeating-linear-gradient(0deg, var(--_grid) 0 1px, transparent 1px 3rem),
+      var(--_tile);
+
+    & > * { scroll-snap-align: start; aspect-ratio: var(--fh-product-ratio, 4 / 5); overflow: hidden; }
+    & > * > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+  }
+  .fh-gallery__thumbs {
+    display: flex;
+    gap: var(--fh-space-2);
+    overflow-x: auto;
+
+    & > a {
+      flex: 0 0 4rem;
+      aspect-ratio: var(--fh-product-ratio, 4 / 5);
+      overflow: hidden;
+      border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--_tile);
+      opacity: 0.6;
+      outline: var(--fh-border-thin) solid transparent;
+      transition: opacity var(--fh-duration-fast);
+
+      &:is(:hover, [aria-current="true"]) { opacity: 1; border-color: var(--fh-tone, var(--fh-color-text)); border-style: solid; }
+      & > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+    }
+  }
+
+}

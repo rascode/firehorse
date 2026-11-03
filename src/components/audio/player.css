@@ -1,0 +1,154 @@
+/*
+ * Firehorse — Player (PLY)
+ * components/audio · layer fh.components · docs /audio/#PLY
+ */
+
+/* —— Shared registered properties so progress can animate smoothly —— */
+
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --level {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer fh.components {
+  /* —— Player shell ——
+   *   <div class="fh-player" data-fh-player data-tone="sky">
+   *     <audio src="…" preload="metadata" controls></audio>
+   *     <figure class="fh-player__art"><img …></figure>
+   *     <div class="fh-player__meta">…</div>
+   *     <button class="fh-play" data-fh-play aria-label="Play"></button>
+   *     <div class="fh-wave" data-fh-wave></div>
+   *     <p class="fh-player__time"><span data-fh-time>0:00</span><span data-fh-duration>0:00</span></p>
+   *     <div class="fh-player__tools">…volume, speed, loop…</div>
+   *   </div> */
+  .fh-player {
+    --_art: 4.5rem;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "art meta"
+      "play wave"
+      "tools tools";
+    gap: var(--fh-space-3) var(--fh-space-4);
+    align-items: center;
+    padding: var(--fh-space-4);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    box-shadow: var(--fh-card-shadow, none);
+    backdrop-filter: var(--fh-card-backdrop, none);
+    container: fh-player / inline-size;
+
+    /* The native element is the no-JS fallback. */
+    & > audio { grid-column: 1 / -1; inline-size: 100%; }
+    &[data-ready] > audio { display: none; }
+    &:not([data-ready]) > :is(.fh-play, .fh-wave, .fh-player__time, .fh-player__tools) { display: none; }
+  }
+
+  /* The player's own layout follows its slot (nearest container);
+   * pieces inside follow the player itself (fh-player). */
+  @container (inline-size >= 34rem) {
+    .fh-player {
+      grid-template-columns: auto auto minmax(0, 1fr) auto;
+      grid-template-areas:
+        "art meta meta meta"
+        "art play wave time"
+        "tools tools tools tools";
+    }
+  }
+
+  .fh-player__art {
+    grid-area: art;
+    inline-size: var(--_art);
+    aspect-ratio: 1;
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: calc(var(--fh-card-radius, 0px) * 0.6 + var(--fh-radius-sm));
+    background:
+      radial-gradient(70% 60% at 50% 45%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 30%, transparent), transparent 75%),
+      var(--fh-color-surface-sunken);
+
+    & > :is(img, svg) { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+  }
+
+  .fh-player__meta { grid-area: meta; display: grid; gap: var(--fh-space-1); min-inline-size: 0; }
+  .fh-player__kicker {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin: 0;
+    color: var(--fh-tone, var(--fh-color-text-subtle));
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+  .fh-player__title {
+    margin: 0;
+    overflow: hidden;
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: -0.02em;
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .fh-player__by { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+
+  .fh-player > .fh-play { grid-area: play; }
+  .fh-player > .fh-wave { grid-area: wave; }
+  .fh-player__time {
+    grid-area: time;
+    display: flex;
+    gap: var(--fh-space-1);
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    & > :first-child { color: var(--fh-color-text); }
+    & > * + *::before { content: "/ "; color: var(--fh-color-text-subtle); }
+  }
+  .fh-player__tools {
+    grid-area: tools;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2) var(--fh-space-3);
+  }
+  @container (inline-size < 34rem) {
+    .fh-player:not(.fh-player--bar) { grid-template-areas: "art meta" "play wave" ". time" "tools tools"; }
+    .fh-player:not(.fh-player--bar) > .fh-player__time { justify-self: end; margin-block-start: calc(var(--fh-space-2) * -1); }
+  }
+  @container fh-player (inline-size >= 34rem) {
+    .fh-player__tools { justify-content: end; }
+  }
+
+  /* Bar layout: one row, art + play + wave + time — for docks and lists. */
+  .fh-player.fh-player--bar {
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "art play wave time tools";
+    padding: var(--fh-space-2) var(--fh-space-3);
+    --_art: 2.75rem;
+
+    & .fh-player__meta { display: none; }
+    & .fh-wave { --fh-wave-height: 2.25rem; }
+  }
+  @container (inline-size < 30rem) {
+    .fh-player--bar { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "play wave time"; }
+    .fh-player--bar > :is(.fh-player__art, .fh-player__tools) { display: none; }
+  }
+
+}

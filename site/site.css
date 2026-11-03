@@ -4,6 +4,17 @@
  * documentation chrome only; they are not part of the system.
  */
 
+/* Geist Serif (Vercel, SIL OFL 1.1; see fonts/GEIST-OFL.txt): the display face
+   of the Lipizzaner theme. Self-hosted until it lands on Google Fonts. */
+@font-face {
+  font-family: "Geist Serif";
+  src: url("/fonts/GeistSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 /* —— Scheme: dark-first, honors an explicit host theme and the
  *    in-page switch (which always wins). —— */
 :root { color-scheme: dark; }
@@ -43,11 +54,13 @@ body::before {
   text-decoration: none;
 }
 .site-mark__bar { color: var(--fh-color-accent); }
-/* Header logo: the wordmark, with the version tag (EYE-17) to its right. */
+/* Header logo: the wordmark, with the version tag (EYE-5.1) to its right. */
 .site-mark--tagged { display: inline-flex; align-items: center; gap: var(--fh-space-3); font-size: 1.2rem; line-height: 1; }
 .site-mark--tagged .site-mark__word { display: inline-flex; align-items: baseline; gap: 0.05em; }
 .site-mark--tagged .site-mark__tag { flex: none; inline-size: max-content; max-inline-size: none; }
 .site-mark__tag { letter-spacing: var(--fh-tracking-wider); white-space: nowrap; }
+/* Narrow headers: the tag drops its "Premium design system" segment and keeps the version, so the menu button stays on screen. */
+@container fh-frame (inline-size < 25rem) { .site-mark--tagged .site-mark__tag .fh-eyebrow-pill__index { display: none; } }
 .site-mark__sub {
   margin-inline-start: var(--fh-space-2);
   padding: 0.12rem 0.4rem;
@@ -82,7 +95,7 @@ body::before {
 .site-scheme > label { padding: 0.38rem 0.6rem; font-size: 0.58rem; }
 
 /* —— Hero —— */
-/* The meta pill (EYE-18, segmented): "No JavaScript required" shortens to
+/* The meta pill (EYE-5.2, segmented): "No JavaScript required" shortens to
    "No JS" when the hero is too narrow to hold the full line. */
 .site-hero__meta-short { display: none; }
 @container fh-frame (inline-size < 30rem) {
@@ -120,26 +133,13 @@ body::before {
   font-style: normal;
   color: var(--fh-color-text-muted);
 }
-.site-install {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--fh-space-3);
-  max-inline-size: 100%;
-  padding: 0.45rem 0.45rem 0.45rem var(--fh-space-4);
-  border: 1px dashed var(--fh-color-etch);
-  border-radius: var(--fh-radius-sm);
-  font-family: var(--fh-font-mono);
-  font-size: var(--fh-text-caption);
-  color: var(--fh-color-text);
-}
 /* —— Hero intro ——
  * Plays once on load, in order: the horse draws in (see Hero backdrop),
- * then the title, then the buttons and the install bar, then the
+ * then the title, then the buttons, then the
  * descriptions (eyebrow, lede) and the facts. Opacity and transform only. */
 @media (prefers-reduced-motion: no-preference) {
   .site-hero .fh-display,
   .site-hero .fh-hero__actions,
-  .site-hero .site-install,
   .site-hero .fh-eyebrow-pill,
   .site-hero .fh-lede,
   .site-hero .site-facts {
@@ -149,7 +149,6 @@ body::before {
    * a quarter second on any connection; only the backdrop waits for fh-ready. */
   .site-hero .fh-display { --_intro-at: 0.05s; }
   .site-hero .fh-hero__actions { --_intro-at: 0.3s; }
-  .site-hero .site-install { --_intro-at: 0.4s; }
   .site-hero .fh-eyebrow-pill { --_intro-at: 0.55s; }
   .site-hero .fh-lede { --_intro-at: 0.6s; }
   .site-hero .site-facts { --_intro-at: 0.75s; }
@@ -181,22 +180,6 @@ body::before {
   :root.fh-js .site-page-cards > .fh-card:not(.is-in) { opacity: 0; translate: 0 0.9rem; }
 }
 @keyframes site-fade { from { opacity: 0; } }
-.site-hero .site-install {
-  /* Sits under the buttons as a solid, full-width bar matching the button row,
-     so it reads as part of the call to action over the horse. */
-  display: flex;
-  inline-size: 100%;
-  max-inline-size: 27.75rem;
-  margin-block-start: calc(var(--fh-space-2) * -1);
-  border-style: solid;
-  border-color: var(--fh-color-border);
-  background-color: var(--site-frost);
-}
-.site-hero .site-install code { flex: 1; }
-.site-install code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-inline-size: 0; }
-.site-install code::before { content: "$ "; color: var(--fh-color-text-subtle); }
-/* The self-hosted install URL is long: on phones it wraps instead of hiding the Copy button. */
-@media (width < 48rem) { .site-install code { white-space: normal; overflow-wrap: anywhere; text-overflow: clip; } }
 
 /* —— Container-native, live: the section under the hero that holds the
  *    breathing window, with the copy that says what to watch. —— */
@@ -977,7 +960,7 @@ body::before {
 }
 .site-service__go:is(:hover, :focus-visible) .fh-icon { color: currentColor; translate: 0.2rem 0; }
 /* How it works: the same etched cells as the hero facts (fh-stats). Three
- * steps share dashed rules, each with an indexed eyebrow pill (EYE-17) over its title,
+ * steps share dashed rules, each with an indexed eyebrow pill (EYE-5.1) over its title,
  * and the button sits in a fourth cell. No gradient. */
 .site-services__strip {
   display: grid;
@@ -1300,6 +1283,7 @@ body::before {
 .fh-burger.site-hover > span::after { inline-size: 70%; }
 .fh-burger.site-focus { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
 .site-menu-static { position: static; display: block; opacity: 1; translate: none; margin-block-start: var(--fh-space-3); max-inline-size: 16rem; }
+.site-menu-static.fh-profile-menu { max-inline-size: 21rem; }
 
 /* Phone frame */
 .site-phone { display: grid; grid-template-rows: 1fr auto; inline-size: min(100%, 20rem); block-size: 26rem; margin-inline: auto; overflow: hidden; border: 6px solid var(--fh-color-surface-chrome); border-radius: 2rem; background: var(--fh-color-canvas); box-shadow: var(--fh-shadow-overlay); }
@@ -1327,6 +1311,9 @@ body::before {
 
 /* Catalog */
 .site-cat-filter { margin-block-end: var(--fh-space-4); }
+.site-cat-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-3) var(--fh-space-6); margin-block-end: var(--fh-space-4); }
+.site-cat-tools > .site-cat-filter { margin: 0; }
+.site-cat__stage > :is(.fh-social, .fh-member, .fh-story) { justify-self: center; inline-size: 100%; }
 .site-cat { display: grid; grid-template-rows: minmax(0, 1fr) auto; background: none; border: 0; }
 .site-cat[hidden] { display: none; }
 /* The stage is a mat, not a card: no border, no surface, only crop marks
@@ -1797,6 +1784,13 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
   .site-backdrop { --_art-w: calc(71vh * 1.579); --_art-xn: 0.92; --_art-pos: calc(var(--_art-xn) * 100%) 50%; }
 }
 
+/* Each theme can bring its own horse: the backdrop swaps its art with the theme.
+   Lipizzaner → Maestoso, etched from a photo by scripts/horse/lipizzaner/etch.py
+   (same canvas and proportions as the default sheet, so the placement holds). */
+:root[data-fh-theme="lipizzaner"] .site-backdrop { --_art: url("img/backdrop/lipizzaner-horse.webp?v=1"); }
+/* Lipizzaner doesn't do the rainbow: every rotating hero word takes the accent (gold by night, claret by day). */
+:root[data-fh-theme="lipizzaner"] .site-hero__turn .fh-rotator > [data-tone] { --fh-tone: var(--fh-color-accent-text); }
+
 /* —— Footer: the hoof elevation etched behind the right side of the menu —— */
 .site-footer .fh-footer__columns { position: relative; isolation: isolate; }
 .site-footer .fh-footer__columns::after {
@@ -1908,6 +1902,10 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-index__variants { display: flex; flex-wrap: wrap; gap: 3px; }
 .site-index__variants a { min-inline-size: 1.7rem; padding: 0.05rem 0.3rem; border: var(--fh-border-thin) solid var(--fh-color-border); border-radius: var(--fh-radius-sm); color: var(--fh-color-text-muted); font: var(--fh-text-micro) / 1.5 var(--fh-font-mono); text-align: center; text-decoration: none; }
 .site-index__variants a:hover { border-color: var(--fh-color-border-strong); color: var(--fh-color-text); }
+/* Groups: siblings sit together, a gap between groups (EYE 1.1 1.2 · 2.1 …). */
+.site-index__gap { inline-size: 0.5rem; }
+/* A group's ID on its variants row label. */
+.site-variants dt > .site-id { justify-self: start; }
 
 /* —— KC, the Firehorse guide —— */
 .site-kc-face { display: inline-grid; place-items: center; overflow: hidden; inline-size: 1.75rem; aspect-ratio: 1; border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone-sky) 50%, transparent); border-radius: var(--fh-radius-pill); background: radial-gradient(circle at 50% 35%, color-mix(in oklab, var(--fh-tone-sky) 22%, var(--fh-color-canvas)), var(--fh-color-canvas)); color: var(--fh-tone-sky); }
@@ -2167,7 +2165,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
 /* Stacks of demos. */
 .fh-section > .fh-stack--xl { --fh-gap: var(--site-demo-gap); }
 /* Small companions keep a tighter, but real, gap. */
-.fh-section > :is(.site-tokens-tools, .site-icons-bar, .site-cat-filters, .fh-chips) + *,
+.fh-section > :is(.site-tokens-tools, .site-icons-bar, .site-cat-filters, .site-cat-tools, .fh-chips) + *,
 .fh-section > * + .site-note { margin-block-start: var(--site-tight); }
 
 /* Inside a demo: roomier head, stage, variant rows and markup bar. */
@@ -2361,16 +2359,16 @@ figcaption .site-id--end { margin-inline-start: auto; }
   --site-frost: color-mix(in oklab, var(--fh-color-canvas) 62%, transparent);
   --site-frost-blur: 8px;
 }
-main :is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   -webkit-backdrop-filter: blur(var(--site-frost-blur));
   backdrop-filter: blur(var(--site-frost-blur));
 }
-:root:not([data-fh-theme]) main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+:root:not([data-fh-theme]) main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   --fh-card-bg: var(--site-frost);
   --fh-chip-bg: var(--site-frost);
 }
-:root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
-main :is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-chip-card, .fh-cube-card):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+:root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-chip-card, .fh-cube-card):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   background-color: var(--site-frost);
 }
 .site-page-summary > .fh-cube-card { background: none; }
@@ -2407,3 +2405,40 @@ main :is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-te
 .site-demo__stage--flush { padding: 0; }
 .site-patterns__note .fh-body { margin-block-start: var(--fh-space-2); max-inline-size: 60ch; }
 .site-panel-demo .fh-grid { margin-block-start: var(--fh-space-4); }
+
+/* —— Developer portal (/developer/) —— */
+.site-dev__search { flex: 0 1 22rem; min-inline-size: min(16rem, 100%); }
+.site-dev__groups { display: grid; gap: var(--fh-space-10); }
+.site-dev__group { display: grid; gap: var(--fh-space-3); }
+.site-dev__group[hidden] { display: none; }
+.site-dev__group-head { display: grid; gap: var(--fh-space-1); }
+.site-dev__group-head h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--fh-space-2); margin: 0; font-size: var(--fh-text-h4); }
+.site-dev__group-head h3 code { color: var(--fh-color-text-subtle); font-size: var(--fh-text-label); }
+.site-dev__group-head p { max-inline-size: 72ch; margin: 0; color: var(--fh-color-text-muted); }
+.site-dev__group th[scope="row"] { display: grid; gap: 0.1rem; }
+.site-dev__group th[scope="row"] small { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); font-weight: var(--fh-weight-regular); }
+.site-dev__group td code { font-size: var(--fh-text-label); }
+.site-dev__group tr[hidden] { display: none; }
+.site-dev__open { padding: 0; border: 0; background: none; color: var(--fh-color-text); font: inherit; font-weight: var(--fh-weight-medium); text-align: start; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in oklab, currentColor 30%, transparent); text-underline-offset: 0.2em; }
+.site-dev__open:hover { text-decoration-color: currentColor; }
+.site-dev__open:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-dev__cascade { display: grid; gap: 0.15rem; margin: 0; padding-inline-start: 3ch; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); }
+.site-dev__cascade .site-dev__open { font-weight: var(--fh-weight-regular); text-decoration: none; }
+.site-dev__cascade .site-dev__open:hover { text-decoration: underline; }
+.site-dev__viewer .fh-detail__body { padding-block-start: 0; }
+.site-dev__pre { max-block-size: none; margin: 0; padding: var(--fh-space-4); overflow: auto; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); line-height: 1.65; tab-size: 2; white-space: pre; }
+.site-dev__c { color: var(--fh-color-text-subtle); }
+.site-dev__a { color: var(--fh-tone-violet); }
+.site-dev__s { color: var(--fh-tone-sky); }
+.site-dev__v { color: var(--fh-tone-teal); }
+
+/* —— Stacking deck demos (DEK): pin under the header and the floating bar —— */
+:is(#c-deck, #c-deck-alt) .fh-deck {
+  --fh-deck-top: calc(var(--fh-header-height) + var(--fh-dock-height) + var(--fh-space-4));
+  --fh-deck-height: min(70svh, 30rem);
+  --fh-deck-gap: 12rem;
+}
+#c-deck .fh-deck {
+  --fh-deck-hero-top: calc(var(--fh-header-height) + var(--fh-dock-height));
+  --fh-deck-hero-height: min(calc(100svh - var(--fh-header-height) - var(--fh-dock-height)), 44rem);
+}

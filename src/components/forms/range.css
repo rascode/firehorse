@@ -1,0 +1,70 @@
+/*
+ * Firehorse — Range (UPL)
+ * components/forms · layer fh.components · docs /forms/#UPL
+ */
+
+@layer fh.components {
+  /* —— Range ——
+   *   <input class="fh-range" type="range" min="0" max="100" value="40"> */
+  .fh-range {
+    --_track: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+
+    inline-size: 100%;
+    block-size: 1.25rem;
+    margin: 0;
+    background: transparent;
+    accent-color: var(--fh-tone);
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      block-size: 0.3rem;
+      border-radius: var(--fh-radius-pill);
+      background: var(--_track);
+    }
+
+    &::-moz-range-track {
+      block-size: 0.3rem;
+      border-radius: var(--fh-radius-pill);
+      background: var(--_track);
+    }
+
+    &::-moz-range-progress {
+      block-size: 0.3rem;
+      border-radius: var(--fh-radius-pill);
+      background: var(--fh-tone);
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      inline-size: 1.1rem;
+      aspect-ratio: 1;
+      margin-block-start: -0.4rem;
+      border: 3px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background: var(--fh-color-text);
+      box-shadow: 0 0 0 1px var(--fh-color-border-strong);
+    }
+
+    &::-moz-range-thumb {
+      inline-size: 1.1rem;
+      block-size: 1.1rem;
+      border: 3px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background: var(--fh-color-text);
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::-webkit-slider-thumb {
+        box-shadow: 0 0 0 2px var(--fh-color-focus);
+      }
+
+      &::-moz-range-thumb {
+        box-shadow: 0 0 0 2px var(--fh-color-focus);
+      }
+    }
+  }
+
+}

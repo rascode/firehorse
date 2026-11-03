@@ -1,0 +1,48 @@
+/*
+ * Firehorse — Nav
+ * components/navigation · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Nav —— */
+  .fh-nav {
+    grid-area: nav;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-6);
+  }
+
+  .fh-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-1);
+    padding: var(--fh-space-1) 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.72;
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(:hover, :focus-visible, [aria-current="page"], [aria-expanded="true"]) {
+      opacity: 1;
+    }
+
+    /* Buttons that open a panel get a chevron. */
+    &[popovertarget]::after {
+      content: "";
+      inline-size: 0.7rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      opacity: 0.7;
+      transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+  }
+
+}

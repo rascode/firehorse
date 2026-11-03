@@ -1,0 +1,59 @@
+/*
+ * Firehorse — Playlist (TRK)
+ * components/audio · layer fh.components · docs /audio/#TRK
+ */
+
+@layer fh.components {
+  /* —— Playlist ——
+   *   <ol class="fh-tracks" data-fh-playlist="#player-id">
+   *     <li><button class="fh-track" data-src="…" data-title="…" aria-current="true">…</button></li>
+   *   </ol> */
+  .fh-tracks {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fh-track;
+  }
+  .fh-track {
+    counter-increment: fh-track;
+    display: grid;
+    grid-template-columns: 1.5rem 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-space-3);
+    inline-size: 100%;
+    padding: var(--fh-space-2) var(--fh-space-2);
+    border: 0;
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition: background-color var(--fh-duration-fast);
+
+    &::before {
+      content: counter(fh-track, decimal-leading-zero);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+    }
+    & > .fh-eq { display: none; }
+    &[aria-current="true"]::before { display: none; }
+    &[aria-current="true"] > .fh-eq { display: inline-flex; grid-column: 1; grid-row: 1; justify-self: center; }
+    & > :is(img, .fh-track__art) {
+      inline-size: 2.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-sm);
+      object-fit: cover;
+      background: radial-gradient(70% 60% at 50% 45%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 35%, transparent), transparent 75%), var(--fh-color-surface-sunken);
+    }
+    & b { display: block; overflow: hidden; font-weight: var(--fh-weight-medium); text-overflow: ellipsis; white-space: nowrap; }
+    & small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
+    & > :last-child { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; }
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 4%, transparent); }
+    &[aria-current="true"] b { color: var(--fh-tone, var(--fh-color-text)); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+
+}

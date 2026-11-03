@@ -6,18 +6,22 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = join(root, "src");
-const files = [];
-(function walk(d) { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walk(p) : p.endsWith(".css") && files.push(p); } })(src);
+// `node scripts/lint.mjs pro/src` lints another source tree (Firehorse Pro)
+// against the core tokens: core files define, only the target is checked.
+const target = process.argv[2] ? join(root, process.argv[2]) : src;
+const walkCss = (dir, out) => { for (const f of readdirSync(dir)) { const p = join(dir, f); statSync(p).isDirectory() ? walkCss(p, out) : p.endsWith(".css") && out.push(p); } return out; };
+const files = walkCss(target, []);
+const coreFiles = target === src ? files : walkCss(src, []);
 
 const errors = [];
 const defined = new Set();
 const read = (f) => readFileSync(f, "utf8").replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
-for (const f of files) for (const m of read(f).matchAll(/(--[\w-]+)\s*:/g)) defined.add(m[1]);
-for (const f of files) for (const m of read(f).matchAll(/@property\s+(--[\w-]+)/g)) defined.add(m[1]);
+for (const f of new Set([...coreFiles, ...files])) for (const m of read(f).matchAll(/(--[\w-]+)\s*:/g)) defined.add(m[1]);
+for (const f of new Set([...coreFiles, ...files])) for (const m of read(f).matchAll(/@property\s+(--[\w-]+)/g)) defined.add(m[1]);
 
 const PRIMITIVE = /--fh-(gray|ember|sky|lime|orange|teal|fuchsia|violet|rose|amber|green|red)-\d+/;
 for (const f of files) {
-  const rel = relative(src, f);
+  const rel = relative(target, f);
   const isToken = rel.startsWith("tokens/") || rel.startsWith("themes/");
   // integrations/ style a third-party library (reveal.js), so its own class names are allowed.
   const isIntegration = rel.startsWith("integrations/");

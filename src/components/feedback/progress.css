@@ -1,0 +1,76 @@
+/*
+ * Firehorse — Progress (FBK)
+ * components/feedback · layer fh.components · docs /components/overlays/#FBK
+ */
+
+@layer fh.components {
+  /* —— Progress (native <progress>) ——
+   *   <progress class="fh-progress" value="64" max="100">64%</progress> */
+  .fh-progress {
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    block-size: var(--fh-progress-size, 0.375rem);
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    color: var(--fh-tone);
+    accent-color: var(--fh-tone);
+
+    &::-webkit-progress-bar {
+      background: transparent;
+    }
+
+    &::-webkit-progress-value {
+      border-radius: inherit;
+      background-color: var(--fh-tone);
+      transition: inline-size var(--fh-duration-slow) var(--fh-ease-out);
+    }
+
+    &::-moz-progress-bar {
+      border-radius: inherit;
+      background-color: var(--fh-tone);
+    }
+
+    /* Indeterminate: a sweeping segment */
+    &:indeterminate {
+      background-image: linear-gradient(90deg, transparent, var(--fh-tone), transparent);
+      background-size: 40% 100%;
+      background-repeat: no-repeat;
+      animation: fh-sweep 1.4s var(--fh-ease-in-out) infinite;
+    }
+
+    &:indeterminate::-moz-progress-bar {
+      background: transparent;
+    }
+  }
+
+  @keyframes fh-sweep {
+    from { background-position: -40% 0; }
+    to { background-position: 140% 0; }
+  }
+
+  /* Labelled progress: label left, value right, bar below. */
+  .fh-progress-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--fh-space-2);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+
+    & > output,
+    & > .fh-progress-field__value {
+      color: var(--fh-color-text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & > .fh-progress {
+      grid-column: 1 / -1;
+    }
+  }
+
+}

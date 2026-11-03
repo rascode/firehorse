@@ -1,0 +1,61 @@
+/*
+ * Firehorse — Play button (PLY)
+ * components/audio · layer fh.components · docs /audio/#PLY
+ */
+
+@layer fh.components {
+  /* —— Play button with progress ring ——
+   *   <button class="fh-play" data-fh-play aria-label="Play" aria-pressed="false"></button>
+   * aria-pressed="true" shows pause. --p draws the ring. */
+  .fh-play {
+    --_size: var(--fh-play-size, 3rem);
+    --_ring: max(2px, calc(var(--_size) * 0.06));
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--_size);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    cursor: pointer;
+    transition: scale var(--fh-duration-fast) var(--fh-ease-standard);
+
+    /* Progress ring. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: conic-gradient(var(--fh-tone, var(--fh-color-accent)) calc(var(--p) * 1turn), color-mix(in oklab, var(--fh-color-text) 12%, transparent) 0);
+      mask: radial-gradient(farthest-side, transparent calc(100% - var(--_ring) - 0.5px), black calc(100% - var(--_ring)));
+    }
+    /* Glyph: play triangle, or pause bars when pressed. */
+    &::after {
+      content: "";
+      inline-size: 34%;
+      aspect-ratio: 1;
+      margin-inline-start: 8%;
+      background-color: currentColor;
+      clip-path: polygon(12% 4%, 96% 50%, 12% 96%);
+      transition: clip-path var(--fh-duration-base) var(--fh-ease-standard), margin var(--fh-duration-base);
+    }
+    &[aria-pressed="true"]::after {
+      margin-inline-start: 0;
+      clip-path: polygon(8% 6%, 38% 6%, 38% 94%, 8% 94%, 8% 6%, 62% 6%, 92% 6%, 92% 94%, 62% 94%, 62% 6%);
+    }
+    &:hover { scale: 1.04; }
+    &:active { scale: 0.97; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 3px; }
+    &[data-loading]::before { animation: fh-play-spin 900ms linear infinite; background: conic-gradient(var(--fh-tone, var(--fh-color-accent)) 0.25turn, transparent 0); }
+  }
+  .fh-play--sm { --fh-play-size: 2.25rem; }
+  .fh-play--lg { --fh-play-size: 4rem; }
+  .fh-play--solid { background: var(--fh-tone, var(--fh-color-text)); color: var(--fh-color-on-tone, var(--fh-color-canvas)); }
+  @keyframes fh-play-spin { to { rotate: 1turn; } }
+
+}

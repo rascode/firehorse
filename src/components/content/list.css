@@ -1,0 +1,109 @@
+/*
+ * Firehorse — List (LST)
+ * components/content · layer fh.components · docs /components/content/#LST
+ */
+
+@layer fh.components {
+  /* —— List ——
+   * Rows of records: leading media, title + meta, trailing value or
+   * action. Rows can be links. Reflows its trailing column under the
+   * text in narrow slots.
+   *   <ul class="fh-list">
+   *     <li><span class="fh-avatar">AL</span>
+   *       <div><b>Ada Lovelace</b><small>Booked an assessment · 2h</small></div>
+   *       <span class="fh-badge" data-tone="lime">Paid</span></li>
+   *   </ul> */
+  .fh-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    container: fh-list / inline-size;
+
+    & > li {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--fh-space-1) var(--fh-space-4);
+      padding: var(--fh-space-3) var(--fh-space-1);
+
+      & + li {
+        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      }
+
+      & > div {
+        display: grid;
+        min-inline-size: 0;
+        line-height: var(--fh-leading-snug);
+      }
+
+      & > div > :first-child {
+        overflow: hidden;
+        color: var(--fh-color-text);
+        font-weight: var(--fh-weight-semibold);
+        letter-spacing: var(--fh-tracking-heading);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      & > div > small {
+        color: var(--fh-color-text-muted);
+        font-size: var(--fh-text-caption);
+      }
+
+      & a::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+
+      & a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      &:has(a:hover) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 4%, transparent);
+      }
+
+      &:has(a:focus-visible) {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  @container fh-list (inline-size < 22rem) {
+    .fh-list > li {
+      grid-template-columns: auto minmax(0, 1fr);
+
+      & > :last-child:not(div) {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+  }
+
+}
+
+@layer fh.components {
+  /* —— List parts (explicit classes) —— */
+  .fh-list__title {
+    margin: 0;
+    overflow: hidden;
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-semibold);
+    letter-spacing: var(--fh-tracking-heading);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-list__meta {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+  }
+
+}

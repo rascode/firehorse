@@ -13,20 +13,25 @@ import { Dialog as D, DropdownMenu as M, Popover as P, Tooltip as T, Tabs as Tb,
 
 type Tone = "sky" | "teal" | "lime" | "amber" | "orange" | "accent" | "rose" | "fuchsia" | "violet" | "neutral";
 const cx = (...c: Array<string | false | undefined | null>) => c.filter(Boolean).join(" ");
+/* Every component root renders data-fh="<Index ID>", so pages built with these components pass
+ * npx firehorse-audit and agents reading the DOM know what each element is. Pass your own
+ * data-fh (for example "local:pricing-box") to override. */
+const BUTTON_IDS = { primary: "BTN-1.1", secondary: "BTN-1.3", ghost: "BTN-2.2", outline: "BTN-2.1", plain: "BTN" } as const;
+const AVATAR_IDS = { rounded: "AVT-1.1", circle: "AVT-1.2", oval: "AVT-1.3", squircle: "AVT-1.4", square: "AVT-1.5" } as const;
 
 /* —— Primitives that are only markup —— */
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "plain" | "secondary" | "ghost" | "outline"; size?: "sm" | "md" | "lg"; tone?: Tone };
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ variant = "primary", size = "md", tone, className, ...p }, ref) => (
-  <button ref={ref} data-tone={tone} className={cx("fh-button", variant !== "primary" && `fh-button--${variant}`, size !== "md" && `fh-button--${size}`, className)} {...p} />
+  <button ref={ref} data-fh={BUTTON_IDS[variant]} data-tone={tone} className={cx("fh-button", variant !== "primary" && `fh-button--${variant}`, size !== "md" && `fh-button--${size}`, className)} {...p} />
 ));
 Button.displayName = "Button";
 
 export const Chip = ({ variant, tone, className, ...p }: React.HTMLAttributes<HTMLSpanElement> & { variant?: "solid" | "tone" | "underline" | "indexed"; tone?: Tone }) => (
-  <span data-tone={tone} className={cx("fh-chip", variant && `fh-chip--${variant}`, className)} {...p} />
+  <span data-fh={variant === "indexed" ? "CHP-2.1" : "CHP"} data-tone={tone} className={cx("fh-chip", variant && `fh-chip--${variant}`, className)} {...p} />
 );
 export const Icon = ({ name, className, ...p }: React.HTMLAttributes<HTMLElement> & { name: string }) => <i aria-hidden="true" className={cx("fh-icon", `fh-icon--${name}`, className)} {...p} />;
 export const Avatar = ({ src, name, shape, size, className }: { src?: string; name: string; shape?: "circle" | "square" | "squircle" | "oval" | "rounded"; size?: "xs" | "sm" | "lg" | "xl" | "2xl"; className?: string }) => (
-  <span className={cx("fh-avatar", shape && `fh-avatar--${shape}`, size && `fh-avatar--${size}`, className)} title={name}>{src ? <img src={src} alt="" /> : name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("")}</span>
+  <span data-fh={AVATAR_IDS[shape ?? "rounded"]} className={cx("fh-avatar", shape && `fh-avatar--${shape}`, size && `fh-avatar--${size}`, className)} title={name}>{src ? <img src={src} alt="" /> : name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("")}</span>
 );
 
 /* —— Dialog & sheet —— */
@@ -37,7 +42,7 @@ export function DialogContent({ title, description, variant, children, className
   return (
     <D.Portal>
       <D.Overlay className="fh-rx-overlay" />
-      <D.Content className={cx("fh-dialog", "fh-rx-dialog", variant && `fh-dialog--${variant}`, className)} {...p}>
+      <D.Content data-fh="DLG" className={cx("fh-dialog", "fh-rx-dialog", variant && `fh-dialog--${variant}`, className)} {...p}>
         <div className="fh-dialog__header"><div className="fh-stack fh-stack--xs"><D.Title className="fh-subheading">{title}</D.Title>{description && <D.Description className="fh-muted">{description}</D.Description>}</div><D.Close className="fh-close" aria-label="Close" /></div>
         <div className="fh-dialog__body">{children}</div>
       </D.Content>
@@ -49,7 +54,7 @@ export function DialogContent({ title, description, variant, children, className
 export const DropdownMenu = M.Root;
 export const DropdownMenuTrigger = M.Trigger;
 export function DropdownMenuContent({ className, ...p }: React.ComponentProps<typeof M.Content>) {
-  return <M.Portal><M.Content sideOffset={6} className={cx("fh-menu", "fh-rx-menu", className)} {...p} /></M.Portal>;
+  return <M.Portal><M.Content data-fh="DRP" sideOffset={6} className={cx("fh-menu", "fh-rx-menu", className)} {...p} /></M.Portal>;
 }
 export const DropdownMenuItem = ({ icon, shortcut, danger, children, className, ...p }: React.ComponentProps<typeof M.Item> & { icon?: string; shortcut?: string; danger?: boolean }) => (
   <M.Item className={cx(danger && "fh-menu__danger", className)} {...p}>{icon && <Icon name={icon} />}{children}{shortcut && <kbd>{shortcut}</kbd>}</M.Item>
@@ -68,7 +73,7 @@ export function Tooltip({ content, children }: { content: React.ReactNode; child
 
 /* —— Tabs (rendered as underline chips) —— */
 export const Tabs = Tb.Root;
-export const TabsList = ({ className, ...p }: React.ComponentProps<typeof Tb.List>) => <Tb.List className={cx("fh-chips", className)} {...p} />;
+export const TabsList = ({ className, ...p }: React.ComponentProps<typeof Tb.List>) => <Tb.List data-fh="CHP-1.4" className={cx("fh-chips", className)} {...p} />;
 export const TabsTrigger = ({ className, tone, ...p }: React.ComponentProps<typeof Tb.Trigger> & { tone?: Tone }) => <Tb.Trigger data-tone={tone} className={cx("fh-chip", "fh-chip--underline", "fh-rx-tab", className)} {...p} />;
 export const TabsContent = Tb.Content;
 
@@ -81,15 +86,15 @@ export function Accordion({ items, type = "single" }: { items: Array<{ value: st
     </A.Item>
   ));
   return type === "multiple"
-    ? <A.Root type="multiple" className="fh-accordion fh-rx-accordion">{body}</A.Root>
-    : <A.Root type="single" collapsible className="fh-accordion fh-rx-accordion">{body}</A.Root>;
+    ? <A.Root data-fh="ACC" type="multiple" className="fh-accordion fh-rx-accordion">{body}</A.Root>
+    : <A.Root data-fh="ACC" type="single" collapsible className="fh-accordion fh-rx-accordion">{body}</A.Root>;
 }
 
 /* —— Form controls —— */
 export function Select({ label, options, placeholder = "Choose…", ...p }: React.ComponentProps<typeof S.Root> & { label: string; options: Array<{ value: string; label: string }>; placeholder?: string }) {
   const id = React.useId();
   return (
-    <div className="fh-field">
+    <div className="fh-field" data-fh="FLD">
       <label htmlFor={id}>{label}</label>
       <S.Root {...p}>
         <S.Trigger id={id} className="fh-select fh-rx-select"><S.Value placeholder={placeholder} /><S.Icon><Icon name="chevron-down" /></S.Icon></S.Trigger>
@@ -99,16 +104,16 @@ export function Select({ label, options, placeholder = "Choose…", ...p }: Reac
   );
 }
 export const Switch = ({ label, ...p }: React.ComponentProps<typeof Sw.Root> & { label: string }) => (
-  <label className="fh-check fh-rx-switch"><Sw.Root className="fh-rx-switch__root" {...p}><Sw.Thumb className="fh-rx-switch__thumb" /></Sw.Root>{label}</label>
+  <label className="fh-check fh-rx-switch" data-fh="CHO"><Sw.Root className="fh-rx-switch__root" {...p}><Sw.Thumb className="fh-rx-switch__thumb" /></Sw.Root>{label}</label>
 );
 export const Checkbox = ({ label, ...p }: React.ComponentProps<typeof C.Root> & { label: string }) => (
-  <label className="fh-check fh-rx-checkbox"><C.Root className="fh-rx-checkbox__root" {...p}><C.Indicator><Icon name="check" /></C.Indicator></C.Root>{label}</label>
+  <label className="fh-check fh-rx-checkbox" data-fh="CHO"><C.Root className="fh-rx-checkbox__root" {...p}><C.Indicator><Icon name="check" /></C.Indicator></C.Root>{label}</label>
 );
 
 /* —— Toasts —— */
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => <To.Provider swipeDirection="right">{children}<To.Viewport className="fh-toaster" /></To.Provider>;
 export const Toast = ({ title, tone = "lime", ...p }: React.ComponentProps<typeof To.Root> & { title: React.ReactNode; tone?: Tone }) => (
-  <To.Root className="fh-toast" data-tone={tone} {...p}><To.Title asChild><p>{title}</p></To.Title><To.Close className="fh-close" aria-label="Dismiss" /></To.Root>
+  <To.Root data-fh="DLG" className="fh-toast" data-tone={tone} {...p}><To.Title asChild><p>{title}</p></To.Title><To.Close className="fh-close" aria-label="Dismiss" /></To.Root>
 );
 
 /* —— Themes ——
@@ -159,7 +164,7 @@ export type ThemeSelectProps = Omit<React.SelectHTMLAttributes<HTMLSelectElement
 export function ThemeSelect({ themes = FIREHORSE_THEMES, storageKey, target, onThemeChange, className, ...p }: ThemeSelectProps) {
   const [theme, setTheme] = useFirehorseTheme({ storageKey, target });
   return (
-    <select aria-label="Theme" {...p} className={cx("fh-select", className)} value={theme} onChange={(e) => { setTheme(e.target.value); onThemeChange?.(e.target.value); }}>
+    <select aria-label="Theme" data-fh="THS" {...p} className={cx("fh-select", className)} value={theme} onChange={(e) => { setTheme(e.target.value); onThemeChange?.(e.target.value); }}>
       {themes.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
     </select>
   );

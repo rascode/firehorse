@@ -1,0 +1,159 @@
+/*
+ * Firehorse — Tag field (TAG)
+ * components/forms · layer fh.components · docs /forms/#TAG
+ */
+
+@layer fh.components {
+  /* —— Tag field: chips + an input in one field ——
+   *   <div class="fh-tags">
+   *     <span class="fh-chip" data-tone="sky">Agents <button class="fh-chip__remove" aria-label="Remove Agents"></button></span>
+   *     <input aria-label="Add a tag" placeholder="Add…">
+   *   </div> */
+  .fh-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    min-block-size: 2.5rem;
+    padding: var(--fh-space-1-5);
+    /* Concentric with the chips inside: outer radius = chip radius + inset.
+     * Chip radius is capped at half a compact chip's height (~1.7rem). */
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + var(--fh-space-1-5));
+    background-color: var(--fh-color-field);
+    cursor: text;
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    & > input {
+      flex: 1 1 6rem;
+      min-inline-size: 6rem;
+      padding-inline: var(--fh-space-1-5);
+      border: 0;
+      outline: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+    }
+
+    & > .fh-chip {
+      padding-block: 0.22rem;
+      background-color: var(--fh-color-canvas);
+    }
+  }
+
+
+  /* —— Inline tag field (--inline): no field until you add one ——
+   * At rest it is just its chips and a small round plus (__add); with no
+   * chips, a text-link "Tag" button stands in. Clicking either opens room
+   * for one tag; Enter adds it and the plus comes back.
+   *   <div class="fh-tags fh-tags--inline">
+   *     <span class="fh-chip" data-tone="sky">agents <button class="fh-chip__remove" aria-label="Remove agents"></button></span>
+   *     <button class="fh-tags__add" type="button" aria-label="Add a tag"></button>
+   *   </div> */
+  .fh-tags--inline {
+    /* The group sits on the same wash as a ghost button's hover, no border. */
+    display: inline-flex;
+    flex: none;
+    inline-size: fit-content;
+    min-block-size: 0;
+    padding: 0.2rem;
+    border: 0;
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + 0.2rem);
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    cursor: default;
+
+    &:focus-within { box-shadow: none; }
+
+    /* The entry is part of the wash: no box of its own, chip-sized text. */
+    & > input {
+      flex: none;
+      inline-size: 8rem;
+      min-inline-size: 0;
+      padding: 0.22rem 0.5rem;
+      border: 0;
+      background: none;
+      font-size: var(--fh-text-label);
+      box-shadow: none;
+      outline: none;
+    }
+
+    /* Focus shows on the group: a slightly deeper wash. */
+    &:focus-within { background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent); }
+
+    & > .fh-chip {
+      border-style: dashed;
+      border-color: transparent;
+      background-color: transparent;
+      transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+    /* Hovered or focused, a tag is etched in its own colour (TAG-2.3). */
+    & > .fh-chip:hover,
+    & > .fh-chip:focus-within { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 70%, transparent); }
+    & > .fh-tags__add { border-color: transparent; }
+  }
+
+  .fh-tags__add {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: 1.5rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-round);
+    background: none;
+    color: var(--fh-color-text-muted);
+    cursor: pointer;
+    transition: color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      inline-size: 0.7rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-plus) center / contain no-repeat;
+    }
+
+    &:hover, &:focus-visible { border-style: solid; border-color: var(--fh-color-border-strong); color: var(--fh-color-text); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
+  }
+
+  /* —— Entry with a prefix (__entry, __prefix): a link field's protocol ——
+   * The prefix is a button that toggles (https:// ⇄ http://); the input holds
+   * the rest. Same pill as the inline field's input.
+   *   <span class="fh-tags__entry"><button class="fh-tags__prefix" type="button">https://</button><input aria-label="Link"></span> */
+  .fh-tags__entry {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    inline-size: 14rem;
+    padding-inline-start: 0.2rem;
+
+    & > input {
+      flex: 1;
+      min-inline-size: 0;
+      padding: 0.22rem 0.5rem 0.22rem 0.1rem;
+      border: 0;
+      outline: 0;
+      background: none;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-label);
+    }
+  }
+
+  .fh-tags__prefix {
+    flex: none;
+    padding: 0.15rem 0.4rem;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    cursor: pointer;
+
+    &:hover, &:focus-visible { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); color: var(--fh-color-text); outline: none; }
+  }
+}

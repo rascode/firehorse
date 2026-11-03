@@ -27,11 +27,11 @@
     <!-- ═══════════════ FORMS ═══════════════ -->
     <section id="forms" class="fh-section fh-section--ruled site-anchor" style="--site-h: 2600px; --site-hn: 3600px" data-tone="teal" aria-labelledby="forms-title" data-fh-label="Forms" data-fh-index="06">
 
-      <div class="site-demo site-auth" data-fh-id="AUT" data-fh-name="Sign in &amp; sign up">
+      <div class="site-demo site-auth" data-fh-id="AUT" data-fh-groups="Layouts|Method" data-fh-name="Sign in &amp; sign up">
         <div class="site-demo__head"><h3>Sign in &amp; sign up</h3><p>Three layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Plain is the form alone.</p></div>
         <div class="site-auth__grid">
           <figure class="site-auth__item site-auth__item--wide"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="teal"><b class="fh-chip__index">01</b>Split</span><span>Etched art beside the form</span></figcaption>
-<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account" data-fh-id="AUT-01" data-fh-name="Split · etched art">
+<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account" data-fh-id="AUT-1.1" data-fh-name="Split · etched art">
   <div class="fh-auth__art" aria-hidden="true"></div>
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
@@ -75,7 +75,7 @@
 </section>
           </figure>
           <figure class="site-auth__item"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="violet"><b class="fh-chip__index">02</b>Card</span><span>Form floating on full-bleed art</span></figcaption>
-<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account" data-fh-id="AUT-02" data-fh-name="Card · full-bleed art">
+<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account" data-fh-id="AUT-1.2" data-fh-name="Card · full-bleed art">
   <div class="fh-auth__art" aria-hidden="true"></div>
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
@@ -119,7 +119,7 @@
 </section>
           </figure>
           <figure class="site-auth__item"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">03</b>Plain</span><span>The form alone, for tight spaces</span></figcaption>
-<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account" data-fh-id="AUT-03" data-fh-name="Plain · no art">
+<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account" data-fh-id="AUT-1.3" data-fh-name="Plain · no art">
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
     <fieldset class="fh-segmented fh-auth__switch">
@@ -158,6 +158,54 @@
     </form>
     <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-plain-up">Create an account</label></p>
     <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-plain-in">Sign in</label></p>
+  </div>
+</section>
+          </figure>
+          <figure class="site-auth__item site-auth__item--wide"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="lime"><b class="fh-chip__index">04</b>Method</span><span>Password first, or an emailed link</span></figcaption>
+<section class="fh-auth" data-tone="lime" aria-label="Sign in or create an account" data-fh-id="AUT-2.1" data-fh-name="Method · password or email link">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind</b> Admin</p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-method-mode" id="auth-method-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-method-mode" id="auth-method-up" value="up"> Create account</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">We email you a link to verify your address.</p>
+    </header>
+    <fieldset class="fh-segmented fh-segmented--sm fh-auth__method" data-fh-auth="in">
+      <legend class="fh-sr-only">Sign in with</legend>
+      <label><input type="radio" name="auth-method-how" value="password" checked> Password</label>
+      <label><input type="radio" name="auth-method-how" value="link"> Email link</label>
+    </fieldset>
+    <form class="fh-auth__form" data-fh-auth="in" data-fh-method="password" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-method-id">Username or email</label><input class="fh-input" id="auth-method-id" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
+      <div class="fh-field"><label for="auth-method-pass">Password</label><input class="fh-input" id="auth-method-pass" name="password" type="password" autocomplete="current-password" required></div>
+      <button class="fh-button" type="submit">Sign in</button>
+    </form>
+    <details class="fh-auth__forgot" data-fh-auth="in" data-fh-method="password">
+      <summary>Forgot password?</summary>
+      <form class="fh-auth__form" method="post" action="/auth/forgot">
+        <div class="fh-field"><label for="auth-method-reset">Username or email</label><input class="fh-input" id="auth-method-reset" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
+        <button class="fh-button fh-button--secondary" type="submit">Send reset link</button>
+      </form>
+    </details>
+    <form class="fh-auth__form" data-fh-auth="in" data-fh-method="link" method="post" action="/auth/link">
+      <div class="fh-field"><label for="auth-method-link">Username or email</label><input class="fh-input" id="auth-method-link" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"><p class="fh-field__hint">We email a one-time link to the address on your account.</p></div>
+      <button class="fh-button" type="submit">Email me a link</button>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-method-new-email">Email</label><input class="fh-input" id="auth-method-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-method-user">Username</label><div class="fh-input-group"><span aria-hidden="true">@</span><input class="fh-input" id="auth-method-user" name="username" autocomplete="username" required placeholder="yourname" aria-describedby="auth-method-rules"></div>
+        <ul class="fh-auth__rules" id="auth-method-rules"><li data-state="met">3–32 chars</li><li data-state="met">Starts with a letter</li><li data-state="met">Letters, numbers, _ only</li><li data-state="checking">Checking…</li></ul></div>
+      <button class="fh-button" type="submit">Send verification link</button>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-method-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-method-in">Sign in</label></p>
   </div>
 </section>
           </figure>
@@ -207,7 +255,7 @@
             </div>
           </div>
           <div class="site-demo site-anchor" id="c-choice" data-fh-id="CHO">
-            <div class="site-demo__head"><h3>Choices</h3><p>Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard.</p></div>
+            <div class="site-demo__head"><h3>Choices</h3><p>Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add <code>fh-segmented--stack</code> to stack its options.</p></div>
             <div class="site-demo__stage" data-demo>
 <div class="fh-stack fh-stack--lg">
   <fieldset class="fh-segmented">
@@ -257,6 +305,36 @@
     <div class="fh-dialog__footer"><button class="fh-button" value="ok">Save</button></div>
   </form>
 </dialog>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-tags" data-fh-id="TAG" data-fh-groups="Field|Inline">
+          <div class="site-demo__head"><h3>Tag field</h3><p>Toned chips with a remove button and an input in one field. The inline variant adds no chrome until it is used: a text link with no tags, then a small round plus that opens room for one more.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-field fh-field--optional" data-fh-id="TAG-1.1" data-fh-name="Field"><label for="tg-channels">Channels</label>
+    <div class="fh-tags">
+      <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
+      <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
+      <input id="tg-channels" placeholder="Add a channel">
+    </div>
+  </div>
+  <div class="fh-cluster" data-fh-id="TAG-2.1" data-fh-name="Inline · empty">
+    <button type="button" class="fh-button fh-button--sm fh-button--ghost"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i>Tag</button>
+  </div>
+  <div class="fh-tags fh-tags--inline" data-fh-id="TAG-2.2" data-fh-name="Inline · adding">
+    <input aria-label="Add a tag" placeholder="Add a tag">
+  </div>
+  <div class="fh-tags fh-tags--inline" data-fh-id="TAG-2.3" data-fh-name="Inline · with tags">
+    <span class="fh-chip" data-tone="orange">applications <button class="fh-chip__remove" type="button" aria-label="Remove applications"></button></span>
+    <span class="fh-chip" data-tone="lime">health <button class="fh-chip__remove" type="button" aria-label="Remove health"></button></span>
+    <button class="fh-tags__add" type="button" aria-label="Add a tag"></button>
+  </div>
+  <div class="fh-tags fh-tags--inline" data-fh-id="TAG-2.4" data-fh-name="Inline · link entry">
+    <span class="fh-chip" data-tone="sky">utbms.com <button class="fh-chip__remove" type="button" aria-label="Remove utbms.com"></button></span>
+    <span class="fh-tags__entry"><button class="fh-tags__prefix" type="button" aria-label="Protocol: https, click for http">https://</button><input aria-label="Link" placeholder="example.com/page"></span>
+  </div>
+</div>
           </div>
         </div>
 

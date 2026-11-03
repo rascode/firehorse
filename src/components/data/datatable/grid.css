@@ -1,0 +1,210 @@
+/*
+ * Firehorse — Grid (DTB)
+ * components/data/datatable · layer fh.components · docs /data/#DTB
+ */
+
+@layer fh.components {
+  /* —— Scroller —— */
+  .fh-dt__scroll {
+    position: relative;
+    min-inline-size: 0;
+    max-block-size: var(--fh-dt-height, 34rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .fh-dt__table {
+    inline-size: max-content;
+    min-inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+
+    & :is(th, td) {
+      block-size: var(--_row);
+      padding: 0 var(--_pad);
+      border-block-end: var(--fh-border-thin) solid var(--_rule);
+      border-inline-end: var(--fh-border-thin) solid color-mix(in oklab, var(--_rule) 70%, transparent);
+      text-align: start;
+      vertical-align: middle;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & thead th {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 3;
+      /* Firehorse label voice: mono, uppercase, tracked, subtle. */
+      block-size: 2.25rem;
+      border-block-end-color: var(--fh-color-border-strong);
+      background-color: var(--_head);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      overflow: visible;
+    }
+
+    & tbody tr:nth-child(even of :not(.fh-dt__group)) > td { background-color: var(--_zebra); }
+    /* Sticky cells stay opaque on striped rows (the stripe is laid over the
+     * surface), so cells scrolled underneath never show through. */
+    & tbody tr:nth-child(even of :not(.fh-dt__group)):not([aria-selected="true"]) > td[data-sticky] {
+      background-color: var(--fh-color-surface);
+      background-image: linear-gradient(var(--_zebra), var(--_zebra));
+    }
+    & tbody tr:not(.fh-dt__group) { cursor: default; }
+    & tbody tr:not(.fh-dt__group):hover > :is(td, th) { background-color: color-mix(in oklab, var(--fh-color-text) 4%, var(--fh-color-surface)); }
+    & tbody tr[aria-selected="true"] > :is(td, th) { background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--fh-color-surface)); }
+    & tbody tr:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: calc(var(--fh-focus-width) * -1); }
+
+    /* Sticky leading columns: selection + primary field. */
+    & [data-sticky] {
+      position: sticky;
+      z-index: 2;
+      background-color: var(--fh-color-surface);
+    }
+    & thead [data-sticky] { z-index: 4; background-color: var(--_head); }
+    & [data-sticky="select"] { inset-inline-start: 0; inline-size: 2.6rem; padding-inline: 0; text-align: center; }
+    & [data-sticky="primary"] {
+      inset-inline-start: var(--fh-dt-primary-offset, 2.6rem);
+      box-shadow: 1px 0 0 var(--_rule), 8px 0 12px -10px var(--fh-color-scrim);
+      font-weight: var(--fh-weight-medium);
+    }
+
+    & tfoot td {
+      position: sticky;
+      inset-block-end: 0;
+      z-index: 2;
+      border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-block-end: 0;
+      background-color: var(--_head);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+    & tfoot td b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+
+  /* —— Header cell —— */
+  .fh-dt__th {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-1-5);
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); font-size: 1.05em; opacity: 0.75; }
+    & > span { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Sort indicator from aria-sort on the <th>. */
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast), rotate var(--fh-duration-fast);
+    }
+    &:hover::after { opacity: 0.4; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+  th[aria-sort="ascending"] .fh-dt__th::after { opacity: 1; rotate: 180deg; color: var(--fh-tone); }
+  th[aria-sort="descending"] .fh-dt__th::after { opacity: 1; color: var(--fh-tone); }
+  th[aria-sort] { color: var(--fh-color-text); }
+
+  .fh-dt__sort-rank {
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: 0.62rem;
+  }
+
+  /* Column resize handle. */
+  .fh-dt__resize {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: -4px;
+    z-index: 5;
+    inline-size: 8px;
+    cursor: col-resize;
+    touch-action: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 25%;
+      inset-inline-start: 3px;
+      inline-size: 2px;
+      border-radius: 1px;
+      background-color: var(--fh-tone);
+      opacity: 0;
+    }
+    &:hover::after,
+    &[data-dragging]::after { opacity: 1; }
+  }
+
+  /* —— Group rows —— */
+  .fh-dt__group > td {
+    position: sticky;
+    inset-inline-start: 0;
+    background-color: color-mix(in oklab, var(--fh-tone) 7%, var(--fh-color-surface));
+    font-weight: var(--fh-weight-medium);
+  }
+  .fh-dt__group-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      transition: rotate var(--fh-duration-fast);
+    }
+    &[aria-expanded="false"]::before { rotate: -90deg; }
+  }
+  .fh-dt__group-meta {
+    margin-inline-start: var(--fh-space-3);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-regular, 400);
+    letter-spacing: var(--fh-tracking-wide);
+  }
+
+  /* —— Footer, pagination —— */
+  .fh-dt__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-2) var(--fh-space-3);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-small);
+  }
+
+}

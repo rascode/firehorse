@@ -1,0 +1,177 @@
+/*
+ * Firehorse — Detail drawer
+ * components/overlays · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Detail drawer ——————————————————————————————————————
+   * A floating sheet for a record: header, quick facts, grouped
+   * fields, activity and a sticky footer. Slides in and out.
+   *
+   *   <dialog class="fh-dialog fh-dialog--float fh-detail" id="record">
+   *     <header class="fh-detail__header">…</header>
+   *     <div class="fh-detail__body">
+   *       <section class="fh-detail__section"><h3>Contact</h3>
+   *         <dl class="fh-detail__fields"><div><dt>Email</dt><dd>…</dd></div></dl>
+   *       </section>
+   *     </div>
+   *     <footer class="fh-detail__footer">…</footer>
+   *   </dialog>
+   */
+  .fh-dialog--float {
+    --_gap: var(--fh-space-3);
+
+    inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));
+    max-inline-size: none;
+    block-size: calc(100dvh - 2 * var(--_gap));
+    max-block-size: none;
+    margin: var(--_gap) var(--_gap) var(--_gap) auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    opacity: 1;
+    translate: calc(100% + 2 * var(--_gap)) 0;
+    transition:
+      translate var(--fh-duration-slow, 380ms) cubic-bezier(0.32, 0.72, 0, 1),
+      overlay var(--fh-duration-slow, 380ms) allow-discrete,
+      display var(--fh-duration-slow, 380ms) allow-discrete;
+
+    &[open] {
+      translate: 0 0;
+
+      @starting-style { translate: calc(100% + 2 * var(--_gap)) 0; }
+    }
+
+    &:dir(rtl) {
+      margin: var(--_gap) auto var(--_gap) var(--_gap);
+      translate: calc(-100% - 2 * var(--_gap)) 0;
+    }
+  }
+
+  .fh-dialog--float.fh-dialog--start {
+    margin: var(--_gap) auto var(--_gap) var(--_gap);
+    translate: calc(-100% - 2 * var(--_gap)) 0;
+
+    &[open] { translate: 0 0; @starting-style { translate: calc(-100% - 2 * var(--_gap)) 0; } }
+  }
+
+  .fh-detail {
+    padding: 0;
+
+    &[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  }
+
+  .fh-detail__header {
+    display: grid;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-4) var(--fh-space-5) var(--fh-space-3);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    /* Flat on purpose: drawers are drawn with lines, never a gradient wash. */
+    background-color: transparent;
+  }
+
+  .fh-detail__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-detail__nav {
+    display: inline-flex;
+    gap: var(--fh-space-1);
+  }
+
+  .fh-detail__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-3);
+    --fh-avatar-size: 3rem;
+
+    /* Long titles wrap at a readable measure instead of running the full width. */
+    & h2 { max-inline-size: var(--fh-detail-title-max, 28ch); margin: 0; font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); letter-spacing: var(--fh-tracking-heading); line-height: 1.15; text-wrap: balance; }
+    & p { margin: var(--fh-space-0-5) 0 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+  }
+
+  .fh-detail__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-border);
+
+    & > div { display: grid; gap: var(--fh-space-0-5); padding: var(--fh-space-2) var(--fh-space-3); background-color: var(--fh-color-surface-raised); }
+    & dt { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: 0.62rem; letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+    & dd { margin: 0; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-semibold); letter-spacing: var(--fh-tracking-mono); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+  }
+
+  .fh-detail__body {
+    display: grid;
+    gap: var(--fh-space-6);
+    align-content: start;
+    padding: var(--fh-space-5);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .fh-detail__section {
+    display: grid;
+    gap: var(--fh-space-3);
+
+    & > h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-space-2);
+      margin: 0;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  /* Label / value rows. Values may be text, links, pills, inputs. */
+  .fh-detail__fields {
+    display: grid;
+    gap: 0;
+    margin: 0;
+
+    & > div {
+      display: grid;
+      grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr);
+      gap: var(--fh-space-3);
+      align-items: center;
+      min-block-size: 2.4rem;
+      padding-block: var(--fh-space-1);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & dt { display: flex; align-items: center; gap: var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+    & dt > .fh-icon { color: var(--fh-color-text-subtle); }
+    & dd { margin: 0; min-inline-size: 0; font-size: var(--fh-text-small); overflow-wrap: anywhere; }
+    & :is(.fh-input, .fh-select) { min-block-size: 2rem; padding-block: 0.3rem; font-size: var(--fh-text-small); }
+  }
+
+  @container fh-dialog (inline-size < 24rem) {
+    .fh-detail__fields > div { grid-template-columns: minmax(0, 1fr); gap: var(--fh-space-1); }
+  }
+
+  .fh-detail__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2);
+    padding: var(--fh-space-3) var(--fh-space-5);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: var(--fh-color-surface-raised);
+  }
+
+}

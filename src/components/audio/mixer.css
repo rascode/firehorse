@@ -1,0 +1,60 @@
+/*
+ * Firehorse — Mixer (MIX)
+ * components/audio · layer fh.components · docs /audio/#MIX
+ */
+
+@layer fh.components {
+  /* —— Mixer: channel strips ——
+   *   <div class="fh-mixer" data-fh-mixer>
+   *     <div class="fh-mixer__bar">…master play, wave, time…</div>
+   *     <div class="fh-channel" data-src="…" data-tone="sky">…</div>
+   *   </div> */
+  .fh-mixer {
+    display: grid;
+    gap: 0;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    container: fh-mixer / inline-size;
+  }
+  .fh-mixer__bar > .fh-player__time { grid-area: auto; }
+  .fh-mixer__bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-space-3);
+    padding: var(--fh-space-4);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  }
+  .fh-channel {
+    display: grid;
+    grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr) auto;
+    grid-template-areas: "name wave buttons" "name gain buttons";
+    align-items: center;
+    gap: var(--fh-space-1) var(--fh-space-4);
+    padding: var(--fh-space-3) var(--fh-space-4);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    transition: opacity var(--fh-duration-base);
+
+    &:last-child { border-block-end: 0; }
+    &[data-muted] { opacity: 0.5; }
+    & > .fh-wave { grid-area: wave; --fh-wave-height: 1.75rem; }
+    & > .fh-channel__gain { grid-area: gain; display: flex; align-items: center; gap: var(--fh-space-2); }
+    & > .fh-channel__buttons { grid-area: buttons; display: flex; gap: var(--fh-space-1); }
+  }
+  .fh-channel__name {
+    grid-area: name;
+    display: grid;
+    gap: var(--fh-space-1);
+    min-inline-size: 0;
+
+    & b { display: flex; align-items: center; gap: var(--fh-space-2); font-weight: var(--fh-weight-medium); }
+    & b::before { content: ""; flex: none; inline-size: 0.5rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background-color: var(--fh-tone, var(--fh-color-text)); box-shadow: 0 0 calc(var(--level) * 12px) var(--fh-tone, transparent); }
+    & small { overflow: hidden; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); letter-spacing: var(--fh-tracking-wider); text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+  }
+  .fh-channel__value { min-inline-size: 3.5rem; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; text-align: end; }
+  @container fh-mixer (inline-size < 36rem) {
+    .fh-channel { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name buttons" "wave wave" "gain gain"; }
+  }
+
+}

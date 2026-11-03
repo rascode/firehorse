@@ -246,9 +246,9 @@ export const tokens = {
     "group": "red"
   },
   "--fh-font-sans": {
-    "$value": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+    "$value": "\"Archivo\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
     "$type": "fontFamily",
-    "tier": "primitives",
+    "tier": "config",
     "group": "font"
   },
   "--fh-font-mono": {
@@ -258,7 +258,13 @@ export const tokens = {
     "group": "font"
   },
   "--fh-font-display": {
-    "$value": "var(--fh-font-sans)",
+    "$value": "\"Archivo\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+    "$type": "fontFamily",
+    "tier": "config",
+    "group": "font"
+  },
+  "--fh-font-figure": {
+    "$value": "var(--fh-font-display)",
     "$type": "fontFamily",
     "tier": "primitives",
     "group": "font"
@@ -432,21 +438,21 @@ export const tokens = {
     "group": "tracking"
   },
   "--fh-tracking-tight": {
-    "$value": "-0.035em",
+    "$value": "-0.03em",
     "$type": "dimension",
-    "tier": "primitives",
+    "tier": "config",
     "group": "tracking"
   },
   "--fh-tracking-snug": {
-    "$value": "-0.03em",
+    "$value": "-0.025em",
     "$type": "dimension",
-    "tier": "primitives",
+    "tier": "config",
     "group": "tracking"
   },
   "--fh-tracking-heading": {
     "$value": "-0.02em",
     "$type": "dimension",
-    "tier": "primitives",
+    "tier": "config",
     "group": "tracking"
   },
   "--fh-tracking-body": {
@@ -1073,6 +1079,18 @@ export const tokens = {
     "tier": "semantic",
     "group": "color"
   },
+  "--fh-color-ink": {
+    "$value": "var(--fh-gray-1000)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
+  "--fh-color-on-ink": {
+    "$value": "var(--fh-gray-0)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
   "--fh-color-accent": {
     "$value": "light-dark(var(--fh-ember-700), var(--fh-ember-500))",
     "$type": "color",
@@ -1279,6 +1297,60 @@ export const tokens = {
   },
   "--fh-card-media-ratio": {
     "$value": "3 / 4",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content": {
+    "$value": "frost",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-bg": {
+    "$value": "oklch(from currentColor clamp(0.14, (0.55 - l) * 999, 0.99) calc(c * 0.2) h / 0.55)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-backdrop": {
+    "$value": "blur(18px) saturate(1.5)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-border": {
+    "$value": "oklch(from currentColor l c h / 0.16)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-radius": {
+    "$value": "var(--fh-radius-md)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-pad": {
+    "$value": "var(--fh-space-4)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-inset": {
+    "$value": "var(--fh-space-3)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-overlap": {
+    "$value": "4.5rem",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-scrim": {
+    "$value": "none",
     "$type": "dimension",
     "tier": "config",
     "group": "card"

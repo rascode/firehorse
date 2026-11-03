@@ -1,0 +1,57 @@
+/*
+ * Firehorse — Toc (NAV)
+ * components/navigation · layer fh.components · docs /components/navigation/#NAV
+ */
+
+@layer fh.components {
+  /* —— Table of contents / sidebar nav ——
+   * Sticky by default inside a split; the enhancer marks the section
+   * in view with aria-current.
+   *   <nav class="fh-toc" aria-label="On this page"><p class="fh-label">On this page</p>
+   *     <ol><li><a href="#intro">Intro</a></li>…</ol></nav> */
+  .fh-toc {
+    position: sticky;
+    inset-block-start: calc(var(--fh-header-height) + var(--fh-space-6));
+    display: grid;
+    gap: var(--fh-space-3);
+    align-self: start;
+
+    & :is(ol, ul) {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    & :is(ol, ul) :is(ol, ul) {
+      margin-inline-start: var(--fh-space-3);
+      border: 0;
+    }
+
+    & a {
+      display: block;
+      margin-inline-start: -1px;
+      padding: var(--fh-space-1-5) var(--fh-space-4);
+      border-inline-start: 2px solid transparent;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+      line-height: var(--fh-leading-snug);
+      text-decoration: none;
+      transition:
+        color var(--fh-duration-fast) var(--fh-ease-standard),
+        border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+
+      &[aria-current]:not([aria-current="false"]) {
+        border-inline-start-color: var(--fh-tone, var(--fh-color-text));
+        color: var(--fh-color-text);
+      }
+    }
+  }
+
+}
