@@ -1725,8 +1725,8 @@ A dropzone over a real file input, a styled range, a tag field, and a dialog tha
   <form method="dialog">
     <div class="fh-dialog__header"><h3 class="fh-subheading" id="demo-sheet-title">Agent settings</h3><button class="fh-close" value="cancel" aria-label="Close"></button></div>
     <div class="fh-dialog__body fh-stack">
-      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked data-fh="UPL"> Answer after hours</label>
-      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" data-fh="UPL"> Voice replies</label>
+      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked> Answer after hours</label>
+      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch"> Voice replies</label>
       <dl class="fh-dl"><div><dt>Agent</dt><dd>Wes</dd></div><div><dt>Plan</dt><dd>Monthly</dd></div></dl>
     </div>
     <div class="fh-dialog__footer"><button class="fh-button" value="ok">Save</button></div>
@@ -1906,6 +1906,116 @@ The sheet: logo and number, title, from and bill-to with the dates, line items, 
 </div>
 ```
 
+### BAL · Balance
+
+The total, what is available, what is pending and declined, and the split by segment or entity.
+
+```html
+<section class="fh-balance" data-tone="teal" data-fh="BAL">
+  <p class="fh-balance__label">Total balance · All</p>
+  <p class="fh-balance__figure"><span class="fh-balance__currency">$</span>48,210<span class="fh-balance__cents">.33</span></p>
+  <dl class="fh-balance__meta">
+    <div><dt>Available</dt><dd>$41,005.10</dd></div>
+    <div><dt>Owed</dt><dd>$3,120.00</dd></div>
+    <div data-status="pending"><dt>Pending · 3</dt><dd>$412.80</dd></div>
+    <div data-status="declined"><dt>Declined · 30d</dt><dd>2</dd></div>
+  </dl>
+  <div class="fh-balance__split" role="img" aria-label="Business 62 percent, Personal 38 percent">
+    <span style="--fh-share: 62%" data-tone="amber"></span><span style="--fh-share: 38%" data-tone="sky"></span>
+  </div>
+  <ul class="fh-balance__legend">
+    <li data-tone="amber"><span>Business</span><b>$29,890.40</b></li>
+    <li data-tone="sky"><span>Personal</span><b>$18,319.93</b></li>
+  </ul>
+</section>
+```
+
+### SEG · Segment switch
+
+All, Business, Personal; entities appear under Business.
+
+```html
+<div class="fh-stack">
+  <nav class="fh-segment" aria-label="Segment" data-fh="SEG">
+    <a href="#f-segment" aria-current="true">All <b>9</b></a>
+    <a href="#f-segment" data-tone="amber">Business <b>5</b></a>
+    <a href="#f-segment" data-tone="sky">Personal <b>4</b></a>
+  </nav>
+  <nav class="fh-segment fh-segment--entities" aria-label="Business" data-fh="SEG">
+    <a href="#f-segment" aria-current="true">All businesses</a>
+    <a href="#f-segment" data-tone="orange">Rascode</a>
+    <a href="#f-segment" data-tone="violet">Lymynal</a>
+  </nav>
+</div>
+```
+
+### ACN · Account card
+
+Name, institution and last four, the entity tag, balance and sync health. Owed balances read red.
+
+```html
+<div class="fh-accounts" data-fh="ACN">
+  <article class="fh-account" data-tone="amber">
+    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true">CH</span><div><h3 class="fh-account__name">Operating</h3><p class="fh-account__sub">Chase · ••4417</p></div><span class="fh-account__tag" data-tone="orange">Rascode</span></header>
+    <p class="fh-account__figure">$18,240.12</p>
+    <dl class="fh-account__meta"><div><dt>Available</dt><dd>$17,990.12</dd></div></dl>
+    <footer class="fh-account__foot"><span data-health="ok">Synced 4 min ago</span></footer>
+  </article>
+  <article class="fh-account" data-tone="sky">
+    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true">AX</span><div><h3 class="fh-account__name">Gold Card</h3><p class="fh-account__sub">Amex · ••1009</p></div><span class="fh-account__tag" data-tone="sky">Personal</span></header>
+    <p class="fh-account__figure" data-flow="owed">−$3,120.00</p>
+    <dl class="fh-account__meta"><div><dt>Limit</dt><dd>$15,000</dd></div></dl>
+    <footer class="fh-account__foot"><span data-health="stale">Synced yesterday</span></footer>
+  </article>
+</div>
+```
+
+### LDG · Ledger
+
+Pending first and labelled; declined and reversed struck through; money in reads green with a plus.
+
+```html
+<ol class="fh-ledger" data-fh="LDG">
+  <li class="fh-ledger__day">Today</li>
+  <li data-status="pending"><span class="fh-ledger__mark" aria-hidden="true">AW</span><div class="fh-ledger__what"><b>AWS</b><small>Card ••2231 · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Pending</span><span class="fh-ledger__amount">−$212.40</span></li>
+  <li data-status="declined"><span class="fh-ledger__mark" aria-hidden="true">FG</span><div class="fh-ledger__what"><b>Figma</b><small>Card ••8810 · Spend limit reached</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Declined</span><span class="fh-ledger__amount">−$45.00</span></li>
+  <li data-status="posted"><span class="fh-ledger__mark" aria-hidden="true">ST</span><div class="fh-ledger__what"><b>Stripe payout</b><small>Operating · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Posted</span><span class="fh-ledger__amount" data-flow="in">+$2,400.00</span></li>
+</ol>
+```
+
+### VCD · Virtual card
+
+A card face for issued cards: last four only, spend against its limit, lock and declines.
+
+```html
+<div class="fh-vcards" data-fh="VCD">
+  <article class="fh-vcard" data-tone="violet" data-state="open">
+    <header><span class="fh-vcard__name">AWS</span><span>Open</span></header>
+    <p class="fh-vcard__number">•••• 2231</p>
+    <div class="fh-vcard__limit" style="--fh-used: 42%"><span>$212 of $500 / month</span></div>
+    <footer><span>Merchant-locked</span><span>0 declines · 30d</span></footer>
+  </article>
+  <article class="fh-vcard" data-tone="orange" data-state="paused">
+    <header><span class="fh-vcard__name">Trial subscriptions</span><span>Paused</span></header>
+    <p class="fh-vcard__number">•••• 8810</p>
+    <div class="fh-vcard__limit" style="--fh-used: 100%"><span>$45 of $45 / transaction</span></div>
+    <footer><span>Single use</span><span>3 declines · 30d</span></footer>
+  </article>
+</div>
+```
+
+### CNX · Connection status
+
+One row per provider: health, last sync and the one action it needs.
+
+```html
+<ul class="fh-connections" data-fh="CNX">
+  <li data-health="ok"><b>Chase</b><small>Plaid · 3 accounts</small><time>4 min ago</time><button class="fh-btn fh-btn--sm" type="button">Sync</button></li>
+  <li data-health="stale"><b>Privacy.com</b><small>73 cards</small><time>Yesterday</time><button class="fh-btn fh-btn--sm" type="button">Sync</button></li>
+  <li data-health="off"><b>PayPal</b><small>Not connected</small><button class="fh-btn fh-btn--sm" type="button">Connect</button></li>
+</ul>
+```
+
 ### THB · Thumbnails & link cards
 
 A YouTube thumbnail with the host in a tone ring (the timestamp covers the bottom right), and the Open Graph card every link preview uses: X, LinkedIn, Slack, iMessage.
@@ -1995,6 +2105,89 @@ A 4:5 feed post (Instagram, Threads, LinkedIn; the profile grid trims it to 3:4)
         <div class="fh-canvas__main"></div>
         <div class="fh-canvas__foot"><span>−3% letter spacing</span><p class="fh-canvas__face"><small>Font</small><b>Archivo</b></p></div>
       </div>
+    </article></dd></div>
+</dl>
+```
+
+### WAL · Home screen wallpapers
+
+A wallpaper drawn on the phone's own icon grid: the brand on icon row 1, the page title on row 2, an etched rule with a tone tick, then a dashed cell where each icon lands, and the dock. Leave rows 1 and 2 empty on that home page and the icons fill the cells. iOS uses one wallpaper for every home page, so make one per Focus (each Focus gets its own page and wallpaper), and turn off Perspective Zoom so it isn't scaled. `--wall-clean` drops the cells; `--wall-5x5` is the denser Android grid. Grid positions are estimates until measured on each device: correct a preset with its `--fh-wall-*` numbers.
+
+```html
+<dl class="site-media site-media--wall" style="--site-media-cols: 0.460fr 0.461fr 0.461fr 0.460fr">
+  <div><dt>iPhone 6.3″<code>.fh-canvas--wall-iphone · 1206 × 2622 · 17, 17 Pro, 18 Pro</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone" data-tone="accent" data-fh="WAL-1.1">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 01</p></div>
+        <h2 class="fh-canvas__title">Studio</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+  <div><dt>iPhone 6.1″<code>.fh-canvas--wall-iphone-61 · 1179 × 2556 · 15, 15 Pro, 16</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone-61" data-tone="sky" data-fh="WAL-1.2">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 02</p></div>
+        <h2 class="fh-canvas__title">Work</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+  <div><dt>iPhone Air<code>.fh-canvas--wall-iphone-air · 1260 × 2736 · Air</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone-air" data-tone="lime" data-fh="WAL-1.3">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 03</p></div>
+        <h2 class="fh-canvas__title">Personal</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+  <div><dt>iPhone 6.9″<code>.fh-canvas--wall-iphone-max · 1320 × 2868 · 17 Pro Max, 18 Pro Max</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone-max" data-tone="amber" data-fh="WAL-1.4">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 04</p></div>
+        <h2 class="fh-canvas__title">Travel</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+</dl>
+<dl class="site-media site-media--wall" style="--site-media-cols: 0.448fr 0.449fr 0.462fr 0.462fr; margin-block-start: var(--fh-space-10)">
+  <div><dt>Pixel Pro<code>.fh-canvas--wall-pixel · 1280 × 2856 · Pixel 11 Pro, 10 Pro</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-pixel" data-tone="violet" data-fh="WAL-2.1">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 01</p></div>
+        <h2 class="fh-canvas__title">Studio</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+  <div><dt>Pixel Pro XL · 5 × 5<code>.fh-canvas--wall-pixel-xl .fh-canvas--wall-5x5 · 1344 × 2992 · Pixel 11 Pro XL, 10 Pro XL</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-pixel-xl fh-canvas--wall-5x5" data-tone="teal" data-fh="WAL-2.2">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 02</p></div>
+        <h2 class="fh-canvas__title">Work</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+  <div><dt>Galaxy S<code>.fh-canvas--wall-galaxy · 1080 × 2340 · S26, S25</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-galaxy" data-tone="rose" data-fh="WAL-3.1">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 01</p></div>
+        <h2 class="fh-canvas__title">Personal</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+    </article></dd></div>
+  <div><dt>Galaxy Plus / Ultra · 5 × 5<code>.fh-canvas--wall-galaxy-qhd .fh-canvas--wall-5x5 · 1440 × 3120 · S26+, S26 Ultra, S25+, S25 Ultra</code></dt><dd>
+    <article class="fh-canvas fh-canvas--wall fh-canvas--wall-galaxy-qhd fh-canvas--wall-5x5" data-tone="orange" data-fh="WAL-3.2">
+      <div class="fh-canvas__band">
+        <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 02</p></div>
+        <h2 class="fh-canvas__title">Travel</h2>
+      </div>
+      <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
     </article></dd></div>
 </dl>
 ```

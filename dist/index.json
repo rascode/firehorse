@@ -3952,7 +3952,7 @@
         "fh-dl",
         "fh-dialog__footer"
       ],
-      "markup": "<div class=\"fh-grid\" data-cols=\"2\" style=\"--fh-grid-min: 17rem; --fh-gap: var(--fh-space-6)\">\n  <label class=\"fh-dropzone\" data-tone=\"sky\" data-fh=\"UPL\">\n    <input type=\"file\" multiple>\n    <span class=\"fh-dropzone__title\">Drop files or browse</span>\n    <span class=\"fh-dropzone__hint\">PDF, PNG or JPG · up to 10 MB</span>\n  </label>\n  <div class=\"fh-stack fh-stack--lg\">\n    <div class=\"fh-field\" data-tone=\"lime\"><label for=\"fx-budget\">Monthly budget</label><input class=\"fh-range\" id=\"fx-budget\" type=\"range\" min=\"500\" max=\"5000\" step=\"100\" value=\"1700\" data-fh=\"UPL\"></div>\n    <div class=\"fh-field fh-field--optional\"><label for=\"fx-tags\">Channels</label>\n      <div class=\"fh-tags\">\n        <span class=\"fh-chip\" data-tone=\"sky\">Messenger <button class=\"fh-chip__remove\" type=\"button\" aria-label=\"Remove Messenger\"></button></span>\n        <span class=\"fh-chip\" data-tone=\"lime\">WhatsApp <button class=\"fh-chip__remove\" type=\"button\" aria-label=\"Remove WhatsApp\"></button></span>\n        <input id=\"fx-tags\" placeholder=\"Add a channel\">\n      </div>\n    </div>\n    <button class=\"fh-button fh-button--secondary\" type=\"button\" data-open-dialog=\"demo-sheet\">Open side sheet</button>\n  </div>\n</div>\n<dialog class=\"fh-dialog fh-dialog--sheet\" id=\"demo-sheet\" aria-labelledby=\"demo-sheet-title\">\n  <form method=\"dialog\">\n    <div class=\"fh-dialog__header\"><h3 class=\"fh-subheading\" id=\"demo-sheet-title\">Agent settings</h3><button class=\"fh-close\" value=\"cancel\" aria-label=\"Close\"></button></div>\n    <div class=\"fh-dialog__body fh-stack\">\n      <label class=\"fh-check\"><input class=\"fh-switch\" type=\"checkbox\" role=\"switch\" checked data-fh=\"UPL\"> Answer after hours</label>\n      <label class=\"fh-check\"><input class=\"fh-switch\" type=\"checkbox\" role=\"switch\" data-fh=\"UPL\"> Voice replies</label>\n      <dl class=\"fh-dl\"><div><dt>Agent</dt><dd>Wes</dd></div><div><dt>Plan</dt><dd>Monthly</dd></div></dl>\n    </div>\n    <div class=\"fh-dialog__footer\"><button class=\"fh-button\" value=\"ok\">Save</button></div>\n  </form>\n</dialog>",
+      "markup": "<div class=\"fh-grid\" data-cols=\"2\" style=\"--fh-grid-min: 17rem; --fh-gap: var(--fh-space-6)\">\n  <label class=\"fh-dropzone\" data-tone=\"sky\" data-fh=\"UPL\">\n    <input type=\"file\" multiple>\n    <span class=\"fh-dropzone__title\">Drop files or browse</span>\n    <span class=\"fh-dropzone__hint\">PDF, PNG or JPG · up to 10 MB</span>\n  </label>\n  <div class=\"fh-stack fh-stack--lg\">\n    <div class=\"fh-field\" data-tone=\"lime\"><label for=\"fx-budget\">Monthly budget</label><input class=\"fh-range\" id=\"fx-budget\" type=\"range\" min=\"500\" max=\"5000\" step=\"100\" value=\"1700\" data-fh=\"UPL\"></div>\n    <div class=\"fh-field fh-field--optional\"><label for=\"fx-tags\">Channels</label>\n      <div class=\"fh-tags\">\n        <span class=\"fh-chip\" data-tone=\"sky\">Messenger <button class=\"fh-chip__remove\" type=\"button\" aria-label=\"Remove Messenger\"></button></span>\n        <span class=\"fh-chip\" data-tone=\"lime\">WhatsApp <button class=\"fh-chip__remove\" type=\"button\" aria-label=\"Remove WhatsApp\"></button></span>\n        <input id=\"fx-tags\" placeholder=\"Add a channel\">\n      </div>\n    </div>\n    <button class=\"fh-button fh-button--secondary\" type=\"button\" data-open-dialog=\"demo-sheet\">Open side sheet</button>\n  </div>\n</div>\n<dialog class=\"fh-dialog fh-dialog--sheet\" id=\"demo-sheet\" aria-labelledby=\"demo-sheet-title\">\n  <form method=\"dialog\">\n    <div class=\"fh-dialog__header\"><h3 class=\"fh-subheading\" id=\"demo-sheet-title\">Agent settings</h3><button class=\"fh-close\" value=\"cancel\" aria-label=\"Close\"></button></div>\n    <div class=\"fh-dialog__body fh-stack\">\n      <label class=\"fh-check\"><input class=\"fh-switch\" type=\"checkbox\" role=\"switch\" checked> Answer after hours</label>\n      <label class=\"fh-check\"><input class=\"fh-switch\" type=\"checkbox\" role=\"switch\"> Voice replies</label>\n      <dl class=\"fh-dl\"><div><dt>Agent</dt><dd>Wes</dd></div><div><dt>Plan</dt><dd>Monthly</dd></div></dl>\n    </div>\n    <div class=\"fh-dialog__footer\"><button class=\"fh-button\" value=\"ok\">Save</button></div>\n  </form>\n</dialog>",
       "groups": [],
       "variants": []
     },
@@ -4511,6 +4511,126 @@
       ]
     },
     {
+      "id": "BAL",
+      "name": "Balance",
+      "section": "Finance",
+      "anchor": "f-balance",
+      "page": "/finance/",
+      "url": "https://firehorse.rascode.dev/finance/#BAL",
+      "summary": "The total, what is available, what is pending and declined, and the split by segment or entity.",
+      "classes": [
+        "fh-balance",
+        "fh-balance__label",
+        "fh-balance__figure",
+        "fh-balance__currency",
+        "fh-balance__cents",
+        "fh-balance__meta",
+        "fh-balance__split",
+        "fh-balance__legend"
+      ],
+      "markup": "<section class=\"fh-balance\" data-tone=\"teal\" data-fh=\"BAL\">\n  <p class=\"fh-balance__label\">Total balance · All</p>\n  <p class=\"fh-balance__figure\"><span class=\"fh-balance__currency\">$</span>48,210<span class=\"fh-balance__cents\">.33</span></p>\n  <dl class=\"fh-balance__meta\">\n    <div><dt>Available</dt><dd>$41,005.10</dd></div>\n    <div><dt>Owed</dt><dd>$3,120.00</dd></div>\n    <div data-status=\"pending\"><dt>Pending · 3</dt><dd>$412.80</dd></div>\n    <div data-status=\"declined\"><dt>Declined · 30d</dt><dd>2</dd></div>\n  </dl>\n  <div class=\"fh-balance__split\" role=\"img\" aria-label=\"Business 62 percent, Personal 38 percent\">\n    <span style=\"--fh-share: 62%\" data-tone=\"amber\"></span><span style=\"--fh-share: 38%\" data-tone=\"sky\"></span>\n  </div>\n  <ul class=\"fh-balance__legend\">\n    <li data-tone=\"amber\"><span>Business</span><b>$29,890.40</b></li>\n    <li data-tone=\"sky\"><span>Personal</span><b>$18,319.93</b></li>\n  </ul>\n</section>",
+      "groups": [],
+      "variants": []
+    },
+    {
+      "id": "SEG",
+      "name": "Segment switch",
+      "section": "Finance",
+      "anchor": "f-segment",
+      "page": "/finance/",
+      "url": "https://firehorse.rascode.dev/finance/#SEG",
+      "summary": "All, Business, Personal; entities appear under Business.",
+      "classes": [
+        "fh-stack",
+        "fh-segment",
+        "fh-segment--entities"
+      ],
+      "markup": "<div class=\"fh-stack\">\n  <nav class=\"fh-segment\" aria-label=\"Segment\" data-fh=\"SEG\">\n    <a href=\"#f-segment\" aria-current=\"true\">All <b>9</b></a>\n    <a href=\"#f-segment\" data-tone=\"amber\">Business <b>5</b></a>\n    <a href=\"#f-segment\" data-tone=\"sky\">Personal <b>4</b></a>\n  </nav>\n  <nav class=\"fh-segment fh-segment--entities\" aria-label=\"Business\" data-fh=\"SEG\">\n    <a href=\"#f-segment\" aria-current=\"true\">All businesses</a>\n    <a href=\"#f-segment\" data-tone=\"orange\">Rascode</a>\n    <a href=\"#f-segment\" data-tone=\"violet\">Lymynal</a>\n  </nav>\n</div>",
+      "groups": [],
+      "variants": []
+    },
+    {
+      "id": "ACN",
+      "name": "Account card",
+      "section": "Finance",
+      "anchor": "f-account",
+      "page": "/finance/",
+      "url": "https://firehorse.rascode.dev/finance/#ACN",
+      "summary": "Name, institution and last four, the entity tag, balance and sync health. Owed balances read red.",
+      "classes": [
+        "fh-accounts",
+        "fh-account",
+        "fh-account__head",
+        "fh-account__mark",
+        "fh-account__name",
+        "fh-account__sub",
+        "fh-account__tag",
+        "fh-account__figure",
+        "fh-account__meta",
+        "fh-account__foot"
+      ],
+      "markup": "<div class=\"fh-accounts\" data-fh=\"ACN\">\n  <article class=\"fh-account\" data-tone=\"amber\">\n    <header class=\"fh-account__head\"><span class=\"fh-account__mark\" aria-hidden=\"true\">CH</span><div><h3 class=\"fh-account__name\">Operating</h3><p class=\"fh-account__sub\">Chase · ••4417</p></div><span class=\"fh-account__tag\" data-tone=\"orange\">Rascode</span></header>\n    <p class=\"fh-account__figure\">$18,240.12</p>\n    <dl class=\"fh-account__meta\"><div><dt>Available</dt><dd>$17,990.12</dd></div></dl>\n    <footer class=\"fh-account__foot\"><span data-health=\"ok\">Synced 4 min ago</span></footer>\n  </article>\n  <article class=\"fh-account\" data-tone=\"sky\">\n    <header class=\"fh-account__head\"><span class=\"fh-account__mark\" aria-hidden=\"true\">AX</span><div><h3 class=\"fh-account__name\">Gold Card</h3><p class=\"fh-account__sub\">Amex · ••1009</p></div><span class=\"fh-account__tag\" data-tone=\"sky\">Personal</span></header>\n    <p class=\"fh-account__figure\" data-flow=\"owed\">−$3,120.00</p>\n    <dl class=\"fh-account__meta\"><div><dt>Limit</dt><dd>$15,000</dd></div></dl>\n    <footer class=\"fh-account__foot\"><span data-health=\"stale\">Synced yesterday</span></footer>\n  </article>\n</div>",
+      "groups": [],
+      "variants": []
+    },
+    {
+      "id": "LDG",
+      "name": "Ledger",
+      "section": "Finance",
+      "anchor": "f-ledger",
+      "page": "/finance/",
+      "url": "https://firehorse.rascode.dev/finance/#LDG",
+      "summary": "Pending first and labelled; declined and reversed struck through; money in reads green with a plus.",
+      "classes": [
+        "fh-ledger",
+        "fh-ledger__day",
+        "fh-ledger__mark",
+        "fh-ledger__what",
+        "fh-ledger__when",
+        "fh-ledger__status",
+        "fh-ledger__amount"
+      ],
+      "markup": "<ol class=\"fh-ledger\" data-fh=\"LDG\">\n  <li class=\"fh-ledger__day\">Today</li>\n  <li data-status=\"pending\"><span class=\"fh-ledger__mark\" aria-hidden=\"true\">AW</span><div class=\"fh-ledger__what\"><b>AWS</b><small>Card ••2231 · Rascode</small></div><time class=\"fh-ledger__when\" datetime=\"2026-11-02\">Nov 2</time><span class=\"fh-ledger__status\">Pending</span><span class=\"fh-ledger__amount\">−$212.40</span></li>\n  <li data-status=\"declined\"><span class=\"fh-ledger__mark\" aria-hidden=\"true\">FG</span><div class=\"fh-ledger__what\"><b>Figma</b><small>Card ••8810 · Spend limit reached</small></div><time class=\"fh-ledger__when\" datetime=\"2026-11-02\">Nov 2</time><span class=\"fh-ledger__status\">Declined</span><span class=\"fh-ledger__amount\">−$45.00</span></li>\n  <li data-status=\"posted\"><span class=\"fh-ledger__mark\" aria-hidden=\"true\">ST</span><div class=\"fh-ledger__what\"><b>Stripe payout</b><small>Operating · Rascode</small></div><time class=\"fh-ledger__when\" datetime=\"2026-11-02\">Nov 2</time><span class=\"fh-ledger__status\">Posted</span><span class=\"fh-ledger__amount\" data-flow=\"in\">+$2,400.00</span></li>\n</ol>",
+      "groups": [],
+      "variants": []
+    },
+    {
+      "id": "VCD",
+      "name": "Virtual card",
+      "section": "Finance",
+      "anchor": "f-vcard",
+      "page": "/finance/",
+      "url": "https://firehorse.rascode.dev/finance/#VCD",
+      "summary": "A card face for issued cards: last four only, spend against its limit, lock and declines.",
+      "classes": [
+        "fh-vcards",
+        "fh-vcard",
+        "fh-vcard__name",
+        "fh-vcard__number",
+        "fh-vcard__limit"
+      ],
+      "markup": "<div class=\"fh-vcards\" data-fh=\"VCD\">\n  <article class=\"fh-vcard\" data-tone=\"violet\" data-state=\"open\">\n    <header><span class=\"fh-vcard__name\">AWS</span><span>Open</span></header>\n    <p class=\"fh-vcard__number\">•••• 2231</p>\n    <div class=\"fh-vcard__limit\" style=\"--fh-used: 42%\"><span>$212 of $500 / month</span></div>\n    <footer><span>Merchant-locked</span><span>0 declines · 30d</span></footer>\n  </article>\n  <article class=\"fh-vcard\" data-tone=\"orange\" data-state=\"paused\">\n    <header><span class=\"fh-vcard__name\">Trial subscriptions</span><span>Paused</span></header>\n    <p class=\"fh-vcard__number\">•••• 8810</p>\n    <div class=\"fh-vcard__limit\" style=\"--fh-used: 100%\"><span>$45 of $45 / transaction</span></div>\n    <footer><span>Single use</span><span>3 declines · 30d</span></footer>\n  </article>\n</div>",
+      "groups": [],
+      "variants": []
+    },
+    {
+      "id": "CNX",
+      "name": "Connection status",
+      "section": "Finance",
+      "anchor": "f-connections",
+      "page": "/finance/",
+      "url": "https://firehorse.rascode.dev/finance/#CNX",
+      "summary": "One row per provider: health, last sync and the one action it needs.",
+      "classes": [
+        "fh-connections",
+        "fh-btn",
+        "fh-btn--sm"
+      ],
+      "markup": "<ul class=\"fh-connections\" data-fh=\"CNX\">\n  <li data-health=\"ok\"><b>Chase</b><small>Plaid · 3 accounts</small><time>4 min ago</time><button class=\"fh-btn fh-btn--sm\" type=\"button\">Sync</button></li>\n  <li data-health=\"stale\"><b>Privacy.com</b><small>73 cards</small><time>Yesterday</time><button class=\"fh-btn fh-btn--sm\" type=\"button\">Sync</button></li>\n  <li data-health=\"off\"><b>PayPal</b><small>Not connected</small><button class=\"fh-btn fh-btn--sm\" type=\"button\">Connect</button></li>\n</ul>",
+      "groups": [],
+      "variants": []
+    },
+    {
       "id": "PLY",
       "name": "Audio player",
       "section": "Audio",
@@ -4886,6 +5006,223 @@
           ],
           "config": {},
           "markup": "<article class=\"fh-canvas fh-canvas--post fh-canvas--specimen\" data-fh-type=\"archivo\" data-fh=\"SOC-1.5\">\n  <figure class=\"fh-canvas__media\"><img src=\"img/backdrop/firehorse-hoof.webp\" alt></figure>\n  <div class=\"fh-canvas__body\">\n    <div class=\"fh-canvas__top\"><h2 class=\"fh-canvas__title\">Create something different</h2><span>TWF</span></div>\n    <div class=\"fh-canvas__main\"></div>\n    <div class=\"fh-canvas__foot\"><span>−3% letter spacing</span><p class=\"fh-canvas__face\"><small>Font</small><b>Archivo</b></p></div>\n  </div>\n</article>"
+        }
+      ]
+    },
+    {
+      "id": "WAL",
+      "name": "Home screen wallpapers",
+      "section": "Social",
+      "anchor": "wallpapers",
+      "page": "/media/",
+      "url": "https://firehorse.rascode.dev/media/#WAL",
+      "summary": "A wallpaper drawn on the phone's own icon grid: the brand on icon row 1, the page title on row 2, an etched rule with a tone tick, then a dashed cell where each icon lands, and the dock. Leave rows 1 and 2 empty on that home page and the icons fill the cells. iOS uses one wallpaper for every home page, so make one per Focus (each Focus gets its own page and wallpaper), and turn off Perspective Zoom so it isn't scaled. --wall-clean drops the cells; --wall-5x5 is the denser Android grid. Grid positions are estimates until measured on each device: correct a preset with its --fh-wall-* numbers.",
+      "classes": [
+        "fh-canvas",
+        "fh-canvas--wall",
+        "fh-canvas--wall-iphone",
+        "fh-canvas__band",
+        "fh-canvas__top",
+        "fh-canvas__mark",
+        "fh-canvas__eyebrow",
+        "fh-canvas__title",
+        "fh-canvas__cells",
+        "fh-canvas__dock",
+        "fh-canvas--wall-iphone-61",
+        "fh-canvas--wall-iphone-air",
+        "fh-canvas--wall-iphone-max",
+        "fh-canvas--wall-pixel",
+        "fh-canvas--wall-pixel-xl",
+        "fh-canvas--wall-5x5",
+        "fh-canvas--wall-galaxy",
+        "fh-canvas--wall-galaxy-qhd"
+      ],
+      "markup": "<dl class=\"site-media site-media--wall\" style=\"--site-media-cols: 0.460fr 0.461fr 0.461fr 0.460fr\">\n  <div><dt>iPhone 6.3″<code>.fh-canvas--wall-iphone · 1206 × 2622 · 17, 17 Pro, 18 Pro</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone\" data-tone=\"accent\" data-fh=\"WAL-1.1\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 01</p></div>\n        <h2 class=\"fh-canvas__title\">Studio</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n  <div><dt>iPhone 6.1″<code>.fh-canvas--wall-iphone-61 · 1179 × 2556 · 15, 15 Pro, 16</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone-61\" data-tone=\"sky\" data-fh=\"WAL-1.2\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 02</p></div>\n        <h2 class=\"fh-canvas__title\">Work</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n  <div><dt>iPhone Air<code>.fh-canvas--wall-iphone-air · 1260 × 2736 · Air</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone-air\" data-tone=\"lime\" data-fh=\"WAL-1.3\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 03</p></div>\n        <h2 class=\"fh-canvas__title\">Personal</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n  <div><dt>iPhone 6.9″<code>.fh-canvas--wall-iphone-max · 1320 × 2868 · 17 Pro Max, 18 Pro Max</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone-max\" data-tone=\"amber\" data-fh=\"WAL-1.4\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 04</p></div>\n        <h2 class=\"fh-canvas__title\">Travel</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n</dl>\n<dl class=\"site-media site-media--wall\" style=\"--site-media-cols: 0.448fr 0.449fr 0.462fr 0.462fr; margin-block-start: var(--fh-space-10)\">\n  <div><dt>Pixel Pro<code>.fh-canvas--wall-pixel · 1280 × 2856 · Pixel 11 Pro, 10 Pro</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-pixel\" data-tone=\"violet\" data-fh=\"WAL-2.1\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 01</p></div>\n        <h2 class=\"fh-canvas__title\">Studio</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n  <div><dt>Pixel Pro XL · 5 × 5<code>.fh-canvas--wall-pixel-xl .fh-canvas--wall-5x5 · 1344 × 2992 · Pixel 11 Pro XL, 10 Pro XL</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-pixel-xl fh-canvas--wall-5x5\" data-tone=\"teal\" data-fh=\"WAL-2.2\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 02</p></div>\n        <h2 class=\"fh-canvas__title\">Work</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n  <div><dt>Galaxy S<code>.fh-canvas--wall-galaxy · 1080 × 2340 · S26, S25</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-galaxy\" data-tone=\"rose\" data-fh=\"WAL-3.1\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 01</p></div>\n        <h2 class=\"fh-canvas__title\">Personal</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n  <div><dt>Galaxy Plus / Ultra · 5 × 5<code>.fh-canvas--wall-galaxy-qhd .fh-canvas--wall-5x5 · 1440 × 3120 · S26+, S26 Ultra, S25+, S25 Ultra</code></dt><dd>\n    <article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-galaxy-qhd fh-canvas--wall-5x5\" data-tone=\"orange\" data-fh=\"WAL-3.2\">\n      <div class=\"fh-canvas__band\">\n        <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 02</p></div>\n        <h2 class=\"fh-canvas__title\">Travel</h2>\n      </div>\n      <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n      <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n    </article></dd></div>\n</dl>",
+      "groups": [
+        {
+          "id": "WAL-1",
+          "name": "iPhone",
+          "summary": "",
+          "variants": [
+            "WAL-1.1",
+            "WAL-1.2",
+            "WAL-1.3",
+            "WAL-1.4"
+          ]
+        },
+        {
+          "id": "WAL-2",
+          "name": "Pixel",
+          "summary": "",
+          "variants": [
+            "WAL-2.1",
+            "WAL-2.2"
+          ]
+        },
+        {
+          "id": "WAL-3",
+          "name": "Galaxy",
+          "summary": "",
+          "variants": [
+            "WAL-3.1",
+            "WAL-3.2"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "WAL-1.1",
+          "group": "WAL-1",
+          "name": "iPhone 6.3″",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-iphone",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone\" data-tone=\"accent\" data-fh=\"WAL-1.1\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 01</p></div>\n    <h2 class=\"fh-canvas__title\">Studio</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-1.2",
+          "group": "WAL-1",
+          "name": "iPhone 6.1″",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-iphone-61",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone-61\" data-tone=\"sky\" data-fh=\"WAL-1.2\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 02</p></div>\n    <h2 class=\"fh-canvas__title\">Work</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-1.3",
+          "group": "WAL-1",
+          "name": "iPhone Air",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-iphone-air",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone-air\" data-tone=\"lime\" data-fh=\"WAL-1.3\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 03</p></div>\n    <h2 class=\"fh-canvas__title\">Personal</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-1.4",
+          "group": "WAL-1",
+          "name": "iPhone 6.9″",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-iphone-max",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-iphone-max\" data-tone=\"amber\" data-fh=\"WAL-1.4\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Focus 04</p></div>\n    <h2 class=\"fh-canvas__title\">Travel</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-2.1",
+          "group": "WAL-2",
+          "name": "Pixel Pro",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-pixel",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-pixel\" data-tone=\"violet\" data-fh=\"WAL-2.1\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 01</p></div>\n    <h2 class=\"fh-canvas__title\">Studio</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-2.2",
+          "group": "WAL-2",
+          "name": "Pixel Pro XL · 5 × 5",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-pixel-xl",
+            "fh-canvas--wall-5x5",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-pixel-xl fh-canvas--wall-5x5\" data-tone=\"teal\" data-fh=\"WAL-2.2\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 02</p></div>\n    <h2 class=\"fh-canvas__title\">Work</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-3.1",
+          "group": "WAL-3",
+          "name": "Galaxy S",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-galaxy",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-galaxy\" data-tone=\"rose\" data-fh=\"WAL-3.1\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 01</p></div>\n    <h2 class=\"fh-canvas__title\">Personal</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
+        },
+        {
+          "id": "WAL-3.2",
+          "group": "WAL-3",
+          "name": "Galaxy Plus / Ultra · 5 × 5",
+          "classes": [
+            "fh-canvas",
+            "fh-canvas--wall",
+            "fh-canvas--wall-galaxy-qhd",
+            "fh-canvas--wall-5x5",
+            "fh-canvas__band",
+            "fh-canvas__top",
+            "fh-canvas__mark",
+            "fh-canvas__eyebrow",
+            "fh-canvas__title",
+            "fh-canvas__cells",
+            "fh-canvas__dock"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-canvas fh-canvas--wall fh-canvas--wall-galaxy-qhd fh-canvas--wall-5x5\" data-tone=\"orange\" data-fh=\"WAL-3.2\">\n  <div class=\"fh-canvas__band\">\n    <div class=\"fh-canvas__top\"><span class=\"fh-canvas__mark\"><i>_</i>firehorse</span><p class=\"fh-canvas__eyebrow\">Mode 02</p></div>\n    <h2 class=\"fh-canvas__title\">Travel</h2>\n  </div>\n  <ol class=\"fh-canvas__cells\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>\n  <ol class=\"fh-canvas__dock\" aria-hidden=\"true\"><li></li><li></li><li></li><li></li><li></li></ol>\n</article>"
         }
       ]
     },
@@ -5973,6 +6310,8 @@
     "fh-table": "TBL",
     "fh-checkout": "CKO",
     "fh-invoice": "INV",
+    "fh-balance": "BAL",
+    "fh-ledger": "LDG",
     "fh-caption": "CAP",
     "fh-playlist": "TRK",
     "fh-reel": "REL",
@@ -6034,6 +6373,12 @@
     "fh-item": "CRT",
     "fh-summary": "SUM",
     "fh-confirmation": "CNF",
+    "fh-segment": "SEG",
+    "fh-switch": "SEG",
+    "fh-account": "ACN",
+    "fh-virtual": "VCD",
+    "fh-connection": "CNX",
+    "fh-statu": "CNX",
     "fh-audio": "PLY",
     "fh-player": "PLY",
     "fh-render": "STG",
@@ -6041,6 +6386,9 @@
     "fh-thumbnail": "THB",
     "fh-post": "SOC",
     "fh-storie": "SOC",
+    "fh-home": "WAL",
+    "fh-screen": "WAL",
+    "fh-wallpaper": "WAL",
     "fh-header": "HDR",
     "fh-cover": "CVR",
     "fh-art": "CVR",
@@ -6076,12 +6424,18 @@
     "fh-form": "FLD",
     "fh-check": "CHO",
     "fh-table-wrap": "TBL",
+    "fh-accounts": "ACN",
+    "fh-vcards": "VCD",
+    "fh-connections": "CNX",
     "fh-tag": "TAG",
     "fh-canva": "THB",
-    "fh-crosse": "CTB"
+    "fh-crosse": "CTB",
+    "fh-vcard": "VCD"
   },
   "components": [
     "fh-accordion",
+    "fh-account",
+    "fh-accounts",
     "fh-action",
     "fh-alert",
     "fh-audio-btn",
@@ -6090,6 +6444,7 @@
     "fh-avatar",
     "fh-avatars",
     "fh-badge",
+    "fh-balance",
     "fh-banner",
     "fh-breadcrumb",
     "fh-burger",
@@ -6113,6 +6468,7 @@
     "fh-code",
     "fh-command",
     "fh-confirm",
+    "fh-connections",
     "fh-crosses",
     "fh-cta-band",
     "fh-cube",
@@ -6147,6 +6503,7 @@
     "fh-input",
     "fh-input-group",
     "fh-invoice",
+    "fh-ledger",
     "fh-letter",
     "fh-line-item",
     "fh-line-items",
@@ -6196,6 +6553,7 @@
     "fh-rotator",
     "fh-scrub",
     "fh-search",
+    "fh-segment",
     "fh-segmented",
     "fh-select",
     "fh-select-wrap",
@@ -6235,6 +6593,8 @@
     "fh-tracks",
     "fh-trust",
     "fh-typing",
+    "fh-vcard",
+    "fh-vcards",
     "fh-volume",
     "fh-wave",
     "fh-window"

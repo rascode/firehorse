@@ -200,7 +200,7 @@ ${list.map((x) => {
 const MEGA = [
   { title: "System", tone: "teal", paths: ["/foundations/", "/layout/", "/patterns/", "/theming/", "/agents/", "/developer/"] },
   { title: "Components", tone: "amber", parent: "/components/" },
-  { title: "Product UI", tone: "orange", paths: ["/forms/", "/data/", "/commerce/", "/audio/"] },
+  { title: "Product UI", tone: "orange", paths: ["/forms/", "/data/", "/finance/", "/commerce/", "/audio/"] },
   // Links can point into a page: { path, name } (the target id must exist; site.mjs --check fails on a dead #link).
   { title: "Media", tone: "fuchsia", paths: [{ path: "/media/", name: "Social & print" }, { path: "/media/#slide-layouts", name: "Slides" }] },
 ];

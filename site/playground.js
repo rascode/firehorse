@@ -65,7 +65,8 @@ function preset(k) {
   if ("theme" in p) window.Firehorse?.setTheme(p.theme);
   setScheme(p.scheme ?? "dark");
   sel.value = k;
-  toast(`${p.name} loaded. Drag, reorder or delete blocks.`);
+  // Phones get a read-only preview (playground.css), so don't invite editing there.
+  toast(document.body.clientWidth < 768 ? `${p.name} preview loaded.` : `${p.name} loaded. Drag, reorder or delete blocks.`);
 }
 sel.addEventListener("change", () => sel.value && preset(sel.value));
 document.addEventListener("click", (e) => { const c = e.target.closest("[data-preset]"); if (c) preset(c.dataset.preset); });

@@ -1,0 +1,128 @@
+<!--@meta {
+  "path": "/finance/",
+  "order": 62,
+  "name": "Finance",
+  "tone": "teal",
+  "title": "Finance · Firehorse",
+  "description": "Firehorse finance: balances, Business and Personal segments, accounts, a ledger that reads pending and declined, virtual cards and connection health.",
+  "headline": "Money, <em>read at a glance</em>",
+  "lede": "A balance hero with its split by segment and entity, a segment switch, account cards, a ledger where pending and declined say so in words, virtual card faces and connection health. Built for Chicken and Egg; every piece follows the active <a class=\"fh-link\" href=\"/theming/\">theme</a>.",
+  "scripts": [],
+  "icon": "wallet",
+  "summary": [
+    { "value": "6", "label": "Components", "blurb": "Balance, segment switch, account, ledger, virtual card, connections." },
+    { "value": "4", "label": "Statuses", "blurb": "Pending, posted, declined and reversed, always labelled." }
+  ]
+}-->
+<!--@main-->
+    <section id="finance" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="finance-title" data-fh-label="Finance" data-fh-index="08">
+      <header class="fh-section-head">
+        <p class="fh-eyebrow">Finance</p>
+        <h2 id="finance-title">Every account, one view</h2>
+        <p>Totals net out what is owed. Business and Personal are tones, entities are chips, and figures blur under <code>data-fh-private</code> when you share your screen.</p>
+      </header>
+
+      <div class="site-demo site-anchor" id="f-balance" data-fh-id="BAL">
+        <div class="site-demo__head"><h3>Balance</h3><p>The total, what is available, what is pending and declined, and the split by segment or entity.</p></div>
+        <div class="site-demo__stage" data-demo>
+<section class="fh-balance" data-tone="teal">
+  <p class="fh-balance__label">Total balance · All</p>
+  <p class="fh-balance__figure"><span class="fh-balance__currency">$</span>48,210<span class="fh-balance__cents">.33</span></p>
+  <dl class="fh-balance__meta">
+    <div><dt>Available</dt><dd>$41,005.10</dd></div>
+    <div><dt>Owed</dt><dd>$3,120.00</dd></div>
+    <div data-status="pending"><dt>Pending · 3</dt><dd>$412.80</dd></div>
+    <div data-status="declined"><dt>Declined · 30d</dt><dd>2</dd></div>
+  </dl>
+  <div class="fh-balance__split" role="img" aria-label="Business 62 percent, Personal 38 percent">
+    <span style="--fh-share: 62%" data-tone="amber"></span><span style="--fh-share: 38%" data-tone="sky"></span>
+  </div>
+  <ul class="fh-balance__legend">
+    <li data-tone="amber"><span>Business</span><b>$29,890.40</b></li>
+    <li data-tone="sky"><span>Personal</span><b>$18,319.93</b></li>
+  </ul>
+</section>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="f-segment" data-fh-id="SEG">
+        <div class="site-demo__head"><h3>Segment switch</h3><p>All, Business, Personal; entities appear under Business.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <nav class="fh-segment" aria-label="Segment">
+    <a href="#f-segment" aria-current="true">All <b>9</b></a>
+    <a href="#f-segment" data-tone="amber">Business <b>5</b></a>
+    <a href="#f-segment" data-tone="sky">Personal <b>4</b></a>
+  </nav>
+  <nav class="fh-segment fh-segment--entities" aria-label="Business">
+    <a href="#f-segment" aria-current="true">All businesses</a>
+    <a href="#f-segment" data-tone="orange">Rascode</a>
+    <a href="#f-segment" data-tone="violet">Lymynal</a>
+  </nav>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="f-account" data-fh-id="ACN">
+        <div class="site-demo__head"><h3>Account card</h3><p>Name, institution and last four, the entity tag, balance and sync health. Owed balances read red.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div class="fh-accounts">
+  <article class="fh-account" data-tone="amber">
+    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true">CH</span><div><h3 class="fh-account__name">Operating</h3><p class="fh-account__sub">Chase · ••4417</p></div><span class="fh-account__tag" data-tone="orange">Rascode</span></header>
+    <p class="fh-account__figure">$18,240.12</p>
+    <dl class="fh-account__meta"><div><dt>Available</dt><dd>$17,990.12</dd></div></dl>
+    <footer class="fh-account__foot"><span data-health="ok">Synced 4 min ago</span></footer>
+  </article>
+  <article class="fh-account" data-tone="sky">
+    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true">AX</span><div><h3 class="fh-account__name">Gold Card</h3><p class="fh-account__sub">Amex · ••1009</p></div><span class="fh-account__tag" data-tone="sky">Personal</span></header>
+    <p class="fh-account__figure" data-flow="owed">−$3,120.00</p>
+    <dl class="fh-account__meta"><div><dt>Limit</dt><dd>$15,000</dd></div></dl>
+    <footer class="fh-account__foot"><span data-health="stale">Synced yesterday</span></footer>
+  </article>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="f-ledger" data-fh-id="LDG">
+        <div class="site-demo__head"><h3>Ledger</h3><p>Pending first and labelled; declined and reversed struck through; money in reads green with a plus.</p></div>
+        <div class="site-demo__stage" data-demo>
+<ol class="fh-ledger">
+  <li class="fh-ledger__day">Today</li>
+  <li data-status="pending"><span class="fh-ledger__mark" aria-hidden="true">AW</span><div class="fh-ledger__what"><b>AWS</b><small>Card ••2231 · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Pending</span><span class="fh-ledger__amount">−$212.40</span></li>
+  <li data-status="declined"><span class="fh-ledger__mark" aria-hidden="true">FG</span><div class="fh-ledger__what"><b>Figma</b><small>Card ••8810 · Spend limit reached</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Declined</span><span class="fh-ledger__amount">−$45.00</span></li>
+  <li data-status="posted"><span class="fh-ledger__mark" aria-hidden="true">ST</span><div class="fh-ledger__what"><b>Stripe payout</b><small>Operating · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Posted</span><span class="fh-ledger__amount" data-flow="in">+$2,400.00</span></li>
+</ol>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="f-vcard" data-fh-id="VCD">
+        <div class="site-demo__head"><h3>Virtual card</h3><p>A card face for issued cards: last four only, spend against its limit, lock and declines.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div class="fh-vcards">
+  <article class="fh-vcard" data-tone="violet" data-state="open">
+    <header><span class="fh-vcard__name">AWS</span><span>Open</span></header>
+    <p class="fh-vcard__number">•••• 2231</p>
+    <div class="fh-vcard__limit" style="--fh-used: 42%"><span>$212 of $500 / month</span></div>
+    <footer><span>Merchant-locked</span><span>0 declines · 30d</span></footer>
+  </article>
+  <article class="fh-vcard" data-tone="orange" data-state="paused">
+    <header><span class="fh-vcard__name">Trial subscriptions</span><span>Paused</span></header>
+    <p class="fh-vcard__number">•••• 8810</p>
+    <div class="fh-vcard__limit" style="--fh-used: 100%"><span>$45 of $45 / transaction</span></div>
+    <footer><span>Single use</span><span>3 declines · 30d</span></footer>
+  </article>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="f-connections" data-fh-id="CNX">
+        <div class="site-demo__head"><h3>Connection status</h3><p>One row per provider: health, last sync and the one action it needs.</p></div>
+        <div class="site-demo__stage" data-demo>
+<ul class="fh-connections">
+  <li data-health="ok"><b>Chase</b><small>Plaid · 3 accounts</small><time>4 min ago</time><button class="fh-btn fh-btn--sm" type="button">Sync</button></li>
+  <li data-health="stale"><b>Privacy.com</b><small>73 cards</small><time>Yesterday</time><button class="fh-btn fh-btn--sm" type="button">Sync</button></li>
+  <li data-health="off"><b>PayPal</b><small>Not connected</small><button class="fh-btn fh-btn--sm" type="button">Connect</button></li>
+</ul>
+        </div>
+      </div>
+    </section>

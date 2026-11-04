@@ -1,0 +1,82 @@
+/*
+ * Firehorse — Virtual card (VCD)
+ * components/finance · layer fh.components · docs /finance/#VCD
+ * A card face for issued and virtual cards. Never shows a full number.
+ *
+ *   <article class="fh-vcard" data-tone="violet" data-state="open">
+ *     <header><span class="fh-vcard__name">AWS</span><span class="fh-vcard__state">Open</span></header>
+ *     <p class="fh-vcard__number">•••• 2231</p>
+ *     <div class="fh-vcard__limit" style="--fh-used: 42%"><span>$212 of $500 / month</span></div>
+ *     <footer><span>Merchant-locked</span><span>3 declines · 30d</span></footer>
+ *   </article>
+ *  Group with .fh-vcards.
+ */
+@layer fh.components {
+  .fh-vcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--fh-space-4);
+  }
+
+  .fh-vcard {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: var(--fh-space-3);
+    aspect-ratio: 1.586;
+    padding: var(--fh-space-4) var(--fh-space-5);
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 35%, transparent);
+    border-radius: var(--fh-radius-lg);
+    background:
+      repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 5%, transparent) 7px 8px),
+      color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 6%, var(--fh-color-surface, transparent));
+    color: inherit;
+    text-decoration: none;
+
+    & > header, & > footer {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--fh-space-2);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      color: var(--fh-color-text-muted);
+    }
+    &[data-state="paused"], &[data-state="closed"] { filter: grayscale(1); opacity: 0.65; }
+  }
+
+  .fh-vcard__name {
+    overflow: hidden;
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: normal;
+    text-overflow: ellipsis;
+    text-transform: none;
+    white-space: nowrap;
+    color: var(--fh-color-text);
+  }
+
+  .fh-vcard__number {
+    align-self: end;
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-large);
+    letter-spacing: 0.12em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-vcard__limit {
+    display: grid;
+    gap: var(--fh-space-1);
+    font-size: var(--fh-text-caption);
+    color: var(--fh-color-text-muted);
+
+    &::before {
+      content: "";
+      block-size: 3px;
+      border-radius: var(--fh-radius-pill);
+      background: linear-gradient(90deg, var(--fh-tone, var(--fh-color-text)) var(--fh-used, 0%), color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 15%, transparent) 0);
+    }
+  }
+}

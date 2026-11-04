@@ -95,6 +95,12 @@
 | `SUM` | Order summary | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#SUM) |
 | `CNF` | Order confirmation | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CNF) |
 | `INV` | Invoice | Invoice | 1 Sheet (3) · 2 Pay (1) | [open](https://firehorse.rascode.dev/commerce/#INV) |
+| `BAL` | Balance | Finance | — | [open](https://firehorse.rascode.dev/finance/#BAL) |
+| `SEG` | Segment switch | Finance | — | [open](https://firehorse.rascode.dev/finance/#SEG) |
+| `ACN` | Account card | Finance | — | [open](https://firehorse.rascode.dev/finance/#ACN) |
+| `LDG` | Ledger | Finance | — | [open](https://firehorse.rascode.dev/finance/#LDG) |
+| `VCD` | Virtual card | Finance | — | [open](https://firehorse.rascode.dev/finance/#VCD) |
+| `CNX` | Connection status | Finance | — | [open](https://firehorse.rascode.dev/finance/#CNX) |
 | `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
 | `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
 | `TRK` | Playlist | Audio | — | [open](https://firehorse.rascode.dev/audio/#TRK) |
@@ -104,6 +110,7 @@
 | `STG` | Render stages | Audio | — | [open](https://firehorse.rascode.dev/audio/#STG) |
 | `THB` | Thumbnails & link cards | Social | 1 Thumbnails & link cards (2) | [open](https://firehorse.rascode.dev/media/#THB) |
 | `SOC` | Posts & stories | Social | 1 Posts & stories (5) | [open](https://firehorse.rascode.dev/media/#SOC) |
+| `WAL` | Home screen wallpapers | Social | 1 iPhone (4) · 2 Pixel (2) · 3 Galaxy (2) | [open](https://firehorse.rascode.dev/media/#WAL) |
 | `HDR` | Profile headers | Social | 1 Profile headers (3) | [open](https://firehorse.rascode.dev/media/#HDR) |
 | `CVR` | Cover art | Social | 1 Cover art (2) | [open](https://firehorse.rascode.dev/media/#CVR) |
 | `BIZ` | Business cards | Social | 1 Business cards (2) | [open](https://firehorse.rascode.dev/media/#BIZ) |
@@ -2414,6 +2421,54 @@ Classes: `fh-invoice` `fh-invoice__cover` `fh-invoice__head` `fh-invoice__logo` 
 </div>
 ```
 
+## BAL · Balance
+
+The total, what is available, what is pending and declined, and the split by segment or entity.
+
+Classes: `fh-balance` `fh-balance__label` `fh-balance__figure` `fh-balance__currency` `fh-balance__cents` `fh-balance__meta` `fh-balance__split` `fh-balance__legend`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#BAL.
+
+## SEG · Segment switch
+
+All, Business, Personal; entities appear under Business.
+
+Classes: `fh-stack` `fh-segment` `fh-segment--entities`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#SEG.
+
+## ACN · Account card
+
+Name, institution and last four, the entity tag, balance and sync health. Owed balances read red.
+
+Classes: `fh-accounts` `fh-account` `fh-account__head` `fh-account__mark` `fh-account__name` `fh-account__sub` `fh-account__tag` `fh-account__figure` `fh-account__meta` `fh-account__foot`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#ACN.
+
+## LDG · Ledger
+
+Pending first and labelled; declined and reversed struck through; money in reads green with a plus.
+
+Classes: `fh-ledger` `fh-ledger__day` `fh-ledger__mark` `fh-ledger__what` `fh-ledger__when` `fh-ledger__status` `fh-ledger__amount`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#LDG.
+
+## VCD · Virtual card
+
+A card face for issued cards: last four only, spend against its limit, lock and declines.
+
+Classes: `fh-vcards` `fh-vcard` `fh-vcard__name` `fh-vcard__number` `fh-vcard__limit`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#VCD.
+
+## CNX · Connection status
+
+One row per provider: health, last sync and the one action it needs.
+
+Classes: `fh-connections` `fh-btn` `fh-btn--sm`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#CNX.
+
 ## PLY · Audio player
 
 Classes: `fh-player` `fh-player__art` `fh-icon` `fh-player__meta` `fh-player__kicker` `fh-eq` `fh-player__title` `fh-player__by` `fh-play` `fh-play--lg` `fh-wave` `fh-wave--lg` `fh-player__time` `fh-player__tools` `fh-audio-btn` `fh-segmented` `fh-segmented--sm` `fh-volume` `fh-scrub`
@@ -2570,6 +2625,122 @@ Classes: `fh-canvas` `fh-canvas--post` `fh-canvas__body` `fh-canvas__top` `fh-ca
     <div class="fh-canvas__main"></div>
     <div class="fh-canvas__foot"><span>−3% letter spacing</span><p class="fh-canvas__face"><small>Font</small><b>Archivo</b></p></div>
   </div>
+</article>
+```
+
+## WAL · Home screen wallpapers
+
+A wallpaper drawn on the phone's own icon grid: the brand on icon row 1, the page title on row 2, an etched rule with a tone tick, then a dashed cell where each icon lands, and the dock. Leave rows 1 and 2 empty on that home page and the icons fill the cells. iOS uses one wallpaper for every home page, so make one per Focus (each Focus gets its own page and wallpaper), and turn off Perspective Zoom so it isn't scaled. --wall-clean drops the cells; --wall-5x5 is the denser Android grid. Grid positions are estimates until measured on each device: correct a preset with its --fh-wall-* numbers.
+
+Classes: `fh-canvas` `fh-canvas--wall` `fh-canvas--wall-iphone` `fh-canvas__band` `fh-canvas__top` `fh-canvas__mark` `fh-canvas__eyebrow` `fh-canvas__title` `fh-canvas__cells` `fh-canvas__dock` `fh-canvas--wall-iphone-61` `fh-canvas--wall-iphone-air` `fh-canvas--wall-iphone-max` `fh-canvas--wall-pixel` `fh-canvas--wall-pixel-xl` `fh-canvas--wall-5x5` `fh-canvas--wall-galaxy` `fh-canvas--wall-galaxy-qhd`
+
+### WAL-1 · iPhone
+
+#### WAL-1.1 · iPhone 6.3″
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone" data-tone="accent" data-fh="WAL-1.1">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 01</p></div>
+    <h2 class="fh-canvas__title">Studio</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+#### WAL-1.2 · iPhone 6.1″
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone-61" data-tone="sky" data-fh="WAL-1.2">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 02</p></div>
+    <h2 class="fh-canvas__title">Work</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+#### WAL-1.3 · iPhone Air
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone-air" data-tone="lime" data-fh="WAL-1.3">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 03</p></div>
+    <h2 class="fh-canvas__title">Personal</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+#### WAL-1.4 · iPhone 6.9″
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-iphone-max" data-tone="amber" data-fh="WAL-1.4">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Focus 04</p></div>
+    <h2 class="fh-canvas__title">Travel</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+### WAL-2 · Pixel
+
+#### WAL-2.1 · Pixel Pro
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-pixel" data-tone="violet" data-fh="WAL-2.1">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 01</p></div>
+    <h2 class="fh-canvas__title">Studio</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+#### WAL-2.2 · Pixel Pro XL · 5 × 5
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-pixel-xl fh-canvas--wall-5x5" data-tone="teal" data-fh="WAL-2.2">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 02</p></div>
+    <h2 class="fh-canvas__title">Work</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+### WAL-3 · Galaxy
+
+#### WAL-3.1 · Galaxy S
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-galaxy" data-tone="rose" data-fh="WAL-3.1">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 01</p></div>
+    <h2 class="fh-canvas__title">Personal</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+</article>
+```
+
+#### WAL-3.2 · Galaxy Plus / Ultra · 5 × 5
+
+```html
+<article class="fh-canvas fh-canvas--wall fh-canvas--wall-galaxy-qhd fh-canvas--wall-5x5" data-tone="orange" data-fh="WAL-3.2">
+  <div class="fh-canvas__band">
+    <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Mode 02</p></div>
+    <h2 class="fh-canvas__title">Travel</h2>
+  </div>
+  <ol class="fh-canvas__cells" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  <ol class="fh-canvas__dock" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
 </article>
 ```
 

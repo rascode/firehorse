@@ -1,0 +1,109 @@
+/*
+ * Firehorse — Ledger (LDG)
+ * components/finance · layer fh.components · docs /finance/#LDG
+ * Transactions as rows: what, where from, when, status, amount. Pending sits
+ * on top and is marked in words; declined is struck through, never just red.
+ *
+ *   <ol class="fh-ledger">
+ *     <li data-status="pending">
+ *       <span class="fh-ledger__mark" aria-hidden="true">AW</span>
+ *       <div class="fh-ledger__what"><b>AWS</b><small>Card ••2231 · Rascode</small></div>
+ *       <time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time>
+ *       <span class="fh-ledger__status">Pending</span>
+ *       <span class="fh-ledger__amount">−$212.40</span>
+ *     </li>
+ *   </ol>
+ *  Group by day with <li class="fh-ledger__day">Today</li>.
+ */
+@layer fh.components {
+  .fh-ledger {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    container-type: inline-size;
+
+    & > li:not(.fh-ledger__day) {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas: "mark what amount" "mark when status";
+      align-items: center;
+      gap: var(--fh-space-0-5) var(--fh-space-3);
+      padding: var(--fh-space-3) var(--fh-space-2);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & > li[data-status="pending"] { background-color: color-mix(in oklab, var(--fh-color-warning) 5%, transparent); }
+    & > li[data-status="declined"] { background-color: color-mix(in oklab, var(--fh-color-danger) 4%, transparent); }
+  }
+
+  .fh-ledger__day {
+    padding: var(--fh-space-4) var(--fh-space-2) var(--fh-space-1-5);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-ledger__mark {
+    grid-area: mark;
+    display: grid;
+    place-items: center;
+    inline-size: var(--fh-space-8);
+    block-size: var(--fh-space-8);
+    border-radius: var(--fh-radius-round);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, transparent);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+  }
+
+  .fh-ledger__what {
+    grid-area: what;
+    display: grid;
+    min-inline-size: 0;
+    & b { overflow: hidden; font-weight: var(--fh-weight-medium); text-overflow: ellipsis; white-space: nowrap; }
+    & small { overflow: hidden; font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); text-overflow: ellipsis; white-space: nowrap; }
+  }
+
+  .fh-ledger__when { grid-area: when; font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); }
+
+  .fh-ledger__status {
+    grid-area: status;
+    justify-self: end;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+
+    li[data-status="pending"] & { color: var(--fh-color-warning); }
+    li[data-status="declined"] & { color: var(--fh-color-danger); }
+    li[data-status="posted"] & { visibility: hidden; }
+  }
+
+  .fh-ledger__amount {
+    grid-area: amount;
+    justify-self: end;
+    font-family: var(--fh-font-figure);
+    font-weight: var(--fh-weight-medium);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    &[data-flow="in"] { color: var(--fh-color-success); }
+    li:is([data-status="declined"], [data-status="reversed"]) & {
+      color: var(--fh-color-text-muted);
+      text-decoration: line-through;
+    }
+  }
+
+  /* Wide: one line per row. */
+  @container (inline-size >= 44rem) {
+    .fh-ledger > li:not(.fh-ledger__day) {
+      grid-template-columns: auto minmax(0, 1fr) 7rem 6rem 8rem;
+      grid-template-areas: "mark what when status amount";
+    }
+    .fh-ledger__status { justify-self: start; }
+  }
+}
