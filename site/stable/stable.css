@@ -49,13 +49,15 @@
 /* The whole title shows: it wraps (balanced) instead of truncating. */
 .stable-dock .stable-dock__title { flex: 1 1 auto; min-inline-size: 0; max-inline-size: 46rem; overflow: visible; white-space: normal; text-wrap: balance; font-size: var(--fh-text-body); line-height: 1.3; }
 @container fh-frame (inline-size < 48rem) { .stable-dock .stable-dock__title { font-size: var(--fh-text-small); } }
+/* The reading column: 40rem (640px), the measure of the Claude blog. */
+:root { --stable-measure: 40rem; }
 .stable-head { display: grid; row-gap: var(--fh-space-6); padding-block: var(--fh-space-10) var(--fh-space-8); }
 /* The head (pill, title, byline, summary) starts on the same line as the
  * article column: the measure repeats .stable-layout's tracks. */
 .stable-measure { display: grid; grid-template-columns: minmax(0, 1fr); }
 .stable-measure > * { grid-column: 1; }
 @container fh-frame (inline-size >= 64rem) {
-  .stable-measure { grid-template-columns: minmax(0, 42rem) 15rem; justify-content: center; column-gap: var(--fh-space-12); }
+  .stable-measure { grid-template-columns: minmax(0, var(--stable-measure)) 15rem; justify-content: center; column-gap: var(--fh-space-12); }
   .stable-head__top > .stable-title { grid-column: 1 / -1; }
 }
 .stable-head__top { row-gap: var(--fh-space-6); }
@@ -79,7 +81,7 @@
 
 .stable-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--fh-space-8); }
 @container fh-frame (inline-size >= 64rem) {
-  .stable-layout { grid-template-columns: minmax(0, 42rem) 15rem; justify-content: center; gap: var(--fh-space-12); }
+  .stable-layout { grid-template-columns: minmax(0, var(--stable-measure)) 15rem; justify-content: center; gap: var(--fh-space-12); }
   .stable-prose { grid-column: 1; grid-row: 1; }
   .stable-toc { grid-column: 2; grid-row: 1; }
 }
@@ -98,7 +100,7 @@
 }
 .stable-toc__marker[data-on] { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .stable-toc__marker { transition: none; } }
-.stable-prose { min-inline-size: 0; max-inline-size: 42rem; overflow-wrap: anywhere; }
+.stable-prose { min-inline-size: 0; max-inline-size: var(--stable-measure); overflow-wrap: anywhere; }
 .stable-prose h2 { scroll-margin-block-start: calc(var(--fh-header-height) + var(--fh-dock-height) + var(--fh-space-6)); }
 .stable-prose ul { padding-inline-start: 1.1em; }
 .stable-prose ul li::marker { color: var(--fh-tone); }
@@ -117,8 +119,8 @@
 .stable-tldr__text a { color: var(--fh-color-text); }
 .stable-figure { margin: 1.6em 0; }
 .stable-figure img { inline-size: 100%; border: var(--fh-border-thin) solid var(--fh-color-border); border-radius: var(--fh-radius-md); }
-.stable-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-5); max-inline-size: 42rem; margin: var(--fh-space-12) auto 0; padding-block-start: var(--fh-space-6); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
-@container fh-frame (inline-size >= 64rem) { .stable-foot { max-inline-size: calc(15rem + 42rem + var(--fh-space-12)); } }
+.stable-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-5); max-inline-size: var(--stable-measure); margin: var(--fh-space-12) auto 0; padding-block-start: var(--fh-space-6); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
+@container fh-frame (inline-size >= 64rem) { .stable-foot { max-inline-size: calc(15rem + var(--stable-measure) + var(--fh-space-12)); } }
 
 .stable-subscribe .fh-split { align-items: start; }
 .stable-form { padding: clamp(var(--fh-space-5), 3cqi, var(--fh-space-7)); border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg); background: color-mix(in oklab, var(--fh-color-surface) 70%, transparent); }
