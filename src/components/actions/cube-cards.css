@@ -51,6 +51,44 @@
   .fh-cube-card__trend { margin-inline-start: auto; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); white-space: nowrap; }
   .fh-cube-card__trend[data-dir="up"] { color: var(--fh-color-success); }
   .fh-cube-card__trend[data-dir="down"] { color: var(--fh-color-danger); }
+  /* Strip: the cards joined into one etched strip, kept quiet (the page
+   * summary on the Firehorse docs). No fills: the cells are clear and the
+   * cubes are etched outlines; only the number carries the tone.
+   *   <ul class="fh-cube-cards fh-cube-cards--strip" data-tone="sky">
+   *     <li class="fh-cube-card"><b class="fh-cube fh-cube--xl">9</b>
+   *       <div class="fh-cube-card__text"><b>Chapters</b><small>Spacing, type, colour…</small></div></li>
+   *   </ul> */
+  .fh-cube-cards--strip {
+    --fh-cube-card-min: 14rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min)), 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+
+    & > .fh-cube-card {
+      --_c: var(--fh-tone);
+      align-items: flex-start;
+      padding: var(--fh-inset-tile) var(--fh-inset-card);
+      border: 0;
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-radius: 0;
+      background: none;
+    }
+    & .fh-cube {
+      --_cube: var(--_c);
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      background: none;
+      color: var(--_c);
+    }
+    & .fh-cube-card__text b { color: var(--fh-color-text-strong); }
+  }
+
   /* Stacked: value on top, label, then a row of small cubes. */
   .fh-cube-card--stack {
     flex-direction: column;

@@ -7054,6 +7054,41 @@
     color: var(--fh-color-danger);
   }
 
+  .fh-cube-cards--strip {
+    --fh-cube-card-min: 14rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min)), 1fr));
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+
+    & > .fh-cube-card {
+      --_c: var(--fh-tone);
+      padding: var(--fh-inset-tile) var(--fh-inset-card);
+      border: 0;
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      background: none;
+      border-radius: 0;
+      align-items: flex-start;
+    }
+
+    & .fh-cube {
+      --_cube: var(--_c);
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      color: var(--_c);
+      background: none;
+    }
+
+    & .fh-cube-card__text b {
+      color: var(--fh-color-text-strong);
+    }
+  }
+
   .fh-cube-card--stack {
     align-items: start;
     gap: var(--fh-gap-grouped);

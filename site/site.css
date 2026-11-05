@@ -2254,38 +2254,9 @@ figcaption .site-id--end { margin-inline-start: auto; }
   pointer-events: none;
   transition-delay: 0s, var(--fh-duration-base), 0s, 0s;
 }
-/* Hero summary: cube cards joined into one etched strip (as on rascode.dev), kept quiet.
- * No fills: the cells are clear and the cubes are etched outlines; only the number
- * carries the page's tone, and it stays one tone across the strip. */
-.site-page-summary {
-  --fh-cube-card-min: 14rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min)), 1fr));
-  gap: 0;
-  margin: var(--site-sub) 0 0;
-  padding: 0;
-  list-style: none;
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: var(--fh-radius-md);
-  overflow: hidden;
-}
-.site-page-summary > .fh-cube-card {
-  --_c: var(--fh-tone);
-  align-items: flex-start;
-  padding: var(--fh-space-5);
-  border: 0;
-  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: 0;
-  background: none;
-}
-.site-page-summary .fh-cube {
-  --_cube: var(--fh-tone);
-  border: var(--fh-border-thin) dashed var(--fh-color-etch);
-  background: none;
-  color: var(--fh-tone);
-}
-.site-page-summary .fh-cube-card__text b { color: var(--fh-color-text-strong); }
+/* Hero summary: the cube-card strip (fh-cube-cards--strip) under the page head; one tone across it. */
+.site-page-summary { margin: var(--site-sub) 0 0; }
+.site-page-summary > .fh-cube-card { --_c: var(--fh-tone); padding: var(--fh-space-5); }
 @container (inline-size >= 30rem) { .site-page-summary .fh-cube-card__text small { min-block-size: 2lh; } }
 .site-page-cards .fh-card__footer .fh-cubes { gap: var(--fh-space-1-5); }
 .fh-drawer .site-drawer__sub { padding-inline-start: var(--fh-space-4); }

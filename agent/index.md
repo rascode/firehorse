@@ -45,7 +45,7 @@
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/#MRK) |
 | `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (3) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/#EYE) |
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CHP) |
-| `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (3) | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
+| `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
 | `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/#KVL) |
@@ -715,7 +715,7 @@ Compact cards led by a tone block: categories, people, files.
 
 Tone blocks that carry one value. In a row they walk the hue wheel by 28°, so three facts read as one family.
 
-Classes: `fh-cubes` `fh-cube` `fh-cube--lg` `fh-cube--sm` `fh-icon` `fh-cube--outline` `fh-cube-cards` `fh-cube-card` `fh-cube--xl` `fh-cube-card__text` `fh-cube-card__trend` `fh-cube-card--stack`
+Classes: `fh-cubes` `fh-cube` `fh-cube--lg` `fh-cube--sm` `fh-icon` `fh-cube--outline` `fh-cube-cards` `fh-cube-card` `fh-cube--xl` `fh-cube-card__text` `fh-cube-card__trend` `fh-cube-card--stack` `fh-cube-cards--strip`
 
 ### CUB-1 · Cubes
 
@@ -789,6 +789,16 @@ Cards led by a cube: the value is the headline, the text says what it measures.
   <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">$1,695</b><div class="fh-cube-card__text"><b>AI agent</b><small>Per month, after setup</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">24/7</b> coverage</li><li><b class="fh-cube fh-cube--sm">3</b> channels</li></ul></article>
   <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">1,284</b><div class="fh-cube-card__text"><b>Inquiries</b><small>Last 30 days · sample</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">+12%</b> vs last</li><li><b class="fh-cube fh-cube--sm">64%</b> booked</li></ul></article>
 </div>
+```
+
+#### CUB-2.4 · Strip
+
+```html
+<ul class="fh-cube-cards fh-cube-cards--strip" data-tone="sky" data-fh="CUB-2.4">
+  <li class="fh-cube-card" data-tone="amber"><b class="fh-cube fh-cube--xl">3</b><div class="fh-cube-card__text"><b>Tasks today</b><small>2 overdue</small></div></li>
+  <li class="fh-cube-card" data-tone="lime"><b class="fh-cube fh-cube--xl">5/8</b><div class="fh-cube-card__text"><b>Habits</b><small>Done so far</small></div></li>
+  <li class="fh-cube-card" data-tone="sky"><b class="fh-cube fh-cube--xl">2</b><div class="fh-cube-card__text"><b>Meetings</b><small>Next at 2:30 PM</small></div></li>
+</ul>
 ```
 
 ## CRD · Card in a ruled grid

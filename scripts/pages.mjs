@@ -133,7 +133,7 @@ const summary = (p, chips, kids, all) => {
   for (const x of (p.meta.summaryFrom === "developer" ? summaryCells() : p.meta.summary ?? [])) { const i = cells.findIndex((y) => y.label === x.replaces); i >= 0 ? cells.splice(i, 1, x) : cells.push(x); }
   const fill = (v) => String(v).replace("{{FAMILIES_TOTAL}}", totals.f).replace("{{VARIANTS_TOTAL}}", totals.v);
   if (!cells.length) return "";
-  return `      <ul class="fh-cube-cards site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
+  return `      <ul class="fh-cube-cards fh-cube-cards--strip site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
 ${cells.slice(0, 4).map((x) => `        <li class="fh-cube-card"><b class="fh-cube fh-cube--xl">${fill(x.value)}</b><div class="fh-cube-card__text"><b>${x.label}</b><small>${fill(x.blurb)}</small></div></li>`).join("\n")}
       </ul>`;
 };
