@@ -2964,7 +2964,7 @@ Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-
 
 One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use --full when the detail needs room. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or gauge drops in as it is.
 
-Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__figure` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-metric__more` `fh-kv` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--full` `fh-metric--wide` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-chip`
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__value` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__figure` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-metric__more` `fh-kv` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--full` `fh-metric--wide` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-chip`
 
 ### MET-1 · Metric tile
 
@@ -2973,8 +2973,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric" data-tone="teal" data-fh="MET-1.1">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
-  <p class="fh-metric__value">LLC</p>
   <p class="fh-metric__sub">Formed 2019 · Delaware</p>
+  <p class="fh-metric__value">LLC</p>
   <p class="fh-metric__source">State records</p>
 </article>
 ```
@@ -2984,8 +2984,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric" data-tone="lime" data-fh="MET-1.2">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
-  <p class="fh-metric__value">82%</p>
   <p class="fh-metric__sub">Next: bank account</p>
+  <p class="fh-metric__value">82%</p>
   <progress class="fh-progress" value="82" max="100">82%</progress>
 </article>
 ```
@@ -2995,8 +2995,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric fh-metric--needed" data-fh="MET-1.3">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
-  <p class="fh-metric__value">Needed</p>
   <p class="fh-metric__sub">For Stripe and PayPal</p>
+  <p class="fh-metric__value">Needed</p>
 </article>
 ```
 
@@ -3005,8 +3005,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <a class="fh-metric" data-tone="sky" href="#a-metric" data-fh="MET-1.4">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
-  <p class="fh-metric__value">4</p>
   <p class="fh-metric__sub">2 public</p>
+  <p class="fh-metric__value">4</p>
 </a>
 ```
 
@@ -3041,8 +3041,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric" data-tone="sky" data-fh="MET-1.7">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
-  <p class="fh-metric__value">$6,940</p>
   <p class="fh-metric__sub">5 invoices · 1 overdue</p>
+  <p class="fh-metric__value">$6,940</p>
   <details class="fh-metric__more">
     <summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
     <dl class="fh-kv">
@@ -3060,8 +3060,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric" data-tone="lime" data-fh="MET-1.8">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
   <p class="fh-metric__sub">vs September</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
 </article>
 ```
 
@@ -3070,8 +3070,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric" data-tone="sky" data-good="down" data-fh="MET-1.9">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
   <p class="fh-metric__sub">Down is good here</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
 </article>
 ```
 
@@ -3192,7 +3192,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 
 ## GAU · Gauge
 
-A half-circle meter from --fh-value (0–100), the figure under the arc and a caption below. The arc takes the tone; set it from the value. Sizes with --fh-gauge-size.
+A full-circle meter from --fh-value (0–100): the figure in the middle, the caption under it, and an indicator with rounded ends running clockwise from the top. The indicator takes the tone; set it from the value. Sizes with --fh-gauge-size; thickness with --fh-gauge-width.
 
 Classes: `fh-gauge`
 

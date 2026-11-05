@@ -46,10 +46,17 @@
     list-style: none;
   }
 
+  /* One anatomy for every tile (Rascode HIG). Each part has a fixed row:
+       1 title · 2 description · 3 gap · 4 figure · 5 chart, progress,
+       people or gauge · 6 source · 7 detail
+     so in fh-metrics the tiles share rows (subgrid) and figures, charts
+     and sources line up across a row whatever each tile carries. The gap
+     row takes the slack, so a row of tiles lines up at both ends. */
   .fh-metric {
+    --_gap: var(--fh-gap-related);
     display: grid;
-    align-content: start;
-    gap: var(--fh-gap-bound);
+    grid-template-rows: auto auto minmax(var(--_gap), 1fr) auto auto auto auto;
+    row-gap: 0;
     min-inline-size: 0;
     margin: 0;
     padding: var(--fh-metric-pad, var(--fh-inset-tile));
@@ -60,10 +67,20 @@
     text-decoration: none;
 
     & > * { margin: 0; min-inline-size: 0; }
-    /* Spacing by relationship (Rascode HIG): label, figure, its line and
-       source are parts of one fact (bound); a chart, progress or people
-       row belongs with the figure (related). */
-    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { margin-block-start: var(--fh-gap-related); }
+
+    /* Spacing by relationship: title, description, figure and source are
+       parts of one fact (bound); a chart, progress, people row or detail
+       belongs with the figure (related). */
+    &::before { content: ""; grid-row: 3; min-block-size: var(--_gap); }
+    & > .fh-metric__label { grid-row: 1; }
+    & > .fh-metric__sub { grid-row: 2; margin-block-start: var(--fh-gap-bound); }
+    /* Figures sit on the bottom of their shared row, so a row of tiles
+       reads along one line; a gauge or ring is the figure of its tile. */
+    & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: end; }
+    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
+    & > :is(.fh-gauge, .fh-ring) { grid-row: 4; align-self: end; }
+    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
+    & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-gap-related); }
   }
 
   .fh-metric__label {
@@ -120,33 +137,18 @@
     &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; }
   }
 
-  /* Spread: label and description at the top, the value and the rest at
-     the bottom, with a wide gap between. Every part has a fixed row:
-       1 label · 2 description · 3 gap · 4 figure · 5 chart, progress or
-       people · 6 source · 7 detail
-     In fh-metrics the tiles share those rows (subgrid), so figures, charts
-     and sources line up across a row of tiles whatever each one carries. */
-  .fh-metric--spread {
-    grid-template-rows: auto auto minmax(var(--fh-metric-gap, var(--fh-gap-separated)), 1fr) auto auto auto auto;
-    row-gap: 0;
+  /* Spread: the same anatomy with a wide gap (--fh-metric-gap, 48px) between
+     the description and the figure. */
+  .fh-metric--spread { --_gap: var(--fh-metric-gap, var(--fh-gap-separated)); }
 
-    &::before { content: ""; grid-row: 3; min-block-size: var(--fh-metric-gap, var(--fh-gap-separated)); }
-    & > .fh-metric__label { grid-row: 1; }
-    & > .fh-metric__sub { grid-row: 2; margin-block-start: var(--fh-gap-bound); }
-    & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: center; }
-    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-gauge, .fh-ring, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
-    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
-    & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-gap-related); }
-  }
-
-  /* Shared rows only when every tile in the set is a spread tile. */
+  /* Shared rows when every item in the set is a tile. */
   @supports (grid-template-rows: subgrid) {
-    .fh-metrics:not(:has(> :not(.fh-metric--spread))) {
+    .fh-metrics:not(:has(> :not(.fh-metric))) {
       /* The set's own row gap would land between every shared row; tiles
          space themselves instead. */
       row-gap: 0;
 
-      & > .fh-metric--spread {
+      & > .fh-metric {
         grid-row: span 7;
         grid-template-rows: subgrid;
         margin-block-end: var(--fh-gap-grouped);
@@ -259,5 +261,5 @@
   .fh-metric__figure > .fh-sparkline { inline-size: min(7rem, 45%); block-size: 1.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
 
   .fh-metric > .fh-sparkline { inline-size: 100%; block-size: 2.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
-  .fh-metric > :is(.fh-gauge, .fh-ring) { justify-self: center; margin-block: var(--fh-gap-related); }
+  .fh-metric > :is(.fh-gauge, .fh-ring) { justify-self: center; }
 }
