@@ -21,6 +21,8 @@
    * caption with no rule, an optional round mark first (the client's
    * logo: <span class="fh-avatar fh-avatar--circle fh-masthead__mark">),
    * tools on the same line, sticky. Fill and blur follow --fh-frost.
+   * fh-masthead--split (with --bar) puts the caption and the tools in two
+   * separate pills with the page showing between them.
    * Knobs: --fh-masthead-fill, --fh-masthead-blur. */
   .fh-masthead {
     --_fill: var(--fh-masthead-fill, calc(15% + clamp(0, var(--fh-frost, 0.6), 1) * 75%));
@@ -115,6 +117,31 @@
     & .fh-masthead__title { text-align: start; }
     & .fh-masthead__foot { display: contents; }
     & .fh-masthead__meta { display: none; }
+  }
+
+  /* Split bar: the caption and the tools each in their own pill, with the
+     page showing between them, instead of one bar edge to edge. Each pill
+     takes the masthead's etch, fill and blur. */
+  .fh-masthead--split {
+    padding: 0;
+    border: 0;
+    background: none;
+    backdrop-filter: none;
+
+    & :is(.fh-masthead__caption, .fh-masthead__tools) {
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+      border-radius: var(--fh-radius-pill);
+      background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
+      backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, 0.6), 1) * 32px))) saturate(1.4);
+    }
+    & .fh-masthead__caption {
+      justify-self: start;
+      max-inline-size: 100%;
+      padding: var(--fh-inset-tight) var(--fh-inset-card);
+      border-block-end-style: var(--fh-card-border-style, dashed);
+    }
+    & .fh-masthead__tools { justify-self: end; padding: var(--fh-inset-tight); }
+    &:has(> .fh-masthead__mark) .fh-masthead__caption { padding-inline-start: var(--fh-inset-tight); }
   }
 
 }

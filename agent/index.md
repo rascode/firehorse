@@ -103,7 +103,7 @@
 | `LDG` | Ledger | Finance | — | [open](https://firehorse.rascode.dev/finance/#LDG) |
 | `VCD` | Virtual card | Finance | — | [open](https://firehorse.rascode.dev/finance/#VCD) |
 | `CNX` | Connection status | Finance | — | [open](https://firehorse.rascode.dev/finance/#CNX) |
-| `MST` | Masthead | Admin | 1 Masthead (2) | [open](https://firehorse.rascode.dev/admin/#MST) |
+| `MST` | Masthead | Admin | 1 Masthead (3) | [open](https://firehorse.rascode.dev/admin/#MST) |
 | `BKD` | Backdrop | Admin | 1 Backdrop (2) | [open](https://firehorse.rascode.dev/admin/#BKD) |
 | `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
 | `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
@@ -2826,9 +2826,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## MST · Masthead
 
-A glass header with the stacking deck's caption: number left in the tone, title right, an etched rule under both, on an etched, see-through, blurred panel. --bar is the one-line top bar: no rule, the client's round logo first (__mark). Shown here over a picture so the frost reads.
+A glass header with the stacking deck's caption: number left in the tone, title right, an etched rule under both, on an etched, see-through, blurred panel. --bar is the one-line top bar: no rule, the client's round logo first (__mark). --split puts the caption and the tools in two pills with the page between them. Shown here over a picture so the frost reads.
 
-Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-masthead__mark` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm`
+Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-masthead__mark` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm` `fh-masthead--split` `fh-avatar--sm`
 
 ### MST-1 · Masthead
 
@@ -2855,6 +2855,18 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
   <div class="fh-masthead__foot">
     <p class="fh-masthead__meta">7 businesses · 5 owned · 2 client</p>
     <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#a-masthead">New business</a></div>
+  </div>
+</header>
+```
+
+#### MST-1.3 · Split
+
+```html
+<header class="fh-masthead fh-masthead--bar fh-masthead--split" data-tone="sky" data-fh="MST-1.3">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">05</span><span class="fh-masthead__title">Today is <small>Nov-05-26</small></span></p>
+  <div class="fh-masthead__tools">
+    <span class="fh-chip" data-tone="lime">Local</span>
+    <span class="fh-avatar fh-avatar--circle fh-avatar--sm" data-tone="sky">HJ</span>
   </div>
 </header>
 ```

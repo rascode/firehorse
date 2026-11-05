@@ -2,6 +2,7 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Masthead · Split** (MST-1.3, `fh-masthead--split` with `--bar`): the caption and the tools each in their own etched, frosted pill, with the page showing between them.
 - **Cube cards · Strip** (CUB-2.4, `fh-cube-cards--strip`): the docs page summary promoted to the library. Cards joined into one etched strip, no fills, etched cubes; only the number carries the tone (per card or one for the strip). The docs page heads use it.
 - **Field fill in dark** (`--fh-color-field`): #232323 (hover #2e2e2e), a whisper off the surface like the light fill, instead of #3a3a3a. All 64 contrast pairs still pass AA.
 - **Content icons in key value lists** (KVL): an `fh-icon` at the start of a `dt` is a content icon in the label's colour (a signature for signing authority, a house for an address, a notebook for notes). 21 Lucide icons added for records (`signature`, `notebook-pen`, `landmark`, `id-card`, `building`, `stamp`, `vault`, `map`, `mailbox` and more; 204 in all). The business concept labels every list row and field.

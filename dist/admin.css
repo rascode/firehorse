@@ -1194,6 +1194,38 @@
     }
   }
 
+  .fh-masthead--split {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: none;
+    border: 0;
+    padding: 0;
+
+    & :is(.fh-masthead__caption, .fh-masthead__tools) {
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+      border-radius: var(--fh-radius-pill);
+      background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
+      -webkit-backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, .6), 1) * 32px))) saturate(1.4);
+      backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, .6), 1) * 32px))) saturate(1.4);
+    }
+
+    & .fh-masthead__caption {
+      max-inline-size: 100%;
+      padding: var(--fh-inset-tight) var(--fh-inset-card);
+      border-block-end-style: var(--fh-card-border-style, dashed);
+      justify-self: start;
+    }
+
+    & .fh-masthead__tools {
+      padding: var(--fh-inset-tight);
+      justify-self: end;
+    }
+
+    &:has( > .fh-masthead__mark) .fh-masthead__caption {
+      padding-inline-start: var(--fh-inset-tight);
+    }
+  }
+
   .fh-section-card {
     --_pad: var(--fh-section-card-pad, var(--fh-inset-card));
     gap: var(--fh-section-card-gap, var(--fh-gap-sectioned));
