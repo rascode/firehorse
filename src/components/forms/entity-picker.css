@@ -40,7 +40,8 @@
    * leave out the avatar and separator for a text-only picker, or just
    * the separator for avatar and name with no line between; the stat is
    * any figure for the use case (open actions, unread, balance, seats);
-   * fh-entity__stat--count draws it as a toned counter.
+   * fh-entity__stat--count draws it as a toned counter; fh-entity__meter
+   * is a small progress bar with its figure (a share: ownership, quota).
    * Knobs: --fh-entity-avatar, --fh-entity-radius, --fh-entity-list-width. */
   .fh-entity-picker {
     --fh-entity-avatar: 1.9rem;
@@ -89,24 +90,30 @@
   }
 
   /* The etch line between the avatar and the name. */
-  /* The separator is an etched arc round the avatar's right side, on the
-     avatar's own curve (its radius plus the gap), so the avatar reads as
-     enclosed. It overlaps the avatar rather than taking room of its own. */
+  /* The separator is an etched arc round the avatar's right side that
+     runs the full height of the row, top edge to bottom edge, centred on
+     the avatar. On a rounded row it mirrors the row's own rounded end, so
+     the two close a circle round the avatar. It overlaps the avatar
+     rather than taking room of its own. */
   .fh-entity__sep {
-    --_g: var(--fh-gap-bound);
-    --_d: calc(var(--fh-avatar-size, 1.9rem) + var(--_g) * 2);
+    --_p: var(--fh-gap-related);
+    --_r: calc(var(--fh-avatar-size, 1.9rem) / 2 + var(--_p));
     flex: none;
-    align-self: center;
-    inline-size: var(--_d);
-    block-size: var(--_d);
-    margin-inline-start: calc((var(--fh-avatar-size, 1.9rem) + var(--_g) + var(--fh-item-gap)) * -1);
-    border: var(--fh-border-thin) var(--_line, dashed) transparent;
-    border-inline-end-color: var(--fh-color-etch);
-    border-radius: calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_g));
+    align-self: stretch;
+    inline-size: var(--_r);
+    margin-block: calc(var(--_p) * -1);
+    margin-inline-start: calc((var(--fh-avatar-size, 1.9rem) / 2 + var(--fh-item-gap)) * -1);
+    border: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
+    border-inline-start: 0;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: min(var(--_r), calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_p)));
+    border-end-end-radius: min(var(--_r), calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_p)));
     pointer-events: none;
   }
-  /* A row with the arc leaves room round the avatar for it, so the arc
-     never lands on the row's own edge. */
+
+  /* A row with the arc keeps the same room above, below and before the
+     avatar, so the arc is centred on it and spans the row edge to edge. */
   .fh-entity:has(.fh-entity__sep) {
     padding-block: var(--fh-gap-related);
     padding-inline-start: var(--fh-gap-related);
@@ -137,6 +144,29 @@
       font-size: var(--fh-text-caption);
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+  }
+
+  /* A share of something (ownership, quota, capacity): a small progress
+   * bar with its figure beside it, at the end of the row.
+   *   <span class="fh-entity__meter" data-tone="fuchsia"><progress class="fh-progress" value="60" max="100">60%</progress><b>60%</b></span> */
+  .fh-entity__meter {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin-inline-start: auto;
+    padding-inline-start: var(--fh-inset-control);
+
+    & > .fh-progress { --fh-progress-size: 0.3rem; inline-size: 3rem; }
+    & > b {
+      min-inline-size: 3ch;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+      text-align: end;
     }
   }
 

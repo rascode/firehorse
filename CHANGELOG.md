@@ -2,7 +2,7 @@
 
 ## 1.1.0 — 2026-11-04
 
-- **Entity picker** (ENT, `src/components/forms/entity-picker.css`): every line in the picker is etched (dashed): the trigger's perimeter on `--rounded`, the list's edge and group rules. The separator is now an etched arc round the avatar's right side, on the avatar's own curve (its radius plus 4px), so the avatar reads as enclosed; rows with the arc leave room for it. Leave out `fh-entity__sep` for no line at all.
+- **Entity picker** (ENT, `src/components/forms/entity-picker.css`): every line in the picker is etched (dashed): the trigger's perimeter on `--rounded`, the list's edge and group rules. The separator is an etched arc centred on the avatar that runs the full height of the row, top edge to bottom edge; on a rounded row it mirrors the row's rounded end, closing a circle round the avatar. New part `fh-entity__meter`: a small progress bar with its figure (ownership, quota). Leave out `fh-entity__sep` for no line at all.
 - **Table of contents** (`src/components/navigation/toc.css`): the label starts where the entries' text starts, past the rule and marker, not on the rule.
 - **Docs site frame audit:** text standing beside a framed block starts where the block's text starts: the home adapt copy and its table, a label captioning a table (Theming), notes under demos (Data). The Stable's reading column is 40rem.
 - **Gauge** (GAU, `src/admin/gauge.css`): now a full circle with the figure in the middle and the caption under it, and the indicator has rounded ends (drawn with `sin()`/`cos()` from `--fh-value`). The gauge is a size container, so the figure and the ends scale with `--fh-gauge-size` (now 8rem).
