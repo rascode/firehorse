@@ -11,7 +11,7 @@
   "styles": ["admin.css"],
   "icon": "list-checks",
   "summary": [
-    { "value": "6", "label": "Spacing steps", "blurb": "Bound, related, grouped, grouped-wide, sectioned, separated." },
+    { "value": "9", "label": "Chapters", "blurb": "Spacing, type, color, lines, surfaces, motion, density, accessibility, naming." },
     { "value": "7", "label": "Spacing rules", "blurb": "Inside is tighter than outside; rules replace space; numbers line up; one left edge." }
   ]
 }-->
@@ -107,5 +107,85 @@
 
       <div class="site-demo site-anchor" id="g-lint">
         <div class="site-demo__head"><h3>Held by lint</h3><p><code>npm run lint</code> flags any raw <code>--fh-space-*</code> in a component and prints the count. It is an error: the build fails on a raw step. <code>--loose-spacing</code> turns it back into a warning with a count, for a source tree still moving over. Tokens, themes and the layout primitives are exempt.</p></div>
+      </div>
+    </section>
+
+    <section id="type" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="type-title" data-fh-label="Type" data-fh-index="02">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 02</p><h2 id="type-title" class="fh-heading">Type</h2><p class="fh-lede">Text people can read at any size.</p></div></header>
+      <div class="site-demo site-anchor" id="g-type-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Body is 15.2px (<code>--fh-text-body</code>), labels 10.9px and micro 9.9px: below these rules. Moving them is the next type change.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-apple-hig-typography">Apple HIG: Typography</a> · <a class="fh-link" href="/references/#ref-govuk-type-scale">GOV.UK Design System: Type scale</a> · <a class="fh-link" href="/references/#ref-butterick-practical-typography">Butterick&#x27;s Practical Typography: Summary of key rules</a> · <a class="fh-link" href="/references/#ref-bringhurst-elements">The Elements of Typographic Style</a> · <a class="fh-link" href="/references/#ref-wcag-text-spacing">WCAG 2.2 SC 1.4.12: Text Spacing</a> · <a class="fh-link" href="/references/#ref-primer-text-resize-spacing">Primer: Text resizing and spacing</a> · <a class="fh-link" href="/references/#ref-utopia">Utopia: fluid type and space</a> · <a class="fh-link" href="/references/#ref-material-typography">Material Design 3: Applying type</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Body text is at least 16px on reading surfaces.</b> Apple, GOV.UK and Butterick land between 16 and 19px for body copy; below that, reading slows.</li><li><b>UI text is never under 11px.</b> Apple sets 11pt as the floor for any text; labels and captions stop there.</li><li><b>Lines run 45 to 90 characters.</b> The measure where the eye finds the next line without effort (Butterick, Bringhurst).</li><li><b>Layouts survive text spacing and 200% zoom.</b> WCAG 1.4.12 and 1.4.4: a reader can widen spacing or enlarge text and nothing clips or overlaps.</li><li><b>Figures use the figure font with tabular numbers.</b> Columns of numbers line up digit for digit.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="color" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="color-title" data-fh-label="Color" data-fh-index="03">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 03</p><h2 id="color-title" class="fh-heading">Color</h2><p class="fh-lede">Color says what something is, never only what it looks like.</p></div></header>
+      <div class="site-demo site-anchor" id="g-color-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> <code>npm run verify</code> checks 64 text pairs at AA in both schemes. Field fills on white are deliberately faint; a field is found by its label and focus ring, and its focus ring holds 3:1.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-wcag-contrast-minimum">WCAG 2.2 SC 1.4.3: Contrast (Minimum)</a> · <a class="fh-link" href="/references/#ref-wcag-non-text-contrast">WCAG 2.2 SC 1.4.11: Non-text Contrast</a> · <a class="fh-link" href="/references/#ref-apple-hig-color">Apple HIG: Color</a> · <a class="fh-link" href="/references/#ref-material-color-roles">Material Design 3: Color roles</a> · <a class="fh-link" href="/references/#ref-css-color-5">CSS Color Module Level 5</a> · <a class="fh-link" href="/references/#ref-css-color-4">CSS Color Module Level 4</a> · <a class="fh-link" href="/references/#ref-atlassian-design-tokens">Atlassian Design System: Design tokens</a> · <a class="fh-link" href="/references/#ref-refactoring-ui">Refactoring UI</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Text holds 4.5:1 against its background, large text 3:1.</b> WCAG 1.4.3, in both schemes.</li><li><b>Controls and the edges that identify them hold 3:1.</b> WCAG 1.4.11: a reader must be able to find the button or the field.</li><li><b>Colors are named by role, not hue.</b> Text, surface, etch, tone; light and dark come from <code>light-dark()</code> on the same name (Apple semantic colors, Material roles, CSS Color 5).</li><li><b>One accent per view. Tones carry category; rules stay grey.</b> The number carries the color; lines and frames do not compete with it.</li><li><b>Meaning never rides on color alone.</b> A status has a word or an icon as well as a tone.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="lines" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="lines-title" data-fh-label="Lines" data-fh-index="04">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 04</p><h2 id="lines-title" class="fh-heading">Lines</h2><p class="fh-lede">A line is structure, drawn only where space can't do the job.</p></div></header>
+      <div class="site-demo site-anchor" id="g-lines-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Card, tile, table and drawer edges follow the theme's card preset (etched by default).</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-wcag-focus-appearance">WCAG 2.2 SC 2.4.13: Focus Appearance</a> · <a class="fh-link" href="/references/#ref-wcag-non-text-contrast">WCAG 2.2 SC 1.4.11: Non-text Contrast</a> · <a class="fh-link" href="/references/#ref-nngroup-common-region">The Principle of Common Region: Containers Create Groupings</a> · <a class="fh-link" href="/references/#ref-fluent-layout">Fluent 2 Design System: Layout</a> · <a class="fh-link" href="/references/#ref-apple-hig-lists-and-tables">Apple HIG: Lists and tables</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Etched, dashed rules mark structure.</b> The Firehorse line: rows, card edges, a section foot.</li><li><b>A rule replaces space; it never adds to it.</b> See Spacing, rule 3.</li><li><b>Containers group before rules divide.</b> A shared edge or fill groups content more strongly than a divider (NN/g common region, Fluent).</li><li><b>Focus is a solid ring at least 2px wide, 3:1 against what's around it.</b> WCAG 2.4.13; never removed, never dashed.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="surfaces" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="surfaces-title" data-fh-label="Surfaces" data-fh-index="05">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 05</p><h2 id="surfaces-title" class="fh-heading">Surfaces</h2><p class="fh-lede">Few levels, each with a job.</p></div></header>
+      <div class="site-demo site-anchor" id="g-surfaces-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Frost, backdrop and the floating drawer follow these; the drawer uses the native <code>&lt;dialog&gt;</code>.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-apple-hig-materials">Apple HIG: Materials</a> · <a class="fh-link" href="/references/#ref-apple-hig-sheets">Apple HIG: Sheets</a> · <a class="fh-link" href="/references/#ref-material-elevation">Material Design 3: Elevation</a> · <a class="fh-link" href="/references/#ref-fluent-elevation">Fluent 2 Design System: Elevation</a> · <a class="fh-link" href="/references/#ref-apg-dialog-modal">ARIA APG: Dialog (Modal) Pattern</a> · <a class="fh-link" href="/references/#ref-nngroup-common-region">The Principle of Common Region: Containers Create Groupings</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Canvas, surface, raised, overlay: four levels, no more.</b> A small fixed set of elevations (Material, Fluent) keeps depth readable.</li><li><b>Glass is for chrome and controls, not for content.</b> Apple materials: bars, sheets and panels frost; reading surfaces stay solid enough to read.</li><li><b>How much glass clouds is one theme setting.</b> <code>--fh-frost</code>, 0 to 1.</li><li><b>A sheet or dialog takes focus and gives it back.</b> ARIA APG dialog: focus moves in, Escape closes, focus returns to what opened it.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="motion" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="motion-title" data-fh-label="Motion" data-fh-index="06">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 06</p><h2 id="motion-title" class="fh-heading">Motion</h2><p class="fh-lede">Motion explains a change; it never decorates one.</p></div></header>
+      <div class="site-demo site-anchor" id="g-motion-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Durations and easings are tokens (<code>--fh-duration-*</code>, <code>--fh-ease-*</code>); every animation sits inside <code>prefers-reduced-motion: no-preference</code>.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-apple-hig-motion">Apple HIG: Motion</a> · <a class="fh-link" href="/references/#ref-material-motion-easing-duration">Material Design 3: Easing and duration</a> · <a class="fh-link" href="/references/#ref-carbon-motion">Carbon Design System: Motion</a> · <a class="fh-link" href="/references/#ref-fluent-motion">Fluent 2 Design System: Motion</a> · <a class="fh-link" href="/references/#ref-nngroup-animation-duration">Executing UX Animations: Duration and Motion Characteristics</a> · <a class="fh-link" href="/references/#ref-css-easing-1">CSS Easing Functions Level 1</a> · <a class="fh-link" href="/references/#ref-css-mediaqueries-5">Media Queries Level 5</a> · <a class="fh-link" href="/references/#ref-wcag-technique-c39-reduced-motion">WCAG Technique C39: Using the CSS prefers-reduced-motion query to prevent motion</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>100 to 500ms.</b> Fast (150ms) for small things, base (220ms) for most, slow (420ms) for sheets and panels.</li><li><b>Ease out to arrive, ease in and out to move.</b> Things that enter decelerate; things that travel accelerate and settle (Material, Carbon, Fluent).</li><li><b>Reduced motion removes it.</b> Under <code>prefers-reduced-motion: reduce</code> nothing slides, pulses or rolls; state changes appear at once (WCAG technique C39, Media Queries 5).</li><li><b>Nothing moves under the pointer.</b> A control that opens stays where it was clicked, so closing is the same click.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="density" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="density-title" data-fh-label="Density" data-fh-index="07">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 07</p><h2 id="density-title" class="fh-heading">Density</h2><p class="fh-lede">Dense or roomy, the relationships hold.</p></div></header>
+      <div class="site-demo site-anchor" id="g-density-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Row spacing S, M, L, XL is one switch for every table and key value list.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-wcag-target-size-minimum">WCAG 2.2 SC 2.5.8: Target Size (Minimum)</a> · <a class="fh-link" href="/references/#ref-wcag-target-size-enhanced">WCAG 2.2 SC 2.5.5: Target Size (Enhanced)</a> · <a class="fh-link" href="/references/#ref-nngroup-touch-target-size">Touch Targets on Touchscreens</a> · <a class="fh-link" href="/references/#ref-slds-density-settings">New Density Settings for the Lightning Experience UI</a> · <a class="fh-link" href="/references/#ref-spectrum-spacing">Spectrum: Spacing</a> · <a class="fh-link" href="/references/#ref-polaris-layout-spacing">Shopify App Design Guidelines: Layout</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Targets are at least 24px; aim for 44 on touch.</b> WCAG 2.5.8 is the floor, Apple's 44pt the goal.</li><li><b>Density scales every relationship together.</b> <code>data-fh-density</code> rescales the spacing steps; <code>data-fh-rows</code> sets row spacing for every table at once.</li><li><b>Compact never goes below the target minimum.</b> Rows tighten; hit areas don't.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="accessibility" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="accessibility-title" data-fh-label="Accessibility" data-fh-index="08">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 08</p><h2 id="accessibility-title" class="fh-heading">Accessibility</h2><p class="fh-lede">WCAG 2.2 AA is the floor, not the goal.</p></div></header>
+      <div class="site-demo site-anchor" id="g-accessibility-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Segmented controls are real radios; expanding tiles are <code>&lt;details&gt;</code>; the drawer is <code>&lt;dialog&gt;</code>.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-wcag-22">Web Content Accessibility Guidelines (WCAG) 2.2</a> · <a class="fh-link" href="/references/#ref-wcag-reflow">WCAG 2.2 SC 1.4.10: Reflow</a> · <a class="fh-link" href="/references/#ref-apg-menubar">ARIA APG: Menu and Menubar Pattern</a> · <a class="fh-link" href="/references/#ref-apg-listbox">ARIA APG: Listbox Pattern</a> · <a class="fh-link" href="/references/#ref-apg-combobox">ARIA APG: Combobox Pattern</a> · <a class="fh-link" href="/references/#ref-apg-radio-group">ARIA APG: Radio Group Pattern</a> · <a class="fh-link" href="/references/#ref-apg-disclosure">ARIA APG: Disclosure (Show/Hide) Pattern</a> · <a class="fh-link" href="/references/#ref-apple-hig-accessibility">Apple HIG: Accessibility</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Everything works with a keyboard, in the order it reads.</b> The ARIA Authoring Practices patterns for menus, listboxes, comboboxes, dialogs, disclosures and radio groups.</li><li><b>Content reflows at 320px without scrolling sideways.</b> WCAG 1.4.10; container queries, not breakpoints.</li><li><b>Real elements first.</b> A button is a <code>&lt;button&gt;</code>, a choice is a radio, a disclosure is <code>&lt;details&gt;</code>; ARIA only where HTML has nothing.</li></ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="naming" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="naming-title" data-fh-label="Naming" data-fh-index="09">
+      <header class="fh-section-head"><div><p class="fh-eyebrow">HIG · 09</p><h2 id="naming-title" class="fh-heading">Naming</h2><p class="fh-lede">A name says what a thing is, not where it was first used.</p></div></header>
+      <div class="site-demo site-anchor" id="g-naming-rules">
+        <div class="site-demo__head"><h3>Rules</h3><p><b>Where Firehorse stands.</b> Firehorse ships <code>tokens.json</code>; the Index gives every component and variant a stable ID.</p><p class="fh-small fh-muted"><b>Sources.</b> <a class="fh-link" href="/references/#ref-dtcg-format">Design Tokens Format Module</a> · <a class="fh-link" href="/references/#ref-atlassian-design-tokens">Atlassian Design System: Design tokens</a> · <a class="fh-link" href="/references/#ref-material-design-tokens">Material Design 3: Design tokens</a> · <a class="fh-link" href="/references/#ref-carbon-spacing">Carbon Design System: Spacing</a> · <a class="fh-link" href="/references/#ref-atomic-design">Atomic Design, Chapter 2: Atomic Design Methodology</a> · <a class="fh-link" href="/references/#ref-nngroup-jakobs-law">Jakob&#x27;s Law of Internet User Experience</a></p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps"><li><b>Components are named for what they are.</b> Key value list, not property list; metric tile, not readiness card.</li><li><b>Tokens are named by role and relationship.</b> <code>--fh-gap-bound</code>, <code>--fh-color-etch</code>; never a number in a name that means a place.</li><li><b>Tokens publish in the W3C Design Tokens format.</b> So other tools and Rascode design systems can read them.</li><li><b>Use-case names only when the owner asks for them.</b> Generic first; a named variant is a decision, not a default.</li></ol>
+        </div>
       </div>
     </section>
