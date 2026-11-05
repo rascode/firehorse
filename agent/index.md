@@ -3039,7 +3039,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 #### MET-1.7 · Expand
 
 ```html
-<article class="fh-metric" data-tone="amber" data-fh="MET-1.7">
+<article class="fh-metric" data-tone="sky" data-fh="MET-1.7">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
   <p class="fh-metric__value">$6,940</p>
   <p class="fh-metric__sub">5 invoices · 1 overdue</p>
@@ -3157,7 +3157,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 #### MET-2.6 · Expand
 
 ```html
-<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber" data-fh="MET-2.6">
+<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.6">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
   <p class="fh-metric__sub">5 invoices, 1 overdue</p>
   <p class="fh-metric__value">$6,940</p>
@@ -3182,7 +3182,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 #### MET-2.8 · Full
 
 ```html
-<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber" data-fh="MET-2.8">
+<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.8">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
   <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
   <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>

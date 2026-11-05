@@ -2418,7 +2418,7 @@ One fact per tile: label with an icon, the value, a line under it and where it c
       </div></div>
     <p class="fh-metric__source">People</p>
   </article>
-  <article class="fh-metric" data-tone="amber" data-fh="MET-1.7">
+  <article class="fh-metric" data-tone="sky" data-fh="MET-1.7">
     <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
     <p class="fh-metric__value">$6,940</p>
     <p class="fh-metric__sub">5 invoices · 1 overdue</p>
@@ -2496,7 +2496,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
     <progress class="fh-progress" value="45" max="100">45%</progress>
     <p class="fh-metric__source">5 of 11 facts</p>
   </article>
-  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber">
+  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky">
     <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
     <p class="fh-metric__sub">5 invoices, 1 overdue</p>
     <p class="fh-metric__value">$6,940</p>
@@ -2511,7 +2511,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
     <progress class="fh-progress" value="31" max="100">31%</progress>
     <p class="fh-metric__source">31% drawn · 9.4% rate</p>
   </article>
-  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber">
+  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky">
     <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
     <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
     <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>
