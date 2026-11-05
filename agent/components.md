@@ -14,7 +14,7 @@
 | Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
-| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-masthead` (`__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread`) `fh-gauge` |
+| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-masthead` (`__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide`) `fh-gauge` |
 | People | `fh-social` (`__photo` `__body` `__name` `__check` `__bio` `__foot` `__stats` `--fade` `--dark`) |
 | Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
@@ -2400,9 +2400,9 @@ One fact per tile: label with an icon, the value, a line under it and where it c
     <p class="fh-metric__value">4 people</p>
     <div class="fh-metric__row">
       <div class="fh-avatars" role="group" aria-label="Team">
-        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/ava.webp" alt="Ava"></span>
-        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/cole.webp" alt="Cole"></span>
-        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/maya.webp" alt="Maya"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span>
         <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
       </div>
       <span class="fh-chip" data-tone="lime">2 public</span>
@@ -2446,6 +2446,62 @@ One fact per tile: label with an icon, the value, a line under it and where it c
     <p class="fh-metric__value">4</p>
     <p class="fh-metric__sub">2 public</p>
   </a>
+</div>
+```
+
+### MET-2 · Spread tiles
+
+The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. `--tinted` leads a row; `--wide` takes two columns.
+
+```html
+<div class="fh-metrics" style="--fh-metrics-min: 14rem">
+  <article class="fh-metric fh-metric--spread" data-tone="lime">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+    <p class="fh-metric__sub">Next: confirm the payout bank account</p>
+    <p class="fh-metric__value">82%</p>
+    <progress class="fh-progress" value="82" max="100">82%</progress>
+    <p class="fh-metric__source">9 of 11 facts</p>
+  </article>
+  <article class="fh-metric fh-metric--spread" data-tone="teal">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+    <p class="fh-metric__sub">All brands, after refunds</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+    <p class="fh-metric__source">vs September</p>
+  </article>
+  <article class="fh-metric fh-metric--spread" data-tone="sky">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders</p>
+    <p class="fh-metric__sub">Last 12 weeks</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span></div>
+    <svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"/><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+  </article>
+  <article class="fh-metric fh-metric--spread" data-tone="violet">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+    <p class="fh-metric__sub">Who can sign in and act for the business</p>
+    <p class="fh-metric__value">4 people</p>
+    <div class="fh-metric__row"><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span></div><span class="fh-chip" data-tone="lime">2 public</span></div>
+  </article>
+  <article class="fh-metric fh-metric--spread fh-metric--tinted" data-tone="orange">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--globe" aria-hidden="true"></i>Google profile</p>
+    <p class="fh-metric__sub">Next: opening hours for each location</p>
+    <p class="fh-metric__value">45%</p>
+    <progress class="fh-progress" value="45" max="100">45%</progress>
+    <p class="fh-metric__source">5 of 11 facts</p>
+  </article>
+  <article class="fh-metric fh-metric--spread" data-tone="amber">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+    <p class="fh-metric__sub">5 invoices, 1 overdue</p>
+    <p class="fh-metric__value">$6,940</p>
+    <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+      <dl class="fh-kv"><div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div><div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div><div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div><div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div></dl>
+    </details>
+  </article>
+  <article class="fh-metric fh-metric--spread fh-metric--wide" data-tone="teal">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit line</p>
+    <p class="fh-metric__sub">Drawn against $40,000 at Cedar Valley Bank</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">$12,500</p><span class="fh-metric__delta" data-trend="flat">0</span></div>
+    <progress class="fh-progress" value="31" max="100">31%</progress>
+    <p class="fh-metric__source">31% drawn · 9.4% rate</p>
+  </article>
 </div>
 ```
 

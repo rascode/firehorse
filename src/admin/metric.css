@@ -22,7 +22,11 @@
    * that opens its area. fh-metric--spread puts the label and the line
    * under it at the top, a wide gap, then the value and anything else at
    * the bottom (--fh-metric-gap, 3rem); tiles in a row line up at both
-   * ends. __row holds avatars (fh-avatars), cubes and chips; a cube,
+   * ends; its label is bold. The gap is a row of its own, so the value,
+   * delta, sparkline, avatars, progress, source and __more all sit below
+   * it, in source order. fh-metric--tinted is a stronger tone wash with a
+   * tone edge, for the tile that leads a row; fh-metric--wide takes two
+   * columns. __row holds avatars (fh-avatars), cubes and chips; a cube,
    * avatar or chip last in __label sits at the far right. __more is a
    * <details> on an etched line at the foot of the tile, a chevron at
    * the right; open, the tile spans the whole row and shows its detail
@@ -119,12 +123,30 @@
     grid-auto-rows: auto;
     row-gap: var(--fh-space-1-5);
 
-    & > .fh-metric__label { grid-row: 1; }
+    /* The gap is a row of its own (this spacer holds it), so every other
+       part lands below it in source order: value, delta, chart, people,
+       progress, source, more. */
+    &::before { content: ""; grid-row: 3; }
+    & > .fh-metric__label {
+      grid-row: 1;
+      color: var(--fh-color-text);
+      font-weight: var(--fh-weight-bold);
+    }
     & > .fh-metric__sub { grid-row: 2; }
-    & > .fh-metric__value { grid-row: 4; font-size: var(--fh-text-h3); }
-    & > .fh-progress { grid-row: 5; }
-    & > .fh-metric__source { grid-row: 6; }
+    & .fh-metric__value { font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); }
+    & > .fh-metric__more { margin-block-start: var(--fh-space-1); }
   }
+
+  /* Tinted: a stronger wash of the tone and a tone edge, for the tile
+     that leads a row. */
+  .fh-metric--tinted {
+    border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 35%, transparent);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, var(--fh-color-surface));
+  }
+
+  /* Wide: two columns of the row, for a tile carrying a chart or a list. */
+  .fh-metric--wide { grid-column: span 2; }
+  @container (inline-size < 30rem) { .fh-metric--wide { grid-column: auto; } }
 
   /* Avatars, cubes and chips on one line. */
   .fh-metric__row {

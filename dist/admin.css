@@ -1445,7 +1445,14 @@
     row-gap: var(--fh-space-1-5);
     grid-auto-rows: auto;
 
+    &:before {
+      content: "";
+      grid-row: 3;
+    }
+
     & > .fh-metric__label {
+      color: var(--fh-color-text);
+      font-weight: var(--fh-weight-bold);
       grid-row: 1;
     }
 
@@ -1453,17 +1460,28 @@
       grid-row: 2;
     }
 
-    & > .fh-metric__value {
+    & .fh-metric__value {
       font-size: var(--fh-text-h3);
-      grid-row: 4;
+      font-weight: var(--fh-weight-medium);
     }
 
-    & > .fh-progress {
-      grid-row: 5;
+    & > .fh-metric__more {
+      margin-block-start: var(--fh-space-1);
     }
+  }
 
-    & > .fh-metric__source {
-      grid-row: 6;
+  .fh-metric--tinted {
+    border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 35%, transparent);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, var(--fh-color-surface));
+  }
+
+  .fh-metric--wide {
+    grid-column: span 2;
+  }
+
+  @container (inline-size < 30rem) {
+    .fh-metric--wide {
+      grid-column: auto;
     }
   }
 

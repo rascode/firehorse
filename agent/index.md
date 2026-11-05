@@ -107,7 +107,7 @@
 | `BKD` | Backdrop | Admin | 1 Backdrop (1) | [open](https://firehorse.rascode.dev/admin/#BKD) |
 | `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
 | `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
-| `MET` | Metric tiles | Admin | 1 Metric tile (11) | [open](https://firehorse.rascode.dev/admin/#MET) |
+| `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (7) | [open](https://firehorse.rascode.dev/admin/#MET) |
 | `GAU` | Gauge | Admin | 1 Gauge (2) | [open](https://firehorse.rascode.dev/admin/#GAU) |
 | `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
 | `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
@@ -2944,7 +2944,7 @@ Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-
 
 One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile takes the whole row and shows its detail. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or gauge drops in as it is.
 
-Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__row` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-chip` `fh-metric__more` `fh-kv` `fh-metric__figure` `fh-metric__delta` `fh-sparkline` `fh-gauge`
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__row` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-chip` `fh-metric__more` `fh-kv` `fh-metric__figure` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--wide`
 
 ### MET-1 · Metric tile
 
@@ -3009,9 +3009,9 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
   <p class="fh-metric__value">4 people</p>
   <div class="fh-metric__row">
     <div class="fh-avatars" role="group" aria-label="Team">
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/ava.webp" alt="Ava"></span>
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/cole.webp" alt="Cole"></span>
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/maya.webp" alt="Maya"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span>
       <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
     </div>
     <span class="fh-chip" data-tone="lime">2 public</span>
@@ -3074,6 +3074,92 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 <article class="fh-metric" data-tone="amber" data-fh="MET-1.11">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
   <div class="fh-gauge" style="--fh-value: 31; --fh-gauge-size: 8rem" role="img" aria-label="31% of the credit line used"><b>31%</b><small>of $40,000</small></div>
+</article>
+```
+
+### MET-2 · Spread tiles
+
+The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. --tinted leads a row; --wide takes two columns.
+
+#### MET-2.1 · Progress
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="lime" data-fh="MET-2.1">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+  <p class="fh-metric__sub">Next: confirm the payout bank account</p>
+  <p class="fh-metric__value">82%</p>
+  <progress class="fh-progress" value="82" max="100">82%</progress>
+  <p class="fh-metric__source">9 of 11 facts</p>
+</article>
+```
+
+#### MET-2.2 · Trend
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="teal" data-fh="MET-2.2">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+  <p class="fh-metric__sub">All brands, after refunds</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+  <p class="fh-metric__source">vs September</p>
+</article>
+```
+
+#### MET-2.3 · Sparkline
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="sky" data-fh="MET-2.3">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders</p>
+  <p class="fh-metric__sub">Last 12 weeks</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span></div>
+  <svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+</article>
+```
+
+#### MET-2.4 · People
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="violet" data-fh="MET-2.4">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+  <p class="fh-metric__sub">Who can sign in and act for the business</p>
+  <p class="fh-metric__value">4 people</p>
+  <div class="fh-metric__row"><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span></div><span class="fh-chip" data-tone="lime">2 public</span></div>
+</article>
+```
+
+#### MET-2.5 · Tinted
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--tinted" data-tone="orange" data-fh="MET-2.5">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--globe" aria-hidden="true"></i>Google profile</p>
+  <p class="fh-metric__sub">Next: opening hours for each location</p>
+  <p class="fh-metric__value">45%</p>
+  <progress class="fh-progress" value="45" max="100">45%</progress>
+  <p class="fh-metric__source">5 of 11 facts</p>
+</article>
+```
+
+#### MET-2.6 · Expand
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="amber" data-fh="MET-2.6">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+  <p class="fh-metric__sub">5 invoices, 1 overdue</p>
+  <p class="fh-metric__value">$6,940</p>
+  <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+    <dl class="fh-kv"><div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div><div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div><div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div><div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div></dl>
+  </details>
+</article>
+```
+
+#### MET-2.7 · Wide
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--wide" data-tone="teal" data-fh="MET-2.7">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit line</p>
+  <p class="fh-metric__sub">Drawn against $40,000 at Cedar Valley Bank</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$12,500</p><span class="fh-metric__delta" data-trend="flat">0</span></div>
+  <progress class="fh-progress" value="31" max="100">31%</progress>
+  <p class="fh-metric__source">31% drawn · 9.4% rate</p>
 </article>
 ```
 
