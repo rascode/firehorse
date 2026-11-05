@@ -26,7 +26,7 @@
    * delta, sparkline, avatars, progress, source and __more all sit below
    * it, in source order. fh-metric--tinted is a stronger tone wash with a
    * tone edge, for the tile that leads a row; fh-metric--wide takes two
-   * columns. __row holds avatars (fh-avatars), cubes and chips; a cube,
+   * columns; fh-metric--full the whole row, and a table in it fills it. __row holds avatars (fh-avatars), cubes and chips; a cube,
    * avatar or chip last in __label sits at the far right. __more is a
    * <details> on an etched line at the foot of the tile, a chevron at
    * the right; open, the tile spans the whole row and shows its detail
@@ -146,6 +146,13 @@
 
   /* Wide: two columns of the row, for a tile carrying a chart or a list. */
   .fh-metric--wide { grid-column: span 2; }
+
+  /* Full: the whole width of the row, for a tile carrying a table. */
+  .fh-metric--full { grid-column: 1 / -1; }
+
+  /* A table or key value list in a tile fills it edge to edge. */
+  .fh-metric > :is(.fh-table-wrap, .fh-kv, .fh-dl),
+  .fh-metric__more > :is(.fh-table-wrap, .fh-kv, .fh-dl) { inline-size: 100%; }
   @container (inline-size < 30rem) { .fh-metric--wide { grid-column: auto; } }
 
   /* Avatars, cubes and chips on one line. */

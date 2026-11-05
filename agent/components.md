@@ -14,7 +14,7 @@
 | Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
-| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide`) `fh-gauge` |
+| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) `fh-gauge` |
 | People | `fh-social` (`__photo` `__body` `__name` `__check` `__bio` `__foot` `__stats` `--fade` `--dark`) |
 | Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
@@ -2464,7 +2464,7 @@ One fact per tile: label with an icon, the value, a line under it and where it c
 
 ### MET-2 · Spread tiles
 
-The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. `--tinted` leads a row; `--wide` takes two columns.
+The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. `--tinted` leads a row; `--wide` takes two columns; `--full` takes the full width, and a table in it fills the tile.
 
 ```html
 <div class="fh-metrics" style="--fh-metrics-min: 14rem">
@@ -2514,6 +2514,12 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
     <div class="fh-metric__figure"><p class="fh-metric__value">$12,500</p><span class="fh-metric__delta" data-trend="flat">0</span></div>
     <progress class="fh-progress" value="31" max="100">31%</progress>
     <p class="fh-metric__source">31% drawn · 9.4% rate</p>
+  </article>
+  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
+    <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>
+    <div class="fh-table-wrap"><table class="fh-table fh-table--reflow"><thead><tr><th>Invoice</th><th>Customer</th><th>Sent</th><th class="fh-num">Amount</th><th>Status</th></tr></thead><tbody><tr><td data-label="Invoice">INV-1042</td><td data-label="Customer">Brightline Builders</td><td data-label="Sent">Oct 30</td><td class="fh-num" data-label="Amount">$2,180.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1041</td><td data-label="Customer">Harbor &amp; Pine</td><td data-label="Sent">Oct 26</td><td class="fh-num" data-label="Amount">$940.00</td><td data-label="Status"><span class="fh-chip" data-tone="lime">Paid</span></td></tr><tr><td data-label="Invoice">INV-1040</td><td data-label="Customer">Mesa Homes</td><td data-label="Sent">Oct 21</td><td class="fh-num" data-label="Amount">$3,420.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1038</td><td data-label="Customer">Cobalt Roofing</td><td data-label="Sent">Oct 9</td><td class="fh-num" data-label="Amount">$400.00</td><td data-label="Status"><span class="fh-chip" data-tone="danger">Overdue</span></td></tr></tbody></table></div>
   </article>
 </div>
 ```

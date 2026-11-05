@@ -107,7 +107,7 @@
 | `BKD` | Backdrop | Admin | 1 Backdrop (2) | [open](https://firehorse.rascode.dev/admin/#BKD) |
 | `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
 | `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
-| `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (7) | [open](https://firehorse.rascode.dev/admin/#MET) |
+| `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/admin/#MET) |
 | `GAU` | Gauge | Admin | 1 Gauge (2) | [open](https://firehorse.rascode.dev/admin/#GAU) |
 | `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
 | `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
@@ -2964,7 +2964,7 @@ Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-
 
 One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile takes the whole row and shows its detail. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or gauge drops in as it is.
 
-Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__row` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-chip` `fh-metric__more` `fh-kv` `fh-metric__figure` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--wide`
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__row` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-chip` `fh-metric__more` `fh-kv` `fh-metric__figure` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--wide` `fh-metric--full` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num`
 
 ### MET-1 · Metric tile
 
@@ -3099,7 +3099,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 
 ### MET-2 · Spread tiles
 
-The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. --tinted leads a row; --wide takes two columns.
+The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. --tinted leads a row; --wide takes two columns; --full takes the full width, and a table in it fills the tile.
 
 #### MET-2.1 · Progress
 
@@ -3180,6 +3180,17 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
   <div class="fh-metric__figure"><p class="fh-metric__value">$12,500</p><span class="fh-metric__delta" data-trend="flat">0</span></div>
   <progress class="fh-progress" value="31" max="100">31%</progress>
   <p class="fh-metric__source">31% drawn · 9.4% rate</p>
+</article>
+```
+
+#### MET-2.8 · Full
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber" data-fh="MET-2.8">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
+  <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>
+  <div class="fh-table-wrap"><table class="fh-table fh-table--reflow"><thead><tr><th>Invoice</th><th>Customer</th><th>Sent</th><th class="fh-num">Amount</th><th>Status</th></tr></thead><tbody><tr><td data-label="Invoice">INV-1042</td><td data-label="Customer">Brightline Builders</td><td data-label="Sent">Oct 30</td><td class="fh-num" data-label="Amount">$2,180.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1041</td><td data-label="Customer">Harbor &amp; Pine</td><td data-label="Sent">Oct 26</td><td class="fh-num" data-label="Amount">$940.00</td><td data-label="Status"><span class="fh-chip" data-tone="lime">Paid</span></td></tr><tr><td data-label="Invoice">INV-1040</td><td data-label="Customer">Mesa Homes</td><td data-label="Sent">Oct 21</td><td class="fh-num" data-label="Amount">$3,420.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1038</td><td data-label="Customer">Cobalt Roofing</td><td data-label="Sent">Oct 9</td><td class="fh-num" data-label="Amount">$400.00</td><td data-label="Status"><span class="fh-chip" data-tone="danger">Overdue</span></td></tr></tbody></table></div>
 </article>
 ```
 
