@@ -20,7 +20,7 @@
    *     <footer class="fh-section-card__foot">…buttons…</footer>
    *   </section>
    * Modifiers: fh-section-card--inset (a sunken sub-card inside another,
-   * e.g. one address role), fh-section-card--aside (the lede sits on the
+   * e.g. one address role; frosted), fh-section-card--aside (the lede sits on the
    * right of the title on wide slots). The tone tints the title icon.
    * Knobs: --fh-section-card-pad, --fh-section-card-gap. */
   .fh-section-card {
@@ -109,10 +109,12 @@
   .fh-section-card--inset {
     --_pad: var(--fh-section-card-pad, var(--fh-space-5));
     gap: var(--fh-section-card-gap, var(--fh-space-3));
-    border-style: solid;
-    border-color: transparent;
+    border-color: var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
-    background-color: var(--fh-color-surface-sunken);
+    /* Frosted, not sunken: a light veil of the text colour over whatever
+       is behind, blurred by --fh-frost. */
+    background-color: color-mix(in oklab, var(--fh-color-text) calc(3% + clamp(0, var(--fh-frost, 0.6), 1) * 4%), transparent);
+    backdrop-filter: blur(calc(clamp(0, var(--fh-frost, 0.6), 1) * 16px));
 
     & .fh-section-card__title {
       font-family: var(--fh-font-mono);

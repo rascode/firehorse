@@ -713,6 +713,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "frost"
   },
+  "--fh-float-gap": {
+    "$value": "0.75rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "float"
+  },
   "--fh-duration-instant": {
     "$value": "80ms",
     "$type": "duration",

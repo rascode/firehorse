@@ -1286,10 +1286,11 @@
   .fh-section-card--inset {
     --_pad: var(--fh-section-card-pad, var(--fh-space-5));
     gap: var(--fh-section-card-gap, var(--fh-space-3));
+    border-color: var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
-    background-color: var(--fh-color-surface-sunken);
-    border-style: solid;
-    border-color: #0000;
+    background-color: color-mix(in oklab, var(--fh-color-text) calc(3% + clamp(0, var(--fh-frost, .6), 1) * 4%), transparent);
+    -webkit-backdrop-filter: blur(calc(clamp(0, var(--fh-frost, .6), 1) * 16px));
+    backdrop-filter: blur(calc(clamp(0, var(--fh-frost, .6), 1) * 16px));
 
     & .fh-section-card__title {
       font-family: var(--fh-font-mono);

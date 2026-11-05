@@ -206,6 +206,7 @@
     --fh-shadow-menu: 0 12px 32px #00000080;
     --fh-blur-chrome: 10px;
     --fh-frost: .6;
+    --fh-float-gap: .75rem;
     --fh-duration-instant: 80ms;
     --fh-duration-fast: .15s;
     --fh-duration-base: .22s;
@@ -10642,24 +10643,27 @@
   }
 
   .fh-dialog--float {
-    --_gap: var(--fh-space-3);
+    --_gap: var(--fh-float-gap, var(--fh-space-3));
     inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));
     max-inline-size: none;
     block-size: calc(100dvh - 2 * var(--_gap));
     max-block-size: none;
     margin: var(--_gap) var(--_gap) var(--_gap) auto;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
-    opacity: 1;
+    opacity: 0;
     translate: calc(100% + 2 * var(--_gap)) 0;
-    transition: translate var(--fh-duration-slow, .38s) cubic-bezier(.32, .72, 0, 1),
-      overlay var(--fh-duration-slow, .38s) allow-discrete,
-      display var(--fh-duration-slow, .38s) allow-discrete;
+    transition: translate var(--fh-float-duration, var(--fh-duration-slow, .42s)) var(--fh-ease-in-out),
+      opacity var(--fh-float-duration, var(--fh-duration-slow, .42s)) var(--fh-ease-in-out),
+      overlay var(--fh-float-duration, var(--fh-duration-slow, .42s)) allow-discrete,
+      display var(--fh-float-duration, var(--fh-duration-slow, .42s)) allow-discrete;
 
     &[open] {
+      opacity: 1;
       translate: 0;
 
       @starting-style {
+        opacity: 0;
         translate: calc(100% + 2 * var(--_gap)) 0;
       }
     }
@@ -10675,9 +10679,11 @@
     translate: calc(-100% - 2 * var(--_gap)) 0;
 
     &[open] {
+      opacity: 1;
       translate: 0;
 
       @starting-style {
+        opacity: 0;
         translate: calc(-100% - 2 * var(--_gap)) 0;
       }
     }
@@ -10859,6 +10865,12 @@
     background-color: var(--fh-color-surface-raised);
     flex-wrap: wrap;
     display: flex;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dialog--float {
+      transition-duration: 0s;
+    }
   }
 
   .fh-burger {

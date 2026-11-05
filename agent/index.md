@@ -2904,7 +2904,7 @@ Classes: `fh-record` `fh-eyebrow-pill` `fh-record__mark` `fh-icon` `fh-record__i
 
 One area of a record page: title with chips on the right, a lede, the body, and a foot for its actions. --inset is a sunken sub-card inside another; --aside puts the lede beside the title on wide slots.
 
-Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-icon` `fh-section-card__tools` `fh-chip` `fh-section-card__lede` `fh-section-card__subhead` `fh-section-card__note` `fh-section-card__foot` `fh-button` `fh-button--sm` `fh-section-card--inset` `fh-section-card--aside`
+Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-icon` `fh-section-card__tools` `fh-chip` `fh-section-card__lede` `fh-metrics` `fh-metric` `fh-metric__label` `fh-metric__value` `fh-metric__sub` `fh-section-card__subhead` `fh-kv` `fh-kv--fields` `fh-input` `fh-kv__full` `fh-textarea` `fh-section-card__note` `fh-section-card__foot` `fh-button` `fh-button--sm` `fh-button--secondary` `fh-section-card--inset` `fh-kv--single` `fh-section-card--aside`
 
 ### SEC-1 · Section card
 
@@ -2916,14 +2916,27 @@ Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-
     <h2 class="fh-section-card__title" id="sec-demo-1"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Identity</h2>
     <div class="fh-section-card__tools">
       <span class="fh-chip" data-tone="lime">Complete</span>
-      <span class="fh-chip" data-tone="teal">6 fields</span>
+      <span class="fh-chip" data-tone="teal">7 fields</span>
     </div>
   </header>
-  <p class="fh-section-card__lede">Who the business is: its names, its code and how it presents itself.</p>
+  <p class="fh-section-card__lede">Who the business is: the names it files and trades under, its code across the platform, and how it describes itself on its site and profiles.</p>
+  <div class="fh-metrics">
+    <article class="fh-metric" data-tone="teal"><p class="fh-metric__label"><i class="fh-icon fh-icon--scale" aria-hidden="true"></i>Structure</p><p class="fh-metric__value">LLC</p><p class="fh-metric__sub">Texas · Mar 2019</p></article>
+    <article class="fh-metric" data-tone="sky"><p class="fh-metric__label"><i class="fh-icon fh-icon--tag" aria-hidden="true"></i>Brands</p><p class="fh-metric__value">3</p><p class="fh-metric__sub">Acme, Acme Pro, Field Kit</p></article>
+    <article class="fh-metric" data-tone="orange"><p class="fh-metric__label"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i>Locations</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">Austin, San Marcos</p></article>
+  </div>
   <h3 class="fh-section-card__subhead">Names</h3>
-  <p class="fh-section-card__note">Legal name comes from the state filing.</p>
+  <dl class="fh-kv fh-kv--fields">
+    <div><dt><label for="sec-legal">Legal name</label></dt><dd><input class="fh-input" id="sec-legal" value="Acme Supply Co. LLC"></dd></div>
+    <div><dt><label for="sec-dba">Trades as</label></dt><dd><input class="fh-input" id="sec-dba" value="Acme"></dd></div>
+    <div><dt><label for="sec-code">Code</label></dt><dd><input class="fh-input" id="sec-code" value="acme"></dd></div>
+    <div><dt><label for="sec-site">Website</label></dt><dd><input class="fh-input" id="sec-site" type="url" value="https://acme-supply.example"></dd></div>
+    <div class="fh-kv__full"><dt><label for="sec-about">About</label></dt><dd><textarea class="fh-textarea" id="sec-about" rows="2">Tools, fasteners and parts for small builders across Central Texas. Same-day pickup in Austin.</textarea></dd></div>
+  </dl>
+  <p class="fh-section-card__note">The legal name comes from the state filing; change it there and it updates here.</p>
   <footer class="fh-section-card__foot">
-    <p class="fh-section-card__note">Saved 2 min ago</p>
+    <p class="fh-section-card__note">Saved Oct 28 by Eleanor Vance</p>
+    <button class="fh-button fh-button--sm fh-button--secondary" type="button">Reset</button>
     <button class="fh-button fh-button--sm" type="button">Save</button>
   </footer>
 </section>
@@ -2934,7 +2947,7 @@ Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-
 ```html
 <section class="fh-section-card fh-section-card--inset" aria-labelledby="sec-demo-3" data-fh="SEC-1.2">
   <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="sec-demo-3">Headquarters</h3><div class="fh-section-card__tools"><span class="fh-chip" data-tone="sky">Default</span></div></header>
-  <p class="fh-section-card__note">400 Congress Ave, Austin, TX 78701</p>
+  <dl class="fh-kv fh-kv--single"><div><dt>Street</dt><dd>400 Congress Ave, Suite 210</dd></div><div><dt>City</dt><dd>Austin, TX 78701</dd></div></dl>
 </section>
 ```
 

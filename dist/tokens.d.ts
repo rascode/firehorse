@@ -119,6 +119,7 @@ export type FirehorseToken =
   | "--fh-shadow-menu"
   | "--fh-blur-chrome"
   | "--fh-frost"
+  | "--fh-float-gap"
   | "--fh-duration-instant"
   | "--fh-duration-fast"
   | "--fh-duration-base"

@@ -6,7 +6,11 @@
 @layer fh.components {
   /* —— Detail drawer ——————————————————————————————————————
    * A floating sheet for a record: header, quick facts, grouped
-   * fields, activity and a sticky footer. Slides in and out.
+   * fields, activity and a sticky footer. Etched edge; it floats
+   * --fh-float-gap from the screen edge (a theme token, space-3) and
+   * eases in and out over --fh-float-duration (slow); with reduced
+   * motion it appears without sliding. fh-dialog--start opens it from
+   * the inline start.
    *
    *   <dialog class="fh-dialog fh-dialog--float fh-detail" id="record">
    *     <header class="fh-detail__header">…</header>
@@ -19,26 +23,28 @@
    *   </dialog>
    */
   .fh-dialog--float {
-    --_gap: var(--fh-space-3);
+    --_gap: var(--fh-float-gap, var(--fh-space-3));
 
     inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));
     max-inline-size: none;
     block-size: calc(100dvh - 2 * var(--_gap));
     max-block-size: none;
     margin: var(--_gap) var(--_gap) var(--_gap) auto;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
-    opacity: 1;
+    opacity: 0;
     translate: calc(100% + 2 * var(--_gap)) 0;
     transition:
-      translate var(--fh-duration-slow, 380ms) cubic-bezier(0.32, 0.72, 0, 1),
-      overlay var(--fh-duration-slow, 380ms) allow-discrete,
-      display var(--fh-duration-slow, 380ms) allow-discrete;
+      translate var(--fh-float-duration, var(--fh-duration-slow, 420ms)) var(--fh-ease-in-out),
+      opacity var(--fh-float-duration, var(--fh-duration-slow, 420ms)) var(--fh-ease-in-out),
+      overlay var(--fh-float-duration, var(--fh-duration-slow, 420ms)) allow-discrete,
+      display var(--fh-float-duration, var(--fh-duration-slow, 420ms)) allow-discrete;
 
     &[open] {
+      opacity: 1;
       translate: 0 0;
 
-      @starting-style { translate: calc(100% + 2 * var(--_gap)) 0; }
+      @starting-style { opacity: 0; translate: calc(100% + 2 * var(--_gap)) 0; }
     }
 
     &:dir(rtl) {
@@ -51,7 +57,7 @@
     margin: var(--_gap) auto var(--_gap) var(--_gap);
     translate: calc(-100% - 2 * var(--_gap)) 0;
 
-    &[open] { translate: 0 0; @starting-style { translate: calc(-100% - 2 * var(--_gap)) 0; } }
+    &[open] { opacity: 1; translate: 0 0; @starting-style { opacity: 0; translate: calc(-100% - 2 * var(--_gap)) 0; } }
   }
 
   .fh-detail {
@@ -174,4 +180,8 @@
     background-color: var(--fh-color-surface-raised);
   }
 
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dialog--float { transition-duration: 0s; }
+  }
 }
