@@ -2,6 +2,7 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Metric tiles** (MET-1, `src/admin/metric.css`): every tile now follows the spread tile's standard: bold title in the text colour (icon keeps the tone), medium figure at h3, and spacing by relationship (title, figure, its line and source 4px apart; a chart, progress or people row 8px under the figure).
 - **Key value list** (KVL, `src/components/content/key-value.css`): each row is a size container; a row narrower than 18rem puts the value under its label, flush left, and lets long labels wrap. The same list at full width keeps label left, value right (the Open invoices tile on /admin/ collapsed vs full).
 - **Docs site:** the offset panel starts at the footer again on every page (the footer's class gained `fh-footer--panel`, so the start marker stopped being added and the panel's dashed edges ran the full page height). Guidelines rule lists wrap each description so inline code stays in its line.
 - **Cursor** (`src/tokens/config.css`, `src/base/reset.css`): the pointer is a white circle with a thin etch (a dark ring for light surfaces, a faint light ring for dark ones). Actions (links, buttons, summaries, checkboxes) get a slightly larger circle; text fields keep the text caret; disabled keeps not-allowed. Tokens `--fh-cursor` and `--fh-cursor-action`; `data-fh-cursor="system"` restores the platform arrow and hand. Every component `cursor: pointer` now reads `--fh-cursor-action`.

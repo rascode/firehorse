@@ -22,7 +22,7 @@
    * that opens its area. fh-metric--spread puts the label and the line
    * under it at the top, a wide gap, then the value and anything else at
    * the bottom (--fh-metric-gap, 3rem); tiles in a row line up at both
-   * ends; its label is bold. Each part has a fixed row (label,
+   * ends. Every tile has a bold title and a medium figure. Each part has a fixed row (label,
    * description, gap, figure, chart or progress or people, source,
    * detail) and tiles in fh-metrics share the rows, so figures line up
    * across a row of tiles whatever each one carries. fh-metric--tinted is a stronger tone wash with a
@@ -60,17 +60,20 @@
     text-decoration: none;
 
     & > * { margin: 0; min-inline-size: 0; }
-    & > .fh-progress { margin-block-start: var(--fh-gap-related); }
+    /* Spacing by relationship (Rascode HIG): label, figure, its line and
+       source are parts of one fact (bound); a chart, progress or people
+       row belongs with the figure (related). */
+    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { margin-block-start: var(--fh-gap-related); }
   }
 
   .fh-metric__label {
     display: flex;
     align-items: center;
     gap: var(--fh-gap-related);
-    color: var(--fh-color-text-muted);
+    color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
-    font-weight: var(--fh-weight-medium);
+    font-weight: var(--fh-weight-bold);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
 
@@ -80,8 +83,8 @@
   .fh-metric__value {
     overflow-wrap: anywhere;
     font-family: var(--fh-font-figure);
-    font-size: var(--fh-text-h4);
-    font-weight: var(--fh-weight-regular);
+    font-size: var(--fh-text-h3);
+    font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
     line-height: var(--fh-leading-tight);
   }
@@ -128,17 +131,12 @@
     row-gap: 0;
 
     &::before { content: ""; grid-row: 3; min-block-size: var(--fh-metric-gap, var(--fh-gap-separated)); }
-    & > .fh-metric__label {
-      grid-row: 1;
-      color: var(--fh-color-text);
-      font-weight: var(--fh-weight-bold);
-    }
+    & > .fh-metric__label { grid-row: 1; }
     & > .fh-metric__sub { grid-row: 2; margin-block-start: var(--fh-gap-bound); }
     & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: center; }
     & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-gauge, .fh-ring, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
     & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
     & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-gap-related); }
-    & .fh-metric__value { font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); }
   }
 
   /* Shared rows only when every tile in the set is a spread tile. */
