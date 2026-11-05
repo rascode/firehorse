@@ -136,16 +136,23 @@
     & > .fh-metric__sub { grid-row: 2; margin-block-start: var(--fh-space-1-5); }
     & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: center; }
     & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-gauge, .fh-ring, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-space-2); }
-    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-space-1-5); }
+    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-space-1); }
     & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-space-2); }
     & .fh-metric__value { font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); }
   }
 
   /* Shared rows only when every tile in the set is a spread tile. */
   @supports (grid-template-rows: subgrid) {
-    .fh-metrics:not(:has(> :not(.fh-metric--spread))) > .fh-metric--spread {
-      grid-row: span 7;
-      grid-template-rows: subgrid;
+    .fh-metrics:not(:has(> :not(.fh-metric--spread))) {
+      /* The set's own row gap would land between every shared row; tiles
+         space themselves instead. */
+      row-gap: 0;
+
+      & > .fh-metric--spread {
+        grid-row: span 7;
+        grid-template-rows: subgrid;
+        margin-block-end: var(--fh-space-3);
+      }
     }
   }
 
@@ -251,7 +258,7 @@
   /* Avatars or a sparkline on the figure line sit at the far right, so
      every tile keeps one line for its figure. */
   .fh-metric__figure > :is(.fh-avatars, .fh-avatar, .fh-sparkline) { margin-inline-start: auto; }
-  .fh-metric__figure > .fh-sparkline { inline-size: min(7rem, 45%); block-size: 2rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
+  .fh-metric__figure > .fh-sparkline { inline-size: min(7rem, 45%); block-size: 1.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
 
   .fh-metric > .fh-sparkline { inline-size: 100%; block-size: 2.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
   .fh-metric > :is(.fh-gauge, .fh-ring) { justify-self: center; margin-block: var(--fh-space-2); }

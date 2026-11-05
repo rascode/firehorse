@@ -1441,7 +1441,7 @@
 
     & > .fh-metric__source {
       grid-row: 6;
-      margin-block-start: var(--fh-space-1-5);
+      margin-block-start: var(--fh-space-1);
     }
 
     & > .fh-metric__more {
@@ -1456,9 +1456,14 @@
   }
 
   @supports (grid-template-rows: subgrid) {
-    .fh-metrics:not(:has( > :not(.fh-metric--spread))) > .fh-metric--spread {
-      grid-row: span 7;
-      grid-template-rows: subgrid;
+    .fh-metrics:not(:has( > :not(.fh-metric--spread))) {
+      row-gap: 0;
+
+      & > .fh-metric--spread {
+        grid-row: span 7;
+        grid-template-rows: subgrid;
+        margin-block-end: var(--fh-space-3);
+      }
     }
   }
 
@@ -1610,7 +1615,7 @@
   }
 
   .fh-metric__figure > .fh-sparkline {
-    block-size: 2rem;
+    block-size: 1.5rem;
     inline-size: min(7rem, 45%);
     color: var(--fh-tone, var(--fh-color-text-muted));
   }
