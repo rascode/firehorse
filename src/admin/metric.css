@@ -118,7 +118,8 @@
   }
 
   /* Spread: label and description at the top, the value and the rest at
-     the bottom, with a wide gap between. Every part has a fixed row:
+     the bottom, with a wide gap between. The title is a __label or an
+     fh-eyebrow-pill. Every part has a fixed row:
        1 label · 2 description · 3 gap · 4 figure · 5 chart, progress or
        people · 6 source · 7 detail
      In fh-metrics the tiles share those rows (subgrid), so figures, charts
@@ -133,6 +134,7 @@
       color: var(--fh-color-text);
       font-weight: var(--fh-weight-bold);
     }
+    & > .fh-eyebrow-pill { grid-row: 1; justify-self: start; margin: 0; }
     & > .fh-metric__sub { grid-row: 2; margin-block-start: var(--fh-gap-bound); }
     & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: center; }
     & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-gauge, .fh-ring, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
