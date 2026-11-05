@@ -30,8 +30,9 @@
    * columns; fh-metric--full the whole row, and a table in it fills it. __row holds avatars (fh-avatars), cubes and chips; a cube,
    * avatar or chip last in __label sits at the far right. __more is a
    * <details> on an etched line at the foot of the tile, a chevron at
-   * the right; open, the tile spans the whole row and shows its detail
-   * (a key value list or a table). __delta is the change beside or
+   * the right; open, the detail shows below it and the tile grows in
+   * place, so the chevron stays under the pointer. Give a tile whose
+   * detail needs room fh-metric--full. __delta is the change beside or
    * under the value: data-trend="up|down|flat" picks the arrow and
    * colour, and data-good="down" on the tile (or the delta) flips the
    * colours for figures where down is good (cost, churn). An
@@ -177,8 +178,8 @@
 
   .fh-metric__label > :is(.fh-cube, .fh-avatar, .fh-avatars, .fh-chip):last-child { margin-inline-start: auto; }
 
-  /* More: an etched line with a chevron; open, the detail shows below and
-     the tile takes the whole row. */
+  /* More: an etched line with a chevron; open, the detail shows below it
+     and the tile grows in place (no jump), so closing is the same click. */
   .fh-metric__more {
     margin-block-start: var(--fh-space-2);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
@@ -208,7 +209,6 @@
     & > :not(summary) { margin-block-start: var(--fh-space-2); }
   }
 
-  .fh-metric:has(> .fh-metric__more[open]) { grid-column: 1 / -1; }
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-metric__more > summary > .fh-icon { transition: rotate var(--fh-duration-fast) var(--fh-ease-out); }

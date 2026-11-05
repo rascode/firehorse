@@ -5239,7 +5239,7 @@
       "anchor": "a-metric",
       "page": "/admin/",
       "url": "https://firehorse.rascode.dev/admin/#MET",
-      "summary": "One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile takes the whole row and shows its detail. __delta shows the change (data-trend; data-good=\"down\" where down is good), and a sparkline, ring or gauge drops in as it is.",
+      "summary": "One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use --full when the detail needs room. __delta shows the change (data-trend; data-good=\"down\" where down is good), and a sparkline, ring or gauge drops in as it is.",
       "classes": [
         "fh-metric",
         "fh-metric__label",
@@ -5264,8 +5264,8 @@
         "fh-sparkline",
         "fh-gauge",
         "fh-metric--tinted",
-        "fh-metric--wide",
         "fh-metric--full",
+        "fh-metric--wide",
         "fh-table-wrap",
         "fh-table",
         "fh-table--reflow",
@@ -5585,6 +5585,7 @@
           "classes": [
             "fh-metric",
             "fh-metric--spread",
+            "fh-metric--full",
             "fh-metric__label",
             "fh-icon",
             "fh-metric__sub",
@@ -5593,7 +5594,7 @@
             "fh-kv"
           ],
           "config": {},
-          "markup": "<article class=\"fh-metric fh-metric--spread\" data-tone=\"amber\" data-fh=\"MET-2.6\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i>Open invoices</p>\n  <p class=\"fh-metric__sub\">5 invoices, 1 overdue</p>\n  <p class=\"fh-metric__value\">$6,940</p>\n  <details class=\"fh-metric__more\"><summary>Breakdown <i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></summary>\n    <dl class=\"fh-kv\"><div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div><div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div><div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div><div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div></dl>\n  </details>\n</article>"
+          "markup": "<article class=\"fh-metric fh-metric--spread fh-metric--full\" data-tone=\"amber\" data-fh=\"MET-2.6\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i>Open invoices</p>\n  <p class=\"fh-metric__sub\">5 invoices, 1 overdue</p>\n  <p class=\"fh-metric__value\">$6,940</p>\n  <details class=\"fh-metric__more\"><summary>Breakdown <i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></summary>\n    <dl class=\"fh-kv\"><div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div><div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div><div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div><div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div></dl>\n  </details>\n</article>"
         },
         {
           "id": "MET-2.7",

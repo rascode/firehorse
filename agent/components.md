@@ -2381,7 +2381,7 @@ One area of a record page: title with chips on the right, a lede, the body, and 
 
 ### MET · Metric tiles
 
-One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an `fh-progress` for a share done, `--needed` for a fact still to fill in, or make the tile an `<a>` to open its area. `--spread` puts the label and description at the top and the value at the bottom, with a wide gap. `__row` holds avatars, cubes and chips. `__more` is an etched line with a chevron: open, the tile takes the whole row and shows its detail. `__delta` shows the change (`data-trend`; `data-good="down"` where down is good), and a sparkline, ring or gauge drops in as it is.
+One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an `fh-progress` for a share done, `--needed` for a fact still to fill in, or make the tile an `<a>` to open its area. `--spread` puts the label and description at the top and the value at the bottom, with a wide gap. `__row` holds avatars, cubes and chips. `__more` is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use `--full` when the detail needs room. `__delta` shows the change (`data-trend`; `data-good="down"` where down is good), and a sparkline, ring or gauge drops in as it is.
 
 ```html
 <div class="fh-metrics">
@@ -2497,7 +2497,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
     <progress class="fh-progress" value="45" max="100">45%</progress>
     <p class="fh-metric__source">5 of 11 facts</p>
   </article>
-  <article class="fh-metric fh-metric--spread" data-tone="amber">
+  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber">
     <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
     <p class="fh-metric__sub">5 invoices, 1 overdue</p>
     <p class="fh-metric__value">$6,940</p>

@@ -137,7 +137,7 @@
         </div>
 
         <div class="site-demo site-anchor" id="a-metric" data-fh-id="MET" data-fh-groups="Metric tile|Spread tiles">
-          <div class="site-demo__head"><h3>Metric tiles</h3><p>One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an <code>fh-progress</code> for a share done, <code>--needed</code> for a fact still to fill in, or make the tile an <code>&lt;a&gt;</code> to open its area. <code>--spread</code> puts the label and description at the top and the value at the bottom, with a wide gap. <code>__row</code> holds avatars, cubes and chips. <code>__more</code> is an etched line with a chevron: open, the tile takes the whole row and shows its detail. <code>__delta</code> shows the change (<code>data-trend</code>; <code>data-good="down"</code> where down is good), and a sparkline, ring or gauge drops in as it is.</p></div>
+          <div class="site-demo__head"><h3>Metric tiles</h3><p>One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an <code>fh-progress</code> for a share done, <code>--needed</code> for a fact still to fill in, or make the tile an <code>&lt;a&gt;</code> to open its area. <code>--spread</code> puts the label and description at the top and the value at the bottom, with a wide gap. <code>__row</code> holds avatars, cubes and chips. <code>__more</code> is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use <code>--full</code> when the detail needs room. <code>__delta</code> shows the change (<code>data-trend</code>; <code>data-good="down"</code> where down is good), and a sparkline, ring or gauge drops in as it is.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-metrics">
   <article class="fh-metric" data-tone="teal" data-fh-id="MET-1.1" data-fh-name="Metric">
@@ -251,7 +251,7 @@
     <progress class="fh-progress" value="45" max="100">45%</progress>
     <p class="fh-metric__source">5 of 11 facts</p>
   </article>
-  <article class="fh-metric fh-metric--spread" data-tone="amber" data-fh-id="MET-2.6" data-fh-name="Expand">
+  <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="amber" data-fh-id="MET-2.6" data-fh-name="Expand">
     <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
     <p class="fh-metric__sub">5 invoices, 1 overdue</p>
     <p class="fh-metric__value">$6,940</p>
