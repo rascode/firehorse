@@ -2,6 +2,8 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Table of contents** (`src/components/navigation/toc.css`): the label starts where the entries' text starts, past the rule and marker, not on the rule.
+- **Docs site frame audit:** text standing beside a framed block starts where the block's text starts: the home adapt copy and its table, a label captioning a table (Theming), notes under demos (Data). The Stable's reading column is 40rem.
 - **Gauge** (GAU, `src/admin/gauge.css`): now a full circle with the figure in the middle and the caption under it, and the indicator has rounded ends (drawn with `sin()`/`cos()` from `--fh-value`). The gauge is a size container, so the figure and the ends scale with `--fh-gauge-size` (now 8rem).
 - **Metric tiles** (MET, `src/admin/metric.css`): one anatomy for every tile. Each part has a fixed row (title, description, gap, figure, chart/progress/people, source, detail); tiles in `fh-metrics` share the rows (subgrid), so figures sit on one line across a row and sources line up. Bold title, medium h3 figure on the bottom of its row, spacing by relationship. A gauge or ring is the figure of its tile. `fh-metric--spread` is now the same tile with the wide gap (48px). MET-1 demos put the description under the title.
 - **Key value list** (KVL, `src/components/content/key-value.css`): each row is a size container; a row narrower than 18rem puts the value under its label, flush left, and lets long labels wrap. The same list at full width keeps label left, value right (the Open invoices tile on /admin/ collapsed vs full).

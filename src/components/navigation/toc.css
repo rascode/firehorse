@@ -16,6 +16,10 @@
     gap: var(--fh-gap-grouped);
     align-self: start;
 
+    /* The label starts where the entries' text starts (past the rule and
+       the 2px marker), not on the rule (Rascode HIG, rule 7). */
+    & > .fh-label { padding-inline-start: calc(var(--fh-inset-tile) + 2px); }
+
     & :is(ol, ul) {
       display: grid;
       gap: 0;
