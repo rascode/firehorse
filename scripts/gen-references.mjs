@@ -24,7 +24,7 @@ if (existsSync(src)) {
   const byChapter = Object.keys(CHAPTERS).map((c) => [c, references.filter((r) => (r.hig_chapters ?? []).includes(c))]).filter(([, rs]) => rs.length);
   const index = byChapter.map(([c, rs]) => `<div id="ch-${c}"><dt>${esc(CHAPTERS[c])}</dt><dd><div class="fh-chips fh-chips--wrap">${rs.map((r) => `<a class="fh-chip" href="#ref-${esc(r.key)}">${esc(r.title.replace("Apple Human Interface Guidelines", "Apple HIG").replace("Understanding WCAG 2.2 ", "WCAG 2.2 ").replace("ARIA Authoring Practices Guide", "ARIA APG"))}</a>`).join("")}</div></dd></div>`).join("\n");
   const sections = groups.map(([k, rs], i) => `    <section id="${k.replace(/_/g, "-")}" class="fh-section fh-section--ruled site-anchor" data-tone="${TONE[k]}" aria-labelledby="${k}-title" data-fh-label="${esc(rs[0].category_label)}" data-fh-index="${String(i + 2).padStart(2, "0")}">
-      <header class="fh-section-head"><p class="fh-eyebrow">${esc(rs[0].category_label)} · ${rs.length}</p><h2 id="${k}-title">${esc({ design_system: "Published design systems", standard: "Standards: W3C, WAI and CSS", practice: "Practice", research: "Usability research" }[k] ?? rs[0].category_label)}</h2></header>
+      <header class="fh-section-head"><div><p class="fh-eyebrow">${esc(rs[0].category_label)} · ${rs.length}</p><h2 id="${k}-title" class="fh-heading">${esc({ design_system: "Published design systems", standard: "Standards: W3C, WAI and CSS", practice: "Practice", research: "Usability research" }[k] ?? rs[0].category_label)}</h2></div></header>
       <div class="fh-grid" data-cols="2">
 ${rs.map(card).join("\n")}
       </div>
@@ -47,7 +47,7 @@ ${rs.map(card).join("\n")}
 }-->
 <!--@main-->
     <section id="by-chapter" class="fh-section fh-section--ruled site-anchor" data-tone="sky" aria-labelledby="by-chapter-title" data-fh-label="By chapter" data-fh-index="01">
-      <header class="fh-section-head"><p class="fh-eyebrow">Index</p><h2 id="by-chapter-title">By chapter</h2><p>Each chapter of the HIG and the sources it draws on.</p></header>
+      <header class="fh-section-head"><div><p class="fh-eyebrow">Index</p><h2 id="by-chapter-title" class="fh-heading">By chapter</h2><p class="fh-lede">Each chapter of the HIG and the sources it draws on.</p></div></header>
       <dl class="fh-dl">
 ${index}
       </dl>
