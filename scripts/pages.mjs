@@ -275,7 +275,9 @@ ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", 
     // and the footer runs tall under it.
     // Every other page gets the same footer: tall, with the panel starting at the footer itself.
     .replace("{{PANEL}}", () => `  <div class="fh-panel" aria-hidden="true"></div>\n`)
-    .replace('class="fh-footer fh-frame site-footer"', () => (m.panel ? 'class="fh-footer fh-footer--tall fh-frame site-footer"' : 'class="fh-footer fh-footer--tall fh-frame site-footer" data-fh-panel-start'))
+    // Match the footer part's class list whatever modifiers it carries (it gained fh-footer--panel;
+    // an exact-string match silently stopped matching and the panel ran the full page height).
+    .replace(/<footer class="fh-footer fh-frame site-footer([^"]*)"/, (_, more) => (m.panel ? `<footer class="fh-footer fh-footer--tall fh-frame site-footer${more}"` : `<footer class="fh-footer fh-footer--tall fh-frame site-footer${more}" data-fh-panel-start`))
     .replaceAll("{{TITLE}}", m.title)
     .replaceAll("{{DESCRIPTION}}", escHtml(m.description))
     .replaceAll("{{OG_TITLE}}", m.ogTitle ?? m.title)

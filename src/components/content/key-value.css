@@ -16,7 +16,8 @@
    * fh-kv--fields puts a field in each value (label left, input
    * filling the right), for edit forms; fh-kv--single keeps one
    * column at any width. Rows go two across when each column can be
-   * 19rem wide. Knob: --fh-kv-label (label width in --fields, 11rem). */
+   * 19rem wide. A row narrower than 18rem stacks: the value goes under
+   * its label, flush left. Knob: --fh-kv-label (label width in --fields, 11rem). */
   .fh-kv {
     display: grid;
     --_gap: var(--fh-gap-sectioned);
@@ -34,6 +35,9 @@
       min-inline-size: 0;
       padding-block: var(--fh-row-pad, var(--fh-inset-control));
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      /* Each row knows its own width, so a value that has to drop under
+         its label (a narrow tile, a collapsed card) goes flush left. */
+      container: fh-kv-row / inline-size;
     }
 
     & dt {
@@ -58,6 +62,13 @@
     }
 
     & dd:empty::before { content: "—"; color: var(--fh-color-text-subtle); }
+
+    /* Restricted room: the value sits under its label, flush left.
+       The same list at full width keeps label left, value right. */
+    @container fh-kv-row (width < 18rem) {
+      & dt { flex: 0 1 auto; min-inline-size: 0; }
+      & dd { flex-basis: 100%; text-align: start; }
+    }
   }
 
   .fh-kv > .fh-kv__full { grid-column: 1 / -1; }

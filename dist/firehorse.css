@@ -8190,6 +8190,7 @@
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
       flex-wrap: wrap;
       display: flex;
+      container: fh-kv-row / inline-size;
     }
 
     & dt {
@@ -8216,6 +8217,18 @@
     & dd:empty:before {
       content: "—";
       color: var(--fh-color-text-subtle);
+    }
+
+    @container fh-kv-row (width < 18rem) {
+      & dt {
+        flex: 0 auto;
+        min-inline-size: 0;
+      }
+
+      & dd {
+        text-align: start;
+        flex-basis: 100%;
+      }
     }
   }
 
