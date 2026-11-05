@@ -89,13 +89,33 @@
   }
 
   /* The etch line between the avatar and the name. */
+  /* The separator is an etched arc round the avatar's right side, on the
+     avatar's own curve (its radius plus the gap), so the avatar reads as
+     enclosed. It overlaps the avatar rather than taking room of its own. */
   .fh-entity__sep {
+    --_g: var(--fh-gap-bound);
+    --_d: calc(var(--fh-avatar-size, 1.9rem) + var(--_g) * 2);
     flex: none;
-    align-self: stretch;
-    inline-size: 0;
-    margin-block: 0.15rem;
-    border-inline-start: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
+    align-self: center;
+    inline-size: var(--_d);
+    block-size: var(--_d);
+    margin-inline-start: calc((var(--fh-avatar-size, 1.9rem) + var(--_g) + var(--fh-item-gap)) * -1);
+    border: var(--fh-border-thin) var(--_line, dashed) transparent;
+    border-inline-end-color: var(--fh-color-etch);
+    border-radius: calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_g));
+    pointer-events: none;
   }
+  /* A row with the arc leaves room round the avatar for it, so the arc
+     never lands on the row's own edge. */
+  .fh-entity:has(.fh-entity__sep) {
+    padding-block: var(--fh-gap-related);
+    padding-inline-start: var(--fh-gap-related);
+  }
+
+  /* The arc follows the avatar's shape class. */
+  .fh-entity:has(.fh-avatar--circle) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-pill); }
+  .fh-entity:has(.fh-avatar--square) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-sm); }
+  .fh-entity:has(.fh-avatar--rounded) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-md); }
 
   .fh-entity__who {
     display: grid;
@@ -213,7 +233,7 @@
     padding: var(--fh-inset-tight);
     overflow: auto;
     overscroll-behavior: contain;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
     color: var(--fh-color-text);
@@ -337,12 +357,15 @@
   .fh-entity-picker--rounded {
     --fh-entity-radius: var(--fh-radius-pill);
 
+    /* On the picker, so the separator's arc takes the same round. */
+    --fh-avatar-radius: var(--fh-radius-pill);
     & .fh-avatar { --fh-avatar-radius: var(--fh-radius-pill); }
 
-    /* The pill has an edge all the way round, so it reads as a control
-       on any fill; it firms up on hover and while the list is open. */
+    /* The pill has an etched edge all the way round, so it reads as a
+       control on any fill; it firms up on hover and while the list is open. */
     & > .fh-entity {
       padding-inline-end: var(--fh-gap-grouped);
+      border-style: dashed;
       border-color: var(--fh-color-etch);
 
       &:hover { border-color: var(--fh-color-border-strong); }

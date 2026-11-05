@@ -3748,11 +3748,34 @@
   }
 
   .fh-entity__sep {
-    border-inline-start: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
+    --_g: var(--fh-gap-bound);
+    --_d: calc(var(--fh-avatar-size, 1.9rem) + var(--_g) * 2);
+    inline-size: var(--_d);
+    block-size: var(--_d);
+    border: var(--fh-border-thin) var(--_line, dashed) transparent;
+    border-inline-end-color: var(--fh-color-etch);
+    border-radius: calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_g));
+    pointer-events: none;
     flex: none;
-    align-self: stretch;
-    inline-size: 0;
-    margin-block: .15rem;
+    align-self: center;
+    margin-inline-start: calc((var(--fh-avatar-size, 1.9rem) + var(--_g) + var(--fh-item-gap)) * -1);
+  }
+
+  .fh-entity:has(.fh-entity__sep) {
+    padding-block: var(--fh-gap-related);
+    padding-inline-start: var(--fh-gap-related);
+  }
+
+  .fh-entity:has(.fh-avatar--circle) .fh-entity__sep {
+    --fh-avatar-radius: var(--fh-radius-pill);
+  }
+
+  .fh-entity:has(.fh-avatar--square) .fh-entity__sep {
+    --fh-avatar-radius: var(--fh-radius-sm);
+  }
+
+  .fh-entity:has(.fh-avatar--rounded) .fh-entity__sep {
+    --fh-avatar-radius: var(--fh-radius-md);
   }
 
   .fh-entity__who {
@@ -3887,7 +3910,7 @@
     max-inline-size: min(26rem, 100vi - 2rem);
     padding: var(--fh-inset-tight);
     overscroll-behavior: contain;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
     color: var(--fh-color-text);
@@ -4015,12 +4038,14 @@
 
   .fh-entity-picker--rounded {
     --fh-entity-radius: var(--fh-radius-pill);
+    --fh-avatar-radius: var(--fh-radius-pill);
 
     & .fh-avatar {
       --fh-avatar-radius: var(--fh-radius-pill);
     }
 
     & > .fh-entity {
+      border-style: dashed;
       border-color: var(--fh-color-etch);
       padding-inline-end: var(--fh-gap-grouped);
 
