@@ -37,9 +37,9 @@
       "art meta"
       "play wave"
       "tools tools";
-    gap: var(--fh-space-3) var(--fh-space-4);
+    gap: var(--fh-gap-grouped) var(--fh-gap-grouped-wide);
     align-items: center;
-    padding: var(--fh-space-4);
+    padding: var(--fh-inset-tile);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
     border-radius: var(--fh-card-radius, var(--fh-radius-none));
     background-color: var(--fh-card-bg, transparent);
@@ -80,11 +80,11 @@
     & > :is(img, svg) { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
   }
 
-  .fh-player__meta { grid-area: meta; display: grid; gap: var(--fh-space-1); min-inline-size: 0; }
+  .fh-player__meta { grid-area: meta; display: grid; gap: var(--fh-gap-bound); min-inline-size: 0; }
   .fh-player__kicker {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin: 0;
     color: var(--fh-tone, var(--fh-color-text-subtle));
     font-family: var(--fh-font-mono);
@@ -109,7 +109,7 @@
   .fh-player__time {
     grid-area: time;
     display: flex;
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     margin: 0;
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
@@ -126,11 +126,11 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2) var(--fh-space-3);
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
   }
   @container (inline-size < 34rem) {
     .fh-player:not(.fh-player--bar) { grid-template-areas: "art meta" "play wave" ". time" "tools tools"; }
-    .fh-player:not(.fh-player--bar) > .fh-player__time { justify-self: end; margin-block-start: calc(var(--fh-space-2) * -1); }
+    .fh-player:not(.fh-player--bar) > .fh-player__time { justify-self: end; margin-block-start: calc(var(--fh-gap-related) * -1); }
   }
   @container fh-player (inline-size >= 34rem) {
     .fh-player__tools { justify-content: end; }
@@ -140,7 +140,7 @@
   .fh-player.fh-player--bar {
     grid-template-columns: auto auto minmax(0, 1fr) auto auto;
     grid-template-areas: "art play wave time tools";
-    padding: var(--fh-space-2) var(--fh-space-3);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
     --_art: 2.75rem;
 
     & .fh-player__meta { display: none; }

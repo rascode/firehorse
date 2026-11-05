@@ -61,7 +61,7 @@
     }
 
     & > hr {
-      margin-block: var(--fh-space-1-5);
+      margin-block: var(--fh-gap-bound);
     }
   }
 
@@ -69,7 +69,7 @@
     .fh-menu {
       position-area: block-end span-inline-end;
       position-try-fallbacks: flip-block, flip-inline;
-      margin-block-start: var(--fh-space-1-5);
+      margin-block-start: var(--fh-gap-bound);
     }
   }
 
@@ -78,7 +78,7 @@
 @layer fh.components {
   /* —— Menu extras: labels, icons, shortcuts, checks, danger —— */
   .fh-menu__label {
-    margin: var(--fh-space-1-5) var(--fh-space-2) var(--fh-space-1);
+    margin: var(--fh-gap-bound) var(--fh-gap-related) var(--fh-gap-bound);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: 0.62rem;
@@ -105,7 +105,7 @@
       opacity: 0;
     }
     &[aria-checked="true"]::after { opacity: 1; }
-    &:has(> kbd)::after { margin-inline-start: var(--fh-space-2); }
+    &:has(> kbd)::after { margin-inline-start: var(--fh-gap-related); }
   }
   .fh-menu > .fh-menu__danger { color: var(--fh-color-danger); }
   .fh-menu > .fh-menu__danger > .fh-icon { color: inherit; }

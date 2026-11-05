@@ -18,14 +18,14 @@
   .fh-app-composer {
     display: flex;
     align-items: flex-end;
-    gap: var(--fh-space-2);
-    padding: var(--fh-space-2);
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tight);
     border: var(--fh-border-thin) solid var(--fh-color-border);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
     backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.2);
 
-    & > .fh-field--dictate { flex: 1; min-inline-size: 0; gap: var(--fh-space-1); }
+    & > .fh-field--dictate { flex: 1; min-inline-size: 0; gap: var(--fh-gap-bound); }
 
     & > .fh-textarea,
     & > .fh-field--dictate > .fh-textarea {
@@ -47,7 +47,7 @@
    * (removable chips, add buttons) and a one-line note beneath it. */
   .fh-app-composer--attach {
     flex-wrap: wrap;
-    row-gap: var(--fh-space-1-5);
+    row-gap: var(--fh-gap-bound);
 
     & > .fh-field--dictate { flex: 1 1 20rem; }
   }
@@ -75,8 +75,8 @@
     flex-basis: 100%;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--fh-space-1-5);
-    padding-block-start: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
+    padding-block-start: var(--fh-inset-tight);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
 
     & > .fh-input { min-block-size: 1.75rem; padding-block: 0.2rem; font-size: var(--fh-text-small); }
@@ -95,7 +95,7 @@
     display: flex;
     flex: none;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin-inline-start: auto;
   }
 

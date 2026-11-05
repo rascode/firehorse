@@ -11,9 +11,9 @@
    *     <ol><li><a href="#intro">Intro</a></li>…</ol></nav> */
   .fh-toc {
     position: sticky;
-    inset-block-start: calc(var(--fh-header-height) + var(--fh-space-6));
+    inset-block-start: calc(var(--fh-header-height) + var(--fh-gap-sectioned));
     display: grid;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     align-self: start;
 
     & :is(ol, ul) {
@@ -26,14 +26,14 @@
     }
 
     & :is(ol, ul) :is(ol, ul) {
-      margin-inline-start: var(--fh-space-3);
+      margin-inline-start: var(--fh-gap-grouped);
       border: 0;
     }
 
     & a {
       display: block;
       margin-inline-start: -1px;
-      padding: var(--fh-space-1-5) var(--fh-space-4);
+      padding: var(--fh-inset-tight) var(--fh-inset-tile);
       border-inline-start: 2px solid transparent;
       color: var(--fh-color-text-muted);
       font-size: var(--fh-text-small);

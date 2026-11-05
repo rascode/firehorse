@@ -23,7 +23,7 @@
    *   </dialog>
    */
   .fh-dialog--float {
-    --_gap: var(--fh-float-gap, var(--fh-space-3));
+    --_gap: var(--fh-float-gap, var(--fh-gap-grouped));
 
     inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));
     max-inline-size: none;
@@ -68,8 +68,8 @@
 
   .fh-detail__header {
     display: grid;
-    gap: var(--fh-space-3);
-    padding: var(--fh-space-4) var(--fh-space-5) var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tile) var(--fh-inset-card) var(--fh-inset-control);
     border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
     /* Flat on purpose: drawers are drawn with lines, never a gradient wash. */
     background-color: transparent;
@@ -79,7 +79,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -89,18 +89,18 @@
 
   .fh-detail__nav {
     display: inline-flex;
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
   }
 
   .fh-detail__identity {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     --fh-avatar-size: 3rem;
 
     /* Long titles wrap at a readable measure instead of running the full width. */
     & h2 { max-inline-size: var(--fh-detail-title-max, 28ch); margin: 0; font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); letter-spacing: var(--fh-tracking-heading); line-height: 1.15; text-wrap: balance; }
-    & p { margin: var(--fh-space-0-5) 0 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+    & p { margin: var(--fh-gap-bound) 0 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
   }
 
   .fh-detail__facts {
@@ -112,28 +112,28 @@
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-border);
 
-    & > div { display: grid; gap: var(--fh-space-0-5); padding: var(--fh-space-2) var(--fh-space-3); background-color: var(--fh-color-surface-raised); }
+    & > div { display: grid; gap: var(--fh-gap-bound); padding: var(--fh-gap-related) var(--fh-gap-grouped); background-color: var(--fh-color-surface-raised); }
     & dt { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: 0.62rem; letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
     & dd { margin: 0; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-semibold); letter-spacing: var(--fh-tracking-mono); text-transform: uppercase; font-variant-numeric: tabular-nums; }
   }
 
   .fh-detail__body {
     display: grid;
-    gap: var(--fh-space-6);
+    gap: var(--fh-gap-sectioned);
     align-content: start;
-    padding: var(--fh-space-5);
+    padding: var(--fh-inset-card);
     overflow-y: auto;
     overscroll-behavior: contain;
   }
 
   .fh-detail__section {
     display: grid;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
 
     & > h3 {
       display: flex;
       align-items: center;
-      gap: var(--fh-space-2);
+      gap: var(--fh-gap-related);
       margin: 0;
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
@@ -153,20 +153,20 @@
     & > div {
       display: grid;
       grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr);
-      gap: var(--fh-space-3);
+      gap: var(--fh-gap-grouped);
       align-items: center;
       min-block-size: 2.4rem;
-      padding-block: var(--fh-space-1);
+      padding-block: var(--fh-inset-tight);
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     }
-    & dt { display: flex; align-items: center; gap: var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+    & dt { display: flex; align-items: center; gap: var(--fh-gap-related); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
     & dt > .fh-icon { color: var(--fh-color-text-subtle); }
     & dd { margin: 0; min-inline-size: 0; font-size: var(--fh-text-small); overflow-wrap: anywhere; }
     & :is(.fh-input, .fh-select) { min-block-size: 2rem; padding-block: 0.3rem; font-size: var(--fh-text-small); }
   }
 
   @container fh-dialog (inline-size < 24rem) {
-    .fh-detail__fields > div { grid-template-columns: minmax(0, 1fr); gap: var(--fh-space-1); }
+    .fh-detail__fields > div { grid-template-columns: minmax(0, 1fr); gap: var(--fh-gap-bound); }
   }
 
   .fh-detail__footer {
@@ -174,8 +174,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2);
-    padding: var(--fh-space-3) var(--fh-space-5);
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-control) var(--fh-inset-card);
     border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
     background-color: var(--fh-color-surface-raised);
   }

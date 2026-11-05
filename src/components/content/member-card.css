@@ -111,8 +111,8 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-rows: repeat(5, auto) 1fr;
-    column-gap: var(--fh-space-4);
-    padding: clamp(var(--fh-space-4), 6cqi, var(--fh-space-6));
+    column-gap: var(--fh-gap-grouped-wide);
+    padding: clamp(var(--fh-inset-tile), 6cqi, var(--fh-inset-card));
   }
 
   .fh-member__name {
@@ -141,9 +141,9 @@
     grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
-    gap: var(--fh-space-4);
-    margin: clamp(var(--fh-space-5), 9cqi, var(--fh-space-8)) 0 0;
-    padding-block-start: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
+    margin: clamp(var(--fh-gap-sectioned), 9cqi, var(--fh-gap-sectioned)) 0 0;
+    padding-block-start: var(--fh-inset-tile);
     border-block-start: 1px dotted var(--fh-color-text-subtle);
   }
   .fh-member__facts > div:last-child { text-align: end; }
@@ -161,7 +161,7 @@
     grid-column: 1;
     grid-row: 6;
     align-self: end;
-    margin-block-start: var(--fh-space-8);
+    margin-block-start: var(--fh-gap-sectioned);
   }
 
   .fh-member__stamp {
@@ -170,7 +170,7 @@
     align-self: end;
     inline-size: clamp(3.25rem, 22cqi, 4.5rem);
     block-size: auto;
-    margin-block-start: var(--fh-space-6);
+    margin-block-start: var(--fh-gap-sectioned);
     color: var(--_tone);
     fill: currentColor;
     stroke: currentColor;
@@ -189,7 +189,7 @@
 
   /* —— Plates: art and body as two separate pieces —— */
   .fh-member--plates {
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     overflow: visible;
     background-color: transparent;
     box-shadow: none;
@@ -221,7 +221,7 @@
     .fh-member > .fh-member__body {
       align-self: end;
       margin: 46cqi var(--fh-card-content-inset, 0px) var(--fh-card-content-inset, 0px);
-      padding: var(--fh-card-content-pad, var(--fh-space-4));
+      padding: var(--fh-card-content-pad, var(--fh-inset-tile));
     }
     .fh-member--plates > .fh-member__body { box-shadow: none; }
   }
@@ -232,7 +232,7 @@
 
   .fh-member__tagline {
     grid-column: 1 / -1;
-    margin: var(--fh-space-4) 0 0;
+    margin: var(--fh-gap-grouped-wide) 0 0;
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-small);
     letter-spacing: 0.04em;
@@ -243,9 +243,9 @@
     grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
-    gap: var(--fh-space-4);
-    margin: var(--fh-space-4) 0 0;
-    padding-block-start: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
+    margin: var(--fh-gap-grouped-wide) 0 0;
+    padding-block-start: var(--fh-inset-tile);
     border-block-start: 1px solid var(--fh-color-border);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
@@ -263,7 +263,7 @@
     place-items: center;
     inline-size: clamp(2.25rem, 14cqi, 2.75rem);
     aspect-ratio: 1;
-    margin-block-start: var(--fh-space-8);
+    margin-block-start: var(--fh-gap-sectioned);
     border-radius: 28%;
     background:
       radial-gradient(circle at 30% 20%, color-mix(in oklab, var(--fh-color-on-ink) 70%, transparent), transparent 55%),

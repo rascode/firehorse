@@ -54,8 +54,8 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-3) var(--fh-space-6);
-    padding-block: var(--fh-space-3) var(--fh-space-4);
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    padding-block: var(--fh-inset-control) var(--fh-inset-tile);
 
     & > .fh-chips {
       flex: 0 4 auto;
@@ -72,7 +72,7 @@
   .fh-dock__identity {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     flex: 1 1 auto;
     min-inline-size: 0;
     overflow: clip;
@@ -136,7 +136,7 @@
   .fh-dock__meta {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     margin: 0;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
@@ -161,7 +161,7 @@
   .fh-dock__actions {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     margin-inline-start: auto;
   }
 
@@ -293,20 +293,20 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas: "identity actions" "chips chips";
-      gap: var(--fh-space-2) var(--fh-space-3);
-      padding-block: var(--fh-space-2);
+      gap: var(--fh-gap-related) var(--fh-gap-grouped);
+      padding-block: var(--fh-inset-tight);
     }
     .fh-dock__identity { grid-area: identity; }
     .fh-dock__actions { grid-area: actions; }
     .fh-dock__bar > .fh-chips {
       grid-area: chips;
-      gap: var(--fh-space-1-5);
+      gap: var(--fh-gap-bound);
       margin-inline: calc(var(--fh-page-margin, 1rem) * -1);
       padding-inline: var(--fh-page-margin, 1rem);
       padding-block: 2px;
       scroll-snap-type: x proximity;
       scroll-padding-inline: var(--fh-page-margin, 1rem);
-      mask-image: linear-gradient(90deg, transparent, black var(--fh-space-4), black calc(100% - var(--fh-space-6)), transparent);
+      mask-image: linear-gradient(90deg, transparent, black var(--fh-gap-grouped-wide), black calc(100% - var(--fh-gap-sectioned)), transparent);
     }
     .fh-dock__bar > .fh-chips > .fh-chip {
       scroll-snap-align: start;

@@ -18,7 +18,7 @@
   .fh-carousel {
     position: relative;
     display: grid;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     container: fh-carousel / inline-size;
   }
 
@@ -26,7 +26,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: var(--fh-carousel-slide, 100%);
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scroll-snap-type: inline mandatory;
@@ -48,7 +48,7 @@
       display: flex;
       justify-content: center;
       gap: 0.35rem;
-      padding-block-start: var(--fh-space-1);
+      padding-block-start: var(--fh-inset-tight);
     }
   }
 
@@ -112,8 +112,8 @@
 
   .fh-carousel__count {
     position: absolute;
-    inset-block-start: var(--fh-space-3);
-    inset-inline-end: var(--fh-space-3);
+    inset-block-start: var(--fh-gap-grouped);
+    inset-inline-end: var(--fh-gap-grouped);
     z-index: 1;
     padding: 0.15rem 0.5rem;
     border-radius: var(--fh-radius-pill);
@@ -161,7 +161,7 @@
   }
 
   .fh-carousel__prev {
-    inset-inline-start: var(--fh-space-3);
+    inset-inline-start: var(--fh-gap-grouped);
 
     &::before {
       rotate: 180deg;
@@ -169,6 +169,6 @@
   }
 
   .fh-carousel__next {
-    inset-inline-end: var(--fh-space-3);
+    inset-inline-end: var(--fh-gap-grouped);
   }
 }

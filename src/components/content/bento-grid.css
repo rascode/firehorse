@@ -15,13 +15,13 @@
     grid-template-columns: minmax(0, 1fr);
     grid-auto-rows: minmax(var(--fh-bento-row, 11rem), auto);
     grid-auto-flow: dense;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
 
     & > * {
       position: relative;
       min-inline-size: 0;
       overflow: hidden;
-      padding: var(--fh-space-6);
+      padding: var(--fh-inset-card);
       border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 3%, transparent);
@@ -55,8 +55,8 @@
   .fh-tier__flag {
     position: absolute;
     z-index: 1;
-    inset-block-start: calc(var(--fh-space-7) - 0.1rem);
-    inset-inline-end: var(--fh-tier-pad, var(--fh-space-6));
+    inset-block-start: calc(var(--fh-gap-sectioned) - 0.1rem);
+    inset-inline-end: var(--fh-tier-pad, var(--fh-gap-sectioned));
     border: var(--fh-border-thin) solid var(--fh-tone);
     border-radius: var(--fh-radius-pill);
     background-color: var(--fh-tone);
@@ -76,18 +76,18 @@
     flex: 1;
     align-content: start;
     gap: 0;
-    margin-inline: calc(var(--fh-tier-pad, var(--fh-space-6)) * -1);
+    margin-inline: calc(var(--fh-tier-pad, var(--fh-gap-sectioned)) * -1);
     border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
 
     & > li {
       min-block-size: 0;
-      padding: var(--fh-space-2-5, 0.625rem) var(--fh-tier-pad, var(--fh-space-6)) var(--fh-space-2-5, 0.625rem) calc(var(--fh-tier-pad, var(--fh-space-6)) + 1.5rem);
+      padding: var(--fh-inset-tight) var(--fh-tier-pad, var(--fh-inset-card)) var(--fh-inset-tight) calc(var(--fh-tier-pad, var(--fh-inset-card)) + 1.5rem);
     }
     & > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
     & > li::before { display: none; }
     & > li::after {
       inset-block-start: 50%;
-      inset-inline-start: var(--fh-tier-pad, var(--fh-space-6));
+      inset-inline-start: var(--fh-tier-pad, var(--fh-gap-sectioned));
       inline-size: 0.85rem;
       translate: 0 -50%;
       mask-size: 0.85rem;

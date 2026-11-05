@@ -30,12 +30,12 @@
    *     </aside>
    *   </div> */
   .fh-cta-band {
-    --_pad: clamp(var(--fh-space-8), 6cqi, var(--fh-space-16));
+    --_pad: clamp(var(--fh-inset-card), 6cqi, var(--fh-inset-page));
     --_bar: var(--fh-tone, var(--fh-color-accent));
 
     position: relative;
     display: grid;
-    gap: var(--fh-space-5);
+    gap: var(--fh-gap-sectioned);
     justify-items: start;
     padding: var(--_pad);
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
@@ -50,12 +50,12 @@
 
   .fh-cta-band__main {
     display: grid;
-    gap: var(--fh-space-6);
+    gap: var(--fh-gap-sectioned);
     align-content: start;
     justify-items: start;
     min-inline-size: 0;
 
-    & > .fh-hero__actions { margin-block-start: var(--fh-space-2); }
+    & > .fh-hero__actions { margin-block-start: var(--fh-gap-related); }
   }
 
   .fh-cta-band__title {
@@ -74,11 +74,11 @@
 
   .fh-cta-band__aside {
     display: grid;
-    gap: var(--fh-space-6);
+    gap: var(--fh-gap-sectioned);
     align-content: end;
     justify-self: stretch;
     min-inline-size: 0;
-    padding-block-start: var(--fh-space-6);
+    padding-block-start: var(--fh-inset-card);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
   }
 
@@ -86,13 +86,13 @@
   .fh-cta-band__aside > .fh-cubes {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
   }
 
   .fh-cta-band__people {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-small);
     line-height: var(--fh-leading-snug);
@@ -113,7 +113,7 @@
     .fh-cta-band {
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: end;
-      column-gap: var(--fh-space-12);
+      column-gap: var(--fh-gap-separated);
 
       & > :not(.fh-hero__actions) {
         grid-column: 1;

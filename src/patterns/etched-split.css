@@ -15,7 +15,7 @@
    *   </div> */
   .fh-etched-split {
     --_gutter: max(var(--fh-page-margin), (100cqi - var(--fh-content-max)) / 2);
-    --_pad: var(--fh-space-7);
+    --_pad: var(--fh-inset-card);
 
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -25,7 +25,7 @@
   .fh-etched-split__pane {
     position: relative;
     min-inline-size: 0;
-    padding: var(--fh-space-7) var(--_gutter) var(--fh-space-8);
+    padding: var(--fh-inset-card) var(--_gutter) var(--fh-inset-card);
     container: fh-pane / inline-size;
 
     & + & {
@@ -39,7 +39,7 @@
     }
 
     .fh-etched-split__pane {
-      padding-block: var(--fh-space-10) var(--fh-space-12);
+      padding-block: var(--fh-inset-card) var(--fh-inset-card);
 
       &:first-child {
         padding-inline: var(--_gutter) var(--_pad);

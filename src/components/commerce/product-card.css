@@ -17,9 +17,9 @@
   .fh-product {
     position: relative;
     display: grid;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     align-content: start;
-    padding: var(--fh-space-2) var(--fh-space-2) var(--fh-space-4);
+    padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tile);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
     border-radius: var(--fh-card-radius, var(--fh-radius-none));
     background-color: var(--fh-card-bg, transparent);
@@ -28,14 +28,14 @@
     container: fh-product / inline-size;
     transition: border-color var(--fh-duration-base) var(--fh-ease-standard);
 
-    & > :not(.fh-product__media, .fh-product__badge, .fh-product__fav) { margin-inline: var(--fh-space-2); }
+    & > :not(.fh-product__media, .fh-product__badge, .fh-product__fav) { margin-inline: var(--fh-gap-related); }
     &:hover { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); }
   }
   /* Grids of products share their etched rules, like .fh-grid--ruled cards. */
   .fh-product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-product-min, 13rem)), 1fr));
-    gap: var(--fh-gap, var(--fh-space-4));
+    gap: var(--fh-gap, var(--fh-gap-grouped-wide));
   }
 
   /* Shared by every product tile: a sunken surface and a faint etched grid. */
@@ -76,8 +76,8 @@
 
   .fh-product__badge {
     position: absolute;
-    inset-block-start: var(--fh-space-3);
-    inset-inline-start: var(--fh-space-3);
+    inset-block-start: var(--fh-gap-grouped);
+    inset-inline-start: var(--fh-gap-grouped);
     z-index: 1;
     padding: 0.12rem 0.45rem 0.16rem;
     border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
@@ -95,8 +95,8 @@
 
   .fh-product__fav {
     position: absolute;
-    inset-block-start: var(--fh-space-2);
-    inset-inline-end: var(--fh-space-2);
+    inset-block-start: var(--fh-gap-related);
+    inset-inline-end: var(--fh-gap-related);
     z-index: 1;
     display: grid;
     place-items: center;
@@ -121,7 +121,7 @@
   }
 
   .fh-product__title {
-    margin: var(--fh-space-1) 0 0;
+    margin: var(--fh-gap-bound) 0 0;
     font-family: var(--fh-font-display);
     font-size: var(--fh-text-body);
     font-weight: var(--fh-weight-medium);

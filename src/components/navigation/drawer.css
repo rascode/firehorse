@@ -14,7 +14,7 @@
     block-size: auto;
     max-block-size: none;
     margin: 0;
-    padding: var(--fh-space-6) var(--fh-page-margin) var(--fh-space-12);
+    padding: var(--fh-inset-card) var(--fh-page-margin) var(--fh-inset-card);
     overflow-y: auto;
     overscroll-behavior: contain;
     border: 0;
@@ -45,7 +45,7 @@
   }
 
   .fh-drawer__group {
-    padding-block: var(--fh-space-5);
+    padding-block: var(--fh-inset-card);
 
     & + & {
       border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
@@ -53,8 +53,8 @@
 
     & > ul {
       display: grid;
-      gap: var(--fh-space-1);
-      margin: var(--fh-space-3) 0 0;
+      gap: var(--fh-gap-bound);
+      margin: var(--fh-gap-grouped) 0 0;
       padding: 0;
       list-style: none;
     }
@@ -62,8 +62,8 @@
     & a {
       display: flex;
       align-items: center;
-      gap: var(--fh-space-2-5);
-      padding-block: var(--fh-space-2);
+      gap: var(--fh-gap-related);
+      padding-block: var(--fh-inset-tight);
       color: var(--fh-color-text);
       font-size: var(--fh-text-lede);
       letter-spacing: var(--fh-tracking-heading);
@@ -92,8 +92,8 @@
     & > summary {
       display: flex;
       align-items: center;
-      gap: var(--fh-space-3);
-      padding-block: var(--fh-space-4);
+      gap: var(--fh-gap-grouped);
+      padding-block: var(--fh-inset-tile);
       color: var(--fh-color-text);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-label);
@@ -134,15 +134,15 @@
 
     & > div {
       display: grid;
-      gap: var(--fh-space-5);
-      padding-block: 0 var(--fh-space-6);
+      gap: var(--fh-gap-sectioned);
+      padding-block: 0 var(--fh-inset-card);
     }
 
     & h3 {
       display: flex;
       align-items: center;
-      gap: var(--fh-space-2);
-      margin: 0 0 var(--fh-space-2);
+      gap: var(--fh-gap-related);
+      margin: 0 0 var(--fh-gap-related);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-label);
       font-weight: var(--fh-weight-heavy);
@@ -169,7 +169,7 @@
 
     & ul {
       display: grid;
-      gap: var(--fh-space-0-5);
+      gap: var(--fh-gap-bound);
       margin: 0;
       padding: 0;
       list-style: none;
@@ -178,7 +178,7 @@
     & .fh-mega__rail {
       flex-direction: column;
       align-items: flex-start;
-      padding: var(--fh-space-4) 0 0;
+      padding: var(--fh-inset-tile) 0 0;
       border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     }
   }

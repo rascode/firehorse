@@ -58,7 +58,7 @@
    * Without scroll-driven animations, or under reduced motion, the cards
    * still pin and stack; they just don't recede, and --count hides. */
   .fh-deck {
-    --_top: var(--fh-deck-top, calc(var(--fh-header-height, 0px) + var(--fh-space-4)));
+    --_top: var(--fh-deck-top, calc(var(--fh-header-height, 0px) + var(--fh-gap-grouped-wide)));
     --_peek: var(--fh-deck-peek, 0.75rem);
     --_h: var(--fh-deck-height, min(78svh, 44rem));
     --_gap: var(--fh-deck-gap, 30svh);
@@ -153,7 +153,7 @@
   .fh-deck__body {
     grid-row: 1;
     align-self: center;
-    padding: clamp(var(--fh-space-5), 5cqi, var(--fh-space-10));
+    padding: clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
   }
   .fh-deck__body :is(p, h2, h3, h4, li) { color: inherit; }
 
@@ -162,9 +162,9 @@
     display: flex;
     align-items: end;
     justify-content: space-between;
-    gap: var(--fh-space-4);
-    margin: 0 clamp(var(--fh-space-5), 5cqi, var(--fh-space-10)) clamp(var(--fh-space-5), 5cqi, var(--fh-space-10));
-    padding-block-end: var(--fh-space-3);
+    gap: var(--fh-gap-grouped-wide);
+    margin: 0 clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated));
+    padding-block-end: var(--fh-inset-control);
     border-block-end: 1px solid color-mix(in oklab, currentColor 55%, transparent);
     font-family: var(--fh-font-display);
     font-size: clamp(1.5rem, 7cqi, 4.5rem);
@@ -180,13 +180,13 @@
   .fh-deck__card:has(> .fh-deck__caption--top) > .fh-deck__body { grid-row: 2; }
   .fh-deck__caption--top {
     grid-row: 1;
-    margin: clamp(var(--fh-space-5), 5cqi, var(--fh-space-10)) clamp(var(--fh-space-5), 5cqi, var(--fh-space-10)) 0;
+    margin: clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) 0;
   }
 
   /* —— Meta line: year, client, tags —— */
   .fh-deck__meta {
     display: block;
-    margin-block-start: var(--fh-space-2);
+    margin-block-start: var(--fh-gap-related);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
     font-weight: 400;
@@ -224,7 +224,7 @@
     min-block-size: 0;
   }
   .fh-deck__card--split > .fh-deck__body { grid-area: body; align-self: start; padding-block-end: 0; }
-  .fh-deck__card--split > .fh-deck__caption { grid-area: caption; margin-block-start: var(--fh-space-4); }
+  .fh-deck__card--split > .fh-deck__caption { grid-area: caption; margin-block-start: var(--fh-gap-grouped-wide); }
 
   @container fh-deck-list (inline-size >= 40rem) {
     .fh-deck__card--split {
@@ -233,7 +233,7 @@
         "media caption" auto
         / minmax(0, 1.1fr) minmax(0, 1fr);
     }
-    .fh-deck__card--split > .fh-deck__body { align-self: center; padding-block-end: clamp(var(--fh-space-5), 5cqi, var(--fh-space-10)); }
+    .fh-deck__card--split > .fh-deck__body { align-self: center; padding-block-end: clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)); }
     .fh-deck__card--split > .fh-deck__caption { margin-block-start: 0; }
   }
 
@@ -244,7 +244,7 @@
     border-radius: 0;
   }
   .fh-deck--hero > :not(:first-child) {
-    margin-inline: var(--fh-deck-inset, clamp(var(--fh-space-4), 4cqi, var(--fh-space-12)));
+    margin-inline: var(--fh-deck-inset, clamp(var(--fh-gap-grouped-wide), 4cqi, var(--fh-gap-separated)));
   }
 
   /* —— Recede styles —— */
@@ -265,11 +265,11 @@
   /* —— Sideways: the deck is its own scroll row —— */
   .fh-deck--x {
     --_h: var(--fh-deck-height, min(60svh, 26rem));
-    --_gap: var(--fh-deck-gap, var(--fh-space-16));
+    --_gap: var(--fh-deck-gap, var(--fh-gap-separated));
     flex-direction: row;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding-block: var(--fh-space-2);
+    padding-block: var(--fh-inset-tight);
     view-timeline: none;
     scroll-timeline: --fh-deck inline;
   }
@@ -284,7 +284,7 @@
   .fh-deck--reverse > .fh-deck__card {
     z-index: calc(var(--_n) - var(--_i, 0));
     inset-block-start: auto;
-    inset-block-end: calc(var(--fh-deck-bottom, var(--fh-space-4)) + var(--_i, 0) * var(--_peek));
+    inset-block-end: calc(var(--fh-deck-bottom, var(--fh-gap-grouped-wide)) + var(--_i, 0) * var(--_peek));
   }
 
   /* —— The motion ——
@@ -322,13 +322,13 @@
         counter-reset: fh-deck-step var(--fh-deck-step) fh-deck-total var(--_n);
         position: sticky;
         z-index: 10;
-        inset-block-start: calc(var(--_top) + var(--fh-space-3));
+        inset-block-start: calc(var(--_top) + var(--fh-gap-grouped));
         display: block;
         align-self: end;
         block-size: 2rem;
         margin-block-end: calc(-2rem - var(--_gap));
-        margin-inline-end: var(--fh-space-3);
-        padding: 0 var(--fh-space-3);
+        margin-inline-end: var(--fh-gap-grouped);
+        padding: 0 var(--fh-inset-control);
         border-radius: var(--fh-radius-pill);
         background-color: color-mix(in oklab, var(--fh-color-canvas) 72%, transparent);
         backdrop-filter: blur(10px);

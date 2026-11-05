@@ -21,8 +21,8 @@
    * The title link stretches over the card; other links stay clickable.
    */
   .fh-card {
-    --_pad-b: clamp(var(--fh-space-5), 4cqi, var(--fh-space-7));
-    --_pad-i: clamp(var(--fh-space-4), 4cqi, var(--fh-space-6));
+    --_pad-b: clamp(var(--fh-gap-sectioned), 4cqi, var(--fh-gap-sectioned));
+    --_pad-i: clamp(var(--fh-gap-grouped-wide), 4cqi, var(--fh-gap-sectioned));
 
     position: relative;
     display: flex;
@@ -66,7 +66,7 @@
    * Ratio follows --fh-card-media-ratio / data-fh-card-media. */
   .fh-card__media {
     position: relative;
-    margin: calc(var(--_pad-b) * -1) calc(var(--_pad-i) * -1) var(--fh-space-4);
+    margin: calc(var(--_pad-b) * -1) calc(var(--_pad-i) * -1) var(--fh-gap-grouped-wide);
     aspect-ratio: var(--fh-card-media-ratio, 16 / 9);
     overflow: hidden;
     border-start-start-radius: inherit;
@@ -137,8 +137,8 @@
   .fh-card__meta {
     display: inline-flex;
     align-items: center;
-    gap: var(--fh-space-1-5);
-    margin: 0 0 var(--fh-space-3);
+    gap: var(--fh-gap-bound);
+    margin: 0 0 var(--fh-gap-grouped);
     color: var(--fh-tone);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -178,7 +178,7 @@
   }
 
   .fh-card__body {
-    margin: var(--fh-space-3) 0 0;
+    margin: var(--fh-gap-grouped) 0 0;
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-body);
     line-height: var(--fh-leading-normal);
@@ -189,9 +189,9 @@
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
-    gap: var(--fh-space-4) var(--fh-space-6);
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
     margin-block-start: auto;
-    padding-block-start: var(--fh-space-6);
+    padding-block-start: var(--fh-inset-card);
 
     /* Interactive footer content sits above the stretched link. */
     & :is(a, button) {
@@ -202,7 +202,7 @@
 
   .fh-card__price {
     display: grid;
-    gap: var(--fh-space-0-5);
+    gap: var(--fh-gap-bound);
     margin: 0;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);

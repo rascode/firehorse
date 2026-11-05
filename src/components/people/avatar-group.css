@@ -20,14 +20,14 @@
   }
 
   .fh-avatars--spread:is(:hover, :focus-within, :focus-visible) > .fh-avatar + .fh-avatar {
-    margin-inline-start: var(--fh-space-1);
+    margin-inline-start: var(--fh-gap-bound);
   }
 
   /* Packed cluster: a tight grid of small faces. */
   .fh-avatars--grid {
     display: grid;
     grid-template-columns: repeat(3, auto);
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     inline-size: fit-content;
 
     & > .fh-avatar + .fh-avatar {
@@ -37,7 +37,7 @@
 
   /* Plain row with breathing room. */
   .fh-avatars--row {
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
 
     & > .fh-avatar + .fh-avatar {
       margin-inline-start: 0;

@@ -30,7 +30,7 @@
     font-variant-numeric: tabular-nums;
 
     & caption {
-      padding: var(--fh-space-4) var(--fh-space-5);
+      padding: var(--fh-inset-tile) var(--fh-inset-card);
       text-align: start;
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-label);
@@ -40,7 +40,7 @@
     }
 
     & thead th {
-      padding: var(--fh-row-pad, var(--fh-space-3)) var(--fh-space-5);
+      padding: var(--fh-row-pad, var(--fh-inset-control)) var(--fh-inset-card);
       background-color: var(--fh-color-surface-raised);
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
@@ -54,7 +54,7 @@
     }
 
     & :is(tbody, tfoot) :is(td, th) {
-      padding: var(--fh-row-pad, var(--fh-space-3)) var(--fh-space-5);
+      padding: var(--fh-row-pad, var(--fh-inset-control)) var(--fh-inset-card);
       color: var(--fh-color-text);
       text-align: start;
       vertical-align: top;
@@ -78,11 +78,11 @@
      *   <tr>…rascode.dev…</tr>
      *   <tr data-depth="1">…api.rascode.dev…</tr> */
     & tbody tr[data-depth="1"] > :first-child {
-      padding-inline-start: calc(var(--fh-space-5) + 1.25rem);
+      padding-inline-start: calc(var(--fh-inset-card) + 1.25rem);
       background-image: linear-gradient(var(--fh-color-etch), var(--fh-color-etch)), linear-gradient(var(--fh-color-etch), var(--fh-color-etch));
       background-repeat: no-repeat;
       background-size: 1px 50%, 0.6rem 1px;
-      background-position: calc(var(--fh-space-5) + 0.35rem) 0, calc(var(--fh-space-5) + 0.35rem) 50%;
+      background-position: calc(var(--fh-gap-sectioned) + 0.35rem) 0, calc(var(--fh-gap-sectioned) + 0.35rem) 50%;
     }
 
     & tbody tr[data-depth="1"] :is(td, th) { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
@@ -108,14 +108,14 @@
 
       & tr {
         display: grid;
-        padding: var(--fh-space-3) 0;
+        padding: var(--fh-inset-control) 0;
       }
 
       & :is(tbody, tfoot) :is(td, th) {
         display: grid;
         grid-template-columns: minmax(6rem, 40%) minmax(0, 1fr);
-        gap: var(--fh-space-3);
-        padding-block: var(--fh-space-1-5);
+        gap: var(--fh-gap-grouped);
+        padding-block: var(--fh-inset-tight);
         border: 0;
         text-align: start;
       }

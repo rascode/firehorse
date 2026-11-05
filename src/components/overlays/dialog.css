@@ -9,7 +9,7 @@
    */
   .fh-dialog {
     inline-size: min(100% - 2 * var(--fh-page-margin), var(--fh-dialog-size, 32rem));
-    max-block-size: min(100dvh - 2 * var(--fh-space-8), 48rem);
+    max-block-size: min(100dvh - 2 * var(--fh-gap-sectioned), 48rem);
     margin: auto;
     padding: 0;
     border: var(--fh-border-thin) solid var(--fh-color-border-strong);
@@ -57,14 +57,14 @@
   .fh-dialog__header,
   .fh-dialog__body,
   .fh-dialog__footer {
-    padding: var(--fh-space-5) clamp(var(--fh-space-5), 5cqi, var(--fh-space-7));
+    padding: var(--fh-inset-card) clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
   }
 
   .fh-dialog__header {
     display: flex;
     align-items: start;
     justify-content: space-between;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
   }
 
@@ -72,7 +72,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
   }
 

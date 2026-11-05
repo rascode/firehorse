@@ -14,20 +14,20 @@
    *   </div> */
   .fh-chat {
     display: grid;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     container: fh-chat / inline-size;
   }
 
   .fh-message {
     display: flex;
     align-items: flex-end;
-    gap: var(--fh-space-2-5);
+    gap: var(--fh-gap-related);
     max-inline-size: min(36rem, 88cqi);
 
     & > div {
       display: grid;
-      gap: var(--fh-space-1);
-      padding: var(--fh-space-3) var(--fh-space-4);
+      gap: var(--fh-gap-bound);
+      padding: var(--fh-inset-control) var(--fh-inset-tile);
       border: var(--fh-border-thin) solid var(--fh-color-border);
       border-radius: var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-lg) var(--fh-radius-sm);
       background-color: var(--fh-color-surface-raised);
@@ -66,7 +66,7 @@
   .fh-typing {
     display: inline-flex;
     gap: 0.25rem;
-    padding-block: var(--fh-space-4);
+    padding-block: var(--fh-inset-tile);
 
     & > i {
       inline-size: 0.35rem;
@@ -96,12 +96,12 @@
   /* —— Chat bubble class + one-element typing dots —— */
   .fh-message__bubble {
     display: grid;
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
   }
 
   .fh-message__bubble > .fh-typing {
     display: inline-flex;
-    padding-block: var(--fh-space-2);
+    padding-block: var(--fh-inset-tight);
 
     & > i:only-child {
       margin-inline: 0.45rem;

@@ -38,16 +38,16 @@
   .fh-line-item {
     display: grid;
     grid-template-columns: 4.5rem minmax(0, 1fr) auto;
-    gap: var(--fh-space-3);
-    padding-block: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
+    padding-block: var(--fh-inset-control);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
 
     & > :first-child { aspect-ratio: var(--fh-product-ratio, 4 / 5); overflow: hidden; border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-sm); background: radial-gradient(70% 55% at 50% 48%, color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 16%, transparent), transparent 72%), var(--_tile); }
     & > :first-child > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
     & h4 { margin: 0; font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
-    & p { margin: var(--fh-space-0-5) 0 var(--fh-space-2); color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro, 0.62rem); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+    & p { margin: var(--fh-gap-bound) 0 var(--fh-gap-related); color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro, 0.62rem); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
     & > :last-child > b { font-family: var(--fh-font-mono); font-weight: var(--fh-weight-medium); font-variant-numeric: tabular-nums; }
-    & > :last-child { display: grid; justify-items: end; align-content: space-between; gap: var(--fh-space-2); }
+    & > :last-child { display: grid; justify-items: end; align-content: space-between; gap: var(--fh-gap-related); }
   }
   .fh-line-item__remove {
     padding: 0;
@@ -65,8 +65,8 @@
   /* Free shipping meter: --v is the percent reached. */
   .fh-ship-meter {
     display: grid;
-    gap: var(--fh-space-2);
-    padding: var(--fh-space-3);
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-control);
     border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 45%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 7%, transparent);
@@ -85,13 +85,13 @@
   /* Order summary. */
   .fh-summary {
     display: grid;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin: 0;
 
-    & > div { display: flex; justify-content: space-between; gap: var(--fh-space-3); font-size: var(--fh-text-small); }
+    & > div { display: flex; justify-content: space-between; gap: var(--fh-gap-grouped); font-size: var(--fh-text-small); }
     & dt { color: var(--fh-color-text-muted); }
     & dd { margin: 0; font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; }
-    & > .fh-summary__total { margin-block-start: var(--fh-space-2); padding-block-start: var(--fh-space-3); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); font-size: var(--fh-text-body); }
+    & > .fh-summary__total { margin-block-start: var(--fh-gap-related); padding-block-start: var(--fh-gap-grouped); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); font-size: var(--fh-text-body); }
     & > .fh-summary__total :is(dt, dd) { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
     & > .fh-summary__discount dd { color: var(--fh-color-success); }
   }

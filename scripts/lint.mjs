@@ -16,9 +16,10 @@ const coreFiles = target === src ? files : walkCss(src, []);
 
 const errors = [];
 // Rascode HIG · Spacing: components space by relationship (--fh-gap-*,
-// --fh-inset-*), never by a raw --fh-space-* step. Warn while the system
-// migrates; `--strict-spacing` (or FH_STRICT_SPACING=1) makes it an error.
-const strictSpacing = process.argv.includes("--strict-spacing") || process.env.FH_STRICT_SPACING === "1";
+// --fh-inset-*, --fh-item-*), never by a raw --fh-space-* step. An error;
+// `--loose-spacing` turns it back into a warning with a count (for another
+// source tree that is still moving over, e.g. Firehorse Pro).
+const strictSpacing = !process.argv.includes("--loose-spacing");
 const spacing = [];
 const defined = new Set();
 const read = (f) => readFileSync(f, "utf8").replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));

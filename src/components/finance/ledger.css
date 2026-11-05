@@ -29,8 +29,8 @@
       grid-template-columns: auto minmax(0, 1fr) auto;
       grid-template-areas: "mark what amount" "mark when status";
       align-items: center;
-      gap: var(--fh-space-0-5) var(--fh-space-3);
-      padding: var(--fh-space-3) var(--fh-space-2);
+      gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+      padding: var(--fh-inset-control) var(--fh-inset-tight);
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     }
     & > li[data-status="pending"] { background-color: color-mix(in oklab, var(--fh-color-warning) 5%, transparent); }
@@ -38,7 +38,7 @@
   }
 
   .fh-ledger__day {
-    padding: var(--fh-space-4) var(--fh-space-2) var(--fh-space-1-5);
+    padding: var(--fh-inset-tile) var(--fh-inset-tight) var(--fh-inset-tight);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -51,8 +51,8 @@
     grid-area: mark;
     display: grid;
     place-items: center;
-    inline-size: var(--fh-space-8);
-    block-size: var(--fh-space-8);
+    inline-size: var(--fh-gap-sectioned);
+    block-size: var(--fh-gap-sectioned);
     border-radius: var(--fh-radius-round);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, transparent);
     font-family: var(--fh-font-mono);

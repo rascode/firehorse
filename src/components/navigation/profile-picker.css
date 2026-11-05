@@ -39,9 +39,9 @@
     --fh-avatar-size: 1.85rem;
     display: inline-flex;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     max-inline-size: 16rem;
-    padding: 0.2rem var(--fh-space-2-5) 0.2rem 0.2rem;
+    padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     background: none;
@@ -144,17 +144,17 @@
     &:hover,
     &:focus-visible,
     &:has(+ .fh-profile-menu:popover-open) {
-      padding: 0.2rem var(--fh-space-2-5) 0.2rem 0.2rem;
+      padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
 
       & > .fh-profile__who {
         max-inline-size: 12rem;
-        margin-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
         opacity: 1;
       }
 
       &::after {
         max-inline-size: 0.7rem;
-        margin-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
         opacity: 1;
       }
     }
@@ -180,9 +180,9 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: var(--fh-space-3);
-    margin: calc(-1 * var(--fh-space-1-5)) calc(-1 * var(--fh-space-1-5)) var(--fh-space-1-5);
-    padding: var(--fh-space-4) var(--fh-space-3-5);
+    gap: var(--fh-gap-grouped);
+    margin: calc(-1 * var(--fh-gap-bound)) calc(-1 * var(--fh-gap-bound)) var(--fh-gap-bound);
+    padding: var(--fh-inset-tile) var(--fh-inset-control);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 5%, transparent);
   }
@@ -214,14 +214,14 @@
   .fh-profile-menu__facts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
-    margin: 0 0 var(--fh-space-1-5);
+    margin: 0 0 var(--fh-gap-bound);
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-sm);
 
     & > div {
       display: grid;
       gap: 0.15rem;
-      padding: var(--fh-space-2) var(--fh-space-2-5);
+      padding: var(--fh-inset-tight) var(--fh-inset-control);
 
       & + div { border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
     }
@@ -248,20 +248,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     padding: 0.35rem 0.65rem;
     font-size: var(--fh-text-small);
 
     & > :first-child {
       display: inline-flex;
       align-items: center;
-      gap: var(--fh-space-3);
+      gap: var(--fh-gap-grouped);
     }
 
     & > :first-child > .fh-icon { color: var(--fh-color-text-subtle); }
   }
 
   /* A profile to switch to: avatar and two lines, check when current. */
-  .fh-menu > .fh-profile-menu__option { gap: var(--fh-space-2-5); padding-block: 0.4rem; }
+  .fh-menu > .fh-profile-menu__option { gap: var(--fh-gap-related); padding-block: 0.4rem; }
 
 }

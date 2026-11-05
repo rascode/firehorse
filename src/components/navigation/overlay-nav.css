@@ -19,7 +19,7 @@
     max-inline-size: none;
     max-block-size: none;
     margin: 0;
-    padding: clamp(var(--fh-space-8), 8vh, var(--fh-space-20)) var(--fh-page-margin, var(--fh-space-6));
+    padding: clamp(var(--fh-inset-card), 8vh, var(--fh-inset-page)) var(--fh-page-margin, var(--fh-inset-card));
     border: 0;
     background-color: color-mix(in oklab, var(--fh-color-canvas) 96%, transparent);
     color: var(--fh-color-text);
@@ -32,14 +32,14 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       align-content: center;
-      gap: var(--fh-space-10);
+      gap: var(--fh-gap-separated);
       opacity: 1;
       @starting-style { opacity: 0; }
     }
 
     & ol {
       display: grid;
-      gap: var(--fh-space-1);
+      gap: var(--fh-gap-bound);
       margin: 0;
       padding: 0;
       list-style: none;
@@ -63,7 +63,7 @@
     & ol a {
       display: inline-flex;
       align-items: baseline;
-      gap: var(--fh-space-4);
+      gap: var(--fh-gap-grouped-wide);
       color: var(--fh-color-text);
       font-size: clamp(2.25rem, 8cqi, 5.5rem);
       font-weight: var(--fh-weight-medium);
@@ -93,15 +93,15 @@
 
   .fh-overlay-nav__aside {
     display: grid;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-small);
   }
 
   .fh-overlay-nav__close {
     position: absolute;
-    inset-block-start: var(--fh-space-4);
-    inset-inline-end: var(--fh-page-margin, var(--fh-space-4));
+    inset-block-start: var(--fh-gap-grouped-wide);
+    inset-inline-end: var(--fh-page-margin, var(--fh-gap-grouped-wide));
   }
 
 }

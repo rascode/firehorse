@@ -54,13 +54,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-4);
-    padding: var(--fh-space-3) var(--fh-space-3) var(--fh-space-3) var(--fh-space-5);
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-control) var(--fh-inset-control) var(--fh-inset-control) var(--fh-inset-card);
     list-style: none;
   }
   summary.fh-tone-panel__head { cursor: pointer; }
   summary.fh-tone-panel__head::-webkit-details-marker { display: none; }
-  .fh-tone-panel--hero > .fh-tone-panel__head { align-items: start; padding-block-start: var(--fh-space-5); }
+  .fh-tone-panel--hero > .fh-tone-panel__head { align-items: start; padding-block-start: var(--fh-gap-sectioned); }
 
   .fh-tone-panel__title {
     margin: 0;
@@ -81,7 +81,7 @@
   .fh-tone-panel__tools {
     display: inline-flex;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     padding: 0.25rem;
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-color-on-ink) 75%, transparent);
@@ -111,24 +111,24 @@
   summary.fh-tone-panel__head:hover .fh-tone-panel__toggle { background-color: color-mix(in oklab, currentColor 10%, transparent); }
 
   .fh-tone-panel__body {
-    padding: 0 var(--fh-space-5) var(--fh-space-5);
+    padding: 0 var(--fh-inset-card) var(--fh-inset-card);
   }
   .fh-tone-panel--hero > .fh-tone-panel__body {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
     justify-content: space-between;
-    gap: var(--fh-space-4) var(--fh-space-8);
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
   }
 
   .fh-tone-panel__figures {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--fh-space-4) clamp(var(--fh-space-6), 6cqi, var(--fh-space-12));
+    gap: var(--fh-gap-grouped-wide) clamp(var(--fh-gap-sectioned), 6cqi, var(--fh-gap-separated));
     margin: 0;
   }
   .fh-tone-panel__figures dt {
-    margin-block-end: var(--fh-space-1);
+    margin-block-end: var(--fh-gap-bound);
     font-size: var(--fh-text-small);
     opacity: 0.8;
   }
@@ -144,7 +144,7 @@
   .fh-tone-panel__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     font-size: var(--fh-text-small);
   }
   .fh-tone-panel__actions :is(a, button) {
@@ -169,14 +169,14 @@
     font-variant-numeric: tabular-nums;
   }
   .fh-tone-panel__table th {
-    padding: 0 var(--fh-space-3) var(--fh-space-2) 0;
+    padding: 0 var(--fh-inset-control) var(--fh-inset-tight) 0;
     font-size: var(--fh-text-small);
     font-weight: 400;
     text-align: start;
     opacity: 0.75;
   }
   .fh-tone-panel__table td {
-    padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) 0;
+    padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) 0;
     font-size: clamp(1rem, 2.8cqi, 1.25rem);
   }
   .fh-tone-panel__table :is(th, td):last-child { padding-inline-end: 0; text-align: end; }

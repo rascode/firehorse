@@ -23,7 +23,7 @@
    * data-fh-env paints the environment band along the top edge. */
   .fh-app {
     --fh-app-side: 15rem;
-    --fh-app-pad: clamp(var(--fh-space-4), 3cqi, var(--fh-space-8));
+    --fh-app-pad: clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card));
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -47,16 +47,16 @@
   .fh-app__side-inner {
     display: flex;
     flex-direction: column;
-    gap: var(--fh-space-6);
+    gap: var(--fh-gap-sectioned);
     min-block-size: 100dvh;
-    padding: var(--fh-space-5) var(--fh-space-3);
+    padding: var(--fh-inset-card) var(--fh-inset-control);
   }
 
   .fh-app__brand {
     display: inline-flex;
     align-items: center;
-    gap: var(--fh-space-2);
-    padding-inline: var(--fh-space-3);
+    gap: var(--fh-gap-related);
+    padding-inline: var(--fh-inset-control);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -79,15 +79,15 @@
    * Titles run to two lines. Hidden when the sidebar wraps into a row. */
   .fh-app__focus {
     display: grid;
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     margin: 0;
   }
 
   .fh-app__focus-item {
     display: grid;
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     margin: 0;
-    padding: var(--fh-space-2) var(--fh-space-3);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
     border-radius: var(--fh-radius-md);
     color: var(--fh-color-text);
     text-decoration: none;
@@ -99,7 +99,7 @@
   .fh-app__focus-label {
     display: inline-flex;
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     color: var(--fh-tone, var(--fh-color-text-subtle));
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
@@ -121,7 +121,7 @@
 
   .fh-app__side-foot {
     margin-block-start: auto;
-    padding-inline: var(--fh-space-3);
+    padding-inline: var(--fh-inset-control);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-caption);
   }
@@ -146,13 +146,13 @@
       flex-wrap: wrap;
       align-items: center;
       min-block-size: 0;
-      padding-block: var(--fh-space-3);
+      padding-block: var(--fh-inset-control);
     }
 
     .fh-app__side-inner > .fh-sidenav {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--fh-space-1) var(--fh-space-4);
+      gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
 
       & > section { display: flex; flex-wrap: wrap; }
       & .fh-label { display: none; }
@@ -175,7 +175,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
   }
 
   .fh-app__side-toggle {
@@ -200,7 +200,7 @@
 
   /* Only a rail is this narrow: icons only, centred. */
   @container fh-app-side (inline-size < 8rem) {
-    .fh-app__side-inner { align-items: center; padding-inline: var(--fh-space-2); }
+    .fh-app__side-inner { align-items: center; padding-inline: var(--fh-gap-related); }
     .fh-app__side-head { flex-direction: column; }
     .fh-app__brand { padding-inline: 0; & > :not(.fh-icon) { display: none; } }
     .fh-app__focus { display: none; }
@@ -233,7 +233,7 @@
     z-index: 2;
     display: flex;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     min-block-size: 3.5rem;
     padding-inline: var(--fh-app-pad);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
@@ -250,7 +250,7 @@
   .fh-app__bar-end {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin-inline-start: auto;
   }
 

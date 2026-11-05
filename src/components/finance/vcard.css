@@ -15,15 +15,15 @@
   .fh-vcards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
   }
 
   .fh-vcard {
     display: grid;
     grid-template-rows: auto 1fr auto auto;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     aspect-ratio: 1.586;
-    padding: var(--fh-space-4) var(--fh-space-5);
+    padding: var(--fh-inset-tile) var(--fh-inset-card);
     border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 35%, transparent);
     border-radius: var(--fh-radius-lg);
     background:
@@ -35,7 +35,7 @@
     & > header, & > footer {
       display: flex;
       justify-content: space-between;
-      gap: var(--fh-space-2);
+      gap: var(--fh-gap-related);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wider);
@@ -68,7 +68,7 @@
 
   .fh-vcard__limit {
     display: grid;
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     font-size: var(--fh-text-caption);
     color: var(--fh-color-text-muted);
 

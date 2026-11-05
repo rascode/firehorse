@@ -33,12 +33,12 @@
   }
 
   .fh-tier {
-    --_pad: var(--fh-tier-pad, var(--fh-space-6));
+    --_pad: var(--fh-tier-pad, var(--fh-inset-card));
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--fh-space-5);
-    padding: var(--fh-space-7) var(--_pad) var(--fh-space-6);
+    gap: var(--fh-gap-sectioned);
+    padding: var(--fh-inset-card) var(--_pad) var(--fh-inset-card);
     border: 0;
     border-radius: 0;
     border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
@@ -61,7 +61,7 @@
 
     & > header {
       display: grid;
-      gap: var(--fh-space-2);
+      gap: var(--fh-gap-related);
     }
 
     /* The price block's baseline runs edge to edge. */
@@ -69,7 +69,7 @@
     & > .fh-tier__price {
       margin-inline: calc(var(--_pad) * -1);
       padding-inline: var(--_pad);
-      padding-block-end: var(--fh-space-5);
+      padding-block-end: var(--fh-inset-card);
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     }
     & > header > .fh-tier__price { margin-inline: 0; padding: 0; border: 0; }
@@ -90,7 +90,7 @@
     &[data-featured]::before {
       content: attr(data-featured);
       position: absolute;
-      inset-block-start: calc(var(--fh-space-7) - 0.1rem);
+      inset-block-start: calc(var(--fh-gap-sectioned) - 0.1rem);
       inset-inline-end: var(--_pad);
       padding: 0.2rem 0.6rem;
       border-radius: var(--fh-radius-pill);
@@ -111,7 +111,7 @@
   .fh-tier__name {
     display: flex;
     align-items: baseline;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin: 0;
     color: var(--fh-tone);
     font-family: var(--fh-font-mono);

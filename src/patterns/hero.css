@@ -19,34 +19,34 @@
 
   .fh-hero {
     display: grid;
-    gap: var(--fh-space-5);
+    gap: var(--fh-gap-sectioned);
     justify-items: start;
     max-inline-size: 44rem;
 
     & > .fh-display,
     & > .fh-title {
-      margin-block-start: var(--fh-space-1);
+      margin-block-start: var(--fh-gap-bound);
     }
   }
 
   .fh-hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--fh-space-3);
-    margin-block-start: var(--fh-space-2);
+    gap: var(--fh-gap-grouped);
+    margin-block-start: var(--fh-gap-related);
   }
 
   /* Hero with media: copy left, frame right; stacks when narrow. */
   .fh-hero-split {
     display: grid;
-    gap: var(--fh-space-10);
+    gap: var(--fh-gap-separated);
     align-items: center;
   }
 
   @container (inline-size >= 60rem) {
     .fh-hero-split {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: var(--fh-space-12);
+      gap: var(--fh-gap-separated);
     }
   }
 

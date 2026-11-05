@@ -15,7 +15,7 @@
   .fh-cube-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-cube-card-min, 13rem)), 1fr));
-    gap: var(--fh-gap, var(--fh-space-3));
+    gap: var(--fh-gap, var(--fh-gap-grouped));
 
     & > :nth-child(3n + 2) { --_cube: oklch(from var(--fh-tone) l c calc(h + 28)); }
     & > :nth-child(3n + 3) { --_cube: oklch(from var(--fh-tone) l c calc(h + 56)); }
@@ -26,9 +26,9 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     min-inline-size: 0;
-    padding: var(--fh-space-3);
+    padding: var(--fh-inset-control);
     border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--_c) 5%, transparent);
@@ -55,10 +55,10 @@
   .fh-cube-card--stack {
     flex-direction: column;
     align-items: start;
-    gap: var(--fh-space-3);
-    padding: var(--fh-space-4);
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tile);
 
-    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-space-3); border-block-start: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
+    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-gap-grouped); border-block-start: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
   }
 
 }

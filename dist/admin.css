@@ -15,7 +15,7 @@
 @layer fh.components {
   .fh-app {
     --fh-app-side: 15rem;
-    --fh-app-pad: clamp(var(--fh-space-4), 3cqi, var(--fh-space-8));
+    --fh-app-pad: clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card));
     background-color: var(--fh-color-canvas);
     min-block-size: 100dvh;
     color: var(--fh-color-text);
@@ -37,17 +37,17 @@
   }
 
   .fh-app__side-inner {
-    gap: var(--fh-space-6);
+    gap: var(--fh-gap-sectioned);
     min-block-size: 100dvh;
-    padding: var(--fh-space-5) var(--fh-space-3);
+    padding: var(--fh-inset-card) var(--fh-inset-control);
     flex-direction: column;
     display: flex;
   }
 
   .fh-app__brand {
     align-items: center;
-    gap: var(--fh-space-2);
-    padding-inline: var(--fh-space-3);
+    gap: var(--fh-gap-related);
+    padding-inline: var(--fh-inset-control);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -66,14 +66,14 @@
   }
 
   .fh-app__focus {
-    gap: var(--fh-space-1);
+    gap: var(--fh-gap-bound);
     margin: 0;
     display: grid;
   }
 
   .fh-app__focus-item {
-    gap: var(--fh-space-1);
-    padding: var(--fh-space-2) var(--fh-space-3);
+    gap: var(--fh-gap-bound);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
     border-radius: var(--fh-radius-md);
     color: var(--fh-color-text);
     margin: 0;
@@ -92,7 +92,7 @@
 
   .fh-app__focus-label {
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     color: var(--fh-tone, var(--fh-color-text-subtle));
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
@@ -117,7 +117,7 @@
   }
 
   .fh-app__side-foot {
-    padding-inline: var(--fh-space-3);
+    padding-inline: var(--fh-inset-control);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-caption);
     margin-block-start: auto;
@@ -136,13 +136,13 @@
   @container fh-app-side (inline-size >= 18rem) {
     .fh-app__side-inner {
       min-block-size: 0;
-      padding-block: var(--fh-space-3);
+      padding-block: var(--fh-inset-control);
       flex-flow: wrap;
       align-items: center;
     }
 
     .fh-app__side-inner > .fh-sidenav {
-      gap: var(--fh-space-1) var(--fh-space-4);
+      gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       flex-wrap: wrap;
       display: flex;
 
@@ -164,7 +164,7 @@
   .fh-app__side-head {
     justify-content: space-between;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     display: flex;
   }
 
@@ -202,7 +202,7 @@
 
   @container fh-app-side (inline-size < 8rem) {
     .fh-app__side-inner {
-      padding-inline: var(--fh-space-2);
+      padding-inline: var(--fh-gap-related);
       align-items: center;
     }
 
@@ -259,7 +259,7 @@
   .fh-app__bar {
     z-index: 2;
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     min-block-size: 3.5rem;
     padding-inline: var(--fh-app-pad);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
@@ -279,7 +279,7 @@
 
   .fh-app__bar-end {
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin-inline-start: auto;
     display: flex;
   }
@@ -384,10 +384,10 @@
       padding var(--fh-duration-base) var(--fh-ease-standard);
     background-color: #0000;
     gap: 0;
-    padding-inline-end: var(--fh-space-3);
+    padding-inline-end: var(--fh-inset-control);
 
     & > .fh-dot {
-      margin-inline-end: var(--fh-space-2);
+      margin-inline-end: var(--fh-gap-related);
     }
 
     & > .fh-env-pill__host, & > .fh-env-pill__chevron {
@@ -428,14 +428,14 @@
         max-inline-size: 20rem;
         border-inline-start-color: var(--fh-color-etch);
         opacity: 1;
-        margin-inline-start: var(--fh-space-2);
-        padding-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
+        padding-inline-start: var(--fh-inset-tight);
       }
 
       & > .fh-env-pill__chevron {
         max-inline-size: .7rem;
         opacity: 1;
-        margin-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
       }
     }
 
@@ -444,14 +444,14 @@
         max-inline-size: 20rem;
         border-inline-start-color: var(--fh-color-etch);
         opacity: 1;
-        margin-inline-start: var(--fh-space-2);
-        padding-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
+        padding-inline-start: var(--fh-inset-tight);
       }
 
       & > .fh-env-pill__chevron {
         max-inline-size: .7rem;
         opacity: 1;
-        margin-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
       }
     }
 
@@ -469,7 +469,7 @@
       border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone-amber);
       color: var(--fh-color-on-primary);
-      margin-inline-start: var(--fh-space-2);
+      margin-inline-start: var(--fh-gap-related);
       padding: .1rem .4rem;
     }
 
@@ -529,8 +529,8 @@
 
   .fh-app-composer {
     align-items: flex-end;
-    gap: var(--fh-space-2);
-    padding: var(--fh-space-2);
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tight);
     border: var(--fh-border-thin) solid var(--fh-color-border);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
@@ -539,7 +539,7 @@
     display: flex;
 
     & > .fh-field--dictate {
-      gap: var(--fh-space-1);
+      gap: var(--fh-gap-bound);
       flex: 1;
       min-inline-size: 0;
     }
@@ -565,7 +565,7 @@
   }
 
   .fh-app-composer--attach {
-    row-gap: var(--fh-space-1-5);
+    row-gap: var(--fh-gap-bound);
     flex-wrap: wrap;
 
     & > .fh-field--dictate {
@@ -597,11 +597,11 @@
 
   .fh-app-composer__attach {
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
     flex-wrap: wrap;
     flex-basis: 100%;
-    padding-block-start: var(--fh-space-1-5);
+    padding-block-start: var(--fh-inset-tight);
     display: flex;
 
     & > .fh-input {
@@ -625,7 +625,7 @@
 
   .fh-app-composer__actions {
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     flex: none;
     margin-inline-start: auto;
     display: flex;
@@ -666,13 +666,13 @@
   }
 
   .fh-app-dock__bar {
-    padding-block: var(--fh-space-3);
+    padding-block: var(--fh-inset-control);
     position: relative;
 
     &:before {
       content: "";
       inset-block: 0;
-      inset-inline: calc(-1 * var(--fh-app-pad, var(--fh-space-6)));
+      inset-inline: calc(-1 * var(--fh-app-pad, var(--fh-gap-sectioned)));
       z-index: -1;
       border-block-end: var(--fh-border-thin) dashed transparent;
       pointer-events: none;
@@ -700,9 +700,9 @@
   }
 
   .fh-app-empty {
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     max-inline-size: 40rem;
-    padding: var(--fh-space-8) var(--fh-space-6);
+    padding: var(--fh-inset-card) var(--fh-inset-card);
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
     display: grid;
@@ -1681,10 +1681,10 @@
   .fh-working {
     --fh-tone: var(--fh-tone-violet);
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     min-block-size: 2rem;
     max-inline-size: 22rem;
-    padding: 0 var(--fh-space-3) 0 var(--fh-space-2-5);
+    padding: 0 var(--fh-inset-control) 0 var(--fh-inset-control);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
     color: var(--fh-color-text);
@@ -1774,8 +1774,8 @@
   .fh-tone-panel__head {
     justify-content: space-between;
     align-items: center;
-    gap: var(--fh-space-4);
-    padding: var(--fh-space-3) var(--fh-space-3) var(--fh-space-3) var(--fh-space-5);
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-control) var(--fh-inset-control) var(--fh-inset-control) var(--fh-inset-card);
     list-style: none;
     display: flex;
   }
@@ -1790,7 +1790,7 @@
 
   .fh-tone-panel--hero > .fh-tone-panel__head {
     align-items: start;
-    padding-block-start: var(--fh-space-5);
+    padding-block-start: var(--fh-gap-sectioned);
   }
 
   .fh-tone-panel__title {
@@ -1812,7 +1812,7 @@
 
   .fh-tone-panel__tools {
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-color-on-ink) 75%, transparent);
     color: var(--fh-color-ink);
@@ -1850,19 +1850,19 @@
   }
 
   .fh-tone-panel__body {
-    padding: 0 var(--fh-space-5) var(--fh-space-5);
+    padding: 0 var(--fh-inset-card) var(--fh-inset-card);
   }
 
   .fh-tone-panel--hero > .fh-tone-panel__body {
     justify-content: space-between;
     align-items: end;
-    gap: var(--fh-space-4) var(--fh-space-8);
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
     flex-wrap: wrap;
     display: flex;
   }
 
   .fh-tone-panel__figures {
-    gap: var(--fh-space-4) clamp(var(--fh-space-6), 6cqi, var(--fh-space-12));
+    gap: var(--fh-gap-grouped-wide) clamp(var(--fh-gap-sectioned), 6cqi, var(--fh-gap-separated));
     flex-wrap: wrap;
     margin: 0;
     display: flex;
@@ -1871,7 +1871,7 @@
   .fh-tone-panel__figures dt {
     font-size: var(--fh-text-small);
     opacity: .8;
-    margin-block-end: var(--fh-space-1);
+    margin-block-end: var(--fh-gap-bound);
   }
 
   .fh-tone-panel__figures dd {
@@ -1884,7 +1884,7 @@
   }
 
   .fh-tone-panel__actions {
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     font-size: var(--fh-text-small);
     flex-wrap: wrap;
     display: flex;
@@ -1915,7 +1915,7 @@
   }
 
   .fh-tone-panel__table th {
-    padding: 0 var(--fh-space-3) var(--fh-space-2) 0;
+    padding: 0 var(--fh-inset-control) var(--fh-inset-tight) 0;
     font-size: var(--fh-text-small);
     text-align: start;
     opacity: .75;
@@ -1923,7 +1923,7 @@
   }
 
   .fh-tone-panel__table td {
-    padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) 0;
+    padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) 0;
     font-size: clamp(1rem, 2.8cqi, 1.25rem);
   }
 

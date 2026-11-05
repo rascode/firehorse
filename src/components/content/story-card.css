@@ -44,7 +44,7 @@
   .fh-story {
     --_tone: var(--fh-tone, var(--fh-color-accent));
     --_bg: var(--_tone);
-    --_pad: var(--fh-story-pad, clamp(var(--fh-space-5), 9cqi, var(--fh-space-8)));
+    --_pad: var(--fh-story-pad, clamp(var(--fh-inset-card), 9cqi, var(--fh-inset-card)));
     --_pitch: var(--fh-story-pitch, 6px);
     position: relative;
     display: grid;
@@ -85,7 +85,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     padding-block-start: var(--_pad);
   }
   .fh-story__logo {
@@ -114,15 +114,15 @@
   .fh-story__field {
     display: grid;
     align-content: center;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     min-block-size: 0;
-    padding-block: var(--fh-space-4);
+    padding-block: var(--fh-inset-tile);
     --fh-tone: currentColor;
   }
 
   .fh-story__foot {
     display: grid;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     padding-block-end: var(--_pad);
   }
   /* data-fh-card-content="frost": the quote and link on a frosted pane. */

@@ -86,7 +86,7 @@
   .fh-env-pill {
     --fh-tone: var(--fh-env-tone);
     gap: 0;
-    padding-inline-end: var(--fh-space-3);
+    padding-inline-end: var(--fh-inset-control);
     /* Etched: a dashed border in the environment's colour, no fill; the dot stays solid. */
     border-style: dashed;
     border-color: color-mix(in oklab, var(--fh-env-tone) 60%, transparent);
@@ -97,7 +97,7 @@
       background-color var(--fh-duration-fast) var(--fh-ease-standard),
       padding var(--fh-duration-base) var(--fh-ease-standard);
 
-    & > .fh-dot { margin-inline-end: var(--fh-space-2); }
+    & > .fh-dot { margin-inline-end: var(--fh-gap-related); }
 
     /* The parts that reveal: they collapse to nothing at rest. */
     & > .fh-env-pill__host,
@@ -136,15 +136,15 @@
 
       & > .fh-env-pill__host {
         max-inline-size: 20rem;
-        margin-inline-start: var(--fh-space-2);
-        padding-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
+        padding-inline-start: var(--fh-inset-tight);
         border-inline-start-color: var(--fh-color-etch);
         opacity: 1;
       }
 
       & > .fh-env-pill__chevron {
         max-inline-size: 0.7rem;
-        margin-inline-start: var(--fh-space-2);
+        margin-inline-start: var(--fh-gap-related);
         opacity: 1;
       }
     }
@@ -155,7 +155,7 @@
 
     &[data-fh-warn]::after {
       content: attr(data-fh-warn);
-      margin-inline-start: var(--fh-space-2);
+      margin-inline-start: var(--fh-gap-related);
       padding: 0.1rem 0.4rem;
       border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone-amber);

@@ -21,15 +21,15 @@
       position: relative;
       display: grid;
       grid-template-columns: var(--_when) minmax(0, 1fr);
-      column-gap: calc(var(--fh-space-3) * 2 + 1rem);
-      padding-block-end: var(--fh-space-5);
+      column-gap: calc(var(--fh-gap-grouped) * 2 + 1rem);
+      padding-block-end: var(--fh-inset-card);
 
       /* rail */
       &:not(:last-child)::before {
         content: "";
         position: absolute;
         inset-block: 1rem 0;
-        inset-inline-start: calc(var(--_when) + var(--fh-space-3) + 0.5rem);
+        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + 0.5rem);
         border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
       }
 
@@ -38,7 +38,7 @@
         content: "";
         position: absolute;
         inset-block-start: 0.4rem;
-        inset-inline-start: calc(var(--_when) + var(--fh-space-3) + 0.5rem - 0.3rem);
+        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + 0.5rem - 0.3rem);
         inline-size: 0.6rem;
         aspect-ratio: 1;
         border-radius: var(--fh-radius-round);
