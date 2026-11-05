@@ -978,13 +978,13 @@ export const tokens = {
     "group": "color"
   },
   "--fh-color-field": {
-    "$value": "light-dark(var(--fh-gray-150), var(--fh-gray-750))",
+    "$value": "light-dark(var(--fh-gray-50), var(--fh-gray-750))",
     "$type": "color",
     "tier": "semantic",
     "group": "color"
   },
   "--fh-color-field-hover": {
-    "$value": "light-dark(var(--fh-gray-200), var(--fh-gray-700))",
+    "$value": "light-dark(var(--fh-gray-100), var(--fh-gray-700))",
     "$type": "color",
     "tier": "semantic",
     "group": "color"
