@@ -19,7 +19,7 @@
    * 19rem wide. Knob: --fh-kv-label (label width in --fields, 11rem). */
   .fh-kv {
     display: grid;
-    --_gap: var(--fh-space-8);
+    --_gap: var(--fh-gap-sectioned);
     /* Two rows across once each column can be 19rem, never more than two. */
     grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19rem, calc(50% - var(--_gap) / 2))), 1fr));
     column-gap: var(--_gap);
@@ -30,9 +30,9 @@
       flex-wrap: wrap;
       align-items: baseline;
       justify-content: space-between;
-      gap: var(--fh-space-1) var(--fh-space-4);
+      gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       min-inline-size: 0;
-      padding-block: var(--fh-row-pad, var(--fh-space-3));
+      padding-block: var(--fh-row-pad, var(--fh-inset-control));
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     }
 

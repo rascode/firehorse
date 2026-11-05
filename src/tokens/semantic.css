@@ -121,3 +121,32 @@
 @property --fh-split { syntax: "*"; inherits: false; }
 @property --fh-align { syntax: "*"; inherits: false; }
 @property --fh-justify { syntax: "*"; inherits: false; }
+
+
+@layer fh.tokens {
+  /* —— Spacing by relationship (Firehorse HIG · Spacing) ——
+   * Components space things by how they relate, never by a raw step.
+   *   bound        4px   parts of one fact: figure and source, label and value, icon and text
+   *   related      8px   things that belong together: figure and chart, chips, label and field
+   *   grouped     12px   siblings: tiles in a grid, rows in a list, fields in a form
+   *   grouped-wide 16px  siblings that need air: cards in a column, form rows
+   *   sectioned   24px   parts of a card or panel
+   *   separated   48px   sections on a page
+   * Insets follow the same steps. Re-resolved under data-fh-density so a
+   * dense section tightens every relationship together. */
+  :root,
+  [data-fh-density] {
+    --fh-gap-bound: var(--fh-space-1);
+    --fh-gap-related: var(--fh-space-2);
+    --fh-gap-grouped: var(--fh-space-3);
+    --fh-gap-grouped-wide: var(--fh-space-4);
+    --fh-gap-sectioned: var(--fh-space-6);
+    --fh-gap-separated: var(--fh-space-12);
+
+    --fh-inset-tight: var(--fh-space-2);
+    --fh-inset-control: var(--fh-space-3);
+    --fh-inset-tile: var(--fh-space-4);
+    --fh-inset-card: var(--fh-space-6);
+    --fh-inset-page: var(--fh-page-margin);
+  }
+}

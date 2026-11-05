@@ -1,0 +1,88 @@
+<!--@meta {
+  "path": "/guidelines/",
+  "order": 5,
+  "name": "Guidelines",
+  "tone": "lime",
+  "title": "Guidelines · Firehorse HIG",
+  "description": "The Firehorse HIG: the rules every Firehorse component and Rascode product follows, starting with spacing by relationship.",
+  "headline": "The Firehorse HIG, <em>rules with reasons</em>",
+  "lede": "How Firehorse pieces are put together, so every product built on it reads as one system. Each rule comes with its reason, and where the code can hold the rule, lint does.",
+  "scripts": [],
+  "styles": ["admin.css"],
+  "icon": "list-checks",
+  "summary": [
+    { "value": "6", "label": "Spacing steps", "blurb": "Bound, related, grouped, grouped-wide, sectioned, separated." },
+    { "value": "6", "label": "Spacing rules", "blurb": "Inside is tighter than outside; rules replace space; numbers line up." }
+  ]
+}-->
+<!--@main-->
+    <section id="spacing" class="fh-section fh-section--ruled site-anchor" data-tone="lime" aria-labelledby="spacing-title" data-fh-label="Spacing" data-fh-index="01">
+      <header class="fh-section-head">
+        <p class="fh-eyebrow">HIG · 01</p>
+        <h2 id="spacing-title">Spacing by relationship</h2>
+        <p>Space says how things relate. A component never picks a number; it picks a relationship, and the relationship has one size everywhere. That is why a figure and its source line sit 4px apart on every tile, in every product.</p>
+      </header>
+
+      <div class="site-demo site-anchor" id="g-steps">
+        <div class="site-demo__head"><h3>The six steps</h3><p>Gaps between things. Each is a token in the semantic layer, mapped onto the spacing ramp, so themes and <code>data-fh-density</code> scale every relationship together.</p></div>
+        <div class="site-demo__stage" data-tone="lime">
+<dl class="fh-kv fh-kv--single"><div><dt><code>--fh-gap-bound</code></dt><dd><span style="display:inline-block; inline-size: var(--fh-gap-bound); block-size: 0.75rem; vertical-align: middle; background: var(--fh-tone); border-radius: 2px; margin-inline-end: var(--fh-gap-related)"></span>4px · <b>Parts of one fact</b>. A figure and its source line, a label and its value, an icon and its text.</dd></div><div><dt><code>--fh-gap-related</code></dt><dd><span style="display:inline-block; inline-size: var(--fh-gap-related); block-size: 0.75rem; vertical-align: middle; background: var(--fh-tone); border-radius: 2px; margin-inline-end: var(--fh-gap-related)"></span>8px · <b>Things that belong together</b>. A figure and its chart or bar, chips in a row, a field label and its input.</dd></div><div><dt><code>--fh-gap-grouped</code></dt><dd><span style="display:inline-block; inline-size: var(--fh-gap-grouped); block-size: 0.75rem; vertical-align: middle; background: var(--fh-tone); border-radius: 2px; margin-inline-end: var(--fh-gap-related)"></span>12px · <b>Siblings</b>. Tiles in a grid, rows in a list, fields in a form.</dd></div><div><dt><code>--fh-gap-grouped-wide</code></dt><dd><span style="display:inline-block; inline-size: var(--fh-gap-grouped-wide); block-size: 0.75rem; vertical-align: middle; background: var(--fh-tone); border-radius: 2px; margin-inline-end: var(--fh-gap-related)"></span>16px · <b>Siblings that need air</b>. Cards in a column, form rows.</dd></div><div><dt><code>--fh-gap-sectioned</code></dt><dd><span style="display:inline-block; inline-size: var(--fh-gap-sectioned); block-size: 0.75rem; vertical-align: middle; background: var(--fh-tone); border-radius: 2px; margin-inline-end: var(--fh-gap-related)"></span>24px · <b>Parts of a card or panel</b>. Head, body and foot of a section card; card padding.</dd></div><div><dt><code>--fh-gap-separated</code></dt><dd><span style="display:inline-block; inline-size: var(--fh-gap-separated); block-size: 0.75rem; vertical-align: middle; background: var(--fh-tone); border-radius: 2px; margin-inline-end: var(--fh-gap-related)"></span>48px · <b>Sections on a page</b>. One section card to the next, page bands.</dd></div></dl>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="g-insets">
+        <div class="site-demo__head"><h3>Insets</h3><p>Padding follows the same steps, named for what it pads.</p></div>
+        <div class="site-demo__stage">
+<dl class="fh-kv fh-kv--single"><div><dt><code>--fh-inset-tight</code></dt><dd>8px · Chips, badges, small controls</dd></div><div><dt><code>--fh-inset-control</code></dt><dd>12px · Inputs, buttons, table cells across</dd></div><div><dt><code>--fh-inset-tile</code></dt><dd>16px · Tiles and inset cards</dd></div><div><dt><code>--fh-inset-card</code></dt><dd>24px · Cards, panels, section cards</dd></div><div><dt><code>--fh-inset-page</code></dt><dd>page margin · The page edge</dd></div></dl>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="g-rules">
+        <div class="site-demo__head"><h3>The rules</h3><p>Six rules, each with the reason behind it.</p></div>
+        <div class="site-demo__stage">
+<ol class="fh-steps">
+  <li><b>Inside is tighter than outside.</b> The space inside a thing is smaller than the space around it. That is how the eye knows where one thing ends.</li>
+  <li><b>Padding is at least the gap.</b> A container's padding is at least as large as the gap between its children, or the children look like they spill out.</li>
+  <li><b>A rule replaces space.</b> An etched rule stands in for a gap; it never adds one. Two rules in a row, or a rule plus a gap, reads as a mistake.</li>
+  <li><b>One gap per relationship.</b> Space comes from the parent's <code>gap</code>, not from stacked margins, so it can't double up.</li>
+  <li><b>Numbers line up.</b> Tiles in a row share rows, so every figure sits at the same height whatever the tile carries.</li>
+  <li><b>No odd steps.</b> 2px, 6px, 10px, 14px, 20px and 28px are not relationships. Each moves to the nearest step, or the reason is written beside it.</li>
+</ol>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="g-bound">
+        <div class="site-demo__head"><h3>Do and don't: one fact</h3><p>A figure and its source are one fact, so they are bound: 4px. At 16px the source floats free and reads as a second thing.</p></div>
+        <div class="site-demo__stage">
+<div class="fh-metrics" style="--fh-metrics-min: 14rem; max-inline-size: 32rem">
+<article class="fh-metric fh-metric--spread" data-tone="lime" style="--fh-metric-gap: var(--fh-gap-sectioned)">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--circle-check" aria-hidden="true"></i>Do · bound</p>
+  <p class="fh-metric__sub">Formed Mar 2019 in Texas</p>
+  <p class="fh-metric__value">LLC</p>
+  <p class="fh-metric__source" style="margin-block-start: var(--fh-gap-bound)">Secretary of State</p>
+</article>
+<article class="fh-metric fh-metric--spread" data-tone="danger" style="--fh-metric-gap: var(--fh-gap-sectioned)">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--circle-x" aria-hidden="true"></i>Don't · 16px</p>
+  <p class="fh-metric__sub">Formed Mar 2019 in Texas</p>
+  <p class="fh-metric__value">LLC</p>
+  <p class="fh-metric__source" style="margin-block-start: var(--fh-gap-grouped-wide)">Secretary of State</p>
+</article>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="g-anatomy">
+        <div class="site-demo__head"><h3>Tile anatomy</h3><p>Every tile has the same rows, in the same order, so a row of tiles reads as one: title, description, gap, figure, chart or bar or people, source, detail. Title to description is bound; the gap is <code>--fh-metric-gap</code>; figure to chart is related; source is bound to what is above it.</p></div>
+        <div class="site-demo__stage">
+<div class="fh-metrics" style="--fh-metrics-min: 13rem">
+  <article class="fh-metric fh-metric--spread" data-tone="lime"><p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>1 · Title</p><p class="fh-metric__sub">2 · Description</p><p class="fh-metric__value">4 · 82%</p><progress class="fh-progress" value="82" max="100">82%</progress><p class="fh-metric__source">6 · Source</p></article>
+  <article class="fh-metric fh-metric--spread" data-tone="sky"><p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>1 · Title</p><p class="fh-metric__sub">2 · Description</p><div class="fh-metric__figure"><p class="fh-metric__value">4 · $48k</p><span class="fh-metric__delta" data-trend="up">12%</span></div><p class="fh-metric__source">6 · Source</p></article>
+  <article class="fh-metric fh-metric--spread" data-tone="violet"><p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>1 · Title</p><p class="fh-metric__sub">2 · Description</p><p class="fh-metric__value">4 · 4</p><p class="fh-metric__source">6 · Source</p></article>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="g-lint">
+        <div class="site-demo__head"><h3>Held by lint</h3><p><code>npm run lint</code> flags any raw <code>--fh-space-*</code> in a component and prints the count. It warns while the system moves over and becomes an error once the count reaches zero (<code>--strict-spacing</code> turns it on early). Tokens, themes and the layout primitives are exempt.</p></div>
+      </div>
+    </section>

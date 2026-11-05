@@ -311,6 +311,23 @@
     --fh-color-on-tone: light-dark(var(--fh-gray-0), var(--fh-gray-950));
     --fh-focus-width: 2px;
     --fh-focus-offset: 2px;
+  }
+
+  :root, [data-fh-density] {
+    --fh-gap-bound: var(--fh-space-1);
+    --fh-gap-related: var(--fh-space-2);
+    --fh-gap-grouped: var(--fh-space-3);
+    --fh-gap-grouped-wide: var(--fh-space-4);
+    --fh-gap-sectioned: var(--fh-space-6);
+    --fh-gap-separated: var(--fh-space-12);
+    --fh-inset-tight: var(--fh-space-2);
+    --fh-inset-control: var(--fh-space-3);
+    --fh-inset-tile: var(--fh-space-4);
+    --fh-inset-card: var(--fh-space-6);
+    --fh-inset-page: var(--fh-page-margin);
+  }
+
+  :root {
     --fh-color-bg: var(--fh-color-canvas);
     --fh-sky-dl: .754;
     --fh-sky-dc: .139;
@@ -8146,7 +8163,7 @@
   }
 
   .fh-kv {
-    --_gap: var(--fh-space-8);
+    --_gap: var(--fh-gap-sectioned);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19rem, calc(50% - var(--_gap) / 2))), 1fr));
     column-gap: var(--_gap);
     margin: 0;
@@ -8155,9 +8172,9 @@
     & > div {
       justify-content: space-between;
       align-items: baseline;
-      gap: var(--fh-space-1) var(--fh-space-4);
+      gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       min-inline-size: 0;
-      padding-block: var(--fh-row-pad, var(--fh-space-3));
+      padding-block: var(--fh-row-pad, var(--fh-inset-control));
       border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
       flex-wrap: wrap;
       display: flex;

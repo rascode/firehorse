@@ -24,6 +24,7 @@
 | Media | `fh-canvas` (`__body` `__top` `__main` `__foot` `__title` `__sub` `__eyebrow` `__mark` `__badge` `__index` `__cubes` `__media` `__ui` (`--crop`) `--og` `--yt-thumb` `--yt-banner` `--x-header` `--li-banner` `--post` `--square` `--story` `--cover` `--card` `--center` `--split` `--row` `--plain` `--plate` `--native` `__cubes--rows`) `[data-fh-guides]` |
 | Slides | `fh-slide` (`--title` `--section` `--middle` `__list` `__stats` `__quote` `__cite` `__code`) on an `fh-canvas`; reveal.js: `dist/reveal.css` |
 | Helpers | `fh-sr-only` `fh-skip` `fh-reveal` `fh-reveal-children` `fh-hide-narrow` `fh-hide-wide` `fh-tone-text` `fh-text-start|center|end` `fh-nowrap` `fh-tabular` `fh-full` |
+| Spacing (HIG) | gaps by relationship: `--fh-gap-bound` (4) `--fh-gap-related` (8) `--fh-gap-grouped` (12) `--fh-gap-grouped-wide` (16) `--fh-gap-sectioned` (24) `--fh-gap-separated` (48); padding: `--fh-inset-tight` `--fh-inset-control` `--fh-inset-tile` `--fh-inset-card` `--fh-inset-page`. Never a raw `--fh-space-*` in a component (/guidelines/). |
 
 Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
 `data-fh-theme` (brand), `data-cols` (grid max columns), `data-label` (table reflow).

@@ -25,8 +25,8 @@
   .fh-masthead {
     --_fill: var(--fh-masthead-fill, calc(15% + clamp(0, var(--fh-frost, 0.6), 1) * 75%));
     display: grid;
-    gap: var(--fh-space-4);
-    padding: clamp(var(--fh-space-5), 4cqi, var(--fh-space-8));
+    gap: var(--fh-gap-grouped-wide);
+    padding: clamp(var(--fh-inset-card), 4cqi, var(--fh-inset-card));
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
@@ -40,8 +40,8 @@
     display: flex;
     align-items: end;
     justify-content: space-between;
-    gap: var(--fh-space-4);
-    padding-block-end: var(--fh-space-3);
+    gap: var(--fh-gap-grouped-wide);
+    padding-block-end: var(--fh-inset-control);
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
     font-family: var(--fh-font-display);
     font-size: clamp(1.75rem, 6cqi, 4rem);
@@ -69,7 +69,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2) var(--fh-space-4);
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
   }
 
   .fh-masthead__meta {
@@ -85,24 +85,24 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin-inline-start: auto;
   }
 
   /* Bar: one line, for an app's top bar. */
   .fh-masthead--bar {
     position: sticky;
-    inset-block-start: var(--fh-space-3);
+    inset-block-start: var(--fh-gap-grouped);
     z-index: 2;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    column-gap: var(--fh-space-3);
-    padding: var(--fh-space-2) var(--fh-space-2) var(--fh-space-2) var(--fh-space-5);
+    column-gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-card);
     border-radius: var(--fh-radius-pill);
 
     &:has(> .fh-masthead__mark) {
       grid-template-columns: auto minmax(0, 1fr) auto;
-      padding-inline-start: var(--fh-space-2);
+      padding-inline-start: var(--fh-inset-tight);
     }
 
     & .fh-masthead__caption {

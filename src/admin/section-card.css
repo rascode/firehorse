@@ -24,9 +24,9 @@
    * right of the title on wide slots). The tone tints the title icon.
    * Knobs: --fh-section-card-pad, --fh-section-card-gap. */
   .fh-section-card {
-    --_pad: var(--fh-section-card-pad, var(--fh-space-6));
+    --_pad: var(--fh-section-card-pad, var(--fh-inset-card));
     display: grid;
-    gap: var(--fh-section-card-gap, var(--fh-space-5));
+    gap: var(--fh-section-card-gap, var(--fh-gap-sectioned));
     align-content: start;
     min-inline-size: 0;
     padding: var(--_pad);
@@ -43,13 +43,13 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2) var(--fh-space-4);
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
   }
 
   .fh-section-card__title {
     display: flex;
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin: 0;
     font-size: var(--fh-text-h4);
     font-weight: var(--fh-weight-medium);
@@ -64,7 +64,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: end;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     margin-inline-start: auto;
   }
 
@@ -76,8 +76,8 @@
   }
 
   .fh-section-card__subhead {
-    margin-block-start: var(--fh-space-2);
-    padding-block-start: var(--fh-space-4);
+    margin-block-start: var(--fh-gap-related);
+    padding-block-start: var(--fh-inset-tile);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -98,8 +98,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: end;
-    gap: var(--fh-space-2);
-    padding-block-start: var(--fh-space-4);
+    gap: var(--fh-gap-related);
+    padding-block-start: var(--fh-inset-tile);
     border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
 
     & > .fh-section-card__note { margin-inline-end: auto; }
@@ -107,8 +107,8 @@
 
   /* Inset: a sub-card inside a section (one address role, one channel). */
   .fh-section-card--inset {
-    --_pad: var(--fh-section-card-pad, var(--fh-space-5));
-    gap: var(--fh-section-card-gap, var(--fh-space-3));
+    --_pad: var(--fh-section-card-pad, var(--fh-inset-card));
+    gap: var(--fh-section-card-gap, var(--fh-gap-grouped));
     border-color: var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
     /* Frosted, not sunken: a light veil of the text colour over whatever
@@ -127,7 +127,7 @@
   /* Aside: the lede sits on the right of the title once both fit at 20rem. */
   .fh-section-card--aside {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    column-gap: var(--fh-space-6);
+    column-gap: var(--fh-gap-sectioned);
 
     & > :not(.fh-section-card__head, .fh-section-card__lede) { grid-column: 1 / -1; }
     & > .fh-section-card__head { align-self: start; }
