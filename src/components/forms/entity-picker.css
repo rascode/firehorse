@@ -35,7 +35,7 @@
    *     </div>
    *   </div>
    *
-   * Shape: default (field fill, like fh-select), --rounded (pill), --etched
+   * Shape: default (field fill, like fh-select), --rounded (pill with an edge), --etched
    * (dashed etch, no fill). Content is whatever parts you put in the row:
    * leave out the avatar and separator for a text-only picker; the stat is
    * any figure for the use case (open actions, unread, balance, seats);
@@ -337,7 +337,15 @@
 
     & .fh-avatar { --fh-avatar-radius: var(--fh-radius-pill); }
 
-    & > .fh-entity { padding-inline-end: var(--fh-gap-grouped); }
+    /* The pill has an edge all the way round, so it reads as a control
+       on any fill; it firms up on hover and while the list is open. */
+    & > .fh-entity {
+      padding-inline-end: var(--fh-gap-grouped);
+      border-color: var(--fh-color-etch);
+
+      &:hover { border-color: var(--fh-color-border-strong); }
+      &:has(~ .fh-entity-picker__list:popover-open) { border-color: var(--fh-color-border-strong); }
+    }
 
     & .fh-entity-picker__list { border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-gap-grouped)); }
   }

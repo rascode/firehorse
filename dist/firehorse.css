@@ -4021,7 +4021,16 @@
     }
 
     & > .fh-entity {
+      border-color: var(--fh-color-etch);
       padding-inline-end: var(--fh-gap-grouped);
+
+      &:hover {
+        border-color: var(--fh-color-border-strong);
+      }
+
+      &:has( ~ .fh-entity-picker__list:popover-open) {
+        border-color: var(--fh-color-border-strong);
+      }
     }
 
     & .fh-entity-picker__list {
