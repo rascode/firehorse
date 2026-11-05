@@ -1,0 +1,74 @@
+/*
+ * Firehorse — Key value list (KVL)
+ * components/content · layer fh.components · docs /components/content/#KVL
+ */
+
+@layer fh.components {
+  /* —— Key value list ——
+   * Label / value rows on etched rules. The label
+   * sits on the left, the value on the right. Two columns of rows when
+   * the slot allows, one when it is narrow.
+   *   <dl class="fh-kv">
+   *     <div><dt>County</dt><dd>Travis</dd></div>
+   *     <div class="fh-kv__full"><dt>Legal description</dt><dd>Lot 4, Block B…</dd></div>
+   *   </dl>
+   * fh-kv__full spans both columns (a long value). Modifier
+   * fh-kv--fields puts a field in each value (label left, input
+   * filling the right), for edit forms; fh-kv--single keeps one
+   * column at any width. Rows go two across when each column can be
+   * 19rem wide. Knob: --fh-kv-label (label width in --fields, 11rem). */
+  .fh-kv {
+    display: grid;
+    --_gap: var(--fh-space-8);
+    /* Two rows across once each column can be 19rem, never more than two. */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19rem, calc(50% - var(--_gap) / 2))), 1fr));
+    column-gap: var(--_gap);
+    margin: 0;
+
+    & > div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--fh-space-1) var(--fh-space-4);
+      min-inline-size: 0;
+      padding-block: var(--fh-row-pad, var(--fh-space-3));
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+
+    & dt {
+      flex: none;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+
+    & dd {
+      flex: 1 1 12ch;
+      min-inline-size: 0;
+      margin: 0;
+      overflow-wrap: anywhere;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+      font-variant-numeric: tabular-nums;
+      text-align: end;
+      text-wrap: pretty;
+    }
+
+    & dd:empty::before { content: "—"; color: var(--fh-color-text-subtle); }
+  }
+
+  .fh-kv > .fh-kv__full { grid-column: 1 / -1; }
+  .fh-kv--single { grid-template-columns: minmax(0, 1fr); }
+
+  /* Fields: label on the left, the field filling the right; the field
+     drops under its label when the row runs out of room. */
+  .fh-kv--fields {
+    & > div { align-items: center; }
+    & dt { flex: 0 0 var(--fh-kv-label, 11rem); }
+    & dd { flex: 1 1 14rem; text-align: start; }
+    & dd > :is(.fh-input, .fh-select, .fh-select-wrap, .fh-textarea) { inline-size: 100%; }
+  }
+}

@@ -48,6 +48,7 @@
 | `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (3) | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
+| `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/#KVL) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/#CKL) |
 | `STP` | Steps | Content | — | [open](https://firehorse.rascode.dev/components/content/#STP) |
 | `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/#CAR) |
@@ -102,6 +103,11 @@
 | `LDG` | Ledger | Finance | — | [open](https://firehorse.rascode.dev/finance/#LDG) |
 | `VCD` | Virtual card | Finance | — | [open](https://firehorse.rascode.dev/finance/#VCD) |
 | `CNX` | Connection status | Finance | — | [open](https://firehorse.rascode.dev/finance/#CNX) |
+| `MST` | Masthead | Admin | 1 Masthead (2) | [open](https://firehorse.rascode.dev/admin/#MST) |
+| `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
+| `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
+| `MET` | Metric tiles | Admin | 1 Metric tile (11) | [open](https://firehorse.rascode.dev/admin/#MET) |
+| `GAU` | Gauge | Admin | 1 Gauge (2) | [open](https://firehorse.rascode.dev/admin/#GAU) |
 | `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
 | `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
 | `TRK` | Playlist | Audio | — | [open](https://firehorse.rascode.dev/audio/#TRK) |
@@ -799,6 +805,61 @@ One column, two, or a row, depending on the slot.
 Classes: `fh-stats`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#STA.
+
+## KVL · Key value list
+
+Label / value rows on etched rules: label on the left, value on the right. Two columns of rows from 38rem; __full spans both. --fields puts a field beside each label; --single keeps one column. Row spacing is set once for the page with data-fh-rows (sm · md · lg · xl) and applies to every table and key value list; data-fh-rows-select on a segmented switch changes it live.
+
+Classes: `fh-kv` `fh-kv--single` `fh-kv--fields` `fh-input` `fh-kv__full` `fh-textarea` `fh-segmented` `fh-segmented--sm` `fh-sr-only`
+
+### KVL-1 · Key value list
+
+#### KVL-1.1 · Read
+
+```html
+<dl class="fh-kv fh-kv--single" style="max-inline-size: 24rem" data-fh="KVL-1.1">
+  <div><dt>County</dt><dd>Travis</dd></div>
+  <div><dt>Parcel</dt><dd>0219-0402-11</dd></div>
+  <div><dt>Year built</dt><dd>1987</dd></div>
+  <div><dt>Lot</dt><dd>0.21 ac</dd></div>
+</dl>
+```
+
+#### KVL-1.2 · Fields
+
+```html
+<dl class="fh-kv fh-kv--fields" data-fh="KVL-1.2">
+  <div><dt><label for="kv-legal">Legal name</label></dt><dd><input class="fh-input" id="kv-legal" value="Acme Supply Co. LLC"></dd></div>
+  <div><dt><label for="kv-dba">DBA</label></dt><dd><input class="fh-input" id="kv-dba" value="Acme"></dd></div>
+  <div class="fh-kv__full"><dt><label for="kv-about">About</label></dt><dd><textarea class="fh-textarea" id="kv-about" rows="2">Tools and parts for small builders.</textarea></dd></div>
+</dl>
+```
+
+#### KVL-1.3 · Mixed
+
+```html
+<dl class="fh-kv" data-fh="KVL-1.3">
+  <div><dt>Owner</dt><dd>Maple Row Holdings LLC</dd></div>
+  <div><dt>Since</dt><dd>2016</dd></div>
+  <div><dt>Mortgage</dt><dd>$212,400</dd></div>
+  <div><dt>Liens</dt><dd>None found</dd></div>
+  <div class="fh-kv__full"><dt>Legal description</dt><dd>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</dd></div>
+</dl>
+```
+
+### KVL-2 · Row spacing
+
+#### KVL-2.1 · Row spacing
+
+```html
+<fieldset class="fh-segmented fh-segmented--sm" data-fh="KVL-2.1">
+  <legend class="fh-sr-only">Row spacing</legend>
+  <label><input type="radio" name="kv-rows" value="sm" data-fh-rows-select> S</label>
+  <label><input type="radio" name="kv-rows" value="md" data-fh-rows-select checked> M</label>
+  <label><input type="radio" name="kv-rows" value="lg" data-fh-rows-select> L</label>
+  <label><input type="radio" name="kv-rows" value="xl" data-fh-rows-select> XL</label>
+</fieldset>
+```
 
 ## CKL · Checklist
 
@@ -2752,6 +2813,275 @@ Classes: `fh-connections` `fh-btn` `fh-btn--sm`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#CNX.
 
+## MST · Masthead
+
+A glass header with the stacking deck's caption: number left, title right, a hairline under both, on an etched, see-through, blurred panel. --bar is the one-line top bar. Shown here over a picture so the frost reads.
+
+Classes: `fh-masthead` `fh-masthead--bar` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm`
+
+### MST-1 · Masthead
+
+#### MST-1.1 · Bar
+
+```html
+<header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh="MST-1.1">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses</p>
+    <div class="fh-masthead__tools">
+      <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Row spacing</legend><label><input type="radio" name="mst-rows" value="sm" data-fh-rows-select> S</label><label><input type="radio" name="mst-rows" value="md" data-fh-rows-select checked> M</label><label><input type="radio" name="mst-rows" value="lg" data-fh-rows-select> L</label><label><input type="radio" name="mst-rows" value="xl" data-fh-rows-select> XL</label></fieldset>
+    </div>
+  </div>
+</header>
+```
+
+#### MST-1.2 · Page
+
+```html
+<header class="fh-masthead" data-tone="amber" data-fh="MST-1.2">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses · 5 owned · 2 client</p>
+    <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#a-masthead">New business</a></div>
+  </div>
+</header>
+```
+
+## REC · Record header
+
+The top of a record page: eyebrow, mark, name, what it does, identifying facts and actions. fh-record--cover adds a band across the top, a picture or etched tone art, with the mark overlapping its edge.
+
+Classes: `fh-record` `fh-eyebrow-pill` `fh-record__mark` `fh-icon` `fh-record__id` `fh-record__title` `fh-record__sub` `fh-record__meta` `fh-record__actions` `fh-button` `fh-button--sm` `fh-button--secondary` `fh-record--cover` `fh-record__cover`
+
+### REC-1 · Record header
+
+#### REC-1.1 · Plain
+
+```html
+<header class="fh-record" data-tone="orange" data-fh="REC-1.1">
+  <p class="fh-eyebrow-pill">API · 07</p>
+  <div class="fh-record__mark" data-state="live"><i class="fh-icon fh-icon--code" aria-hidden="true"></i></div>
+  <div class="fh-record__id"><h2 class="fh-record__title">Ledger API</h2><p class="fh-record__sub">Accounts, entries and balances over REST.</p><p class="fh-record__meta"><span>ledger</span><span>api.example.com</span></p></div>
+  <div class="fh-record__actions"><a class="fh-button fh-button--sm fh-button--secondary" href="#a-record">Docs</a><a class="fh-button fh-button--sm" href="#a-record">Open</a></div>
+</header>
+```
+
+#### REC-1.2 · Cover
+
+```html
+<header class="fh-record fh-record--cover" data-tone="teal" data-fh="REC-1.2">
+  <div class="fh-record__cover"></div>
+  <p class="fh-eyebrow-pill">Business · Client</p>
+  <div class="fh-record__mark">AC</div>
+  <div class="fh-record__id"><h2 class="fh-record__title">Acme Supply Co.</h2><p class="fh-record__sub">Tools and parts for small builders.</p><p class="fh-record__meta"><span>acme</span><span>Austin, TX</span><span>Since 2019</span></p></div>
+  <div class="fh-record__actions"><a class="fh-button fh-button--sm" href="#a-record">Edit</a></div>
+</header>
+```
+
+## SEC · Section card
+
+One area of a record page: title with chips on the right, a lede, the body, and a foot for its actions. --inset is a sunken sub-card inside another; --aside puts the lede beside the title on wide slots.
+
+Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-icon` `fh-section-card__tools` `fh-chip` `fh-section-card__lede` `fh-section-card__subhead` `fh-section-card__note` `fh-section-card__foot` `fh-button` `fh-button--sm` `fh-section-card--inset` `fh-section-card--aside`
+
+### SEC-1 · Section card
+
+#### SEC-1.1 · Default
+
+```html
+<section class="fh-section-card" data-tone="teal" aria-labelledby="sec-demo-1" data-fh="SEC-1.1">
+  <header class="fh-section-card__head">
+    <h2 class="fh-section-card__title" id="sec-demo-1"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Identity</h2>
+    <div class="fh-section-card__tools">
+      <span class="fh-chip" data-tone="lime">Complete</span>
+      <span class="fh-chip" data-tone="teal">6 fields</span>
+    </div>
+  </header>
+  <p class="fh-section-card__lede">Who the business is: its names, its code and how it presents itself.</p>
+  <h3 class="fh-section-card__subhead">Names</h3>
+  <p class="fh-section-card__note">Legal name comes from the state filing.</p>
+  <footer class="fh-section-card__foot">
+    <p class="fh-section-card__note">Saved 2 min ago</p>
+    <button class="fh-button fh-button--sm" type="button">Save</button>
+  </footer>
+</section>
+```
+
+#### SEC-1.2 · Inset
+
+```html
+<section class="fh-section-card fh-section-card--inset" aria-labelledby="sec-demo-3" data-fh="SEC-1.2">
+  <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="sec-demo-3">Headquarters</h3><div class="fh-section-card__tools"><span class="fh-chip" data-tone="sky">Default</span></div></header>
+  <p class="fh-section-card__note">400 Congress Ave, Austin, TX 78701</p>
+</section>
+```
+
+#### SEC-1.3 · Aside
+
+```html
+<section class="fh-section-card fh-section-card--aside" aria-labelledby="sec-demo-5" data-fh="SEC-1.3">
+  <header class="fh-section-card__head"><h2 class="fh-section-card__title" id="sec-demo-5"><i class="fh-icon fh-icon--code" aria-hidden="true"></i>Property record</h2></header>
+  <p class="fh-section-card__lede">The full record as stored, and as structured data for search engines.</p>
+</section>
+```
+
+## MET · Metric tiles
+
+One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile takes the whole row and shows its detail. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or gauge drops in as it is.
+
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__row` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-chip` `fh-metric__more` `fh-kv` `fh-metric__figure` `fh-metric__delta` `fh-sparkline` `fh-gauge`
+
+### MET-1 · Metric tile
+
+#### MET-1.1 · Metric
+
+```html
+<article class="fh-metric" data-tone="teal" data-fh="MET-1.1">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
+  <p class="fh-metric__value">LLC</p>
+  <p class="fh-metric__sub">Formed 2019 · Delaware</p>
+  <p class="fh-metric__source">State records</p>
+</article>
+```
+
+#### MET-1.2 · Progress
+
+```html
+<article class="fh-metric" data-tone="lime" data-fh="MET-1.2">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+  <p class="fh-metric__value">82%</p>
+  <p class="fh-metric__sub">Next: bank account</p>
+  <progress class="fh-progress" value="82" max="100">82%</progress>
+</article>
+```
+
+#### MET-1.3 · Needed
+
+```html
+<article class="fh-metric fh-metric--needed" data-fh="MET-1.3">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
+  <p class="fh-metric__value">Needed</p>
+  <p class="fh-metric__sub">For Stripe and PayPal</p>
+</article>
+```
+
+#### MET-1.4 · Link
+
+```html
+<a class="fh-metric" data-tone="sky" href="#a-metric" data-fh="MET-1.4">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
+  <p class="fh-metric__value">4</p>
+  <p class="fh-metric__sub">2 public</p>
+</a>
+```
+
+#### MET-1.5 · Spread
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="fuchsia" data-fh="MET-1.5">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i>Payment readiness</p>
+  <p class="fh-metric__sub">What Stripe still needs before payouts</p>
+  <p class="fh-metric__value">3 of 11</p>
+  <progress class="fh-progress" value="27" max="100">27%</progress>
+</article>
+```
+
+#### MET-1.6 · People
+
+```html
+<article class="fh-metric" data-tone="violet" data-fh="MET-1.6">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+  <p class="fh-metric__value">4 people</p>
+  <div class="fh-metric__row">
+    <div class="fh-avatars" role="group" aria-label="Team">
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/ava.webp" alt="Ava"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/cole.webp" alt="Cole"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/maya.webp" alt="Maya"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
+    </div>
+    <span class="fh-chip" data-tone="lime">2 public</span>
+  </div>
+</article>
+```
+
+#### MET-1.7 · Expand
+
+```html
+<article class="fh-metric" data-tone="amber" data-fh="MET-1.7">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+  <p class="fh-metric__value">$6,940</p>
+  <p class="fh-metric__sub">5 invoices · 1 overdue</p>
+  <details class="fh-metric__more">
+    <summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+    <dl class="fh-kv">
+      <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>
+      <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>
+      <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>
+      <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>
+    </dl>
+  </details>
+</article>
+```
+
+#### MET-1.8 · Trend
+
+```html
+<article class="fh-metric" data-tone="lime" data-fh="MET-1.8">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+  <p class="fh-metric__sub">vs September</p>
+</article>
+```
+
+#### MET-1.9 · Trend · down is good
+
+```html
+<article class="fh-metric" data-tone="sky" data-good="down" data-fh="MET-1.9">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
+  <p class="fh-metric__sub">Down is good here</p>
+</article>
+```
+
+#### MET-1.10 · Sparkline
+
+```html
+<article class="fh-metric" data-tone="teal" data-fh="MET-1.10">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders · 12 wk</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span></div>
+  <svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+</article>
+```
+
+#### MET-1.11 · Gauge
+
+```html
+<article class="fh-metric" data-tone="amber" data-fh="MET-1.11">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
+  <div class="fh-gauge" style="--fh-value: 31; --fh-gauge-size: 8rem" role="img" aria-label="31% of the credit line used"><b>31%</b><small>of $40,000</small></div>
+</article>
+```
+
+## GAU · Gauge
+
+A half-circle meter from --fh-value (0–100), the figure under the arc and a caption below. The arc takes the tone; set it from the value. Sizes with --fh-gauge-size.
+
+Classes: `fh-gauge`
+
+### GAU-1 · Gauge
+
+#### GAU-1.1 · Gauge
+
+```html
+<div class="fh-gauge" data-tone="lime" style="--fh-value: 82" role="img" aria-label="82% ready" data-fh="GAU-1.1"><b>82%</b><small>Ready</small></div>
+```
+
+#### GAU-1.2 · Small
+
+```html
+<div class="fh-gauge" data-tone="danger" style="--fh-value: 93; --fh-gauge-size: 6rem; --fh-gauge-width: 0.45rem" role="img" aria-label="93% of storage used" data-fh="GAU-1.2"><b>93%</b><small>Storage</small></div>
+```
+
 ## PLY · Audio player
 
 Classes: `fh-player` `fh-player__art` `fh-icon` `fh-player__meta` `fh-player__kicker` `fh-eq` `fh-player__title` `fh-player__by` `fh-play` `fh-play--lg` `fh-wave` `fh-wave--lg` `fh-player__time` `fh-player__tools` `fh-audio-btn` `fh-segmented` `fh-segmented--sm` `fh-volume` `fh-scrub`
@@ -3593,6 +3923,11 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `PRF-02` | `PRF-1.2` |
 | `PRF-03` | `PRF-1.4` |
 | `PRF-04` | `PRF-1.3` |
+| `PRP` | `KVL` |
+| `PRP-1` | `KVL-1` |
+| `PRP-1.1` | `KVL-1.1` |
+| `PRP-1.2` | `KVL-1.2` |
+| `PRP-1.3` | `KVL-1.3` |
 | `SLD-01` | `SLD-1.1` |
 | `SLD-02` | `SLD-1.2` |
 | `SLD-03` | `SLD-1.3` |

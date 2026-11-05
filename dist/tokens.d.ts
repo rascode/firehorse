@@ -236,6 +236,7 @@ export type FirehorseToken =
   | "--fh-chip-radius"
   | "--fh-chip-bg"
   | "--fh-chip-underline"
+  | "--fh-row-pad"
   | "--fh-density"
   | "--fh-table-zebra"
   | "--fh-table-rule";

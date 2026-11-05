@@ -21,7 +21,10 @@
  *  12. Dictation fields ([data-fh-dictate]): type or talk; the browser
  *      transcribes into the textarea. Hidden where it can't transcribe.
  *  13. Theme select ([data-fh-theme-select]): a dropdown (or radios)
- *      that switches data-fh-theme and remembers the choice.
+ *      that switches data-fh-theme and remembers the choice. Row
+ *      spacing select ([data-fh-rows-select]) does the same for
+ *      data-fh-rows (sm · md · lg · xl), so every table and key value
+ *      list on the page opens up or tightens at once.
  *  14. Word rotators (.fh-rotator): the slot eases to each word's width,
  *      extra words are hidden from screen readers, and the roll pauses
  *      off screen. The roll itself is CSS and runs without this.
@@ -102,6 +105,40 @@ function setTheme(name, { target = document.documentElement, key = target === do
   // Controls added by other scripts before load get synced too.
   ready(syncThemes);
   addEventListener("load", syncThemes, { once: true });
+}
+
+/* Row spacing select: <fieldset class="fh-segmented"> radios, or a select,
+ * with data-fh-rows-select and value sm · md · lg · xl. Sets data-fh-rows
+ * on <html> (or data-fh-rows-target) and remembers it in
+ * localStorage["fh-rows"]. Fires fh:rows. Firehorse.setRows("lg"). */
+const ROWS_KEY = "fh-rows";
+const isRows = (v) => ["sm", "md", "lg", "xl"].includes(v);
+const rowsTarget = (el) => (el?.dataset.fhRowsTarget && document.querySelector(el.dataset.fhRowsTarget)) || document.documentElement;
+function syncRows() {
+  for (const el of document.querySelectorAll("[data-fh-rows-select]")) {
+    const current = rowsTarget(el).getAttribute("data-fh-rows") || "md";
+    if (el.type === "radio") el.checked = el.value === current;
+    else if ("value" in el && el.value !== current) el.value = current;
+  }
+}
+function setRows(size, { target = document.documentElement } = {}) {
+  if (!isRows(size)) return null;
+  target.setAttribute("data-fh-rows", size);
+  if (target === document.documentElement) themeStore.set(ROWS_KEY, size);
+  syncRows();
+  target.dispatchEvent(new CustomEvent("fh:rows", { bubbles: true, detail: { rows: size } }));
+  return size;
+}
+{
+  const saved = themeStore.get(ROWS_KEY);
+  if (isRows(saved)) document.documentElement.setAttribute("data-fh-rows", saved);
+  document.addEventListener("change", (e) => {
+    const el = e.target.closest?.("[data-fh-rows-select]");
+    if (!el || (el.type === "radio" && !el.checked)) return;
+    setRows(el.value, { target: rowsTarget(el) });
+  });
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setRows });
+  ready(syncRows);
 }
 
 ready(() => {

@@ -1,0 +1,60 @@
+/*
+ * Firehorse — Gauge (GAU)
+ * admin · layer fh.components · docs /admin/#GAU
+ */
+
+@layer fh.components {
+  /* —— Gauge ——
+   * A half-circle meter from one custom property, the figure under the
+   * arc and a caption below. The fill takes the tone, so set data-tone
+   * from the value (lime when healthy, amber, red) where it matters.
+   *   <div class="fh-gauge" data-tone="lime" style="--fh-value: 64" role="img" aria-label="64% of the limit used">
+   *     <b>64%</b><small>of limit</small>
+   *   </div>
+   * --fh-value is 0–100 (registered by the ring, so it animates when it
+   * changes). Knobs: --fh-gauge-size (width, 9rem), --fh-gauge-width
+   * (arc thickness, 0.65rem). */
+  .fh-gauge {
+    --_v: clamp(0, var(--fh-value, 0), 100);
+    --_w: var(--fh-gauge-width, 0.65rem);
+    display: inline-grid;
+    grid-template-areas: "arc" "caption";
+    justify-items: center;
+    inline-size: var(--fh-gauge-size, 9rem);
+    max-inline-size: 100%;
+    margin: 0;
+
+    &::before {
+      content: "";
+      grid-area: arc;
+      inline-size: 100%;
+      aspect-ratio: 2 / 1;
+      background: conic-gradient(from -90deg at 50% 100%, var(--fh-tone, var(--fh-color-text)) calc(var(--_v) * 1.8deg), color-mix(in oklab, var(--fh-color-text) 10%, transparent) 0 180deg, transparent 0);
+      mask: radial-gradient(farthest-side at 50% 100%, transparent calc(100% - var(--_w)), var(--fh-color-text) calc(100% - var(--_w) + 1px) calc(100% - 1px), transparent 100%);
+    }
+
+    & > b {
+      grid-area: arc;
+      align-self: end;
+      font-family: var(--fh-font-figure);
+      font-size: calc(var(--fh-gauge-size, 9rem) / 5.5);
+      font-weight: var(--fh-weight-regular);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    & > small {
+      grid-area: caption;
+      margin-block-start: var(--fh-space-1-5);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-gauge { transition: --fh-value var(--fh-duration-slow) var(--fh-ease-out); }
+  }
+}

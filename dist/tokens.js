@@ -1415,6 +1415,12 @@ export const tokens = {
     "tier": "config",
     "group": "chip"
   },
+  "--fh-row-pad": {
+    "$value": "var(--fh-space-5)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "row"
+  },
   "--fh-density": {
     "$value": "1.25",
     "$type": "dimension",

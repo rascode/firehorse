@@ -13,7 +13,8 @@
 | Type | `fh-display` `fh-title` `fh-heading` `fh-subheading` `fh-lede` `fh-body` `fh-small` `fh-label` `fh-eyebrow` `fh-mono` `fh-index` `fh-price` `fh-signature` `fh-prose` `fh-muted` `fh-subtle` |
 | Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
-| Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
+| Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
+| Admin (admin.css) | `fh-app` `fh-masthead` (`__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread`) `fh-gauge` |
 | People | `fh-social` (`__photo` `__body` `__name` `__check` `__bio` `__foot` `__stats` `--fade` `--dark`) |
 | Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
@@ -623,6 +624,40 @@ One column, two, or a row, depending on the slot.
   <div><dt>Deliverables</dt><dd>4</dd><dd>Docs, diagrams, migration plan</dd></div>
   <div><dt>Follow-up</dt><dd>30 d</dd><dd>Questions answered</dd></div>
 </dl>
+```
+
+### KVL · Key value list
+
+Label / value rows on etched rules: label on the left, value on the right. Two columns of rows from 38rem; `__full` spans both. `--fields` puts a field beside each label; `--single` keeps one column. Row spacing is set once for the page with `data-fh-rows` (sm · md · lg · xl) and applies to every table and key value list; `data-fh-rows-select` on a segmented switch changes it live.
+
+```html
+<div class="fh-stack">
+<fieldset class="fh-segmented fh-segmented--sm" data-fh="KVL-2.1">
+  <legend class="fh-sr-only">Row spacing</legend>
+  <label><input type="radio" name="kv-rows" value="sm" data-fh-rows-select> S</label>
+  <label><input type="radio" name="kv-rows" value="md" data-fh-rows-select checked> M</label>
+  <label><input type="radio" name="kv-rows" value="lg" data-fh-rows-select> L</label>
+  <label><input type="radio" name="kv-rows" value="xl" data-fh-rows-select> XL</label>
+</fieldset>
+<dl class="fh-kv fh-kv--single" style="max-inline-size: 24rem" data-fh="KVL-1.1">
+  <div><dt>County</dt><dd>Travis</dd></div>
+  <div><dt>Parcel</dt><dd>0219-0402-11</dd></div>
+  <div><dt>Year built</dt><dd>1987</dd></div>
+  <div><dt>Lot</dt><dd>0.21 ac</dd></div>
+</dl>
+<dl class="fh-kv fh-kv--fields" data-fh="KVL-1.2">
+  <div><dt><label for="kv-legal">Legal name</label></dt><dd><input class="fh-input" id="kv-legal" value="Acme Supply Co. LLC"></dd></div>
+  <div><dt><label for="kv-dba">DBA</label></dt><dd><input class="fh-input" id="kv-dba" value="Acme"></dd></div>
+  <div class="fh-kv__full"><dt><label for="kv-about">About</label></dt><dd><textarea class="fh-textarea" id="kv-about" rows="2">Tools and parts for small builders.</textarea></dd></div>
+</dl>
+<dl class="fh-kv" data-fh="KVL-1.3">
+  <div><dt>Owner</dt><dd>Maple Row Holdings LLC</dd></div>
+  <div><dt>Since</dt><dd>2016</dd></div>
+  <div><dt>Mortgage</dt><dd>$212,400</dd></div>
+  <div><dt>Liens</dt><dd>None found</dd></div>
+  <div class="fh-kv__full"><dt>Legal description</dt><dd>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</dd></div>
+</dl>
+</div>
 ```
 
 ### CKL · Checklist
@@ -1765,6 +1800,257 @@ Toned chips with a remove button and an input in one field. The inline variant a
 </div>
 ```
 
+### ENT · Entity picker
+
+Choose an account, person or client by its identity: avatar, an etch line, the name and a second line, a figure for the use case, then the chevron. The open list groups its options, and each option is the same row as the selection. Real radios underneath, so it submits and takes arrow keys with no script; `firehorse.js` mirrors the pick into the trigger and fires `fh:entity`.
+
+```html
+<div class="fh-grid" data-cols="3" style="--fh-grid-min: 16rem; --fh-gap: var(--fh-space-6)">
+  <div class="fh-field" data-fh="ENT-1.1">
+    <span class="fh-field__label" id="ent-a-l">Account</span>
+    <div class="fh-entity-picker" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-a" aria-haspopup="listbox" aria-labelledby="ent-a-l ent-a-v" style="anchor-name: --ent-a">
+        <span class="fh-entity__value" id="ent-a-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-a" popover role="listbox" aria-labelledby="ent-a-l" style="position-anchor: --ent-a">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh="ENT-1.2">
+    <span class="fh-field__label" id="ent-b-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--rounded" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-b" aria-haspopup="listbox" aria-labelledby="ent-b-l ent-b-v" style="anchor-name: --ent-b">
+        <span class="fh-entity__value" id="ent-b-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-b" popover role="listbox" aria-labelledby="ent-b-l" style="position-anchor: --ent-b">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh="ENT-1.3">
+    <span class="fh-field__label" id="ent-c-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--etched" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-c" aria-haspopup="listbox" aria-labelledby="ent-c-l ent-c-v" style="anchor-name: --ent-c">
+        <span class="fh-entity__value" id="ent-c-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-c" popover role="listbox" aria-labelledby="ent-c-l" style="position-anchor: --ent-c">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh="ENT-2.1">
+    <span class="fh-field__label" id="ent-d-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--etched" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-d" aria-haspopup="listbox" aria-labelledby="ent-d-l ent-d-v" style="anchor-name: --ent-d">
+        <span class="fh-entity__value" id="ent-d-v">
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-d" popover role="listbox" aria-labelledby="ent-d-l" style="position-anchor: --ent-d">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="northwind" checked>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="rascode">
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="halcyon">
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="juniper">
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh="ENT-2.2">
+    <span class="fh-field__label" id="ent-e-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--rounded" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-e" aria-haspopup="listbox" aria-labelledby="ent-e-l ent-e-v" style="anchor-name: --ent-e">
+        <span class="fh-entity__value" id="ent-e-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="5 open actions"><b>5</b></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-e" popover role="listbox" aria-labelledby="ent-e-l" style="position-anchor: --ent-e">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="5 open actions"><b>5</b></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="rose" aria-label="12 open actions"><b>12</b></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="2 open actions"><b>2</b></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="neutral" aria-label="0 open actions"><b>0</b></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh="ENT-2.3">
+    <span class="fh-field__label" id="ent-f-l">Assignee</span>
+    <div class="fh-entity-picker" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-f" aria-haspopup="listbox" aria-labelledby="ent-f-l ent-f-v" style="anchor-name: --ent-f">
+        <span class="fh-entity__value" id="ent-f-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="violet">AM</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Ava Marlow</b><small>Design lead</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>3</b><small>Due</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-f" popover role="listbox" aria-labelledby="ent-f-l" style="position-anchor: --ent-f">
+        <fieldset class="fh-entity-picker__group"><legend>Team</legend>
+          <label class="fh-entity"><input type="radio" name="ent-f" value="ava" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="violet">AM</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Ava Marlow</b><small>Design lead</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>3</b><small>Due</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-f" value="mateo">
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">MO</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Mateo Ortiz</b><small>Engineer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>1</b><small>Due</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Contractors</legend>
+          <label class="fh-entity"><input type="radio" name="ent-f" value="priya">
+            <span class="fh-avatar fh-avatar--circle" data-tone="orange">PN</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Priya Nand</b><small>Copy · until Dec</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Due</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
 ### TBL · Table
 
 With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36rem.
@@ -2014,6 +2300,165 @@ One row per provider: health, last sync and the one action it needs.
   <li data-health="stale"><b>Privacy.com</b><small>73 cards</small><time>Yesterday</time><button class="fh-btn fh-btn--sm" type="button">Sync</button></li>
   <li data-health="off"><b>PayPal</b><small>Not connected</small><button class="fh-btn fh-btn--sm" type="button">Connect</button></li>
 </ul>
+```
+
+### REC · Record header
+
+The top of a record page: eyebrow, mark, name, what it does, identifying facts and actions. `fh-record--cover` adds a band across the top, a picture or etched tone art, with the mark overlapping its edge.
+
+```html
+<div class="fh-stack fh-stack--lg">
+<header class="fh-record" data-tone="orange" data-fh="REC-1.1">
+  <p class="fh-eyebrow-pill">API · 07</p>
+  <div class="fh-record__mark" data-state="live"><i class="fh-icon fh-icon--code" aria-hidden="true"></i></div>
+  <div class="fh-record__id"><h2 class="fh-record__title">Ledger API</h2><p class="fh-record__sub">Accounts, entries and balances over REST.</p><p class="fh-record__meta"><span>ledger</span><span>api.example.com</span></p></div>
+  <div class="fh-record__actions"><a class="fh-button fh-button--sm fh-button--secondary" href="#a-record">Docs</a><a class="fh-button fh-button--sm" href="#a-record">Open</a></div>
+</header>
+<header class="fh-record fh-record--cover" data-tone="teal" data-fh="REC-1.2">
+  <div class="fh-record__cover"></div>
+  <p class="fh-eyebrow-pill">Business · Client</p>
+  <div class="fh-record__mark">AC</div>
+  <div class="fh-record__id"><h2 class="fh-record__title">Acme Supply Co.</h2><p class="fh-record__sub">Tools and parts for small builders.</p><p class="fh-record__meta"><span>acme</span><span>Austin, TX</span><span>Since 2019</span></p></div>
+  <div class="fh-record__actions"><a class="fh-button fh-button--sm" href="#a-record">Edit</a></div>
+</header>
+</div>
+```
+
+### SEC · Section card
+
+One area of a record page: title with chips on the right, a lede, the body, and a foot for its actions. `--inset` is a sunken sub-card inside another; `--aside` puts the lede beside the title on wide slots.
+
+```html
+<div class="fh-stack">
+<section class="fh-section-card" data-tone="teal" aria-labelledby="sec-demo-1" data-fh="SEC-1.1">
+  <header class="fh-section-card__head">
+    <h2 class="fh-section-card__title" id="sec-demo-1"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Identity</h2>
+    <div class="fh-section-card__tools">
+      <span class="fh-chip" data-tone="lime">Complete</span>
+      <span class="fh-chip" data-tone="teal">6 fields</span>
+    </div>
+  </header>
+  <p class="fh-section-card__lede">Who the business is: its names, its code and how it presents itself.</p>
+  <h3 class="fh-section-card__subhead">Names</h3>
+  <p class="fh-section-card__note">Legal name comes from the state filing.</p>
+  <footer class="fh-section-card__foot">
+    <p class="fh-section-card__note">Saved 2 min ago</p>
+    <button class="fh-button fh-button--sm" type="button">Save</button>
+  </footer>
+</section>
+<section class="fh-section-card" aria-labelledby="sec-demo-2">
+  <header class="fh-section-card__head"><h2 class="fh-section-card__title" id="sec-demo-2"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i>Addresses</h2></header>
+  <div class="fh-grid" data-cols="2">
+    <section class="fh-section-card fh-section-card--inset" aria-labelledby="sec-demo-3" data-fh="SEC-1.2">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="sec-demo-3">Headquarters</h3><div class="fh-section-card__tools"><span class="fh-chip" data-tone="sky">Default</span></div></header>
+      <p class="fh-section-card__note">400 Congress Ave, Austin, TX 78701</p>
+    </section>
+    <section class="fh-section-card fh-section-card--inset" aria-labelledby="sec-demo-4">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="sec-demo-4">Mailing</h3></header>
+      <p class="fh-section-card__note">Same as default</p>
+    </section>
+  </div>
+</section>
+<section class="fh-section-card fh-section-card--aside" aria-labelledby="sec-demo-5" data-fh="SEC-1.3">
+  <header class="fh-section-card__head"><h2 class="fh-section-card__title" id="sec-demo-5"><i class="fh-icon fh-icon--code" aria-hidden="true"></i>Property record</h2></header>
+  <p class="fh-section-card__lede">The full record as stored, and as structured data for search engines.</p>
+</section>
+</div>
+```
+
+### MET · Metric tiles
+
+One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an `fh-progress` for a share done, `--needed` for a fact still to fill in, or make the tile an `<a>` to open its area. `--spread` puts the label and description at the top and the value at the bottom, with a wide gap. `__row` holds avatars, cubes and chips. `__more` is an etched line with a chevron: open, the tile takes the whole row and shows its detail. `__delta` shows the change (`data-trend`; `data-good="down"` where down is good), and a sparkline, ring or gauge drops in as it is.
+
+```html
+<div class="fh-metrics">
+  <article class="fh-metric" data-tone="teal" data-fh="MET-1.1">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
+    <p class="fh-metric__value">LLC</p>
+    <p class="fh-metric__sub">Formed 2019 · Delaware</p>
+    <p class="fh-metric__source">State records</p>
+  </article>
+  <article class="fh-metric" data-tone="lime" data-fh="MET-1.2">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+    <p class="fh-metric__value">82%</p>
+    <p class="fh-metric__sub">Next: bank account</p>
+    <progress class="fh-progress" value="82" max="100">82%</progress>
+  </article>
+  <article class="fh-metric fh-metric--needed" data-fh="MET-1.3">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
+    <p class="fh-metric__value">Needed</p>
+    <p class="fh-metric__sub">For Stripe and PayPal</p>
+  </article>
+  <article class="fh-metric fh-metric--spread" data-tone="fuchsia" data-fh="MET-1.5">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i>Payment readiness</p>
+    <p class="fh-metric__sub">What Stripe still needs before payouts</p>
+    <p class="fh-metric__value">3 of 11</p>
+    <progress class="fh-progress" value="27" max="100">27%</progress>
+  </article>
+  <article class="fh-metric" data-tone="violet" data-fh="MET-1.6">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+    <p class="fh-metric__value">4 people</p>
+    <div class="fh-metric__row">
+      <div class="fh-avatars" role="group" aria-label="Team">
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/ava.webp" alt="Ava"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/cole.webp" alt="Cole"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/maya.webp" alt="Maya"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
+      </div>
+      <span class="fh-chip" data-tone="lime">2 public</span>
+    </div>
+  </article>
+  <article class="fh-metric" data-tone="amber" data-fh="MET-1.7">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+    <p class="fh-metric__value">$6,940</p>
+    <p class="fh-metric__sub">5 invoices · 1 overdue</p>
+    <details class="fh-metric__more">
+      <summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+      <dl class="fh-kv">
+        <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>
+        <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>
+        <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>
+        <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>
+      </dl>
+    </details>
+  </article>
+  <article class="fh-metric" data-tone="lime" data-fh="MET-1.8">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+    <p class="fh-metric__sub">vs September</p>
+  </article>
+  <article class="fh-metric" data-tone="sky" data-good="down" data-fh="MET-1.9">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
+    <p class="fh-metric__sub">Down is good here</p>
+  </article>
+  <article class="fh-metric" data-tone="teal" data-fh="MET-1.10">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders · 12 wk</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span></div>
+    <svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+  </article>
+  <article class="fh-metric" data-tone="amber" data-fh="MET-1.11">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
+    <div class="fh-gauge" style="--fh-value: 31; --fh-gauge-size: 8rem" role="img" aria-label="31% of the credit line used"><b>31%</b><small>of $40,000</small></div>
+  </article>
+  <a class="fh-metric" data-tone="sky" href="#a-metric" data-fh="MET-1.4">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
+    <p class="fh-metric__value">4</p>
+    <p class="fh-metric__sub">2 public</p>
+  </a>
+</div>
+```
+
+### GAU · Gauge
+
+A half-circle meter from `--fh-value` (0–100), the figure under the arc and a caption below. The arc takes the tone; set it from the value. Sizes with `--fh-gauge-size`.
+
+```html
+<div class="fh-cluster" style="gap: var(--fh-space-8)">
+  <div class="fh-gauge" data-tone="lime" style="--fh-value: 82" role="img" aria-label="82% ready" data-fh="GAU-1.1"><b>82%</b><small>Ready</small></div>
+  <div class="fh-gauge" data-tone="amber" style="--fh-value: 64" role="img" aria-label="64% of the limit used"><b>64%</b><small>Of limit</small></div>
+  <div class="fh-gauge" data-tone="danger" style="--fh-value: 93; --fh-gauge-size: 6rem; --fh-gauge-width: 0.45rem" role="img" aria-label="93% of storage used" data-fh="GAU-1.2"><b>93%</b><small>Storage</small></div>
+</div>
 ```
 
 ### THB · Thumbnails & link cards

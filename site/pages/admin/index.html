@@ -1,0 +1,209 @@
+<!--@meta {
+  "path": "/admin/",
+  "order": 63,
+  "name": "Admin",
+  "tone": "amber",
+  "title": "Admin · Firehorse",
+  "description": "Firehorse admin: the pieces for back-office pages. Record headers, section cards, metric tiles, row spacing and the app shell, in admin.css.",
+  "headline": "Back office, <em>built to read</em>",
+  "lede": "Record headers, section cards and metric tiles for admin pages, shipped in <code>admin.css</code> after <code>firehorse.css</code>. They reuse the system's tokens, tables, key value lists and chips.",
+  "scripts": [],
+  "styles": ["admin.css"],
+  "icon": "layout-grid",
+  "summary": [
+    { "value": "5", "label": "Components", "blurb": "Masthead, record header, section card, metric tiles, gauge." },
+    { "value": "4", "label": "Row spacings", "blurb": "S, M, L and XL, for every table on the page." }
+  ]
+}-->
+<!--@main-->
+    <section id="admin" class="fh-section fh-section--ruled site-anchor" data-tone="amber" aria-labelledby="admin-title" data-fh-label="Admin" data-fh-index="09">
+      <header class="fh-section-head">
+        <p class="fh-eyebrow">Admin</p>
+        <h2 id="admin-title">Record pages</h2>
+        <p>A record page is a header, then one section card per area. Inside a card: metric tiles, a key value list, a table, chips.</p>
+      </header>
+
+        <div class="site-demo site-anchor" id="a-masthead" data-fh-id="MST" data-fh-groups="Masthead">
+          <div class="site-demo__head"><h3>Masthead</h3><p>A glass header with the stacking deck's caption: number left, title right, a hairline under both, on an etched, see-through, blurred panel. <code>--bar</code> is the one-line top bar. Shown here over a picture so the frost reads.</p></div>
+          <div class="site-demo__stage" data-demo style="background: url(/img/backdrop/firehorse-horse.webp) center / cover; padding: var(--fh-space-8)">
+<div class="fh-stack">
+<header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh-id="MST-1.1" data-fh-name="Bar">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses</p>
+    <div class="fh-masthead__tools">
+      <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Row spacing</legend><label><input type="radio" name="mst-rows" value="sm" data-fh-rows-select> S</label><label><input type="radio" name="mst-rows" value="md" data-fh-rows-select checked> M</label><label><input type="radio" name="mst-rows" value="lg" data-fh-rows-select> L</label><label><input type="radio" name="mst-rows" value="xl" data-fh-rows-select> XL</label></fieldset>
+    </div>
+  </div>
+</header>
+<header class="fh-masthead" data-tone="amber" data-fh-id="MST-1.2" data-fh-name="Page">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses · 5 owned · 2 client</p>
+    <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#a-masthead">New business</a></div>
+  </div>
+</header>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-record" data-fh-id="REC" data-fh-groups="Record header">
+          <div class="site-demo__head"><h3>Record header</h3><p>The top of a record page: eyebrow, mark, name, what it does, identifying facts and actions. <code>fh-record--cover</code> adds a band across the top, a picture or etched tone art, with the mark overlapping its edge.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<header class="fh-record" data-tone="orange" data-fh-id="REC-1.1" data-fh-name="Plain">
+  <p class="fh-eyebrow-pill">API · 07</p>
+  <div class="fh-record__mark" data-state="live"><i class="fh-icon fh-icon--code" aria-hidden="true"></i></div>
+  <div class="fh-record__id"><h2 class="fh-record__title">Ledger API</h2><p class="fh-record__sub">Accounts, entries and balances over REST.</p><p class="fh-record__meta"><span>ledger</span><span>api.example.com</span></p></div>
+  <div class="fh-record__actions"><a class="fh-button fh-button--sm fh-button--secondary" href="#a-record">Docs</a><a class="fh-button fh-button--sm" href="#a-record">Open</a></div>
+</header>
+<header class="fh-record fh-record--cover" data-tone="teal" data-fh-id="REC-1.2" data-fh-name="Cover">
+  <div class="fh-record__cover"></div>
+  <p class="fh-eyebrow-pill">Business · Client</p>
+  <div class="fh-record__mark">AC</div>
+  <div class="fh-record__id"><h2 class="fh-record__title">Acme Supply Co.</h2><p class="fh-record__sub">Tools and parts for small builders.</p><p class="fh-record__meta"><span>acme</span><span>Austin, TX</span><span>Since 2019</span></p></div>
+  <div class="fh-record__actions"><a class="fh-button fh-button--sm" href="#a-record">Edit</a></div>
+</header>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-section-card" data-fh-id="SEC" data-fh-groups="Section card">
+          <div class="site-demo__head"><h3>Section card</h3><p>One area of a record page: title with chips on the right, a lede, the body, and a foot for its actions. <code>--inset</code> is a sunken sub-card inside another; <code>--aside</code> puts the lede beside the title on wide slots.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+<section class="fh-section-card" data-tone="teal" aria-labelledby="sec-demo-1" data-fh-id="SEC-1.1" data-fh-name="Default">
+  <header class="fh-section-card__head">
+    <h2 class="fh-section-card__title" id="sec-demo-1"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Identity</h2>
+    <div class="fh-section-card__tools">
+      <span class="fh-chip" data-tone="lime">Complete</span>
+      <span class="fh-chip" data-tone="teal">6 fields</span>
+    </div>
+  </header>
+  <p class="fh-section-card__lede">Who the business is: its names, its code and how it presents itself.</p>
+  <h3 class="fh-section-card__subhead">Names</h3>
+  <p class="fh-section-card__note">Legal name comes from the state filing.</p>
+  <footer class="fh-section-card__foot">
+    <p class="fh-section-card__note">Saved 2 min ago</p>
+    <button class="fh-button fh-button--sm" type="button">Save</button>
+  </footer>
+</section>
+<section class="fh-section-card" aria-labelledby="sec-demo-2">
+  <header class="fh-section-card__head"><h2 class="fh-section-card__title" id="sec-demo-2"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i>Addresses</h2></header>
+  <div class="fh-grid" data-cols="2">
+    <section class="fh-section-card fh-section-card--inset" aria-labelledby="sec-demo-3" data-fh-id="SEC-1.2" data-fh-name="Inset">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="sec-demo-3">Headquarters</h3><div class="fh-section-card__tools"><span class="fh-chip" data-tone="sky">Default</span></div></header>
+      <p class="fh-section-card__note">400 Congress Ave, Austin, TX 78701</p>
+    </section>
+    <section class="fh-section-card fh-section-card--inset" aria-labelledby="sec-demo-4">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="sec-demo-4">Mailing</h3></header>
+      <p class="fh-section-card__note">Same as default</p>
+    </section>
+  </div>
+</section>
+<section class="fh-section-card fh-section-card--aside" aria-labelledby="sec-demo-5" data-fh-id="SEC-1.3" data-fh-name="Aside">
+  <header class="fh-section-card__head"><h2 class="fh-section-card__title" id="sec-demo-5"><i class="fh-icon fh-icon--code" aria-hidden="true"></i>Property record</h2></header>
+  <p class="fh-section-card__lede">The full record as stored, and as structured data for search engines.</p>
+</section>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-metric" data-fh-id="MET" data-fh-groups="Metric tile">
+          <div class="site-demo__head"><h3>Metric tiles</h3><p>One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an <code>fh-progress</code> for a share done, <code>--needed</code> for a fact still to fill in, or make the tile an <code>&lt;a&gt;</code> to open its area. <code>--spread</code> puts the label and description at the top and the value at the bottom, with a wide gap. <code>__row</code> holds avatars, cubes and chips. <code>__more</code> is an etched line with a chevron: open, the tile takes the whole row and shows its detail. <code>__delta</code> shows the change (<code>data-trend</code>; <code>data-good="down"</code> where down is good), and a sparkline, ring or gauge drops in as it is.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-metrics">
+  <article class="fh-metric" data-tone="teal" data-fh-id="MET-1.1" data-fh-name="Metric">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
+    <p class="fh-metric__value">LLC</p>
+    <p class="fh-metric__sub">Formed 2019 · Delaware</p>
+    <p class="fh-metric__source">State records</p>
+  </article>
+  <article class="fh-metric" data-tone="lime" data-fh-id="MET-1.2" data-fh-name="Progress">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+    <p class="fh-metric__value">82%</p>
+    <p class="fh-metric__sub">Next: bank account</p>
+    <progress class="fh-progress" value="82" max="100">82%</progress>
+  </article>
+  <article class="fh-metric fh-metric--needed" data-fh-id="MET-1.3" data-fh-name="Needed">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
+    <p class="fh-metric__value">Needed</p>
+    <p class="fh-metric__sub">For Stripe and PayPal</p>
+  </article>
+  <article class="fh-metric fh-metric--spread" data-tone="fuchsia" data-fh-id="MET-1.5" data-fh-name="Spread">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i>Payment readiness</p>
+    <p class="fh-metric__sub">What Stripe still needs before payouts</p>
+    <p class="fh-metric__value">3 of 11</p>
+    <progress class="fh-progress" value="27" max="100">27%</progress>
+  </article>
+  <article class="fh-metric" data-tone="violet" data-fh-id="MET-1.6" data-fh-name="People">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+    <p class="fh-metric__value">4 people</p>
+    <div class="fh-metric__row">
+      <div class="fh-avatars" role="group" aria-label="Team">
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/ava.webp" alt="Ava"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/cole.webp" alt="Cole"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="img/avatars/maya.webp" alt="Maya"></span>
+        <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
+      </div>
+      <span class="fh-chip" data-tone="lime">2 public</span>
+    </div>
+  </article>
+  <article class="fh-metric" data-tone="amber" data-fh-id="MET-1.7" data-fh-name="Expand">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+    <p class="fh-metric__value">$6,940</p>
+    <p class="fh-metric__sub">5 invoices · 1 overdue</p>
+    <details class="fh-metric__more">
+      <summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+      <dl class="fh-kv">
+        <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>
+        <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>
+        <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>
+        <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>
+      </dl>
+    </details>
+  </article>
+  <article class="fh-metric" data-tone="lime" data-fh-id="MET-1.8" data-fh-name="Trend">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+    <p class="fh-metric__sub">vs September</p>
+  </article>
+  <article class="fh-metric" data-tone="sky" data-good="down" data-fh-id="MET-1.9" data-fh-name="Trend · down is good">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
+    <p class="fh-metric__sub">Down is good here</p>
+  </article>
+  <article class="fh-metric" data-tone="teal" data-fh-id="MET-1.10" data-fh-name="Sparkline">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders · 12 wk</p>
+    <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span></div>
+    <svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"/><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+  </article>
+  <article class="fh-metric" data-tone="amber" data-fh-id="MET-1.11" data-fh-name="Gauge">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
+    <div class="fh-gauge" style="--fh-value: 31; --fh-gauge-size: 8rem" role="img" aria-label="31% of the credit line used"><b>31%</b><small>of $40,000</small></div>
+  </article>
+  <a class="fh-metric" data-tone="sky" href="#a-metric" data-fh-id="MET-1.4" data-fh-name="Link">
+    <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
+    <p class="fh-metric__value">4</p>
+    <p class="fh-metric__sub">2 public</p>
+  </a>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-gauge" data-fh-id="GAU" data-fh-groups="Gauge">
+          <div class="site-demo__head"><h3>Gauge</h3><p>A half-circle meter from <code>--fh-value</code> (0–100), the figure under the arc and a caption below. The arc takes the tone; set it from the value. Sizes with <code>--fh-gauge-size</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-cluster" style="gap: var(--fh-space-8)">
+  <div class="fh-gauge" data-tone="lime" style="--fh-value: 82" role="img" aria-label="82% ready" data-fh-id="GAU-1.1" data-fh-name="Gauge"><b>82%</b><small>Ready</small></div>
+  <div class="fh-gauge" data-tone="amber" style="--fh-value: 64" role="img" aria-label="64% of the limit used"><b>64%</b><small>Of limit</small></div>
+  <div class="fh-gauge" data-tone="danger" style="--fh-value: 93; --fh-gauge-size: 6rem; --fh-gauge-width: 0.45rem" role="img" aria-label="93% of storage used" data-fh-id="GAU-1.2" data-fh-name="Small"><b>93%</b><small>Storage</small></div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-finance">
+          <div class="site-demo__head"><h3>Finance cards</h3><p>Balance, segment switch, account cards, ledger, virtual cards and connection health live on <a class="fh-link" href="/finance/">Finance</a> and work on any admin page.</p></div>
+        </div>
+
+    </section>

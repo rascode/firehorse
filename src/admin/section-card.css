@@ -1,0 +1,133 @@
+/*
+ * Firehorse — Section card (SEC)
+ * admin · layer fh.components · docs /admin/#SEC
+ */
+
+@layer fh.components {
+  /* —— Section card ——
+   * One area of a record page: a head (title, then chips or tools on the
+   * right), a lede, the body, and a foot for its actions. Cards sit in a
+   * stack, or side by side in an fh-grid for small areas.
+   *   <section class="fh-section-card" data-tone="teal" aria-labelledby="id">
+   *     <header class="fh-section-card__head">
+   *       <h2 class="fh-section-card__title" id="id"><i class="fh-icon fh-icon--building"></i>Identity</h2>
+   *       <div class="fh-section-card__tools">…chips or buttons…</div>
+   *     </header>
+   *     <p class="fh-section-card__lede">What this area holds.</p>
+   *     …metric tiles, property list, table…
+   *     <h3 class="fh-section-card__subhead">Sales history</h3>
+   *     …
+   *     <footer class="fh-section-card__foot">…buttons…</footer>
+   *   </section>
+   * Modifiers: fh-section-card--inset (a sunken sub-card inside another,
+   * e.g. one address role), fh-section-card--aside (the lede sits on the
+   * right of the title on wide slots). The tone tints the title icon.
+   * Knobs: --fh-section-card-pad, --fh-section-card-gap. */
+  .fh-section-card {
+    --_pad: var(--fh-section-card-pad, var(--fh-space-6));
+    display: grid;
+    gap: var(--fh-section-card-gap, var(--fh-space-5));
+    align-content: start;
+    min-inline-size: 0;
+    padding: var(--_pad);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    container: fh-section-card / inline-size;
+
+    & > * { margin: 0; min-inline-size: 0; }
+  }
+
+  .fh-section-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-space-2) var(--fh-space-4);
+  }
+
+  .fh-section-card__title {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-space-2);
+    margin: 0;
+    font-size: var(--fh-text-h4);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -0.01em;
+    line-height: var(--fh-leading-tight);
+
+    & > .fh-icon { color: var(--fh-tone, var(--fh-color-text-muted)); }
+  }
+
+  .fh-section-card__tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: end;
+    gap: var(--fh-space-2);
+    margin-inline-start: auto;
+  }
+
+  .fh-section-card__lede {
+    max-inline-size: 72ch;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-section-card__subhead {
+    margin-block-start: var(--fh-space-2);
+    padding-block-start: var(--fh-space-4);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-section-card__note {
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-small);
+    max-inline-size: 72ch;
+  }
+
+  .fh-section-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: end;
+    gap: var(--fh-space-2);
+    padding-block-start: var(--fh-space-4);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > .fh-section-card__note { margin-inline-end: auto; }
+  }
+
+  /* Inset: a sub-card inside a section (one address role, one channel). */
+  .fh-section-card--inset {
+    --_pad: var(--fh-section-card-pad, var(--fh-space-5));
+    gap: var(--fh-section-card-gap, var(--fh-space-3));
+    border-style: solid;
+    border-color: transparent;
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-sunken);
+
+    & .fh-section-card__title {
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  /* Aside: the lede sits on the right of the title once both fit at 20rem. */
+  .fh-section-card--aside {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    column-gap: var(--fh-space-6);
+
+    & > :not(.fh-section-card__head, .fh-section-card__lede) { grid-column: 1 / -1; }
+    & > .fh-section-card__head { align-self: start; }
+  }
+}

@@ -28,6 +28,7 @@
  *   data-fh-radius       sharp · soft · round
  *   data-fh-density      compact · comfortable · spacious
  *   data-fh-table        lined · zebra · borderless
+ *   data-fh-rows         sm · md · lg · xl   (row spacing in tables and key value lists)
  *   data-fh-type         geist · inter · hanken · archivo
  *
  * Type presets set the sans and display families and the heading tracking
@@ -121,6 +122,13 @@
   [data-fh-radius="sharp"] { --fh-radius-sm: 0; --fh-radius-md: 0; --fh-radius-lg: 0; --fh-radius-xl: 0; }
   [data-fh-radius="soft"] { --fh-radius-sm: 6px; --fh-radius-md: 10px; --fh-radius-lg: 1rem; --fh-radius-xl: 1.25rem; }
   [data-fh-radius="round"] { --fh-radius-sm: 999px; --fh-radius-md: 1rem; --fh-radius-lg: 1.5rem; --fh-radius-xl: 2rem; }
+
+  /* —— Row spacing: the room above and below each row of a table,
+     key value list or description list. md is the default. —— */
+  [data-fh-rows="sm"] { --fh-row-pad: var(--fh-space-2); }
+  [data-fh-rows="md"] { --fh-row-pad: var(--fh-space-3); }
+  [data-fh-rows="lg"] { --fh-row-pad: var(--fh-space-4); }
+  [data-fh-rows="xl"] { --fh-row-pad: var(--fh-space-5); }
 
   /* —— Density: rescales the spacing ramp —— */
   [data-fh-density] {

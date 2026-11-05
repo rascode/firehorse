@@ -1576,6 +1576,97 @@
       "variants": []
     },
     {
+      "id": "KVL",
+      "name": "Key value list",
+      "section": "Content",
+      "anchor": "c-kv",
+      "page": "/components/content/",
+      "url": "https://firehorse.rascode.dev/components/content/#KVL",
+      "summary": "Label / value rows on etched rules: label on the left, value on the right. Two columns of rows from 38rem; __full spans both. --fields puts a field beside each label; --single keeps one column. Row spacing is set once for the page with data-fh-rows (sm · md · lg · xl) and applies to every table and key value list; data-fh-rows-select on a segmented switch changes it live.",
+      "classes": [
+        "fh-kv",
+        "fh-kv--single",
+        "fh-kv--fields",
+        "fh-input",
+        "fh-kv__full",
+        "fh-textarea",
+        "fh-segmented",
+        "fh-segmented--sm",
+        "fh-sr-only"
+      ],
+      "markup": "<div class=\"fh-stack\">\n<fieldset class=\"fh-segmented fh-segmented--sm\" data-fh=\"KVL-2.1\">\n  <legend class=\"fh-sr-only\">Row spacing</legend>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"sm\" data-fh-rows-select> S</label>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"md\" data-fh-rows-select checked> M</label>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"lg\" data-fh-rows-select> L</label>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"xl\" data-fh-rows-select> XL</label>\n</fieldset>\n<dl class=\"fh-kv fh-kv--single\" style=\"max-inline-size: 24rem\" data-fh=\"KVL-1.1\">\n  <div><dt>County</dt><dd>Travis</dd></div>\n  <div><dt>Parcel</dt><dd>0219-0402-11</dd></div>\n  <div><dt>Year built</dt><dd>1987</dd></div>\n  <div><dt>Lot</dt><dd>0.21 ac</dd></div>\n</dl>\n<dl class=\"fh-kv fh-kv--fields\" data-fh=\"KVL-1.2\">\n  <div><dt><label for=\"kv-legal\">Legal name</label></dt><dd><input class=\"fh-input\" id=\"kv-legal\" value=\"Acme Supply Co. LLC\"></dd></div>\n  <div><dt><label for=\"kv-dba\">DBA</label></dt><dd><input class=\"fh-input\" id=\"kv-dba\" value=\"Acme\"></dd></div>\n  <div class=\"fh-kv__full\"><dt><label for=\"kv-about\">About</label></dt><dd><textarea class=\"fh-textarea\" id=\"kv-about\" rows=\"2\">Tools and parts for small builders.</textarea></dd></div>\n</dl>\n<dl class=\"fh-kv\" data-fh=\"KVL-1.3\">\n  <div><dt>Owner</dt><dd>Maple Row Holdings LLC</dd></div>\n  <div><dt>Since</dt><dd>2016</dd></div>\n  <div><dt>Mortgage</dt><dd>$212,400</dd></div>\n  <div><dt>Liens</dt><dd>None found</dd></div>\n  <div class=\"fh-kv__full\"><dt>Legal description</dt><dd>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</dd></div>\n</dl>\n</div>",
+      "groups": [
+        {
+          "id": "KVL-1",
+          "name": "Key value list",
+          "summary": "",
+          "variants": [
+            "KVL-1.1",
+            "KVL-1.2",
+            "KVL-1.3"
+          ]
+        },
+        {
+          "id": "KVL-2",
+          "name": "Row spacing",
+          "summary": "",
+          "variants": [
+            "KVL-2.1"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "KVL-1.1",
+          "group": "KVL-1",
+          "name": "Read",
+          "classes": [
+            "fh-kv",
+            "fh-kv--single"
+          ],
+          "config": {},
+          "markup": "<dl class=\"fh-kv fh-kv--single\" style=\"max-inline-size: 24rem\" data-fh=\"KVL-1.1\">\n  <div><dt>County</dt><dd>Travis</dd></div>\n  <div><dt>Parcel</dt><dd>0219-0402-11</dd></div>\n  <div><dt>Year built</dt><dd>1987</dd></div>\n  <div><dt>Lot</dt><dd>0.21 ac</dd></div>\n</dl>"
+        },
+        {
+          "id": "KVL-1.2",
+          "group": "KVL-1",
+          "name": "Fields",
+          "classes": [
+            "fh-kv",
+            "fh-kv--fields",
+            "fh-input",
+            "fh-kv__full",
+            "fh-textarea"
+          ],
+          "config": {},
+          "markup": "<dl class=\"fh-kv fh-kv--fields\" data-fh=\"KVL-1.2\">\n  <div><dt><label for=\"kv-legal\">Legal name</label></dt><dd><input class=\"fh-input\" id=\"kv-legal\" value=\"Acme Supply Co. LLC\"></dd></div>\n  <div><dt><label for=\"kv-dba\">DBA</label></dt><dd><input class=\"fh-input\" id=\"kv-dba\" value=\"Acme\"></dd></div>\n  <div class=\"fh-kv__full\"><dt><label for=\"kv-about\">About</label></dt><dd><textarea class=\"fh-textarea\" id=\"kv-about\" rows=\"2\">Tools and parts for small builders.</textarea></dd></div>\n</dl>"
+        },
+        {
+          "id": "KVL-1.3",
+          "group": "KVL-1",
+          "name": "Mixed",
+          "classes": [
+            "fh-kv",
+            "fh-kv__full"
+          ],
+          "config": {},
+          "markup": "<dl class=\"fh-kv\" data-fh=\"KVL-1.3\">\n  <div><dt>Owner</dt><dd>Maple Row Holdings LLC</dd></div>\n  <div><dt>Since</dt><dd>2016</dd></div>\n  <div><dt>Mortgage</dt><dd>$212,400</dd></div>\n  <div><dt>Liens</dt><dd>None found</dd></div>\n  <div class=\"fh-kv__full\"><dt>Legal description</dt><dd>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</dd></div>\n</dl>"
+        },
+        {
+          "id": "KVL-2.1",
+          "group": "KVL-2",
+          "name": "Row spacing",
+          "classes": [
+            "fh-segmented",
+            "fh-segmented--sm",
+            "fh-sr-only"
+          ],
+          "config": {},
+          "markup": "<fieldset class=\"fh-segmented fh-segmented--sm\" data-fh=\"KVL-2.1\">\n  <legend class=\"fh-sr-only\">Row spacing</legend>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"sm\" data-fh-rows-select> S</label>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"md\" data-fh-rows-select checked> M</label>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"lg\" data-fh-rows-select> L</label>\n  <label><input type=\"radio\" name=\"kv-rows\" value=\"xl\" data-fh-rows-select> XL</label>\n</fieldset>"
+        }
+      ]
+    },
+    {
       "id": "CKL",
       "name": "Checklist",
       "section": "Content",
@@ -4810,6 +4901,535 @@
       "variants": []
     },
     {
+      "id": "MST",
+      "name": "Masthead",
+      "section": "Admin",
+      "anchor": "a-masthead",
+      "page": "/admin/",
+      "url": "https://firehorse.rascode.dev/admin/#MST",
+      "summary": "A glass header with the stacking deck's caption: number left, title right, a hairline under both, on an etched, see-through, blurred panel. --bar is the one-line top bar. Shown here over a picture so the frost reads.",
+      "classes": [
+        "fh-masthead",
+        "fh-masthead--bar",
+        "fh-masthead__caption",
+        "fh-masthead__index",
+        "fh-masthead__title",
+        "fh-masthead__foot",
+        "fh-masthead__meta",
+        "fh-masthead__tools",
+        "fh-segmented",
+        "fh-segmented--sm",
+        "fh-sr-only",
+        "fh-chip",
+        "fh-button",
+        "fh-button--sm"
+      ],
+      "markup": "<div class=\"fh-stack\">\n<header class=\"fh-masthead fh-masthead--bar\" data-tone=\"amber\" data-fh=\"MST-1.1\">\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses</p>\n    <div class=\"fh-masthead__tools\">\n      <fieldset class=\"fh-segmented fh-segmented--sm\"><legend class=\"fh-sr-only\">Row spacing</legend><label><input type=\"radio\" name=\"mst-rows\" value=\"sm\" data-fh-rows-select> S</label><label><input type=\"radio\" name=\"mst-rows\" value=\"md\" data-fh-rows-select checked> M</label><label><input type=\"radio\" name=\"mst-rows\" value=\"lg\" data-fh-rows-select> L</label><label><input type=\"radio\" name=\"mst-rows\" value=\"xl\" data-fh-rows-select> XL</label></fieldset>\n    </div>\n  </div>\n</header>\n<header class=\"fh-masthead\" data-tone=\"amber\" data-fh=\"MST-1.2\">\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses · 5 owned · 2 client</p>\n    <div class=\"fh-masthead__tools\"><span class=\"fh-chip\" data-tone=\"lime\">All synced</span><a class=\"fh-button fh-button--sm\" href=\"#a-masthead\">New business</a></div>\n  </div>\n</header>\n</div>",
+      "groups": [
+        {
+          "id": "MST-1",
+          "name": "Masthead",
+          "summary": "",
+          "variants": [
+            "MST-1.1",
+            "MST-1.2"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "MST-1.1",
+          "group": "MST-1",
+          "name": "Bar",
+          "classes": [
+            "fh-masthead",
+            "fh-masthead--bar",
+            "fh-masthead__caption",
+            "fh-masthead__index",
+            "fh-masthead__title",
+            "fh-masthead__foot",
+            "fh-masthead__meta",
+            "fh-masthead__tools",
+            "fh-segmented",
+            "fh-segmented--sm",
+            "fh-sr-only"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-masthead fh-masthead--bar\" data-tone=\"amber\" data-fh=\"MST-1.1\">\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses</p>\n    <div class=\"fh-masthead__tools\">\n      <fieldset class=\"fh-segmented fh-segmented--sm\"><legend class=\"fh-sr-only\">Row spacing</legend><label><input type=\"radio\" name=\"mst-rows\" value=\"sm\" data-fh-rows-select> S</label><label><input type=\"radio\" name=\"mst-rows\" value=\"md\" data-fh-rows-select checked> M</label><label><input type=\"radio\" name=\"mst-rows\" value=\"lg\" data-fh-rows-select> L</label><label><input type=\"radio\" name=\"mst-rows\" value=\"xl\" data-fh-rows-select> XL</label></fieldset>\n    </div>\n  </div>\n</header>"
+        },
+        {
+          "id": "MST-1.2",
+          "group": "MST-1",
+          "name": "Page",
+          "classes": [
+            "fh-masthead",
+            "fh-masthead__caption",
+            "fh-masthead__index",
+            "fh-masthead__title",
+            "fh-masthead__foot",
+            "fh-masthead__meta",
+            "fh-masthead__tools",
+            "fh-chip",
+            "fh-button",
+            "fh-button--sm"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-masthead\" data-tone=\"amber\" data-fh=\"MST-1.2\">\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses · 5 owned · 2 client</p>\n    <div class=\"fh-masthead__tools\"><span class=\"fh-chip\" data-tone=\"lime\">All synced</span><a class=\"fh-button fh-button--sm\" href=\"#a-masthead\">New business</a></div>\n  </div>\n</header>"
+        }
+      ]
+    },
+    {
+      "id": "REC",
+      "name": "Record header",
+      "section": "Admin",
+      "anchor": "a-record",
+      "page": "/admin/",
+      "url": "https://firehorse.rascode.dev/admin/#REC",
+      "summary": "The top of a record page: eyebrow, mark, name, what it does, identifying facts and actions. fh-record--cover adds a band across the top, a picture or etched tone art, with the mark overlapping its edge.",
+      "classes": [
+        "fh-record",
+        "fh-eyebrow-pill",
+        "fh-record__mark",
+        "fh-icon",
+        "fh-record__id",
+        "fh-record__title",
+        "fh-record__sub",
+        "fh-record__meta",
+        "fh-record__actions",
+        "fh-button",
+        "fh-button--sm",
+        "fh-button--secondary",
+        "fh-record--cover",
+        "fh-record__cover"
+      ],
+      "markup": "<div class=\"fh-stack fh-stack--lg\">\n<header class=\"fh-record\" data-tone=\"orange\" data-fh=\"REC-1.1\">\n  <p class=\"fh-eyebrow-pill\">API · 07</p>\n  <div class=\"fh-record__mark\" data-state=\"live\"><i class=\"fh-icon fh-icon--code\" aria-hidden=\"true\"></i></div>\n  <div class=\"fh-record__id\"><h2 class=\"fh-record__title\">Ledger API</h2><p class=\"fh-record__sub\">Accounts, entries and balances over REST.</p><p class=\"fh-record__meta\"><span>ledger</span><span>api.example.com</span></p></div>\n  <div class=\"fh-record__actions\"><a class=\"fh-button fh-button--sm fh-button--secondary\" href=\"#a-record\">Docs</a><a class=\"fh-button fh-button--sm\" href=\"#a-record\">Open</a></div>\n</header>\n<header class=\"fh-record fh-record--cover\" data-tone=\"teal\" data-fh=\"REC-1.2\">\n  <div class=\"fh-record__cover\"></div>\n  <p class=\"fh-eyebrow-pill\">Business · Client</p>\n  <div class=\"fh-record__mark\">AC</div>\n  <div class=\"fh-record__id\"><h2 class=\"fh-record__title\">Acme Supply Co.</h2><p class=\"fh-record__sub\">Tools and parts for small builders.</p><p class=\"fh-record__meta\"><span>acme</span><span>Austin, TX</span><span>Since 2019</span></p></div>\n  <div class=\"fh-record__actions\"><a class=\"fh-button fh-button--sm\" href=\"#a-record\">Edit</a></div>\n</header>\n</div>",
+      "groups": [
+        {
+          "id": "REC-1",
+          "name": "Record header",
+          "summary": "",
+          "variants": [
+            "REC-1.1",
+            "REC-1.2"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "REC-1.1",
+          "group": "REC-1",
+          "name": "Plain",
+          "classes": [
+            "fh-record",
+            "fh-eyebrow-pill",
+            "fh-record__mark",
+            "fh-icon",
+            "fh-record__id",
+            "fh-record__title",
+            "fh-record__sub",
+            "fh-record__meta",
+            "fh-record__actions",
+            "fh-button",
+            "fh-button--sm",
+            "fh-button--secondary"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-record\" data-tone=\"orange\" data-fh=\"REC-1.1\">\n  <p class=\"fh-eyebrow-pill\">API · 07</p>\n  <div class=\"fh-record__mark\" data-state=\"live\"><i class=\"fh-icon fh-icon--code\" aria-hidden=\"true\"></i></div>\n  <div class=\"fh-record__id\"><h2 class=\"fh-record__title\">Ledger API</h2><p class=\"fh-record__sub\">Accounts, entries and balances over REST.</p><p class=\"fh-record__meta\"><span>ledger</span><span>api.example.com</span></p></div>\n  <div class=\"fh-record__actions\"><a class=\"fh-button fh-button--sm fh-button--secondary\" href=\"#a-record\">Docs</a><a class=\"fh-button fh-button--sm\" href=\"#a-record\">Open</a></div>\n</header>"
+        },
+        {
+          "id": "REC-1.2",
+          "group": "REC-1",
+          "name": "Cover",
+          "classes": [
+            "fh-record",
+            "fh-record--cover",
+            "fh-record__cover",
+            "fh-eyebrow-pill",
+            "fh-record__mark",
+            "fh-record__id",
+            "fh-record__title",
+            "fh-record__sub",
+            "fh-record__meta",
+            "fh-record__actions",
+            "fh-button",
+            "fh-button--sm"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-record fh-record--cover\" data-tone=\"teal\" data-fh=\"REC-1.2\">\n  <div class=\"fh-record__cover\"></div>\n  <p class=\"fh-eyebrow-pill\">Business · Client</p>\n  <div class=\"fh-record__mark\">AC</div>\n  <div class=\"fh-record__id\"><h2 class=\"fh-record__title\">Acme Supply Co.</h2><p class=\"fh-record__sub\">Tools and parts for small builders.</p><p class=\"fh-record__meta\"><span>acme</span><span>Austin, TX</span><span>Since 2019</span></p></div>\n  <div class=\"fh-record__actions\"><a class=\"fh-button fh-button--sm\" href=\"#a-record\">Edit</a></div>\n</header>"
+        }
+      ]
+    },
+    {
+      "id": "SEC",
+      "name": "Section card",
+      "section": "Admin",
+      "anchor": "a-section-card",
+      "page": "/admin/",
+      "url": "https://firehorse.rascode.dev/admin/#SEC",
+      "summary": "One area of a record page: title with chips on the right, a lede, the body, and a foot for its actions. --inset is a sunken sub-card inside another; --aside puts the lede beside the title on wide slots.",
+      "classes": [
+        "fh-section-card",
+        "fh-section-card__head",
+        "fh-section-card__title",
+        "fh-icon",
+        "fh-section-card__tools",
+        "fh-chip",
+        "fh-section-card__lede",
+        "fh-section-card__subhead",
+        "fh-section-card__note",
+        "fh-section-card__foot",
+        "fh-button",
+        "fh-button--sm",
+        "fh-section-card--inset",
+        "fh-section-card--aside"
+      ],
+      "markup": "<div class=\"fh-stack\">\n<section class=\"fh-section-card\" data-tone=\"teal\" aria-labelledby=\"sec-demo-1\" data-fh=\"SEC-1.1\">\n  <header class=\"fh-section-card__head\">\n    <h2 class=\"fh-section-card__title\" id=\"sec-demo-1\"><i class=\"fh-icon fh-icon--building-2\" aria-hidden=\"true\"></i>Identity</h2>\n    <div class=\"fh-section-card__tools\">\n      <span class=\"fh-chip\" data-tone=\"lime\">Complete</span>\n      <span class=\"fh-chip\" data-tone=\"teal\">6 fields</span>\n    </div>\n  </header>\n  <p class=\"fh-section-card__lede\">Who the business is: its names, its code and how it presents itself.</p>\n  <h3 class=\"fh-section-card__subhead\">Names</h3>\n  <p class=\"fh-section-card__note\">Legal name comes from the state filing.</p>\n  <footer class=\"fh-section-card__foot\">\n    <p class=\"fh-section-card__note\">Saved 2 min ago</p>\n    <button class=\"fh-button fh-button--sm\" type=\"button\">Save</button>\n  </footer>\n</section>\n<section class=\"fh-section-card\" aria-labelledby=\"sec-demo-2\">\n  <header class=\"fh-section-card__head\"><h2 class=\"fh-section-card__title\" id=\"sec-demo-2\"><i class=\"fh-icon fh-icon--map-pin\" aria-hidden=\"true\"></i>Addresses</h2></header>\n  <div class=\"fh-grid\" data-cols=\"2\">\n    <section class=\"fh-section-card fh-section-card--inset\" aria-labelledby=\"sec-demo-3\" data-fh=\"SEC-1.2\">\n      <header class=\"fh-section-card__head\"><h3 class=\"fh-section-card__title\" id=\"sec-demo-3\">Headquarters</h3><div class=\"fh-section-card__tools\"><span class=\"fh-chip\" data-tone=\"sky\">Default</span></div></header>\n      <p class=\"fh-section-card__note\">400 Congress Ave, Austin, TX 78701</p>\n    </section>\n    <section class=\"fh-section-card fh-section-card--inset\" aria-labelledby=\"sec-demo-4\">\n      <header class=\"fh-section-card__head\"><h3 class=\"fh-section-card__title\" id=\"sec-demo-4\">Mailing</h3></header>\n      <p class=\"fh-section-card__note\">Same as default</p>\n    </section>\n  </div>\n</section>\n<section class=\"fh-section-card fh-section-card--aside\" aria-labelledby=\"sec-demo-5\" data-fh=\"SEC-1.3\">\n  <header class=\"fh-section-card__head\"><h2 class=\"fh-section-card__title\" id=\"sec-demo-5\"><i class=\"fh-icon fh-icon--code\" aria-hidden=\"true\"></i>Property record</h2></header>\n  <p class=\"fh-section-card__lede\">The full record as stored, and as structured data for search engines.</p>\n</section>\n</div>",
+      "groups": [
+        {
+          "id": "SEC-1",
+          "name": "Section card",
+          "summary": "",
+          "variants": [
+            "SEC-1.1",
+            "SEC-1.2",
+            "SEC-1.3"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "SEC-1.1",
+          "group": "SEC-1",
+          "name": "Default",
+          "classes": [
+            "fh-section-card",
+            "fh-section-card__head",
+            "fh-section-card__title",
+            "fh-icon",
+            "fh-section-card__tools",
+            "fh-chip",
+            "fh-section-card__lede",
+            "fh-section-card__subhead",
+            "fh-section-card__note",
+            "fh-section-card__foot",
+            "fh-button",
+            "fh-button--sm"
+          ],
+          "config": {},
+          "markup": "<section class=\"fh-section-card\" data-tone=\"teal\" aria-labelledby=\"sec-demo-1\" data-fh=\"SEC-1.1\">\n  <header class=\"fh-section-card__head\">\n    <h2 class=\"fh-section-card__title\" id=\"sec-demo-1\"><i class=\"fh-icon fh-icon--building-2\" aria-hidden=\"true\"></i>Identity</h2>\n    <div class=\"fh-section-card__tools\">\n      <span class=\"fh-chip\" data-tone=\"lime\">Complete</span>\n      <span class=\"fh-chip\" data-tone=\"teal\">6 fields</span>\n    </div>\n  </header>\n  <p class=\"fh-section-card__lede\">Who the business is: its names, its code and how it presents itself.</p>\n  <h3 class=\"fh-section-card__subhead\">Names</h3>\n  <p class=\"fh-section-card__note\">Legal name comes from the state filing.</p>\n  <footer class=\"fh-section-card__foot\">\n    <p class=\"fh-section-card__note\">Saved 2 min ago</p>\n    <button class=\"fh-button fh-button--sm\" type=\"button\">Save</button>\n  </footer>\n</section>"
+        },
+        {
+          "id": "SEC-1.2",
+          "group": "SEC-1",
+          "name": "Inset",
+          "classes": [
+            "fh-section-card",
+            "fh-section-card--inset",
+            "fh-section-card__head",
+            "fh-section-card__title",
+            "fh-section-card__tools",
+            "fh-chip",
+            "fh-section-card__note"
+          ],
+          "config": {},
+          "markup": "<section class=\"fh-section-card fh-section-card--inset\" aria-labelledby=\"sec-demo-3\" data-fh=\"SEC-1.2\">\n  <header class=\"fh-section-card__head\"><h3 class=\"fh-section-card__title\" id=\"sec-demo-3\">Headquarters</h3><div class=\"fh-section-card__tools\"><span class=\"fh-chip\" data-tone=\"sky\">Default</span></div></header>\n  <p class=\"fh-section-card__note\">400 Congress Ave, Austin, TX 78701</p>\n</section>"
+        },
+        {
+          "id": "SEC-1.3",
+          "group": "SEC-1",
+          "name": "Aside",
+          "classes": [
+            "fh-section-card",
+            "fh-section-card--aside",
+            "fh-section-card__head",
+            "fh-section-card__title",
+            "fh-icon",
+            "fh-section-card__lede"
+          ],
+          "config": {},
+          "markup": "<section class=\"fh-section-card fh-section-card--aside\" aria-labelledby=\"sec-demo-5\" data-fh=\"SEC-1.3\">\n  <header class=\"fh-section-card__head\"><h2 class=\"fh-section-card__title\" id=\"sec-demo-5\"><i class=\"fh-icon fh-icon--code\" aria-hidden=\"true\"></i>Property record</h2></header>\n  <p class=\"fh-section-card__lede\">The full record as stored, and as structured data for search engines.</p>\n</section>"
+        }
+      ]
+    },
+    {
+      "id": "MET",
+      "name": "Metric tiles",
+      "section": "Admin",
+      "anchor": "a-metric",
+      "page": "/admin/",
+      "url": "https://firehorse.rascode.dev/admin/#MET",
+      "summary": "One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile takes the whole row and shows its detail. __delta shows the change (data-trend; data-good=\"down\" where down is good), and a sparkline, ring or gauge drops in as it is.",
+      "classes": [
+        "fh-metric",
+        "fh-metric__label",
+        "fh-icon",
+        "fh-metric__value",
+        "fh-metric__sub",
+        "fh-metric__source",
+        "fh-progress",
+        "fh-metric--needed",
+        "fh-metric--spread",
+        "fh-cube",
+        "fh-cube--sm",
+        "fh-metric__row",
+        "fh-avatars",
+        "fh-avatar",
+        "fh-avatar--sm",
+        "fh-avatar--square",
+        "fh-avatars__more",
+        "fh-chip",
+        "fh-metric__more",
+        "fh-kv",
+        "fh-metric__figure",
+        "fh-metric__delta",
+        "fh-sparkline",
+        "fh-gauge"
+      ],
+      "markup": "<div class=\"fh-metrics\">\n  <article class=\"fh-metric\" data-tone=\"teal\" data-fh=\"MET-1.1\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--building-2\" aria-hidden=\"true\"></i>Structure</p>\n    <p class=\"fh-metric__value\">LLC</p>\n    <p class=\"fh-metric__sub\">Formed 2019 · Delaware</p>\n    <p class=\"fh-metric__source\">State records</p>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"lime\" data-fh=\"MET-1.2\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--credit-card\" aria-hidden=\"true\"></i>Stripe</p>\n    <p class=\"fh-metric__value\">82%</p>\n    <p class=\"fh-metric__sub\">Next: bank account</p>\n    <progress class=\"fh-progress\" value=\"82\" max=\"100\">82%</progress>\n  </article>\n  <article class=\"fh-metric fh-metric--needed\" data-fh=\"MET-1.3\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i>EIN</p>\n    <p class=\"fh-metric__value\">Needed</p>\n    <p class=\"fh-metric__sub\">For Stripe and PayPal</p>\n  </article>\n  <article class=\"fh-metric fh-metric--spread\" data-tone=\"fuchsia\" data-fh=\"MET-1.5\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--shield-check\" aria-hidden=\"true\"></i>Payment readiness</p>\n    <p class=\"fh-metric__sub\">What Stripe still needs before payouts</p>\n    <p class=\"fh-metric__value\">3 of 11</p>\n    <progress class=\"fh-progress\" value=\"27\" max=\"100\">27%</progress>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"violet\" data-fh=\"MET-1.6\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--users\" aria-hidden=\"true\"></i>Team<span class=\"fh-cube fh-cube--sm\">4</span></p>\n    <p class=\"fh-metric__value\">4 people</p>\n    <div class=\"fh-metric__row\">\n      <div class=\"fh-avatars\" role=\"group\" aria-label=\"Team\">\n        <span class=\"fh-avatar fh-avatar--sm fh-avatar--square\"><img src=\"img/avatars/ava.webp\" alt=\"Ava\"></span>\n        <span class=\"fh-avatar fh-avatar--sm fh-avatar--square\"><img src=\"img/avatars/cole.webp\" alt=\"Cole\"></span>\n        <span class=\"fh-avatar fh-avatar--sm fh-avatar--square\"><img src=\"img/avatars/maya.webp\" alt=\"Maya\"></span>\n        <span class=\"fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more\">+1</span>\n      </div>\n      <span class=\"fh-chip\" data-tone=\"lime\">2 public</span>\n    </div>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"amber\" data-fh=\"MET-1.7\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i>Open invoices</p>\n    <p class=\"fh-metric__value\">$6,940</p>\n    <p class=\"fh-metric__sub\">5 invoices · 1 overdue</p>\n    <details class=\"fh-metric__more\">\n      <summary>Breakdown <i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></summary>\n      <dl class=\"fh-kv\">\n        <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>\n        <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>\n        <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>\n        <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>\n      </dl>\n    </details>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"lime\" data-fh=\"MET-1.8\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--dollar-sign\" aria-hidden=\"true\"></i>Revenue · 30 d</p>\n    <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\">$48,210</p><span class=\"fh-metric__delta\" data-trend=\"up\">12%</span></div>\n    <p class=\"fh-metric__sub\">vs September</p>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"sky\" data-good=\"down\" data-fh=\"MET-1.9\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--trending-down\" aria-hidden=\"true\"></i>Churn</p>\n    <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\">2.1%</p><span class=\"fh-metric__delta\" data-trend=\"down\">0.4 pt</span></div>\n    <p class=\"fh-metric__sub\">Down is good here</p>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"teal\" data-fh=\"MET-1.10\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--chart-line\" aria-hidden=\"true\"></i>Orders · 12 wk</p>\n    <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\">42</p><span class=\"fh-metric__delta\" data-trend=\"up\">8</span></div>\n    <svg class=\"fh-sparkline\" viewBox=\"0 0 120 32\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z\" fill=\"currentColor\" opacity=\".12\"></path><path d=\"M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"></path></svg>\n  </article>\n  <article class=\"fh-metric\" data-tone=\"amber\" data-fh=\"MET-1.11\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--gauge\" aria-hidden=\"true\"></i>Credit used</p>\n    <div class=\"fh-gauge\" style=\"--fh-value: 31; --fh-gauge-size: 8rem\" role=\"img\" aria-label=\"31% of the credit line used\"><b>31%</b><small>of $40,000</small></div>\n  </article>\n  <a class=\"fh-metric\" data-tone=\"sky\" href=\"#a-metric\" data-fh=\"MET-1.4\">\n    <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--users\" aria-hidden=\"true\"></i>Faces</p>\n    <p class=\"fh-metric__value\">4</p>\n    <p class=\"fh-metric__sub\">2 public</p>\n  </a>\n</div>",
+      "groups": [
+        {
+          "id": "MET-1",
+          "name": "Metric tile",
+          "summary": "",
+          "variants": [
+            "MET-1.1",
+            "MET-1.2",
+            "MET-1.3",
+            "MET-1.4",
+            "MET-1.5",
+            "MET-1.6",
+            "MET-1.7",
+            "MET-1.8",
+            "MET-1.9",
+            "MET-1.10",
+            "MET-1.11"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "MET-1.1",
+          "group": "MET-1",
+          "name": "Metric",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__value",
+            "fh-metric__sub",
+            "fh-metric__source"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"teal\" data-fh=\"MET-1.1\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--building-2\" aria-hidden=\"true\"></i>Structure</p>\n  <p class=\"fh-metric__value\">LLC</p>\n  <p class=\"fh-metric__sub\">Formed 2019 · Delaware</p>\n  <p class=\"fh-metric__source\">State records</p>\n</article>"
+        },
+        {
+          "id": "MET-1.2",
+          "group": "MET-1",
+          "name": "Progress",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__value",
+            "fh-metric__sub",
+            "fh-progress"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"lime\" data-fh=\"MET-1.2\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--credit-card\" aria-hidden=\"true\"></i>Stripe</p>\n  <p class=\"fh-metric__value\">82%</p>\n  <p class=\"fh-metric__sub\">Next: bank account</p>\n  <progress class=\"fh-progress\" value=\"82\" max=\"100\">82%</progress>\n</article>"
+        },
+        {
+          "id": "MET-1.3",
+          "group": "MET-1",
+          "name": "Needed",
+          "classes": [
+            "fh-metric",
+            "fh-metric--needed",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__value",
+            "fh-metric__sub"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric fh-metric--needed\" data-fh=\"MET-1.3\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i>EIN</p>\n  <p class=\"fh-metric__value\">Needed</p>\n  <p class=\"fh-metric__sub\">For Stripe and PayPal</p>\n</article>"
+        },
+        {
+          "id": "MET-1.4",
+          "group": "MET-1",
+          "name": "Link",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__value",
+            "fh-metric__sub"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-metric\" data-tone=\"sky\" href=\"#a-metric\" data-fh=\"MET-1.4\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--users\" aria-hidden=\"true\"></i>Faces</p>\n  <p class=\"fh-metric__value\">4</p>\n  <p class=\"fh-metric__sub\">2 public</p>\n</a>"
+        },
+        {
+          "id": "MET-1.5",
+          "group": "MET-1",
+          "name": "Spread",
+          "classes": [
+            "fh-metric",
+            "fh-metric--spread",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__sub",
+            "fh-metric__value",
+            "fh-progress"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric fh-metric--spread\" data-tone=\"fuchsia\" data-fh=\"MET-1.5\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--shield-check\" aria-hidden=\"true\"></i>Payment readiness</p>\n  <p class=\"fh-metric__sub\">What Stripe still needs before payouts</p>\n  <p class=\"fh-metric__value\">3 of 11</p>\n  <progress class=\"fh-progress\" value=\"27\" max=\"100\">27%</progress>\n</article>"
+        },
+        {
+          "id": "MET-1.6",
+          "group": "MET-1",
+          "name": "People",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-cube",
+            "fh-cube--sm",
+            "fh-metric__value",
+            "fh-metric__row",
+            "fh-avatars",
+            "fh-avatar",
+            "fh-avatar--sm",
+            "fh-avatar--square",
+            "fh-avatars__more",
+            "fh-chip"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"violet\" data-fh=\"MET-1.6\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--users\" aria-hidden=\"true\"></i>Team<span class=\"fh-cube fh-cube--sm\">4</span></p>\n  <p class=\"fh-metric__value\">4 people</p>\n  <div class=\"fh-metric__row\">\n    <div class=\"fh-avatars\" role=\"group\" aria-label=\"Team\">\n      <span class=\"fh-avatar fh-avatar--sm fh-avatar--square\"><img src=\"img/avatars/ava.webp\" alt=\"Ava\"></span>\n      <span class=\"fh-avatar fh-avatar--sm fh-avatar--square\"><img src=\"img/avatars/cole.webp\" alt=\"Cole\"></span>\n      <span class=\"fh-avatar fh-avatar--sm fh-avatar--square\"><img src=\"img/avatars/maya.webp\" alt=\"Maya\"></span>\n      <span class=\"fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more\">+1</span>\n    </div>\n    <span class=\"fh-chip\" data-tone=\"lime\">2 public</span>\n  </div>\n</article>"
+        },
+        {
+          "id": "MET-1.7",
+          "group": "MET-1",
+          "name": "Expand",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__value",
+            "fh-metric__sub",
+            "fh-metric__more",
+            "fh-kv"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"amber\" data-fh=\"MET-1.7\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i>Open invoices</p>\n  <p class=\"fh-metric__value\">$6,940</p>\n  <p class=\"fh-metric__sub\">5 invoices · 1 overdue</p>\n  <details class=\"fh-metric__more\">\n    <summary>Breakdown <i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></summary>\n    <dl class=\"fh-kv\">\n      <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>\n      <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>\n      <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>\n      <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>\n    </dl>\n  </details>\n</article>"
+        },
+        {
+          "id": "MET-1.8",
+          "group": "MET-1",
+          "name": "Trend",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__figure",
+            "fh-metric__value",
+            "fh-metric__delta",
+            "fh-metric__sub"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"lime\" data-fh=\"MET-1.8\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--dollar-sign\" aria-hidden=\"true\"></i>Revenue · 30 d</p>\n  <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\">$48,210</p><span class=\"fh-metric__delta\" data-trend=\"up\">12%</span></div>\n  <p class=\"fh-metric__sub\">vs September</p>\n</article>"
+        },
+        {
+          "id": "MET-1.9",
+          "group": "MET-1",
+          "name": "Trend · down is good",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__figure",
+            "fh-metric__value",
+            "fh-metric__delta",
+            "fh-metric__sub"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"sky\" data-good=\"down\" data-fh=\"MET-1.9\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--trending-down\" aria-hidden=\"true\"></i>Churn</p>\n  <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\">2.1%</p><span class=\"fh-metric__delta\" data-trend=\"down\">0.4 pt</span></div>\n  <p class=\"fh-metric__sub\">Down is good here</p>\n</article>"
+        },
+        {
+          "id": "MET-1.10",
+          "group": "MET-1",
+          "name": "Sparkline",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-metric__figure",
+            "fh-metric__value",
+            "fh-metric__delta",
+            "fh-sparkline"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"teal\" data-fh=\"MET-1.10\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--chart-line\" aria-hidden=\"true\"></i>Orders · 12 wk</p>\n  <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\">42</p><span class=\"fh-metric__delta\" data-trend=\"up\">8</span></div>\n  <svg class=\"fh-sparkline\" viewBox=\"0 0 120 32\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z\" fill=\"currentColor\" opacity=\".12\"></path><path d=\"M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"></path></svg>\n</article>"
+        },
+        {
+          "id": "MET-1.11",
+          "group": "MET-1",
+          "name": "Gauge",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-icon",
+            "fh-gauge"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"amber\" data-fh=\"MET-1.11\">\n  <p class=\"fh-metric__label\"><i class=\"fh-icon fh-icon--gauge\" aria-hidden=\"true\"></i>Credit used</p>\n  <div class=\"fh-gauge\" style=\"--fh-value: 31; --fh-gauge-size: 8rem\" role=\"img\" aria-label=\"31% of the credit line used\"><b>31%</b><small>of $40,000</small></div>\n</article>"
+        }
+      ]
+    },
+    {
+      "id": "GAU",
+      "name": "Gauge",
+      "section": "Admin",
+      "anchor": "a-gauge",
+      "page": "/admin/",
+      "url": "https://firehorse.rascode.dev/admin/#GAU",
+      "summary": "A half-circle meter from --fh-value (0–100), the figure under the arc and a caption below. The arc takes the tone; set it from the value. Sizes with --fh-gauge-size.",
+      "classes": [
+        "fh-gauge"
+      ],
+      "markup": "<div class=\"fh-cluster\" style=\"gap: var(--fh-space-8)\">\n  <div class=\"fh-gauge\" data-tone=\"lime\" style=\"--fh-value: 82\" role=\"img\" aria-label=\"82% ready\" data-fh=\"GAU-1.1\"><b>82%</b><small>Ready</small></div>\n  <div class=\"fh-gauge\" data-tone=\"amber\" style=\"--fh-value: 64\" role=\"img\" aria-label=\"64% of the limit used\"><b>64%</b><small>Of limit</small></div>\n  <div class=\"fh-gauge\" data-tone=\"danger\" style=\"--fh-value: 93; --fh-gauge-size: 6rem; --fh-gauge-width: 0.45rem\" role=\"img\" aria-label=\"93% of storage used\" data-fh=\"GAU-1.2\"><b>93%</b><small>Storage</small></div>\n</div>",
+      "groups": [
+        {
+          "id": "GAU-1",
+          "name": "Gauge",
+          "summary": "",
+          "variants": [
+            "GAU-1.1",
+            "GAU-1.2"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "GAU-1.1",
+          "group": "GAU-1",
+          "name": "Gauge",
+          "classes": [
+            "fh-gauge"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-gauge\" data-tone=\"lime\" style=\"--fh-value: 82\" role=\"img\" aria-label=\"82% ready\" data-fh=\"GAU-1.1\"><b>82%</b><small>Ready</small></div>"
+        },
+        {
+          "id": "GAU-1.2",
+          "group": "GAU-1",
+          "name": "Small",
+          "classes": [
+            "fh-gauge"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-gauge\" data-tone=\"danger\" style=\"--fh-value: 93; --fh-gauge-size: 6rem; --fh-gauge-width: 0.45rem\" role=\"img\" aria-label=\"93% of storage used\" data-fh=\"GAU-1.2\"><b>93%</b><small>Storage</small></div>"
+        }
+      ]
+    },
+    {
       "id": "PLY",
       "name": "Audio player",
       "section": "Audio",
@@ -6371,6 +6991,11 @@
     "PRF-02": "PRF-1.2",
     "PRF-03": "PRF-1.4",
     "PRF-04": "PRF-1.3",
+    "PRP": "KVL",
+    "PRP-1": "KVL-1",
+    "PRP-1.1": "KVL-1.1",
+    "PRP-1.2": "KVL-1.2",
+    "PRP-1.3": "KVL-1.3",
     "SLD-01": "SLD-1.1",
     "SLD-02": "SLD-1.2",
     "SLD-03": "SLD-1.3",
@@ -6491,6 +7116,8 @@
     "fh-invoice": "INV",
     "fh-balance": "BAL",
     "fh-ledger": "LDG",
+    "fh-masthead": "MST",
+    "fh-gauge": "GAU",
     "fh-caption": "CAP",
     "fh-playlist": "TRK",
     "fh-reel": "REL",
@@ -6516,6 +7143,8 @@
     "fh-ruled": "CRD",
     "fh-stat": "STA",
     "fh-strip": "STA",
+    "fh-key": "KVL",
+    "fh-value": "KVL",
     "fh-stacking": "DEK",
     "fh-deck": "DEK",
     "fh-member": "MBR",
@@ -6524,7 +7153,6 @@
     "fh-blur": "SPD",
     "fh-liquid": "LQG",
     "fh-glas": "LQG",
-    "fh-list": "LST",
     "fh-detail": "DET",
     "fh-code": "DET",
     "fh-divider": "DET",
@@ -6559,6 +7187,10 @@
     "fh-virtual": "VCD",
     "fh-connection": "CNX",
     "fh-statu": "CNX",
+    "fh-record": "REC",
+    "fh-section": "SEC",
+    "fh-metric": "MET",
+    "fh-tile": "MET",
     "fh-audio": "PLY",
     "fh-player": "PLY",
     "fh-render": "STG",
@@ -6569,7 +7201,6 @@
     "fh-home": "WAL",
     "fh-screen": "WAL",
     "fh-wallpaper": "WAL",
-    "fh-header": "HDR",
     "fh-cover": "CVR",
     "fh-art": "CVR",
     "fh-busines": "BIZ",
@@ -6584,11 +7215,13 @@
     "fh-eyebrow-pill": "EYE",
     "fh-chips": "CHP",
     "fh-cubes": "CUB",
+    "fh-kv": "KVL",
     "fh-glass": "LQG",
     "fh-card": "CRD",
     "fh-profile": "PRF",
     "fh-auth": "AUT",
     "fh-tags": "TAG",
+    "fh-section-card": "SEC",
     "fh-canvas": "THB",
     "fh-etched-split": "CIN",
     "fh-bleed": "CIN",
@@ -6598,6 +7231,7 @@
     "fh-link": "ACT",
     "fh-stats": "STA",
     "fh-steps": "STP",
+    "fh-list": "LST",
     "fh-tiers": "TIR",
     "fh-dock": "DCK",
     "fh-tabs": "TAB",
@@ -6685,6 +7319,7 @@
     "fh-input",
     "fh-input-group",
     "fh-invoice",
+    "fh-kv",
     "fh-ledger",
     "fh-letter",
     "fh-line-item",
