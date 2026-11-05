@@ -16,7 +16,8 @@
    * fh-kv--fields puts a field in each value (label left, input
    * filling the right), for edit forms; fh-kv--single keeps one
    * column at any width. Rows go two across when each column can be
-   * 19rem wide. A row narrower than 18rem stacks: the value goes under
+   * 19rem wide. An fh-icon at the start of a dt is a content icon, in the
+   * label's colour. A row narrower than 18rem stacks: the value goes under
    * its label, flush left. Knob: --fh-kv-label (label width in --fields, 11rem). */
   .fh-kv {
     display: grid;
@@ -48,6 +49,10 @@
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
     }
+
+    /* A content icon before the label says what the value is (a pen for
+       a signature, a house for an address). It takes the label's colour. */
+    & dt .fh-icon { margin-inline-end: var(--fh-gap-related); }
 
     & dd {
       flex: 1 1 12ch;

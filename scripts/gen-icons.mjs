@@ -13,6 +13,7 @@ export const ICONS = {
   commerce: ["shopping-cart", "shopping-bag", "credit-card", "wallet", "receipt", "truck", "package", "gift", "store", "badge-percent", "ticket", "box", "ruler", "scan-barcode", "shield-check", "rotate-ccw"],
   media: ["play", "pause", "skip-back", "skip-forward", "rotate-cw", "repeat", "repeat-1", "shuffle", "volume", "volume-1", "volume-2", "volume-x", "music", "audio-lines", "audio-waveform", "headphones", "mic-vocal", "radio", "disc-3", "captions", "sliders-vertical", "gauge", "list-music", "podcast"],
   ai: ["sparkles", "wand-sparkles", "bot", "brain", "cpu", "zap", "workflow", "git-branch", "code", "terminal", "rocket", "flame", "palette", "accessibility", "sun", "moon", "monitor", "smartphone", "keyboard", "mouse-pointer-click", "target", "award", "leaf", "coffee"],
+  records: ["signature", "notebook-pen", "landmark", "id-card", "building", "scroll-text", "calendar-check", "banknote", "coins", "map", "mailbox", "stamp", "hourglass", "file-badge", "user-pen", "calendar-clock", "vault", "arrow-down-to-line", "fingerprint", "text-quote", "scale"],
   social: ["youtube", "linkedin", "facebook", "twitter", "instagram", "github"],
 };
 const all = Object.values(ICONS).flat();

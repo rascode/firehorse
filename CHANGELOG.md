@@ -2,6 +2,7 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Content icons in key value lists** (KVL): an `fh-icon` at the start of a `dt` is a content icon in the label's colour (a signature for signing authority, a house for an address, a notebook for notes). 21 Lucide icons added for records (`signature`, `notebook-pen`, `landmark`, `id-card`, `building`, `stamp`, `vault`, `map`, `mailbox` and more; 204 in all). The business concept labels every list row and field.
 - **Entity picker** (ENT, `src/components/forms/entity-picker.css`): every line in the picker is etched (dashed): the trigger's perimeter on `--rounded`, the list's edge and group rules. The separator is an etched arc centred on the avatar that runs the full height of the row, top edge to bottom edge; on a rounded row it mirrors the row's rounded end, closing a circle round the avatar. New part `fh-entity__meter`: a small progress bar with its figure (ownership, quota). Leave out `fh-entity__sep` for no line at all.
 - **Table of contents** (`src/components/navigation/toc.css`): the label starts where the entries' text starts, past the rule and marker, not on the rule.
 - **Docs site frame audit:** text standing beside a framed block starts where the block's text starts: the home adapt copy and its table, a label captioning a table (Theming), notes under demos (Data). The Stable's reading column is 40rem.
