@@ -2,6 +2,7 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Entity picker** (ENT, `src/components/forms/entity-picker.css`): every line inside the picker (avatar separator, stat edge, group rules) is etched (dashed) by default; the rounded trigger has an etch edge all the way round. Leave out `fh-entity__sep` for avatar and name with no line between (the Manager tile on the business concept does).
 - **Table of contents** (`src/components/navigation/toc.css`): the label starts where the entries' text starts, past the rule and marker, not on the rule.
 - **Docs site frame audit:** text standing beside a framed block starts where the block's text starts: the home adapt copy and its table, a label captioning a table (Theming), notes under demos (Data). The Stable's reading column is 40rem.
 - **Gauge** (GAU, `src/admin/gauge.css`): now a full circle with the figure in the middle and the caption under it, and the indicator has rounded ends (drawn with `sin()`/`cos()` from `--fh-value`). The gauge is a size container, so the figure and the ends scale with `--fh-gauge-size` (now 8rem).

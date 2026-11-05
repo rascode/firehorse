@@ -37,14 +37,16 @@
    *
    * Shape: default (field fill, like fh-select), --rounded (pill with an edge), --etched
    * (dashed etch, no fill). Content is whatever parts you put in the row:
-   * leave out the avatar and separator for a text-only picker; the stat is
+   * leave out the avatar and separator for a text-only picker, or just
+   * the separator for avatar and name with no line between; the stat is
    * any figure for the use case (open actions, unread, balance, seats);
    * fh-entity__stat--count draws it as a toned counter.
    * Knobs: --fh-entity-avatar, --fh-entity-radius, --fh-entity-list-width. */
   .fh-entity-picker {
     --fh-entity-avatar: 1.9rem;
     --fh-entity-radius: var(--fh-radius-sm);
-    --_line: solid;
+    /* Lines inside the picker (separator, stat edge, group rules) are etched. */
+    --_line: dashed;
     position: relative;
     display: grid;
     min-inline-size: 0;
@@ -92,7 +94,7 @@
     align-self: stretch;
     inline-size: 0;
     margin-block: 0.15rem;
-    border-inline-start: var(--fh-border-thin) var(--_line, solid) var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
   }
 
   .fh-entity__who {
@@ -126,7 +128,7 @@
     justify-items: end;
     margin-inline-start: auto;
     padding-inline-start: var(--fh-inset-control);
-    border-inline-start: var(--fh-border-thin) var(--_line, solid) var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
     line-height: 1.1;
 
     & > b {
@@ -263,7 +265,7 @@
     &:has(+ &) {
       margin-block-end: var(--fh-gap-bound);
       padding-block-end: var(--fh-inset-tight);
-      border-block-end: var(--fh-border-thin) var(--_line, solid) var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
     }
 
     & > :is(legend, .fh-entity-picker__label) {
