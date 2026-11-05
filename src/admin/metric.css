@@ -32,8 +32,7 @@
    * <details> on an etched line at the foot of the tile, a chevron at
    * the right; open, the detail shows below it and the tile grows in
    * place, so the chevron stays under the pointer. Give a tile whose
-   * detail needs room fh-metric--full. __delta is the change beside or
-   * under the value: data-trend="up|down|flat" picks the arrow and
+   * detail needs room fh-metric--full. __delta is the change beside the value, centred on it: data-trend="up|down|flat" picks the arrow and
    * colour, and data-good="down" on the tile (or the delta) flips the
    * colours for figures where down is good (cost, churn). An
    * fh-sparkline, fh-ring or fh-gauge sits in a tile as it is. Knobs: --fh-metrics-min (tile width, 12rem),
@@ -245,12 +244,14 @@
   .fh-metric__figure {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     gap: var(--fh-space-2);
   }
 
-  /* Avatars on the figure line sit at the far right. */
-  .fh-metric__figure > :is(.fh-avatars, .fh-avatar) { align-self: center; margin-inline-start: auto; }
+  /* Avatars or a sparkline on the figure line sit at the far right, so
+     every tile keeps one line for its figure. */
+  .fh-metric__figure > :is(.fh-avatars, .fh-avatar, .fh-sparkline) { margin-inline-start: auto; }
+  .fh-metric__figure > .fh-sparkline { inline-size: min(7rem, 45%); block-size: 2rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
 
   .fh-metric > .fh-sparkline { inline-size: 100%; block-size: 2.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
   .fh-metric > :is(.fh-gauge, .fh-ring) { justify-self: center; margin-block: var(--fh-space-2); }

@@ -1598,15 +1598,20 @@
   }
 
   .fh-metric__figure {
-    align-items: baseline;
+    align-items: center;
     gap: var(--fh-space-2);
     flex-wrap: wrap;
     display: flex;
   }
 
-  .fh-metric__figure > :is(.fh-avatars, .fh-avatar) {
-    align-self: center;
+  .fh-metric__figure > :is(.fh-avatars, .fh-avatar, .fh-sparkline) {
     margin-inline-start: auto;
+  }
+
+  .fh-metric__figure > .fh-sparkline {
+    block-size: 2rem;
+    inline-size: min(7rem, 45%);
+    color: var(--fh-tone, var(--fh-color-text-muted));
   }
 
   .fh-metric > .fh-sparkline {
