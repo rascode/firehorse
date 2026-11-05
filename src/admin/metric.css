@@ -79,13 +79,27 @@
     & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: end; }
     & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
     & > :is(.fh-gauge, .fh-ring) { grid-row: 4; align-self: end; }
-    & > .fh-metric__source { grid-row: 6; align-self: end; margin-block-start: var(--fh-gap-bound); }
+    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
     & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-gap-related); }
+    /* The source stays bound to what is above it (4px). With no chart,
+       progress or people row under the figure, it moves up into that row,
+       right under the figure, instead of leaving the row's height between. */
+    &:not(:has(> :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__source { grid-row: 5; }
+
     /* A tile with a detail and no source puts the detail on the source
        line: "Breakdown" reads level with "People" and "State records",
-       and the row of tiles keeps one height. Sources sit on the foot of
-       that line, so their text shares its baseline with the summary. */
-    &:not(:has(> .fh-metric__source)) > .fh-metric__more { grid-row: 6; align-self: end; }
+       and the row of tiles keeps one height. */
+    &:not(:has(> .fh-metric__source)) > .fh-metric__more {
+      grid-row: 6;
+      /* On the source line it is the source line: bound to the figure,
+         no rule of its own. The rule comes back when it opens. */
+      margin-block-start: calc(var(--fh-gap-bound) - var(--fh-border-thin));
+      border-block-start-color: transparent;
+      & > summary { padding-block-start: 0; }
+      &[open] { border-block-start-color: var(--fh-color-etch-soft); }
+      &[open] > summary { padding-block-start: var(--fh-gap-related); }
+    }
+    &:not(:has(> .fh-metric__source, > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__more { grid-row: 5; }
   }
 
   .fh-metric__label {

@@ -1373,7 +1373,6 @@
 
     & > .fh-metric__source {
       grid-row: 6;
-      align-self: end;
       margin-block-start: var(--fh-gap-bound);
     }
 
@@ -1382,9 +1381,30 @@
       margin-block-start: var(--fh-gap-related);
     }
 
+    &:not(:has( > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__source {
+      grid-row: 5;
+    }
+
     &:not(:has( > .fh-metric__source)) > .fh-metric__more {
+      border-block-start-color: #0000;
       grid-row: 6;
-      align-self: end;
+      margin-block-start: calc(var(--fh-gap-bound) - var(--fh-border-thin));
+
+      & > summary {
+        padding-block-start: 0;
+      }
+
+      &[open] {
+        border-block-start-color: var(--fh-color-etch-soft);
+      }
+
+      &[open] > summary {
+        padding-block-start: var(--fh-gap-related);
+      }
+    }
+
+    &:not(:has( > .fh-metric__source,  > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__more {
+      grid-row: 5;
     }
   }
 
