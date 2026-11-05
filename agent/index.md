@@ -2964,7 +2964,7 @@ Classes: `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-
 
 One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, cubes and chips. __more is an etched line with a chevron: open, the tile takes the whole row and shows its detail. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or gauge drops in as it is.
 
-Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__row` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-chip` `fh-metric__more` `fh-kv` `fh-metric__figure` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--wide` `fh-metric--full` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num`
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__figure` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-metric__more` `fh-kv` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--wide` `fh-metric--full` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-chip`
 
 ### MET-1 · Metric tile
 
@@ -3026,16 +3026,13 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric_
 ```html
 <article class="fh-metric" data-tone="violet" data-fh="MET-1.6">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
-  <p class="fh-metric__value">4 people</p>
-  <div class="fh-metric__row">
-    <div class="fh-avatars" role="group" aria-label="Team">
+  <div class="fh-metric__figure"><p class="fh-metric__value">4</p><div class="fh-avatars" role="group" aria-label="Team">
       <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span>
       <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span>
       <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span>
       <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
-    </div>
-    <span class="fh-chip" data-tone="lime">2 public</span>
-  </div>
+    </div></div>
+  <p class="fh-metric__source">People</p>
 </article>
 ```
 
@@ -3139,10 +3136,10 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 
 ```html
 <article class="fh-metric fh-metric--spread" data-tone="violet" data-fh="MET-2.4">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team</p>
   <p class="fh-metric__sub">Who can sign in and act for the business</p>
-  <p class="fh-metric__value">4 people</p>
-  <div class="fh-metric__row"><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span></div><span class="fh-chip" data-tone="lime">2 public</span></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value">4</p><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span></div></div>
+  <p class="fh-metric__source">People</p>
 </article>
 ```
 
