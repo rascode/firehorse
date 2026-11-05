@@ -3060,13 +3060,13 @@
   }
 
   .fh-field {
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     min-inline-size: 0;
     display: grid;
 
     & > label, & > .fh-field__label, & > legend {
       align-items: center;
-      gap: var(--fh-space-2);
+      gap: var(--fh-gap-related);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-label);
       font-weight: var(--fh-weight-medium);
@@ -3194,7 +3194,7 @@
       margin-block: auto;
       position: absolute;
       inset-block: 0;
-      inset-inline-end: var(--fh-space-3);
+      inset-inline-end: var(--fh-gap-grouped);
     }
   }
 
@@ -3251,7 +3251,7 @@
     }
 
     & > :not(.fh-input) {
-      padding-inline: var(--fh-space-3);
+      padding-inline: var(--fh-inset-control);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-caption);
@@ -3261,7 +3261,7 @@
 
   .fh-check {
     align-items: flex-start;
-    gap: var(--fh-space-2-5);
+    gap: var(--fh-gap-related);
     inline-size: fit-content;
     color: var(--fh-color-text);
     font-size: var(--fh-text-small);
@@ -3405,13 +3405,13 @@
   }
 
   .fh-form {
-    gap: var(--fh-space-5) var(--fh-space-4);
+    gap: var(--fh-gap-sectioned) var(--fh-gap-grouped-wide);
     display: grid;
     container: fh-form / inline-size;
   }
 
   .fh-form__row {
-    gap: var(--fh-space-5) var(--fh-space-4);
+    gap: var(--fh-gap-sectioned) var(--fh-gap-grouped-wide);
     display: grid;
   }
 
@@ -3423,16 +3423,16 @@
 
   .fh-form__actions {
     align-items: center;
-    gap: var(--fh-space-3);
+    gap: var(--fh-gap-grouped);
     flex-wrap: wrap;
-    padding-block-start: var(--fh-space-2);
+    padding-block-start: var(--fh-inset-tight);
     display: flex;
   }
 
   .fh-dropzone {
     justify-items: center;
-    gap: var(--fh-space-2);
-    padding: var(--fh-space-8) var(--fh-space-5);
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-card) var(--fh-inset-card);
     border: var(--fh-border-thick) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-color-field) 35%, transparent);
@@ -3545,10 +3545,10 @@
 
   .fh-tags {
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     min-block-size: 2.5rem;
-    padding: var(--fh-space-1-5);
-    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), .85rem) + var(--fh-space-1-5));
+    padding: var(--fh-inset-tight);
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), .85rem) + var(--fh-gap-bound));
     background-color: var(--fh-color-field);
     cursor: text;
     flex-wrap: wrap;
@@ -3560,7 +3560,7 @@
 
     & > input {
       min-inline-size: 6rem;
-      padding-inline: var(--fh-space-1-5);
+      padding-inline: var(--fh-inset-tight);
       color: var(--fh-color-text);
       font-size: var(--fh-text-small);
       background: none;
@@ -3775,7 +3775,7 @@
     flex: none;
     justify-items: end;
     margin-inline-start: auto;
-    padding-inline-start: var(--fh-space-3);
+    padding-inline-start: var(--fh-inset-control);
     line-height: 1.1;
     display: grid;
 
@@ -3827,7 +3827,7 @@
       mask: var(--fh-icon-chevron-down) center / contain no-repeat;
       transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
       flex: none;
-      margin-inline-start: var(--fh-space-1);
+      margin-inline-start: var(--fh-gap-bound);
     }
 
     &:hover {
@@ -3877,10 +3877,10 @@
     inline-size: max(anchor-size(inline), var(--fh-entity-list-width, 18rem));
     max-block-size: min(24rem, 60dvh);
     max-inline-size: min(26rem, 100vi - 2rem);
-    padding: var(--fh-space-1-5);
+    padding: var(--fh-inset-tight);
     overscroll-behavior: contain;
     border: var(--fh-border-thin) solid var(--fh-color-border-strong);
-    border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-space-1));
+    border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-menu);
@@ -3919,7 +3919,7 @@
     .fh-entity-picker__list {
       position-area: block-end span-inline-end;
       position-try-fallbacks: flip-block, flip-inline;
-      margin-block-start: var(--fh-space-1-5);
+      margin-block-start: var(--fh-gap-bound);
     }
   }
 
@@ -3933,16 +3933,16 @@
 
     &:has( + &) {
       border-block-end: var(--fh-border-thin) var(--_line, solid) var(--fh-color-etch);
-      margin-block-end: var(--fh-space-1-5);
-      padding-block-end: var(--fh-space-1-5);
+      margin-block-end: var(--fh-gap-bound);
+      padding-block-end: var(--fh-inset-tight);
     }
 
     & > :is(legend, .fh-entity-picker__label) {
       justify-content: space-between;
       align-items: baseline;
-      gap: var(--fh-space-2);
+      gap: var(--fh-gap-related);
       inline-size: 100%;
-      padding: var(--fh-space-1-5) var(--fh-space-2) var(--fh-space-1);
+      padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
       letter-spacing: var(--fh-tracking-wider);
@@ -3960,7 +3960,7 @@
   }
 
   .fh-entity-picker__list .fh-entity {
-    padding-inline-end: var(--fh-space-2-5);
+    padding-inline-end: var(--fh-inset-control);
     position: relative;
 
     & > input {
@@ -3979,7 +3979,7 @@
       mask: var(--fh-icon-check) center / contain no-repeat;
       opacity: 0;
       flex: none;
-      margin-inline-start: var(--fh-space-1);
+      margin-inline-start: var(--fh-gap-bound);
     }
 
     &:not(:has(.fh-entity__stat)):after {
@@ -4013,11 +4013,11 @@
     }
 
     & > .fh-entity {
-      padding-inline-end: var(--fh-space-3-5);
+      padding-inline-end: var(--fh-gap-grouped);
     }
 
     & .fh-entity-picker__list {
-      border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-space-3));
+      border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-gap-grouped));
     }
   }
 
@@ -4050,7 +4050,7 @@
     & .fh-entity-picker__list .fh-entity + .fh-entity:before {
       content: "";
       inset-block-start: -.05rem;
-      inset-inline: var(--fh-space-2);
+      inset-inline: var(--fh-gap-related);
       border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
       pointer-events: none;
       position: absolute;
@@ -4107,7 +4107,7 @@
 
   .fh-dictate__mode {
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     border-radius: var(--fh-radius-pill);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
@@ -4160,7 +4160,7 @@
 
   .fh-dictate__live {
     align-items: center;
-    gap: var(--fh-space-1) var(--fh-space-3);
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -4324,8 +4324,8 @@
   .fh-auth__corner {
     z-index: 2;
     position: absolute;
-    inset-block-start: var(--fh-space-4);
-    inset-inline-end: var(--fh-space-4);
+    inset-block-start: var(--fh-gap-grouped-wide);
+    inset-inline-end: var(--fh-gap-grouped-wide);
 
     & .fh-segmented {
       background-color: var(--fh-auth-glass);
@@ -4345,10 +4345,10 @@
 
   .fh-auth__panel {
     align-content: center;
-    gap: var(--fh-space-5);
+    gap: var(--fh-gap-sectioned);
     inline-size: 100%;
     max-inline-size: 27rem;
-    padding: clamp(var(--fh-space-6), 6cqi, var(--fh-space-12)) clamp(var(--fh-space-5), 5cqi, var(--fh-space-10));
+    padding: clamp(var(--fh-inset-card), 6cqi, var(--fh-inset-card)) clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
     margin-inline: auto;
     display: grid;
     position: relative;
@@ -4356,7 +4356,7 @@
 
   .fh-auth__brand {
     align-items: center;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -4372,7 +4372,7 @@
   }
 
   .fh-auth__head {
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     display: grid;
 
     & h1, & h2, & h3 {
@@ -4404,13 +4404,13 @@
 
     & > label {
       min-inline-size: 0;
-      padding-inline: var(--fh-space-2);
+      padding-inline: var(--fh-inset-tight);
       border-radius: var(--fh-radius-pill);
     }
   }
 
   .fh-auth__form {
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     margin: 0;
     display: grid;
 
@@ -4423,7 +4423,7 @@
   .fh-auth__row {
     justify-content: space-between;
     align-items: center;
-    gap: var(--fh-space-2) var(--fh-space-4);
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
     font-size: var(--fh-text-small);
     flex-wrap: wrap;
     display: flex;
@@ -4438,7 +4438,7 @@
   }
 
   .fh-auth__social {
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
     display: grid;
 
@@ -4512,7 +4512,7 @@
 
   .fh-auth--card {
     min-block-size: 38rem;
-    padding: clamp(var(--fh-space-4), 5cqi, var(--fh-space-12));
+    padding: clamp(var(--fh-inset-tile), 5cqi, var(--fh-inset-card));
     place-items: center;
 
     & .fh-auth__art {
@@ -4545,9 +4545,9 @@
     }
 
     .fh-auth--glass > .fh-auth__panel {
-      inline-size: min(27rem, 100% - 2 * var(--fh-space-6));
+      inline-size: min(27rem, 100% - 2 * var(--fh-gap-sectioned));
       min-block-size: 0;
-      margin-block: var(--fh-space-8);
+      margin-block: var(--fh-gap-sectioned);
       border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
       border-radius: var(--fh-radius-lg);
       background-color: var(--fh-auth-glass);
@@ -4573,7 +4573,7 @@
   }
 
   .fh-auth__forgot {
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     font-size: var(--fh-text-small);
     display: grid;
 
@@ -4599,7 +4599,7 @@
   }
 
   .fh-auth__rules {
-    gap: var(--fh-space-1) var(--fh-space-3);
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-caption);
     flex-wrap: wrap;
@@ -4610,7 +4610,7 @@
 
     & > li {
       align-items: center;
-      gap: var(--fh-space-1);
+      gap: var(--fh-gap-bound);
       display: inline-flex;
     }
 
@@ -4641,7 +4641,7 @@
 
   .fh-auth-page {
     min-block-size: 100dvh;
-    padding: var(--fh-space-6) var(--fh-space-4);
+    padding: var(--fh-inset-card) var(--fh-inset-tile);
     background-color: var(--fh-color-canvas);
     place-items: center;
     display: grid;

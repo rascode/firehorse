@@ -129,8 +129,8 @@
   .fh-auth__corner {
     position: absolute;
     z-index: 2;
-    inset-block-start: var(--fh-space-4);
-    inset-inline-end: var(--fh-space-4);
+    inset-block-start: var(--fh-gap-grouped-wide);
+    inset-inline-end: var(--fh-gap-grouped-wide);
 
     & .fh-segmented {
       background-color: var(--fh-auth-glass);
@@ -155,18 +155,18 @@
     position: relative;
     display: grid;
     align-content: center;
-    gap: var(--fh-space-5);
+    gap: var(--fh-gap-sectioned);
     inline-size: 100%;
     max-inline-size: 27rem;
     margin-inline: auto;
-    padding: clamp(var(--fh-space-6), 6cqi, var(--fh-space-12)) clamp(var(--fh-space-5), 5cqi, var(--fh-space-10));
+    padding: clamp(var(--fh-inset-card), 6cqi, var(--fh-inset-card)) clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
   }
 
   .fh-auth__brand {
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -178,7 +178,7 @@
 
   .fh-auth__head {
     display: grid;
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
 
     & h1,
     & h2,
@@ -212,14 +212,14 @@
 
     & > label {
       min-inline-size: 0;
-      padding-inline: var(--fh-space-2);
+      padding-inline: var(--fh-inset-tight);
       border-radius: var(--fh-radius-pill);
     }
   }
 
   .fh-auth__form {
     display: grid;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     margin: 0;
 
     & .fh-button[type="submit"] { inline-size: 100%; justify-content: center; }
@@ -231,7 +231,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-space-2) var(--fh-space-4);
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
     font-size: var(--fh-text-small);
 
     & a { color: var(--fh-color-text-muted); }
@@ -241,7 +241,7 @@
   .fh-auth__social {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
-    gap: var(--fh-space-2);
+    gap: var(--fh-gap-related);
 
     & .fh-button { justify-content: center; }
   }
@@ -307,7 +307,7 @@
   /* —— Card: the form floats on full-bleed art —— */
   .fh-auth--card {
     min-block-size: 38rem;
-    padding: clamp(var(--fh-space-4), 5cqi, var(--fh-space-12));
+    padding: clamp(var(--fh-inset-tile), 5cqi, var(--fh-inset-card));
     place-items: center;
 
     & .fh-auth__art {
@@ -347,9 +347,9 @@
     .fh-auth--glass > .fh-auth__panel {
       grid-area: 1 / 1;
       place-self: center;
-      inline-size: min(27rem, 100% - 2 * var(--fh-space-6));
+      inline-size: min(27rem, 100% - 2 * var(--fh-gap-sectioned));
       min-block-size: 0;
-      margin-block: var(--fh-space-8);
+      margin-block: var(--fh-gap-sectioned);
       border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
       border-radius: var(--fh-radius-lg);
       background-color: var(--fh-auth-glass);
@@ -377,7 +377,7 @@
   /* Forgot password: a disclosure under the password form, holding its own form. */
   .fh-auth__forgot {
     display: grid;
-    gap: var(--fh-space-4);
+    gap: var(--fh-gap-grouped-wide);
     font-size: var(--fh-text-small);
 
     & > summary {
@@ -397,7 +397,7 @@
   .fh-auth__rules {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--fh-space-1) var(--fh-space-3);
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
     margin: 0;
     padding: 0;
     color: var(--fh-color-text-subtle);
@@ -407,7 +407,7 @@
     & > li {
       display: inline-flex;
       align-items: center;
-      gap: var(--fh-space-1);
+      gap: var(--fh-gap-bound);
     }
     & > li::before {
       content: "";

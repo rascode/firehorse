@@ -125,7 +125,7 @@
     flex: none;
     justify-items: end;
     margin-inline-start: auto;
-    padding-inline-start: var(--fh-space-3);
+    padding-inline-start: var(--fh-inset-control);
     border-inline-start: var(--fh-border-thin) var(--_line, solid) var(--fh-color-etch);
     line-height: 1.1;
 
@@ -172,7 +172,7 @@
       flex: none;
       inline-size: 0.8rem;
       aspect-ratio: 1;
-      margin-inline-start: var(--fh-space-1);
+      margin-inline-start: var(--fh-gap-bound);
       background-color: var(--fh-color-text-subtle);
       mask: var(--fh-icon-chevron-down) center / contain no-repeat;
       transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
@@ -208,11 +208,11 @@
     max-inline-size: min(26rem, 100vi - 2rem);
     max-block-size: min(24rem, 60dvh);
     margin: 0;
-    padding: var(--fh-space-1-5);
+    padding: var(--fh-inset-tight);
     overflow: auto;
     overscroll-behavior: contain;
     border: var(--fh-border-thin) solid var(--fh-color-border-strong);
-    border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-space-1));
+    border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-menu);
@@ -246,7 +246,7 @@
     .fh-entity-picker__list {
       position-area: block-end span-inline-end;
       position-try-fallbacks: flip-block, flip-inline;
-      margin-block-start: var(--fh-space-1-5);
+      margin-block-start: var(--fh-gap-bound);
     }
   }
 
@@ -261,8 +261,8 @@
 
     /* The rule sits on the bottom of the group before, so a legend never cuts it. */
     &:has(+ &) {
-      margin-block-end: var(--fh-space-1-5);
-      padding-block-end: var(--fh-space-1-5);
+      margin-block-end: var(--fh-gap-bound);
+      padding-block-end: var(--fh-inset-tight);
       border-block-end: var(--fh-border-thin) var(--_line, solid) var(--fh-color-etch);
     }
 
@@ -270,10 +270,10 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: var(--fh-space-2);
+      gap: var(--fh-gap-related);
       inline-size: 100%;
       margin: 0;
-      padding: var(--fh-space-1-5) var(--fh-space-2) var(--fh-space-1);
+      padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
       font-size: 0.62rem;
@@ -287,7 +287,7 @@
   /* An option: the row, a hidden radio, a check when chosen. */
   .fh-entity-picker__list .fh-entity {
     position: relative;
-    padding-inline-end: var(--fh-space-2-5);
+    padding-inline-end: var(--fh-inset-control);
 
     & > input {
       position: absolute;
@@ -302,7 +302,7 @@
       flex: none;
       inline-size: 0.85rem;
       aspect-ratio: 1;
-      margin-inline-start: var(--fh-space-1);
+      margin-inline-start: var(--fh-gap-bound);
       background-color: var(--fh-color-text);
       mask: var(--fh-icon-check) center / contain no-repeat;
       opacity: 0;
@@ -337,9 +337,9 @@
 
     & .fh-avatar { --fh-avatar-radius: var(--fh-radius-pill); }
 
-    & > .fh-entity { padding-inline-end: var(--fh-space-3-5); }
+    & > .fh-entity { padding-inline-end: var(--fh-gap-grouped); }
 
-    & .fh-entity-picker__list { border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-space-3)); }
+    & .fh-entity-picker__list { border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-gap-grouped)); }
   }
 
   /* --etched: drawn in dashed etch lines on no fill, like fh-profile. */
@@ -369,7 +369,7 @@
       content: "";
       position: absolute;
       inset-block-start: -0.05rem;
-      inset-inline: var(--fh-space-2);
+      inset-inline: var(--fh-gap-related);
       border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
       pointer-events: none;
     }

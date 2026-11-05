@@ -13,12 +13,12 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--fh-space-1-5);
+    gap: var(--fh-gap-bound);
     min-block-size: 2.5rem;
-    padding: var(--fh-space-1-5);
+    padding: var(--fh-inset-tight);
     /* Concentric with the chips inside: outer radius = chip radius + inset.
      * Chip radius is capped at half a compact chip's height (~1.7rem). */
-    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + var(--fh-space-1-5));
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + var(--fh-gap-bound));
     background-color: var(--fh-color-field);
     cursor: text;
 
@@ -29,7 +29,7 @@
     & > input {
       flex: 1 1 6rem;
       min-inline-size: 6rem;
-      padding-inline: var(--fh-space-1-5);
+      padding-inline: var(--fh-inset-tight);
       border: 0;
       outline: 0;
       background: none;
