@@ -6,7 +6,7 @@
  * behaviors (comboboxes, menus with typeahead, toasts with swipe) done for them.
  *
  *   import "@rascode/firehorse";
- *   import { Button, Dialog, DropdownMenu, Select, Tabs } from "@rascode/firehorse-react";
+ *   import { Button, Dialog, DropdownMenu, EntityPicker, Select, Tabs } from "@rascode/firehorse-react";
  */
 import * as React from "react";
 import { Dialog as D, DropdownMenu as M, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C, Toast as To } from "radix-ui";
@@ -99,6 +99,109 @@ export function Select({ label, options, placeholder = "Choose…", ...p }: Reac
       <S.Root {...p}>
         <S.Trigger id={id} className="fh-select fh-rx-select"><S.Value placeholder={placeholder} /><S.Icon><Icon name="chevron-down" /></S.Icon></S.Trigger>
         <S.Portal><S.Content position="popper" sideOffset={4} className="fh-menu fh-rx-menu"><S.Viewport>{options.map((o) => <S.Item key={o.value} value={o.value} className="fh-rx-option"><S.ItemText>{o.label}</S.ItemText><S.ItemIndicator><Icon name="check" /></S.ItemIndicator></S.Item>)}</S.Viewport></S.Content></S.Portal>
+      </S.Root>
+    </div>
+  );
+}
+/* —— Entity picker (ENT) ——
+ * Choose an account, person or client by its identity. The trigger and every option are the same
+ * row: avatar, an etch line, name and a second line, a stat, then the chevron. The stat is
+ * configured per use case: pass how to read it from your entity and what to call it.
+ *
+ *   <EntityPicker label="Account" entities={accounts} value={id} onValueChange={setId}
+ *     shape="etched" groupBy={(a) => a.kind}
+ *     stat={{ label: "Open", value: (a) => a.openActions, tone: (a) => (a.openActions ? "amber" : "neutral") }} />
+ */
+export type Entity = { id: string; name: string; sub?: React.ReactNode; avatar?: string; initials?: string; tone?: Tone; group?: string; disabled?: boolean };
+export type EntityStat<E extends Entity = Entity> = {
+  /** Mono label under the figure ("Open", "Unread", "Due"). With display "count", the accessible name. */
+  label: string;
+  /** Reads the figure from an entity: open actions, unread, a balance. */
+  value: (entity: E) => React.ReactNode;
+  tone?: Tone | ((entity: E) => Tone | undefined);
+  /** "label" (figure over its label, default) or "count" (a toned counter). */
+  display?: "label" | "count";
+  /** Leave the stat off rows where it reads 0 or nothing. */
+  hideEmpty?: boolean;
+};
+export type EntityPickerProps<E extends Entity = Entity> = Omit<React.ComponentProps<typeof S.Root>, "children"> & {
+  label: React.ReactNode;
+  entities: E[];
+  shape?: "field" | "rounded" | "etched";
+  /** Show avatars (default true). Off for a text-only picker. */
+  avatar?: boolean;
+  stat?: EntityStat<E>;
+  /** Group key for each entity (default entity.group). Groups keep the order they first appear in, unless groupOrder is given. */
+  groupBy?: (entity: E) => string | undefined;
+  groupOrder?: string[];
+  /** Extra text after a group's label, such as a count. */
+  groupMeta?: (group: string, entities: E[]) => React.ReactNode;
+  placeholder?: React.ReactNode;
+  className?: string;
+};
+const initialsOf = (name: string) => name.split(/[\s@._&-]+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join("") || "?";
+function EntityRow<E extends Entity>({ entity, avatar, stat, text }: { entity: E; avatar: boolean; stat?: EntityStat<E>; text?: (name: React.ReactNode) => React.ReactNode }) {
+  const figure = stat?.value(entity);
+  const empty = figure === 0 || figure === "0" || figure == null || figure === "";
+  const tone = typeof stat?.tone === "function" ? stat.tone(entity) : stat?.tone;
+  return (
+    <>
+      {avatar ? (
+        <>
+          <span className="fh-avatar fh-avatar--circle" data-tone={entity.tone}>{entity.avatar ? <img src={entity.avatar} alt="" /> : (entity.initials ?? initialsOf(entity.name))}</span>
+          <span className="fh-entity__sep" aria-hidden="true" />
+        </>
+      ) : null}
+      <span className="fh-entity__who"><b>{text ? text(entity.name) : entity.name}</b>{entity.sub ? <small>{entity.sub}</small> : null}</span>
+      {stat && !(stat.hideEmpty && empty) ? (
+        stat.display === "count"
+          ? <span className="fh-entity__stat fh-entity__stat--count" data-tone={tone} aria-label={`${figure ?? 0} ${stat.label}`}><b>{figure ?? 0}</b></span>
+          : <span className="fh-entity__stat" data-tone={tone}><b>{figure ?? 0}</b><small>{stat.label}</small></span>
+      ) : null}
+    </>
+  );
+}
+export function EntityPicker<E extends Entity = Entity>({ label, entities, shape = "field", avatar = true, stat, groupBy, groupOrder, groupMeta, placeholder = "Choose…", className, value, defaultValue, onValueChange, ...p }: EntityPickerProps<E>) {
+  const id = React.useId();
+  const [inner, setInner] = React.useState(defaultValue);
+  const current = value ?? inner;
+  const selected = entities.find((e) => e.id === current);
+  const groups = React.useMemo(() => {
+    const map = new Map<string, E[]>();
+    for (const e of entities) { const g = (groupBy ? groupBy(e) : e.group) ?? ""; map.set(g, [...(map.get(g) ?? []), e]); }
+    const keys = [...map.keys()];
+    if (groupOrder) keys.sort((a, b) => ((groupOrder.indexOf(a) + 1 || 1e9) - (groupOrder.indexOf(b) + 1 || 1e9)));
+    return keys.map((k) => [k, map.get(k)!] as const);
+  }, [entities, groupBy, groupOrder]);
+  return (
+    <div className="fh-field" data-fh="ENT">
+      <label htmlFor={id}>{label}</label>
+      <S.Root value={current} onValueChange={(v) => { setInner(v); onValueChange?.(v); }} {...p}>
+        <div className={cx("fh-entity-picker", shape !== "field" && `fh-entity-picker--${shape}`, className)} data-fh={shape === "rounded" ? "ENT-1.2" : shape === "etched" ? "ENT-1.3" : "ENT-1.1"}>
+          <S.Trigger id={id} className="fh-entity">
+            <span className="fh-entity__value">
+              <S.Value placeholder={<span className="fh-entity__placeholder">{placeholder}</span>}>
+                {selected ? <EntityRow entity={selected} avatar={avatar} stat={stat} /> : null}
+              </S.Value>
+            </span>
+          </S.Trigger>
+          <S.Portal>
+            <S.Content position="popper" sideOffset={6} className={cx("fh-entity-picker", shape !== "field" && `fh-entity-picker--${shape}`)}>
+              <S.Viewport className="fh-entity-picker__list fh-rx-menu" data-state="open" style={{ inlineSize: "max(var(--radix-select-trigger-width), var(--fh-entity-list-width, 18rem))" }}>
+                {groups.map(([g, items]) => (
+                  <S.Group key={g || "_"} className="fh-entity-picker__group">
+                    {g ? <S.Label className="fh-entity-picker__label">{g}{groupMeta ? <small>{groupMeta(g, items)}</small> : null}</S.Label> : null}
+                    {items.map((e) => (
+                      <S.Item key={e.id} value={e.id} disabled={e.disabled} className="fh-entity">
+                        <EntityRow entity={e} avatar={avatar} stat={stat} text={(n) => <S.ItemText>{n}</S.ItemText>} />
+                      </S.Item>
+                    ))}
+                  </S.Group>
+                ))}
+              </S.Viewport>
+            </S.Content>
+          </S.Portal>
+        </div>
       </S.Root>
     </div>
   );

@@ -4074,6 +4074,185 @@
       ]
     },
     {
+      "id": "ENT",
+      "name": "Entity picker",
+      "section": "Fields & choices",
+      "anchor": "c-entity",
+      "page": "/forms/",
+      "url": "https://firehorse.rascode.dev/forms/#ENT",
+      "summary": "Choose an account, person or client by its identity: avatar, an etch line, the name and a second line, a figure for the use case, then the chevron. The open list groups its options, and each option is the same row as the selection. Real radios underneath, so it submits and takes arrow keys with no script; firehorse.js mirrors the pick into the trigger and fires fh:entity.",
+      "classes": [
+        "fh-field",
+        "fh-field__label",
+        "fh-entity-picker",
+        "fh-entity",
+        "fh-entity__value",
+        "fh-avatar",
+        "fh-avatar--circle",
+        "fh-entity__sep",
+        "fh-entity__who",
+        "fh-entity__stat",
+        "fh-entity-picker__list",
+        "fh-entity-picker__group",
+        "fh-entity-picker--rounded",
+        "fh-entity-picker--etched",
+        "fh-entity__stat--count"
+      ],
+      "markup": "<div class=\"fh-grid\" data-cols=\"3\" style=\"--fh-grid-min: 16rem; --fh-gap: var(--fh-space-6)\">\n  <div class=\"fh-field\" data-fh=\"ENT-1.1\">\n    <span class=\"fh-field__label\" id=\"ent-a-l\">Account</span>\n    <div class=\"fh-entity-picker\" data-fh-entity>\n      <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-a\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-a-l ent-a-v\" style=\"anchor-name: --ent-a\">\n        <span class=\"fh-entity__value\" id=\"ent-a-v\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </span>\n      </button>\n      <div class=\"fh-entity-picker__list\" id=\"ent-a\" popover role=\"listbox\" aria-labelledby=\"ent-a-l\" style=\"position-anchor: --ent-a\">\n        <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"northwind\" checked>\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"rascode\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n          </label>\n        </fieldset>\n        <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"halcyon\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"juniper\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n          </label>\n        </fieldset>\n      </div>\n    </div>\n  </div>\n  <div class=\"fh-field\" data-fh=\"ENT-1.2\">\n    <span class=\"fh-field__label\" id=\"ent-b-l\">Account</span>\n    <div class=\"fh-entity-picker fh-entity-picker--rounded\" data-fh-entity>\n      <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-b\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-b-l ent-b-v\" style=\"anchor-name: --ent-b\">\n        <span class=\"fh-entity__value\" id=\"ent-b-v\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </span>\n      </button>\n      <div class=\"fh-entity-picker__list\" id=\"ent-b\" popover role=\"listbox\" aria-labelledby=\"ent-b-l\" style=\"position-anchor: --ent-b\">\n        <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"northwind\" checked>\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"rascode\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n          </label>\n        </fieldset>\n        <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"halcyon\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"juniper\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n          </label>\n        </fieldset>\n      </div>\n    </div>\n  </div>\n  <div class=\"fh-field\" data-fh=\"ENT-1.3\">\n    <span class=\"fh-field__label\" id=\"ent-c-l\">Account</span>\n    <div class=\"fh-entity-picker fh-entity-picker--etched\" data-fh-entity>\n      <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-c\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-c-l ent-c-v\" style=\"anchor-name: --ent-c\">\n        <span class=\"fh-entity__value\" id=\"ent-c-v\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </span>\n      </button>\n      <div class=\"fh-entity-picker__list\" id=\"ent-c\" popover role=\"listbox\" aria-labelledby=\"ent-c-l\" style=\"position-anchor: --ent-c\">\n        <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"northwind\" checked>\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"rascode\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n          </label>\n        </fieldset>\n        <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"halcyon\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"juniper\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n          </label>\n        </fieldset>\n      </div>\n    </div>\n  </div>\n  <div class=\"fh-field\" data-fh=\"ENT-2.1\">\n    <span class=\"fh-field__label\" id=\"ent-d-l\">Account</span>\n    <div class=\"fh-entity-picker fh-entity-picker--etched\" data-fh-entity>\n      <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-d\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-d-l ent-d-v\" style=\"anchor-name: --ent-d\">\n        <span class=\"fh-entity__value\" id=\"ent-d-v\">\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </span>\n      </button>\n      <div class=\"fh-entity-picker__list\" id=\"ent-d\" popover role=\"listbox\" aria-labelledby=\"ent-d-l\" style=\"position-anchor: --ent-d\">\n        <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"northwind\" checked>\n            <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"rascode\">\n            <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n          </label>\n        </fieldset>\n        <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"halcyon\">\n            <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"juniper\">\n            <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n          </label>\n        </fieldset>\n      </div>\n    </div>\n  </div>\n  <div class=\"fh-field\" data-fh=\"ENT-2.2\">\n    <span class=\"fh-field__label\" id=\"ent-e-l\">Account</span>\n    <div class=\"fh-entity-picker fh-entity-picker--rounded\" data-fh-entity>\n      <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-e\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-e-l ent-e-v\" style=\"anchor-name: --ent-e\">\n        <span class=\"fh-entity__value\" id=\"ent-e-v\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"amber\" aria-label=\"5 open actions\"><b>5</b></span>\n        </span>\n      </button>\n      <div class=\"fh-entity-picker__list\" id=\"ent-e\" popover role=\"listbox\" aria-labelledby=\"ent-e-l\" style=\"position-anchor: --ent-e\">\n        <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"northwind\" checked>\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n            <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"amber\" aria-label=\"5 open actions\"><b>5</b></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"rascode\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n            <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"rose\" aria-label=\"12 open actions\"><b>12</b></span>\n          </label>\n        </fieldset>\n        <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"halcyon\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n            <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"amber\" aria-label=\"2 open actions\"><b>2</b></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"juniper\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n            <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"neutral\" aria-label=\"0 open actions\"><b>0</b></span>\n          </label>\n        </fieldset>\n      </div>\n    </div>\n  </div>\n  <div class=\"fh-field\" data-fh=\"ENT-2.3\">\n    <span class=\"fh-field__label\" id=\"ent-f-l\">Assignee</span>\n    <div class=\"fh-entity-picker\" data-fh-entity>\n      <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-f\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-f-l ent-f-v\" style=\"anchor-name: --ent-f\">\n        <span class=\"fh-entity__value\" id=\"ent-f-v\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"violet\">AM</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Ava Marlow</b><small>Design lead</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>3</b><small>Due</small></span>\n        </span>\n      </button>\n      <div class=\"fh-entity-picker__list\" id=\"ent-f\" popover role=\"listbox\" aria-labelledby=\"ent-f-l\" style=\"position-anchor: --ent-f\">\n        <fieldset class=\"fh-entity-picker__group\"><legend>Team</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-f\" value=\"ava\" checked>\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"violet\">AM</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Ava Marlow</b><small>Design lead</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>3</b><small>Due</small></span>\n          </label>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-f\" value=\"mateo\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">MO</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Mateo Ortiz</b><small>Engineer</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>1</b><small>Due</small></span>\n          </label>\n        </fieldset>\n        <fieldset class=\"fh-entity-picker__group\"><legend>Contractors</legend>\n          <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-f\" value=\"priya\">\n            <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"orange\">PN</span>\n            <span class=\"fh-entity__sep\"></span>\n            <span class=\"fh-entity__who\"><b>Priya Nand</b><small>Copy · until Dec</small></span>\n            <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Due</small></span>\n          </label>\n        </fieldset>\n      </div>\n    </div>\n  </div>\n</div>",
+      "groups": [
+        {
+          "id": "ENT-1",
+          "name": "Shapes",
+          "summary": "",
+          "variants": [
+            "ENT-1.1",
+            "ENT-1.2",
+            "ENT-1.3"
+          ]
+        },
+        {
+          "id": "ENT-2",
+          "name": "Content",
+          "summary": "",
+          "variants": [
+            "ENT-2.1",
+            "ENT-2.2",
+            "ENT-2.3"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "ENT-1.1",
+          "group": "ENT-1",
+          "name": "Field",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-entity-picker",
+            "fh-entity",
+            "fh-entity__value",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-entity__sep",
+            "fh-entity__who",
+            "fh-entity__stat",
+            "fh-entity-picker__list",
+            "fh-entity-picker__group"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"ENT-1.1\">\n  <span class=\"fh-field__label\" id=\"ent-a-l\">Account</span>\n  <div class=\"fh-entity-picker\" data-fh-entity>\n    <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-a\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-a-l ent-a-v\" style=\"anchor-name: --ent-a\">\n      <span class=\"fh-entity__value\" id=\"ent-a-v\">\n        <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n        <span class=\"fh-entity__sep\"></span>\n        <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n        <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n      </span>\n    </button>\n    <div class=\"fh-entity-picker__list\" id=\"ent-a\" popover role=\"listbox\" aria-labelledby=\"ent-a-l\" style=\"position-anchor: --ent-a\">\n      <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"northwind\" checked>\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"rascode\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n        </label>\n      </fieldset>\n      <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"halcyon\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-a\" value=\"juniper\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n        </label>\n      </fieldset>\n    </div>\n  </div>\n</div>"
+        },
+        {
+          "id": "ENT-1.2",
+          "group": "ENT-1",
+          "name": "Rounded",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-entity-picker",
+            "fh-entity-picker--rounded",
+            "fh-entity",
+            "fh-entity__value",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-entity__sep",
+            "fh-entity__who",
+            "fh-entity__stat",
+            "fh-entity-picker__list",
+            "fh-entity-picker__group"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"ENT-1.2\">\n  <span class=\"fh-field__label\" id=\"ent-b-l\">Account</span>\n  <div class=\"fh-entity-picker fh-entity-picker--rounded\" data-fh-entity>\n    <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-b\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-b-l ent-b-v\" style=\"anchor-name: --ent-b\">\n      <span class=\"fh-entity__value\" id=\"ent-b-v\">\n        <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n        <span class=\"fh-entity__sep\"></span>\n        <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n        <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n      </span>\n    </button>\n    <div class=\"fh-entity-picker__list\" id=\"ent-b\" popover role=\"listbox\" aria-labelledby=\"ent-b-l\" style=\"position-anchor: --ent-b\">\n      <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"northwind\" checked>\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"rascode\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n        </label>\n      </fieldset>\n      <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"halcyon\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-b\" value=\"juniper\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n        </label>\n      </fieldset>\n    </div>\n  </div>\n</div>"
+        },
+        {
+          "id": "ENT-1.3",
+          "group": "ENT-1",
+          "name": "Etched",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-entity-picker",
+            "fh-entity-picker--etched",
+            "fh-entity",
+            "fh-entity__value",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-entity__sep",
+            "fh-entity__who",
+            "fh-entity__stat",
+            "fh-entity-picker__list",
+            "fh-entity-picker__group"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"ENT-1.3\">\n  <span class=\"fh-field__label\" id=\"ent-c-l\">Account</span>\n  <div class=\"fh-entity-picker fh-entity-picker--etched\" data-fh-entity>\n    <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-c\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-c-l ent-c-v\" style=\"anchor-name: --ent-c\">\n      <span class=\"fh-entity__value\" id=\"ent-c-v\">\n        <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n        <span class=\"fh-entity__sep\"></span>\n        <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n        <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n      </span>\n    </button>\n    <div class=\"fh-entity-picker__list\" id=\"ent-c\" popover role=\"listbox\" aria-labelledby=\"ent-c-l\" style=\"position-anchor: --ent-c\">\n      <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"northwind\" checked>\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"rascode\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n        </label>\n      </fieldset>\n      <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"halcyon\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-c\" value=\"juniper\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n        </label>\n      </fieldset>\n    </div>\n  </div>\n</div>"
+        },
+        {
+          "id": "ENT-2.1",
+          "group": "ENT-2",
+          "name": "No avatar",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-entity-picker",
+            "fh-entity-picker--etched",
+            "fh-entity",
+            "fh-entity__value",
+            "fh-entity__who",
+            "fh-entity__stat",
+            "fh-entity-picker__list",
+            "fh-entity-picker__group"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"ENT-2.1\">\n  <span class=\"fh-field__label\" id=\"ent-d-l\">Account</span>\n  <div class=\"fh-entity-picker fh-entity-picker--etched\" data-fh-entity>\n    <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-d\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-d-l ent-d-v\" style=\"anchor-name: --ent-d\">\n      <span class=\"fh-entity__value\" id=\"ent-d-v\">\n        <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n        <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n      </span>\n    </button>\n    <div class=\"fh-entity-picker__list\" id=\"ent-d\" popover role=\"listbox\" aria-labelledby=\"ent-d-l\" style=\"position-anchor: --ent-d\">\n      <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"northwind\" checked>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>5</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"rascode\">\n          <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>12</b><small>Open</small></span>\n        </label>\n      </fieldset>\n      <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"halcyon\">\n          <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>2</b><small>Open</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-d\" value=\"juniper\">\n          <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Open</small></span>\n        </label>\n      </fieldset>\n    </div>\n  </div>\n</div>"
+        },
+        {
+          "id": "ENT-2.2",
+          "group": "ENT-2",
+          "name": "Counter",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-entity-picker",
+            "fh-entity-picker--rounded",
+            "fh-entity",
+            "fh-entity__value",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-entity__sep",
+            "fh-entity__who",
+            "fh-entity__stat",
+            "fh-entity__stat--count",
+            "fh-entity-picker__list",
+            "fh-entity-picker__group"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"ENT-2.2\">\n  <span class=\"fh-field__label\" id=\"ent-e-l\">Account</span>\n  <div class=\"fh-entity-picker fh-entity-picker--rounded\" data-fh-entity>\n    <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-e\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-e-l ent-e-v\" style=\"anchor-name: --ent-e\">\n      <span class=\"fh-entity__value\" id=\"ent-e-v\">\n        <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n        <span class=\"fh-entity__sep\"></span>\n        <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n        <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"amber\" aria-label=\"5 open actions\"><b>5</b></span>\n      </span>\n    </button>\n    <div class=\"fh-entity-picker__list\" id=\"ent-e\" popover role=\"listbox\" aria-labelledby=\"ent-e-l\" style=\"position-anchor: --ent-e\">\n      <fieldset class=\"fh-entity-picker__group\"><legend>Workspaces</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"northwind\" checked>\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">NS</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>\n          <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"amber\" aria-label=\"5 open actions\"><b>5</b></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"rascode\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"accent\">RC</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>\n          <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"rose\" aria-label=\"12 open actions\"><b>12</b></span>\n        </label>\n      </fieldset>\n      <fieldset class=\"fh-entity-picker__group\"><legend>Clients</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"halcyon\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"teal\">HH</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Halcyon Health</b><small>Client · viewer</small></span>\n          <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"amber\" aria-label=\"2 open actions\"><b>2</b></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-e\" value=\"juniper\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"lime\">JL</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Juniper Labs</b><small>Client · editor</small></span>\n          <span class=\"fh-entity__stat fh-entity__stat--count\" data-tone=\"neutral\" aria-label=\"0 open actions\"><b>0</b></span>\n        </label>\n      </fieldset>\n    </div>\n  </div>\n</div>"
+        },
+        {
+          "id": "ENT-2.3",
+          "group": "ENT-2",
+          "name": "Person · due today",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-entity-picker",
+            "fh-entity",
+            "fh-entity__value",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-entity__sep",
+            "fh-entity__who",
+            "fh-entity__stat",
+            "fh-entity-picker__list",
+            "fh-entity-picker__group"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"ENT-2.3\">\n  <span class=\"fh-field__label\" id=\"ent-f-l\">Assignee</span>\n  <div class=\"fh-entity-picker\" data-fh-entity>\n    <button class=\"fh-entity\" type=\"button\" popovertarget=\"ent-f\" aria-haspopup=\"listbox\" aria-labelledby=\"ent-f-l ent-f-v\" style=\"anchor-name: --ent-f\">\n      <span class=\"fh-entity__value\" id=\"ent-f-v\">\n        <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"violet\">AM</span>\n        <span class=\"fh-entity__sep\"></span>\n        <span class=\"fh-entity__who\"><b>Ava Marlow</b><small>Design lead</small></span>\n        <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>3</b><small>Due</small></span>\n      </span>\n    </button>\n    <div class=\"fh-entity-picker__list\" id=\"ent-f\" popover role=\"listbox\" aria-labelledby=\"ent-f-l\" style=\"position-anchor: --ent-f\">\n      <fieldset class=\"fh-entity-picker__group\"><legend>Team</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-f\" value=\"ava\" checked>\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"violet\">AM</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Ava Marlow</b><small>Design lead</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"rose\"><b>3</b><small>Due</small></span>\n        </label>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-f\" value=\"mateo\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"sky\">MO</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Mateo Ortiz</b><small>Engineer</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"amber\"><b>1</b><small>Due</small></span>\n        </label>\n      </fieldset>\n      <fieldset class=\"fh-entity-picker__group\"><legend>Contractors</legend>\n        <label class=\"fh-entity\"><input type=\"radio\" name=\"ent-f\" value=\"priya\">\n          <span class=\"fh-avatar fh-avatar--circle\" data-tone=\"orange\">PN</span>\n          <span class=\"fh-entity__sep\"></span>\n          <span class=\"fh-entity__who\"><b>Priya Nand</b><small>Copy · until Dec</small></span>\n          <span class=\"fh-entity__stat\" data-tone=\"neutral\"><b>0</b><small>Due</small></span>\n        </label>\n      </fieldset>\n    </div>\n  </div>\n</div>"
+        }
+      ]
+    },
+    {
       "id": "DTB",
       "name": "Datatable",
       "section": "Data",
@@ -6364,6 +6543,7 @@
     "fh-upload": "UPL",
     "fh-range": "UPL",
     "fh-sheet": "UPL",
+    "fh-entity": "ENT",
     "fh-page": "PDP",
     "fh-expres": "EXP",
     "fh-pay": "EXP",
@@ -6486,6 +6666,8 @@
     "fh-dropzone",
     "fh-dt",
     "fh-empty",
+    "fh-entity",
+    "fh-entity-picker",
     "fh-eq",
     "fh-etched-split",
     "fh-express",

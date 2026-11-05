@@ -83,6 +83,7 @@
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#CHO) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#UPL) |
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/#TAG) |
+| `ENT` | Entity picker | Fields & choices | 1 Shapes (3) · 2 Content (3) | [open](https://firehorse.rascode.dev/forms/#ENT) |
 | `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/#DTB) |
 | `TBL` | Table | Table | — | [open](https://firehorse.rascode.dev/data/#TBL) |
 | `PRD` | Product grid | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PRD) |
@@ -2207,6 +2208,288 @@ Classes: `fh-field` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `
 <div class="fh-tags fh-tags--inline" data-fh="TAG-2.4">
   <span class="fh-chip" data-tone="sky">utbms.com <button class="fh-chip__remove" type="button" aria-label="Remove utbms.com"></button></span>
   <span class="fh-tags__entry"><button class="fh-tags__prefix" type="button" aria-label="Protocol: https, click for http">https://</button><input aria-label="Link" placeholder="example.com/page"></span>
+</div>
+```
+
+## ENT · Entity picker
+
+Choose an account, person or client by its identity: avatar, an etch line, the name and a second line, a figure for the use case, then the chevron. The open list groups its options, and each option is the same row as the selection. Real radios underneath, so it submits and takes arrow keys with no script; firehorse.js mirrors the pick into the trigger and fires fh:entity.
+
+Classes: `fh-field` `fh-field__label` `fh-entity-picker` `fh-entity` `fh-entity__value` `fh-avatar` `fh-avatar--circle` `fh-entity__sep` `fh-entity__who` `fh-entity__stat` `fh-entity-picker__list` `fh-entity-picker__group` `fh-entity-picker--rounded` `fh-entity-picker--etched` `fh-entity__stat--count`
+
+### ENT-1 · Shapes
+
+#### ENT-1.1 · Field
+
+```html
+<div class="fh-field" data-fh="ENT-1.1">
+  <span class="fh-field__label" id="ent-a-l">Account</span>
+  <div class="fh-entity-picker" data-fh-entity>
+    <button class="fh-entity" type="button" popovertarget="ent-a" aria-haspopup="listbox" aria-labelledby="ent-a-l ent-a-v" style="anchor-name: --ent-a">
+      <span class="fh-entity__value" id="ent-a-v">
+        <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+        <span class="fh-entity__sep"></span>
+        <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+        <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+      </span>
+    </button>
+    <div class="fh-entity-picker__list" id="ent-a" popover role="listbox" aria-labelledby="ent-a-l" style="position-anchor: --ent-a">
+      <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+        <label class="fh-entity"><input type="radio" name="ent-a" value="northwind" checked>
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-a" value="rascode">
+          <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+        </label>
+      </fieldset>
+      <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+        <label class="fh-entity"><input type="radio" name="ent-a" value="halcyon">
+          <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-a" value="juniper">
+          <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+          <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+        </label>
+      </fieldset>
+    </div>
+  </div>
+</div>
+```
+
+#### ENT-1.2 · Rounded
+
+```html
+<div class="fh-field" data-fh="ENT-1.2">
+  <span class="fh-field__label" id="ent-b-l">Account</span>
+  <div class="fh-entity-picker fh-entity-picker--rounded" data-fh-entity>
+    <button class="fh-entity" type="button" popovertarget="ent-b" aria-haspopup="listbox" aria-labelledby="ent-b-l ent-b-v" style="anchor-name: --ent-b">
+      <span class="fh-entity__value" id="ent-b-v">
+        <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+        <span class="fh-entity__sep"></span>
+        <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+        <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+      </span>
+    </button>
+    <div class="fh-entity-picker__list" id="ent-b" popover role="listbox" aria-labelledby="ent-b-l" style="position-anchor: --ent-b">
+      <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+        <label class="fh-entity"><input type="radio" name="ent-b" value="northwind" checked>
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-b" value="rascode">
+          <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+        </label>
+      </fieldset>
+      <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+        <label class="fh-entity"><input type="radio" name="ent-b" value="halcyon">
+          <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-b" value="juniper">
+          <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+          <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+        </label>
+      </fieldset>
+    </div>
+  </div>
+</div>
+```
+
+#### ENT-1.3 · Etched
+
+```html
+<div class="fh-field" data-fh="ENT-1.3">
+  <span class="fh-field__label" id="ent-c-l">Account</span>
+  <div class="fh-entity-picker fh-entity-picker--etched" data-fh-entity>
+    <button class="fh-entity" type="button" popovertarget="ent-c" aria-haspopup="listbox" aria-labelledby="ent-c-l ent-c-v" style="anchor-name: --ent-c">
+      <span class="fh-entity__value" id="ent-c-v">
+        <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+        <span class="fh-entity__sep"></span>
+        <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+        <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+      </span>
+    </button>
+    <div class="fh-entity-picker__list" id="ent-c" popover role="listbox" aria-labelledby="ent-c-l" style="position-anchor: --ent-c">
+      <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+        <label class="fh-entity"><input type="radio" name="ent-c" value="northwind" checked>
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-c" value="rascode">
+          <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+        </label>
+      </fieldset>
+      <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+        <label class="fh-entity"><input type="radio" name="ent-c" value="halcyon">
+          <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-c" value="juniper">
+          <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+          <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+        </label>
+      </fieldset>
+    </div>
+  </div>
+</div>
+```
+
+### ENT-2 · Content
+
+#### ENT-2.1 · No avatar
+
+```html
+<div class="fh-field" data-fh="ENT-2.1">
+  <span class="fh-field__label" id="ent-d-l">Account</span>
+  <div class="fh-entity-picker fh-entity-picker--etched" data-fh-entity>
+    <button class="fh-entity" type="button" popovertarget="ent-d" aria-haspopup="listbox" aria-labelledby="ent-d-l ent-d-v" style="anchor-name: --ent-d">
+      <span class="fh-entity__value" id="ent-d-v">
+        <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+        <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+      </span>
+    </button>
+    <div class="fh-entity-picker__list" id="ent-d" popover role="listbox" aria-labelledby="ent-d-l" style="position-anchor: --ent-d">
+      <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+        <label class="fh-entity"><input type="radio" name="ent-d" value="northwind" checked>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-d" value="rascode">
+          <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+        </label>
+      </fieldset>
+      <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+        <label class="fh-entity"><input type="radio" name="ent-d" value="halcyon">
+          <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-d" value="juniper">
+          <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+          <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+        </label>
+      </fieldset>
+    </div>
+  </div>
+</div>
+```
+
+#### ENT-2.2 · Counter
+
+```html
+<div class="fh-field" data-fh="ENT-2.2">
+  <span class="fh-field__label" id="ent-e-l">Account</span>
+  <div class="fh-entity-picker fh-entity-picker--rounded" data-fh-entity>
+    <button class="fh-entity" type="button" popovertarget="ent-e" aria-haspopup="listbox" aria-labelledby="ent-e-l ent-e-v" style="anchor-name: --ent-e">
+      <span class="fh-entity__value" id="ent-e-v">
+        <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+        <span class="fh-entity__sep"></span>
+        <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+        <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="5 open actions"><b>5</b></span>
+      </span>
+    </button>
+    <div class="fh-entity-picker__list" id="ent-e" popover role="listbox" aria-labelledby="ent-e-l" style="position-anchor: --ent-e">
+      <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+        <label class="fh-entity"><input type="radio" name="ent-e" value="northwind" checked>
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="5 open actions"><b>5</b></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-e" value="rascode">
+          <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+          <span class="fh-entity__stat fh-entity__stat--count" data-tone="rose" aria-label="12 open actions"><b>12</b></span>
+        </label>
+      </fieldset>
+      <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+        <label class="fh-entity"><input type="radio" name="ent-e" value="halcyon">
+          <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+          <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="2 open actions"><b>2</b></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-e" value="juniper">
+          <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+          <span class="fh-entity__stat fh-entity__stat--count" data-tone="neutral" aria-label="0 open actions"><b>0</b></span>
+        </label>
+      </fieldset>
+    </div>
+  </div>
+</div>
+```
+
+#### ENT-2.3 · Person · due today
+
+```html
+<div class="fh-field" data-fh="ENT-2.3">
+  <span class="fh-field__label" id="ent-f-l">Assignee</span>
+  <div class="fh-entity-picker" data-fh-entity>
+    <button class="fh-entity" type="button" popovertarget="ent-f" aria-haspopup="listbox" aria-labelledby="ent-f-l ent-f-v" style="anchor-name: --ent-f">
+      <span class="fh-entity__value" id="ent-f-v">
+        <span class="fh-avatar fh-avatar--circle" data-tone="violet">AM</span>
+        <span class="fh-entity__sep"></span>
+        <span class="fh-entity__who"><b>Ava Marlow</b><small>Design lead</small></span>
+        <span class="fh-entity__stat" data-tone="rose"><b>3</b><small>Due</small></span>
+      </span>
+    </button>
+    <div class="fh-entity-picker__list" id="ent-f" popover role="listbox" aria-labelledby="ent-f-l" style="position-anchor: --ent-f">
+      <fieldset class="fh-entity-picker__group"><legend>Team</legend>
+        <label class="fh-entity"><input type="radio" name="ent-f" value="ava" checked>
+          <span class="fh-avatar fh-avatar--circle" data-tone="violet">AM</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Ava Marlow</b><small>Design lead</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>3</b><small>Due</small></span>
+        </label>
+        <label class="fh-entity"><input type="radio" name="ent-f" value="mateo">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">MO</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Mateo Ortiz</b><small>Engineer</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>1</b><small>Due</small></span>
+        </label>
+      </fieldset>
+      <fieldset class="fh-entity-picker__group"><legend>Contractors</legend>
+        <label class="fh-entity"><input type="radio" name="ent-f" value="priya">
+          <span class="fh-avatar fh-avatar--circle" data-tone="orange">PN</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Priya Nand</b><small>Copy · until Dec</small></span>
+          <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Due</small></span>
+        </label>
+      </fieldset>
+    </div>
+  </div>
 </div>
 ```
 

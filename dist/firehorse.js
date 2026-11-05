@@ -25,6 +25,9 @@
  *  14. Word rotators (.fh-rotator): the slot eases to each word's width,
  *      extra words are hidden from screen readers, and the roll pauses
  *      off screen. The roll itself is CSS and runs without this.
+ *  15. Entity pickers ([data-fh-entity]): the chosen option's row is
+ *      mirrored into the trigger, the list closes on a pick, and
+ *      fh:entity fires. The radios submit without this.
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -743,5 +746,55 @@ ready(() => {
   if ("IntersectionObserver" in globalThis) {
     const io = new IntersectionObserver((es) => es.forEach((e) => e.target.toggleAttribute("data-fh-paused", !e.isIntersecting)));
     rotators.forEach((r) => io.observe(r));
+  }
+});
+
+/* —— 15. Entity picker ———————————————————————————————————————
+ * The options are radios in a popover, so the value submits and arrow keys
+ * move through it without this. This adds the rest: the chosen row is
+ * copied into the trigger's fh-entity__value, a click or Enter closes the
+ * list and returns focus to the trigger, opening it focuses the current
+ * option, and the picker fires fh:entity ({ value, input }) on change. */
+ready(() => {
+  const sync = (picker) => {
+    const input = picker.querySelector(".fh-entity-picker__list input:checked");
+    const slot = picker.querySelector(":scope > .fh-entity .fh-entity__value");
+    if (!input || !slot) return;
+    const row = input.closest(".fh-entity");
+    slot.replaceChildren(...[...row.children].filter((c) => c !== input).map((c) => c.cloneNode(true)));
+    slot.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+    picker.dataset.value = input.value;
+  };
+  const close = (picker) => {
+    const list = picker.querySelector(".fh-entity-picker__list");
+    if (list?.matches(":popover-open")) list.hidePopover();
+    picker.querySelector(":scope > .fh-entity")?.focus();
+  };
+  for (const picker of document.querySelectorAll("[data-fh-entity]")) {
+    const list = picker.querySelector(".fh-entity-picker__list");
+    const trigger = picker.querySelector(":scope > .fh-entity");
+    if (!list || !trigger) continue;
+    list.addEventListener("change", (e) => {
+      if (!e.target.matches?.("input[type=radio]")) return;
+      sync(picker);
+      picker.dispatchEvent(new CustomEvent("fh:entity", { bubbles: true, detail: { value: e.target.value, input: e.target } }));
+    });
+    // A pointer pick closes the list; arrow keys only move the choice.
+    list.addEventListener("click", (e) => {
+      if (e.detail > 0 && e.target.closest(".fh-entity")) setTimeout(() => close(picker));
+    });
+    list.addEventListener("keydown", (e) => {
+      if ((e.key === "Enter" || e.key === " ") && e.target.matches?.("input[type=radio]")) {
+        e.preventDefault();
+        e.target.checked || (e.target.checked = true, e.target.dispatchEvent(new Event("change", { bubbles: true })));
+        close(picker);
+      }
+    });
+    list.addEventListener("toggle", (e) => {
+      trigger.setAttribute("aria-expanded", String(e.newState === "open"));
+      if (e.newState === "open") (list.querySelector("input:checked") ?? list.querySelector("input:not(:disabled)"))?.focus({ preventScroll: true });
+    });
+    trigger.setAttribute("aria-expanded", "false");
+    if (list.querySelector("input:checked")) sync(picker);
   }
 });
