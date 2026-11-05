@@ -19,6 +19,8 @@
   .fh-app__content { display: grid; gap: var(--fh-space-6); }
 </style>
 <script>try{var r=localStorage.getItem("fh-rows");if(r)document.documentElement.setAttribute("data-fh-rows",r)}catch(e){}</script>
+<script>/* Light, dark or follow the system; remembered with the docs site's choice. */
+(function(){var h=document.documentElement,k="fh-scheme";function set(v){h.setAttribute("data-fh-scheme",v)}var s;try{s=localStorage.getItem(k)}catch(e){}if(s)set(s);document.addEventListener("DOMContentLoaded",function(){var v=s||"light";document.querySelectorAll("[data-scheme-select]").forEach(function(r){r.checked=r.value===v;r.addEventListener("change",function(){set(r.value);try{localStorage.setItem(k,r.value)}catch(e){}})})})})();</script>
 </head>
 <body data-fh-type="geist">
 <div class="fh-app">
@@ -44,6 +46,7 @@
         <p class="fh-masthead__caption"><span class="fh-masthead__index">02</span><span class="fh-masthead__title">Business · Acme Supply</span></p>
         <div class="fh-masthead__foot">
           <div class="fh-masthead__tools">
+            <fieldset class="fh-segmented fh-segmented--sm" title="Colour scheme"><legend class="fh-sr-only">Colour scheme</legend><label><input type="radio" name="scheme" value="light" data-scheme-select checked> Light</label><label><input type="radio" name="scheme" value="dark" data-scheme-select> Dark</label><label><input type="radio" name="scheme" value="auto" data-scheme-select> Auto</label></fieldset>
             <fieldset class="fh-segmented fh-segmented--sm" title="Row spacing"><legend class="fh-sr-only">Row spacing</legend><label><input type="radio" name="rows" value="sm" data-fh-rows-select> S</label><label><input type="radio" name="rows" value="md" data-fh-rows-select checked> M</label><label><input type="radio" name="rows" value="lg" data-fh-rows-select> L</label><label><input type="radio" name="rows" value="xl" data-fh-rows-select> XL</label></fieldset>
           </div>
         </div>
