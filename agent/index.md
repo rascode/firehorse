@@ -128,6 +128,7 @@
 | `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
 | `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
+| `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
 
 ## NEU · Neutral ramp
 
@@ -4014,6 +4015,108 @@ Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full`
     <div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
   </div>
 </div>
+```
+
+## KEY · Key fields
+
+Classes: `fh-keyfield` `fh-keyfield__head` `fh-keyfield__label` `fh-keyfield__type` `fh-keyfield__name` `fh-keyfield__value` `fh-keyfield__mask` `fh-keyfield__dots` `fh-keyfield__last` `fh-keyfield__action` `fh-icon` `fh-keyfield__editor` `fh-input` `fh-button` `fh-button--sm` `fh-keyfield__hint` `fh-select` `fh-keyset` `fh-keyset__head` `fh-keyset__name` `fh-keyset__count`
+
+### KEY-1 · Fields
+
+#### KEY-1.1 · Key field (copy-only)
+
+```html
+<div>
+<div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="set" data-key-id="demo-secret" data-fh="KEY-1.1">
+  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-1">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div>
+  <code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code>
+  <div class="fh-keyfield__value">
+    <output class="fh-keyfield__mask" aria-labelledby="kf-1"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output>
+    <button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy secret key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+  </div>
+</div>
+</div>
+```
+
+#### KEY-1.2 · Key field with reveal
+
+```html
+<div>
+<div class="fh-keyfield" data-fh-keyfield data-kind="identifier" data-state="set" data-revealable data-key-id="demo-publishable" data-fh="KEY-1.2">
+  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-2">Publishable key</span><span class="fh-keyfield__type" data-kind="identifier">Stripe publishable</span></div>
+  <code class="fh-keyfield__name">ACME__STRIPE_PUBLISHABLE_KEY</code>
+  <div class="fh-keyfield__value">
+    <output class="fh-keyfield__mask" aria-labelledby="kf-2"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">9c1e</span></output>
+    <button class="fh-keyfield__action" type="button" data-keyfield-reveal aria-pressed="false" aria-label="Show value" title="Show"><i class="fh-icon fh-icon--eye" aria-hidden="true"></i></button>
+    <button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy publishable key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+  </div>
+</div>
+</div>
+```
+
+#### KEY-1.3 · Key field, not set
+
+```html
+<div>
+<div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-required data-fh="KEY-1.3">
+  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-3">Webhook signing secret</span><span class="fh-keyfield__type" data-kind="credential">Stripe webhook</span></div>
+  <code class="fh-keyfield__name">ACME__STRIPE_WEBHOOK_SECRET</code>
+  <div class="fh-keyfield__value">
+    <output class="fh-keyfield__mask" aria-labelledby="kf-3">Not set</output>
+    <button class="fh-keyfield__action" type="button" aria-label="Set webhook signing secret" title="Set"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button>
+  </div>
+  <form class="fh-keyfield__editor" hidden>
+    <input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="whsec_…" aria-label="Webhook signing secret">
+    <button class="fh-button fh-button--sm" type="submit">Save</button>
+    <p class="fh-keyfield__hint">Starts with whsec_. Stored sealed; only the last four show.</p>
+  </form>
+</div>
+</div>
+```
+
+#### KEY-1.4 · Key field, needs a type
+
+```html
+<div>
+<div class="fh-keyfield" data-fh-keyfield data-state="untyped" data-fh="KEY-1.4">
+  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-4">Team ID</span><span class="fh-keyfield__type">Needs a type</span></div>
+  <code class="fh-keyfield__name">ACME__XAI_TEAM_ID</code>
+  <form class="fh-keyfield__editor">
+    <select class="fh-select" aria-label="Type for ACME__XAI_TEAM_ID"><option value>Choose a type…</option><option>ID</option><option>API key</option><option>Secret</option></select>
+    <button class="fh-button fh-button--sm" type="submit">Set type</button>
+    <p class="fh-keyfield__hint">Nothing about its value shows until it has a type.</p>
+  </form>
+</div>
+</div>
+```
+
+### KEY-2 · Groups
+
+#### KEY-2.1 · Service keys
+
+```html
+<div class="site-demo">
+          <div class="site-demo__head"><h3>Service keys</h3><p>One service's keys together, with how many are set. Adding a service to an application creates its fields from the service's slots.</p></div>
+          <div style="padding: var(--fh-inset-card)">
+<section class="fh-keyset" aria-labelledby="ks-1" data-fh="KEY-2.1">
+  <header class="fh-keyset__head"><i class="fh-icon fh-icon--video" aria-hidden="true"></i><span class="fh-keyset__name" id="ks-1">Zoom</span><span class="fh-keyset__count">1 of 2 set</span></header>
+  <div class="fh-keyfield" data-fh-keyfield data-kind="identifier" data-state="set" data-revealable data-key-id="demo-zoom-id">
+    <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-5">Client ID</span><span class="fh-keyfield__type" data-kind="identifier">OAuth client ID</span></div>
+    <code class="fh-keyfield__name">ACME__ZOOM_CLIENT_ID</code>
+    <div class="fh-keyfield__value">
+      <output class="fh-keyfield__mask" aria-labelledby="kf-5"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">Qx7w</span></output>
+      <button class="fh-keyfield__action" type="button" data-keyfield-reveal aria-pressed="false" aria-label="Show value" title="Show"><i class="fh-icon fh-icon--eye" aria-hidden="true"></i></button>
+      <button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy client ID" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+    </div>
+  </div>
+  <div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-required>
+    <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-6">Client secret</span><span class="fh-keyfield__type" data-kind="credential">OAuth client secret</span></div>
+    <code class="fh-keyfield__name">ACME__ZOOM_CLIENT_SECRET</code>
+    <div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="kf-6">Not set</output></div>
+  </div>
+</section>
+          </div>
+        </div>
 ```
 
 ## Former IDs
