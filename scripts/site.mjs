@@ -34,6 +34,7 @@ const jsStamp = Object.fromEntries([...readdirSync(join(root, "site")).filter((f
 const bustJs = (s) => s.replace(/src="(\/?)([\w-]+\.js)"/g, (m, slash, f) => (jsStamp[f] ? `src="${slash}${f}?v=${jsStamp[f]}"` : m));
 const fill = (s) => bustJs(bust(s)).replaceAll('src="site.js"', `src="site.js?v=${siteJs}"`).replaceAll('src="/site.js"', `src="/site.js?v=${siteJs}"`).replaceAll("{{HORSE}}", horse).replaceAll("{{TOKENS}}", String(tokenCount)).replaceAll("{{GZIP}}", gzipKb).replaceAll("{{SCHEMA_ROWS}}", schemaRows).replaceAll("{{DS_VERSION}}", JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version);
 // Docs pages: site/pages/**/*.html wrapped in site/parts/layout.html (see scripts/pages.mjs).
+await import("./gen-references.mjs");
 const docPages = pages();
 const ctx = assemble(docPages);
 for (const p of docPages) {
@@ -82,6 +83,7 @@ cp("agent/kc.md", "agent/kc.md");
 cp("agent/patterns.md", "agent/patterns.md");
 cp("dist/index.json", "index.json");
 cp("schema/mappings.json", "schema.json");
+if (existsSync(join(root, "site/data/references.json"))) cp("site/data/references.json", "references.json");
 
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
