@@ -325,6 +325,10 @@
     --fh-inset-tile: var(--fh-space-4);
     --fh-inset-card: var(--fh-space-6);
     --fh-inset-page: var(--fh-page-margin);
+    --fh-item-block: var(--fh-inset-tight);
+    --fh-item-inline: var(--fh-inset-control);
+    --fh-item-gap: var(--fh-gap-related);
+    --fh-item-frame: var(--fh-gap-bound);
   }
 
   :root {
@@ -2857,7 +2861,7 @@
   .fh-menu {
     max-block-size: min(22rem, 60dvh);
     min-inline-size: 13rem;
-    padding: var(--fh-space-1-5);
+    padding: var(--fh-item-frame);
     border: var(--fh-border-thin) solid var(--fh-color-border-strong);
     border-radius: var(--fh-radius-sm);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
@@ -2884,15 +2888,15 @@
 
     & > :is(a, button) {
       align-items: center;
-      gap: var(--fh-space-3);
-      border-radius: calc(var(--fh-radius-sm) - 1px);
+      gap: var(--fh-item-gap);
       inline-size: 100%;
+      padding: var(--fh-item-block) var(--fh-item-inline);
+      border-radius: calc(var(--fh-radius-sm) - 1px);
       color: inherit;
       font-size: var(--fh-text-small);
       text-align: start;
       background: none;
       border: 0;
-      padding: .55rem .65rem;
       text-decoration: none;
       display: flex;
 
@@ -3119,7 +3123,7 @@
   .fh-input, .fh-textarea, .fh-select {
     min-block-size: 2.5rem;
     inline-size: 100%;
-    padding: .55rem var(--fh-space-3);
+    padding: var(--fh-item-block) var(--fh-item-inline);
     border: var(--fh-border-thin) solid transparent;
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
@@ -3208,17 +3212,17 @@
     }
 
     .fh-select::picker(select) {
-      padding: var(--fh-space-1-5);
+      padding: var(--fh-item-frame);
       border: var(--fh-border-thin) solid var(--fh-color-border-strong);
       border-radius: var(--fh-radius-sm);
       background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
       box-shadow: var(--fh-shadow-menu);
-      margin-block-start: var(--fh-space-1-5);
+      margin-block-start: var(--fh-gap-bound);
     }
 
     .fh-select option {
+      padding: var(--fh-item-block) var(--fh-item-inline);
       border-radius: calc(var(--fh-radius-sm) - 1px);
-      padding: .55rem .65rem;
 
       &:is(:hover, :focus-visible) {
         background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
@@ -3319,10 +3323,10 @@
   }
 
   .fh-segmented {
-    gap: var(--fh-space-1);
+    gap: var(--fh-item-frame);
     inline-size: fit-content;
     max-inline-size: 100%;
-    padding: var(--fh-space-1);
+    padding: var(--fh-item-frame);
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     min-inline-size: 0;
@@ -3332,7 +3336,8 @@
     & > label {
       justify-content: center;
       align-items: center;
-      gap: var(--fh-space-1-5);
+      gap: var(--fh-item-gap);
+      padding: var(--fh-item-block) var(--fh-item-inline);
       border-radius: var(--fh-radius-pill);
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
@@ -3345,7 +3350,6 @@
       transition: background-color var(--fh-duration-base) var(--fh-ease-standard),
         color var(--fh-duration-base) var(--fh-ease-standard);
       flex: 1;
-      padding: .55rem .9rem;
       display: inline-flex;
       position: relative;
 
@@ -3701,11 +3705,11 @@
   .fh-entity {
     --fh-avatar-size: var(--fh-entity-avatar, 1.9rem);
     align-items: center;
-    gap: var(--fh-space-2-5);
+    gap: var(--fh-item-gap);
     min-block-size: 2.5rem;
     inline-size: 100%;
     min-inline-size: 0;
-    padding: .35rem var(--fh-space-3) .35rem .35rem;
+    padding: var(--fh-gap-bound) var(--fh-item-inline) var(--fh-gap-bound) var(--fh-gap-bound);
     border: var(--fh-border-thin) solid transparent;
     border-radius: var(--fh-entity-radius, var(--fh-radius-sm));
     color: var(--fh-color-text);
@@ -3719,7 +3723,7 @@
     display: flex;
 
     &:not(:has(.fh-avatar)) {
-      padding-inline-start: var(--fh-space-3);
+      padding-inline-start: var(--fh-item-inline);
     }
 
     & .fh-avatar {

@@ -82,6 +82,24 @@
         </div>
       </div>
 
+      <div class="site-demo site-anchor" id="g-items">
+        <div class="site-demo__head"><h3>Items: menus and selectors</h3><p>A menu item, a select option, a picker option and a segmented option are the same thing, so they are built the same way: <code>--fh-item-block</code> 8px by <code>--fh-item-inline</code> 12px, <code>--fh-item-gap</code> 8px between icon and text, inside a <code>--fh-item-frame</code> of 4px. Text fields use the same padding, so a field and its menu line up.</p></div>
+        <div class="site-demo__stage">
+<div class="fh-cluster" style="align-items: start; gap: var(--fh-gap-sectioned)">
+  <div class="fh-menu" style="position: static; display: block; inline-size: 14rem">
+    <button type="button"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Duplicate</button>
+    <button type="button"><i class="fh-icon fh-icon--share-2" aria-hidden="true"></i>Share</button>
+    <button type="button"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete</button>
+  </div>
+  <div class="fh-stack" style="inline-size: 14rem">
+    <div class="fh-select-wrap"><select class="fh-select" aria-label="Industry"><option>Hardware wholesale</option><option>Retail</option></select></div>
+    <input class="fh-input" aria-label="Legal name" value="Acme Supply Co. LLC">
+    <fieldset class="fh-segmented"><legend class="fh-sr-only">Scheme</legend><label><input type="radio" name="g-seg" checked> Dark</label><label><input type="radio" name="g-seg"> Light</label><label><input type="radio" name="g-seg"> Auto</label></fieldset>
+  </div>
+</div>
+        </div>
+      </div>
+
       <div class="site-demo site-anchor" id="g-lint">
         <div class="site-demo__head"><h3>Held by lint</h3><p><code>npm run lint</code> flags any raw <code>--fh-space-*</code> in a component and prints the count. It warns while the system moves over and becomes an error once the count reaches zero (<code>--strict-spacing</code> turns it on early). Tokens, themes and the layout primitives are exempt.</p></div>
       </div>

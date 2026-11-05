@@ -10,7 +10,7 @@
   .fh-select {
     inline-size: 100%;
     min-block-size: 2.5rem;
-    padding: 0.55rem var(--fh-space-3);
+    padding: var(--fh-item-block) var(--fh-item-inline);
     border: var(--fh-border-thin) solid transparent;
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
@@ -100,8 +100,8 @@
     }
 
     .fh-select::picker(select) {
-      margin-block-start: var(--fh-space-1-5);
-      padding: var(--fh-space-1-5);
+      margin-block-start: var(--fh-gap-bound);
+      padding: var(--fh-item-frame);
       border: var(--fh-border-thin) solid var(--fh-color-border-strong);
       border-radius: var(--fh-radius-sm);
       background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
@@ -109,7 +109,7 @@
     }
 
     .fh-select option {
-      padding: 0.55rem 0.65rem;
+      padding: var(--fh-item-block) var(--fh-item-inline);
       border-radius: calc(var(--fh-radius-sm) - 1px);
 
       &:is(:hover, :focus-visible) {

@@ -55,11 +55,11 @@
     --fh-avatar-size: var(--fh-entity-avatar, 1.9rem);
     display: flex;
     align-items: center;
-    gap: var(--fh-space-2-5);
+    gap: var(--fh-item-gap);
     inline-size: 100%;
     min-inline-size: 0;
     min-block-size: 2.5rem;
-    padding: 0.35rem var(--fh-space-3) 0.35rem 0.35rem;
+    padding: var(--fh-gap-bound) var(--fh-item-inline) var(--fh-gap-bound) var(--fh-gap-bound);
     border: var(--fh-border-thin) solid transparent;
     border-radius: var(--fh-entity-radius, var(--fh-radius-sm));
     background: none;
@@ -73,7 +73,7 @@
       box-shadow var(--fh-duration-fast) var(--fh-ease-standard);
 
     /* Text only: no avatar, so the row starts with the name. */
-    &:not(:has(.fh-avatar)) { padding-inline-start: var(--fh-space-3); }
+    &:not(:has(.fh-avatar)) { padding-inline-start: var(--fh-item-inline); }
 
     & .fh-avatar { flex: none; }
   }

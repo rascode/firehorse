@@ -132,7 +132,8 @@
    *   grouped-wide 16px  siblings that need air: cards in a column, form rows
    *   sectioned   24px   parts of a card or panel
    *   separated   48px   sections on a page
-   * Insets follow the same steps. Re-resolved under data-fh-density so a
+   * Insets follow the same steps. Items (menu items, options, segmented
+   * options) pad 8 by 12 with an 8px gap inside a 4px frame. Re-resolved under data-fh-density so a
    * dense section tightens every relationship together. */
   :root,
   [data-fh-density] {
@@ -148,5 +149,12 @@
     --fh-inset-tile: var(--fh-space-4);
     --fh-inset-card: var(--fh-space-6);
     --fh-inset-page: var(--fh-page-margin);
+
+    /* Items: every menu item, select option, picker option and segmented
+       option is built the same way (HIG · Spacing · Items). */
+    --fh-item-block: var(--fh-inset-tight);
+    --fh-item-inline: var(--fh-inset-control);
+    --fh-item-gap: var(--fh-gap-related);
+    --fh-item-frame: var(--fh-gap-bound);
   }
 }
