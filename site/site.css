@@ -206,6 +206,11 @@ body::before {
   font-size: var(--fh-text-small);
   overflow: hidden;
 }
+/* Rascode HIG · Frame: the copy beside the window stands one card inset
+   in from the content line, and the table's first column starts on that
+   same line, so the heading, lede, rows and note share one left edge. */
+.site-adapt__copy > :not(.site-adapt__table) { padding-inline-start: var(--fh-inset-card); }
+.site-adapt__table :is(th, td):first-child { padding-inline-start: calc(var(--fh-inset-card) - var(--fh-border-thin)); }
 .site-adapt__table :is(th, td) {
   padding: var(--fh-space-3) var(--fh-space-4);
   text-align: start;
