@@ -29,6 +29,7 @@
  *   data-fh-density      compact · comfortable · spacious
  *   data-fh-table        lined · zebra · borderless
  *   data-fh-rows         sm · md · lg · xl   (row spacing in tables and key value lists)
+ *   data-fh-cursor       dot · system   (dot is the default: a white circle with an etch)
  *   data-fh-type         geist · inter · hanken · archivo
  *
  * Type presets set the sans and display families and the heading tracking
@@ -122,6 +123,17 @@
   [data-fh-radius="sharp"] { --fh-radius-sm: 0; --fh-radius-md: 0; --fh-radius-lg: 0; --fh-radius-xl: 0; }
   [data-fh-radius="soft"] { --fh-radius-sm: 6px; --fh-radius-md: 10px; --fh-radius-lg: 1rem; --fh-radius-xl: 1.25rem; }
   [data-fh-radius="round"] { --fh-radius-sm: 999px; --fh-radius-md: 1rem; --fh-radius-lg: 1.5rem; --fh-radius-xl: 2rem; }
+
+  /* —— Cursor: a white circle with a thin etch, the Firehorse pointer.
+     A dark ring reads on light surfaces, a faint light ring on dark ones.
+     Actions (links, buttons, summaries) get a slightly larger circle.
+     Text fields keep the text caret. data-fh-cursor="system" restores
+     the platform arrow and hand. —— */
+  :root {
+    --fh-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10.0' cy='10.0' r='6.25' fill='none' stroke='white' stroke-opacity='.35'/%3E%3Ccircle cx='10.0' cy='10.0' r='5' fill='white' stroke='black' stroke-opacity='.3'/%3E%3C/svg%3E") 10 10, default;
+    --fh-cursor-action: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12.0' cy='12.0' r='8.25' fill='none' stroke='white' stroke-opacity='.35'/%3E%3Ccircle cx='12.0' cy='12.0' r='7' fill='white' stroke='black' stroke-opacity='.3'/%3E%3C/svg%3E") 12 12, pointer;
+  }
+  [data-fh-cursor="system"] { --fh-cursor: default; --fh-cursor-action: pointer; }
 
   /* —— Row spacing: the room above and below each row of a table,
      key value list or description list. md is the default. —— */

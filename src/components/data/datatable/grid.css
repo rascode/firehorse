@@ -57,7 +57,7 @@
       background-color: var(--fh-color-surface);
       background-image: linear-gradient(var(--_zebra), var(--_zebra));
     }
-    & tbody tr:not(.fh-dt__group) { cursor: default; }
+    & tbody tr:not(.fh-dt__group) { cursor: var(--fh-cursor); }
     & tbody tr:not(.fh-dt__group):hover > :is(td, th) { background-color: color-mix(in oklab, var(--fh-color-text) 4%, var(--fh-color-surface)); }
     & tbody tr[aria-selected="true"] > :is(td, th) { background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--fh-color-surface)); }
     & tbody tr:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: calc(var(--fh-focus-width) * -1); }
@@ -104,7 +104,7 @@
     color: inherit;
     font: inherit;
     text-align: start;
-    cursor: pointer;
+    cursor: var(--fh-cursor-action);
 
     & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); font-size: 1.05em; opacity: 0.75; }
     & > span { flex: 1; overflow: hidden; text-overflow: ellipsis; }
@@ -173,7 +173,7 @@
     background: none;
     color: var(--fh-color-text);
     font: inherit;
-    cursor: pointer;
+    cursor: var(--fh-cursor-action);
 
     &::before {
       content: "";

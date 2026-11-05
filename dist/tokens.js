@@ -1517,6 +1517,18 @@ export const tokens = {
     "tier": "config",
     "group": "chip"
   },
+  "--fh-cursor": {
+    "$value": "default",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "cursor"
+  },
+  "--fh-cursor-action": {
+    "$value": "pointer",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "cursor"
+  },
   "--fh-row-pad": {
     "$value": "var(--fh-space-5)",
     "$type": "dimension",

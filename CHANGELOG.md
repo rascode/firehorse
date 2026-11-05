@@ -2,6 +2,8 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Cursor** (`src/tokens/config.css`, `src/base/reset.css`): the pointer is a white circle with a thin etch (a dark ring for light surfaces, a faint light ring for dark ones). Actions (links, buttons, summaries, checkboxes) get a slightly larger circle; text fields keep the text caret; disabled keeps not-allowed. Tokens `--fh-cursor` and `--fh-cursor-action`; `data-fh-cursor="system"` restores the platform arrow and hand. Every component `cursor: pointer` now reads `--fh-cursor-action`.
+
 First public release.
 
 - **Section card (SEC) and metric tiles (MET)** in Admin, and the **key value list (KVL)** in Content. Section card (`src/admin/section-card.css`): one area of a record, with a head (`__title` with a tone-tinted icon, `__tools` for chips or buttons on the right), `__lede`, `__subhead` (mono caps on a dashed rule), `__note` and a `__foot` for its actions; `--inset` is a frosted sub-card inside another (one address role), clouded by `--fh-frost`, `--aside` puts the lede beside the title on wide slots; knobs `--fh-section-card-pad`, `--fh-section-card-gap`. Metric tiles (`src/admin/metric.css`): `fh-metrics` lays out `fh-metric` tiles as many across as fit (`--fh-metrics-min`, 12rem), each with `__label` (icon), `__value` (figure font), `__sub`, `__source` and an optional `fh-progress`; `--needed` marks a fact still to fill in, and `a.fh-metric` opens its area. Key value list (`src/components/content/key-value.css`): `fh-kv` rows of label left, value right on dashed rules, two across from 38rem, `__full` for a long value; `--fields` puts a field beside each label (`--fh-kv-label`), `--single` keeps one column. No motion. Demos: section card and metric tiles on Admin (`/admin/`), key value list on Content (`#c-kv`).

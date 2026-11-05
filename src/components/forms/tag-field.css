@@ -62,7 +62,7 @@
     border: 0;
     border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + 0.2rem);
     background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
-    cursor: default;
+    cursor: var(--fh-cursor);
 
     &:focus-within { box-shadow: none; }
 
@@ -105,7 +105,7 @@
     border-radius: var(--fh-radius-round);
     background: none;
     color: var(--fh-color-text-muted);
-    cursor: pointer;
+    cursor: var(--fh-cursor-action);
     transition: color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
 
     &::before {
@@ -152,7 +152,7 @@
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    cursor: pointer;
+    cursor: var(--fh-cursor-action);
 
     &:hover, &:focus-visible { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); color: var(--fh-color-text); outline: none; }
   }

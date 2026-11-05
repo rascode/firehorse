@@ -253,6 +253,8 @@ export type FirehorseToken =
   | "--fh-chip-radius"
   | "--fh-chip-bg"
   | "--fh-chip-underline"
+  | "--fh-cursor"
+  | "--fh-cursor-action"
   | "--fh-row-pad"
   | "--fh-density"
   | "--fh-table-zebra"
