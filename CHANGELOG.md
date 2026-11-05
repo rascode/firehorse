@@ -2,6 +2,8 @@
 
 ## 1.1.0 — 2026-11-04
 
+- **Frost inheritance** (BKD): on an app with a backdrop, metric tiles, cube cards and strips, entity picker triggers and the tracker's quick bar, check cards and log take `--fh-frost-fill` / `--fh-frost-filter` with the other framed surfaces, so one frost setting reaches every framed surface. Check cards tint with an image layer so the frost shows under the tone.
+- **Tracker** (TRA, `src/admin/tracker.css`): a day's check-offs as one section, the standard from Helm's Today. Head (`fh-tracker__head`) with the title, the day's bar (`__meter`) and done chips flush right (`__done`); a quick-add bar (`fh-quick`, `__label`, `__action`); check-off cards (`fh-check-cards`, `fh-check-card` with `__check`, `__area`, `__icon`, `__title`, `__meter`, `__above`, `__below`): one height per row, text flush left, the action's icon large on the left, an etched check top right; and the day's log (`fh-tracker__log`) beside them on wide screens. Knobs `--fh-check-card-min`, `--fh-tracker-log`. Demo on /admin/.
 - **Icons:** 17 habit icons (`person-standing`, `bike`, `dumbbell`, `heart-pulse`, `biceps-flexed`, `pill`, `sprout`, `flower-2`, `book-open`, `pen-line`, `sunrise`, `droplet`, `footprints`, `bed`, `apple`, `salad`, `timer`); 221 in all.
 - **Masthead · Split** (MST-1.3, `fh-masthead--split` with `--bar`): the caption and the tools each in their own etched, frosted pill, with the page showing between them.
 - **Cube cards · Strip** (CUB-2.4, `fh-cube-cards--strip`): the docs page summary promoted to the library. Cards joined into one etched strip, no fills, etched cubes; only the number carries the tone (per card or one for the strip). The docs page heads use it.

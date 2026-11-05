@@ -1,0 +1,277 @@
+/*
+ * Firehorse — Tracker (TRA)
+ * admin · layer fh.components · docs /admin/#TRA
+ */
+
+@layer fh.components {
+  /* —— Tracker ——
+   * A day's check-offs as one section (Helm's Today, Habits and Actions):
+   * a head with the title, a bar of the day's share and the done items as
+   * chips flush right; a quick-add bar across the page; check-off cards in
+   * a grid; and the day's log beside them.
+   *   <section class="fh-tracker">
+   *     <header class="fh-tracker__head"><h2>Habits</h2>
+   *       <p class="fh-tracker__meter"><progress class="fh-progress" value="38" max="100"></progress><b>38%</b></p>
+   *       <ul class="fh-tracker__done"><li class="fh-chip"><i class="fh-icon fh-icon--check"></i>Workout <b>+20</b></li></ul>
+   *     </header>
+   *     <div class="fh-quick"><p class="fh-quick__label">Quick add</p><button class="fh-quick__action">…</button></div>
+   *     <div class="fh-tracker__body">
+   *       <ul class="fh-check-cards"><li><button class="fh-check-card" data-tone="orange">
+   *         <span class="fh-check-card__check"></span>
+   *         <span class="fh-check-card__area"><i class="fh-icon fh-icon--flame"></i>Fit</span>
+   *         <span class="fh-check-card__icon"><i class="fh-icon fh-icon--person-standing"></i></span>
+   *         <span class="fh-check-card__title"><small>Do</small>Cardio</span>
+   *         <span class="fh-check-card__meter"><span class="fh-check-card__above"><span>30 minutes</span><span>+20 pts</span></span>
+   *           <progress class="fh-progress" value="0" max="30"></progress><span class="fh-check-card__below">0 of 30 done</span></span>
+   *       </button></li></ul>
+   *       <aside class="fh-tracker__log"><h3>Today’s log <span>3</span></h3><ol>…<li><time>1:01 AM</time><div><b>Workout</b><span>6 workouts</span></div></li></ol></aside>
+   *     </div>
+   *   </section>
+   * Cards share one height per row; the text is flush left, the action's
+   * icon large on the left, an etched round check top right. A card is a
+   * button: open a check-off dialog from it (how much, a note, photos).
+   * Spacing by relationship: parts of the section are sectioned (24px).
+   * Knobs: --fh-check-card-min (card width, 8.5rem), --fh-tracker-log (log
+   * column, 20rem). */
+  .fh-tracker {
+    display: grid;
+    gap: var(--fh-gap-sectioned);
+    container-type: inline-size;
+  }
+
+  .fh-tracker__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    min-block-size: 2.5rem;
+
+    & > :is(h2, h3) { margin: 0; }
+  }
+
+  .fh-tracker__meter {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    margin: 0 0 0 var(--fh-gap-sectioned);
+
+    & > .fh-progress { --fh-progress-size: 0.375rem; inline-size: clamp(8rem, 22cqi, 16rem); }
+    & > b { color: var(--fh-color-text-muted); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-medium); font-variant-numeric: tabular-nums; }
+  }
+
+  /* Done items: chips, flush right. */
+  .fh-tracker__done {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--fh-gap-related);
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+
+    & > .fh-chip { gap: var(--fh-gap-bound); }
+    & > .fh-chip b { margin-inline-start: var(--fh-gap-bound); color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); font-weight: var(--fh-weight-medium); }
+  }
+
+  /* Quick add: one etched bar across the page. */
+  .fh-quick {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-card);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+
+    & form { display: contents; }
+  }
+
+  .fh-quick__label {
+    margin: 0 var(--fh-gap-related) 0 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-quick__action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-gap-related) var(--fh-inset-control);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    cursor: var(--fh-cursor-action);
+
+    & .fh-icon { color: var(--fh-tone, var(--fh-color-text-muted)); }
+    &:hover { border-style: solid; border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); background: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 8%, transparent); }
+    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  /* Body: the cards, and the day's log beside them on wide screens. */
+  .fh-tracker__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--fh-gap-sectioned);
+    align-items: start;
+  }
+
+  @container (inline-size >= 64rem) {
+    .fh-tracker__body:has(> .fh-tracker__log) { grid-template-columns: minmax(0, 1fr) var(--fh-tracker-log, 20rem); }
+  }
+
+  /* Check-off cards. */
+  .fh-check-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-check-card-min, 8.5rem)), 1fr));
+    grid-auto-rows: 1fr;
+    gap: var(--fh-gap-grouped);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li, & form { display: grid; margin: 0; }
+  }
+
+  .fh-check-card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: var(--fh-gap-bound);
+    min-block-size: 11rem;
+    padding: var(--fh-inset-tile);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-radius-md);
+    /* The tone tint is an image layer, so a frost fill (background-color) shows under it. */
+    background-image: linear-gradient(color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 4%, transparent), color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 4%, transparent));
+    color: var(--fh-color-text);
+    font: inherit;
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition: border-color var(--fh-duration-fast) var(--fh-ease-out), background-color var(--fh-duration-fast) var(--fh-ease-out);
+
+    &:hover { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); background-image: linear-gradient(color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 9%, transparent), color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 9%, transparent)); }
+    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  .fh-check-card__check {
+    position: absolute;
+    inset-block-start: var(--fh-inset-control);
+    inset-inline-end: var(--fh-inset-control);
+    inline-size: 1.125rem;
+    aspect-ratio: 1;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+
+    .fh-check-card:hover & { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 18%, transparent); }
+  }
+
+  .fh-check-card__area {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    color: var(--fh-tone, var(--fh-color-text-muted));
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  /* The action's icon: large, on the left, in the tone, no ring. */
+  .fh-check-card__icon {
+    align-self: center;
+    margin-block: var(--fh-gap-grouped) var(--fh-gap-related);
+    color: var(--fh-tone, var(--fh-color-text-muted));
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  /* The action: the verb small above, the subject. */
+  .fh-check-card__title {
+    display: grid;
+    gap: 0.15rem;
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-snug);
+
+    & > small { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); font-weight: var(--fh-weight-regular); letter-spacing: var(--fh-tracking-wide); }
+  }
+
+  /* The bar with a line above (how much · points) and a source line below. */
+  .fh-check-card__meter {
+    display: grid;
+    gap: var(--fh-gap-bound);
+    margin-block-start: var(--fh-gap-related);
+
+    & > .fh-progress { --fh-progress-size: 0.25rem; inline-size: 100%; }
+  }
+
+  .fh-check-card__above {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+
+    & > * { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    & > :last-child { flex: none; font-variant-numeric: tabular-nums; }
+  }
+
+  .fh-check-card__below {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+  }
+
+  /* The day's log: time on the left, the entry on an etched line with a tone dot. */
+  .fh-tracker__log {
+    & > :is(h3, h4) {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 0 var(--fh-gap-related);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+
+      & > span { color: var(--fh-color-text-subtle); }
+    }
+    & > ol { display: grid; margin: 0; padding: 0; list-style: none; }
+    & li { display: grid; grid-template-columns: 4rem minmax(0, 1fr); column-gap: var(--fh-gap-grouped-wide); margin: 0; }
+    & time { padding-block: var(--fh-inset-control); color: var(--fh-color-text-muted); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; }
+    & li > div {
+      position: relative;
+      display: grid;
+      gap: var(--fh-gap-bound);
+      padding: var(--fh-inset-control) 0 var(--fh-inset-control) var(--fh-gap-grouped-wide);
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: calc(var(--fh-gap-bound) * -1 - var(--fh-border-thin) / 2);
+        inset-block-start: calc(var(--fh-inset-control) + 0.4em);
+        inline-size: var(--fh-gap-related);
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-pill);
+        background: var(--fh-tone, var(--fh-color-text-muted));
+      }
+    }
+    & li b { font-weight: var(--fh-weight-medium); }
+    & li span { color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-check-card, .fh-quick__action { transition: none; }
+  }
+}

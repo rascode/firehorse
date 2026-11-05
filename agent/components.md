@@ -14,7 +14,7 @@
 | Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
-| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) `fh-gauge` |
+| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
 | People | `fh-social` (`__photo` `__body` `__name` `__check` `__bio` `__foot` `__stats` `--fade` `--dark`) |
 | Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
@@ -2537,6 +2537,40 @@ A full-circle meter from `--fh-value` (0–100): the figure in the middle, the c
   <div class="fh-gauge" data-tone="amber" style="--fh-value: 64" role="img" aria-label="64% of the limit used"><b>64%</b><small>Of limit</small></div>
   <div class="fh-gauge" data-tone="danger" style="--fh-value: 93; --fh-gauge-size: 6rem; --fh-gauge-width: 0.45rem" role="img" aria-label="93% of storage used" data-fh="GAU-1.2"><b>93%</b><small>Storage</small></div>
 </div>
+```
+
+### TRA · Tracker
+
+A day's check-offs as one section, as on Helm's Today: the title with the day's bar and the done items as chips flush right; a quick-add bar across the page; check-off cards (one height per row, text flush left, the action's icon large on the left, an etched check top right, a bar with a line above and below); the day's log beside them. Each card is a button that opens a check-off dialog.
+
+```html
+<section class="fh-tracker" data-fh="TRA-1.1">
+  <header class="fh-tracker__head"><h3 class="fh-h3">Habits</h3>
+    <p class="fh-tracker__meter" data-tone="lime"><progress class="fh-progress" value="38" max="100">38%</progress><b>38%</b></p>
+    <ul class="fh-tracker__done"><li class="fh-chip" data-tone="orange"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Workout <b>+20</b></li><li class="fh-chip" data-tone="orange"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>25 push-ups <b>+20</b></li><li class="fh-chip" data-tone="lime"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Haritaki <b>+20</b></li></ul>
+  </header>
+  <div class="fh-quick" role="group" aria-label="Quick add"><p class="fh-quick__label">Quick add</p>
+    <button class="fh-quick__action" type="button" data-tone="orange"><i class="fh-icon fh-icon--biceps-flexed" aria-hidden="true"></i>+25 push-ups</button>
+    <button class="fh-quick__action" type="button" data-tone="sky"><i class="fh-icon fh-icon--phone" aria-hidden="true"></i>Log a phone call</button>
+    <button class="fh-quick__action" type="button" data-tone="sky"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>One outreach</button>
+    <button class="fh-quick__action" type="button" data-tone="violet"><i class="fh-icon fh-icon--book-open" aria-hidden="true"></i>Read 30 pages</button>
+    <button class="fh-quick__action" type="button" data-tone="lime"><i class="fh-icon fh-icon--droplet" aria-hidden="true"></i>Glass of water</button>
+  </div>
+  <div class="fh-tracker__body">
+    <ul class="fh-check-cards">
+          <li><button class="fh-check-card" type="button" data-tone="orange"><span class="fh-check-card__check"></span><span class="fh-check-card__area"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i>Fit</span><span class="fh-check-card__icon"><i class="fh-icon fh-icon--person-standing" aria-hidden="true"></i></span><span class="fh-check-card__title"><small>Do</small>Cardio</span><span class="fh-check-card__meter"><span class="fh-check-card__above"><span>30 minutes</span><span>+20 pts</span></span><progress class="fh-progress" value="0" max="30"></progress><span class="fh-check-card__below">0 of 30 done</span></span></button></li>
+          <li><button class="fh-check-card" type="button" data-tone="lime"><span class="fh-check-card__check"></span><span class="fh-check-card__area"><i class="fh-icon fh-icon--leaf" aria-hidden="true"></i>Health</span><span class="fh-check-card__icon"><i class="fh-icon fh-icon--pill" aria-hidden="true"></i></span><span class="fh-check-card__title"><small>Take</small>Ashwagandha</span><span class="fh-check-card__meter"><span class="fh-check-card__above"><span>1 tsp</span><span>+20 pts</span></span><progress class="fh-progress" value="0" max="1"></progress><span class="fh-check-card__below">0 of 1 done</span></span></button></li>
+          <li><button class="fh-check-card" type="button" data-tone="sky"><span class="fh-check-card__check"></span><span class="fh-check-card__area"><i class="fh-icon fh-icon--brain" aria-hidden="true"></i>Mind</span><span class="fh-check-card__icon"><i class="fh-icon fh-icon--pen-line" aria-hidden="true"></i></span><span class="fh-check-card__title"><small>Write</small>Longform piece</span><span class="fh-check-card__meter"><span class="fh-check-card__above"><span>1000 words</span><span>+20 pts</span></span><progress class="fh-progress" value="350" max="1000"></progress><span class="fh-check-card__below">350 of 1000 done</span></span></button></li>
+          <li><button class="fh-check-card" type="button" data-tone="sky"><span class="fh-check-card__check"></span><span class="fh-check-card__area"><i class="fh-icon fh-icon--brain" aria-hidden="true"></i>Mind</span><span class="fh-check-card__icon"><i class="fh-icon fh-icon--phone" aria-hidden="true"></i></span><span class="fh-check-card__title"><small>Make</small>Phone calls</span><span class="fh-check-card__meter"><span class="fh-check-card__above"><span>3 calls</span><span>+20 pts</span></span><progress class="fh-progress" value="1" max="3"></progress><span class="fh-check-card__below">1 of 3 done</span></span></button></li>
+          <li><button class="fh-check-card" type="button" data-tone="violet"><span class="fh-check-card__check"></span><span class="fh-check-card__area"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i>Soul</span><span class="fh-check-card__icon"><i class="fh-icon fh-icon--sunrise" aria-hidden="true"></i></span><span class="fh-check-card__title"><small>Practice</small>Rising Center</span><span class="fh-check-card__meter"><span class="fh-check-card__above"><span>7 times</span><span>+20 pts</span></span><progress class="fh-progress" value="0" max="7"></progress><span class="fh-check-card__below">0 of 7 done</span></span></button></li>
+    </ul>
+    <aside class="fh-tracker__log"><h4>Today’s log <span>3</span></h4><ol>
+      <li data-tone="orange"><time>7:10 AM</time><div><b>Workout</b><span>6 workouts</span></div></li>
+      <li data-tone="orange"><time>7:40 AM</time><div><b>25 push-ups</b><span>25 push-ups</span></div></li>
+      <li data-tone="lime"><time>8:05 AM</time><div><b>Haritaki</b><span>1 tbsp · with water</span></div></li>
+    </ol></aside>
+  </div>
+</section>
 ```
 
 ### THB · Thumbnails & link cards

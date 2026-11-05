@@ -76,7 +76,10 @@
 
     & > :not(.fh-backdrop) { position: relative; z-index: 1; }
 
-    & :is(.fh-app__side, .fh-section-card, .fh-table-wrap, .fh-dt, .fh-card, .fh-accordion, .fh-empty, .fh-stats, .fh-overview, .fh-code) {
+    /* Every framed surface takes the frost (the inheritance model): set
+       --fh-frost once, in Options or the theme, and all of these follow. */
+    & :is(.fh-app__side, .fh-section-card, .fh-table-wrap, .fh-dt, .fh-card, .fh-accordion, .fh-empty, .fh-stats, .fh-overview, .fh-code,
+          .fh-metric, .fh-cube-card, .fh-quick, .fh-check-card, .fh-tracker__log, .fh-entity-picker > .fh-entity, .fh-cube-cards--strip) {
       background-color: var(--fh-frost-fill);
       backdrop-filter: var(--fh-frost-filter);
     }
