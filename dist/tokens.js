@@ -318,13 +318,13 @@ export const tokens = {
     "group": "weight"
   },
   "--fh-text-micro": {
-    "$value": "0.62rem",
+    "$value": "0.6875rem",
     "$type": "dimension",
     "tier": "primitives",
     "group": "text"
   },
   "--fh-text-label": {
-    "$value": "0.68rem",
+    "$value": "0.6875rem",
     "$type": "dimension",
     "tier": "primitives",
     "group": "text"
@@ -342,7 +342,7 @@ export const tokens = {
     "group": "text"
   },
   "--fh-text-body": {
-    "$value": "0.95rem",
+    "$value": "1rem",
     "$type": "dimension",
     "tier": "primitives",
     "group": "text"

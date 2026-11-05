@@ -130,11 +130,11 @@
     --fh-weight-semibold: 550;
     --fh-weight-bold: 600;
     --fh-weight-heavy: 700;
-    --fh-text-micro: .62rem;
-    --fh-text-label: .68rem;
+    --fh-text-micro: .6875rem;
+    --fh-text-label: .6875rem;
     --fh-text-caption: .78rem;
     --fh-text-small: .88rem;
-    --fh-text-body: .95rem;
+    --fh-text-body: 1rem;
     --fh-text-lede: 1.05rem;
     --fh-text-large: 1.15rem;
     --fh-text-h4: clamp(1.05rem, .95rem + .5cqi, 1.2rem);
@@ -1242,7 +1242,7 @@
   .fh-button--sm {
     min-block-size: 2rem;
     padding: .42rem var(--fh-inset-control);
-    font-size: .64rem;
+    font-size: var(--fh-text-micro);
   }
 
   .fh-button--lg {
@@ -1698,8 +1698,8 @@
 
   .fh-eyebrow-pill--sm {
     gap: var(--fh-gap-bound);
+    font-size: var(--fh-text-micro);
     padding: .22rem .55rem .22rem .4rem;
-    font-size: .58rem;
   }
 
   .fh-eyebrow-pill--lg {
@@ -1895,7 +1895,7 @@
     max-inline-size: 100%;
     color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
     font-family: var(--fh-font-mono);
-    font-size: .58rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
@@ -2923,9 +2923,9 @@
     margin: var(--fh-gap-bound) var(--fh-gap-related) var(--fh-gap-bound);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
-    font-size: .62rem;
   }
 
   .fh-menu > :is(a, button) > .fh-icon {
@@ -2935,8 +2935,8 @@
   .fh-menu > :is(a, button) > kbd, .fh-menu__kbd {
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
     margin-inline-start: auto;
-    font-size: .66rem;
   }
 
   .fh-menu > [role="menuitemcheckbox"], .fh-menu > [role="menuitemradio"] {
@@ -3082,9 +3082,9 @@
       content: "Required";
       border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
       border-radius: var(--fh-radius-pill);
+      font-size: var(--fh-text-micro);
       color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
       padding: .08rem .42rem .12rem;
-      font-size: .58rem;
       line-height: 1.35;
     }
 
@@ -3341,7 +3341,7 @@
       border-radius: var(--fh-radius-pill);
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
-      font-size: .66rem;
+      font-size: var(--fh-text-micro);
       font-weight: var(--fh-weight-bold);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
@@ -3379,8 +3379,8 @@
     padding: 2px;
 
     & > label {
+      font-size: var(--fh-text-micro);
       padding: .32rem .6rem;
-      font-size: .6rem;
     }
   }
 
@@ -3790,9 +3790,9 @@
     & > small {
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
-      font-size: .56rem;
     }
   }
 
@@ -3945,10 +3945,10 @@
       padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
       margin: 0;
-      font-size: .62rem;
       display: flex;
 
       & > small {
@@ -4111,7 +4111,7 @@
     border-radius: var(--fh-radius-pill);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: .6rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-bold);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
@@ -5303,7 +5303,7 @@
   .fh-dt__sort-rank {
     color: var(--fh-tone);
     font-family: var(--fh-font-mono);
-    font-size: .62rem;
+    font-size: var(--fh-text-micro);
   }
 
   .fh-dt__resize {
@@ -5576,9 +5576,9 @@
 
     & > span {
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       color: var(--fh-color-text-muted);
       place-items: center;
-      font-size: .62rem;
       display: inline-grid;
     }
   }
@@ -6541,7 +6541,7 @@
     max-inline-size: 11rem;
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
-    font-size: .66rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
     letter-spacing: var(--fh-tracking-mono);
     font-variant-numeric: tabular-nums;
@@ -6564,8 +6564,8 @@
 
   .fh-cube--sm {
     min-inline-size: 1.5rem;
+    font-size: var(--fh-text-micro);
     padding: .22rem .35rem;
-    font-size: .58rem;
   }
 
   .fh-cube--xl {
@@ -6601,7 +6601,7 @@
       gap: var(--fh-gap-related);
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
-      font-size: .56rem;
+      font-size: var(--fh-text-micro);
       font-weight: var(--fh-weight-medium);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
@@ -6860,7 +6860,7 @@
     inline-size: 2rem;
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
-    font-size: .62rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
     letter-spacing: .04em;
     flex: none;
@@ -6897,11 +6897,11 @@
     & > small {
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wider);
       text-overflow: ellipsis;
       text-transform: uppercase;
       white-space: nowrap;
-      font-size: .58rem;
       overflow: hidden;
     }
   }
@@ -7055,7 +7055,7 @@
     inline-size: 2rem;
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
-    font-size: .62rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
     flex: none;
     place-items: center;
@@ -7698,7 +7698,7 @@
       box-shadow: var(--fh-shadow-menu);
       color: var(--fh-color-text);
       font-family: var(--fh-font-mono);
-      font-size: .62rem;
+      font-size: var(--fh-text-micro);
       font-weight: var(--fh-weight-medium);
       letter-spacing: var(--fh-tracking-wide);
       text-transform: none;
@@ -8058,9 +8058,9 @@
   .fh-message__name {
     color: var(--fh-tone);
     font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
-    font-size: .6rem;
   }
 
   .fh-message--self, .fh-message[data-from="me"] {
@@ -8613,10 +8613,10 @@
         aspect-ratio: 1;
         border: var(--fh-border-thick) dashed var(--fh-color-etch);
         border-radius: var(--fh-radius-round);
+        inline-size: 1.6rem;
+        font-size: var(--fh-text-micro);
         flex: none;
         place-items: center;
-        inline-size: 1.6rem;
-        font-size: .62rem;
         display: grid;
       }
 
@@ -8664,7 +8664,7 @@
       font-size: 0;
 
       &:before {
-        font-size: .62rem;
+        font-size: var(--fh-text-micro);
       }
     }
 
@@ -8874,7 +8874,7 @@
       background-color: var(--fh-tone);
       color: var(--fh-color-on-tone);
       font-family: var(--fh-font-mono);
-      font-size: .58rem;
+      font-size: var(--fh-text-micro);
       font-weight: var(--fh-weight-heavy);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
@@ -10792,9 +10792,9 @@
     & dt {
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
-      font-size: .62rem;
     }
 
     & dd {
@@ -11291,10 +11291,10 @@
     & > small {
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wide);
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: .62rem;
       overflow: hidden;
     }
   }
@@ -11439,9 +11439,9 @@
     & dt {
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
-      font-size: .58rem;
     }
 
     & dd {
@@ -11552,8 +11552,8 @@
       & > kbd {
         color: var(--fh-color-text-subtle);
         font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-micro);
         margin-inline-start: auto;
-        font-size: .66rem;
       }
 
       &[hidden] {
@@ -11568,7 +11568,7 @@
     border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
-    font-size: .64rem;
+    font-size: var(--fh-text-micro);
     display: flex;
   }
 
@@ -11586,9 +11586,9 @@
       padding: var(--fh-inset-tight) 0;
       border-radius: var(--fh-radius-md);
       color: var(--fh-color-text-subtle);
+      font-size: var(--fh-text-micro);
       justify-items: center;
       gap: .2rem;
-      font-size: .66rem;
       text-decoration: none;
       display: grid;
       position: relative;
@@ -11616,9 +11616,9 @@
         background-color: var(--fh-color-danger);
         min-inline-size: 1rem;
         color: var(--fh-color-on-media);
+        font-size: var(--fh-text-micro);
         text-align: center;
         padding: 0 .25rem;
-        font-size: .6rem;
         line-height: 1rem;
         position: absolute;
         inset-block-start: .1rem;
@@ -12378,7 +12378,7 @@
     background-color: color-mix(in oklab, var(--fh-color-canvas) 78%, transparent);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: .58rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
@@ -12798,8 +12798,8 @@
       min-inline-size: 1.05rem;
       color: var(--fh-color-on-tone);
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       padding: 0 .28rem;
-      font-size: .6rem;
       line-height: 1.05rem;
       position: absolute;
       inset-block-start: .2rem;
@@ -13270,8 +13270,8 @@
       inline-size: 1.6rem;
       color: var(--fh-tone, var(--fh-color-text));
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
       place-items: center;
-      font-size: .68rem;
       display: grid;
     }
   }

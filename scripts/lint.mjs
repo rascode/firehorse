@@ -41,6 +41,8 @@ for (const f of files) {
     if (!isToken && PRIMITIVE.test(line)) errors.push(`${at} primitive token in component — use a semantic token`);
     const isSpacingExempt = isToken || isIntegration || rel.startsWith("layout/") || rel.startsWith("base/") || rel.startsWith("utilities/");
     if (!isSpacingExempt) for (const m of line.matchAll(/var\(--fh-space-[\w-]+/g)) spacing.push(`${at} raw spacing ${m[0].slice(4)} — use a --fh-gap-* or --fh-inset-* token (HIG · Spacing)`);
+    const fs = line.match(/font-size:\s*(\d*\.?\d+)(rem|px)\b/);
+    if (!isToken && fs && (fs[2] === "rem" ? Number(fs[1]) < 0.6875 : Number(fs[1]) < 11)) errors.push(`${at} font-size under 11px — the floor is --fh-text-micro (HIG · Type)`);
     if (/!important/.test(line) && !/(reset\.css|document\.css)/.test(rel)) errors.push(`${at} !important outside reset/motion safety`);
     const mq = line.match(/@media\s+([^{]+)/);
     if (mq && /(min|max)-width|width\s*[<>]/.test(mq[1])) errors.push(`${at} viewport width media query — use @container`);
