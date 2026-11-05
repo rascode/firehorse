@@ -15,7 +15,7 @@
 @layer fh.components {
   .fh-app {
     --fh-app-side: 15rem;
-    --fh-app-pad: clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card));
+    --fh-app-pad: var(--fh-inset-page);
     background-color: var(--fh-color-canvas);
     min-block-size: 100dvh;
     color: var(--fh-color-text);
@@ -39,7 +39,7 @@
   .fh-app__side-inner {
     gap: var(--fh-gap-sectioned);
     min-block-size: 100dvh;
-    padding: var(--fh-inset-card) var(--fh-inset-control);
+    padding: var(--fh-inset-card) var(--fh-item-frame);
     flex-direction: column;
     display: flex;
   }
@@ -47,7 +47,7 @@
   .fh-app__brand {
     align-items: center;
     gap: var(--fh-gap-related);
-    padding-inline: var(--fh-inset-control);
+    padding-inline: var(--fh-item-inline);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -117,7 +117,7 @@
   }
 
   .fh-app__side-foot {
-    padding-inline: var(--fh-inset-control);
+    padding-inline: var(--fh-item-inline);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-caption);
     margin-block-start: auto;

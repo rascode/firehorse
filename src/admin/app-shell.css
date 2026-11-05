@@ -23,7 +23,8 @@
    * data-fh-env paints the environment band along the top edge. */
   .fh-app {
     --fh-app-side: 15rem;
-    --fh-app-pad: clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card));
+    /* HIG · Frame: apps use the site's page margin for the content line. */
+    --fh-app-pad: var(--fh-inset-page);
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -49,14 +50,16 @@
     flex-direction: column;
     gap: var(--fh-gap-sectioned);
     min-block-size: 100dvh;
-    padding: var(--fh-inset-card) var(--fh-inset-control);
+    /* The frame plus each item's own inline padding puts the sidebar's text
+       16px from the viewport edge, the same as every menu item. */
+    padding: var(--fh-inset-card) var(--fh-item-frame);
   }
 
   .fh-app__brand {
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-related);
-    padding-inline: var(--fh-inset-control);
+    padding-inline: var(--fh-item-inline);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
@@ -121,7 +124,7 @@
 
   .fh-app__side-foot {
     margin-block-start: auto;
-    padding-inline: var(--fh-inset-control);
+    padding-inline: var(--fh-item-inline);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-caption);
   }
