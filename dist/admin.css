@@ -1373,12 +1373,18 @@
 
     & > .fh-metric__source {
       grid-row: 6;
+      align-self: end;
       margin-block-start: var(--fh-gap-bound);
     }
 
     & > .fh-metric__more {
       grid-row: 7;
       margin-block-start: var(--fh-gap-related);
+    }
+
+    &:not(:has( > .fh-metric__source)) > .fh-metric__more {
+      grid-row: 6;
+      align-self: end;
     }
   }
 

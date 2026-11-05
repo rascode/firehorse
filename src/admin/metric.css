@@ -79,8 +79,13 @@
     & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: end; }
     & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
     & > :is(.fh-gauge, .fh-ring) { grid-row: 4; align-self: end; }
-    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
+    & > .fh-metric__source { grid-row: 6; align-self: end; margin-block-start: var(--fh-gap-bound); }
     & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-gap-related); }
+    /* A tile with a detail and no source puts the detail on the source
+       line: "Breakdown" reads level with "People" and "State records",
+       and the row of tiles keeps one height. Sources sit on the foot of
+       that line, so their text shares its baseline with the summary. */
+    &:not(:has(> .fh-metric__source)) > .fh-metric__more { grid-row: 6; align-self: end; }
   }
 
   .fh-metric__label {
