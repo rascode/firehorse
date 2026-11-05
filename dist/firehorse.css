@@ -3107,12 +3107,18 @@
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
     color: var(--fh-color-text);
-    font-size: var(--fh-text-body);
+    font-size: calc(var(--fh-text-body) * 1.03);
+    font-weight: var(--fh-weight-medium);
     appearance: none;
+    line-height: 1.4;
+
+    &::placeholder {
+      font-weight: var(--fh-weight-regular);
+    }
+
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard),
       box-shadow var(--fh-duration-fast) var(--fh-ease-standard),
       border-color var(--fh-duration-fast) var(--fh-ease-standard);
-    line-height: 1.4;
 
     &:hover:not(:disabled, :focus) {
       background-color: var(--fh-color-field-hover);

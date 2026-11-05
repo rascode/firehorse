@@ -15,9 +15,14 @@
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
     color: var(--fh-color-text);
-    font-size: var(--fh-text-body);
+    /* Entered values a touch heavier and larger than body text; the
+       placeholder stays at body weight. */
+    font-size: calc(var(--fh-text-body) * 1.03);
+    font-weight: var(--fh-weight-medium);
     line-height: 1.4;
     appearance: none;
+
+    &::placeholder { font-weight: var(--fh-weight-regular); }
     transition:
       background-color var(--fh-duration-fast) var(--fh-ease-standard),
       box-shadow var(--fh-duration-fast) var(--fh-ease-standard),
