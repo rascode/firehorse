@@ -15,7 +15,7 @@ const files = walkCss(target, []);
 const coreFiles = target === src ? files : walkCss(src, []);
 
 const errors = [];
-// Firehorse HIG · Spacing: components space by relationship (--fh-gap-*,
+// Rascode HIG · Spacing: components space by relationship (--fh-gap-*,
 // --fh-inset-*), never by a raw --fh-space-* step. Warn while the system
 // migrates; `--strict-spacing` (or FH_STRICT_SPACING=1) makes it an error.
 const strictSpacing = process.argv.includes("--strict-spacing") || process.env.FH_STRICT_SPACING === "1";
