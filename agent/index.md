@@ -104,7 +104,7 @@
 | `VCD` | Virtual card | Finance | — | [open](https://firehorse.rascode.dev/finance/#VCD) |
 | `CNX` | Connection status | Finance | — | [open](https://firehorse.rascode.dev/finance/#CNX) |
 | `MST` | Masthead | Admin | 1 Masthead (2) | [open](https://firehorse.rascode.dev/admin/#MST) |
-| `BKD` | Backdrop | Admin | 1 Backdrop (1) | [open](https://firehorse.rascode.dev/admin/#BKD) |
+| `BKD` | Backdrop | Admin | 1 Backdrop (2) | [open](https://firehorse.rascode.dev/admin/#BKD) |
 | `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
 | `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
 | `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (7) | [open](https://firehorse.rascode.dev/admin/#MET) |
@@ -2816,9 +2816,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## MST · Masthead
 
-A glass header with the stacking deck's caption: number left, title right, a hairline under both, on an etched, see-through, blurred panel. --bar is the one-line top bar. Shown here over a picture so the frost reads.
+A glass header with the stacking deck's caption: number left in the tone, title right, an etched rule under both, on an etched, see-through, blurred panel. --bar is the one-line top bar: no rule, the client's round logo first (__mark). Shown here over a picture so the frost reads.
 
-Classes: `fh-masthead` `fh-masthead--bar` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm`
+Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-masthead__mark` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm`
 
 ### MST-1 · Masthead
 
@@ -2826,6 +2826,7 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-masthead__caption` `fh-masthead__i
 
 ```html
 <header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh="MST-1.1">
+  <span class="fh-avatar fh-avatar--circle fh-masthead__mark" role="img" aria-label="Acme Supply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 12 5l7 14"></path><path d="M8.5 13h7"></path><circle cx="12" cy="5" r="1.3" fill="currentColor"></circle></svg></span>
   <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
   <div class="fh-masthead__foot">
     <p class="fh-masthead__meta">7 businesses</p>
@@ -2850,9 +2851,9 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-masthead__caption` `fh-masthead__i
 
 ## BKD · Backdrop
 
-A quiet abstract picture behind a whole app: soft tone fields under the sign-in page's etched contours. Put it first inside fh-app; it is fixed to the viewport, and the sidebar and top bar turn to glass over it. --fh-backdrop-strength sets how much tone shows. Shown here in a framed stage.
+A quiet abstract picture behind a whole app: soft tone fields under the sign-in page's etched contours. Put it first inside fh-app; it is fixed to the viewport, and the sidebar and top bar turn to glass over it. --fh-backdrop-strength sets how much tone shows. Glass over it frosts by --fh-frost (0–1), a theme token; a range with data-fh-frost-select dials it live and remembers it. Shown here in a framed stage.
 
-Classes: `fh-backdrop`
+Classes: `fh-backdrop` `fh-field` `fh-field__label` `fh-range`
 
 ### BKD-1 · Backdrop
 
@@ -2860,6 +2861,12 @@ Classes: `fh-backdrop`
 
 ```html
 <div class="fh-backdrop" aria-hidden="true" style="position: absolute" data-fh="BKD-1.1"></div>
+```
+
+#### BKD-1.2 · Frost slider
+
+```html
+<label class="fh-field" style="position: relative; z-index: 1; max-inline-size: 16rem; margin-block-end: var(--fh-space-4)" data-fh="BKD-1.2"><span class="fh-field__label">Frost</span><input class="fh-range" type="range" min="0" max="100" value="60" data-fh-frost-select></label>
 ```
 
 ## REC · Record header

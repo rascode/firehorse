@@ -15,7 +15,9 @@
    *   </div>
    * It is fixed to the viewport and sits under everything. Inside an
    * fh-app with a backdrop, the sidebar and top bar turn to glass.
-   * Knobs: --fh-backdrop-strength (how much tone shows, 1), --fh-backdrop-art
+   * Panels, tables and cards on it frost by --fh-frost (0–1, a theme
+   * token; a range input with data-fh-frost-select dials it live). Knobs:
+   * --fh-backdrop-strength (how much tone shows, 1), --fh-backdrop-art
    * (the line art; none to drop it). */
   .fh-backdrop {
     --_k: var(--fh-backdrop-strength, 1);
@@ -51,6 +53,22 @@
     }
   }
 
+  /* Frost: how much the glass over a backdrop clouds and blurs, from one
+     number (--fh-frost, 0–1, a theme token). 0 is clear, 1 nearly solid.
+     --fh-frost-fill and --fh-frost-filter are ready-made for app pieces
+     of your own (background-color and backdrop-filter). */
+  .fh-frost,
+  .fh-app:has(> .fh-backdrop) {
+    --_f: clamp(0, var(--fh-frost, 0.6), 1);
+    --fh-frost-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
+    --fh-frost-filter: blur(calc(var(--_f) * 32px)) saturate(calc(1 + var(--_f) * 0.4));
+  }
+
+  .fh-frost {
+    background-color: var(--fh-frost-fill);
+    backdrop-filter: var(--fh-frost-filter);
+  }
+
   .fh-app:has(> .fh-backdrop) {
     position: relative;
     isolation: isolate;
@@ -58,11 +76,11 @@
 
     & > :not(.fh-backdrop) { position: relative; z-index: 1; }
 
-    & .fh-app__side {
-      background-color: color-mix(in oklab, var(--fh-color-surface) 58%, transparent);
-      backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.3);
+    & :is(.fh-app__side, .fh-section-card, .fh-table-wrap, .fh-dt, .fh-card, .fh-accordion, .fh-empty, .fh-stats, .fh-overview, .fh-code) {
+      background-color: var(--fh-frost-fill);
+      backdrop-filter: var(--fh-frost-filter);
     }
 
-    & .fh-app__bar { background-color: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent); }
+    & .fh-app__bar { background-color: var(--fh-frost-fill); }
   }
 }

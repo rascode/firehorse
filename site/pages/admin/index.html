@@ -24,10 +24,11 @@
       </header>
 
         <div class="site-demo site-anchor" id="a-masthead" data-fh-id="MST" data-fh-groups="Masthead">
-          <div class="site-demo__head"><h3>Masthead</h3><p>A glass header with the stacking deck's caption: number left, title right, a hairline under both, on an etched, see-through, blurred panel. <code>--bar</code> is the one-line top bar. Shown here over a picture so the frost reads.</p></div>
+          <div class="site-demo__head"><h3>Masthead</h3><p>A glass header with the stacking deck's caption: number left in the tone, title right, an etched rule under both, on an etched, see-through, blurred panel. <code>--bar</code> is the one-line top bar: no rule, the client's round logo first (<code>__mark</code>). Shown here over a picture so the frost reads.</p></div>
           <div class="site-demo__stage" data-demo style="background: url(/img/backdrop/firehorse-horse.webp) center / cover; padding: var(--fh-space-8)">
 <div class="fh-stack">
 <header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh-id="MST-1.1" data-fh-name="Bar">
+  <span class="fh-avatar fh-avatar--circle fh-masthead__mark" role="img" aria-label="Acme Supply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 12 5l7 14"/><path d="M8.5 13h7"/><circle cx="12" cy="5" r="1.3" fill="currentColor"/></svg></span>
   <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
   <div class="fh-masthead__foot">
     <p class="fh-masthead__meta">7 businesses</p>
@@ -48,9 +49,11 @@
         </div>
 
         <div class="site-demo site-anchor" id="a-backdrop" data-fh-id="BKD" data-fh-groups="Backdrop">
-          <div class="site-demo__head"><h3>Backdrop</h3><p>A quiet abstract picture behind a whole app: soft tone fields under the sign-in page's etched contours. Put it first inside <code>fh-app</code>; it is fixed to the viewport, and the sidebar and top bar turn to glass over it. <code>--fh-backdrop-strength</code> sets how much tone shows. Shown here in a framed stage.</p></div>
+          <div class="site-demo__head"><h3>Backdrop</h3><p>A quiet abstract picture behind a whole app: soft tone fields under the sign-in page's etched contours. Put it first inside <code>fh-app</code>; it is fixed to the viewport, and the sidebar and top bar turn to glass over it. <code>--fh-backdrop-strength</code> sets how much tone shows. Glass over it frosts by <code>--fh-frost</code> (0–1), a theme token; a range with <code>data-fh-frost-select</code> dials it live and remembers it. Shown here in a framed stage.</p></div>
           <div class="site-demo__stage" data-demo style="position: relative; overflow: hidden; contain: paint; min-block-size: 18rem; padding: var(--fh-space-8)">
 <div class="fh-backdrop" aria-hidden="true" style="position: absolute" data-fh-id="BKD-1.1" data-fh-name="Backdrop"></div>
+<label class="fh-field" style="position: relative; z-index: 1; max-inline-size: 16rem; margin-block-end: var(--fh-space-4)" data-fh-id="BKD-1.2" data-fh-name="Frost slider"><span class="fh-field__label">Frost</span><input class="fh-range" type="range" min="0" max="100" value="60" data-fh-frost-select></label>
+<section class="fh-section-card fh-frost" style="position: relative; z-index: 1; margin-block-start: var(--fh-space-4)"><header class="fh-section-card__head"><h3 class="fh-section-card__title">Frosted card</h3></header><p class="fh-section-card__lede">Move the slider: from clear glass to nearly solid.</p></section>
 <header class="fh-masthead fh-masthead--bar" data-tone="sky" style="position: relative">
   <p class="fh-masthead__caption"><span class="fh-masthead__index">03</span><span class="fh-masthead__title">Finance</span></p>
   <div class="fh-masthead__foot"><div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">Synced</span></div></div>

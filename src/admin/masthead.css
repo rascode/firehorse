@@ -7,7 +7,8 @@
   /* —— Masthead ——
    * A glass header: an etched edge, see-through fill with a blur behind
    * it, and the stacking deck's caption inside (number on the left,
-   * title on the right, a hairline under both). A backdrop behind the
+   * title on the right, an etched rule under both; the number carries
+   * the tone, the rule stays grey). A backdrop behind the
    * page shows through it, frosted.
    *   <header class="fh-masthead" data-tone="amber">
    *     <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
@@ -17,17 +18,19 @@
    *     </div>
    *   </header>
    * fh-masthead--bar is the one-line form for an app's top bar: smaller
-   * caption, tools on the same line, sticky. Knobs: --fh-masthead-fill
-   * (how much of the canvas shows, 62%), --fh-masthead-blur. */
+   * caption with no rule, an optional round mark first (the client's
+   * logo: <span class="fh-avatar fh-avatar--circle fh-masthead__mark">),
+   * tools on the same line, sticky. Fill and blur follow --fh-frost.
+   * Knobs: --fh-masthead-fill, --fh-masthead-blur. */
   .fh-masthead {
-    --_fill: var(--fh-masthead-fill, 62%);
+    --_fill: var(--fh-masthead-fill, calc(15% + clamp(0, var(--fh-frost, 0.6), 1) * 75%));
     display: grid;
     gap: var(--fh-space-4);
     padding: clamp(var(--fh-space-5), 4cqi, var(--fh-space-8));
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
-    backdrop-filter: blur(var(--fh-masthead-blur, var(--fh-blur-chrome))) saturate(1.4);
+    backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, 0.6), 1) * 32px))) saturate(1.4);
     container: fh-masthead / inline-size;
 
     & > * { margin: 0; min-inline-size: 0; }
@@ -39,7 +42,7 @@
     justify-content: space-between;
     gap: var(--fh-space-4);
     padding-block-end: var(--fh-space-3);
-    border-block-end: 1px solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
     font-family: var(--fh-font-display);
     font-size: clamp(1.75rem, 6cqi, 4rem);
     font-weight: var(--fh-weight-regular);
@@ -53,6 +56,13 @@
   }
 
   .fh-masthead__title { text-align: end; text-wrap: balance; }
+
+  .fh-masthead__mark {
+    --fh-avatar-size: 2.25rem;
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 14%, var(--fh-color-surface));
+    color: var(--fh-tone, var(--fh-color-text));
+    & > svg { inline-size: 60%; block-size: 60%; }
+  }
 
   .fh-masthead__foot {
     display: flex;
@@ -86,13 +96,20 @@
     z-index: 2;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
+    column-gap: var(--fh-space-3);
     padding: var(--fh-space-2) var(--fh-space-2) var(--fh-space-2) var(--fh-space-5);
     border-radius: var(--fh-radius-pill);
+
+    &:has(> .fh-masthead__mark) {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      padding-inline-start: var(--fh-space-2);
+    }
 
     & .fh-masthead__caption {
       justify-content: start;
       align-items: baseline;
-      padding-block-end: var(--fh-space-1);
+      padding-block-end: 0;
+      border-block-end: 0;
       font-size: var(--fh-text-h4);
     }
     & .fh-masthead__title { text-align: start; }

@@ -24,7 +24,8 @@
  *      that switches data-fh-theme and remembers the choice. Row
  *      spacing select ([data-fh-rows-select]) does the same for
  *      data-fh-rows (sm · md · lg · xl), so every table and key value
- *      list on the page opens up or tightens at once.
+ *      list on the page opens up or tightens at once. Frost select
+ *      ([data-fh-frost-select], a range 0–100) dials --fh-frost.
  *  14. Word rotators (.fh-rotator): the slot eases to each word's width,
  *      extra words are hidden from screen readers, and the roll pauses
  *      off screen. The roll itself is CSS and runs without this.
@@ -139,6 +140,30 @@ function setRows(size, { target = document.documentElement } = {}) {
   });
   globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setRows });
   ready(syncRows);
+}
+
+/* Frost select: <input type="range" min="0" max="100" data-fh-frost-select>.
+ * Sets --fh-frost (0–1) on <html> and remembers it in localStorage["fh-frost"].
+ * Fires fh:frost. Firehorse.setFrost(0.4). */
+const FROST_KEY = "fh-frost";
+function setFrost(v, { remember = true } = {}) {
+  const n = Math.min(1, Math.max(0, Number(v)));
+  if (Number.isNaN(n)) return null;
+  document.documentElement.style.setProperty("--fh-frost", String(n));
+  if (remember) themeStore.set(FROST_KEY, String(n));
+  for (const el of document.querySelectorAll("[data-fh-frost-select]")) if (Number(el.value) !== Math.round(n * 100)) el.value = String(Math.round(n * 100));
+  document.documentElement.dispatchEvent(new CustomEvent("fh:frost", { bubbles: true, detail: { frost: n } }));
+  return n;
+}
+{
+  const saved = themeStore.get(FROST_KEY);
+  if (saved !== null && saved !== "") setFrost(saved, { remember: false });
+  document.addEventListener("input", (e) => {
+    const el = e.target.closest?.("[data-fh-frost-select]");
+    if (el) setFrost(Number(el.value) / 100);
+  });
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setFrost });
+  ready(() => { const v = getComputedStyle(document.documentElement).getPropertyValue("--fh-frost"); for (const el of document.querySelectorAll("[data-fh-frost-select]")) el.value = String(Math.round(Number(v || 0.6) * 100)); });
 }
 
 ready(() => {

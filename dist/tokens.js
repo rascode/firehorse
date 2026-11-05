@@ -707,6 +707,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "blur"
   },
+  "--fh-frost": {
+    "$value": "0.6",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "frost"
+  },
   "--fh-duration-instant": {
     "$value": "80ms",
     "$type": "duration",
