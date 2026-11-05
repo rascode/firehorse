@@ -104,6 +104,7 @@
 | `VCD` | Virtual card | Finance | — | [open](https://firehorse.rascode.dev/finance/#VCD) |
 | `CNX` | Connection status | Finance | — | [open](https://firehorse.rascode.dev/finance/#CNX) |
 | `MST` | Masthead | Admin | 1 Masthead (2) | [open](https://firehorse.rascode.dev/admin/#MST) |
+| `BKD` | Backdrop | Admin | 1 Backdrop (1) | [open](https://firehorse.rascode.dev/admin/#BKD) |
 | `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
 | `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
 | `MET` | Metric tiles | Admin | 1 Metric tile (11) | [open](https://firehorse.rascode.dev/admin/#MET) |
@@ -2845,6 +2846,20 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-masthead__caption` `fh-masthead__i
     <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#a-masthead">New business</a></div>
   </div>
 </header>
+```
+
+## BKD · Backdrop
+
+A quiet abstract picture behind a whole app: soft tone fields under the sign-in page's etched contours. Put it first inside fh-app; it is fixed to the viewport, and the sidebar and top bar turn to glass over it. --fh-backdrop-strength sets how much tone shows. Shown here in a framed stage.
+
+Classes: `fh-backdrop`
+
+### BKD-1 · Backdrop
+
+#### BKD-1.1 · Backdrop
+
+```html
+<div class="fh-backdrop" aria-hidden="true" style="position: absolute" data-fh="BKD-1.1"></div>
 ```
 
 ## REC · Record header
