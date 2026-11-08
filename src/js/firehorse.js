@@ -860,3 +860,164 @@ ready(() => {
     if (list.querySelector("input:checked")) sync(picker);
   }
 });
+
+/* —— Motion (MOT-2, MOT-4.1) ——————————————————————————————————————————————
+ * Intro hold: intros ([data-fh-enter]) run once <html> has fh-js and hold until fh-ready. The
+ * page's head sets fh-js with a 2s fallback for fh-ready:
+ *   <script>(d=>{d.classList.add("fh-js");setTimeout(()=>d.classList.add("fh-ready"),2e3)})(document.documentElement)</script>
+ * This adds fh-ready sooner: as soon as fonts and the images inside [data-fh-intro] have
+ * loaded, so intros never play against a half-loaded page.
+ *
+ * Circle reveal: Firehorse.reveal(change, from) runs change() as a view transition and opens
+ * the new look out as a circle from the element `from` (a theme picker, a typeface button).
+ * Instant without view transitions or under reduced motion. */
+{
+  const root = document.documentElement;
+  if (root.classList.contains("fh-js") && !root.classList.contains("fh-ready")) {
+    const imgs = [...document.querySelectorAll("[data-fh-intro] img")].map((i) => (i.decode ? i.decode().catch(() => {}) : Promise.resolve()));
+    const go = () => root.classList.add("fh-ready");
+    Promise.race([Promise.all([document.fonts?.ready ?? Promise.resolve(), ...imgs]), new Promise((r) => setTimeout(r, 2000))]).then(go, go);
+  }
+  const ms = (name, fallback) => {
+    const v = getComputedStyle(root).getPropertyValue(name).trim();
+    return v.endsWith("ms") ? parseFloat(v) : v.endsWith("s") ? parseFloat(v) * 1000 : fallback;
+  };
+  const reveal = (change, from) => {
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!document.startViewTransition || still) { change(); return Promise.resolve(); }
+    const r = from?.getBoundingClientRect?.();
+    const x = r ? r.left + r.width / 2 : innerWidth - 40, y = r ? r.top + r.height / 2 : 40;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    root.setAttribute("data-fh-vt", "reveal");
+    const vt = document.startViewTransition(change);
+    vt.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: ms("--fh-duration-reveal", 720), easing: getComputedStyle(root).getPropertyValue("--fh-ease-in-out").trim() || "ease-in-out", pseudoElement: "::view-transition-new(root)" }
+      );
+    }).catch(() => {});
+    return vt.finished.finally(() => root.removeAttribute("data-fh-vt"));
+  };
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { reveal });
+}
+
+/* —— Choreography: glide and lock (MOT-4.2, MOT-4.3) ——————————————————————————
+ * Free. Script measures once (and on resize); the motion itself rides the root scroll timeline
+ * in CSS (src/utilities/intro.css), so it tracks the scroll exactly on the compositor.
+ *
+ *   data-fh-glide="center"   The element hands off from its place to a fixed pill that slides to
+ *                            the centre of the window as the page scrolls (the homepage nav).
+ *   data-fh-lock             The element rides up with the page, then locks on a line:
+ *     data-fh-lock-to          a selector (its top, or its middle with data-fh-lock-align="middle")
+ *                              or a number of px from the top; default 16
+ *     data-fh-lock-scale       a number, or "fit" to end as tall as the lock-to element
+ *     data-fh-lock-origin      "left" (default) or "right": the side it shrinks toward
+ *     data-fh-lock="clone"     for non-interactive marks: a copy moves, the original stays in
+ *                              place for assistive tech (opacity 0); data-fh-lock-href makes the
+ *                              copy a link (e.g. back to the top)
+ *   The first lock (or the one with data-fh-lock-primary) sets --fh-lock on <html>: the scroll
+ *   distance other pieces (glides, fh-recede via --fh-recede-range) share. Each locked element
+ *   gets data-locked once it has locked. Waits for intros to finish; skipped under reduced
+ *   motion or without scroll-driven animations, where everything simply stays in the page.
+ *   Firehorse.choreo.locks maps each element to its measurements; "fh:choreo" fires when ready. */
+{
+  const root = document.documentElement;
+  const able = !matchMedia("(prefers-reduced-motion: reduce)").matches && CSS.supports?.("animation-timeline: scroll()");
+  const glides = [...document.querySelectorAll("[data-fh-glide]")];
+  const lockEls = [...document.querySelectorAll("[data-fh-lock]")];
+  const choreo = { locks: new Map(), glides: new Map(), ready: false };
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { choreo });
+  if (able && (glides.length || lockEls.length)) {
+    // Moving an element restarts its CSS animations, so a moved element (and its stand-in) drops
+    // its entrance attributes first: its intro has already played.
+    const settle = (el) => { for (const n of [el, ...el.querySelectorAll("[data-fh-enter], [data-fh-enter-children]")]) { n.removeAttribute("data-fh-enter"); n.removeAttribute("data-fh-enter-children"); } };
+    const ghostOf = (el) => {
+      const g = el.cloneNode(true);
+      g.removeAttribute("id"); g.querySelectorAll("[id]").forEach((n) => n.removeAttribute("id"));
+      g.setAttribute("aria-hidden", "true"); g.inert = true; g.classList.add("fh-choreo-ghost");
+      for (const a of ["data-fh-glide", "data-fh-lock", "popovertarget"]) g.removeAttribute(a);
+      settle(g);
+      return g;
+    };
+    const lineOf = (spec, align) => {
+      if (spec && !/^[\d.]+$/.test(spec)) {
+        const t = document.querySelector(spec);
+        if (t) { const r = t.getBoundingClientRect(), fixed = getComputedStyle(t).position === "fixed"; return { y: (fixed ? r.top : r.top + scrollY) + (align === "middle" ? r.height / 2 : 0), h: r.height }; }
+      }
+      return { y: spec ? parseFloat(spec) : 16, h: 0 };
+    };
+    const measureGlide = (g) => {
+      const { el, wrap, ghost } = g;
+      const pad = parseFloat(getComputedStyle(wrap).paddingInlineStart) || 0;
+      const r = ghost.getBoundingClientRect();
+      wrap.style.setProperty("--_fh-y", `${r.top + scrollY - pad}px`);
+      wrap.style.setProperty("--_fh-x0", `${r.left - pad}px`);
+      wrap.style.setProperty("--_fh-x1", `${Math.round((root.clientWidth - wrap.offsetWidth) / 2)}px`);
+    };
+    const measureLock = (L) => {
+      const { el, layer, ghost } = L;
+      const r = ghost.getBoundingClientRect();
+      const align = el.dataset.fhLockAlign === "middle" ? "middle" : "top";
+      const line = lineOf(el.dataset.fhLockTo, align);
+      const s = el.dataset.fhLockScale === "fit" && line.h ? line.h / r.height : parseFloat(el.dataset.fhLockScale) || 1;
+      const right = el.dataset.fhLockOrigin === "right";
+      const top = r.top + scrollY, ref = align === "middle" ? r.height / 2 : 0;
+      const dist = Math.max(1, Math.round(top + ref - line.y));
+      Object.assign(L, { dist, s, box: { left: right ? r.left + r.width * (1 - s) : r.left, width: r.width * s, top: line.y - (align === "middle" ? (r.height * s) / 2 : 0), height: r.height * s } });
+      layer.style.setProperty("--_fh-top", `${top}px`);
+      layer.style.setProperty("--_fh-left", `${r.left}px`);
+      layer.style.setProperty("--_fh-w", `${r.width}px`);
+      layer.style.setProperty("--_fh-dist", `${dist}px`);
+      layer.style.setProperty("--_fh-s", String(s));
+      layer.style.setProperty("--_fh-o", `${right ? "100%" : "0"} ${align === "middle" ? "50%" : "0"}`);
+      if (L.primary) root.style.setProperty("--fh-lock", `${dist}px`);
+    };
+    const measure = () => { choreo.glides.forEach(measureGlide); choreo.locks.forEach(measureLock); choreo.glides.forEach(measureGlide); root.dispatchEvent(new CustomEvent("fh:choreo-measure")); };
+    const start = () => {
+      if (choreo.ready) return;
+      for (const el of glides) {
+        settle(el);
+        const ghost = ghostOf(el); el.before(ghost);
+        const wrap = document.createElement("div"); wrap.className = "fh-glide"; document.body.append(wrap);
+        wrap.append(el);
+        choreo.glides.set(el, { el, wrap, ghost });
+      }
+      const primary = lockEls.find((e) => e.hasAttribute("data-fh-lock-primary")) || lockEls[0];
+      for (const el of lockEls) {
+        if (el.dataset.fhLock !== "clone") settle(el);
+        const ghost = ghostOf(el); el.before(ghost);
+        let layer;
+        if (el.dataset.fhLock === "clone") {
+          const copy = ghostOf(el); copy.classList.remove("fh-choreo-ghost"); copy.inert = false;
+          layer = el.dataset.fhLockHref ? Object.assign(document.createElement("a"), { href: el.dataset.fhLockHref }) : document.createElement("div");
+          if (el.dataset.fhLockHref) { layer.setAttribute("aria-label", el.dataset.fhLockLabel || el.textContent.trim()); copy.setAttribute("aria-hidden", "true"); } else layer.setAttribute("aria-hidden", "true");
+          layer.append(copy);
+          const cs = getComputedStyle(el);
+          Object.assign(copy.style, { fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, letterSpacing: cs.letterSpacing, lineHeight: cs.lineHeight, margin: "0" });
+          settle(el); el.classList.add("fh-lock-source"); ghost.remove(); // its intro has played; now it only holds its place
+          choreo.locks.set(el, { el, layer, ghost: el, primary: el === primary, copy });
+        } else {
+          layer = document.createElement("div"); layer.append(el);
+          choreo.locks.set(el, { el, layer, ghost, primary: el === primary });
+        }
+        layer.classList.add("fh-lock");
+        document.body.append(layer);
+      }
+      measure();
+      choreo.ready = true;
+      root.setAttribute("data-fh-choreo", "");
+      let raf = 0;
+      const check = () => { raf = 0; choreo.locks.forEach((L) => { const on = scrollY >= L.dist - 0.5; if (on !== L.on) { L.on = on; (L.copy || L.el).toggleAttribute("data-locked", on); L.layer.toggleAttribute("data-locked", on); } }); };
+      addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(check); }, { passive: true });
+      check();
+      let rz = 0;
+      addEventListener("resize", () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(measure); }, { passive: true });
+      document.fonts?.ready.then(measure);
+      root.dispatchEvent(new CustomEvent("fh:choreo", { detail: choreo }));
+    };
+    // Wait for intros to land (fh-ready, then every running entrance), at most 6s.
+    const intros = () => Promise.all(document.getAnimations ? document.getAnimations().filter((a) => a.effect?.target?.closest?.("[data-fh-enter], [data-fh-enter-children]")).map((a) => a.finished.catch(() => {})) : []);
+    const whenReady = () => new Promise((r) => { if (root.classList.contains("fh-ready") || !root.classList.contains("fh-js")) r(); else new MutationObserver((_, o) => { if (root.classList.contains("fh-ready")) { o.disconnect(); r(); } }).observe(root, { attributes: true, attributeFilter: ["class"] }); });
+    Promise.race([whenReady().then(() => new Promise((r) => requestAnimationFrame(r))).then(intros), new Promise((r) => setTimeout(r, 6000))]).then(() => requestAnimationFrame(start));
+  }
+}

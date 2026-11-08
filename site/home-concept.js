@@ -5,22 +5,7 @@
 /* A circular reveal for look changes (colour, typeface): the new look opens out from the
  * button that was used, over the old one, as a view transition. Falls back to an instant
  * change without view transitions or with reduced motion. */
-window.hcReveal = (change, from) => {
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!document.startViewTransition || still) { change(); return; }
-  const r = from?.getBoundingClientRect?.();
-  const x = r ? r.left + r.width / 2 : innerWidth - 40, y = r ? r.top + r.height / 2 : 40;
-  const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-  document.documentElement.setAttribute("data-hc-vt", "reveal");
-  const vt = document.startViewTransition(change);
-  vt.ready.then(() => {
-    document.documentElement.animate(
-      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
-      { duration: 720, easing: "cubic-bezier(0.65, 0, 0.35, 1)", pseudoElement: "::view-transition-new(root)" }
-    );
-  }).catch(() => {});
-  vt.finished.finally(() => document.documentElement.removeAttribute("data-hc-vt"));
-};
+window.hcReveal = (change, from) => (window.Firehorse?.reveal ? window.Firehorse.reveal(change, from) : change()); // MOT-4.1, free enhancer
 
 const html = document.documentElement;
 const pop = document.getElementById("site-hc-roots");
@@ -247,135 +232,18 @@ if (agents && tagTop && turn && marks) {
   sec.addEventListener("hc-svc-unpin", () => { delete sec.dataset.pinned; items().forEach((el) => el.classList.remove("is-lit")); }); // hand back to the flow: only the featured one lights
 })();
 
-// The horses stop receding when the logo's top reaches the top of the window.
+// On the Firehorse motion system: the nav glides (data-fh-glide), the logo and Send to an agent
+// lock (data-fh-lock), and the corner tools dock beside it (data-fh-dock-beside, Pro), all built
+// by the enhancer from the page's attributes. The page only adds its own touches: the tools ride
+// fixed in the top-right corner, and Send to an agent's label gets the roll it flips with.
 {
-  const fh = document.querySelector(".site-hc__fh");
-  const art = document.querySelector(".site-hc__art");
-  if (fh && art) {
-    const lock = () => {}; // superseded: --hc-lock is set on :root by the scroll choreography
-    document.fonts?.ready.then(lock);
-    addEventListener("resize", lock, { passive: true });
-    fh.addEventListener("animationend", lock);
-    setTimeout(lock, 3000);
-    lock();
-  }
-}
-
-// Scroll choreography. Everything moves on CSS scroll-driven animations (compositor, no
-// per-frame script); this only measures, once and on resize, and hands the numbers to CSS:
-//   --hc-lock   scroll distance at which the logo's top meets the nav row (the lock point)
-//   float       the nav links' fixed wrapper: --_y, --_x0 (over the row) → --_x1 (centred)
-//   mark        the logo's fixed copy: --_t0, --_l (where the logo sits at the top)
-// The links and the logo copy live on <body> so they stay above the sections below.
-{
-  const root = document.documentElement;
-  const nav = document.querySelector(".site-hc__sections.site-hc-nav");
-  const links = nav?.querySelector(".site-hc-nav__links");
-  const fh = document.querySelector(".site-hc__fh");
-  if (nav && links && fh) {
-    const PAD = 5; // the float's padding (0.3125rem)
-    const ag = document.querySelector(".site-hc__agents");
-    const float = document.createElement("div");
-    float.className = "site-hc-float";
-    document.body.append(float);
-    const mark = fh.cloneNode(true);
-    mark.removeAttribute("id");
-    mark.className = "site-hc-mark";
-    const home = document.createElement("a");
-    home.href = "#hc-hero";
-    home.className = "site-hc-mark__link";
-    home.setAttribute("aria-label", "Firehorse, back to top");
-    home.append(mark);
-    document.body.append(home);
-    const measure = () => {
-      const y = scrollY;
-      const home0 = links.parentElement === nav ? links.querySelector(".site-hc-nav__link").getBoundingClientRect() : null;
-      const nr = nav.getBoundingClientRect();
-      if (home0) { measure.row = { top: home0.top + y, left: home0.left }; measure.navOff = home0.left - nr.left; }
-      else if (measure.row) measure.row.left = nr.left + (measure.navOff || 0);
-      const fr = fh.getBoundingClientRect();
-      const { top, left } = measure.row;
-      const w = links.offsetWidth + PAD * 2;
-      const lock = Math.max(1, Math.round(fr.top + y - top));
-      root.style.setProperty("--hc-lock", `${lock}px`);
-      float.style.setProperty("--_y", `${top - PAD + (measure.dy || 0)}px`);
-      float.style.setProperty("--_x0", `${left - PAD + (measure.dx || 0)}px`);
-      const fw = links.parentElement === float ? float.offsetWidth : w;
-      float.style.setProperty("--_x1", `${Math.round((root.clientWidth - fw) / 2)}px`);
-      home.style.setProperty("--_t0", `${fr.top + y}px`);
-      home.style.setProperty("--_l", `${fr.left}px`);
-      if (ag) {
-        // measure where the button sits in the hero: the real one, or (once it has moved to
-        // <body>) its invisible stand-in, which home-concept.js's fit() keeps placed
-        const src = ag.parentElement === document.body ? (measure.ghost || ag) : ag;
-        const ar = src.getBoundingClientRect(), fr2 = float.getBoundingClientRect();
-        const fh2 = fr2.height || 40, fTop = parseFloat(float.style.getPropertyValue("--_y")) || top - PAD;
-        ag.style.setProperty("--_t0", `${ar.top + y}px`);
-        ag.style.setProperty("--_l", `${ar.left}px`);
-        ag.style.setProperty("--_w", `${ar.width}px`);
-        ag.style.setProperty("--_s", (fh2 / ar.height).toFixed(4));
-        // lock when the button's middle meets the nav pill's middle
-        measure.lock2 = Math.max(1, ar.top + y + ar.height / 2 - (fTop + fh2 / 2));
-        root.style.setProperty("--hc-lock2", `${measure.lock2}px`);
-        // the T and colour dot: fixed top right; as Send to an agent arrives under them they
-        // slide to sit just left of it, level with the nav row
-        const tools = document.querySelector(".site-hc__git");
-        if (tools && tools.parentElement === document.body) {
-          const tl = tools.offsetLeft, tw = tools.offsetWidth, tt = tools.offsetTop, th = tools.offsetHeight;
-          const s = fh2 / ar.height;
-          const agLeft = ar.left + ar.width * (1 - s);           // its left edge once locked (scaled from the right)
-          root.style.setProperty("--hc-tools-dx", `${agLeft - 8 - (tl + tw)}px`);
-          root.style.setProperty("--hc-tools-dy", `${fTop + fh2 / 2 - (tt + th / 2)}px`);
-        }
-      }
-      const cs = getComputedStyle(fh);
-      Object.assign(mark.style, { fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, letterSpacing: cs.letterSpacing, lineHeight: cs.lineHeight }); // colour comes from CSS, so it follows the scheme
-    };
-    let done = false;
-    const init = () => {
-      if (done) return; done = true;
-      const first = links.querySelector(".site-hc-nav__link");
-      const before = first.getBoundingClientRect();
-      measure();
-      float.append(links);
-      // true up the float so the links land exactly where they were (no jump on hand-over)
-      const after = first.getBoundingClientRect();
-      const dy = measure.row.top - after.top, dx = 0; // float is fixed at the row's top-of-page spot
-      if (dy) { float.style.setProperty("--_y", `${parseFloat(float.style.getPropertyValue("--_y")) + dy}px`); measure.dy = dy; }
-      float.style.setProperty("--_x1", `${Math.round((root.clientWidth - float.offsetWidth) / 2)}px`);
-      root.setAttribute("data-hc-choreo", ""); // CSS: show the copies, hide the original logo
-      if (ag) {
-        const btn = ag.querySelector(".fh-button");
-        const txt = btn && [...btn.childNodes].find((n) => n.nodeType === 3 && n.data.trim());
-        if (txt) { const sp = document.createElement("span"); sp.className = "fh-roll hc-agent-roll"; sp.textContent = txt.data.trim(); txt.replaceWith(sp); }
-        const tools = document.querySelector(".site-hc__git");
-        if (tools) { tools.classList.add("is-fixed"); document.body.append(tools); }
-        measure();                       // float is in place now: measure the button against it
-        const ghost = document.createElement("span");
-        ghost.className = "site-agents site-hc__agents site-hc__agents-ghost";
-        ghost.setAttribute("aria-hidden", "true");
-        ghost.inert = true;
-        const gb = btn.cloneNode(true); gb.removeAttribute("popovertarget"); gb.tabIndex = -1;
-        ghost.append(gb);
-        Object.assign(ghost.style, { top: ag.style.top, inlineSize: ag.style.inlineSize });
-        ag.after(ghost);
-        measure.ghost = ghost;
-        document.body.append(ag);
-        ag.classList.add("is-fixed");
-        let locked = null, raf = 0;
-        const check = () => { raf = 0; const l = scrollY >= (measure.lock2 || 1e9) - 0.5; if (l !== locked) { locked = l; ag.toggleAttribute("data-locked", l); root.toggleAttribute("data-hc-past", l); } };
-        addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(check); }, { passive: true });
-        check();
-      }
-    };
-    const ready = () => setTimeout(() => requestAnimationFrame(init), 3200); // let the whole intro land (and Send to an agent settle under the headline)
-    if (root.classList.contains("fh-ready")) ready();
-    else new MutationObserver((_, o) => { if (root.classList.contains("fh-ready")) { o.disconnect(); ready(); } }).observe(root, { attributes: true, attributeFilter: ["class"] });
-    setTimeout(init, 6000);
-    let rz = 0;
-    addEventListener("resize", () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(() => done && measure()); }, { passive: true });
-    document.fonts?.ready.then(() => done && measure());
-  }
+  const tools = document.querySelector(".site-hc__git");
+  if (tools) { tools.classList.add("is-fixed"); document.body.append(tools); }
+  document.documentElement.addEventListener("fh:choreo", () => {
+    const btn = document.querySelector(".site-hc__agents > .fh-button");
+    const txt = btn && [...btn.childNodes].find((n) => n.nodeType === 3 && n.data.trim());
+    if (txt) { const sp = document.createElement("span"); sp.className = "fh-roll hc-agent-roll"; sp.textContent = txt.data.trim(); txt.replaceWith(sp); }
+  }, { once: true });
 }
 
 // "Dark": toggles the page between light and dark through the (hidden) scheme radios, so

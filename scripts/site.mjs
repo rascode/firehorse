@@ -54,6 +54,7 @@ if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
   cp("pro/dist/firehorse-pro.min.css", "firehorse-pro.css");
   cp("pro/dist/calendar.js", "calendar.js");
   cp("pro/dist/keyfield.js", "keyfield.js");
+  if (existsSync(join(root, "pro/dist/motion.js"))) cp("pro/dist/motion.js", "motion-pro.js");
 }
 for (const dir of ["img/supply", "img/backdrop", "img/og", "audio"]) {
   mkdirSync(join(out, dir), { recursive: true });

@@ -9,7 +9,8 @@
  *           holds the share without tuning.
  *   blocks  rectangles (panels, slats) each on its own clock, visible for `share` of its cycle.
  *
- * Tiers: "free" ships in the open package; "pro" is Firehorse Pro. The tier is data here so the
+ * Tiers: "free" ships in the open package; "pro" is Firehorse Pro. Firehorse's standard: every
+ * paid component ships with at least three free versions (here Wave, Panels, Ripple). The tier is data here so the
  * site can gate it (Rascode sign-in) without touching the styles.
  *
  * Usage:
@@ -80,7 +81,7 @@ const shutters = () => {
 export const STYLES = [
   { id: "wave", name: "Wave", note: "Soft drifting gaps", tier: "free", kind: "field", make: wave },
   { id: "panels", name: "Panels", note: "Random panels, own clocks", tier: "free", kind: "blocks", make: panels },
-  { id: "ripple", name: "Ripple", note: "Rings from two points", tier: "pro", kind: "field", make: ripple },
+  { id: "ripple", name: "Ripple", note: "Rings from two points", tier: "free", kind: "field", make: ripple },
   { id: "dapple", name: "Dapple", note: "Light through leaves", tier: "pro", kind: "field", make: dapple },
   { id: "tides", name: "Tide lines", note: "Bands rolling across", tier: "pro", kind: "field", make: tides },
   { id: "shutters", name: "Shutters", note: "Staggered vertical slats", tier: "pro", kind: "blocks", make: shutters },
