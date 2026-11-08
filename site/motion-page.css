@@ -1,0 +1,59 @@
+/* Motion docs page (/motion/): the demo stages. Page-only. */
+.site-motion-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: var(--fh-space-3); }
+.site-motion-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  block-size: 5.5rem;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--fh-radius-md, 10px);
+  background: color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-surface, var(--fh-color-canvas)));
+  font: 600 var(--fh-text-label) / 1 var(--fh-font-mono);
+  letter-spacing: var(--fh-tracking-wider);
+  text-transform: uppercase;
+  color: var(--fh-color-text);
+  overflow: clip;
+}
+.site-motion-tile--line > span { position: absolute; inset: auto 1rem 1.1rem; block-size: 2px; background: var(--fh-tone); }
+.site-motion-tile--art { background: radial-gradient(circle at 70% 30%, color-mix(in oklab, var(--fh-tone) 55%, transparent), transparent 70%), color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-canvas)); }
+.site-motion-tile--clip > span { display: grid; place-items: center; inline-size: 100%; block-size: 100%; background: color-mix(in oklab, var(--fh-tone) 30%, transparent); }
+.site-motion-bar { display: flex; justify-content: flex-end; padding: 0 var(--fh-space-4) var(--fh-space-4); }
+
+.site-motion-hero { display: grid; gap: var(--fh-space-2); perspective: 40em; }
+.site-motion-hero__mark { margin: 0; font: 800 2rem / 1 var(--fh-font-sans); letter-spacing: var(--fh-tracking-wordmark, -0.05em); transform-origin: 50% 100%; }
+.site-motion-hero__mark > span { color: var(--fh-color-accent); }
+.site-motion-hero__line { display: block; block-size: 2px; border-block-end: 2px dashed var(--fh-tone); }
+.site-motion-hero__top, .site-motion-hero__turn { margin: 0; font: 700 clamp(1.4rem, 1rem + 2cqi, 2.4rem) / 1.05 var(--fh-font-display); letter-spacing: var(--fh-tracking-tight); }
+.site-motion-hero__turn { color: var(--fh-color-text-muted); }
+.site-motion-hero__chips { display: flex; flex-wrap: wrap; gap: var(--fh-space-2); margin: var(--fh-space-2) 0 0; padding: 0; list-style: none; }
+.site-motion-hero__chips > li { padding: 0.35rem 0.7rem; border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: 999px; font: 600 var(--fh-text-label) / 1 var(--fh-font-mono); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+
+.site-motion-scroll { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--fh-space-3); }
+.site-motion-frame { position: relative; display: grid; gap: var(--fh-space-2); }
+.site-motion-frame > div { aspect-ratio: 4 / 3; border-radius: var(--fh-radius-md, 10px); overflow: clip; }
+.site-motion-frame > span { font: 600 var(--fh-text-label) / 1 var(--fh-font-mono); color: var(--fh-color-text-muted); }
+.site-motion-art { background: url("/img/backdrop/hv-hat.webp") center 35% / cover; }
+.site-motion-art--b { background-image: url("/img/backdrop/hv-rider.webp"); }
+.site-motion-art--c { background: color-mix(in oklab, var(--fh-tone) 40%, var(--fh-color-canvas)); }
+.site-motion-art--d { background: color-mix(in oklab, var(--fh-tone) 25%, var(--fh-color-canvas)); }
+.site-motion-note { margin: 0; padding: 0 var(--fh-space-4) var(--fh-space-4); font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
+
+.site-motion-choreo { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: var(--fh-space-3); }
+.site-motion-card { display: grid; align-content: start; gap: var(--fh-space-2); padding: var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: var(--fh-radius-md, 10px); }
+.site-motion-card small { color: var(--fh-color-text-muted); }
+.site-motion-card .fh-button { justify-self: start; }
+.site-motion-code { display: block; font: var(--fh-text-caption, 0.75rem) / 1.4 var(--fh-font-mono); color: var(--fh-color-text-muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+.site-motion-pro { padding: 0.05rem 0.3rem; border-radius: 999px; background: var(--fh-color-text); color: var(--fh-color-canvas); font: 800 0.55rem / 1.3 var(--fh-font-mono); letter-spacing: 0.04em; text-transform: uppercase; vertical-align: middle; }
+
+.site-motion-drift { position: relative; display: grid; gap: var(--fh-space-3); }
+.site-motion-drift__canvas { inline-size: 100%; aspect-ratio: 16 / 9; border-radius: var(--fh-radius-md, 10px); background: var(--fh-color-surface, var(--fh-color-canvas)); }
+.site-motion-drift__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-3); }
+.site-motion-drift__styles { display: flex; flex-wrap: wrap; gap: var(--fh-space-1-5, 0.375rem); }
+.site-motion-drift__styles > button { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.7rem; border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: 999px; background: none; color: inherit; font: 600 0.62rem / 1.2 var(--fh-font-mono); letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
+.site-motion-drift__styles > button[aria-pressed="true"] { border-style: solid; border-color: var(--fh-color-accent); color: var(--fh-color-accent); }
+.site-motion-drift__styles > button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-motion-drift__amt { display: inline-flex; align-items: center; gap: var(--fh-space-2); font: 600 var(--fh-text-label) / 1 var(--fh-font-mono); text-transform: uppercase; letter-spacing: var(--fh-tracking-wider); }
+.site-motion-drift__amt input { inline-size: 9rem; accent-color: var(--fh-color-accent); }
+.site-motion-ease { --site-ease-cols: 1; }
+.site-motion-rules { display: grid; gap: var(--fh-space-2); margin: 0; padding-inline-start: 1.25rem; }
+.site-motion-rules li { line-height: 1.5; }
