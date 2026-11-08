@@ -10,7 +10,8 @@
  *   blocks  rectangles (panels, slats) each on its own clock, visible for `share` of its cycle.
  *
  * Tiers: "free" ships in the open package; "pro" is Firehorse Pro. Firehorse's standard: every
- * paid component ships with at least three free versions (here Wave, Panels, Ripple). The tier is data here so the
+ * paid component ships with at least three free versions (here Wave, Silk, Eddy, Panels,
+ * Ripple; Dapple, Tide lines and Shutters are Pro). The tier is data here so the
  * site can gate it (Rascode sign-in) without touching the styles.
  *
  * Usage:
@@ -58,6 +59,26 @@ const tides = () => {
   return (u, v, t) => Math.sin((v + u * tilt) * k1 - t * 0.7) + 0.6 * Math.sin((v - u * 0.4) * k2 + t * 0.45 + Math.sin(u * 4 + t * 0.3) * 0.8);
 };
 
+// Silk: domain-warped waves. The coordinates are bent by slower waves before the main wave is
+// read, so the gaps fold and stretch like cloth instead of rolling in straight lines.
+const silk = () => {
+  const a = rnd(1.5, 2.5), b = rnd(2, 3.5), sp = rnd(0.15, 0.3), p = Array.from({ length: 5 }, () => rnd(0, TAU));
+  return (u, v, t) => {
+    const wx = Math.sin(v * a * 3 + t * sp + p[0]) + 0.5 * Math.sin(u * b * 2 - t * sp * 1.3 + p[1]);
+    const wy = Math.sin(u * a * 3 - t * sp * 0.8 + p[2]) + 0.5 * Math.sin(v * b * 2 + t * sp * 1.1 + p[3]);
+    return Math.sin((u + 0.35 * wx) * b * 3 + (v + 0.35 * wy) * a * 2 + t * 0.4 + p[4]);
+  };
+};
+// Eddy: slow whirlpools. Spiral arms turn around three random centres and fade with distance,
+// over a faint drift, so the photo opens in turning swirls.
+const eddy = () => {
+  const c = [0, 1, 2].map(() => ({ x: rnd(0.1, 0.9), y: rnd(0.1, 0.9), n: 1 + Math.floor(rnd(0, 3)), k: rnd(8, 14), s: rnd(0.4, 0.9) * (Math.random() < 0.5 ? -1 : 1) }));
+  return (u, v, t, ar) => c.reduce((f, q) => {
+    const dx = (u - q.x) * ar, dy = v - q.y, r = Math.hypot(dx, dy);
+    return f + Math.exp(-r * 1.6) * Math.sin(Math.atan2(dy, dx) * q.n + r * q.k - t * q.s);
+  }, 0) + 0.3 * Math.sin(u * 2.1 + v * 1.3 + t * 0.25);
+};
+
 /* —— Block styles —————————————————————————————————————————————————————————— */
 const clock = (q, now, lo, hi) => { q.T = rnd(lo, hi); q.start = now; };
 const panels = (aspect) => {
@@ -80,6 +101,8 @@ const shutters = () => {
 
 export const STYLES = [
   { id: "wave", name: "Wave", note: "Soft drifting gaps", tier: "free", kind: "field", make: wave },
+  { id: "silk", name: "Silk", note: "Waves that fold like cloth", tier: "free", kind: "field", make: silk },
+  { id: "eddy", name: "Eddy", note: "Slow, turning swirls", tier: "free", kind: "field", make: eddy },
   { id: "panels", name: "Panels", note: "Random panels, own clocks", tier: "free", kind: "blocks", make: panels },
   { id: "ripple", name: "Ripple", note: "Rings from two points", tier: "free", kind: "field", make: ripple },
   { id: "dapple", name: "Dapple", note: "Light through leaves", tier: "pro", kind: "field", make: dapple },
@@ -88,10 +111,17 @@ export const STYLES = [
 ];
 
 /* —— Engine ————————————————————————————————————————————————————————————————— */
-export function createDrift(canvas, { paused = () => false, fps = 30, maxDpr = 1.5, gap = 3, fade = 0.9 } = {}) {
+export function createDrift(canvas, { paused = () => false, fps = 30, maxDpr = 1.5, gap = 3, fade = 0.9, veil = 1 } = {}) {
   const ctx = canvas.getContext("2d");
   const mk = document.createElement("canvas"), mctx = mk.getContext("2d");
   const sharp = { canvas: document.createElement("canvas") }; sharp.ctx = sharp.canvas.getContext("2d");
+  // The veil: the same photo, out of focus and a touch muted, under the drift. Hidden parts read
+  // as resting (soft) rather than missing (blank), so the photo's overall tone holds steady
+  // whatever the share or style; what the drift reveals is the sharp photo. `veil` is its
+  // opacity (1 by default; 0 shows the page through the gaps). Drawn once per photo and size;
+  // each frame only lays it underneath.
+  const vc = document.createElement("canvas"), vctx = vc.getContext("2d");
+  let veilOn = veil;
   let photo = null, pos = [0.5, 0.5], lift = 0, fit = "cover", fill = "", style = STYLES[0], share = 0.74, fn = null, blocks = [], vals = null, sorted = null;
   let running = false, last = 0;
   const t0 = performance.now();
@@ -107,6 +137,7 @@ export function createDrift(canvas, { paused = () => false, fps = 30, maxDpr = 1
   };
   const seed = () => {
     resize();
+    paintVeil();
     if (style.kind === "field") fn = style.make();
     else blocks = style.make(canvas.width / Math.max(1, canvas.height));
   };
@@ -140,19 +171,37 @@ export function createDrift(canvas, { paused = () => false, fps = 30, maxDpr = 1
   };
   const frame = (nowMs = performance.now()) => {
     if (!photo) return;
-    if (share <= 0) { ctx.clearRect(0, 0, canvas.width, canvas.height); return; } // nothing showing
+    if (share <= 0) { ctx.clearRect(0, 0, canvas.width, canvas.height); if (veilOn > 0 && vc.width) ctx.drawImage(vc, 0, 0); return; } // only the veil
     if (style.kind === "field") maskField((nowMs - t0) / 1000); else maskBlocks(nowMs / 1000);
-    const cw = canvas.width, ch = canvas.height, iw = photo.naturalWidth, ih = photo.naturalHeight;
     ctx.globalCompositeOperation = "source-over";
-    ctx.clearRect(0, 0, cw, ch);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPhoto(ctx, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "destination-in";
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(mk, 0, 0, canvas.width, canvas.height);
+    if (veilOn > 0 && vc.width) { ctx.globalCompositeOperation = "destination-over"; ctx.drawImage(vc, 0, 0); }
+    ctx.globalCompositeOperation = "source-over";
+  };
+  const paintVeil = () => {
+    if (!photo || veilOn <= 0) return;
+    vc.width = canvas.width; vc.height = canvas.height;
+    vctx.clearRect(0, 0, vc.width, vc.height);
+    vctx.filter = `blur(${Math.round(vc.width / 70)}px) saturate(0.8) brightness(0.94)`;
+    vctx.globalAlpha = veilOn;
+    drawPhoto(vctx, vc.width, vc.height);
+    vctx.filter = "none"; vctx.globalAlpha = 1;
+  };
+  function drawPhoto(ctx, cw, ch) {
+    const iw = photo.naturalWidth, ih = photo.naturalHeight;
     if (fit === "height") {
       // the whole photo, top to bottom, flush right, over a soft, enlarged, blurred copy of
       // itself that fills the window, so the left side is the photo too, never a blank band;
       // the sharp photo's left fifth feathers into the blur
       const s = Math.max(cw / iw, ch / ih), bw = iw * s * 1.08, bh2 = ih * s * 1.08;
+      const keep = ctx.filter; // the veil draws through here with its own softening
       ctx.filter = `blur(${Math.round(cw / 40)}px) brightness(0.92)`;
       ctx.drawImage(photo, (cw - bw) / 2, (ch - bh2) * 0.7, bw, bh2);
-      ctx.filter = "none";
+      ctx.filter = keep;
       const dh = ch, dw = (iw * ch) / ih, x0 = cw - dw;
       if (x0 > 0) {
         const t = sharp.canvas; t.width = Math.ceil(dw); t.height = ch;
@@ -172,11 +221,7 @@ export function createDrift(canvas, { paused = () => false, fps = 30, maxDpr = 1
       const s = Math.max(cw / iw, bh / ih), dw = iw * s, dh = ih * s;
       ctx.drawImage(photo, (cw - dw) * pos[0], by + (bh - dh) * pos[1], dw, dh);
     }
-    ctx.globalCompositeOperation = "destination-in";
-    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
-    ctx.drawImage(mk, 0, 0, cw, ch);
-    ctx.globalCompositeOperation = "source-over";
-  };
+  }
   const loop = (now) => {
     if (!running) return;
     if (!document.hidden && !paused() && now - last > 1000 / fps) { last = now; frame(now); }
@@ -186,6 +231,7 @@ export function createDrift(canvas, { paused = () => false, fps = 30, maxDpr = 1
     setPhoto(img, p = [0.5, 0.5], l = 0, o = {}) { photo = img; pos = p; lift = Math.min(0.5, Math.max(0, +l || 0)); fit = o.fit || "cover"; fill = /^#[0-9a-f]{6}$/i.test(o.fill || "") ? o.fill : ""; seed(); },
     setStyle(id) { style = STYLES.find((s) => s.id === id) || STYLES[0]; seed(); },
     setShare(p) { share = Math.min(1, Math.max(0, p)); seed(); },
+    setVeil(v) { veilOn = Math.min(1, Math.max(0, +v || 0)); paintVeil(); frame(); },
     get style() { return style.id; },
     resize() { resize(); if (style.kind === "blocks") seed(); frame(); },
     frame,
