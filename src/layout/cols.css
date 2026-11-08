@@ -1,0 +1,137 @@
+/*
+ * Firehorse — Columns (COL)
+ * layout · layer fh.layout
+ *
+ * A 12-column grid by default, 16 as the alternative, for placing text and images
+ * off the obvious lines: offsets, asymmetric splits, overlaps.
+ *
+ *   <div class="fh-cols">                       12 columns
+ *   <div class="fh-cols" data-cols="16">        16 columns
+ *     <div data-span="7" data-start="2">…</div>  columns 2 to 8
+ *     <figure data-span="6" data-start="7" data-row="1">…</figure>   shares row 1: overlaps
+ *
+ * Like every Firehorse layout, it follows its container, not the screen:
+ *   under 40rem   every child takes the full width, in source order
+ *   40–60rem      data-span-md / data-start-md apply (else full width)
+ *   60rem and up  data-span / data-start / data-row / data-row-span apply
+ * A child that is itself .fh-cols with data-subgrid lines up on the parent's columns.
+ * data-layer="over" lifts a child above the ones it overlaps.
+ * The page guides (data-fh-guides="cols-12" on <html>) draw these same columns.
+ */
+
+@layer fh.layout {
+  .fh-cols {
+    --fh-cols: 12;
+    --fh-cols-gutter: var(--fh-space-6);
+    display: grid;
+    grid-template-columns: repeat(var(--fh-cols), minmax(0, 1fr));
+    column-gap: var(--fh-cols-gutter);
+    row-gap: var(--fh-gap, var(--fh-space-8));
+    align-items: start;
+    container: fh-cols / inline-size;
+
+    &[data-cols="16"] { --fh-cols: 16; }
+
+    & > * {
+      grid-column: 1 / -1;
+      min-inline-size: 0;
+    }
+    & > [data-align="center"] { align-self: center; }
+    & > [data-align="end"] { align-self: end; }
+    & > [data-align="stretch"] { align-self: stretch; }
+    & > [data-layer="over"] { position: relative; z-index: 1; }
+  }
+
+  .fh-cols > .fh-cols[data-subgrid] {
+    grid-template-columns: subgrid;
+    column-gap: var(--fh-cols-gutter);
+  }
+
+  @container fh-cols (inline-size >= 40rem) {
+    .fh-cols {
+    & > [data-span-md="1"] { grid-column: auto / span min(1, var(--fh-cols)); }
+    & > [data-start-md="1"] { grid-column-start: 1; }
+    & > [data-span-md="2"] { grid-column: auto / span min(2, var(--fh-cols)); }
+    & > [data-start-md="2"] { grid-column-start: 2; }
+    & > [data-span-md="3"] { grid-column: auto / span min(3, var(--fh-cols)); }
+    & > [data-start-md="3"] { grid-column-start: 3; }
+    & > [data-span-md="4"] { grid-column: auto / span min(4, var(--fh-cols)); }
+    & > [data-start-md="4"] { grid-column-start: 4; }
+    & > [data-span-md="5"] { grid-column: auto / span min(5, var(--fh-cols)); }
+    & > [data-start-md="5"] { grid-column-start: 5; }
+    & > [data-span-md="6"] { grid-column: auto / span min(6, var(--fh-cols)); }
+    & > [data-start-md="6"] { grid-column-start: 6; }
+    & > [data-span-md="7"] { grid-column: auto / span min(7, var(--fh-cols)); }
+    & > [data-start-md="7"] { grid-column-start: 7; }
+    & > [data-span-md="8"] { grid-column: auto / span min(8, var(--fh-cols)); }
+    & > [data-start-md="8"] { grid-column-start: 8; }
+    & > [data-span-md="9"] { grid-column: auto / span min(9, var(--fh-cols)); }
+    & > [data-start-md="9"] { grid-column-start: 9; }
+    & > [data-span-md="10"] { grid-column: auto / span min(10, var(--fh-cols)); }
+    & > [data-start-md="10"] { grid-column-start: 10; }
+    & > [data-span-md="11"] { grid-column: auto / span min(11, var(--fh-cols)); }
+    & > [data-start-md="11"] { grid-column-start: 11; }
+    & > [data-span-md="12"] { grid-column: auto / span min(12, var(--fh-cols)); }
+    & > [data-start-md="12"] { grid-column-start: 12; }
+    & > [data-span-md="13"] { grid-column: auto / span min(13, var(--fh-cols)); }
+    & > [data-start-md="13"] { grid-column-start: 13; }
+    & > [data-span-md="14"] { grid-column: auto / span min(14, var(--fh-cols)); }
+    & > [data-start-md="14"] { grid-column-start: 14; }
+    & > [data-span-md="15"] { grid-column: auto / span min(15, var(--fh-cols)); }
+    & > [data-start-md="15"] { grid-column-start: 15; }
+    & > [data-span-md="16"] { grid-column: auto / span min(16, var(--fh-cols)); }
+    & > [data-start-md="16"] { grid-column-start: 16; }
+    }
+  }
+
+  @container fh-cols (inline-size >= 60rem) {
+    .fh-cols {
+      & > [data-span] { grid-column: auto / span var(--fh-cols); }
+    & > [data-span="1"] { grid-column-end: span min(1, var(--fh-cols)); }
+    & > [data-start="1"] { grid-column-start: 1; }
+    & > [data-span="2"] { grid-column-end: span min(2, var(--fh-cols)); }
+    & > [data-start="2"] { grid-column-start: 2; }
+    & > [data-span="3"] { grid-column-end: span min(3, var(--fh-cols)); }
+    & > [data-start="3"] { grid-column-start: 3; }
+    & > [data-span="4"] { grid-column-end: span min(4, var(--fh-cols)); }
+    & > [data-start="4"] { grid-column-start: 4; }
+    & > [data-span="5"] { grid-column-end: span min(5, var(--fh-cols)); }
+    & > [data-start="5"] { grid-column-start: 5; }
+    & > [data-span="6"] { grid-column-end: span min(6, var(--fh-cols)); }
+    & > [data-start="6"] { grid-column-start: 6; }
+    & > [data-span="7"] { grid-column-end: span min(7, var(--fh-cols)); }
+    & > [data-start="7"] { grid-column-start: 7; }
+    & > [data-span="8"] { grid-column-end: span min(8, var(--fh-cols)); }
+    & > [data-start="8"] { grid-column-start: 8; }
+    & > [data-span="9"] { grid-column-end: span min(9, var(--fh-cols)); }
+    & > [data-start="9"] { grid-column-start: 9; }
+    & > [data-span="10"] { grid-column-end: span min(10, var(--fh-cols)); }
+    & > [data-start="10"] { grid-column-start: 10; }
+    & > [data-span="11"] { grid-column-end: span min(11, var(--fh-cols)); }
+    & > [data-start="11"] { grid-column-start: 11; }
+    & > [data-span="12"] { grid-column-end: span min(12, var(--fh-cols)); }
+    & > [data-start="12"] { grid-column-start: 12; }
+    & > [data-span="13"] { grid-column-end: span min(13, var(--fh-cols)); }
+    & > [data-start="13"] { grid-column-start: 13; }
+    & > [data-span="14"] { grid-column-end: span min(14, var(--fh-cols)); }
+    & > [data-start="14"] { grid-column-start: 14; }
+    & > [data-span="15"] { grid-column-end: span min(15, var(--fh-cols)); }
+    & > [data-start="15"] { grid-column-start: 15; }
+    & > [data-span="16"] { grid-column-end: span min(16, var(--fh-cols)); }
+    & > [data-start="16"] { grid-column-start: 16; }
+    & > [data-row="1"] { grid-row-start: 1; }
+    & > [data-row="2"] { grid-row-start: 2; }
+    & > [data-row="3"] { grid-row-start: 3; }
+    & > [data-row="4"] { grid-row-start: 4; }
+    & > [data-row="5"] { grid-row-start: 5; }
+    & > [data-row="6"] { grid-row-start: 6; }
+    & > [data-row="7"] { grid-row-start: 7; }
+    & > [data-row="8"] { grid-row-start: 8; }
+    & > [data-row-span="2"] { grid-row-end: span 2; }
+    & > [data-row-span="3"] { grid-row-end: span 3; }
+    & > [data-row-span="4"] { grid-row-end: span 4; }
+    & > [data-row-span="5"] { grid-row-end: span 5; }
+    & > [data-row-span="6"] { grid-row-end: span 6; }
+    }
+  }
+}

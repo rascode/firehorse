@@ -1,0 +1,61 @@
+/*
+ * Firehorse — Etched split (ESP)
+ * patterns · layer fh.patterns · docs /patterns/#ESP
+ */
+
+@layer fh.patterns {
+  /* —— Etched split ——
+   * Full-bleed pair of panes divided by dashed rules, with each pane's
+   * copy aligned to the page content edge. Context (problem |
+   * approach) and contact (details | form) both use it.
+   *
+   *   <div class="fh-etched-split fh-bleed">
+   *     <div class="fh-etched-split__pane">…</div>
+   *     <div class="fh-etched-split__pane">…</div>
+   *   </div> */
+  .fh-etched-split {
+    --_gutter: max(var(--fh-page-margin), (100cqi - var(--fh-content-max)) / 2);
+    --_pad: var(--fh-inset-card);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-block: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-etched-split__pane {
+    position: relative;
+    min-inline-size: 0;
+    padding: var(--fh-inset-card) var(--_gutter) var(--fh-inset-card);
+    container: fh-pane / inline-size;
+
+    & + & {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  @container (inline-size >= 56rem) {
+    .fh-etched-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .fh-etched-split__pane {
+      padding-block: var(--fh-inset-card) var(--fh-inset-card);
+
+      &:first-child {
+        padding-inline: var(--_gutter) var(--_pad);
+      }
+
+      & + & {
+        padding-inline: var(--_pad) var(--_gutter);
+        border-block-start: 0;
+        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      }
+    }
+  }
+
+  /* Roomy: each pane takes the full section rhythm top and bottom (the Cinch pattern, CIN). */
+  .fh-etched-split--roomy > .fh-etched-split__pane {
+    padding-block: var(--fh-section-space);
+  }
+
+}

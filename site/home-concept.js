@@ -1,0 +1,516 @@
+/* Homepage concept (/home-concept/): the theme-colour dot's five roots. The page opens on Violet;
+ * a pick re-tints it for the visit and does what the
+ * logo's root picker in site.js does: --site-pick + data-site-root on <html>, so the root, the
+ * accent and every harmony re-tint live, remembered in localStorage "fh-root" (shared with it). */
+/* A circular reveal for look changes (colour, typeface): the new look opens out from the
+ * button that was used, over the old one, as a view transition. Falls back to an instant
+ * change without view transitions or with reduced motion. */
+window.hcReveal = (change, from) => (window.Firehorse?.reveal ? window.Firehorse.reveal(change, from) : change()); // MOT-4.1, free enhancer
+
+const html = document.documentElement;
+const pop = document.getElementById("site-hc-roots");
+// The theme colour: a fixed root, or "From backdrop" (the default), where the backdrop picker
+// hands over the colour of whatever is behind the page (window.hcBackdropColour). A fixed pick
+// turns "From backdrop" off; picking it again turns it back on.
+window.hcRoot = { auto: true, backdrop: null, set: null };
+if (pop) {
+  const swatches = [...pop.querySelectorAll("[data-root]")];
+  const AUTO = "fh-hc-root-auto";
+  try { window.hcRoot.auto = localStorage.getItem(AUTO) !== "0"; } catch {}
+  const setRoot = (hex) => {
+    html.style.setProperty("--site-hc-pick", hex); // this page's own pick (it opens on Violet)
+    html.style.setProperty("--site-pick", hex);
+    html.setAttribute("data-site-root", "");
+  };
+  const mark = (hex) => swatches.forEach((b) => b.setAttribute("aria-pressed", String(window.hcRoot.auto ? b.dataset.root === "auto" : !!hex && b.dataset.root.toLowerCase() === hex.toLowerCase())));
+  // the backdrop picker calls this with the backdrop's colour (inside its own reveal)
+  window.hcRoot.set = (hex) => {
+    window.hcRoot.backdrop = hex || null;
+    if (hex) html.style.setProperty("--site-hc-auto", hex);
+    if (window.hcRoot.auto && hex) setRoot(hex);
+    mark(hex);
+  };
+  mark("#8b5cf6"); // the page opens on Violet (home-concept.css)
+  pop.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-root]");
+    if (!b) return;
+    const dot = document.querySelector(".site-hc__root-btn");
+    pop.hidePopover();
+    if (b.dataset.root === "auto") {
+      window.hcRoot.auto = true;
+      try { localStorage.setItem(AUTO, "1"); } catch {}
+      window.hcReveal(() => { if (window.hcRoot.backdrop) setRoot(window.hcRoot.backdrop); mark(); }, dot);
+      return;
+    }
+    const hex = b.dataset.root;
+    window.hcRoot.auto = false;
+    try { localStorage.setItem(AUTO, "0"); localStorage.setItem("fh-root", hex); } catch {}
+    window.hcReveal(() => { setRoot(hex); mark(hex); }, dot);
+  });
+}
+
+/* The spine: a grey etch on the left edge of the logo's underscore, the full height of the
+ * window in two runs: up from the underscore to the top of the window, and down from under the
+ * tagline to the bottom. As the page scrolls they draw back toward the logo (the top run comes
+ * down, the bottom run goes up), gone when the logo locks (CSS, on the scroll timeline). */
+const spine = document.querySelector(".site-hc__spine");
+const bar = document.querySelector(".site-hc__fh .site-mark__bar");
+const hero = document.querySelector(".site-hc");
+const ledeEl = document.querySelector(".site-hc__lede");
+if (spine && bar && hero) {
+  const down = spine.cloneNode(false);
+  down.classList.add("site-hc__spine--down");
+  spine.after(down);
+  const place = () => {
+    const h = hero.getBoundingClientRect(), b = bar.getBoundingClientRect();
+    const fs = parseFloat(getComputedStyle(bar).fontSize) || 16;
+    const x = Math.round(b.left - h.left);                // the underscore's left edge
+    // the only break is the tagline's own line box: the top run ends at its top, the bottom
+    // run starts at its foot
+    const l = ledeEl?.getBoundingClientRect();
+    const has = l && l.height;
+    const upEnd = (has ? l.top : b.bottom - fs * 0.3) - h.top;
+    const downStart = (has ? l.bottom : b.bottom + 8) - h.top;
+    spine.style.left = `${x}px`;
+    spine.style.top = "0px";
+    spine.style.height = `${Math.max(0, Math.round(upEnd))}px`;
+    down.style.left = `${x}px`;
+    down.style.top = `${Math.round(downStart)}px`;
+    down.style.height = `${Math.max(0, Math.round(h.height - downStart))}px`;
+  };
+  (document.fonts?.ready ?? Promise.resolve()).then(place);
+  addEventListener("resize", place, { passive: true });
+  document.querySelector(".site-hc__fh")?.addEventListener("animationend", place);
+  ledeEl?.addEventListener("animationend", place);
+  setTimeout(place, 2000); setTimeout(place, 4500);
+  place();
+}
+
+/* Send to an agent: right-aligned under "that ___.", at its own width. */
+const agents = document.querySelector(".site-hc__agents");
+const tagTop = document.querySelector(".site-hc__tag-top");
+const turn = document.querySelector(".site-hc__tag-turn");
+const marks = document.querySelector(".site-hc__marks");
+if (agents && tagTop && turn && marks) {
+  const fit = () => {
+    const m = marks.getBoundingClientRect(), t = turn.getBoundingClientRect();
+    agents.style.top = `${Math.round(t.bottom - m.top + 20)}px`;
+  };
+  (document.fonts?.ready ?? Promise.resolve()).then(fit);
+  addEventListener("resize", fit, { passive: true });
+  turn.addEventListener("animationend", fit); // "that ___." drops into place in the intro
+  setTimeout(fit, 3000);
+  fit();
+}
+
+// The lede starts on the underscore's left edge (the spine's line): glyph edge on the line.
+{
+  const bar2 = document.querySelector(".site-hc__fh .site-mark__bar");
+  const lede = document.querySelector(".site-hc__lede");
+  if (bar2 && lede) {
+    const ctx = document.createElement("canvas").getContext("2d");
+    const bearing = (el, ch) => { const cs = getComputedStyle(el); ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`; return ctx.measureText(ch).actualBoundingBoxLeft; };
+    const align = () => {
+      const x = bar2.getBoundingClientRect().left;
+      const base = lede.parentElement.getBoundingClientRect().left;
+      lede.style.setProperty("--hc-lede-x", `${Math.max(0, x - base + bearing(lede, "T"))}px`);
+    };
+    document.fonts?.ready.then(align);
+    addEventListener("resize", align, { passive: true });
+    document.querySelector(".site-hc__fh")?.addEventListener("animationend", align);
+    setTimeout(align, 1800);
+    align();
+  }
+}
+
+// "Build with": clone the services once for a seamless loop, then light the one passing just
+// right of the label in its brand colour, one at a time. Reduced motion: no flow, they take
+// turns in place instead.
+{
+  const track = document.querySelector(".site-hc-svc__track");
+  const list = track?.querySelector(".site-hc-svc__list");
+  if (track && list) {
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    [...list.children].forEach((li) => { const c = li.cloneNode(true); c.setAttribute("aria-hidden", "true"); list.append(c); });
+    const items = [...list.children];
+    let lit = null, on = false, raf = 0, k = 0;
+    const light = (el) => { if (el === lit) return; lit?.classList.remove("is-lit"); el?.classList.add("is-lit"); lit = el; };
+    const tick = () => {
+      if (track.closest(".site-hc-svc")?.hasAttribute("data-pinned")) { lit = null; if (on) raf = setTimeout(tick, 120); return; }
+      const t = track.getBoundingClientRect();
+      const focus = t.left + t.width * 0.12;
+      let best = null, d = Infinity;
+      for (const el of items) { const r = el.getBoundingClientRect(); const dd = Math.abs(r.left + r.width / 2 - focus); if (dd < d) { d = dd; best = el; } }
+      light(best);
+      if (on) raf = setTimeout(tick, 120);
+    };
+    const real = items.filter((el) => !el.hasAttribute("aria-hidden"));
+    let timer = 0;
+    new IntersectionObserver(([e]) => {
+      on = e.isIntersecting;
+      if (still) { clearInterval(timer); if (on) { light(real[k]); timer = setInterval(() => { k = (k + 1) % real.length; light(real[k]); }, 1800); } return; }
+      clearTimeout(raf); if (on) raf = setTimeout(tick, 0);
+    }).observe(track);
+  }
+}
+
+// The send card for "Build with": hover (or focus, or tap) a service and a card above it holds
+// the prompt, editable, with Open in <service> (or Copy command) and Copy. The flow pauses while
+// the card is up; the prompt edits carry over between services.
+(async () => {
+  const sec = document.querySelector(".site-hc-svc");
+  const track = sec?.querySelector(".site-hc-svc__track");
+  const src = document.querySelector('script[src*="site-features.js"]')?.src;
+  if (!sec || !track || !src) return;
+  const { AGENTS, sendTo, basePrompt } = await import(src); // same URL, same module instance
+  const card = document.createElement("div");
+  card.className = "site-hc-svc__card";
+  card.setAttribute("role", "dialog");
+  card.setAttribute("aria-label", "Send the prompt");
+  card.innerHTML = `<div class="site-hc-svc__card-head"><span class="hc-c-mono hc-c-title">Send to an agent</span><span class="hc-c-mono hc-c-hint">Prompt copied on send</span></div>
+    <div class="site-hc-svc__card-body">
+      <div class="site-hc-svc__card-tile"><span class="site-hc-svc__card-cube"><i class="fh-icon" aria-hidden="true"></i></span><span class="hc-c-mono hc-c-num"></span><i class="fh-icon fh-icon--arrow-up-right hc-c-go" aria-hidden="true"></i><b></b><small></small></div>
+      <label class="site-hc-svc__card-prompt"><span class="hc-c-mono">Prompt · edit me</span><textarea spellcheck="false"></textarea></label>
+    </div>
+    <div class="site-hc-svc__card-foot"><button type="button" data-act="copy">Copy prompt<i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button><button type="button" class="site-hc-svc__send" data-act="send"><span></span><i class="fh-icon fh-icon--arrow-up-right" aria-hidden="true"></i></button></div>`;
+  sec.append(card);
+  const ta = card.querySelector("textarea");
+  ta.value = basePrompt();
+  const list = track.querySelector(".site-hc-svc__list");
+  let current = null, hideT = 0;
+  const paused = (p) => { list.style.animationPlayState = p ? "paused" : ""; };
+  const show = (li) => {
+    clearTimeout(hideT);
+    const a = AGENTS.find((x) => x.id === li.dataset.svc);
+    if (!a) return;
+    current = { li, a };
+    card.style.setProperty("--_brand", li.style.getPropertyValue("--_brand") || "var(--fh-color-text)");
+    const n = AGENTS.indexOf(a) + 1;
+    card.querySelector(".site-hc-svc__card-cube .fh-icon").className = `fh-icon fh-icon--${a.icon}`;
+    card.querySelector(".hc-c-num").textContent = String(n).padStart(2, "0");
+    card.querySelector(".hc-c-go").className = `fh-icon fh-icon--${a.command ? "copy" : "arrow-up-right"} hc-c-go`;
+    card.querySelector(".site-hc-svc__card-tile b").textContent = a.name;
+    card.querySelector(".site-hc-svc__card-tile small").textContent = a.command ? "From your terminal" : a.note;
+    card.querySelector(".hc-c-hint").textContent = `${String(n).padStart(2, "0")} / ${String(AGENTS.length).padStart(2, "0")}`;
+    card.querySelector(".site-hc-svc__send span").textContent = a.command ? "Copy command" : `Open ${a.name}`;
+    card.querySelector(".site-hc-svc__send .fh-icon").className = `fh-icon fh-icon--${a.command ? "terminal" : "arrow-up-right"}`;
+    const s = sec.getBoundingClientRect(), r = li.getBoundingClientRect(), w = card.offsetWidth;
+    const center = r.left + r.width / 2 - s.left;
+    const x = Math.min(Math.max(center - w / 2, 12), s.width - w - 12);
+    card.style.setProperty("--_x", `${x}px`);
+    card.style.setProperty("--_caret", `${center - x}px`);
+    card.style.setProperty("--_y", `${s.bottom - r.top + 14}px`);
+    li.dispatchEvent(new CustomEvent("hc-svc-pin", { bubbles: true }));
+    card.setAttribute("data-open", "");
+    paused(true);
+  };
+  const hide = (now) => {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { if (card.contains(document.activeElement) && !now) return; card.removeAttribute("data-open"); current = null; paused(false); sec.dispatchEvent(new CustomEvent("hc-svc-unpin")); }, now ? 0 : 220);
+  };
+  const items = () => [...list.children];
+  items().forEach((li) => { if (!li.hasAttribute("aria-hidden")) { li.tabIndex = 0; li.setAttribute("role", "button"); li.setAttribute("aria-haspopup", "dialog"); } });
+  // Hover intent: the card opens only when the pointer has deliberately rested on a service
+  // (a real pointer move onto it, then ~0.55s without leaving or scrolling). Passing over, or
+  // the page / the flow sliding a service under a still pointer, does nothing. A click (or
+  // Enter / focus from the keyboard) opens it at once.
+  let intentT = 0, intentLi = null, lastMove = 0, lastScroll = 0;
+  const DWELL = 550;
+  const cancelIntent = () => { clearTimeout(intentT); intentLi?.classList.remove("is-aiming"); intentLi = null; };
+  addEventListener("scroll", () => { lastScroll = performance.now(); cancelIntent(); }, { passive: true });
+  list.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    lastMove = performance.now();
+    const li = e.target.closest(".site-hc-svc__item");
+    if (current) { if (li && li !== current.li) show(li); else clearTimeout(hideT); return; } // card up: follow
+    if (!li || li === intentLi) return;
+    cancelIntent();
+    if (performance.now() - lastScroll < 250) return;
+    intentLi = li;
+    li.classList.add("is-aiming");
+    intentT = setTimeout(() => { const ok = intentLi === li && performance.now() - lastScroll > DWELL && li.matches(":hover"); cancelIntent(); if (ok) show(li); }, DWELL);
+  });
+  list.addEventListener("pointerout", (e) => { if (intentLi && !intentLi.contains(e.relatedTarget)) cancelIntent(); });
+  list.addEventListener("click", (e) => { const li = e.target.closest(".site-hc-svc__item"); if (li) show(li); });
+  list.addEventListener("focusin", (e) => { const li = e.target.closest(".site-hc-svc__item"); if (li) show(li); });
+  track.addEventListener("pointerleave", () => hide());
+  card.addEventListener("pointerenter", () => clearTimeout(hideT));
+  card.addEventListener("pointerleave", () => hide());
+  sec.addEventListener("focusout", () => setTimeout(() => { if (!sec.contains(document.activeElement)) hide(true); }, 0));
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && current) { const li = current.li; hide(true); li.focus?.(); } });
+  addEventListener("scroll", () => current && card.hasAttribute("data-open") && show(current.li), { passive: true }); // keep it on its service
+  card.addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-act]");
+    if (!b || !current) return;
+    const p = ta.value.trim() || basePrompt();
+    if (b.dataset.act === "copy") { let ok = false; try { await navigator.clipboard.writeText(p); ok = true; } catch {} window.fhToast?.(ok ? "Prompt copied" : "Couldn't copy", ok ? "success" : "danger"); return; }
+    sendTo(current.a, p);
+  });
+  // While the card is up, the lit service is the one it belongs to.
+  sec.addEventListener("hc-svc-pin", (e) => { sec.dataset.pinned = ""; items().forEach((el) => el.classList.toggle("is-lit", el === e.target)); });
+  sec.addEventListener("hc-svc-unpin", () => { delete sec.dataset.pinned; items().forEach((el) => el.classList.remove("is-lit")); }); // hand back to the flow: only the featured one lights
+})();
+
+// On the Firehorse motion system: the nav glides (data-fh-glide), the logo and Send to an agent
+// lock (data-fh-lock), and the corner tools dock beside it (data-fh-dock-beside, Pro), all built
+// by the enhancer from the page's attributes. The page only adds its own touches: the tools ride
+// fixed in the top-right corner, and Send to an agent's label gets the roll it flips with.
+{
+  const tools = document.querySelector(".site-hc__git");
+  if (tools) { tools.classList.add("is-fixed"); document.body.append(tools); }
+  document.documentElement.addEventListener("fh:choreo", () => {
+    const btn = document.querySelector(".site-hc__agents > .fh-button");
+    const txt = btn && [...btn.childNodes].find((n) => n.nodeType === 3 && n.data.trim());
+    if (txt) { const sp = document.createElement("span"); sp.className = "fh-roll hc-agent-roll"; sp.textContent = txt.data.trim(); txt.replaceWith(sp); }
+  }, { once: true });
+}
+
+// "Dark": toggles the page between light and dark through the (hidden) scheme radios, so
+// site.js remembers it as usual.
+{
+  const btn = document.querySelector(".site-hc__dark");
+  if (btn) {
+    const mq = matchMedia("(prefers-color-scheme: dark)");
+    const isDark = () => { const v = document.querySelector('input[name="scheme"]:checked')?.value || "auto"; return v === "dark" || (v === "auto" && mq.matches); };
+    const sync = () => btn.setAttribute("aria-pressed", String(isDark()));
+    btn.addEventListener("click", () => {
+      const r = document.querySelector(`.site-hc__scheme-src input[value="${isDark() ? "light" : "dark"}"]`);
+      if (!r) return;
+      const flip = () => { r.checked = true; r.dispatchEvent(new Event("change", { bubbles: true })); sync(); };
+      // the label rolls first, then the whole page cross-fades into the other scheme
+      btn.setAttribute("aria-pressed", String(!isDark()));
+      if (document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches) setTimeout(() => document.startViewTransition(flip), 120);
+      else flip();
+    });
+    mq.addEventListener?.("change", sync);
+    sync();
+  }
+}
+
+// The Git chip (v1.1 · Download from Git) lives bottom right now, just left of the KC
+// launcher, level with it; placed from KC's box so it follows KC's size and the window.
+{
+  const chip = document.querySelector(".site-hc__git .site-hc__meta");
+  if (chip) {
+    chip.classList.add("site-hc__meta--dock");
+    document.body.append(chip);
+    // the Light / Dark chip sits between the Git chip and KC
+    const dark = document.querySelector(".site-hc__dark");
+    if (dark) { dark.classList.add("site-hc__dark--dock"); document.body.append(dark); }
+    const place = () => {
+      const kc = document.querySelector(".site-kc-launch");
+      const W = document.documentElement.clientWidth, H = innerHeight;
+      if (!kc) { chip.style.setProperty("--_r", "16px"); chip.style.setProperty("--_b", "16px"); return; }
+      const r = kc.getBoundingClientRect();
+      let right = W - r.left + 8;
+      if (dark) {
+        dark.style.setProperty("--_r", `${right}px`);
+        dark.style.setProperty("--_b", `${H - r.bottom + (r.height - dark.offsetHeight) / 2}px`);
+        right += dark.offsetWidth + 8;
+      }
+      chip.style.setProperty("--_r", `${right}px`);
+      chip.style.setProperty("--_b", `${H - r.bottom + (r.height - chip.offsetHeight) / 2}px`);
+    };
+    place();
+    addEventListener("resize", place, { passive: true });
+    new ResizeObserver(place).observe(document.body);
+    setTimeout(place, 800); setTimeout(place, 2500);
+  }
+}
+
+// Typeface picker: sets data-fh-type on <html> (the system's own type switch, in the fh.config
+// layer), remembers it, and re-measures the layout once the new face has loaded.
+{
+  const pop = document.getElementById("site-hc-types");
+  if (pop) {
+    const root = document.documentElement;
+    const KEY = "fh-type-concept";
+    const get = () => { try { return localStorage.getItem(KEY) || "inter"; } catch { return "inter"; } };
+    const mark = (k) => pop.querySelectorAll("button[data-type]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === k)));
+    const apply = (k, save) => {
+      root.setAttribute("data-fh-type", k);
+      mark(k);
+      if (save) { try { localStorage.setItem(KEY, k); } catch {} }
+      (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(() => dispatchEvent(new Event("resize"))));
+    };
+    apply(get(), false);
+    pop.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-type]");
+      if (!b) return;
+      pop.hidePopover();
+      window.hcReveal(() => apply(b.dataset.type, true), document.querySelector(".site-hc__type-btn"));
+    });
+  }
+}
+
+
+// Backdrop picker (the camera, left of the T). Scenes set data-hc-bg on <html>; a photo also
+// sets data-hc-photo and puts the photo on the scene. Remembered in localStorage. Photos are
+// decoded before the reveal so they open out whole.
+//
+// Drift reveal: the photo through a drift from the Firehorse Drift library (site/drift.js):
+// Wave and Panels are free, the rest Pro. "Showing" (0–90%) is how much of the photo is visible
+// at a time; every style re-randomises itself from that on each change. It keeps moving while the page
+// scrolls and rests only in hidden tabs; one still frame under reduced motion.
+const HC_QS = (() => { try { return new URL(document.currentScript.src).search; } catch { return ""; } })();
+(async () => {
+  const pop = document.getElementById("site-hc-bgs");
+  const scene = document.querySelector(".site-hc__scene");
+  if (!pop || !scene) return;
+  const { createDrift } = await import(`/drift.js${HC_QS}`);
+  const root = document.documentElement;
+  const KEY = "fh-hc-bg", FX = "fh-hc-drift", SHOW = "fh-hc-drift-show", STYLE = "fh-hc-drift-style";
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const store = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+  const read = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch { return d; } };
+  const btnFor = (k) => pop.querySelector(`button[data-bg="${k}"]`);
+  // Photos are rasters, so unlike the horse (a mask, sharp at any size) they are fetched at the
+  // size this screen needs at the backdrop's largest: the window's covering width x the pixel
+  // ratio x 1.1112 (the scale the scene starts at before it recedes), stepped to 200px so the
+  // cache holds, capped at 3840. Assumes a 3:2 photo for tall windows.
+  const SCALE0 = 1.1112;
+  const photoUrl = (src) => {
+    const need = Math.max(innerWidth, innerHeight * 1.5) * Math.min(devicePixelRatio || 1, 2) * SCALE0;
+    const w = Math.min(3840, Math.ceil(need / 200) * 200);
+    return src.replace(/([?&])w=\d+/, `$1w=${w}`);
+  };
+  // The backdrop's colour for "From backdrop": scenes have their own; a photo is sampled small
+  // (CORS-clean: same-origin files and Unsplash's CDN) and its most vivid hue is taken, its
+  // pixels averaged and set to a usable lightness and chroma. Near-grey photos keep the colour.
+  const SCENE_COLOUR = { firehorse: "#8b5cf6", aurora: "#2bb3a3", aura: "#e0a526", blueprint: "#3b82f6" };
+  const colours = new Map();
+  const colourOf = (src) => {
+    if (colours.has(src)) return colours.get(src);
+    const p = new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        try {
+          const N = 48, cv = document.createElement("canvas"); cv.width = cv.height = N;
+          const x = cv.getContext("2d", { willReadFrequently: true }); x.drawImage(img, 0, 0, N, N);
+          const d = x.getImageData(0, 0, N, N).data, bins = Array.from({ length: 24 }, () => ({ w: 0, r: 0, g: 0, b: 0 }));
+          let total = 0;
+          for (let i = 0; i < d.length; i += 4) {
+            const r = d[i] / 255, g = d[i + 1] / 255, b = d[i + 2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), c = mx - mn;
+            if (c < 0.08 || mx < 0.18 || mx > 0.97) continue;
+            const h = c === 0 ? 0 : mx === r ? ((g - b) / c + 6) % 6 : mx === g ? (b - r) / c + 2 : (r - g) / c + 4;
+            const w = (c / mx) * c, k = bins[Math.floor(h * 4) % 24];
+            k.w += w; k.r += r * w; k.g += g * w; k.b += b * w; total += w;
+          }
+          const best = bins.reduce((a, k) => (k.w > a.w ? k : a), bins[0]);
+          if (total < 6 || best.w < total * 0.08) { resolve(null); return; } // near grey
+          let r = best.r / best.w, g = best.g / best.w, b = best.b / best.w;
+          // to HSL, set to a lightness and saturation that reads as a theme colour, back to hex
+          const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l0 = (mx + mn) / 2, c = mx - mn;
+          const h = c === 0 ? 0 : (mx === r ? ((g - b) / c + 6) % 6 : mx === g ? (b - r) / c + 2 : (r - g) / c + 4) * 60;
+          const s = Math.min(0.85, Math.max(0.55, c / (1 - Math.abs(2 * l0 - 1) || 1))), l = Math.min(0.58, Math.max(0.46, l0));
+          const f = (n) => { const k = (n + h / 30) % 12, a = s * Math.min(l, 1 - l); return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
+          resolve("#" + [f(0), f(8), f(4)].map((v) => v.toString(16).padStart(2, "0")).join(""));
+        } catch { resolve(null); }
+      };
+      img.onerror = () => resolve(null);
+      img.src = src.includes("images.unsplash.com") ? src.replace(/([?&])w=\d+/, "$1w=96") : src;
+    });
+    colours.set(src, p);
+    return p;
+  };
+  const backdropColour = (b) => (b?.dataset.photo ? colourOf(b.dataset.photo) : Promise.resolve(SCENE_COLOUR[b?.dataset.bg] || null));
+  const imgs = new Map();
+  const load = (src) => {
+    if (!imgs.has(src)) { const img = new Image(); img.src = src; imgs.set(src, img.decode().then(() => img).catch(() => img)); }
+    return Promise.race([imgs.get(src), new Promise((r) => setTimeout(() => r(null), 1800))]);
+  };
+
+  const cv = document.createElement("canvas");
+  cv.className = "site-hc__drift";
+  scene.prepend(cv);
+  const fillLayer = document.createElement("div");
+  fillLayer.className = "site-hc__scene-fill";
+  scene.prepend(fillLayer);
+  const drift = createDrift(cv, { maxDpr: 2 }); // keeps moving while the page scrolls; rests only in hidden tabs.
+  // Its backing store is sized from the canvas's scaled box, so it is full resolution at the
+  // start of the recede and only ever shrinks from there.
+  let photo = null, pos = [0.5, 0.5], lift = 0, fitOpts = {};
+  const on = () => root.hasAttribute("data-hc-drift") && root.hasAttribute("data-hc-photo") && photo;
+  const sync = () => {
+    if (!on()) { drift.stop(); return; }
+    drift.setPhoto(photo, pos, lift, fitOpts);
+    if (still) { drift.frame(); drift.stop(); } else drift.start();
+  };
+  addEventListener("resize", () => { if (on()) drift.resize(); }, { passive: true });
+
+  const posOf = (s) => { const [a = "center", b = "center"] = (s || "").split(" "); const n = (x) => (x === "center" ? 0.5 : parseFloat(x) / 100); return [n(a), n(b)]; };
+  const mark = (k) => pop.querySelectorAll("button[data-bg]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.bg === k)));
+  const apply = (k, save, img) => {
+    const b = btnFor(k) || btnFor("firehorse");
+    k = b.dataset.bg;
+    root.setAttribute("data-hc-bg", k);
+    if (b.dataset.photo) {
+      root.setAttribute("data-hc-photo", "");
+      scene.style.setProperty("--_img", `url("${photoUrl(b.dataset.photo)}")`);
+      scene.style.setProperty("--_pos", b.dataset.pos || "center");
+      pos = posOf(b.dataset.pos);
+      lift = parseFloat(b.dataset.lift) || 0;
+      scene.style.setProperty("--_lift", String(lift));
+      fitOpts = { fit: b.dataset.fit || "cover", fill: b.dataset.fill || "" };
+      if (b.dataset.fit) scene.dataset.fit = b.dataset.fit; else delete scene.dataset.fit;
+      if (b.dataset.fill) scene.style.setProperty("--_fill", b.dataset.fill); else scene.style.removeProperty("--_fill");
+      if (img) scene.style.setProperty("--_ar", (img.naturalWidth / img.naturalHeight).toFixed(4));
+      photo = img || null;
+      if (!photo) load(photoUrl(b.dataset.photo)).then((i) => { if (root.getAttribute("data-hc-bg") === k && i) { photo = i; scene.style.setProperty("--_ar", (i.naturalWidth / i.naturalHeight).toFixed(4)); sync(); } });
+    } else {
+      root.removeAttribute("data-hc-photo");
+      scene.style.removeProperty("--_img");
+      scene.style.removeProperty("--_lift");
+      scene.style.removeProperty("--_fill");
+      delete scene.dataset.fit;
+      fitOpts = {};
+      photo = null;
+    }
+    mark(k);
+    if (save) store(KEY, k);
+    sync();
+  };
+
+  // Showing: 50–90%
+  const amt = pop.querySelector(".site-hc__bgs-amt input"), amtOut = pop.querySelector(".site-hc__bgs-amt-out");
+  const setShow = (pct, save) => {
+    pct = Math.min(90, Math.max(0, pct | 0));
+    if (amt) amt.value = String(pct);
+    if (amtOut) amtOut.textContent = String(pct);
+    drift.setShare(pct / 100);
+    if (save) store(SHOW, String(pct));
+    if (on()) drift.frame();
+  };
+  amt?.addEventListener("input", () => setShow(parseInt(amt.value, 10), true));
+  // Drift style
+  const styleBtns = [...pop.querySelectorAll("button[data-drift]")];
+  const setStyle = (id, save) => {
+    if (!styleBtns.some((b) => b.dataset.drift === id)) id = "wave";
+    drift.setStyle(id);
+    styleBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.drift === id)));
+    if (save) store(STYLE, id);
+    if (on()) drift.frame();
+  };
+  // On / off
+  const fxBtn = pop.querySelector(".site-hc__bgs-fx");
+  const setFx = (v, save) => { root.toggleAttribute("data-hc-drift", v); fxBtn?.setAttribute("aria-pressed", String(v)); if (save) store(FX, v ? "1" : "0"); sync(); };
+
+  setStyle(read(STYLE, "wave"), false);
+  { const v = parseInt(read(SHOW, "74"), 10); setShow(Number.isNaN(v) ? 74 : v, false); }
+  setFx(read(FX, "1") === "1", false);
+  apply(read(KEY, "firehorse"), false);
+  backdropColour(pop.querySelector(`button[data-bg="${root.getAttribute("data-hc-bg")}"]`)).then((hex) => window.hcRoot?.set?.(hex));
+
+  pop.addEventListener("pointerover", (e) => { const b = e.target.closest("button[data-photo]"); if (b) load(photoUrl(b.dataset.photo)); });
+  pop.addEventListener("click", async (e) => {
+    if (e.target.closest(".site-hc__bgs-fx")) { setFx(!root.hasAttribute("data-hc-drift"), true); return; }
+    const d = e.target.closest("button[data-drift]");
+    if (d) { setStyle(d.dataset.drift, true); if (!root.hasAttribute("data-hc-drift")) setFx(true, true); return; }
+    const b = e.target.closest("button[data-bg]");
+    if (!b) return;
+    pop.hidePopover();
+    const [img, hex] = await Promise.all([b.dataset.photo ? load(photoUrl(b.dataset.photo)) : null, Promise.race([backdropColour(b), new Promise((r) => setTimeout(() => r(null), 1200))])]);
+    window.hcReveal(() => { apply(b.dataset.bg, true, img); window.hcRoot?.set?.(hex); }, document.querySelector(".site-hc__bg-btn"));
+  });
+})();

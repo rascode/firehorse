@@ -1,0 +1,33 @@
+/*
+ * Firehorse — Components (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  /* —— Real components on a canvas ——
+   * Put any Firehorse component (avatars, chips, a datatable, a header
+   * in a window) inside __ui: it is laid out in native pixels, one CSS
+   * pixel per canvas pixel, then zoomed with the canvas. So a chip on a
+   * 1280 × 720 slide is the size it is on a 1280-wide screen, at any
+   * drawn size. --fh-canvas-ui-scale enlarges it (2 = twice that).
+   * --crop fills the space left and fades the bottom, like a cropped screenshot. */
+  .fh-canvas__ui {
+    min-inline-size: 0;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-sans);
+    font-size: 1rem;
+    letter-spacing: normal;
+    line-height: var(--fh-leading-normal);
+    text-align: start;
+    text-transform: none;
+    zoom: calc(tan(atan2(100cqi, calc(var(--fh-canvas-w) * 1px))) * var(--fh-canvas-ui-scale, 1));
+  }
+
+  .fh-canvas__ui--crop {
+    flex: 1 1 0;
+    min-block-size: 0;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, black 78%, transparent);
+  }
+
+}

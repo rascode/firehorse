@@ -49,6 +49,17 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
       <p class="fh-menu__label">From your terminal</p>
       <div class="site-agents__cli">${AGENTS.filter((a) => a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b>${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
       <div class="site-agents__foot"><button type="button" class="fh-button fh-button--sm fh-button--secondary site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button></div>
+      <details class="site-agents__ask">
+        <summary><span class="site-agents__ask-q"><b>Don't see your agent?</b><small>Tell us and we'll add it to the list.</small></span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+        <form class="site-agents__ask-form" novalidate data-placement="agent-menu">
+          <label><span>Agent</span><input name="agent" required maxlength="120" placeholder="Its name" autocomplete="off"></label>
+          <label><span>Link <small>optional</small></span><input name="link" type="url" maxlength="300" placeholder="https://"></label>
+          <label><span>Your email <small>optional, to hear when it's in</small></span><input name="email" type="email" maxlength="200" placeholder="you@company.com" autocomplete="email"></label>
+          <input class="site-agents__ask-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="fh-button fh-button--sm site-agents__ask-send"><span>Send request</span></button>
+          <p class="site-agents__ask-status" role="status" aria-live="polite"></p>
+        </form>
+      </details>
     </div>`;
   // Open on whichever side of the button has more room; never scroll the page.
   // The menu fits that room and scrolls inside itself if it has to.
@@ -56,6 +67,28 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
     if (e.newState !== "open") return;
     const r = host.getBoundingClientRect();
     e.target.toggleAttribute("data-up", r.top > innerHeight - r.bottom);
+  });
+  // "Don't see your agent?": posts to /api/agent-request with the page's campaign attribution;
+  // the team adds it to AGENTS and opens a PR.
+  const askForm = host.querySelector(".site-agents__ask-form");
+  askForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const status = askForm.querySelector(".site-agents__ask-status"), send = askForm.querySelector("button[type=submit]");
+    const fd = new FormData(askForm), data = Object.fromEntries(fd);
+    if (!String(data.agent || "").trim()) { status.textContent = "Tell us which agent."; askForm.agent.focus(); return; }
+    if (data.email && !askForm.email.checkValidity()) { status.textContent = "That email doesn't look right."; askForm.email.focus(); return; }
+    send.setAttribute("aria-busy", "true"); status.textContent = "Sending…";
+    let ok = false, preview = false;
+    try {
+      const r = await fetch("/api/agent-request", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...data, page: location.href, attribution: window.fhAttribution?.fields(askForm) ?? {} }) });
+      ok = r.ok; preview = !r.ok && r.status !== 422 && location.hostname !== "firehorse.rascode.dev";
+      if (!ok && r.status === 422) { status.textContent = (await r.json().catch(() => ({}))).error || "Check the form."; send.removeAttribute("aria-busy"); return; }
+    } catch { preview = location.hostname !== "firehorse.rascode.dev"; }
+    send.removeAttribute("aria-busy");
+    if (!ok && !preview) { status.textContent = "That didn't go through. Try again in a minute."; return; }
+    askForm.reset();
+    status.textContent = preview ? "Preview: the form isn't connected here, so nothing was sent." : "Thanks. We'll look at adding it.";
+    toast(preview ? "Preview: request not sent" : "Agent request sent", preview ? "amber" : "success");
   });
   host.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-agent]");
@@ -70,8 +103,8 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
 $$("[data-agent-menu]:not([data-agent-menu=\"manual\"])").forEach((h) => agentMenu(h));
 
 /* —— Themes ——————————————————————————————————————————————
- * A theme carries every design decision (type, both schemes, shape,
- * density, avatar/card/button/chip/table styles). The list comes from
+ * A theme is a colour set (neutrals and an accent, both schemes); it never
+ * changes type, spacing, shape or layout. The list comes from
  * themes.json, which the theme compiler writes from src/themes/*.json.
  * Firehorse's enhancer (firehorse.js) does the switching: any
  * [data-fh-theme-select] control sets data-fh-theme on <html> and
@@ -85,7 +118,7 @@ const base = manifest.find((t) => t.base);
 export const BASE_THEME = { ...(base ?? { label: "Firehorse", tagline: "The base system.", config: {} }), name: "", scope: base?.name ?? "" };
 export const THEMES = [BASE_THEME, ...manifest.filter((t) => !t.base)];
 const themeOf = (name) => THEMES.find((t) => t.name === (name || "")) ?? BASE_THEME;
-const LABELS = { avatar: "Avatar", card: "Card", cardMedia: "Card media", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table" };
+const LABELS = { avatar: "Avatar", card: "Card", cardMedia: "Card media", cardContent: "Card content", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table" };
 const escHtml = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 export const themeSelect = (attrs = "") =>
@@ -98,7 +131,7 @@ export const themeCards = () => {
     <label class="site-theme"${(t.scope ?? t.name) ? ` data-fh-theme="${t.scope ?? t.name}"` : ""}>
       <input class="fh-sr-only" type="radio" name="${group}" value="${t.name}" data-fh-theme-select>
       <span class="site-theme__head"><b>${escHtml(t.label)}</b><span class="site-theme__swatches" aria-hidden="true"><i style="background: var(--fh-color-canvas)"></i><i style="background: var(--fh-color-surface-raised)"></i><i style="background: var(--fh-color-text)"></i><i style="background: var(--fh-color-accent)"></i></span></span>
-      <span class="site-theme__tagline">${escHtml(t.tagline)}</span>
+      <span class="site-theme__tagline">${escHtml(t.horse?.line || t.tagline)}</span>
       <span class="site-theme__sample" aria-hidden="true"><span class="fh-button fh-button--sm">Button</span><span class="fh-chip" data-tone="sky">Chip</span><span class="fh-avatar fh-avatar--sm">${t.label.slice(0, 2)}</span></span>
     </label>`).join("")}</div>`;
 };
@@ -119,7 +152,7 @@ drawer.dataset.tone = "fuchsia";
 drawer.setAttribute("aria-labelledby", "themes-drawer-title");
 drawer.style.setProperty("--fh-dialog-size", "24rem");
 drawer.innerHTML = `<header class="fh-detail__header"><div class="fh-detail__bar"><span>Themes</span><button class="fh-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()"></button></div>
-  <div class="fh-detail__identity"><div><h2 id="themes-drawer-title">Theme this site</h2><p>A theme sets type, color, shape and density. Light and dark come with every one.</p></div></div></header>
+  <div class="fh-detail__identity"><div><h2 id="themes-drawer-title">Theme this site</h2><p>A theme is a colour set, light and dark. It never moves type, spacing or layout.</p></div></div></header>
   <div class="fh-detail__body">
     ${themeCards()}
     <section class="fh-detail__section"><h3>What <span data-theme-name></span> decides</h3><dl class="fh-detail__fields" data-theme-decisions></dl></section>
@@ -129,36 +162,52 @@ drawer.innerHTML = `<header class="fh-detail__header"><div class="fh-detail__bar
 document.body.append(drawer);
 drawer.addEventListener("click", (e) => { if (e.target.closest('a[href^="#"]')) drawer.close(); });
 $$("[data-opens='themes']").forEach((b) => b.addEventListener("click", () => drawer.showModal()));
-// Floating theme picker (bottom right): a trigger with the current theme's
-// swatches, opening an etched table of every theme. Each row is a radio
-// (firehorse.js does the switching); its swatch strip renders inside that
-// theme, so the colors are the theme's own. Replaces the plain <select>.
-const float = $(".site-float");
-if (float) {
-  const swatch = (t) => `<span class="site-tp__swatches"${(t.scope ?? t.name) ? ` data-fh-theme="${t.scope ?? t.name}"` : ""} aria-hidden="true"><i style="background: var(--fh-color-canvas)"></i><i style="background: var(--fh-color-surface-raised)"></i><i style="background: var(--fh-color-text)"></i><i style="background: var(--fh-color-accent)"></i></span>`;
-  float.innerHTML = `<button class="site-tp__trigger" type="button" popovertarget="theme-picker" style="anchor-name: --theme-picker" aria-label="Choose a theme"><span class="site-tp__now"></span><span class="site-tp__label">Theme</span><b class="site-tp__name"></b><i class="fh-icon fh-icon--chevron-up" aria-hidden="true"></i></button>
-    <div class="fh-menu site-tp" id="theme-picker" popover style="position-anchor: --theme-picker" aria-label="Themes">
-      <header class="site-agents__head"><span class="site-agents__title">Themes</span><span class="site-agents__hint site-tp__saved"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Saved in this browser</span></header>
-      <div class="site-tp__table" role="radiogroup" aria-label="Theme">
-        <div class="site-tp__row site-tp__row--head" aria-hidden="true"><span>Theme</span><span>Button</span><span>Card</span><span>Density</span></div>
-        ${THEMES.map((t, i) => `<label class="site-tp__row" style="--_i:${i}">
-          <input class="site-tp__radio" type="radio" name="theme-picker" value="${t.name}" data-fh-theme-select>
-          <span class="site-tp__theme">${swatch(t)}<span><b>${escHtml(t.label)}</b><small>${escHtml(t.tagline)}</small></span></span>
-          <span>${escHtml(t.config?.button ?? "default")}</span><span>${escHtml(t.config?.card ?? "default")}</span><span>${escHtml(t.config?.density ?? "default")}</span>
-          <i class="fh-icon fh-icon--check site-tp__check" aria-hidden="true"></i>
-        </label>`).join("")}
-      </div>
-      <div class="site-agents__foot"><button class="fh-button fh-button--sm fh-button--secondary site-agents__copy" type="button" data-tp-more>All theme options</button></div>
-    </div>`;
-  const paintNow = () => {
-    const t = themeOf(document.documentElement.getAttribute("data-fh-theme"));
-    $(".site-tp__now", float).innerHTML = swatch(t);
-    $(".site-tp__name", float).textContent = t.label;
-  };
-  paintNow();
-  document.addEventListener("fh:theme", paintNow);
-  new MutationObserver(paintNow).observe(document.documentElement, { attributes: true, attributeFilter: ["data-fh-theme"] });
-  $("[data-tp-more]", float).addEventListener("click", () => { $("#theme-picker").hidePopover?.(); drawer.showModal(); });
+// Header theme picker: one etched round button left of the scheme pill opens a list of themes.
+// Each row renders inside its own theme (data-fh-theme on the row), so its framed horse avatar
+// and swatches wear that theme's colours. Rows are radios; firehorse.js does the switching.
+/* —— Page guides (GDS): designer overlays, from the theme panel or the Layout demo ——
+   data-fh-guides on <html> is all it takes; the overlays are CSS. Remembered in this browser. */
+const GUIDES = [["cols-12", "12 columns"], ["cols-16", "16 columns"], ["golden", "Golden sections"], ["thirds", "Thirds"], ["baseline", "Baseline"], ["modular", "Modular"], ["safe", "Safe areas"]];
+const guidesNow = () => new Set((document.documentElement.getAttribute("data-fh-guides") || "").split(/\s+/).filter(Boolean));
+const syncGuides = () => { const s = guidesNow(); $$("[data-guide]").forEach((b) => b.setAttribute("aria-pressed", String(s.has(b.dataset.guide)))); };
+const setGuides = (s) => {
+  const v = [...s].join(" ");
+  if (v) document.documentElement.setAttribute("data-fh-guides", v); else document.documentElement.removeAttribute("data-fh-guides");
+  store.set("fh-guides", v || null);
+  syncGuides();
+};
+document.addEventListener("click", (e) => {
+  const b = e.target.closest?.("[data-guide]");
+  if (!b) return;
+  const s = guidesNow(), g = b.dataset.guide;
+  if (s.has(g)) s.delete(g); else { s.add(g); if (g === "cols-12") s.delete("cols-16"); if (g === "cols-16") s.delete("cols-12"); }
+  setGuides(s);
+});
+if (store.get("fh-guides")) setGuides(new Set(store.get("fh-guides").split(/\s+/)));
+
+const tpBtn = $(".site-theme-btn");
+if (tpBtn) {
+  const horse = (t) => `/img/theme-horses/${t.scope || t.name || "firehorse"}.webp`;
+  const pop = document.createElement("div");
+  pop.className = "site-tp2";
+  pop.id = "theme-picker";
+  pop.setAttribute("popover", "");
+  pop.setAttribute("aria-label", "Themes");
+  pop.innerHTML = `<header class="site-tp2__head"><b>Themes</b><small><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Saved in this browser</small></header>
+    <div class="site-tp2__list" role="radiogroup" aria-label="Theme">
+      ${THEMES.map((t, i) => `<label class="site-tp2__item"${(t.scope ?? t.name) ? ` data-fh-theme="${t.scope ?? t.name}"` : ""} style="--_i:${i}">
+        <input class="fh-sr-only" type="radio" name="theme-picker" value="${t.name}" data-fh-theme-select>
+        <span class="site-tp2__avatar" style="--_horse: url('${horse(t)}')" aria-hidden="true"></span>
+        <span class="site-tp2__text"><b>${escHtml(t.label)}</b><small>${escHtml(t.horse?.line || t.tagline)}</small></span>
+        <span class="site-tp2__swatches" aria-hidden="true"><i style="background: var(--fh-color-canvas)"></i><i style="background: var(--fh-color-text)"></i><i style="background: var(--fh-color-accent)"></i></span>
+        <i class="fh-icon fh-icon--check site-tp2__check" aria-hidden="true"></i>
+      </label>`).join("")}
+    </div>
+    <div class="site-tp2__guides"><p class="fh-label">Guides</p><div class="fh-cluster">${GUIDES.map(([g, label]) => `<button class="fh-chip fh-chip--sm" type="button" aria-pressed="false" data-guide="${g}">${label}</button>`).join("")}</div></div>
+    <footer class="site-tp2__foot"><button class="fh-button fh-button--sm fh-button--plain" type="button" data-tp-more>All theme options</button></footer>`;
+  tpBtn.after(pop);
+  syncGuides();
+  $("[data-tp-more]", pop).addEventListener("click", () => { pop.hidePopover?.(); drawer.showModal(); });
 }
 // Forms demo: the sample sign-in/up forms post nowhere on this site; confirm in place instead.
 $$(".site-auth .fh-auth__form").forEach((f) => f.addEventListener("submit", (e) => {
@@ -186,6 +235,10 @@ if (cat) {
     track.scrollTo({ left: 0 });
   }));
   const step = (d) => track.scrollBy({ left: d * track.clientWidth * 0.9, behavior: "smooth" });
+  // Card content: plain or frost, as the config attribute on the catalog.
+  for (const r of $$(".site-cat-content input", cat.parentElement)) r.addEventListener("change", () => {
+    if (r.checked) cat.setAttribute("data-fh-card-content", r.value);
+  });
   $(".site-cat-prev")?.addEventListener("click", () => step(-1));
   $(".site-cat-next")?.addEventListener("click", () => step(1));
 }

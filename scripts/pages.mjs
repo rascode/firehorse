@@ -1,5 +1,5 @@
 // Docs-site pages. Each site/pages/**/*.html file is one page:
-//   <!--@meta {json}-->   path, order, name, tone, title, description, headline, lede, scripts[], heroCta (raw HTML under the lede), dockCta (raw HTML: replaces the dock's chips and Next button), dockBadge (raw HTML: replaces the dock pill's section count)
+//   <!--@meta {json}-->   path, order, name, tone, title, description, headline, lede, scripts[], styles[], heroCta (raw HTML under the lede), dockCta (raw HTML: replaces the dock's chips and Next button), dockBadge (raw HTML: replaces the dock pill's section count)
 //                         panel: true → the offset panel from [data-fh-panel-start] down, with a tall footer
 //                         optional: parent (hub path), hub, chips [[id, label]], labels {id: label}, aliases [old ids → this page]
 //   <!--@jsonld-->        the page's JSON-LD <script> (optional)
@@ -9,6 +9,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { expandGenerated, summaryCells } from "./developer.mjs";
 
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pagesDir = join(root, "site/pages");
@@ -29,7 +30,7 @@ const parse = (file) => {
   const rel = relative(pagesDir, file).replace(/\\/g, "/");
   const path = meta.path ?? "/" + rel.replace(/(^|\/)index\.html$/, "$1").replace(/\.html$/, "/");
   const out = path === "/" ? "index.html" : path.replace(/^\//, "") + "index.html";
-  return { file, rel, out, path, meta, jsonld: block("jsonld"), main: block("main"), after: block("after") };
+  return { file, rel, out, path, meta, jsonld: block("jsonld"), main: expandGenerated(block("main")), after: block("after") };
 };
 
 /** Every page, in site order (meta.order, then path). */
@@ -52,8 +53,8 @@ const slug = (t) => t.toLowerCase().replace(/&amp;|&/g, "and").replace(/<[^>]+>/
 const pad = (n) => String(n).padStart(2, "0");
 const idsIn = (h) => [...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
 const counts = (h) => {
-  const ids = [...h.matchAll(/data-fh-id="([A-Z]{3}(?:-\d{2})?)"/g)].map((m) => m[1]);
-  return { families: ids.filter((i) => !i.includes("-")), variants: ids.filter((i) => i.includes("-")).length };
+  const ids = [...h.matchAll(/data-fh-id="([A-Z]{3}(?:-\d+(?:\.\d+)?)?)"/g)].map((m) => m[1]);
+  return { families: ids.filter((i) => !i.includes("-")), variants: ids.filter((i) => i.includes(".")).length };
 };
 
 /** Give every .site-demo an anchor (id from its heading) so the dock can link to it. */
@@ -83,13 +84,16 @@ const planChips = (p, main) => {
   starts.forEach((sec, k) => {
     const end = k + 1 < starts.length ? starts[k + 1].at : main.length;
     let body = main.slice(sec.at, end);
-    const fams = [...body.matchAll(/<([a-z][\w-]*)\s([^>]*?)data-fh-id="([A-Z]{3})"([^>]*)>/g)];
+    const chipRe = /<([a-z][\w-]*)\s([^>]*?)data-fh-id="([A-Z]{3}(?:-\d+)?)"([^>]*)>/g;
+    const isChip = (tag, attrs, fid) => tag !== "section" && (!fid.includes("-") || /class="site-demo\b/.test(attrs));
+    const fams = [...body.matchAll(chipRe)].filter((m) => isChip(m[1], m[2] + m[4], m[3]));
     if (!fams.length) {
       chips.push({ id: sec.id, label: (p.meta.labels ?? {})[sec.id] ?? sec.tag.match(/data-fh-label="([^"]*)"/)?.[1] ?? sec.id, tone: sec.tag.match(/data-tone="([^"]*)"/)?.[1], tag: sec.tag });
     } else {
       body = body.replace(sec.tag, `<section ${sec.tag.replace(/^<section id="[^"]+"\s*/, "").replace(/\s*data-fh-(label|index)="[^"]*"/g, "").replace(/>$/, "")} data-fh-was="${sec.id}">`);
       const src = body;
-      body = body.replace(/<([a-z][\w-]*)\s([^>]*?)data-fh-id="([A-Z]{3})"([^>]*)>/g, (m, tag, a, fid, b, at) => {
+      body = body.replace(chipRe, (m, tag, a, fid, b, at) => {
+        if (!isChip(tag, a + b, fid)) return m;
         const attrs = a + b, tail = src.slice(at + m.length, at + m.length + 700);
         const h3 = /class="site-demo\b/.test(attrs) ? tail.match(/<div class="site-demo__head"><h3[^>]*>([\s\S]*?)<\/h3>/)?.[1] : null;
         const label = (p.meta.labels ?? {})[fid] ?? attrs.match(/data-fh-name="([^"]*)"/)?.[1] ?? (h3 && stripTags(h3)) ?? fid;
@@ -120,16 +124,23 @@ const summary = (p, chips, kids, all) => {
   const totals = all.reduce((t, x) => { const c = famsOf(x); return { f: t.f + c.families.length, v: t.v + c.variants }; }, { f: 0, v: 0 });
   const c = kids.length ? kids.reduce((t, k) => { const kc = famsOf(k); return { families: [...t.families, ...kc.families], variants: t.variants + kc.variants }; }, { families: [], variants: 0 }) : famsOf(p);
   const names = (arr) => arr.length <= 3 ? arr.join(" · ") : `${arr.slice(0, 3).join(" · ")} and ${arr.length - 3} more`;
-  const example = [...(kids.length ? kids.map((k) => k.main).join("") : p.main).matchAll(/data-fh-id="([A-Z]{3}-\d{2})"/g)].map((m) => m[1])[0];
+  const example = [...(kids.length ? kids.map((k) => k.main).join("") : p.main).matchAll(/data-fh-id="([A-Z]{3}-\d+\.\d+)"/g)].map((m) => m[1])[0];
   const cells = [];
   if (kids.length) cells.push({ value: kids.length, label: "Groups", blurb: names(kids.map((k) => k.meta.name)) + "." });
   if (c.families.length) cells.push({ value: c.families.length, label: "Families", blurb: kids.length ? "Each with an Index ID and its own section." : names(chips.filter((ch) => ch.fid).map((ch) => textOf(ch.label))) + "." });
   if (c.variants) cells.push({ value: c.variants, label: "Variants", blurb: `Each has its own ID${example ? `, like ${example}` : ""}. Copy it with its markup.` });
   // an authored fact can stand in for a counted one ({replaces: "Variants"}) when it says the same thing better
-  for (const x of p.meta.summary ?? []) { const i = cells.findIndex((y) => y.label === x.replaces); i >= 0 ? cells.splice(i, 1, x) : cells.push(x); }
+  for (const x of (p.meta.summaryFrom === "developer" ? summaryCells() : p.meta.summary ?? [])) { const i = cells.findIndex((y) => y.label === x.replaces); i >= 0 ? cells.splice(i, 1, x) : cells.push(x); }
   const fill = (v) => String(v).replace("{{FAMILIES_TOTAL}}", totals.f).replace("{{VARIANTS_TOTAL}}", totals.v);
   if (!cells.length) return "";
-  return `      <ul class="fh-cube-cards site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
+  // "summaryStyle": "tiles": the home Explore tile, as is (open dashed grid, solid cube, heavy title).
+  if (p.meta.summaryStyle === "tiles") {
+    const walk = [0, 3, 1, 5, 6, 2];
+    return `      <ul class="site-explore__grid site-page-tiles site-page-summary" aria-label="In this category">
+${cells.slice(0, 4).map((x, i) => `        <li style="--_w: var(--site-walk-${walk[i % walk.length]})"><div class="site-tile"><span class="site-open__cube">${fill(x.value)}</span><small>${String(i + 1).padStart(2, "0")} · ${escHtml(p.meta.name)}</small><b>${x.label}</b><span>${fill(x.blurb)}</span></div></li>`).join("\n")}
+      </ul>`;
+  }
+  return `      <ul class="fh-cube-cards fh-cube-cards--strip site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
 ${cells.slice(0, 4).map((x) => `        <li class="fh-cube-card"><b class="fh-cube fh-cube--xl">${fill(x.value)}</b><div class="fh-cube-card__text"><b>${x.label}</b><small>${fill(x.blurb)}</small></div></li>`).join("\n")}
       </ul>`;
 };
@@ -160,6 +171,7 @@ ${summary(p, chips, kids, all)}
 
     <div class="fh-dock fh-frame site-page-dock" data-tone="${tone}" data-follow data-engage="#top">
       <div class="fh-dock__bar">
+        <a class="site-mark site-dock-home" href="/" aria-label="Firehorse home"><span class="site-mark__word" aria-hidden="true"><span class="site-mark__bar">_</span>f<span class="site-dock-fold site-dock-fold--ire">ire</span>h<span class="site-dock-fold site-dock-fold--orse">orse</span></span></a>
         <div class="fh-dock__identity">
           <p class="fh-eyebrow-pill fh-dock__heading" data-tone="${tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><span class="fh-rollover" data-fh-rollover="sections" data-fh-default="${escHtml(m.name)}" aria-live="polite"><span class="fh-rollover__item">${escHtml(m.name)}</span></span></span><span class="fh-eyebrow-pill__seg">${m.dockBadge ?? `<strong><span class="fh-rollover" data-fh-rollover="sections" data-fh-part="index" data-fh-default="${pad(chips.length)}" aria-hidden="true"><span class="fh-rollover__item">${pad(chips.length)}</span></span></strong>`}</span></p>
         </div>
@@ -169,6 +181,7 @@ ${chipHtml}
 `}${m.dockCta ? `        <div class="fh-dock__actions">${m.dockCta}</div>` : next ? `        <div class="fh-dock__actions">
           <a class="fh-button fh-button--sm fh-button--outline" href="${next.path}"><span class="fh-roll">Next · ${escHtml(next.meta.name)}</span></a>
         </div>` : ""}
+        <button class="fh-header__toggle site-dock-menu" type="button" popovertarget="site-drawer" aria-label="Open menu"></button>
       </div>
       <span class="fh-dock__progress" aria-hidden="true"></span>
     </div>
@@ -191,26 +204,56 @@ ${list.map((x) => {
       </div>`;
 
 
+/** Home · Explore: every top-level category as an open tile on one dashed grid (no card boxes).
+ *  Each tile takes a step of the root's hue walk for its cube and hover. */
+const exploreTiles = (list) => {
+  const walk = [0, 3, 1, 5, 6, 2];
+  const short = (d) => { const t = d.replace(/^(The )?Firehorse [^:]{1,40}:\s*/, ""); const s = t.charAt(0).toUpperCase() + t.slice(1); return s.split(/(?<=\.)\s/)[0]; };
+  const tiles = list.map((x, i) => {
+    const c = counts(x.main);
+    const meta = c.families.length ? `${c.families.length} families` : "Guide";
+    return `        <li style="--_w: var(--site-walk-${walk[i % walk.length]})"><a href="${x.path}"><span class="site-open__cube" aria-hidden="true"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}"></i></span><small>${String(i + 1).padStart(2, "0")} · ${meta}</small><b>${escHtml(x.meta.name)}</b><span>${escHtml(short(x.meta.description ?? ""))}</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a></li>`;
+  }).join("\n");
+  return `    <section id="explore" class="fh-section site-anchor site-open site-explore" data-tone="accent" aria-labelledby="explore-title" data-fh-label="Explore" data-fh-index="02">
+      <hr class="site-open__rule" aria-hidden="true">
+      <header class="site-adapt__head">
+        <p class="site-chapter" data-tone="accent"><b>02</b> Explore</p>
+        <h2 id="explore-title" class="site-open__display">Every part.<br><em>One click to copy.</em></h2>
+        <p class="site-open__lede">Each category opens on live components. Every one copies its markup, with its Index ID, in a click; or <code>git clone</code> the whole system and make it yours.</p>
+      </header>
+      <ul class="site-explore__grid">
+${tiles}
+      </ul>
+    </section>`;
+};
+
 /** Site navigation, generated from the pages so it can't drift: the Docs mega, the drawer list,
  *  the footer Docs column, ⌘K pages and the home dock's category chips. */
 const MEGA = [
-  { title: "System", tone: "teal", paths: ["/foundations/", "/layout/", "/patterns/", "/theming/", "/agents/"] },
+  { title: "System", tone: "teal", paths: ["/foundations/", "/layout/", "/patterns/", "/theming/", "/agents/", "/developer/"] },
   { title: "Components", tone: "amber", parent: "/components/" },
-  { title: "Product UI", tone: "orange", paths: ["/forms/", "/data/", "/commerce/", "/audio/"] },
+  { title: "Product UI", tone: "orange", paths: ["/forms/", "/data/", "/finance/", "/commerce/", "/audio/"] },
   // Links can point into a page: { path, name } (the target id must exist; site.mjs --check fails on a dead #link).
-  { title: "Media", tone: "fuchsia", paths: [{ path: "/media/", name: "Social & print" }, { path: "/media/#slide-layouts", name: "Slides" }] },
+  { title: "Media", tone: "fuchsia", paths: [{ path: "/media/", name: "Social & print", icon: "image", description: "Posts, stories and print sizes" }, { path: "/media/#slide-layouts", name: "Slides", icon: "panels-top-left", description: "Slide layouts for decks" }] },
 ];
-const navParts = (list) => {
+const navParts = (all) => {
+  // Unlisted pages ("unlisted": true, e.g. prototypes) build and link fine but stay out of the menus.
+  const list = all.filter((x) => !x.meta.unlisted);
   const by = (path) => list.find((x) => x.path === path);
   const top = list.filter((x) => x.path !== "/" && !x.meta.parent);
   const li = (x, pre = "") => `${pre}<li><a href="${x.path}"><span class="fh-roll">${escHtml(x.meta.name)}</span></a></li>`;
+  // Each column's icons take one step of the root's hue walk (site.css --site-walk-*), so the menu re-tints with the root.
+  const walk = [0, 3, 1, 5, 6, 2]; // root, a split complement, warm, the other complement, cool, warm-far
+  // "Firehorse forms: fields and…" reads as "Fields and…" under the title that already says Forms.
+  const blurb = (d) => { const t = d.replace(/^(The )?Firehorse [^:]{1,40}:\s*/, ""); return t.charAt(0).toUpperCase() + t.slice(1); };
+  const item = (x, pre) => `${pre}<li><a class="site-nav-item" href="${x.path}"><span class="site-nav-ico"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span><span class="fh-roll">${escHtml(x.meta.name)}</span>${x.meta.description ? `<small>${escHtml(blurb(x.meta.description))}</small>` : ""}</a></li>`;
   const mega = `    <div class="fh-mega__grid">
-${MEGA.map((col) => {
-    const items = col.parent ? [by(col.parent), ...list.filter((x) => x.meta.parent === col.parent)] : col.paths.map((p) => (typeof p === "string" ? by(p) : { path: p.path, meta: { name: p.name } }));
-    return `      <section data-tone="${col.tone}">
+${MEGA.map((col, i) => {
+    const items = col.parent ? [by(col.parent), ...list.filter((x) => x.meta.parent === col.parent)] : col.paths.map((p) => (typeof p === "string" ? by(p) : { path: p.path, meta: { name: p.name, icon: p.icon, description: p.description } }));
+    return `      <section data-tone="${col.tone}" style="--_w: var(--site-walk-${walk[i % walk.length]})">
         <h3>${col.title}</h3>
         <ul>
-${items.filter(Boolean).map((x) => li(x, "          ")).join("\n")}
+${items.filter(Boolean).map((x) => item(x, "          ")).join("\n")}
         </ul>
       </section>`;
   }).join("\n")}
@@ -234,10 +277,7 @@ export const assemble = (list = pages()) => {
       main = (main.includes("{{PAGE_HEAD}}") ? main : "{{PAGE_HEAD}}\n" + main).replace("{{PAGE_HEAD}}", () => pageHead(p, chips, list));
     }
     main = main.replace("{{GROUP_CARDS}}", () => cards(list.filter((x) => x.meta.parent === p.path)))
-      .replace("{{CATEGORY_CARDS}}", () => `    <section id="explore" class="fh-section fh-section--ruled site-anchor" data-tone="accent" aria-labelledby="explore-title" data-fh-label="Explore" data-fh-index="02">
-      <header class="fh-section-head"><div><p class="site-chapter" data-tone="accent"><b>02</b> Explore</p><h2 id="explore-title" class="fh-heading">Everything in Firehorse, one category at a time</h2><p class="fh-lede">Good artists copy: every component here copies its markup, with its Index ID, in one click. Great artists clone: <code>git clone</code> the whole system and make it yours.</p></div></header>
-${cards(list.filter((x) => x.path !== "/" && !x.meta.parent))}
-    </section>`);
+      .replace("{{CATEGORY_CARDS}}", () => exploreTiles(list.filter((x) => x.path !== "/" && !x.meta.parent && !x.meta.unlisted)));
     p.built = main;
   }
   // where every id lives, for cross-page links and old /#hash links
@@ -245,7 +285,13 @@ ${cards(list.filter((x) => x.path !== "/" && !x.meta.parent))}
   for (const p of list) for (const id of idsIn(p.built)) if (!where.has(id)) where.set(id, p.path);
   for (const p of list) for (const m of p.built.matchAll(/data-fh-was="([^"]+)"/g)) if (!where.has(m[1])) where.set(m[1], p.path + "#");
   for (const p of list) for (const id of p.meta.aliases ?? []) if (!where.has(id)) where.set(id, p.path + "#");
-  for (const p of list) for (const m of p.built.matchAll(/data-fh-id="([A-Z]{3}(?:-\d{2})?)"/g)) if (!where.has(m[1])) where.set(m[1], p.path);
+  for (const p of list) for (const m of p.built.matchAll(/data-fh-id="([A-Z]{3}(?:-\d+(?:\.\d+)?)?)"/g)) if (!where.has(m[1])) where.set(m[1], p.path);
+  // Groups named on their family (CAT-2) live where their variants do; retired IDs live where their replacement does.
+  for (const [id, path] of [...where]) { const g = /^([A-Z]{3}-\d+)\.\d+$/.exec(id)?.[1]; if (g && !where.has(g)) where.set(g, path); }
+  try {
+    const moved = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "../index-ledger.json"), "utf8")).moved ?? {};
+    for (const [old, to] of Object.entries(moved)) if (!where.has(old) && where.has(to)) where.set(old, where.get(to));
+  } catch {}
   return { list, where, nav: navParts(list) };
 };
 
@@ -253,6 +299,8 @@ ${cards(list.filter((x) => x.path !== "/" && !x.meta.parent))}
 export const render = (p, ctx, base = "https://firehorse.rascode.dev") => {
   const m = p.meta;
   const scripts = (m.scripts ?? []).map((s) => `<script type="module" src="${s}"></script>`).join("\n");
+  // meta.styles: page-only stylesheets (e.g. Firehorse Pro), loaded after Firehorse and before site.css.
+  const styles = (m.styles ?? []).map((s) => `<link rel="stylesheet" href="${s}">`).join("\n");
   const jsonld = p.jsonld || (p.path === "/" ? "" : `<script type="application/ld+json">
 ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", "@id": base + p.path, name: m.title, description: m.description, url: base + p.path, isPartOf: { "@id": base + "/#website" } }, null, 2)}
 </script>`);
@@ -263,7 +311,9 @@ ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", 
     // and the footer runs tall under it.
     // Every other page gets the same footer: tall, with the panel starting at the footer itself.
     .replace("{{PANEL}}", () => `  <div class="fh-panel" aria-hidden="true"></div>\n`)
-    .replace('class="fh-footer fh-frame site-footer"', () => (m.panel ? 'class="fh-footer fh-footer--tall fh-frame site-footer"' : 'class="fh-footer fh-footer--tall fh-frame site-footer" data-fh-panel-start'))
+    // Match the footer part's class list whatever modifiers it carries (it gained fh-footer--panel;
+    // an exact-string match silently stopped matching and the panel ran the full page height).
+    .replace(/<footer class="fh-footer fh-frame site-footer([^"]*)"/, (_, more) => (m.panel ? `<footer class="fh-footer fh-footer--tall fh-frame site-footer${more}"` : `<footer class="fh-footer fh-footer--tall fh-frame site-footer${more}" data-fh-panel-start`))
     .replaceAll("{{TITLE}}", m.title)
     .replaceAll("{{DESCRIPTION}}", escHtml(m.description))
     .replaceAll("{{OG_TITLE}}", m.ogTitle ?? m.title)
@@ -272,9 +322,10 @@ ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", 
     .replace("{{JSONLD}}", () => jsonld)
     .replace("{{MAIN}}", () => p.built ?? p.main)
     .replace("{{AFTER}}", () => p.after)
-    .replace("{{SCRIPTS}}", () => scripts);
+    .replace("{{SCRIPTS}}", () => scripts)
+    .replace("{{STYLES}}", () => styles);
   if (ctx) {
-    for (const [k, v] of Object.entries(ctx.nav)) html = html.replace(k, () => v);
+    for (const [k, v] of Object.entries(ctx.nav)) html = html.replaceAll(k, () => v);
     // mark where we are in the nav lists
     html = html.replace(new RegExp(`(<li(?: class="[^"]*")?><a) (href="${p.path.replace(/\//g, "\\/")}")`, "g"), '$1 aria-current="page" $2');
     const here = new Set(idsIn(html));

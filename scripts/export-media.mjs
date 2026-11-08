@@ -22,8 +22,8 @@ catch { console.error("firehorse-export needs Playwright:\n  npm i -D playwright
 
 const url = /^https?:/.test(input) ? input : pathToFileURL(resolve(input)).href;
 const browser = await chromium.launch();
-// Wide enough for a 3000 px cover drawn at native size.
-const page = await browser.newPage({ viewport: { width: 3200, height: 1800 }, deviceScaleFactor: scale });
+// Big enough for a 3000 px cover or a 3120 px-tall phone wallpaper at native size.
+const page = await browser.newPage({ viewport: { width: 3200, height: 3200 }, deviceScaleFactor: scale });
 await page.goto(url, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 mkdirSync(out, { recursive: true });

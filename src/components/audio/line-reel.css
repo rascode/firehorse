@@ -1,0 +1,29 @@
+/*
+ * Firehorse — Line reel (REL)
+ * components/audio · layer fh.components · docs /audio/#REL
+ */
+
+@layer fh.components {
+  /* —— Line reel: one line at a time, rolling up as it changes ——
+   *   <div class="fh-line-reel" data-fh-reel="#player"><span class="fh-line-reel__count">2/6</span><p class="fh-line-reel__line">…</p></div> */
+  .fh-line-reel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    overflow: hidden;
+  }
+  .fh-line-reel__count { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-variant-numeric: tabular-nums; }
+  .fh-line-reel__line {
+    margin: 0;
+    overflow: hidden;
+    font-size: var(--fh-text-body);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-line-reel__line[data-enter] { animation: fh-line-reel-in 520ms var(--fh-ease-out) both; }
+  }
+  @keyframes fh-line-reel-in { from { opacity: 0; translate: 0 0.9em; filter: blur(3px); } }
+
+}

@@ -1,0 +1,71 @@
+/*
+ * Firehorse — Action link (ACT)
+ * components/actions · layer fh.components · docs /components/actions/#ACT
+ */
+
+@layer fh.components {
+  /* —— Action link ——
+   * Mono caps link with a dashed underline and arrow. Used for
+   * "View all", section CTAs and card actions. Takes the tone. */
+  .fh-action {
+    --_color: var(--fh-action-color, var(--fh-color-text));
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    padding: 0;
+    padding-block-end: 0.2em;
+    border: 0;
+    border-block-end: var(--fh-border-thin) dashed color-mix(in oklab, var(--_color) 45%, transparent);
+    background: none;
+    color: var(--_color);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wide);
+    line-height: var(--fh-leading-heading);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: var(--fh-cursor-action);
+    transition:
+      color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::after {
+      content: "";
+      inline-size: 0.8em;
+      block-size: 0.8em;
+      flex: none;
+      background-color: currentColor;
+      mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover {
+      --_color: var(--fh-color-accent-text);
+    }
+
+    &:hover::after {
+      translate: 0.1rem -0.1rem;
+    }
+
+    &[data-tone] {
+      --_color: var(--fh-tone);
+    }
+  }
+
+  /* <button class="fh-action"> keeps the link look (no UA button chrome).
+   * Padding / border / background already match on .fh-action; appearance
+   * clears remaining UA button chrome without wiping the dashed underline. */
+  button.fh-action {
+    appearance: none;
+  }
+
+  .fh-action--lg {
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: 0.04em;
+  }
+
+}

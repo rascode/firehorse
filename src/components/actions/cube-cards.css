@@ -1,0 +1,102 @@
+/*
+ * Firehorse — Cube cards (CUC)
+ * components/actions · layer fh.components · docs /components/actions/#CUC
+ */
+
+@layer fh.components {
+  /* —— Cube cards ——
+   * A card led by a cube: the value is the headline, the text says
+   * what it measures. In a .fh-cube-cards group the tones walk the
+   * hue wheel like a list of cubes.
+   *   <div class="fh-cube-cards" data-tone="teal">
+   *     <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">14</b>
+   *       <div class="fh-cube-card__text"><b>Days</b><small>From kickoff to handoff</small></div></article>
+   *   </div> */
+  .fh-cube-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-cube-card-min, 13rem)), 1fr));
+    gap: var(--fh-gap, var(--fh-gap-grouped));
+
+    & > :nth-child(3n + 2) { --_cube: oklch(from var(--fh-tone) l c calc(h + 28)); }
+    & > :nth-child(3n + 3) { --_cube: oklch(from var(--fh-tone) l c calc(h + 56)); }
+  }
+  .fh-cube-card {
+    --_c: var(--_cube, var(--fh-tone));
+
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    padding: var(--fh-inset-control);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--_c) 5%, transparent);
+    color: var(--fh-color-text);
+    text-decoration: none;
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    & > .fh-cube { --_cube: var(--_c); }
+    &:is(a, button, label):hover { border-color: color-mix(in oklab, var(--_c) 70%, transparent); background-color: color-mix(in oklab, var(--_c) 10%, transparent); }
+    &:is(a, button, label):focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+  .fh-cube-card__text {
+    display: grid;
+    gap: 0.15rem;
+    min-inline-size: 0;
+
+    & b { overflow: hidden; font-weight: var(--fh-weight-medium); text-overflow: ellipsis; white-space: nowrap; }
+    & small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); line-height: var(--fh-leading-snug); }
+  }
+  .fh-cube-card__trend { margin-inline-start: auto; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); white-space: nowrap; }
+  .fh-cube-card__trend[data-dir="up"] { color: var(--fh-color-success); }
+  .fh-cube-card__trend[data-dir="down"] { color: var(--fh-color-danger); }
+  /* Strip: the cards joined into one etched strip, kept quiet (the page
+   * summary on the Firehorse docs). No fills: the cells are clear and the
+   * cubes are etched outlines; only the number carries the tone.
+   *   <ul class="fh-cube-cards fh-cube-cards--strip" data-tone="sky">
+   *     <li class="fh-cube-card"><b class="fh-cube fh-cube--xl">9</b>
+   *       <div class="fh-cube-card__text"><b>Chapters</b><small>Spacing, type, colour…</small></div></li>
+   *   </ul> */
+  .fh-cube-cards--strip {
+    --fh-cube-card-min: 14rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min)), 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+
+    & > .fh-cube-card {
+      --_c: var(--fh-tone);
+      align-items: flex-start;
+      padding: var(--fh-inset-tile) var(--fh-inset-card);
+      border: 0;
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-radius: 0;
+      background: none;
+    }
+    & .fh-cube {
+      --_cube: var(--_c);
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      background: none;
+      color: var(--_c);
+    }
+    & .fh-cube-card__text b { color: var(--fh-color-text-strong); }
+  }
+
+  /* Stacked: value on top, label, then a row of small cubes. */
+  .fh-cube-card--stack {
+    flex-direction: column;
+    align-items: start;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tile);
+
+    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-gap-grouped); border-block-start: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
+  }
+
+}

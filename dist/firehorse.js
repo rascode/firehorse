@@ -21,10 +21,17 @@
  *  12. Dictation fields ([data-fh-dictate]): type or talk; the browser
  *      transcribes into the textarea. Hidden where it can't transcribe.
  *  13. Theme select ([data-fh-theme-select]): a dropdown (or radios)
- *      that switches data-fh-theme and remembers the choice.
+ *      that switches data-fh-theme and remembers the choice. Row
+ *      spacing select ([data-fh-rows-select]) does the same for
+ *      data-fh-rows (sm · md · lg · xl), so every table and key value
+ *      list on the page opens up or tightens at once. Frost select
+ *      ([data-fh-frost-select], a range 0–100) dials --fh-frost.
  *  14. Word rotators (.fh-rotator): the slot eases to each word's width,
  *      extra words are hidden from screen readers, and the roll pauses
  *      off screen. The roll itself is CSS and runs without this.
+ *  15. Entity pickers ([data-fh-entity]): the chosen option's row is
+ *      mirrored into the trigger, the list closes on a pick, and
+ *      fh:entity fires. The radios submit without this.
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -99,6 +106,64 @@ function setTheme(name, { target = document.documentElement, key = target === do
   // Controls added by other scripts before load get synced too.
   ready(syncThemes);
   addEventListener("load", syncThemes, { once: true });
+}
+
+/* Row spacing select: <fieldset class="fh-segmented"> radios, or a select,
+ * with data-fh-rows-select and value sm · md · lg · xl. Sets data-fh-rows
+ * on <html> (or data-fh-rows-target) and remembers it in
+ * localStorage["fh-rows"]. Fires fh:rows. Firehorse.setRows("lg"). */
+const ROWS_KEY = "fh-rows";
+const isRows = (v) => ["sm", "md", "lg", "xl"].includes(v);
+const rowsTarget = (el) => (el?.dataset.fhRowsTarget && document.querySelector(el.dataset.fhRowsTarget)) || document.documentElement;
+function syncRows() {
+  for (const el of document.querySelectorAll("[data-fh-rows-select]")) {
+    const current = rowsTarget(el).getAttribute("data-fh-rows") || "md";
+    if (el.type === "radio") el.checked = el.value === current;
+    else if ("value" in el && el.value !== current) el.value = current;
+  }
+}
+function setRows(size, { target = document.documentElement } = {}) {
+  if (!isRows(size)) return null;
+  target.setAttribute("data-fh-rows", size);
+  if (target === document.documentElement) themeStore.set(ROWS_KEY, size);
+  syncRows();
+  target.dispatchEvent(new CustomEvent("fh:rows", { bubbles: true, detail: { rows: size } }));
+  return size;
+}
+{
+  const saved = themeStore.get(ROWS_KEY);
+  if (isRows(saved)) document.documentElement.setAttribute("data-fh-rows", saved);
+  document.addEventListener("change", (e) => {
+    const el = e.target.closest?.("[data-fh-rows-select]");
+    if (!el || (el.type === "radio" && !el.checked)) return;
+    setRows(el.value, { target: rowsTarget(el) });
+  });
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setRows });
+  ready(syncRows);
+}
+
+/* Frost select: <input type="range" min="0" max="100" data-fh-frost-select>.
+ * Sets --fh-frost (0–1) on <html> and remembers it in localStorage["fh-frost"].
+ * Fires fh:frost. Firehorse.setFrost(0.4). */
+const FROST_KEY = "fh-frost";
+function setFrost(v, { remember = true } = {}) {
+  const n = Math.min(1, Math.max(0, Number(v)));
+  if (Number.isNaN(n)) return null;
+  document.documentElement.style.setProperty("--fh-frost", String(n));
+  if (remember) themeStore.set(FROST_KEY, String(n));
+  for (const el of document.querySelectorAll("[data-fh-frost-select]")) if (Number(el.value) !== Math.round(n * 100)) el.value = String(Math.round(n * 100));
+  document.documentElement.dispatchEvent(new CustomEvent("fh:frost", { bubbles: true, detail: { frost: n } }));
+  return n;
+}
+{
+  const saved = themeStore.get(FROST_KEY);
+  if (saved !== null && saved !== "") setFrost(saved, { remember: false });
+  document.addEventListener("input", (e) => {
+    const el = e.target.closest?.("[data-fh-frost-select]");
+    if (el) setFrost(Number(el.value) / 100);
+  });
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setFrost });
+  ready(() => { const v = getComputedStyle(document.documentElement).getPropertyValue("--fh-frost"); for (const el of document.querySelectorAll("[data-fh-frost-select]")) el.value = String(Math.round(Number(v || 0.6) * 100)); });
 }
 
 ready(() => {
@@ -318,9 +383,9 @@ ready(() => {
   }
 
   /* —— 6c. In-page navigation ——
-   * Same-page links: short jumps scroll smoothly; long jumps cut to just
-   * short of the target and glide the last stretch, so travelling across
-   * a long page takes ~400ms instead of seconds and never misfires.
+   * Same-page links glide to the target in one eased motion (0.42–0.9s by
+   * distance), re-aiming each frame so it never misfires, and stop the
+   * moment the visitor scrolls themselves.
    * Updates the URL, closes the popover it came from and moves focus to
    * the target for keyboard and screen-reader users. */
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
@@ -338,7 +403,6 @@ ready(() => {
     const smooth = !reduced.matches;
     const y = targetY(el);
     const dist = y - scrollY;
-    const glide = Math.min(Math.abs(dist), innerHeight * 0.6);
     // Once a scroll settles, re-check the landing (sections that render
     // on the way can change size) and correct it, at most twice.
     let fixes = 0;
@@ -357,16 +421,30 @@ ready(() => {
       addEventListener("scrollend", once);
       setTimeout(once, 1200);
     };
-    if (!smooth || Math.abs(dist) <= glide + 1) {
-      scrollTo({ top: y, behavior: smooth ? "smooth" : "instant" });
+    if (!smooth) {
+      scrollTo({ top: y, behavior: "instant" });
       afterScroll();
     } else {
-      scrollTo({ top: y - Math.sign(dist) * glide, behavior: "instant" });
-      requestAnimationFrame(() => {
+      // One eased glide all the way, re-aiming every frame (sections that render on the way
+      // can move the target). Longer trips take a little longer, never more than ~0.9s.
+      // A wheel, touch or key from the visitor hands the page straight back to them.
+      const from = scrollY;
+      const dur = Math.min(900, Math.max(420, 300 + Math.abs(dist) * 0.12));
+      const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+      const stop = () => { navToken++; };
+      for (const ev of ["wheel", "touchstart", "keydown"]) addEventListener(ev, stop, { once: true, passive: true });
+      const t0 = performance.now();
+      const step = (now) => {
         if (token !== navToken) return;
-        scrollTo({ top: targetY(el), behavior: "smooth" });
-        afterScroll();
-      });
+        const p = Math.min(1, (now - t0) / dur);
+        scrollTo({ top: from + (targetY(el) - from) * ease(p), behavior: "instant" });
+        if (p < 1) requestAnimationFrame(step);
+        else {
+          for (const ev of ["wheel", "touchstart", "keydown"]) removeEventListener(ev, stop);
+          afterScroll();
+        }
+      };
+      requestAnimationFrame(step);
     }
     if (push && location.hash !== `#${el.id}`) history.pushState(null, "", `#${el.id}`);
     if (!el.matches("a, button, input, select, textarea, [tabindex]")) el.setAttribute("tabindex", "-1");
@@ -745,3 +823,214 @@ ready(() => {
     rotators.forEach((r) => io.observe(r));
   }
 });
+
+/* —— 15. Entity picker ———————————————————————————————————————
+ * The options are radios in a popover, so the value submits and arrow keys
+ * move through it without this. This adds the rest: the chosen row is
+ * copied into the trigger's fh-entity__value, a click or Enter closes the
+ * list and returns focus to the trigger, opening it focuses the current
+ * option, and the picker fires fh:entity ({ value, input }) on change. */
+ready(() => {
+  const sync = (picker) => {
+    const input = picker.querySelector(".fh-entity-picker__list input:checked");
+    const slot = picker.querySelector(":scope > .fh-entity .fh-entity__value");
+    if (!input || !slot) return;
+    const row = input.closest(".fh-entity");
+    slot.replaceChildren(...[...row.children].filter((c) => c !== input).map((c) => c.cloneNode(true)));
+    slot.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+    picker.dataset.value = input.value;
+  };
+  const close = (picker) => {
+    const list = picker.querySelector(".fh-entity-picker__list");
+    if (list?.matches(":popover-open")) list.hidePopover();
+    picker.querySelector(":scope > .fh-entity")?.focus();
+  };
+  for (const picker of document.querySelectorAll("[data-fh-entity]")) {
+    const list = picker.querySelector(".fh-entity-picker__list");
+    const trigger = picker.querySelector(":scope > .fh-entity");
+    if (!list || !trigger) continue;
+    list.addEventListener("change", (e) => {
+      if (!e.target.matches?.("input[type=radio]")) return;
+      sync(picker);
+      picker.dispatchEvent(new CustomEvent("fh:entity", { bubbles: true, detail: { value: e.target.value, input: e.target } }));
+    });
+    // A pointer pick closes the list; arrow keys only move the choice.
+    list.addEventListener("click", (e) => {
+      if (e.detail > 0 && e.target.closest(".fh-entity")) setTimeout(() => close(picker));
+    });
+    list.addEventListener("keydown", (e) => {
+      if ((e.key === "Enter" || e.key === " ") && e.target.matches?.("input[type=radio]")) {
+        e.preventDefault();
+        e.target.checked || (e.target.checked = true, e.target.dispatchEvent(new Event("change", { bubbles: true })));
+        close(picker);
+      }
+    });
+    list.addEventListener("toggle", (e) => {
+      trigger.setAttribute("aria-expanded", String(e.newState === "open"));
+      if (e.newState === "open") (list.querySelector("input:checked") ?? list.querySelector("input:not(:disabled)"))?.focus({ preventScroll: true });
+    });
+    trigger.setAttribute("aria-expanded", "false");
+    if (list.querySelector("input:checked")) sync(picker);
+  }
+});
+
+/* —— Motion (MOT-2, MOT-4.1) ——————————————————————————————————————————————
+ * Intro hold: intros ([data-fh-enter]) run once <html> has fh-js and hold until fh-ready. The
+ * page's head sets fh-js with a 2s fallback for fh-ready:
+ *   <script>(d=>{d.classList.add("fh-js");setTimeout(()=>d.classList.add("fh-ready"),2e3)})(document.documentElement)</script>
+ * This adds fh-ready sooner: as soon as fonts and the images inside [data-fh-intro] have
+ * loaded, so intros never play against a half-loaded page.
+ *
+ * Circle reveal: Firehorse.reveal(change, from) runs change() as a view transition and opens
+ * the new look out as a circle from the element `from` (a theme picker, a typeface button).
+ * Instant without view transitions or under reduced motion. */
+{
+  const root = document.documentElement;
+  if (root.classList.contains("fh-js") && !root.classList.contains("fh-ready")) {
+    const imgs = [...document.querySelectorAll("[data-fh-intro] img")].map((i) => (i.decode ? i.decode().catch(() => {}) : Promise.resolve()));
+    const go = () => root.classList.add("fh-ready");
+    Promise.race([Promise.all([document.fonts?.ready ?? Promise.resolve(), ...imgs]), new Promise((r) => setTimeout(r, 2000))]).then(go, go);
+  }
+  const ms = (name, fallback) => {
+    const v = getComputedStyle(root).getPropertyValue(name).trim();
+    return v.endsWith("ms") ? parseFloat(v) : v.endsWith("s") ? parseFloat(v) * 1000 : fallback;
+  };
+  const reveal = (change, from) => {
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!document.startViewTransition || still) { change(); return Promise.resolve(); }
+    const r = from?.getBoundingClientRect?.();
+    const x = r ? r.left + r.width / 2 : innerWidth - 40, y = r ? r.top + r.height / 2 : 40;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    root.setAttribute("data-fh-vt", "reveal");
+    const vt = document.startViewTransition(change);
+    vt.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: ms("--fh-duration-reveal", 720), easing: getComputedStyle(root).getPropertyValue("--fh-ease-in-out").trim() || "ease-in-out", pseudoElement: "::view-transition-new(root)" }
+      );
+    }).catch(() => {});
+    return vt.finished.finally(() => root.removeAttribute("data-fh-vt"));
+  };
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { reveal });
+}
+
+/* —— Choreography: glide and lock (MOT-4.2, MOT-4.3) ——————————————————————————
+ * Free. Script measures once (and on resize); the motion itself rides the root scroll timeline
+ * in CSS (src/utilities/intro.css), so it tracks the scroll exactly on the compositor.
+ *
+ *   data-fh-glide="center"   The element hands off from its place to a fixed pill that slides to
+ *                            the centre of the window as the page scrolls (the homepage nav).
+ *   data-fh-lock             The element rides up with the page, then locks on a line:
+ *     data-fh-lock-to          a selector (its top, or its middle with data-fh-lock-align="middle")
+ *                              or a number of px from the top; default 16
+ *     data-fh-lock-scale       a number, or "fit" to end as tall as the lock-to element
+ *     data-fh-lock-origin      "left" (default) or "right": the side it shrinks toward
+ *     data-fh-lock="clone"     for non-interactive marks: a copy moves, the original stays in
+ *                              place for assistive tech (opacity 0); data-fh-lock-href makes the
+ *                              copy a link (e.g. back to the top)
+ *   The first lock (or the one with data-fh-lock-primary) sets --fh-lock on <html>: the scroll
+ *   distance other pieces (glides, fh-recede via --fh-recede-range) share. Each locked element
+ *   gets data-locked once it has locked. Waits for intros to finish; skipped under reduced
+ *   motion or without scroll-driven animations, where everything simply stays in the page.
+ *   Firehorse.choreo.locks maps each element to its measurements; "fh:choreo" fires when ready. */
+{
+  const root = document.documentElement;
+  const able = !matchMedia("(prefers-reduced-motion: reduce)").matches && CSS.supports?.("animation-timeline: scroll()");
+  const glides = [...document.querySelectorAll("[data-fh-glide]")];
+  const lockEls = [...document.querySelectorAll("[data-fh-lock]")];
+  const choreo = { locks: new Map(), glides: new Map(), ready: false };
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { choreo });
+  if (able && (glides.length || lockEls.length)) {
+    // Moving an element restarts its CSS animations, so a moved element (and its stand-in) drops
+    // its entrance attributes first: its intro has already played.
+    const settle = (el) => { for (const n of [el, ...el.querySelectorAll("[data-fh-enter], [data-fh-enter-children]")]) { n.removeAttribute("data-fh-enter"); n.removeAttribute("data-fh-enter-children"); } };
+    const ghostOf = (el) => {
+      const g = el.cloneNode(true);
+      g.removeAttribute("id"); g.querySelectorAll("[id]").forEach((n) => n.removeAttribute("id"));
+      g.setAttribute("aria-hidden", "true"); g.inert = true; g.classList.add("fh-choreo-ghost");
+      for (const a of ["data-fh-glide", "data-fh-lock", "popovertarget"]) g.removeAttribute(a);
+      settle(g);
+      return g;
+    };
+    const lineOf = (spec, align) => {
+      if (spec && !/^[\d.]+$/.test(spec)) {
+        const t = document.querySelector(spec);
+        if (t) { const r = t.getBoundingClientRect(), fixed = getComputedStyle(t).position === "fixed"; return { y: (fixed ? r.top : r.top + scrollY) + (align === "middle" ? r.height / 2 : 0), h: r.height }; }
+      }
+      return { y: spec ? parseFloat(spec) : 16, h: 0 };
+    };
+    const measureGlide = (g) => {
+      const { el, wrap, ghost } = g;
+      const pad = parseFloat(getComputedStyle(wrap).paddingInlineStart) || 0;
+      const r = ghost.getBoundingClientRect();
+      wrap.style.setProperty("--_fh-y", `${r.top + scrollY - pad}px`);
+      wrap.style.setProperty("--_fh-x0", `${r.left - pad}px`);
+      wrap.style.setProperty("--_fh-x1", `${Math.round((root.clientWidth - wrap.offsetWidth) / 2)}px`);
+    };
+    const measureLock = (L) => {
+      const { el, layer, ghost } = L;
+      const r = ghost.getBoundingClientRect();
+      const align = el.dataset.fhLockAlign === "middle" ? "middle" : "top";
+      const line = lineOf(el.dataset.fhLockTo, align);
+      const s = el.dataset.fhLockScale === "fit" && line.h ? line.h / r.height : parseFloat(el.dataset.fhLockScale) || 1;
+      const right = el.dataset.fhLockOrigin === "right";
+      const top = r.top + scrollY, ref = align === "middle" ? r.height / 2 : 0;
+      const dist = Math.max(1, Math.round(top + ref - line.y));
+      Object.assign(L, { dist, s, box: { left: right ? r.left + r.width * (1 - s) : r.left, width: r.width * s, top: line.y - (align === "middle" ? (r.height * s) / 2 : 0), height: r.height * s } });
+      layer.style.setProperty("--_fh-top", `${top}px`);
+      layer.style.setProperty("--_fh-left", `${r.left}px`);
+      layer.style.setProperty("--_fh-w", `${r.width}px`);
+      layer.style.setProperty("--_fh-dist", `${dist}px`);
+      layer.style.setProperty("--_fh-s", String(s));
+      layer.style.setProperty("--_fh-o", `${right ? "100%" : "0"} ${align === "middle" ? "50%" : "0"}`);
+      if (L.primary) root.style.setProperty("--fh-lock", `${dist}px`);
+    };
+    const measure = () => { choreo.glides.forEach(measureGlide); choreo.locks.forEach(measureLock); choreo.glides.forEach(measureGlide); root.dispatchEvent(new CustomEvent("fh:choreo-measure")); };
+    const start = () => {
+      if (choreo.ready) return;
+      for (const el of glides) {
+        settle(el);
+        const ghost = ghostOf(el); el.before(ghost);
+        const wrap = document.createElement("div"); wrap.className = "fh-glide"; document.body.append(wrap);
+        wrap.append(el);
+        choreo.glides.set(el, { el, wrap, ghost });
+      }
+      const primary = lockEls.find((e) => e.hasAttribute("data-fh-lock-primary")) || lockEls[0];
+      for (const el of lockEls) {
+        if (el.dataset.fhLock !== "clone") settle(el);
+        const ghost = ghostOf(el); el.before(ghost);
+        let layer;
+        if (el.dataset.fhLock === "clone") {
+          const copy = ghostOf(el); copy.classList.remove("fh-choreo-ghost"); copy.inert = false;
+          layer = el.dataset.fhLockHref ? Object.assign(document.createElement("a"), { href: el.dataset.fhLockHref }) : document.createElement("div");
+          if (el.dataset.fhLockHref) { layer.setAttribute("aria-label", el.dataset.fhLockLabel || el.textContent.trim()); copy.setAttribute("aria-hidden", "true"); } else layer.setAttribute("aria-hidden", "true");
+          layer.append(copy);
+          const cs = getComputedStyle(el);
+          Object.assign(copy.style, { fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, letterSpacing: cs.letterSpacing, lineHeight: cs.lineHeight, margin: "0" });
+          settle(el); el.classList.add("fh-lock-source"); ghost.remove(); // its intro has played; now it only holds its place
+          choreo.locks.set(el, { el, layer, ghost: el, primary: el === primary, copy });
+        } else {
+          layer = document.createElement("div"); layer.append(el);
+          choreo.locks.set(el, { el, layer, ghost, primary: el === primary });
+        }
+        layer.classList.add("fh-lock");
+        document.body.append(layer);
+      }
+      measure();
+      choreo.ready = true;
+      root.setAttribute("data-fh-choreo", "");
+      let raf = 0;
+      const check = () => { raf = 0; choreo.locks.forEach((L) => { const on = scrollY >= L.dist - 0.5; if (on !== L.on) { L.on = on; (L.copy || L.el).toggleAttribute("data-locked", on); L.layer.toggleAttribute("data-locked", on); } }); };
+      addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(check); }, { passive: true });
+      check();
+      let rz = 0;
+      addEventListener("resize", () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(measure); }, { passive: true });
+      document.fonts?.ready.then(measure);
+      root.dispatchEvent(new CustomEvent("fh:choreo", { detail: choreo }));
+    };
+    // Wait for intros to land (fh-ready, then every running entrance), at most 6s.
+    const intros = () => Promise.all(document.getAnimations ? document.getAnimations().filter((a) => a.effect?.target?.closest?.("[data-fh-enter], [data-fh-enter-children]")).map((a) => a.finished.catch(() => {})) : []);
+    const whenReady = () => new Promise((r) => { if (root.classList.contains("fh-ready") || !root.classList.contains("fh-js")) r(); else new MutationObserver((_, o) => { if (root.classList.contains("fh-ready")) { o.disconnect(); r(); } }).observe(root, { attributes: true, attributeFilter: ["class"] }); });
+    Promise.race([whenReady().then(() => new Promise((r) => requestAnimationFrame(r))).then(intros), new Promise((r) => setTimeout(r, 6000))]).then(() => requestAnimationFrame(start));
+  }
+}

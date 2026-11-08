@@ -6,7 +6,7 @@
   "title": "Theming · Firehorse",
   "description": "Firehorse theming: build a theme on top of the defaults, switch with data-fh-theme, and the built-in horse-breed themes.",
   "headline": "One attribute per scheme, one file per brand",
-  "lede": "Schemes come from <code>light-dark()</code>, so a single attribute flips any subtree. Brands are small files that re-point tokens and never add component selectors; for a whole look, type, color, shape and density together, start from a <a class=\"fh-link\" href=\"#themes\">theme</a>. Firehorse is the base layer for every site built on it.",
+  "lede": "Schemes come from <code>light-dark()</code>, so a single attribute flips any subtree. Brands are small files that re-point tokens and never add component selectors; for a whole colour set in light and dark, start from a <a class=\"fh-link\" href=\"#themes\">theme</a>; type, shape and density are separate choices and never change with it. Firehorse is the base layer for every site built on it.",
   "scripts": [],
   "icon": "palette",
   "summary": [
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="site-demo" data-fh-id="THM">
+        <div class="site-demo" data-fh-id="THM" data-fh-name="Brand theme file">
           <div class="site-demo__head"><h3>themes/brand.css</h3><code>@layer fh.themes</code></div>
           <pre class="site-pre"><code><span class="c">/* Load after firehorse.css */</span>
 <span class="t">@layer</span> fh.themes {
@@ -72,6 +72,39 @@
 }</code></pre>
         </div>
       </div>
+
+      <div class="site-demo site-anchor site-harmony" id="c-harmony" style="--fh-root: #e8590c">
+        <div class="site-demo__head"><h3>Harmony &amp; overlays</h3><p>One root colour in, a balanced family out. Set <code>--fh-root</code> on any element and Firehorse derives tints, shades and harmonies in OKLCH, so the steps look even on every hue. Overlays paint a layer built from the same family. Pick a root:</p></div>
+        <div class="site-demo__stage" data-demo>
+          <div class="fh-stack fh-stack--lg">
+            <label class="fh-field site-harmony__pick"><span>Root colour</span><input type="color" value="#e8590c" data-harmony-root aria-label="Root colour"></label>
+            <p class="fh-label">Tints and shades</p>
+            <div class="site-harmony__row"><div class="site-harmony__sw"><span style="background:var(--fh-root-shade-3)"></span><code>--fh-root-shade-3</code><small>Shade 3</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-shade-2)"></span><code>--fh-root-shade-2</code><small>Shade 2</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-shade-1)"></span><code>--fh-root-shade-1</code><small>Shade 1</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root)"></span><code>--fh-root</code><small>Root</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-tint-1)"></span><code>--fh-root-tint-1</code><small>Tint 1</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-tint-2)"></span><code>--fh-root-tint-2</code><small>Tint 2</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-tint-3)"></span><code>--fh-root-tint-3</code><small>Tint 3</small></div></div>
+            <p class="fh-label">Harmony</p>
+            <div class="site-harmony__row"><div class="site-harmony__sw"><span style="background:var(--fh-root-analog-1)"></span><code>--fh-root-analog-1</code><small>Analogous −30°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-analog-2)"></span><code>--fh-root-analog-2</code><small>Analogous +30°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-complement)"></span><code>--fh-root-complement</code><small>Complement</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-split-1)"></span><code>--fh-root-split-1</code><small>Split 150°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-split-2)"></span><code>--fh-root-split-2</code><small>Split 210°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-triad-1)"></span><code>--fh-root-triad-1</code><small>Triad 120°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-triad-2)"></span><code>--fh-root-triad-2</code><small>Triad 240°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-muted)"></span><code>--fh-root-muted</code><small>Muted</small></div></div>
+            <p class="fh-label">Overlays · <code>data-fh-overlay</code></p>
+            <div class="fh-grid" style="--fh-grid-min: 12rem; --fh-grid-max-cols: 4">
+              <article class="fh-card site-harmony__card" data-fh-overlay="wash"><p class="fh-card__meta">wash</p><h4 class="fh-card__title">Flat and quiet</h4></article>
+              <article class="fh-card site-harmony__card" data-fh-overlay="glow"><p class="fh-card__meta">glow</p><h4 class="fh-card__title">Radial bloom</h4></article>
+              <article class="fh-card site-harmony__card" data-fh-overlay="aurora"><p class="fh-card__meta">aurora</p><h4 class="fh-card__title">Conic sweep</h4></article>
+              <figure class="fh-card site-harmony__card site-harmony__photo" data-fh-overlay="duotone"><img src="/img/backdrop/firehorse-horse.webp" alt="" loading="lazy"><figcaption class="fh-card__meta">duotone</figcaption></figure>
+            </div>
+            <pre class="fh-code"><code><span class="c">/* a palette from one colour */</span>
+.hero { <span class="a">--fh-root</span>: #3b82f6; }
+.hero .tag { background: var(<span class="a">--fh-root-tint-3</span>); color: var(<span class="a">--fh-root-shade-2</span>); }
+
+<span class="c">/* or the function, where the browser has @function */</span>
+.badge { background: --fh-harmony(var(--fh-root), 30deg, 0.15, 0.7); }
+
+<span class="c">/* an overlay from the element's own tone */</span>
+&lt;section data-tone="teal" data-fh-root="tone" data-fh-overlay="glow"&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+<script type="module">
+  const demo = document.getElementById("c-harmony");
+  demo?.querySelector("[data-harmony-root]")?.addEventListener("input", (e) => demo.style.setProperty("--fh-root", e.target.value));
+</script>
     </section>
 
     <!-- ═══════════════ THEMES ═══════════════ -->
@@ -81,7 +114,7 @@
         <div>
           <p class="site-chapter" data-tone="fuchsia"><b>02</b> Themes</p>
           <h2 id="themes-title" class="fh-heading">Pick a horse. The whole site changes.</h2>
-          <p class="fh-lede">A theme is every design decision in one file: type, color in light and dark, corner radius, density, and how avatars, cards, buttons, chips and tables look. Apply it with one attribute, <code>data-fh-theme</code>, and switch it with a dropdown. Firehorse ships three to start. Build your own on top of Firehorse the same way.</p>
+          <p class="fh-lede">A theme is a colour set: neutrals and an accent, in light and dark. It never changes type, spacing, corner radius or layout, so switching themes recolours a page without moving anything. Apply it with one attribute, <code>data-fh-theme</code>, and switch it with a dropdown. Shape and density stay separate choices, set with their own <code>data-fh-*</code> attributes.</p>
         </div>
         <button class="fh-button fh-button--plain" type="button" data-opens="themes"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i>Open the theme drawer</button>
       </header>
@@ -102,18 +135,11 @@
             <div class="fh-window__body"><pre class="site-pre"><code>{
   <span class="a">"name"</span>: <span class="v">"appaloosa"</span>,
   <span class="a">"label"</span>: <span class="v">"Appaloosa"</span>,
-  <span class="a">"config"</span>: {
-    <span class="a">"avatar"</span>: <span class="v">"circle"</span>, <span class="a">"card"</span>: <span class="v">"outline"</span>,
-    <span class="a">"button"</span>: <span class="v">"flat"</span>, <span class="a">"chip"</span>: <span class="v">"solid"</span>,
-    <span class="a">"radius"</span>: <span class="v">"soft"</span>, <span class="a">"density"</span>: <span class="v">"compact"</span>,
-    <span class="a">"table"</span>: <span class="v">"zebra"</span>
-  },
   <span class="a">"color"</span>: {
     <span class="a">"neutral"</span>: { <span class="a">"hue"</span>: 250, <span class="a">"chroma"</span>: 0.012 },
     <span class="a">"accent"</span>: { <span class="a">"light"</span>: <span class="v">"#1d4ed8"</span>, <span class="a">"dark"</span>: <span class="v">"#60a5fa"</span> },
     <span class="a">"onAccent"</span>: { <span class="a">"light"</span>: <span class="v">"#ffffff"</span>, <span class="a">"dark"</span>: <span class="v">"#0b1220"</span> }
-  },
-  <span class="a">"font"</span>: { <span class="a">"display"</span>: <span class="v">"Georgia, serif"</span> }
+  }
 }</code></pre></div>
           </figure>
           <pre class="site-pre site-config-code"><span class="c"># compile it (checks AA contrast in both schemes)</span>

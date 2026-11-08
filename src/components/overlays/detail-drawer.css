@@ -1,0 +1,187 @@
+/*
+ * Firehorse — Detail drawer
+ * components/overlays · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Detail drawer ——————————————————————————————————————
+   * A floating sheet for a record: header, quick facts, grouped
+   * fields, activity and a sticky footer. Etched edge; it floats
+   * --fh-float-gap from the screen edge (a theme token, space-3) and
+   * eases in and out over --fh-float-duration (slow); with reduced
+   * motion it appears without sliding. fh-dialog--start opens it from
+   * the inline start.
+   *
+   *   <dialog class="fh-dialog fh-dialog--float fh-detail" id="record">
+   *     <header class="fh-detail__header">…</header>
+   *     <div class="fh-detail__body">
+   *       <section class="fh-detail__section"><h3>Contact</h3>
+   *         <dl class="fh-detail__fields"><div><dt>Email</dt><dd>…</dd></div></dl>
+   *       </section>
+   *     </div>
+   *     <footer class="fh-detail__footer">…</footer>
+   *   </dialog>
+   */
+  .fh-dialog--float {
+    --_gap: var(--fh-float-gap, var(--fh-gap-grouped));
+
+    inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));
+    max-inline-size: none;
+    block-size: calc(100dvh - 2 * var(--_gap));
+    max-block-size: none;
+    margin: var(--_gap) var(--_gap) var(--_gap) auto;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+    border-radius: var(--fh-radius-lg);
+    opacity: 0;
+    translate: calc(100% + 2 * var(--_gap)) 0;
+    transition:
+      translate var(--fh-float-duration, var(--fh-duration-slow, 420ms)) var(--fh-ease-in-out),
+      opacity var(--fh-float-duration, var(--fh-duration-slow, 420ms)) var(--fh-ease-in-out),
+      overlay var(--fh-float-duration, var(--fh-duration-slow, 420ms)) allow-discrete,
+      display var(--fh-float-duration, var(--fh-duration-slow, 420ms)) allow-discrete;
+
+    &[open] {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style { opacity: 0; translate: calc(100% + 2 * var(--_gap)) 0; }
+    }
+
+    &:dir(rtl) {
+      margin: var(--_gap) auto var(--_gap) var(--_gap);
+      translate: calc(-100% - 2 * var(--_gap)) 0;
+    }
+  }
+
+  .fh-dialog--float.fh-dialog--start {
+    margin: var(--_gap) auto var(--_gap) var(--_gap);
+    translate: calc(-100% - 2 * var(--_gap)) 0;
+
+    &[open] { opacity: 1; translate: 0 0; @starting-style { opacity: 0; translate: calc(-100% - 2 * var(--_gap)) 0; } }
+  }
+
+  .fh-detail {
+    padding: 0;
+
+    &[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  }
+
+  .fh-detail__header {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tile) var(--fh-inset-card) var(--fh-inset-control);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    /* Flat on purpose: drawers are drawn with lines, never a gradient wash. */
+    background-color: transparent;
+  }
+
+  .fh-detail__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-detail__nav {
+    display: inline-flex;
+    gap: var(--fh-gap-bound);
+  }
+
+  .fh-detail__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    --fh-avatar-size: 3rem;
+
+    /* Long titles wrap at a readable measure instead of running the full width. */
+    & h2 { max-inline-size: var(--fh-detail-title-max, 28ch); margin: 0; font-size: var(--fh-text-h3); font-weight: var(--fh-weight-medium); letter-spacing: var(--fh-tracking-heading); line-height: 1.15; text-wrap: balance; }
+    & p { margin: var(--fh-gap-bound) 0 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+  }
+
+  .fh-detail__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-border);
+
+    & > div { display: grid; gap: var(--fh-gap-bound); padding: var(--fh-gap-related) var(--fh-gap-grouped); background-color: var(--fh-color-surface-raised); }
+    & dt { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+    & dd { margin: 0; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-semibold); letter-spacing: var(--fh-tracking-mono); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+  }
+
+  .fh-detail__body {
+    display: grid;
+    gap: var(--fh-gap-sectioned);
+    align-content: start;
+    padding: var(--fh-inset-card);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .fh-detail__section {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+
+    & > h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-gap-related);
+      margin: 0;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  /* Label / value rows. Values may be text, links, pills, inputs. */
+  .fh-detail__fields {
+    display: grid;
+    gap: 0;
+    margin: 0;
+
+    & > div {
+      display: grid;
+      grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr);
+      gap: var(--fh-gap-grouped);
+      align-items: center;
+      min-block-size: 2.4rem;
+      padding-block: var(--fh-inset-tight);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & dt { display: flex; align-items: center; gap: var(--fh-gap-related); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+    & dt > .fh-icon { color: var(--fh-color-text-subtle); }
+    & dd { margin: 0; min-inline-size: 0; font-size: var(--fh-text-small); overflow-wrap: anywhere; }
+    & :is(.fh-input, .fh-select) { min-block-size: 2rem; padding-block: 0.3rem; font-size: var(--fh-text-small); }
+  }
+
+  @container fh-dialog (inline-size < 24rem) {
+    .fh-detail__fields > div { grid-template-columns: minmax(0, 1fr); gap: var(--fh-gap-bound); }
+  }
+
+  .fh-detail__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-control) var(--fh-inset-card);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: var(--fh-color-surface-raised);
+  }
+
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dialog--float { transition-duration: 0s; }
+  }
+}

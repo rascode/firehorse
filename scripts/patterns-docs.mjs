@@ -1,4 +1,4 @@
-// Generates agent/patterns.md from the Patterns page (site/pages/patterns): every pattern and
+// Generates agent/patterns.md from the Design patterns page (site/pages/patterns): every design pattern and
 // building block with its anatomy, spec (built from / keep / change freely / phones) and markup,
 // so agents follow the same rules the page shows.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -19,12 +19,12 @@ const dedent = (s) => {
   return lines.map((l) => l.slice(min)).join("\n");
 };
 
-let out = `# Firehorse — patterns
+let out = `# Firehorse — design patterns
 
 > Page layouts by ID, v${pkg.version}. Generated from https://firehorse.rascode.dev/patterns/.
-> A pattern is the saddle tree; the theme, tones and content are the leather and
+> A design pattern is the saddle tree; the theme, tones and content are the leather and
 > tooling. When a person
-> names a pattern, build it with this markup and keep every **Keep** rule. Change
+> names a design pattern, build it with this markup and keep every **Keep** rule. Change
 > only what **Change freely** allows. Rules: [system.md](system.md).
 
 `;
@@ -46,4 +46,4 @@ for (const sec of doc.querySelectorAll("section.site-anchor")) {
   }
 }
 writeFileSync(join(root, "agent/patterns.md"), out);
-console.log(`agent/patterns.md: ${doc.querySelectorAll(".site-demo[data-fh-id]").length} patterns`);
+console.log(`agent/patterns.md: ${doc.querySelectorAll(".site-demo[data-fh-id]").length} design patterns`);

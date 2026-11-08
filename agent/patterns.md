@@ -1,12 +1,12 @@
-# Firehorse — patterns
+# Firehorse — design patterns
 
 > Page layouts by ID, v1.1.0. Generated from https://firehorse.rascode.dev/patterns/.
-> A pattern is the saddle tree; the theme, tones and content are the leather and
+> A design pattern is the saddle tree; the theme, tones and content are the leather and
 > tooling. When a person
-> names a pattern, build it with this markup and keep every **Keep** rule. Change
+> names a design pattern, build it with this markup and keep every **Keep** rule. Change
 > only what **Change freely** allows. Rules: [system.md](system.md).
 
-## Page patterns
+## Page design patterns
 
 Each one was recorded from a real page before it was rebuilt, so the proportions are measured, not remembered. Keep what the rules say to keep; change the rest.
 
@@ -55,7 +55,7 @@ Anatomy, top to bottom:
   </main>
   <footer class="fh-footer fh-footer--tall">
     <nav class="fh-footer__columns" aria-label="Sample footer">
-      <div class="fh-footer__column" data-tone="teal"><h2>Docs</h2><ul><li><a href="#fender">Patterns</a></li></ul></div>
+      <div class="fh-footer__column" data-tone="teal"><h2>Docs</h2><ul><li><a href="#fender">Design patterns</a></li></ul></div>
       <div class="fh-footer__column" data-tone="violet"><h2>Agents</h2><ul><li><a href="#fender">Index</a></li></ul></div>
       <div class="fh-footer__column" data-tone="accent"><h2>Studio</h2><ul><li><a href="#fender">Contact</a></li></ul></div>
     </nav>
@@ -93,9 +93,9 @@ Anatomy, top to bottom:
     </div>
     <div class="fh-etched-split__pane fh-crosses">
       <div class="fh-stack">
-        <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The pattern</span></p>
-        <p class="fh-lede">Every pattern has an ID, a live demo and the rules that keep its fit, so a person or an agent can cut it again in any theme.</p>
-        <p class="fh-body fh-muted">Patterns at launch: <strong>2</strong>, plus 3 building blocks.</p>
+        <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The design pattern</span></p>
+        <p class="fh-lede">Every design pattern has an ID, a live demo and the rules that keep its fit, so a person or an agent can cut it again in any theme.</p>
+        <p class="fh-body fh-muted">Design patterns at launch: <strong>2</strong>, plus 3 building blocks.</p>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@ Anatomy, top to bottom:
 
 ## Building blocks
 
-Section-sized layouts you can use on their own. Patterns combine them with the frame and fix their proportions.
+Section-sized layouts you can use on their own. Design patterns combine them with the frame and fix their proportions.
 
 ### PNL · Offset panel
 

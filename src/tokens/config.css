@@ -22,11 +22,20 @@
  *   data-fh-avatar       rounded · circle · square · squircle · oval
  *   data-fh-card         etched · solid · elevated · outline · glass · minimal · tonal
  *   data-fh-card-media   wide · classic · square · portrait
+ *   data-fh-card-content plain · frost
  *   data-fh-button       convex · flat · soft · pill · sharp
  *   data-fh-chip         dashed · solid · soft · underline
  *   data-fh-radius       sharp · soft · round
  *   data-fh-density      compact · comfortable · spacious
  *   data-fh-table        lined · zebra · borderless
+ *   data-fh-rows         sm · md · lg · xl   (row spacing in tables and key value lists)
+ *   data-fh-cursor       dot · system   (dot is the default: a white circle with an etch)
+ *   data-fh-type         geist · inter · hanken · archivo
+ *
+ * Type presets set the sans and display families and the heading tracking
+ * each face wants (Hanken Grotesk −5% at display size, Archivo −3%). They
+ * name the family only: load the font yourself (Google Fonts, or self-host);
+ * until it loads, the system stack stands in.
  */
 
 @layer fh.config {
@@ -74,6 +83,29 @@
   [data-fh-card-media="square"] { --fh-card-media-ratio: 1; }
   [data-fh-card-media="portrait"] { --fh-card-media-ratio: 3 / 4; }
 
+  /* —— Card content ——
+   * frost: a card's content (fh-card__content, the story card's foot, the
+   * social and member card's body) sits on a pane of frosted glass over the
+   * card's art. The pane's tint is the opposite of the text it holds, so
+   * light text gets a dark pane and dark text a light one, on any surface.
+   * plain: back to no pane (cancels a frost set further up). */
+  [data-fh-card-content="plain"] {
+    --fh-card-content: plain; --fh-card-content-bg: initial; --fh-card-content-backdrop: initial;
+    --fh-card-content-border: initial; --fh-card-content-radius: initial; --fh-card-content-pad: initial;
+    --fh-card-content-inset: initial; --fh-card-content-overlap: initial; --fh-card-content-scrim: initial;
+  }
+  [data-fh-card-content="frost"] {
+    --fh-card-content: frost;
+    --fh-card-content-bg: oklch(from currentColor clamp(0.14, (0.55 - l) * 999, 0.99) calc(c * 0.2) h / 0.55);
+    --fh-card-content-backdrop: blur(18px) saturate(1.5);
+    --fh-card-content-border: oklch(from currentColor l c h / 0.16);
+    --fh-card-content-radius: var(--fh-radius-md);
+    --fh-card-content-pad: var(--fh-space-4);
+    --fh-card-content-inset: var(--fh-space-3);
+    --fh-card-content-overlap: 4.5rem;
+    --fh-card-content-scrim: none;
+  }
+
   /* —— Buttons —— */
   [data-fh-button="convex"] { --fh-button-radius: var(--fh-radius-sm); --fh-button-sheen: 1; --fh-button-shadow: var(--fh-shadow-convex); --fh-button-shadow-hover: var(--fh-shadow-convex-hover); --fh-button-shadow-active: var(--fh-shadow-convex-active); --fh-button-lift: -1px; }
   [data-fh-button="flat"] { --fh-button-radius: var(--fh-radius-sm); --fh-button-sheen: 0; --fh-button-shadow: none; --fh-button-shadow-hover: none; --fh-button-shadow-active: none; --fh-button-lift: 0px; }
@@ -91,6 +123,24 @@
   [data-fh-radius="sharp"] { --fh-radius-sm: 0; --fh-radius-md: 0; --fh-radius-lg: 0; --fh-radius-xl: 0; }
   [data-fh-radius="soft"] { --fh-radius-sm: 6px; --fh-radius-md: 10px; --fh-radius-lg: 1rem; --fh-radius-xl: 1.25rem; }
   [data-fh-radius="round"] { --fh-radius-sm: 999px; --fh-radius-md: 1rem; --fh-radius-lg: 1.5rem; --fh-radius-xl: 2rem; }
+
+  /* —— Cursor: a white circle with a thin etch, the Firehorse pointer.
+     A dark ring reads on light surfaces, a faint light ring on dark ones.
+     Actions (links, buttons, summaries) get a slightly larger circle.
+     Text fields keep the text caret. data-fh-cursor="system" restores
+     the platform arrow and hand. —— */
+  :root {
+    --fh-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10.0' cy='10.0' r='6.25' fill='none' stroke='white' stroke-opacity='.35'/%3E%3Ccircle cx='10.0' cy='10.0' r='5' fill='white' stroke='black' stroke-opacity='.3'/%3E%3C/svg%3E") 10 10, default;
+    --fh-cursor-action: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12.0' cy='12.0' r='8.25' fill='none' stroke='white' stroke-opacity='.35'/%3E%3Ccircle cx='12.0' cy='12.0' r='7' fill='white' stroke='black' stroke-opacity='.3'/%3E%3C/svg%3E") 12 12, pointer;
+  }
+  [data-fh-cursor="system"] { --fh-cursor: default; --fh-cursor-action: pointer; }
+
+  /* —— Row spacing: the room above and below each row of a table,
+     key value list or description list. md is the default. —— */
+  [data-fh-rows="sm"] { --fh-row-pad: var(--fh-space-2); }
+  [data-fh-rows="md"] { --fh-row-pad: var(--fh-space-3); }
+  [data-fh-rows="lg"] { --fh-row-pad: var(--fh-space-4); }
+  [data-fh-rows="xl"] { --fh-row-pad: var(--fh-space-5); }
 
   /* —— Density: rescales the spacing ramp —— */
   [data-fh-density] {
@@ -116,4 +166,30 @@
   [data-fh-table="lined"] { --fh-table-zebra: transparent; --fh-table-rule: var(--fh-color-rule); }
   [data-fh-table="zebra"] { --fh-table-zebra: color-mix(in oklab, var(--fh-color-text) 4%, transparent); --fh-table-rule: transparent; }
   [data-fh-table="borderless"] { --fh-table-zebra: transparent; --fh-table-rule: transparent; }
+
+  /* —— Type —— */
+  [data-fh-type="geist"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-tracking-tight: -0.04em; --fh-tracking-snug: -0.03em; --fh-tracking-heading: -0.02em;
+  }
+  [data-fh-type="inter"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-tracking-tight: -0.035em; --fh-tracking-snug: -0.025em; --fh-tracking-heading: -0.02em;
+  }
+  [data-fh-type="hanken"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-font-display: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-tracking-tight: -0.05em; --fh-tracking-snug: -0.04em; --fh-tracking-heading: -0.03em;
+  }
+  [data-fh-type="archivo"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-font-display: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fh-tracking-tight: -0.03em; --fh-tracking-snug: -0.025em; --fh-tracking-heading: -0.02em;
+  }
 }

@@ -246,9 +246,9 @@ export const tokens = {
     "group": "red"
   },
   "--fh-font-sans": {
-    "$value": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+    "$value": "\"Archivo\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
     "$type": "fontFamily",
-    "tier": "primitives",
+    "tier": "config",
     "group": "font"
   },
   "--fh-font-mono": {
@@ -258,7 +258,13 @@ export const tokens = {
     "group": "font"
   },
   "--fh-font-display": {
-    "$value": "var(--fh-font-sans)",
+    "$value": "\"Archivo\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+    "$type": "fontFamily",
+    "tier": "config",
+    "group": "font"
+  },
+  "--fh-font-figure": {
+    "$value": "var(--fh-font-display)",
     "$type": "fontFamily",
     "tier": "primitives",
     "group": "font"
@@ -312,13 +318,13 @@ export const tokens = {
     "group": "weight"
   },
   "--fh-text-micro": {
-    "$value": "0.62rem",
+    "$value": "0.6875rem",
     "$type": "dimension",
     "tier": "primitives",
     "group": "text"
   },
   "--fh-text-label": {
-    "$value": "0.68rem",
+    "$value": "0.6875rem",
     "$type": "dimension",
     "tier": "primitives",
     "group": "text"
@@ -336,7 +342,7 @@ export const tokens = {
     "group": "text"
   },
   "--fh-text-body": {
-    "$value": "0.95rem",
+    "$value": "1rem",
     "$type": "dimension",
     "tier": "primitives",
     "group": "text"
@@ -425,6 +431,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "leading"
   },
+  "--fh-tracking-wordmark": {
+    "$value": "-0.05em",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "tracking"
+  },
   "--fh-tracking-tightest": {
     "$value": "-0.04em",
     "$type": "dimension",
@@ -432,21 +444,21 @@ export const tokens = {
     "group": "tracking"
   },
   "--fh-tracking-tight": {
-    "$value": "-0.035em",
+    "$value": "-0.03em",
     "$type": "dimension",
-    "tier": "primitives",
+    "tier": "config",
     "group": "tracking"
   },
   "--fh-tracking-snug": {
-    "$value": "-0.03em",
+    "$value": "-0.025em",
     "$type": "dimension",
-    "tier": "primitives",
+    "tier": "config",
     "group": "tracking"
   },
   "--fh-tracking-heading": {
     "$value": "-0.02em",
     "$type": "dimension",
-    "tier": "primitives",
+    "tier": "config",
     "group": "tracking"
   },
   "--fh-tracking-body": {
@@ -701,6 +713,18 @@ export const tokens = {
     "tier": "primitives",
     "group": "blur"
   },
+  "--fh-frost": {
+    "$value": "0.6",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "frost"
+  },
+  "--fh-float-gap": {
+    "$value": "0.75rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "float"
+  },
   "--fh-duration-instant": {
     "$value": "80ms",
     "$type": "duration",
@@ -748,6 +772,84 @@ export const tokens = {
     "$type": "cubicBezier",
     "tier": "primitives",
     "group": "ease"
+  },
+  "--fh-duration-enter": {
+    "$value": "600ms",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
+  "--fh-duration-reveal": {
+    "$value": "720ms",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
+  "--fh-duration-intro": {
+    "$value": "900ms",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
+  "--fh-duration-scene": {
+    "$value": "1.1s",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
+  "--fh-ease-expo-out": {
+    "$value": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "$type": "cubicBezier",
+    "tier": "primitives",
+    "group": "ease"
+  },
+  "--fh-ease-spring": {
+    "$value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    "$type": "cubicBezier",
+    "tier": "primitives",
+    "group": "ease"
+  },
+  "--fh-ease-glide": {
+    "$value": "cubic-bezier(0.45, 0, 0.55, 1)",
+    "$type": "cubicBezier",
+    "tier": "primitives",
+    "group": "ease"
+  },
+  "--fh-ease-in": {
+    "$value": "cubic-bezier(0.64, 0, 0.78, 0)",
+    "$type": "cubicBezier",
+    "tier": "primitives",
+    "group": "ease"
+  },
+  "--fh-intro-beat": {
+    "$value": "150ms",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "intro"
+  },
+  "--fh-stagger": {
+    "$value": "60ms",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "stagger"
+  },
+  "--fh-motion-rise": {
+    "$value": "0.6rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "motion"
+  },
+  "--fh-recede-to": {
+    "$value": "0.9",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "recede"
+  },
+  "--fh-recede-range": {
+    "$value": "48vh",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "recede"
   },
   "--fh-z-raised": {
     "$value": "1",
@@ -947,6 +1049,48 @@ export const tokens = {
     "tier": "semantic",
     "group": "color"
   },
+  "--fh-heading-size": {
+    "$value": "clamp(1.4rem, 1rem + 1.5vw, 2.2rem)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "heading"
+  },
+  "--fh-heading-weight": {
+    "$value": "var(--fh-weight-heavy)",
+    "$type": "fontWeight",
+    "tier": "semantic",
+    "group": "heading"
+  },
+  "--fh-heading-tracking": {
+    "$value": "var(--fh-tracking-tight)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "heading"
+  },
+  "--fh-display-weight": {
+    "$value": "var(--fh-weight-heavy)",
+    "$type": "fontWeight",
+    "tier": "semantic",
+    "group": "display"
+  },
+  "--fh-subheading-weight": {
+    "$value": "var(--fh-weight-bold)",
+    "$type": "fontWeight",
+    "tier": "semantic",
+    "group": "subheading"
+  },
+  "--fh-menu-opacity": {
+    "$value": "0.86",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "menu"
+  },
+  "--fh-color-surface-menu": {
+    "$value": "color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
   "--fh-color-surface-chrome": {
     "$value": "light-dark(var(--fh-gray-150), var(--fh-gray-875))",
     "$type": "color",
@@ -960,13 +1104,13 @@ export const tokens = {
     "group": "color"
   },
   "--fh-color-field": {
-    "$value": "light-dark(var(--fh-gray-150), var(--fh-gray-750))",
+    "$value": "light-dark(var(--fh-gray-50), var(--fh-gray-875))",
     "$type": "color",
     "tier": "semantic",
     "group": "color"
   },
   "--fh-color-field-hover": {
-    "$value": "light-dark(var(--fh-gray-200), var(--fh-gray-700))",
+    "$value": "light-dark(var(--fh-gray-100), var(--fh-gray-850))",
     "$type": "color",
     "tier": "semantic",
     "group": "color"
@@ -1069,6 +1213,18 @@ export const tokens = {
   },
   "--fh-color-on-primary": {
     "$value": "var(--fh-color-canvas)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
+  "--fh-color-ink": {
+    "$value": "var(--fh-gray-1000)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
+  "--fh-color-on-ink": {
+    "$value": "var(--fh-gray-0)",
     "$type": "color",
     "tier": "semantic",
     "group": "color"
@@ -1223,6 +1379,96 @@ export const tokens = {
     "tier": "semantic",
     "group": "focus"
   },
+  "--fh-gap-bound": {
+    "$value": "var(--fh-space-1)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "gap"
+  },
+  "--fh-gap-related": {
+    "$value": "var(--fh-space-2)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "gap"
+  },
+  "--fh-gap-grouped": {
+    "$value": "var(--fh-space-3)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "gap"
+  },
+  "--fh-gap-grouped-wide": {
+    "$value": "var(--fh-space-4)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "gap"
+  },
+  "--fh-gap-sectioned": {
+    "$value": "var(--fh-space-6)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "gap"
+  },
+  "--fh-gap-separated": {
+    "$value": "var(--fh-space-12)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "gap"
+  },
+  "--fh-inset-tight": {
+    "$value": "var(--fh-space-2)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "inset"
+  },
+  "--fh-inset-control": {
+    "$value": "var(--fh-space-3)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "inset"
+  },
+  "--fh-inset-tile": {
+    "$value": "var(--fh-space-4)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "inset"
+  },
+  "--fh-inset-card": {
+    "$value": "var(--fh-space-6)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "inset"
+  },
+  "--fh-inset-page": {
+    "$value": "var(--fh-page-margin)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "inset"
+  },
+  "--fh-item-block": {
+    "$value": "var(--fh-inset-tight)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "item"
+  },
+  "--fh-item-inline": {
+    "$value": "var(--fh-inset-control)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "item"
+  },
+  "--fh-item-gap": {
+    "$value": "var(--fh-gap-related)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "item"
+  },
+  "--fh-item-frame": {
+    "$value": "var(--fh-gap-bound)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "item"
+  },
   "--fh-avatar-radius": {
     "$value": "var(--fh-radius-pill)",
     "$type": "dimension",
@@ -1279,6 +1525,60 @@ export const tokens = {
   },
   "--fh-card-media-ratio": {
     "$value": "3 / 4",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content": {
+    "$value": "frost",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-bg": {
+    "$value": "oklch(from currentColor clamp(0.14, (0.55 - l) * 999, 0.99) calc(c * 0.2) h / 0.55)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-backdrop": {
+    "$value": "blur(18px) saturate(1.5)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-border": {
+    "$value": "oklch(from currentColor l c h / 0.16)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-radius": {
+    "$value": "var(--fh-radius-md)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-pad": {
+    "$value": "var(--fh-space-4)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-inset": {
+    "$value": "var(--fh-space-3)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-overlap": {
+    "$value": "4.5rem",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "card"
+  },
+  "--fh-card-content-scrim": {
+    "$value": "none",
     "$type": "dimension",
     "tier": "config",
     "group": "card"
@@ -1342,6 +1642,24 @@ export const tokens = {
     "$type": "dimension",
     "tier": "config",
     "group": "chip"
+  },
+  "--fh-cursor": {
+    "$value": "default",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "cursor"
+  },
+  "--fh-cursor-action": {
+    "$value": "pointer",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "cursor"
+  },
+  "--fh-row-pad": {
+    "$value": "var(--fh-space-5)",
+    "$type": "dimension",
+    "tier": "config",
+    "group": "row"
   },
   "--fh-density": {
     "$value": "1.25",

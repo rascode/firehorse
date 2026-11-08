@@ -1,0 +1,34 @@
+/*
+ * Firehorse — Captions (CAP)
+ * components/audio · layer fh.components · docs /audio/#CAP
+ */
+
+@layer fh.components {
+  /* —— Synced captions ——
+   *   <div class="fh-captions" data-fh-captions="#player" aria-live="polite">
+   *     <p class="fh-captions__line"><span data-state="done">The</span> <span data-state="active">tide</span> …</p>
+   *   </div> */
+  .fh-captions {
+    display: grid;
+    place-items: center;
+    min-block-size: 3.5rem;
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    text-align: center;
+  }
+  .fh-captions__line {
+    margin: 0;
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -0.01em;
+    line-height: var(--fh-leading-snug);
+    text-wrap: balance;
+
+    & > [data-state] { transition: color var(--fh-duration-base), opacity var(--fh-duration-base); }
+    & > [data-state="pending"] { color: var(--fh-color-text-subtle); }
+    & > [data-state="done"] { color: var(--fh-color-text); }
+    & > [data-state="active"] { color: var(--fh-tone, var(--fh-color-accent-text)); }
+  }
+
+}

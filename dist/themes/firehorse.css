@@ -51,11 +51,11 @@
     --fh-weight-semibold: 550;
     --fh-weight-bold: 600;
     --fh-weight-heavy: 700;
-    --fh-text-micro: .62rem;
-    --fh-text-label: .68rem;
+    --fh-text-micro: .6875rem;
+    --fh-text-label: .6875rem;
     --fh-text-caption: .78rem;
     --fh-text-small: .88rem;
-    --fh-text-body: .95rem;
+    --fh-text-body: 1rem;
     --fh-text-lede: 1.05rem;
     --fh-text-large: 1.15rem;
     --fh-text-h4: clamp(1.05rem, .95rem + .5cqi, 1.2rem);
@@ -70,6 +70,7 @@
     --fh-leading-heading: 1.3;
     --fh-leading-normal: 1.45;
     --fh-leading-relaxed: 1.6;
+    --fh-tracking-wordmark: -.05em;
     --fh-tracking-tightest: -.04em;
     --fh-tracking-tight: -.035em;
     --fh-tracking-snug: -.03em;
@@ -103,6 +104,8 @@
     --fh-shadow-overlay: 0 18px 40px #00000073;
     --fh-shadow-menu: 0 12px 32px #00000080;
     --fh-blur-chrome: 10px;
+    --fh-frost: .6;
+    --fh-float-gap: .75rem;
     --fh-duration-instant: 80ms;
     --fh-duration-fast: .15s;
     --fh-duration-base: .22s;
@@ -111,6 +114,19 @@
     --fh-ease-standard: ease;
     --fh-ease-out: cubic-bezier(.22, 1, .36, 1);
     --fh-ease-in-out: cubic-bezier(.65, 0, .35, 1);
+    --fh-duration-enter: .6s;
+    --fh-duration-reveal: .72s;
+    --fh-duration-intro: .9s;
+    --fh-duration-scene: 1.1s;
+    --fh-ease-expo-out: cubic-bezier(.16, 1, .3, 1);
+    --fh-ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+    --fh-ease-glide: cubic-bezier(.45, 0, .55, 1);
+    --fh-ease-in: cubic-bezier(.64, 0, .78, 0);
+    --fh-intro-beat: .15s;
+    --fh-stagger: 60ms;
+    --fh-motion-rise: .6rem;
+    --fh-recede-to: .9;
+    --fh-recede-range: 48vh;
     --fh-z-raised: 1;
     --fh-z-sticky: 20;
     --fh-z-drawer: 25;
@@ -148,13 +164,16 @@
     --fh-ember-lc: .174;
     --fh-ember-lh: 36.1;
     --fh-font-display: var(--fh-font-sans);
+    --fh-font-figure: var(--fh-font-display);
     --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
     --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
     --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    --fh-menu-opacity: .86;
+    --fh-color-surface-menu: color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent);
     --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
     --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
-    --fh-color-field: light-dark(var(--fh-gray-150), var(--fh-gray-750));
-    --fh-color-field-hover: light-dark(var(--fh-gray-200), var(--fh-gray-700));
+    --fh-color-field: light-dark(var(--fh-gray-50), var(--fh-gray-875));
+    --fh-color-field-hover: light-dark(var(--fh-gray-100), var(--fh-gray-850));
     --fh-color-text-ghost: light-dark(#c4c4c0, #3d3d3d);
     --fh-color-border: light-dark(#1616161a, #f0f0f014);
     --fh-color-border-strong: light-dark(#1616162e, #f0f0f024);
@@ -166,6 +185,8 @@
     --fh-color-scaffold-tick: light-dark(#0003, #fff3);
     --fh-color-primary: var(--fh-color-text);
     --fh-color-on-primary: var(--fh-color-canvas);
+    --fh-color-ink: var(--fh-gray-1000);
+    --fh-color-on-ink: var(--fh-gray-0);
     --fh-color-accent: light-dark(var(--fh-ember-700), var(--fh-ember-500));
     --fh-color-accent-hover: light-dark(var(--fh-ember-500), var(--fh-ember-400));
     --fh-color-on-accent: var(--fh-gray-0);
@@ -211,6 +232,11 @@
     --fh-density: 1;
     --fh-table-zebra: transparent;
     --fh-table-rule: var(--fh-color-rule);
+    --fh-heading-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+    --fh-heading-weight: var(--fh-weight-heavy);
+    --fh-heading-tracking: var(--fh-tracking-tight);
+    --fh-display-weight: var(--fh-weight-heavy);
+    --fh-subheading-weight: var(--fh-weight-bold);
   }
 
   @supports not (color: oklch(from red l c h)) {

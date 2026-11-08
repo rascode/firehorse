@@ -1,0 +1,94 @@
+/*
+ * Firehorse — Field (FLD)
+ * components/forms · layer fh.components · docs /forms/#FLD
+ */
+
+/*
+ * Firehorse — forms
+ * ---------------------------------------------------------------
+ * Fields sit one step above the canvas so empty inputs stay
+ * visible on dark. Labels are mono caps. Required/optional chips are
+ * generated from the input's own `required` attribute — no extra
+ * markup, and the label can never disagree with the input.
+ *
+ *   <div class="fh-field">
+ *     <label for="email">Work email</label>
+ *     <input class="fh-input" id="email" type="email" required>
+ *     <p class="fh-field__hint">We reply within one business day.</p>
+ *   </div>
+ *
+ * Validation styling uses :user-invalid, so errors appear only after
+ * the visitor has interacted with the field. aria-invalid="true" shows the
+ * same error state at once: for errors the server returns, and for pages
+ * that must show the state without interaction.
+ */
+
+@layer fh.components {
+  .fh-field {
+    display: grid;
+    gap: var(--fh-gap-bound);
+    min-inline-size: 0;
+
+    & > label,
+    & > .fh-field__label,
+    & > legend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-related);
+      padding: 0;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      line-height: var(--fh-leading-snug);
+      text-transform: uppercase;
+      color: var(--fh-color-text-muted);
+    }
+
+    /* Auto chips */
+    &:has(:is(input, textarea, select)[required]) > label::after,
+    &.fh-field--optional > label::after {
+      content: "Required";
+      padding: 0.08rem 0.42rem 0.12rem;
+      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+      border-radius: var(--fh-radius-pill);
+      font-size: var(--fh-text-micro);
+      line-height: 1.35;
+      color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
+    }
+
+    &.fh-field--optional > label::after {
+      content: "Optional";
+    }
+
+    /* Valid + required: the chip settles to a check. */
+    &:has(:is(input, textarea, select)[required]:valid:not(:placeholder-shown, [aria-invalid="true"])) > label::after {
+      content: "Done";
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-color-success) 50%, transparent);
+      color: var(--fh-color-success);
+    }
+
+    &:has(:user-invalid, [aria-invalid="true"]) > label {
+      color: var(--fh-color-danger);
+    }
+  }
+
+  .fh-field__hint,
+  .fh-field__error {
+    margin: 0;
+    font-size: var(--fh-text-caption);
+    line-height: var(--fh-leading-normal);
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-field__error {
+    display: none;
+    color: var(--fh-color-danger);
+  }
+
+  .fh-field:has(:user-invalid, [aria-invalid="true"]) .fh-field__error {
+    display: block;
+  }
+
+}

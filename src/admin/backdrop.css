@@ -1,0 +1,89 @@
+/*
+ * Firehorse — Backdrop (BKD)
+ * admin · layer fh.components · docs /admin/#BKD
+ */
+
+@layer fh.components {
+  /* —— Backdrop ——
+   * A quiet abstract picture behind a whole app, edge to edge: soft tone
+   * fields under the etched contour art from the sign-in page, faint
+   * enough to read text over. Glass pieces (the masthead, the app's side
+   * and top bars) frost over it.
+   *   <div class="fh-app">
+   *     <div class="fh-backdrop" aria-hidden="true"></div>
+   *     …side, main…
+   *   </div>
+   * It is fixed to the viewport and sits under everything. Inside an
+   * fh-app with a backdrop, the sidebar and top bar turn to glass.
+   * Panels, tables and cards on it frost by --fh-frost (0–1, a theme
+   * token; a range input with data-fh-frost-select dials it live). Knobs:
+   * --fh-backdrop-strength (how much tone shows, 1), --fh-backdrop-art
+   * (the line art; none to drop it). */
+  .fh-backdrop {
+    --_k: var(--fh-backdrop-strength, 1);
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: var(--fh-color-canvas);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -10%;
+    }
+
+    /* Tone fields, blurred so they read as light, not shapes. */
+    &::before {
+      background:
+        radial-gradient(40% 45% at 12% 18%, color-mix(in oklab, var(--fh-tone-sky) calc(var(--_k) * 22%), transparent), transparent 70%),
+        radial-gradient(35% 40% at 88% 12%, color-mix(in oklab, var(--fh-tone-violet) calc(var(--_k) * 18%), transparent), transparent 70%),
+        radial-gradient(45% 40% at 78% 86%, color-mix(in oklab, var(--fh-tone-teal) calc(var(--_k) * 16%), transparent), transparent 70%),
+        radial-gradient(30% 35% at 22% 92%, color-mix(in oklab, var(--fh-tone-amber) calc(var(--_k) * 12%), transparent), transparent 70%);
+      filter: blur(48px);
+    }
+
+    /* The etched contours, very faint. */
+    &::after {
+      background-color: var(--fh-color-text);
+      mask: var(--fh-backdrop-art, url("art/etch-contours.svg")) center / cover no-repeat;
+      opacity: 0.06;
+    }
+  }
+
+  /* Frost: how much the glass over a backdrop clouds and blurs, from one
+     number (--fh-frost, 0–1, a theme token). 0 is clear, 1 nearly solid.
+     --fh-frost-fill and --fh-frost-filter are ready-made for app pieces
+     of your own (background-color and backdrop-filter). */
+  .fh-frost,
+  .fh-app:has(> .fh-backdrop) {
+    --_f: clamp(0, var(--fh-frost, 0.6), 1);
+    --fh-frost-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
+    --fh-frost-filter: blur(calc(var(--_f) * 32px)) saturate(calc(1 + var(--_f) * 0.4));
+  }
+
+  .fh-frost {
+    background-color: var(--fh-frost-fill);
+    backdrop-filter: var(--fh-frost-filter);
+  }
+
+  .fh-app:has(> .fh-backdrop) {
+    position: relative;
+    isolation: isolate;
+    background-color: transparent;
+
+    & > :not(.fh-backdrop) { position: relative; z-index: 1; }
+
+    /* Every framed surface takes the frost (the inheritance model): set
+       --fh-frost once, in Options or the theme, and all of these follow. */
+    & :is(.fh-app__side, .fh-section-card, .fh-table-wrap, .fh-dt, .fh-card, .fh-accordion, .fh-empty, .fh-stats, .fh-overview, .fh-code,
+          .fh-metric, .fh-cube-card, .fh-quick, .fh-check-card, .fh-tracker__log, .fh-entity-picker > .fh-entity, .fh-cube-cards--strip) {
+      background-color: var(--fh-frost-fill);
+      backdrop-filter: var(--fh-frost-filter);
+    }
+
+    & .fh-app__bar { background-color: var(--fh-frost-fill); }
+  }
+}

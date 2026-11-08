@@ -1,0 +1,149 @@
+/*
+ * Firehorse — Masthead (MST)
+ * admin · layer fh.components · docs /admin/#MST
+ */
+
+@layer fh.components {
+  /* —— Masthead ——
+   * A glass header: an etched edge, see-through fill with a blur behind
+   * it, and the stacking deck's caption inside (number on the left,
+   * title on the right, an etched rule under both; the number carries
+   * the tone, the rule stays grey). A backdrop behind the
+   * page shows through it, frosted.
+   *   <header class="fh-masthead" data-tone="amber">
+   *     <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+   *     <div class="fh-masthead__foot">
+   *       <p class="fh-masthead__meta">7 businesses · 5 owned</p>
+   *       <div class="fh-masthead__tools">…chips, switches, buttons…</div>
+   *     </div>
+   *   </header>
+   * fh-masthead--bar is the one-line form for an app's top bar: smaller
+   * caption with no rule, an optional round mark first (the client's
+   * logo: <span class="fh-avatar fh-avatar--circle fh-masthead__mark">),
+   * tools on the same line, sticky. Fill and blur follow --fh-frost.
+   * fh-masthead--split (with --bar) puts the caption and the tools in two
+   * separate pills with the page showing between them.
+   * Knobs: --fh-masthead-fill, --fh-masthead-blur. */
+  .fh-masthead {
+    --_fill: var(--fh-masthead-fill, calc(15% + clamp(0, var(--fh-frost, 0.6), 1) * 75%));
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+    padding: clamp(var(--fh-inset-card), 4cqi, var(--fh-inset-card));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+    border-radius: var(--fh-radius-lg);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
+    backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, 0.6), 1) * 32px))) saturate(1.4);
+    container: fh-masthead / inline-size;
+
+    & > * { margin: 0; min-inline-size: 0; }
+  }
+
+  .fh-masthead__caption {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide);
+    padding-block-end: var(--fh-inset-control);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    font-family: var(--fh-font-display);
+    font-size: clamp(1.75rem, 6cqi, 4rem);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .fh-masthead__index {
+    color: var(--fh-tone, var(--fh-color-text-muted));
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-masthead__title { text-align: end; text-wrap: balance; }
+
+  .fh-masthead__mark {
+    --fh-avatar-size: 2.25rem;
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 14%, var(--fh-color-surface));
+    color: var(--fh-tone, var(--fh-color-text));
+    & > svg { inline-size: 60%; block-size: 60%; }
+  }
+
+  .fh-masthead__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
+  }
+
+  .fh-masthead__meta {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-masthead__tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin-inline-start: auto;
+  }
+
+  /* Bar: one line, for an app's top bar. */
+  .fh-masthead--bar {
+    position: sticky;
+    inset-block-start: var(--fh-gap-grouped);
+    z-index: 2;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-card);
+    border-radius: var(--fh-radius-pill);
+
+    &:has(> .fh-masthead__mark) {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      padding-inline-start: var(--fh-inset-tight);
+    }
+
+    & .fh-masthead__caption {
+      justify-content: start;
+      align-items: baseline;
+      padding-block-end: 0;
+      border-block-end: 0;
+      font-size: var(--fh-text-h4);
+    }
+    & .fh-masthead__title { text-align: start; }
+    /* A qualifier after the title (a date, a count), smaller and quieter. */
+    & .fh-masthead__title > small { margin-inline-start: var(--fh-gap-bound); color: var(--fh-color-text-muted); font-size: 0.62em; font-variant-numeric: tabular-nums; }
+    & .fh-masthead__foot { display: contents; }
+    & .fh-masthead__meta { display: none; }
+  }
+
+  /* Split bar: the caption and the tools each in their own pill, with the
+     page showing between them, instead of one bar edge to edge. Each pill
+     takes the masthead's etch, fill and blur. */
+  .fh-masthead--split {
+    padding: 0;
+    border: 0;
+    background: none;
+    backdrop-filter: none;
+
+    & :is(.fh-masthead__caption, .fh-masthead__tools) {
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+      border-radius: var(--fh-radius-pill);
+      background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
+      backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, 0.6), 1) * 32px))) saturate(1.4);
+    }
+    & .fh-masthead__caption {
+      justify-self: start;
+      max-inline-size: 100%;
+      padding: var(--fh-inset-tight) var(--fh-inset-card);
+      border-block-end-style: var(--fh-card-border-style, dashed);
+    }
+    & .fh-masthead__tools { justify-self: end; padding: var(--fh-inset-tight); }
+    &:has(> .fh-masthead__mark) .fh-masthead__caption { padding-inline-start: var(--fh-inset-tight); }
+  }
+
+}

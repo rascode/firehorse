@@ -75,10 +75,11 @@ table.addEventListener(<span class="v">"fh:row-open"</span>, (e) =&gt; drawer.sh
     <section id="tables" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Table" aria-label="Table">
       <div class="fh-stack fh-stack--xl">
 
-        <div class="site-demo site-anchor" id="c-table" data-fh-id="TBL">
-          <div class="site-demo__head"><h3>Table</h3><p>With <code>fh-table--reflow</code>, rows turn into labelled cards when the slot is under 36rem.</p></div>
+        <div class="site-demo site-anchor" id="c-table" data-fh-id="TBL" data-fh-groups="Table|Caption head">
+          <div class="site-demo__head"><h3>Table</h3><p>With <code>fh-table--reflow</code>, rows turn into labelled cards when the slot is under 36rem. <code>fh-table__head</code> in the caption is a title with a count chip.</p></div>
           <div class="site-demo__stage" data-demo>
-<div class="fh-table-wrap">
+<div class="fh-stack fh-stack--lg">
+<div class="fh-table-wrap" data-fh-id="TBL-1.1" data-fh-name="Table">
   <table class="fh-table fh-table--reflow">
     <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="fh-num">Amount</th></tr></thead>
     <tbody>
@@ -87,6 +88,17 @@ table.addEventListener(<span class="v">"fh:row-open"</span>, (e) =&gt; drawer.sh
       <tr><td data-label="Invoice">RC-0144</td><td data-label="Client">Halcyon</td><td data-label="Status"><span class="fh-badge">Draft</span></td><td data-label="Amount" class="fh-num">$750.00</td></tr>
     </tbody>
   </table>
+</div>
+<div class="fh-table-wrap" data-fh-id="TBL-2.1" data-fh-name="Caption head">
+  <table class="fh-table">
+    <caption><div class="fh-table__head"><h3 class="fh-subheading">Schema columns</h3><span class="fh-chip" data-tone="sky">12</span></div></caption>
+    <thead><tr><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>uuid</td><td>uuid</td><td>Primary key</td></tr>
+      <tr><td>name</td><td>text</td><td>Display name</td></tr>
+    </tbody>
+  </table>
+</div>
 </div>
           </div>
         </div>

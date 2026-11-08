@@ -1,0 +1,20 @@
+/*
+ * Firehorse — Guides (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  /* —— Guides: the safe area, and what the platform covers —— */
+  .fh-canvas[data-fh-guides] {
+    --_guide-fill: color-mix(in oklab, var(--fh-color-warning) 18%, transparent);
+
+    & .fh-canvas__body { outline: max(1px, calc(2 * var(--_u))) dashed var(--fh-color-warning); outline-offset: 0; }
+  }
+
+  .fh-canvas--yt-thumb[data-fh-guides] { --_guide: linear-gradient(var(--_guide-fill) 0 0) right calc(16 * var(--_u)) bottom calc(16 * var(--_u)) / calc(150 * var(--_u)) calc(56 * var(--_u)) no-repeat; }
+  .fh-canvas--x-header[data-fh-guides] { --_guide: radial-gradient(circle calc(170 * var(--_u)) at calc(220 * var(--_u)) 100%, var(--_guide-fill) 99%, transparent 100%); }
+  .fh-canvas--li-banner[data-fh-guides] { --_guide: radial-gradient(circle calc(160 * var(--_u)) at calc(220 * var(--_u)) 105%, var(--_guide-fill) 99%, transparent 100%); }
+  .fh-canvas--story[data-fh-guides] { --_guide: linear-gradient(var(--_guide-fill) 0 0) top / 100% calc(250 * var(--_u)) no-repeat, linear-gradient(var(--_guide-fill) 0 0) bottom / 100% calc(340 * var(--_u)) no-repeat; }
+  .fh-canvas--post[data-fh-guides] { --_guide: linear-gradient(var(--_guide-fill) 0 0) left / calc(34 * var(--_u)) 100% no-repeat, linear-gradient(var(--_guide-fill) 0 0) right / calc(34 * var(--_u)) 100% no-repeat; }
+
+}

@@ -1,6 +1,7 @@
 // Starter files built from the live media demos (site/pages/media), so they can't drift:
 //   templates/media.html   every social / cover / card format, ready to edit and export (npx firehorse-export)
 //   templates/slides.html  a reveal.js deck with the ten slide layouts
+//   templates/wallpapers.html  home screen wallpapers, one per Focus per device (npx firehorse-export)
 // Run: node scripts/templates.mjs   (part of `npm run site`)
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
@@ -55,6 +56,33 @@ writeFileSync(join(root, "templates/media.html"), `${head("Firehorse media")}
 <body>
 <!-- Each canvas exports to <data-fh-export>.png at its native size. Add data-fh-guides to see its safe area. -->
 ${media.join("\n\n")}
+</body>
+</html>
+`);
+
+// —— Home screen wallpapers: one titled PNG per Focus, per device ——
+// Edit FOCUS (titles and tones), keep the device presets, export:
+//   npx firehorse-export templates/wallpapers.html --out wallpapers
+const FOCUS = [["Studio", "accent"], ["Work", "sky"], ["Personal", "lime"], ["Travel", "amber"]];
+const walls = canvases(["WAL"]).flatMap((el) => FOCUS.map(([title, tone], i) => {
+  const c = parse(el.outerHTML).firstChild;
+  const device = slug(c.getAttribute("data-fh-name"));
+  c.setAttribute("data-tone", tone);
+  c.setAttribute("data-fh-export", `${device}-${slug(title)}`);
+  c.querySelector(".fh-canvas__title").set_content(title);
+  c.querySelector(".fh-canvas__eyebrow")?.set_content(`Focus ${String(i + 1).padStart(2, "0")}`);
+  return `  <!-- ${el.getAttribute("data-fh-id")} · ${el.getAttribute("data-fh-name")} · ${title} -->\n` + tidy(c, 2);
+}));
+writeFileSync(join(root, "templates/wallpapers.html"), `${head("Firehorse wallpapers")}
+<style>
+  /* Preview layout only. Export: npx firehorse-export templates/wallpapers.html --out wallpapers */
+  body { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px; margin: 0 auto; padding: 48px 24px; max-inline-size: 1200px; align-items: start; }
+  .fh-canvas { box-shadow: 0 0 0 1px var(--fh-color-rule); }
+</style>
+</head>
+<body>
+<!-- One wallpaper per Focus per device. Grid positions are estimates; correct a preset with its --fh-wall-* numbers. -->
+${walls.join("\n\n")}
 </body>
 </html>
 `);

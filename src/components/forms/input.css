@@ -1,0 +1,157 @@
+/*
+ * Firehorse — Input (FLD)
+ * components/forms · layer fh.components · docs /forms/#FLD
+ */
+
+@layer fh.components {
+  /* —— Text inputs, textarea, select —— */
+  .fh-input,
+  .fh-textarea,
+  .fh-select {
+    inline-size: 100%;
+    min-block-size: 2.5rem;
+    padding: var(--fh-item-block) var(--fh-item-inline);
+    border: var(--fh-border-thin) solid transparent;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-field);
+    color: var(--fh-color-text);
+    /* Entered values a touch heavier and larger than body text; the
+       placeholder stays at body weight. */
+    font-size: calc(var(--fh-text-body) * 1.03);
+    font-weight: var(--fh-weight-medium);
+    line-height: 1.4;
+    appearance: none;
+
+    &::placeholder { font-weight: var(--fh-weight-regular); }
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      box-shadow var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover:not(:disabled, :focus) {
+      background-color: var(--fh-color-field-hover);
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    &:user-invalid,
+    &[aria-invalid="true"] {
+      border-color: color-mix(in oklab, var(--fh-color-danger) 70%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+    }
+
+    @media (pointer: coarse) {
+      min-block-size: var(--fh-tap-target);
+      font-size: max(16px, var(--fh-text-body)); /* stops iOS zoom-on-focus */
+    }
+
+    @media (forced-colors: active) {
+      border-color: FieldText;
+    }
+  }
+
+  /* Quiet field (FLD-3): faint fill, no border — a barely-there lift off
+   * the canvas. Pair with .fh-field--quiet on the field wrapper, or put
+   * .fh-input--quiet / .fh-textarea--quiet / .fh-select--quiet on the control. */
+  .fh-field--quiet :is(.fh-input, .fh-textarea, .fh-select),
+  .fh-input--quiet,
+  .fh-textarea--quiet,
+  .fh-select--quiet,
+  .fh-field--quiet .fh-input-group {
+    border-color: transparent;
+    background-color: color-mix(in oklab, var(--fh-color-text) 3.5%, transparent);
+  }
+
+  .fh-field--quiet .fh-input-group > .fh-input,
+  .fh-input-group:has(> .fh-input--quiet) > .fh-input {
+    background-color: transparent;
+  }
+
+  .fh-field--quiet :is(.fh-input, .fh-textarea, .fh-select):hover:not(:disabled, :focus),
+  .fh-field--quiet .fh-input-group:hover:not(:focus-within),
+  :is(.fh-input--quiet, .fh-textarea--quiet, .fh-select--quiet):hover:not(:disabled, :focus) {
+    background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent);
+  }
+
+  .fh-field--quiet :is(.fh-input, .fh-textarea, .fh-select):focus,
+  .fh-field--quiet .fh-input-group:focus-within,
+  :is(.fh-input--quiet, .fh-textarea--quiet, .fh-select--quiet):focus {
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+  }
+
+  .fh-textarea {
+    min-block-size: 7.5rem;
+    resize: vertical;
+    field-sizing: content;
+  }
+
+  .fh-select {
+    padding-inline-end: 2.25rem;
+    background-image: none;
+    cursor: var(--fh-cursor-action);
+  }
+
+  /* Native chevron replacement — wrap the select so the arrow can sit
+   * on top without a background image (keeps currentColor). */
+  .fh-select-wrap {
+    position: relative;
+    display: grid;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline-end: var(--fh-gap-grouped);
+      inline-size: 1rem;
+      margin-block: auto;
+      block-size: 1rem;
+      background-color: var(--fh-color-text-muted);
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      pointer-events: none;
+    }
+  }
+
+  /* Customizable <select> (Chromium 135+): style the open picker too. */
+  @supports (appearance: base-select) {
+    .fh-select,
+    .fh-select::picker(select) {
+      appearance: base-select;
+    }
+
+    .fh-select::picker-icon {
+      display: none;
+    }
+
+    .fh-select::picker(select) {
+      margin-block-start: var(--fh-gap-bound);
+      padding: var(--fh-item-frame);
+      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-radius: var(--fh-radius-sm);
+      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+      box-shadow: var(--fh-shadow-menu);
+    }
+
+    .fh-select option {
+      padding: var(--fh-item-block) var(--fh-item-inline);
+      border-radius: calc(var(--fh-radius-sm) - 1px);
+
+      &:is(:hover, :focus-visible) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+      }
+
+      &::checkmark {
+        order: 1;
+        margin-inline-start: auto;
+      }
+    }
+  }
+
+}

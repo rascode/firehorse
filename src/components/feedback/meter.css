@@ -1,0 +1,32 @@
+/*
+ * Firehorse — Meter (FBK)
+ * components/feedback · layer fh.components · docs /components/overlays/#FBK
+ */
+
+@layer fh.components {
+  /* —— Meter (native <meter>): capacity, quota, score —— */
+  .fh-meter {
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    block-size: 0.5rem;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+
+    &::-webkit-meter-bar {
+      block-size: 0.5rem;
+      border: 0;
+      border-radius: var(--fh-radius-pill);
+      background: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    }
+
+    &::-webkit-meter-optimum-value { background: var(--fh-color-success); border-radius: inherit; }
+    &::-webkit-meter-suboptimum-value { background: var(--fh-color-warning); border-radius: inherit; }
+    &::-webkit-meter-even-less-good-value { background: var(--fh-color-danger); border-radius: inherit; }
+    &:-moz-meter-optimum::-moz-meter-bar { background: var(--fh-color-success); }
+    &:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--fh-color-warning); }
+    &:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--fh-color-danger); }
+  }
+
+}

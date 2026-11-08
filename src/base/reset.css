@@ -52,8 +52,16 @@
     letter-spacing: inherit;
   }
 
-  button {
-    cursor: pointer;
+  html {
+    cursor: var(--fh-cursor);
+  }
+
+  :where(a[href], button, [role="button"], summary, label[for], select, input:is([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="submit"], [type="button"])) {
+    cursor: var(--fh-cursor-action);
+  }
+
+  :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="submit"], [type="button"]), textarea, [contenteditable]:not([contenteditable="false"])) {
+    cursor: text;
   }
 
   :disabled {

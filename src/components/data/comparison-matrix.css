@@ -1,0 +1,29 @@
+/*
+ * Firehorse — Comparison matrix (TBL)
+ * components/data · layer fh.components · docs /data/#TBL
+ */
+
+@layer fh.components {
+  /* —— Comparison matrix ——
+   * Feature × plan grid with tone dots for included items. */
+  .fh-matrix {
+    & td:is([data-included="true"], [data-included="false"]) {
+      text-align: center;
+    }
+
+    & td[data-included="true"]::after {
+      content: "";
+      display: inline-block;
+      inline-size: 0.95rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-tone);
+      mask: var(--fh-icon-check) center / contain no-repeat;
+      vertical-align: middle;
+    }
+
+    & td[data-included="false"]::after {
+      content: "—";
+      color: var(--fh-color-text-ghost);
+    }
+  }
+}

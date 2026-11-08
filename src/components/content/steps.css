@@ -1,0 +1,70 @@
+/*
+ * Firehorse — Steps (STP)
+ * components/content · layer fh.components · docs /components/content/#STP
+ */
+
+@layer fh.components {
+  /* —— Steps (process list) ——
+   *   <ol class="fh-steps">
+   *     <li data-tone="sky"><span class="fh-steps__mark">01</span>
+   *       <div><h3>Assess</h3><p>…</p></div></li>
+   *   </ol>  */
+  .fh-steps {
+    display: grid;
+    gap: var(--fh-gap-sectioned);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fh-step;
+
+    & > li {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
+      align-items: start;
+      counter-increment: fh-step;
+    }
+
+    & h3 {
+      max-inline-size: 22ch;
+      font-size: var(--fh-text-lede);
+      font-weight: var(--fh-weight-bold);
+    }
+
+    & p {
+      max-inline-size: 34ch;
+      margin-block-start: var(--fh-gap-bound);
+      color: var(--fh-color-text-muted);
+      line-height: var(--fh-leading-normal);
+    }
+  }
+
+  .fh-steps__mark {
+    display: grid;
+    justify-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 2rem;
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+
+    &:empty::after {
+      content: counter(fh-step, decimal-leading-zero);
+    }
+
+    & svg {
+      inline-size: 1.05rem;
+      block-size: 1.05rem;
+    }
+  }
+
+  /* Steps lay out as a grid when the slot is wide enough. */
+  @container (inline-size >= 52rem) {
+    .fh-steps--grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-grid-min, 15rem)), 1fr));
+      gap: var(--fh-gap-sectioned) var(--fh-gap-sectioned);
+    }
+  }
+
+}

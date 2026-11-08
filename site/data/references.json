@@ -1,0 +1,2007 @@
+{
+  "name": "Rascode HIG references",
+  "url": "https://firehorse.rascode.dev/references.json",
+  "generated_at": "2026-11-05T04:40:47.391Z",
+  "references": [
+    {
+      "key": "wcag-22",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "summary": "The W3C Recommendation that defines testable web accessibility success criteria.",
+      "explanation": "The normative standard behind every accessibility rule in our HIG. Aim for Level AA, which 2.2 extends with target size minimum (2.5.8) and focus not obscured (2.4.11). Cite specific criteria through the Understanding entries below.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/WCAG22/",
+      "published_year": 2023,
+      "tags": [
+        "w3c",
+        "wcag",
+        "standard"
+      ],
+      "hig_chapters": [
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wcag-contrast-minimum",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 1.4.3: Contrast (Minimum)",
+      "summary": "W3C's explanation of the AA text contrast requirement.",
+      "explanation": "Text needs a contrast ratio of at least 4.5:1, and large text (18pt, or 14pt bold, about 24px or 18.66px bold) needs at least 3:1. Logos and disabled controls are exempt. This is the floor for every text and background pair in our color tokens.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "contrast",
+        "4.5-to-1"
+      ],
+      "hig_chapters": [
+        "color",
+        "accessibility",
+        "type"
+      ]
+    },
+    {
+      "key": "wcag-non-text-contrast",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 1.4.11: Non-text Contrast",
+      "summary": "W3C's explanation of the AA contrast requirement for UI components and graphics.",
+      "explanation": "Visual information needed to identify a control and its states, such as borders, focus rings and checkbox marks, needs at least 3:1 against adjacent colors. The same goes for meaningful parts of graphics. This sets the floor for our border, separator-as-boundary and icon tokens.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "contrast",
+        "3-to-1",
+        "borders"
+      ],
+      "hig_chapters": [
+        "color",
+        "lines",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wcag-target-size-minimum",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 2.5.8: Target Size (Minimum)",
+      "summary": "W3C's explanation of the AA 24 by 24 CSS pixel pointer target rule.",
+      "explanation": "Pointer targets must be at least 24 by 24 CSS px. A smaller target still passes if a 24px circle centered on it doesn't overlap another target or another small target's circle. Inline links in text and equivalent alternatives are exempt. It is the legal floor; Apple's 44pt is the comfortable goal.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "target-size",
+        "24px"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility",
+        "density",
+        "spacing"
+      ]
+    },
+    {
+      "key": "wcag-target-size-enhanced",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 2.5.5: Target Size (Enhanced)",
+      "summary": "W3C's explanation of the AAA 44 by 44 CSS pixel target rule.",
+      "explanation": "At Level AAA, pointer targets must be at least 44 by 44 CSS px, matching Apple's 44pt guidance. Use it as the target for touch-first and comfortable density modes.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "target-size",
+        "44px",
+        "aaa"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility",
+        "density"
+      ]
+    },
+    {
+      "key": "wcag-reflow",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 1.4.10: Reflow",
+      "summary": "W3C's explanation of the AA rule that content reflows without two-way scrolling.",
+      "explanation": "Content must work at a width of 320 CSS px (or a height of 256 CSS px for horizontal text) without scrolling in two directions. This equals 400% zoom on a 1280px viewport. Data tables, maps and toolbars are exempt. It requires layouts built from flexible primitives rather than fixed widths.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "reflow",
+        "320px",
+        "zoom"
+      ],
+      "hig_chapters": [
+        "layout",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wcag-text-spacing",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 1.4.12: Text Spacing",
+      "summary": "W3C's explanation of the AA rule that layouts survive user text-spacing overrides.",
+      "explanation": "Nothing may be lost when users set line height to 1.5 times the font size, paragraph spacing to 2 times, letter spacing to 0.12 times and word spacing to 0.16 times. In practice, avoid fixed heights and clipped overflow on any text container.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "text-spacing",
+        "line-height"
+      ],
+      "hig_chapters": [
+        "type",
+        "spacing",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wcag-focus-appearance",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Understanding WCAG 2.2 SC 2.4.13: Focus Appearance",
+      "summary": "W3C's explanation of the AAA minimum size and contrast for focus indicators.",
+      "explanation": "A focus indicator must be at least as large as a 2 CSS px border around the unfocused component, and its pixels must change by at least 3:1 between focused and unfocused states. Although it is AAA, it is the clearest published spec for a focus ring, so we adopt it as our default.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html",
+      "published_year": 2023,
+      "tags": [
+        "wcag",
+        "focus",
+        "focus-ring",
+        "2px",
+        "3-to-1"
+      ],
+      "hig_chapters": [
+        "lines",
+        "color",
+        "accessibility",
+        "anatomy"
+      ]
+    },
+    {
+      "key": "wcag-technique-c39-reduced-motion",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "WCAG Technique C39: Using the CSS prefers-reduced-motion query to prevent motion",
+      "summary": "W3C's technique for meeting motion criteria with prefers-reduced-motion.",
+      "explanation": "This is the sufficient technique for SC 2.3.3 (Animation from Interactions): wrap non-essential motion in a prefers-reduced-motion media query and remove or replace it when the user asks for less. It joins Apple's Reduce Motion guidance to the CSS mechanism.",
+      "originator": "W3C Accessibility Guidelines Working Group",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/WCAG21/Techniques/css/C39",
+      "published_year": null,
+      "tags": [
+        "wcag",
+        "reduced-motion",
+        "technique",
+        "css"
+      ],
+      "hig_chapters": [
+        "motion",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-menubar",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Menu and Menubar Pattern",
+      "summary": "W3C's keyboard and role model for menus and menubars.",
+      "explanation": "Defines menu, menubar and menuitem roles (including checkbox and radio items). Arrow keys move between items and Enter or Space activates. Focus moves into the menu when it opens and returns to the trigger when it closes. Use it for command menus only, not for site navigation link lists.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/menubar/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "menu",
+        "menubar",
+        "keyboard"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-menu-button",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Menu Button Pattern",
+      "summary": "W3C's pattern for a button that opens a menu.",
+      "explanation": "The trigger carries aria-haspopup and aria-expanded. Enter, Space or Down Arrow opens the menu and focuses the first item. This is the accessible counterpart to Apple's pull-down button.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "menu-button"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-listbox",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Listbox Pattern",
+      "summary": "W3C's pattern for single- and multi-select option lists.",
+      "explanation": "Covers option roles, selection versus focus, type-ahead and the Shift and Ctrl selection model for multi-select. Use it for selectable lists and as the popup inside a combobox.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "listbox",
+        "selection"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-combobox",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Combobox Pattern",
+      "summary": "W3C's pattern for an input with an associated popup of suggestions.",
+      "explanation": "Defines editable and select-only comboboxes, the autocomplete modes (none, list, both), aria-activedescendant focus handling, and Escape and Alt+Down behaviour. It is the reference for our picker and select anatomy on the web.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "combobox",
+        "select",
+        "autocomplete"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-dialog-modal",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Dialog (Modal) Pattern",
+      "summary": "W3C's pattern for modal dialogs.",
+      "explanation": "When a modal dialog opens, move focus into it and trap Tab inside. Escape closes it, and focus returns to the element that opened it. Content behind it is inert. This is the web counterpart to Apple's sheets and alerts, and it governs our modal surface tier.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "dialog",
+        "modal",
+        "focus-trap"
+      ],
+      "hig_chapters": [
+        "surfaces",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-disclosure",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Disclosure (Show/Hide) Pattern",
+      "summary": "W3C's pattern for a button that shows and hides content.",
+      "explanation": "A button with aria-expanded controls a region; Enter or Space toggles it. It is the simplest correct pattern for expanders and accordions, and it is often the right choice where teams wrongly reach for a menu.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "disclosure",
+        "accordion"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apg-radio-group",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "ARIA Authoring Practices Guide: Radio Group Pattern",
+      "summary": "W3C's pattern for mutually exclusive options.",
+      "explanation": "Tab moves into the group as a single stop, and arrow keys move between options and select them. It is the accessible model for segmented controls that select a single value.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/ARIA/apg/patterns/radio/",
+      "published_year": null,
+      "tags": [
+        "aria",
+        "apg",
+        "radio",
+        "segmented-control"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wai-tutorial-forms",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "W3C WAI Tutorials: Forms",
+      "summary": "W3C's tutorial on accessible form labels, grouping, instructions and validation.",
+      "explanation": "Every control gets a visible label, related controls are grouped with fieldset and legend, and instructions and errors are tied to their fields. It is the official web practice behind our field anatomy.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/tutorials/forms/",
+      "published_year": null,
+      "tags": [
+        "wai",
+        "tutorial",
+        "forms",
+        "labels"
+      ],
+      "hig_chapters": [
+        "anatomy",
+        "items",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wai-tutorial-menus",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "W3C WAI Tutorials: Menus",
+      "summary": "W3C's tutorial on accessible navigation menus and fly-outs.",
+      "explanation": "Covers navigation menu structure, labelling, showing the current item, and fly-out and application menus. Read it alongside the APG menubar pattern to keep navigation menus and command menus distinct.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/tutorials/menus/",
+      "published_year": null,
+      "tags": [
+        "wai",
+        "tutorial",
+        "menus",
+        "navigation"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "wai-tutorial-tables",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "W3C WAI Tutorials: Tables",
+      "summary": "W3C's tutorial on accessible data tables.",
+      "explanation": "Covers header cells, scope, captions and summaries for simple and irregular tables. It is the semantic baseline for our list and table components.",
+      "originator": "W3C WAI",
+      "source_name": "W3C WAI",
+      "source_url": "https://www.w3.org/WAI/tutorials/tables/",
+      "published_year": null,
+      "tags": [
+        "wai",
+        "tutorial",
+        "tables"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "css-box-alignment-3",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Box Alignment Module Level 3",
+      "summary": "The CSS spec that defines alignment and the gap properties for flex, grid and multicolumn layouts.",
+      "explanation": "Defines gap, row-gap and column-gap, which let a container own the spacing between its children instead of each child carrying margins. That is the CSS mechanism behind \"spacing belongs to the parent\" in our spacing chapter.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-align-3/",
+      "published_year": null,
+      "tags": [
+        "css",
+        "gap",
+        "alignment",
+        "spec"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "layout"
+      ]
+    },
+    {
+      "key": "css-grid-2",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Grid Layout Module Level 2",
+      "summary": "The CSS Grid spec level that adds subgrid.",
+      "explanation": "Subgrid lets nested elements, such as card headers and footers or form labels, align to the parent grid's tracks. Cite it for cross-component alignment without magic numbers.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-grid-2/",
+      "published_year": 2020,
+      "tags": [
+        "css",
+        "grid",
+        "subgrid",
+        "spec"
+      ],
+      "hig_chapters": [
+        "layout",
+        "items"
+      ]
+    },
+    {
+      "key": "css-contain-3",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Containment Module Level 3",
+      "summary": "The CSS spec that defines container queries and container query units.",
+      "explanation": "Container queries let a component respond to the size of its own container rather than the viewport, and container units such as cqi scale with it. This is the basis for component-level density and layout variants.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-contain-3/",
+      "published_year": null,
+      "tags": [
+        "css",
+        "container-queries",
+        "spec"
+      ],
+      "hig_chapters": [
+        "layout",
+        "density"
+      ]
+    },
+    {
+      "key": "css-mediaqueries-5",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Media Queries Level 5",
+      "summary": "The CSS spec that defines user-preference media features.",
+      "explanation": "Defines prefers-reduced-motion, prefers-contrast, prefers-color-scheme and related features. These are how the web side of our HIG honors system settings for reduced motion, increased contrast and dark mode, mirroring Apple's appearance and accessibility settings.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/mediaqueries-5/",
+      "published_year": null,
+      "tags": [
+        "css",
+        "prefers-reduced-motion",
+        "prefers-contrast",
+        "prefers-color-scheme",
+        "spec"
+      ],
+      "hig_chapters": [
+        "motion",
+        "color",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "css-color-4",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Color Module Level 4",
+      "summary": "The CSS spec for color syntax and spaces, including oklch and display-p3.",
+      "explanation": "Adds perceptual color spaces such as oklab and oklch and wide-gamut display-p3. Perceptual lightness lets us build palette ramps whose steps look even and whose contrast is predictable, and display-p3 matches Apple's wide-color guidance.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-color-4/",
+      "published_year": 2022,
+      "tags": [
+        "css",
+        "color",
+        "oklch",
+        "p3",
+        "spec"
+      ],
+      "hig_chapters": [
+        "color"
+      ]
+    },
+    {
+      "key": "css-color-5",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Color Module Level 5",
+      "summary": "The CSS spec that adds color-mix(), relative color syntax and light-dark().",
+      "explanation": "color-mix() and relative colors derive hover, pressed and tint states from one base token. light-dark() picks a value from the active color scheme. Together they let semantic color tokens carry both appearances without duplicate declarations.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-color-5/",
+      "published_year": null,
+      "tags": [
+        "css",
+        "color-mix",
+        "light-dark",
+        "spec"
+      ],
+      "hig_chapters": [
+        "color",
+        "naming"
+      ]
+    },
+    {
+      "key": "css-values-4",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Values and Units Module Level 4",
+      "summary": "The CSS spec for units and math functions, including clamp(), min() and max().",
+      "explanation": "Defines rem, ch, viewport units and the clamp(), min() and max() functions that fluid type and space scales rely on. ch units express line measure directly, such as max-inline-size: 66ch.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-values-4/",
+      "published_year": null,
+      "tags": [
+        "css",
+        "clamp",
+        "units",
+        "spec"
+      ],
+      "hig_chapters": [
+        "type",
+        "spacing"
+      ]
+    },
+    {
+      "key": "css-cascade-5",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Cascading and Inheritance Level 5",
+      "summary": "The CSS spec that introduces cascade layers (@layer).",
+      "explanation": "Cascade layers fix the priority of reset, tokens, components and utilities no matter how specific a selector is or what order files load in. That lets Firehorse themes and product overrides layer cleanly.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-cascade-5/",
+      "published_year": 2022,
+      "tags": [
+        "css",
+        "cascade-layers",
+        "layer",
+        "spec"
+      ],
+      "hig_chapters": [
+        "naming"
+      ]
+    },
+    {
+      "key": "css-easing-1",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "CSS Easing Functions Level 1",
+      "summary": "The CSS spec that defines cubic-bezier(), steps() and the keyword easing curves.",
+      "explanation": "This is the format Material, Carbon and Apple-style curves must be expressed in on the web. Our motion tokens should be stored as cubic-bezier() values defined here.",
+      "originator": "W3C CSS Working Group",
+      "source_name": "W3C",
+      "source_url": "https://www.w3.org/TR/css-easing-1/",
+      "published_year": null,
+      "tags": [
+        "css",
+        "easing",
+        "cubic-bezier",
+        "spec"
+      ],
+      "hig_chapters": [
+        "motion",
+        "naming"
+      ]
+    },
+    {
+      "key": "dtcg-format",
+      "category": "standard",
+      "category_label": "Standard",
+      "title": "Design Tokens Format Module",
+      "summary": "The W3C Design Tokens Community Group's interchange format for design tokens.",
+      "explanation": "Defines a JSON format with $value, $type and $description, groups, and {alias} references, plus types for color, dimension, duration, cubicBezier, shadow and typography. Firehorse tokens should be stored in this format so tools can exchange them. It is a Community Group report, not a W3C Recommendation.",
+      "originator": "W3C Design Tokens Community Group",
+      "source_name": "Design Tokens Community Group",
+      "source_url": "https://www.designtokens.org/tr/drafts/format/",
+      "published_year": 2025,
+      "tags": [
+        "dtcg",
+        "tokens",
+        "format",
+        "json"
+      ],
+      "hig_chapters": [
+        "naming"
+      ]
+    },
+    {
+      "key": "apple-hig-overview",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines",
+      "summary": "Apple's top-level design guidance for every Apple platform, grouped into foundations, patterns, components, inputs and technologies.",
+      "explanation": "The index that every other Apple entry hangs off. It splits guidance into Foundations (accessibility, color, layout, materials, typography, motion) and Components, which maps closely onto our chapter split between tokens and anatomy. Use it as the root citation when a Rascode rule follows Apple in general.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines",
+      "published_year": 2025,
+      "tags": [
+        "apple",
+        "hig",
+        "overview"
+      ],
+      "hig_chapters": [
+        "layout",
+        "anatomy",
+        "naming"
+      ]
+    },
+    {
+      "key": "apple-hig-design-principles",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Design principles",
+      "summary": "Apple's statement of the fundamental principles that guide design across its platforms.",
+      "explanation": "Linked from the HIG home as the first of the design fundamentals. Cite it when the Rascode HIG states its own principles, such as content first and controls that support rather than compete with it.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/design-principles",
+      "published_year": null,
+      "tags": [
+        "apple",
+        "principles"
+      ],
+      "hig_chapters": [
+        "layout",
+        "surfaces"
+      ]
+    },
+    {
+      "key": "apple-hig-layout",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Layout",
+      "summary": "Apple's guidance on consistent, adaptive layouts that respect safe areas, margins and hierarchy.",
+      "explanation": "Keep content inside safe areas and system margins, extend backgrounds to the edges, and put the most important items in the upper, leading part of the screen. Keep a minimum tappable area of 44x44 pt for every control. Group related items with negative space, background shapes, materials or separators, and use indentation and alignment to show hierarchy. On tvOS, keep primary content 60 px from top and bottom and 80 px from the sides.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/layout",
+      "published_year": null,
+      "tags": [
+        "apple",
+        "layout",
+        "margins",
+        "safe-area",
+        "hit-target"
+      ],
+      "hig_chapters": [
+        "layout",
+        "spacing",
+        "items",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apple-hig-typography",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Typography",
+      "summary": "Apple's rules for legible type, text styles and Dynamic Type.",
+      "explanation": "Default and minimum text sizes per platform: iOS/iPadOS 17 pt default and 11 pt minimum; macOS 13 and 10; tvOS 29 and 23; visionOS 17 and 12; watchOS 16 and 12. Avoid Ultralight, Thin and Light weights at small sizes. Use built-in text styles so hierarchy survives when people change text size, and make layouts adapt to every Dynamic Type size, including the accessibility sizes.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/typography",
+      "published_year": null,
+      "tags": [
+        "apple",
+        "typography",
+        "dynamic-type",
+        "type-scale"
+      ],
+      "hig_chapters": [
+        "type",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apple-hig-color",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Color",
+      "summary": "Apple's guidance on semantic system colors, appearance modes and inclusive color.",
+      "explanation": "Never use one color to mean two things. Give every custom color light, dark and increased-contrast variants. Name colors by purpose, not appearance: label, secondary label, separator, and primary, secondary and tertiary backgrounds for nested grouping. Don't rely on color alone to carry meaning. With Liquid Glass, tint only the one primary action's background, not several controls.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/color",
+      "published_year": 2025,
+      "tags": [
+        "apple",
+        "color",
+        "semantic-tokens",
+        "dark-mode",
+        "contrast"
+      ],
+      "hig_chapters": [
+        "color",
+        "naming",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apple-hig-materials",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Materials",
+      "summary": "Apple's guidance on Liquid Glass and standard blur materials for depth and layering.",
+      "explanation": "Liquid Glass is a separate functional layer for controls and navigation that floats above content. Keep it out of the content layer, where standard materials (ultra-thin, thin, regular, thick) belong. Thicker materials give better contrast for fine text, and thinner ones keep context visible. Over bright media, Apple suggests a dark dimming layer of about 35% opacity behind clear glass. Put vibrant label colors on top of materials, never plain grays.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/materials",
+      "published_year": 2025,
+      "tags": [
+        "apple",
+        "materials",
+        "liquid-glass",
+        "elevation",
+        "translucency"
+      ],
+      "hig_chapters": [
+        "surfaces",
+        "color"
+      ]
+    },
+    {
+      "key": "apple-hig-motion",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Motion",
+      "summary": "Apple's guidance on purposeful, brief, optional motion.",
+      "explanation": "Add motion only when it has a purpose, keep feedback animations brief and precise, and avoid animating interactions that happen often. Motion must be optional: never make it the only way information is conveyed, and let people cancel it rather than wait for it to finish. In visionOS, avoid sustained oscillation near 0.2 Hz and motion at the edges of the field of view.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/motion",
+      "published_year": 2025,
+      "tags": [
+        "apple",
+        "motion",
+        "reduce-motion",
+        "feedback"
+      ],
+      "hig_chapters": [
+        "motion",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apple-hig-accessibility",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Accessibility",
+      "summary": "Apple's accessibility requirements for control size, contrast, spacing and motion.",
+      "explanation": "Minimum control sizes: 28x28 pt on iOS/iPadOS and watchOS, 20x20 pt on macOS, 56x56 pt on tvOS, and 60x60 pt targets in visionOS. Contrast follows WCAG AA: 4.5:1 for text up to 17 pt and 3:1 for 18 pt and larger or bold text. Leave about 12 pt of padding around bezeled controls and about 24 pt around unbezeled ones. With Reduce Motion on, replace axis transitions with fades and cut back on automatic and repeating animation.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/accessibility",
+      "published_year": null,
+      "tags": [
+        "apple",
+        "accessibility",
+        "contrast",
+        "hit-target",
+        "reduce-motion"
+      ],
+      "hig_chapters": [
+        "accessibility",
+        "items",
+        "spacing",
+        "color",
+        "motion"
+      ]
+    },
+    {
+      "key": "apple-hig-buttons",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Buttons",
+      "summary": "Apple's anatomy and usage rules for buttons: style, content and role.",
+      "explanation": "A button needs a hit region of at least 44x44 pt, or 60x60 pt in visionOS. Custom buttons always need a press state. Limit prominent buttons to one or two per view, and use style rather than size to mark the preferred option. Roles are normal, primary, cancel and destructive, and a destructive action must never get the primary role. Start text labels with a verb, and add a trailing ellipsis when the button opens another view.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/buttons",
+      "published_year": 2025,
+      "tags": [
+        "apple",
+        "buttons",
+        "roles",
+        "hit-target",
+        "states"
+      ],
+      "hig_chapters": [
+        "anatomy",
+        "items",
+        "naming",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "apple-hig-menus",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Menus",
+      "summary": "Apple's guidance on menus as a space-saving way to present commands.",
+      "explanation": "Part of Apple's Menus and actions group, next to context menus, pop-up buttons and pull-down buttons. Use it for menu item anatomy (labels, grouping with separators, ordering by frequency) and to choose between a pop-up button (mutually exclusive options) and a pull-down button (actions).",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/menus",
+      "published_year": null,
+      "tags": [
+        "apple",
+        "menus",
+        "commands"
+      ],
+      "hig_chapters": [
+        "anatomy",
+        "items",
+        "naming"
+      ]
+    },
+    {
+      "key": "apple-hig-pickers",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Pickers",
+      "summary": "Apple's guidance on pickers for choosing from medium-to-long lists of values.",
+      "explanation": "Use a picker for medium-to-long lists, a pull-down button for short lists, and a list or table for very long ones. Order values predictably, for example alphabetically, so people can guess the hidden values. Show the picker in context near the field being edited rather than switching views. Coarser minute steps that divide 60 evenly, such as 15, are allowed.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/pickers",
+      "published_year": 2023,
+      "tags": [
+        "apple",
+        "pickers",
+        "selection"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy"
+      ]
+    },
+    {
+      "key": "apple-hig-segmented-controls",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Segmented controls",
+      "summary": "Apple's rules for linear sets of equal-width segments that select or act.",
+      "explanation": "Use no more than about five to seven segments in a wide interface, and about five on iPhone. Keep segment widths equal, use either text or images but not both, and label segments with nouns in title case. Never mix selection segments with action segments in one control. For switching whole app sections, use a tab bar instead.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/segmented-controls",
+      "published_year": 2023,
+      "tags": [
+        "apple",
+        "segmented-control",
+        "selection"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy",
+        "naming"
+      ]
+    },
+    {
+      "key": "apple-hig-lists-and-tables",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Lists and tables",
+      "summary": "Apple's guidance on presenting rows of data in lists and multicolumn tables.",
+      "explanation": "Keep row text short to avoid truncation. When space is tight, consider truncating in the middle so both ends stay recognizable. Use nouns in title case for column headings, with no ending punctuation. Grouped styles separate sections with headers, footers and extra space, and alternating row colors help in wide multicolumn tables. Persistently highlight the selected row in navigational lists.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/lists-and-tables",
+      "published_year": 2023,
+      "tags": [
+        "apple",
+        "lists",
+        "tables",
+        "rows",
+        "density"
+      ],
+      "hig_chapters": [
+        "items",
+        "density",
+        "lines",
+        "naming"
+      ]
+    },
+    {
+      "key": "apple-hig-sheets",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Apple Human Interface Guidelines: Sheets",
+      "summary": "Apple's guidance on sheets for scoped tasks tied to the current context.",
+      "explanation": "A sheet supports a scoped task closely related to what people are doing, and it belongs to Apple's Presentation group alongside alerts, popovers and panels. Pair it with the button rule that a primary-role button in a sheet can close it on Return. Cite it for our modal surface tiers.",
+      "originator": "Apple",
+      "source_name": "Apple Developer",
+      "source_url": "https://developer.apple.com/design/human-interface-guidelines/sheets",
+      "published_year": null,
+      "tags": [
+        "apple",
+        "sheets",
+        "modal",
+        "presentation"
+      ],
+      "hig_chapters": [
+        "surfaces",
+        "anatomy"
+      ]
+    },
+    {
+      "key": "material-layout-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 3: Grids and spacing",
+      "summary": "Material 3's guidance on grids, margins, padding and spacers.",
+      "explanation": "Material 3 aligns components, padding and spacing to a 4dp grid. Window margins are 16dp at compact widths and 24dp at medium and larger widths. Spacers separate panes. Cite it next to Carbon and Atlassian to support a 4-unit base with an 8-unit rhythm.",
+      "originator": "Google",
+      "source_name": "Material Design 3",
+      "source_url": "https://m3.material.io/foundations/layout/understanding-layout/spacing",
+      "published_year": null,
+      "tags": [
+        "material",
+        "spacing",
+        "grid",
+        "4dp",
+        "margins"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "layout"
+      ]
+    },
+    {
+      "key": "material-spacing-methods-m2",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 2: Spacing methods",
+      "summary": "Material 2's spacing methods page, the classic statement of the 8dp grid with a 4dp sub-grid.",
+      "explanation": "Components align to an 8dp square baseline grid, while icons, type and some elements inside components align to a 4dp grid. Together with Bryn Jackson's article, it is where the industry habit of an 8-point grid with 4-point half steps comes from. The old material.io URL redirects to m2.material.io.",
+      "originator": "Google",
+      "source_name": "Material Design 2",
+      "source_url": "https://m2.material.io/design/layout/spacing-methods.html",
+      "published_year": 2018,
+      "tags": [
+        "material",
+        "8dp",
+        "4dp",
+        "baseline-grid"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "type"
+      ]
+    },
+    {
+      "key": "material-motion-easing-duration",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 3: Easing and duration",
+      "summary": "Material 3's easing curves and duration tokens.",
+      "explanation": "M3 defines standard easing at cubic-bezier(0.2, 0, 0, 1), plus emphasized decelerate (0.05, 0.7, 0.1, 1) for entering and emphasized accelerate (0.3, 0, 0.8, 0.15) for exiting. Duration tokens step from short (50 to 200 ms) through medium (250 to 400 ms) and long (450 to 600 ms) to extra-long (700 to 1000 ms). Small, simple changes get short durations, and large surfaces get longer ones.",
+      "originator": "Google",
+      "source_name": "Material Design 3",
+      "source_url": "https://m3.material.io/styles/motion/easing-and-duration",
+      "published_year": null,
+      "tags": [
+        "material",
+        "motion",
+        "easing",
+        "duration",
+        "tokens"
+      ],
+      "hig_chapters": [
+        "motion",
+        "naming"
+      ]
+    },
+    {
+      "key": "material-elevation",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 3: Elevation",
+      "summary": "Material 3's model of elevation as surface level, shown through tone and shadow.",
+      "explanation": "M3 uses six elevation levels: 0, 1, 3, 6, 8 and 12dp. Higher surfaces are shown mainly with tonal surface color and only secondarily with shadow. Cite it for limiting surface tiers to a small fixed set.",
+      "originator": "Google",
+      "source_name": "Material Design 3",
+      "source_url": "https://m3.material.io/styles/elevation/overview",
+      "published_year": null,
+      "tags": [
+        "material",
+        "elevation",
+        "surfaces",
+        "shadow"
+      ],
+      "hig_chapters": [
+        "surfaces",
+        "color"
+      ]
+    },
+    {
+      "key": "material-typography",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 3: Applying type",
+      "summary": "Material 3's type scale and how to apply its roles.",
+      "explanation": "The M3 type scale has 15 styles in five roles (display, headline, title, body, label), each in large, medium and small. Body large is 16 on a 24 line height. Naming styles by role rather than pixel size is the pattern we follow for type tokens.",
+      "originator": "Google",
+      "source_name": "Material Design 3",
+      "source_url": "https://m3.material.io/styles/typography/applying-type",
+      "published_year": null,
+      "tags": [
+        "material",
+        "typography",
+        "type-scale",
+        "roles"
+      ],
+      "hig_chapters": [
+        "type",
+        "naming"
+      ]
+    },
+    {
+      "key": "material-color-roles",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 3: Color roles",
+      "summary": "Material 3's semantic color roles, such as primary, on-primary and surface containers.",
+      "explanation": "Every color role comes paired with an on-role for content placed on it, such as primary and on-primary, which builds contrast into the naming. Surfaces come in a graded set of container tones for layering. This is a direct model for naming semantic color tokens by job rather than by hue.",
+      "originator": "Google",
+      "source_name": "Material Design 3",
+      "source_url": "https://m3.material.io/styles/color/roles",
+      "published_year": null,
+      "tags": [
+        "material",
+        "color",
+        "roles",
+        "semantic-tokens"
+      ],
+      "hig_chapters": [
+        "color",
+        "naming",
+        "surfaces"
+      ]
+    },
+    {
+      "key": "material-design-tokens",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Material Design 3: Design tokens",
+      "summary": "Material 3's explanation of reference, system and component tokens.",
+      "explanation": "M3 tokens come in three tiers: reference tokens hold raw values, system tokens hold semantic roles, and component tokens map roles to component parts. It is a widely used precedent for a three-tier token architecture.",
+      "originator": "Google",
+      "source_name": "Material Design 3",
+      "source_url": "https://m3.material.io/foundations/design-tokens",
+      "published_year": null,
+      "tags": [
+        "material",
+        "tokens",
+        "architecture"
+      ],
+      "hig_chapters": [
+        "naming"
+      ]
+    },
+    {
+      "key": "carbon-2x-grid",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Carbon Design System: 2x Grid",
+      "summary": "IBM's grid system, built by dividing and multiplying by two.",
+      "explanation": "Everything sizes to an 8px mini unit, and fixed sizes run from 8 to 80px. Breakpoints run from Small (320px) to Max (1584px) with 4, 8 or 16 columns. Box padding equals box margin, which gives a 32px total gutter when used. It shows how one base unit can govern type, layout and iconography together.",
+      "originator": "IBM",
+      "source_name": "Carbon Design System",
+      "source_url": "https://carbondesignsystem.com/elements/2x-grid/overview/",
+      "published_year": null,
+      "tags": [
+        "carbon",
+        "grid",
+        "8px",
+        "breakpoints"
+      ],
+      "hig_chapters": [
+        "layout",
+        "spacing"
+      ]
+    },
+    {
+      "key": "carbon-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Carbon Design System: Spacing",
+      "summary": "Carbon's 13-step spacing scale.",
+      "explanation": "The tokens are spacing-01 through spacing-13: 2, 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96 and 160px. The scale uses multiples of two, four and eight, so small steps are fine-grained and large steps are coarse. It is a good template for a non-linear spacing ramp.",
+      "originator": "IBM",
+      "source_name": "Carbon Design System",
+      "source_url": "https://carbondesignsystem.com/elements/spacing/overview/",
+      "published_year": null,
+      "tags": [
+        "carbon",
+        "spacing",
+        "scale",
+        "tokens"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "naming"
+      ]
+    },
+    {
+      "key": "carbon-motion",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Carbon Design System: Motion",
+      "summary": "Carbon's productive and expressive motion, with easing curves and duration tokens.",
+      "explanation": "Productive motion is subtle and used for task work. Expressive motion is reserved for significant moments. Productive standard easing is cubic-bezier(0.2, 0, 0.38, 0.9), with separate entrance and exit curves. Durations run 70, 110, 150, 240, 400 and 700ms (fast-01 to slow-02).",
+      "originator": "IBM",
+      "source_name": "Carbon Design System",
+      "source_url": "https://carbondesignsystem.com/elements/motion/overview/",
+      "published_year": null,
+      "tags": [
+        "carbon",
+        "motion",
+        "easing",
+        "duration"
+      ],
+      "hig_chapters": [
+        "motion",
+        "naming"
+      ]
+    },
+    {
+      "key": "fluent-layout",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Fluent 2 Design System: Layout",
+      "summary": "Microsoft's layout foundations: a 4px base unit, spacing ramp, grid and breakpoints.",
+      "explanation": "Fluent uses a 4px base unit, with 2, 6 and 10 added for aligning icons. The web spacing ramp is 0, 2, 4, 6, 8, 10, 12, 16, 20, 24, 28, 32, 36, 40, 48, 52 and 56px. Use space rather than lines or dividers to create sections. The page cites proximity: close elements read as related. Breakpoints run from 320px to 1920px and up.",
+      "originator": "Microsoft",
+      "source_name": "Fluent 2 Design System",
+      "source_url": "https://fluent2.microsoft.design/layout",
+      "published_year": null,
+      "tags": [
+        "fluent",
+        "spacing-ramp",
+        "4px",
+        "proximity",
+        "breakpoints"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "layout",
+        "lines"
+      ]
+    },
+    {
+      "key": "fluent-motion",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Fluent 2 Design System: Motion",
+      "summary": "Microsoft's motion principles for Fluent.",
+      "explanation": "Fluent asks that motion be functional, natural, consistent and appealing. Keep durations quick and give larger elements more time. The page names linear, ease-in, ease-out and ease-in-out curves but publishes no numeric values, so cite it for principles rather than numbers.",
+      "originator": "Microsoft",
+      "source_name": "Fluent 2 Design System",
+      "source_url": "https://fluent2.microsoft.design/motion",
+      "published_year": null,
+      "tags": [
+        "fluent",
+        "motion",
+        "principles"
+      ],
+      "hig_chapters": [
+        "motion"
+      ]
+    },
+    {
+      "key": "fluent-elevation",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Fluent 2 Design System: Elevation",
+      "summary": "Fluent's shadow-based elevation ramp for layering surfaces.",
+      "explanation": "Fluent layers surfaces with a small ramp of shadow tokens. Each pairs a soft ambient shadow with a sharper key shadow, and higher layers such as dialogs get larger shadows. Cite it next to Material for a limited, named set of surface tiers.",
+      "originator": "Microsoft",
+      "source_name": "Fluent 2 Design System",
+      "source_url": "https://fluent2.microsoft.design/elevation",
+      "published_year": null,
+      "tags": [
+        "fluent",
+        "elevation",
+        "shadow"
+      ],
+      "hig_chapters": [
+        "surfaces"
+      ]
+    },
+    {
+      "key": "polaris-layout-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Shopify App Design Guidelines: Layout",
+      "summary": "Shopify's layout guidance for Polaris-based apps, built on a 4px spacing grid.",
+      "explanation": "The Shopify admin is built on a 4px spacing grid, and apps should align to it to feel native. Use looser spacing for low-density layouts and tighter spacing for high-density ones, and never switch density partway down a page. The older polaris-react token pages now redirect to shopify.dev.",
+      "originator": "Shopify",
+      "source_name": "Shopify.dev",
+      "source_url": "https://shopify.dev/docs/apps/design-guidelines/layout",
+      "published_year": null,
+      "tags": [
+        "polaris",
+        "shopify",
+        "4px",
+        "density"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "density"
+      ]
+    },
+    {
+      "key": "atlassian-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Atlassian Design System: Spacing",
+      "summary": "Atlassian's spacing tokens built on an 8px base unit.",
+      "explanation": "space.100 equals 8px, and tokens are named as hundredths of it: space.025 is 2px, space.050 is 4px, space.150 is 12px, and so on up to space.1000 at 80px. Use the small tokens (up to space.100) inside compact elements and the large ones (space.400 and up) for page-level layout. The numeric naming scheme is a strong model for us.",
+      "originator": "Atlassian",
+      "source_name": "Atlassian Design",
+      "source_url": "https://atlassian.design/foundations/spacing",
+      "published_year": null,
+      "tags": [
+        "atlassian",
+        "spacing",
+        "tokens",
+        "8px"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "naming"
+      ]
+    },
+    {
+      "key": "atlassian-design-tokens",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Atlassian Design System: Design tokens",
+      "summary": "Atlassian's overview of its token system for color, elevation, spacing and type.",
+      "explanation": "Atlassian names tokens semantically by property, purpose and modifier, such as color.background.neutral.hovered, so one token works across light and dark themes. Cite it for token naming grammar and for elevation tokens that pair surface color with shadow.",
+      "originator": "Atlassian",
+      "source_name": "Atlassian Design",
+      "source_url": "https://atlassian.design/foundations/tokens/design-tokens",
+      "published_year": null,
+      "tags": [
+        "atlassian",
+        "tokens",
+        "naming",
+        "theming"
+      ],
+      "hig_chapters": [
+        "naming",
+        "color",
+        "surfaces"
+      ]
+    },
+    {
+      "key": "slds-spacing-sizing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Lightning Design System 2: Spacing and Sizing",
+      "summary": "Salesforce's SLDS 2 guidance on spacing and sizing hooks.",
+      "explanation": "SLDS spacing runs from xxx-small (0.125rem, 2px) through medium (1rem) to xx-large (3rem), built on rem multiples of 4px. The page is a zeroheight site that needs JavaScript, so the numbers here come from SLDS documentation and should be checked before quoting.",
+      "originator": "Salesforce",
+      "source_name": "Lightning Design System",
+      "source_url": "https://www.lightningdesignsystem.com/2e1ef8501/p/03d6b0-spacing-and-sizing/b/95cf0b",
+      "published_year": null,
+      "tags": [
+        "slds",
+        "salesforce",
+        "spacing"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "naming"
+      ]
+    },
+    {
+      "key": "slds-density-settings",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "New Density Settings for the Lightning Experience UI",
+      "summary": "Salesforce's announcement of user-selectable Comfy and Compact density.",
+      "explanation": "Comfy puts labels above fields with more space between them. Compact puts labels to the left with less space, which gives about 30% more information density on record details and 20% more vertical density in cards. It is a well-documented case of density offered as a user setting rather than fixed per screen.",
+      "originator": "Salesforce",
+      "source_name": "Salesforce Developers Blog",
+      "source_url": "https://developer.salesforce.com/blogs/2018/08/new-density-settings-for-the-lightning-experience-ui-in-winter-19",
+      "published_year": 2018,
+      "tags": [
+        "slds",
+        "density",
+        "comfy",
+        "compact"
+      ],
+      "hig_chapters": [
+        "density",
+        "spacing"
+      ]
+    },
+    {
+      "key": "spectrum-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Spectrum: Spacing",
+      "summary": "Adobe Spectrum's spacing principles and its split between layout and component spacing.",
+      "explanation": "Spectrum calls spacing relational, proportional and perceptual. Layout spacing sits between components and regions, and component spacing sits inside a component. Closer elements read as more related, and even spacing inside a group signals equal relation. Too little negative space adds clutter and cognitive load.",
+      "originator": "Adobe",
+      "source_name": "Spectrum",
+      "source_url": "https://spectrum.adobe.com/page/spacing/",
+      "published_year": null,
+      "tags": [
+        "spectrum",
+        "adobe",
+        "spacing",
+        "proximity"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "density"
+      ]
+    },
+    {
+      "key": "govuk-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "GOV.UK Design System: Spacing",
+      "summary": "GOV.UK's responsive and static spacing scales, units 0 to 9.",
+      "explanation": "The static scale is 0, 5, 10, 15, 20, 25, 30, 40, 50 and 60px. The responsive scale keeps units 0 to 3 fixed and shrinks the larger units on small screens, so unit 9 is 60px on large screens and 40px on small ones, switching at the 640px breakpoint. It is a clear precedent for spacing that responds to viewport while small gaps stay fixed.",
+      "originator": "Government Digital Service",
+      "source_name": "GOV.UK Design System",
+      "source_url": "https://design-system.service.gov.uk/styles/spacing/",
+      "published_year": null,
+      "tags": [
+        "govuk",
+        "spacing",
+        "responsive"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "layout"
+      ]
+    },
+    {
+      "key": "govuk-type-scale",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "GOV.UK Design System: Type scale",
+      "summary": "GOV.UK's tested type scale for public services.",
+      "explanation": "GOV.UK sets body text at 19px, larger than most product systems, because services must be readable by everyone. Its scale is tested on real government services, which makes it a strong citation when we argue for generous body sizes.",
+      "originator": "Government Digital Service",
+      "source_name": "GOV.UK Design System",
+      "source_url": "https://design-system.service.gov.uk/styles/type-scale/",
+      "published_year": null,
+      "tags": [
+        "govuk",
+        "typography",
+        "type-scale"
+      ],
+      "hig_chapters": [
+        "type",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "govuk-layout",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "GOV.UK Design System: Layout",
+      "summary": "GOV.UK's page layout and grid guidance.",
+      "explanation": "Most content goes in a two-thirds column so line lengths stay readable, with a simple grid of halves, thirds and quarters inside a fixed-width container. Start from a single column and add columns only when the content needs them.",
+      "originator": "Government Digital Service",
+      "source_name": "GOV.UK Design System",
+      "source_url": "https://design-system.service.gov.uk/styles/layout/",
+      "published_year": null,
+      "tags": [
+        "govuk",
+        "layout",
+        "grid",
+        "measure"
+      ],
+      "hig_chapters": [
+        "layout"
+      ]
+    },
+    {
+      "key": "uswds-spacing-units",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "U.S. Web Design System: Spacing units",
+      "summary": "USWDS spacing tokens built on 8px multiples.",
+      "explanation": "Tokens are named by multiples of 8px: 05 is 4px, 1 is 8px, 105 is 12px, 2 is 16px, 3 is 24px, 4 is 32px and 10 is 80px. There are also 1px and 2px steps and named large sizes such as card (160px). USWDS requires every spacing value in utilities or component CSS to use these tokens, which is the rule we want for hard-coded values.",
+      "originator": "U.S. General Services Administration",
+      "source_name": "USWDS",
+      "source_url": "https://designsystem.digital.gov/design-tokens/spacing-units/",
+      "published_year": null,
+      "tags": [
+        "uswds",
+        "spacing",
+        "tokens",
+        "8px"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "naming"
+      ]
+    },
+    {
+      "key": "uswds-layout-grid",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "U.S. Web Design System: Layout grid",
+      "summary": "USWDS's 12-column flexbox layout grid and breakpoints.",
+      "explanation": "A 12-column, mobile-first grid with tokenized gutters and named breakpoints. Cite it with GOV.UK as government-grade, tested layout practice.",
+      "originator": "U.S. General Services Administration",
+      "source_name": "USWDS",
+      "source_url": "https://designsystem.digital.gov/utilities/layout-grid/",
+      "published_year": null,
+      "tags": [
+        "uswds",
+        "grid",
+        "breakpoints"
+      ],
+      "hig_chapters": [
+        "layout"
+      ]
+    },
+    {
+      "key": "primer-layout",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Primer: Layout",
+      "summary": "GitHub Primer's page layout foundations: regions, padding and breakpoints.",
+      "explanation": "Pages are built from header, content, panes and footer regions. Content padding is 16px, rising to 24px at the xlarge breakpoint, while pane padding stays 16px. Breakpoints run from 320px to 1400px and fine-tune within narrow, regular and wide viewport ranges. On narrow screens, panes become separate pages, bottom sheets or stacked content.",
+      "originator": "GitHub",
+      "source_name": "Primer",
+      "source_url": "https://primer.style/product/getting-started/foundations/layout/",
+      "published_year": null,
+      "tags": [
+        "primer",
+        "github",
+        "layout",
+        "breakpoints"
+      ],
+      "hig_chapters": [
+        "layout",
+        "spacing"
+      ]
+    },
+    {
+      "key": "primer-text-resize-spacing",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Primer: Text resizing and spacing",
+      "summary": "Primer's accessibility guidance on surviving text resize and user text-spacing overrides.",
+      "explanation": "Applies WCAG 1.4.4 and 1.4.12 to product UI. Layouts must survive 200% text zoom and user-set line, paragraph, letter and word spacing without clipping or overlap, so avoid fixed heights on text containers. It turns the W3C criteria into practical component rules.",
+      "originator": "GitHub",
+      "source_name": "Primer",
+      "source_url": "https://primer.style/accessibility/design-guidance/text-resize-and-spacing/",
+      "published_year": null,
+      "tags": [
+        "primer",
+        "accessibility",
+        "text-spacing",
+        "zoom"
+      ],
+      "hig_chapters": [
+        "accessibility",
+        "type",
+        "spacing"
+      ]
+    },
+    {
+      "key": "ant-proximity",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Ant Design: Proximity",
+      "summary": "Ant Design's vertical spacing tiers based on the proximity principle.",
+      "explanation": "Ant Design uses three vertical spacing tiers, small 8px, middle 16px and large 24px, to separate levels of information, following y = 8 + 8n. Horizontal spacing follows the grid. It is a design system citing Gestalt proximity directly, which is how we use that principle.",
+      "originator": "Ant Group",
+      "source_name": "Ant Design",
+      "source_url": "https://ant.design/docs/spec/proximity/",
+      "published_year": null,
+      "tags": [
+        "ant-design",
+        "proximity",
+        "8px",
+        "gestalt"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "density"
+      ]
+    },
+    {
+      "key": "ant-alignment",
+      "category": "design_system",
+      "category_label": "Design system",
+      "title": "Ant Design: Alignment",
+      "summary": "Ant Design's rules for aligning text, forms and numbers.",
+      "explanation": "Align text to one consistent edge, align form labels on a shared line (colon-aligned labels in Chinese UIs), and right-align numbers for comparison. Cite it for alignment rules in forms and tables.",
+      "originator": "Ant Group",
+      "source_name": "Ant Design",
+      "source_url": "https://ant.design/docs/spec/alignment/",
+      "published_year": null,
+      "tags": [
+        "ant-design",
+        "alignment",
+        "forms",
+        "tables"
+      ],
+      "hig_chapters": [
+        "layout",
+        "items"
+      ]
+    },
+    {
+      "key": "refactoring-ui",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "Refactoring UI",
+      "summary": "A practitioner book by Adam Wathan and Steve Schoger on making interfaces look good with tactics rather than talent.",
+      "explanation": "Its best-known advice: start with too much white space and remove it, and use a fixed spacing and sizing scale where steps get further apart as values grow. Build hierarchy with weight and color, not just size, and de-emphasize secondary content instead of shouting primary content. Define shade ramps and an elevation set of shadows in advance.",
+      "originator": "Adam Wathan and Steve Schoger",
+      "source_name": "Refactoring UI",
+      "source_url": "https://www.refactoringui.com/",
+      "published_year": 2018,
+      "tags": [
+        "practice",
+        "spacing-scale",
+        "hierarchy",
+        "whitespace"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "type",
+        "color",
+        "surfaces",
+        "density"
+      ]
+    },
+    {
+      "key": "every-layout",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "Every Layout",
+      "summary": "Heydon Pickering and Andy Bell's book on intrinsic CSS layout primitives.",
+      "explanation": "It teaches composable layout primitives (Stack, Box, Center, Cluster, Sidebar, Switcher and others) that respond to their content and container without breakpoints. Its Stack primitive puts spacing on the parent between siblings, a direct model for how Firehorse layout components should own space.",
+      "originator": "Heydon Pickering and Andy Bell",
+      "source_name": "Every Layout",
+      "source_url": "https://every-layout.dev/",
+      "published_year": 2019,
+      "tags": [
+        "practice",
+        "css",
+        "intrinsic-layout",
+        "primitives"
+      ],
+      "hig_chapters": [
+        "layout",
+        "spacing"
+      ]
+    },
+    {
+      "key": "utopia",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "Utopia: fluid type and space",
+      "summary": "James Gilyead and Trys Mudford's approach and calculators for fluid type and space scales.",
+      "explanation": "Define a type and space scale for the smallest and largest viewports, and let the browser interpolate between them with clamp() instead of jumping at breakpoints. The free calculators output CSS custom properties, which fits token-driven systems directly.",
+      "originator": "James Gilyead and Trys Mudford (Clearleft)",
+      "source_name": "Utopia",
+      "source_url": "https://utopia.fyi/",
+      "published_year": 2020,
+      "tags": [
+        "practice",
+        "fluid-type",
+        "clamp",
+        "space-scale"
+      ],
+      "hig_chapters": [
+        "type",
+        "spacing"
+      ]
+    },
+    {
+      "key": "butterick-practical-typography",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "Butterick's Practical Typography: Summary of key rules",
+      "summary": "Matthew Butterick's concise rules for professional typography, online.",
+      "explanation": "Body text: 15 to 25px on the web. Line spacing: 120 to 145% of the point size. Line length: 45 to 90 characters. Mark paragraphs with either a first-line indent or 4 to 10pt of space between paragraphs, never both, and use bold or italic sparingly and never together. These ranges set our body type and measure tokens.",
+      "originator": "Matthew Butterick",
+      "source_name": "Practical Typography",
+      "source_url": "https://practicaltypography.com/summary-of-key-rules.html",
+      "published_year": null,
+      "tags": [
+        "practice",
+        "typography",
+        "line-length",
+        "line-height"
+      ],
+      "hig_chapters": [
+        "type",
+        "spacing"
+      ]
+    },
+    {
+      "key": "bringhurst-elements",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "The Elements of Typographic Style",
+      "summary": "Robert Bringhurst's standard reference on typographic practice.",
+      "explanation": "It is the canonical source for measure: 45 to 75 characters is satisfactory for single-column text, with 66 widely seen as ideal. It also roots modular scales in musical intervals and treats space as part of the type. The latest version is 4.0 (2012), published by Hartley & Marks; the link is the Wikipedia entry for the book.",
+      "originator": "Robert Bringhurst",
+      "source_name": "Wikipedia (book entry)",
+      "source_url": "https://en.wikipedia.org/wiki/The_Elements_of_Typographic_Style",
+      "published_year": 2012,
+      "tags": [
+        "practice",
+        "typography",
+        "measure",
+        "modular-scale"
+      ],
+      "hig_chapters": [
+        "type",
+        "spacing"
+      ]
+    },
+    {
+      "key": "eight-point-grid-spec",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "8-Point Grid",
+      "summary": "Spec's widely cited article on the 8-point grid, associated with Bryn Jackson.",
+      "explanation": "Use multiples of 8 for dimensions, padding and margin. It distinguishes a hard grid, where elements snap into 8pt containers, from a soft grid, where 8pt gaps are measured between elements. A 4pt baseline grid aligns text. The page itself does not name its author or date; the attribution to Bryn Jackson comes from common citation.",
+      "originator": "Bryn Jackson (Spec)",
+      "source_name": "Spec",
+      "source_url": "https://spec.fm/specifics/8-pt-grid",
+      "published_year": null,
+      "tags": [
+        "practice",
+        "8pt-grid",
+        "4pt",
+        "baseline"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "type"
+      ]
+    },
+    {
+      "key": "atomic-design",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "Atomic Design, Chapter 2: Atomic Design Methodology",
+      "summary": "Brad Frost's methodology for building interfaces from atoms, molecules, organisms, templates and pages.",
+      "explanation": "It gives a shared vocabulary for component scale and composition. That helps our anatomy and naming chapters decide where a part ends and a pattern begins. Use the stages as a mental model, not as folder names.",
+      "originator": "Brad Frost",
+      "source_name": "Atomic Design",
+      "source_url": "https://atomicdesign.bradfrost.com/chapter-2/",
+      "published_year": 2016,
+      "tags": [
+        "practice",
+        "atomic-design",
+        "components"
+      ],
+      "hig_chapters": [
+        "anatomy",
+        "naming"
+      ]
+    },
+    {
+      "key": "css-tricks-grid-guide",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "A Complete Guide to CSS Grid Layout",
+      "summary": "CSS-Tricks' canonical practitioner reference for every CSS Grid property.",
+      "explanation": "This is the de facto practitioner reference for grid, gap and alignment properties. It pairs with the W3C Grid and Box Alignment specs when engineers implement our layout chapter.",
+      "originator": "CSS-Tricks",
+      "source_name": "CSS-Tricks",
+      "source_url": "https://css-tricks.com/complete-guide-css-grid-layout/",
+      "published_year": null,
+      "tags": [
+        "practice",
+        "css",
+        "grid"
+      ],
+      "hig_chapters": [
+        "layout",
+        "spacing"
+      ]
+    },
+    {
+      "key": "nngroup-ten-heuristics",
+      "category": "practice",
+      "category_label": "Practice",
+      "title": "10 Usability Heuristics for User Interface Design",
+      "summary": "Jakob Nielsen's ten general principles for interaction design.",
+      "explanation": "Visibility of system status, consistency and standards, error prevention, recognition rather than recall, and aesthetic and minimalist design all bear directly on our rules. Use them as review criteria for every component.",
+      "originator": "Jakob Nielsen (Nielsen Norman Group)",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/ten-usability-heuristics/",
+      "published_year": 1994,
+      "tags": [
+        "nngroup",
+        "heuristics",
+        "usability"
+      ],
+      "hig_chapters": [
+        "anatomy",
+        "items",
+        "naming"
+      ]
+    },
+    {
+      "key": "nngroup-visual-hierarchy",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Visual Hierarchy in UX: Definition",
+      "summary": "NN/g's definition of visual hierarchy and the levers that create it.",
+      "explanation": "Hierarchy comes from contrast in color, scale and grouping. A good layout uses few, clearly distinct levels so users can tell what matters at a glance. Their squint test is a quick way to check this. Cite it when limiting type and emphasis levels.",
+      "originator": "Nielsen Norman Group",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/",
+      "published_year": null,
+      "tags": [
+        "nngroup",
+        "hierarchy",
+        "emphasis"
+      ],
+      "hig_chapters": [
+        "type",
+        "color",
+        "layout"
+      ]
+    },
+    {
+      "key": "nngroup-gestalt-proximity",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Proximity Principle in Visual Design",
+      "summary": "NN/g's practitioner treatment of the Gestalt proximity principle.",
+      "explanation": "Items placed close together are seen as a group, and spacing can override color or shape cues. Space between groups must be clearly larger than space within them. This is our citation for proximity, which Fluent, Spectrum and Ant Design also use directly.",
+      "originator": "Nielsen Norman Group",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/gestalt-proximity/",
+      "published_year": null,
+      "tags": [
+        "nngroup",
+        "proximity",
+        "gestalt",
+        "grouping"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "density",
+        "lines"
+      ]
+    },
+    {
+      "key": "nngroup-common-region",
+      "category": "research",
+      "category_label": "Research",
+      "title": "The Principle of Common Region: Containers Create Groupings",
+      "summary": "NN/g's article on using containers, backgrounds and borders to show grouping.",
+      "explanation": "Elements inside a shared boundary or background read as one group, even when the elements themselves differ. Use containers when proximity alone isn't enough, which matches Apple's grouping by background shape and material.",
+      "originator": "Nielsen Norman Group",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/common-region/",
+      "published_year": null,
+      "tags": [
+        "nngroup",
+        "common-region",
+        "containers"
+      ],
+      "hig_chapters": [
+        "surfaces",
+        "lines",
+        "spacing"
+      ]
+    },
+    {
+      "key": "nngroup-form-white-space",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Group Form Elements Effectively Using White Space",
+      "summary": "NN/g's guidance on using spacing to associate labels with fields.",
+      "explanation": "Put each label closer to its own field than to any other field, and separate groups of related fields with extra white space. NN/g studies found that even small hesitations caused by ambiguous spacing hurt form completion. Written by Marieke McCloskey (2013).",
+      "originator": "Marieke McCloskey (Nielsen Norman Group)",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/form-design-white-space/",
+      "published_year": 2013,
+      "tags": [
+        "nngroup",
+        "forms",
+        "whitespace",
+        "labels"
+      ],
+      "hig_chapters": [
+        "spacing",
+        "anatomy",
+        "items"
+      ]
+    },
+    {
+      "key": "nngroup-touch-target-size",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Touch Targets on Touchscreens",
+      "summary": "NN/g's guidance on minimum physical touch target size.",
+      "explanation": "Touch targets should be at least about 1cm x 1cm (0.4in), which is roughly Apple's 44pt on phones, with enough space between them to prevent mis-taps. Expressing the size physically explains why the 44pt and 48dp conventions exist. Written by Aurora Harley (2019).",
+      "originator": "Aurora Harley (Nielsen Norman Group)",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/touch-target-size/",
+      "published_year": 2019,
+      "tags": [
+        "nngroup",
+        "touch-target",
+        "hit-target"
+      ],
+      "hig_chapters": [
+        "items",
+        "accessibility",
+        "density"
+      ]
+    },
+    {
+      "key": "nngroup-animation-duration",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Executing UX Animations: Duration and Motion Characteristics",
+      "summary": "NN/g's guidance on how long UI animations should last and how they should ease.",
+      "explanation": "Most UI animations should take about 100 to 500ms: simple feedback near 100ms and modal or panel transitions around 200 to 300ms. Use ease-out for elements entering the screen, and let entering animations run slightly longer than exiting ones. Written by Page Laubheimer (2020).",
+      "originator": "Page Laubheimer (Nielsen Norman Group)",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/animation-duration/",
+      "published_year": 2020,
+      "tags": [
+        "nngroup",
+        "motion",
+        "duration",
+        "easing"
+      ],
+      "hig_chapters": [
+        "motion"
+      ]
+    },
+    {
+      "key": "nngroup-response-time-limits",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Response Time Limits",
+      "summary": "Jakob Nielsen's three response-time thresholds for interactive systems.",
+      "explanation": "At 0.1 seconds a response feels instant. Up to 1 second the user's flow of thought stays intact. Around 10 seconds is the limit of attention, and past it you need progress indicators. This is the tested basis for when we show loading states, and it is a stronger citation than the Doherty threshold for our motion and feedback rules.",
+      "originator": "Jakob Nielsen (Nielsen Norman Group)",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/response-times-3-important-limits/",
+      "published_year": 1993,
+      "tags": [
+        "nngroup",
+        "response-time",
+        "feedback",
+        "loading"
+      ],
+      "hig_chapters": [
+        "motion",
+        "anatomy"
+      ]
+    },
+    {
+      "key": "nngroup-jakobs-law",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Jakob's Law of Internet User Experience",
+      "summary": "NN/g's short explainer of Jakob's Law: users expect your site to work like the others they use.",
+      "explanation": "Users spend most of their time on other products, so they bring those conventions with them. Following platform patterns, as Apple's HIG and the APG define them, lowers learning cost. This is our argument for conventional control behavior over novelty.",
+      "originator": "Jakob Nielsen (Nielsen Norman Group)",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/videos/jakobs-law-internet-ux/",
+      "published_year": null,
+      "tags": [
+        "nngroup",
+        "jakobs-law",
+        "conventions"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy",
+        "naming"
+      ]
+    },
+    {
+      "key": "nngroup-dropdowns",
+      "category": "research",
+      "category_label": "Research",
+      "title": "Dropdowns: Design Guidelines",
+      "summary": "NN/g's usability guidelines for dropdown menus and selects.",
+      "explanation": "Use dropdowns for medium-length option lists. Very short lists are better as radio buttons or segmented controls, and very long ones need typeahead. Show the current value and order options logically. These findings agree with Apple's pickers and segmented-controls guidance.",
+      "originator": "Nielsen Norman Group",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/drop-down-menus/",
+      "published_year": null,
+      "tags": [
+        "nngroup",
+        "dropdown",
+        "select",
+        "menus"
+      ],
+      "hig_chapters": [
+        "items",
+        "anatomy"
+      ]
+    },
+    {
+      "key": "nngroup-principles-visual-design",
+      "category": "research",
+      "category_label": "Research",
+      "title": "5 Principles of Visual Design in UX",
+      "summary": "NN/g's overview of scale, visual hierarchy, balance, contrast and Gestalt grouping.",
+      "explanation": "Use at most about three sizes in a layout so differences in scale stay readable. Use contrast deliberately to direct attention, and group items to reduce cognitive load. It gives a compact, testable framing for our type and color chapters.",
+      "originator": "Nielsen Norman Group",
+      "source_name": "Nielsen Norman Group",
+      "source_url": "https://www.nngroup.com/articles/principles-visual-design/",
+      "published_year": null,
+      "tags": [
+        "nngroup",
+        "visual-design",
+        "scale",
+        "contrast"
+      ],
+      "hig_chapters": [
+        "type",
+        "color",
+        "layout"
+      ]
+    }
+  ]
+}

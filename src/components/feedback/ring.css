@@ -1,0 +1,35 @@
+/*
+ * Firehorse — Ring (FBK)
+ * components/feedback · layer fh.components · docs /components/overlays/#FBK
+ */
+
+@layer fh.components {
+  /* —— Ring: circular progress from one custom property ——
+   *   <div class="fh-ring" style="--fh-value: 72" role="img" aria-label="72% complete"><b>72%</b></div> */
+  @property --fh-value {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+
+  .fh-ring {
+    --_size: var(--fh-ring-size, 4.5rem);
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--_size);
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    background:
+      radial-gradient(closest-side, var(--fh-color-canvas) 78%, transparent 79%),
+      conic-gradient(var(--fh-tone) calc(var(--fh-value) * 1%), color-mix(in oklab, var(--fh-color-text) 10%, transparent) 0);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--_size) / 5);
+    font-weight: var(--fh-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--fh-color-text);
+    transition: --fh-value var(--fh-duration-slow) var(--fh-ease-out);
+  }
+
+}

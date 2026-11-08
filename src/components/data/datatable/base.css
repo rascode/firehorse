@@ -1,0 +1,54 @@
+/*
+ * Firehorse — Base (DTB)
+ * components/data/datatable · layer fh.components · docs /data/#DTB
+ */
+
+/*
+ * Firehorse — datatable
+ * ---------------------------------------------------------------
+ * A database-style table: toolbar, filter chips, sticky header and
+ * primary column, typed cells, groups, a summary row, a bulk-action
+ * bar and three views (grid, gallery, board). The markup works on its
+ * own; dist/datatable.js renders it from a JSON field definition and
+ * adds search, filters, sorting, grouping, field visibility, column
+ * resizing, selection and drag-between-columns.
+ *
+ *   <div class="fh-dt" data-view="grid" data-density="comfortable">
+ *     <div class="fh-dt__toolbar">…</div>
+ *     <div class="fh-dt__filters">…</div>
+ *     <div class="fh-dt__scroll"><table class="fh-dt__table">…</table></div>
+ *     <div class="fh-dt__footer">…</div>
+ *   </div>
+ *
+ * Cells: <td class="fh-cell fh-cell--{type}">. Types: text, long,
+ * number, currency, percent, progress, select, multi, status, date,
+ * check, rating, user, users, url, email, phone, link, attachment,
+ * formula, sparkline, tags.
+ */
+
+@layer fh.components {
+  .fh-dt {
+    --_row: var(--fh-dt-row, calc(2.75rem + (var(--fh-row-pad, 0.75rem) - 0.75rem) * 2));
+    --_pad: var(--fh-dt-pad, var(--fh-inset-control));
+    --_rule: var(--fh-table-rule, var(--fh-color-rule));
+    --_zebra: var(--fh-table-zebra, transparent);
+    --_head: var(--fh-color-surface-raised);
+    --_ctl: var(--fh-dt-control, 1.875rem);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    min-inline-size: 0;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    container: fh-dt / inline-size;
+    font-size: var(--fh-text-small);
+    font-variant-numeric: tabular-nums;
+    overflow: clip;
+  }
+
+  .fh-dt[data-density="compact"] { --_row: 2.1rem; --_pad: var(--fh-gap-related); }
+  .fh-dt[data-density="spacious"] { --_row: 3.5rem; --_pad: var(--fh-gap-grouped-wide); }
+
+}

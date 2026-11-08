@@ -1,0 +1,55 @@
+/*
+ * Firehorse — Connection status (CNX)
+ * components/finance · layer fh.components · docs /finance/#CNX
+ * One row per linked provider: health, last sync and the one action it needs.
+ *
+ *   <ul class="fh-connections">
+ *     <li data-health="ok"><b>Chase</b><small>Plaid · 3 accounts</small><time>4 min ago</time><a class="fh-btn">Sync</a></li>
+ *     <li data-health="error"><b>PayPal</b><small>Not configured</small><a class="fh-btn">Connect</a></li>
+ *   </ul>
+ */
+@layer fh.components {
+  .fh-connections {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+
+    & > li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
+      padding: var(--fh-inset-control) var(--fh-inset-tile);
+    }
+    & > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+    & > li::before { grid-row: 1 / span 2; display: none; }
+    & b { display: flex; align-items: center; font-weight: var(--fh-weight-medium); }
+    & > li[data-health] > b::before {
+      content: "";
+      flex: none;
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      margin-inline-end: var(--fh-gap-related);
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-success);
+    }
+    & > li[data-health="stale"] > b::before { background-color: var(--fh-color-warning); }
+    & > li[data-health="error"] > b::before { background-color: var(--fh-color-danger); }
+    & > li[data-health="off"] > b::before { background-color: var(--fh-color-etch-soft); }
+    & small { grid-column: 1; font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); }
+    & time { grid-column: 1; font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); color: var(--fh-color-text-muted); }
+    & > li > :is(a, button, form) { grid-column: 2; grid-row: 1 / span 3; }
+  }
+
+  /* Privacy: blur figures while screen sharing; hover or focus reveals. */
+  [data-fh-private] :is(.fh-balance__figure, .fh-balance__meta dd, .fh-balance__legend b, .fh-account__figure, .fh-account__meta dd, .fh-ledger__amount) {
+    filter: blur(0.4em);
+    transition: filter var(--fh-duration-fast, 120ms) var(--fh-ease-out, ease-out);
+  }
+  [data-fh-private] :is(.fh-balance, .fh-account, .fh-ledger > li):is(:hover, :focus-within) :is(.fh-balance__figure, .fh-balance__meta dd, .fh-balance__legend b, .fh-account__figure, .fh-account__meta dd, .fh-ledger__amount) {
+    filter: none;
+  }
+}

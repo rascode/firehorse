@@ -1,0 +1,53 @@
+/*
+ * Firehorse — Admin dock (ADK)
+ * admin · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Admin dock (ADK): a page's working bar that rides under the top bar ——
+   *   <div class="fh-app-dock"><div class="fh-app-dock__bar">…composer, filters…</div></div>
+   * At rest it sits in the page like anything else. Once it pins under
+   * the bar it engages, like the dock on rascode.dev: a frosted surface
+   * edge to edge across the work area, with the bar's dashed rule under it.
+   * Engages on its own where scroll-state queries work; elsewhere set
+   * data-active="true" on .fh-app-dock. */
+  .fh-app-dock {
+    position: sticky;
+    inset-block-start: var(--fh-app-bar-size, 3.5rem);
+    z-index: 1;
+    container: fh-app-dock / inline-size scroll-state;
+  }
+
+  .fh-app-dock__bar {
+    position: relative;
+    padding-block: var(--fh-inset-control);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline: calc(-1 * var(--fh-app-pad, var(--fh-gap-sectioned)));
+      z-index: -1;
+      border-block-end: var(--fh-border-thin) dashed transparent;
+      background-color: transparent;
+      pointer-events: none;
+      transition:
+        background-color var(--fh-duration-base) var(--fh-ease-standard),
+        border-color var(--fh-duration-base) var(--fh-ease-standard);
+    }
+  }
+
+  .fh-app-dock[data-active="true"] > .fh-app-dock__bar::before {
+    border-block-end-color: var(--fh-color-etch);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 86%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+  }
+
+  @container fh-app-dock scroll-state(stuck: top) {
+    .fh-app-dock__bar::before {
+      border-block-end-color: var(--fh-color-etch);
+      background-color: color-mix(in oklab, var(--fh-color-canvas) 86%, transparent);
+      backdrop-filter: blur(var(--fh-blur-chrome));
+    }
+  }
+}

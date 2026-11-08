@@ -1,0 +1,66 @@
+/*
+ * Firehorse — Command menu
+ * components/overlays · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Command menu ————————————————————————————————————————
+   *   <dialog class="fh-dialog fh-command"> <label class="fh-command__search">…</label>
+   *     <div class="fh-command__list"><p class="fh-menu__label">Pages</p><a>…</a></div> </dialog> */
+  .fh-command {
+    --fh-dialog-size: 36rem;
+    margin-block-start: 12vh;
+    padding: 0;
+
+    &[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; max-block-size: min(30rem, 76dvh); }
+  }
+  .fh-command__search {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-muted);
+
+    &::before { content: ""; inline-size: 1rem; aspect-ratio: 1; background-color: currentColor; mask: var(--fh-icon-search) center / contain no-repeat; }
+    & > input { flex: 1; min-inline-size: 0; padding: var(--fh-gap-bound) 0; border: 0; background: none; color: var(--fh-color-text); font: inherit; font-size: var(--fh-text-body); outline: none; }
+  }
+  .fh-command__list {
+    display: grid;
+    align-content: start;
+    gap: 1px;
+    padding: var(--fh-inset-tight);
+    overflow-y: auto;
+
+    & > :is(a, button) {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-gap-grouped);
+      padding: var(--fh-inset-tight) var(--fh-inset-control);
+      border: 0;
+      border-radius: var(--fh-radius-sm);
+      background: none;
+      color: var(--fh-color-text);
+      font: inherit;
+      font-size: var(--fh-text-small);
+      text-align: start;
+      text-decoration: none;
+      cursor: var(--fh-cursor-action);
+
+      &:is(:hover, :focus-visible, [aria-selected="true"]) { background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, transparent); outline: none; }
+      & > .fh-icon-tile { --fh-icon-tile: 1.75rem; }
+      & > kbd { margin-inline-start: auto; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); }
+      &[hidden] { display: none; }
+    }
+  }
+  .fh-command__foot {
+    display: flex;
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-tight) var(--fh-inset-tile);
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+  }
+
+}

@@ -1,0 +1,140 @@
+/*
+ * Firehorse — Avatar (AVS)
+ * components/people · layer fh.components · docs /components/avatars/#AVS
+ */
+
+@layer fh.components {
+  /* —— Avatar ——
+   * Square plate by default (the Firehorse portrait); --round for
+   * people in social contexts. Initials fall back when there is no image.
+   *   <span class="fh-avatar" data-tone="sky"><img src="…" alt=""></span>
+   *   <span class="fh-avatar">JR</span> */
+  .fh-avatar {
+    --_size: var(--fh-avatar-size, 2.25rem);
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--_size);
+    aspect-ratio: var(--fh-avatar-ratio, 1);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    /* Shape comes from config tokens (see tokens/config.css) so one
+     * data-fh-avatar on <html> reshapes every avatar on the site. */
+    border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--_size) * 0.3);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    & > img {
+      inline-size: 100%;
+      block-size: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
+    /* Presence dot: data-status="online|away|busy" */
+    &[data-status]::after {
+      content: "";
+      position: absolute;
+      inset-block-end: -2px;
+      inset-inline-end: -2px;
+      inline-size: 0.6rem;
+      aspect-ratio: 1;
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-live);
+    }
+
+    &[data-status="away"]::after { background-color: var(--fh-color-warning); }
+    &[data-status="busy"]::after { background-color: var(--fh-color-danger); }
+  }
+
+  .fh-avatar--sm { --fh-avatar-size: 1.75rem; }
+  .fh-avatar--lg { --fh-avatar-size: 3.5rem; }
+  .fh-avatar--xl { --fh-avatar-size: 5.5rem; }
+
+  /* Overlapping stack: <div class="fh-avatars">…avatars… <span class="fh-avatar">+4</span></div> */
+  .fh-avatars {
+    display: flex;
+    align-items: center;
+
+    & > .fh-avatar {
+      border-style: solid;
+      border-color: var(--fh-color-canvas);
+      border-width: 2px;
+    }
+
+    & > .fh-avatar + .fh-avatar {
+      margin-inline-start: calc(var(--fh-avatar-size, 2.25rem) * -0.3);
+    }
+  }
+
+}
+
+@layer fh.components {
+  /* —— Avatar shapes, sizes, rings ——
+   * Rounded rect is the Firehorse plate; every other shape is one
+   * modifier away. */
+  .fh-avatar--xs { --fh-avatar-size: 1.4rem; }
+  .fh-avatar--2xl { --fh-avatar-size: 7rem; }
+  .fh-avatar--circle { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
+  .fh-avatar--square { --fh-avatar-radius: var(--fh-radius-sm); --fh-avatar-ratio: 1; }
+  .fh-avatar--rounded { --fh-avatar-radius: var(--fh-radius-md); --fh-avatar-ratio: 1; }
+  /* Oval: a portrait rectangle capped with a half circle top and bottom. */
+  .fh-avatar--oval { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 3 / 4; }
+  .fh-avatar--squircle { --fh-avatar-radius: 32%; --fh-avatar-ratio: 1; --fh-avatar-corner-shape: squircle; }
+
+  @supports (corner-shape: squircle) {
+    .fh-avatar {
+      corner-shape: var(--fh-avatar-corner-shape, round);
+    }
+  }
+
+  .fh-avatar[data-status="offline"]::after {
+    background-color: var(--fh-color-text-subtle);
+  }
+
+  /* Ring: a tone outline with a canvas gap. */
+  .fh-avatar--ring {
+    border: 0;
+    box-shadow:
+      0 0 0 2px var(--fh-color-canvas),
+      0 0 0 4px var(--fh-tone);
+  }
+
+  /* Halo: a soft tone glow that breathes. */
+  .fh-avatar--halo {
+    border: 0;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 35%, transparent), 0 0 24px -4px var(--fh-tone);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-avatar--halo {
+      animation: fh-halo 3s var(--fh-ease-in-out) infinite alternate;
+    }
+  }
+
+  @keyframes fh-halo {
+    to {
+      box-shadow: 0 0 0 5px color-mix(in oklab, var(--fh-tone) 20%, transparent), 0 0 36px -2px var(--fh-tone);
+    }
+  }
+
+  /* Generated: initials on a tone mesh built from the tone and its
+   * neighbours on the wheel. */
+  .fh-avatar--generated {
+    border: 0;
+    background:
+      radial-gradient(circle at 20% 15%, oklch(from var(--fh-tone) l c calc(h + 40)) 0, transparent 55%),
+      radial-gradient(circle at 85% 90%, oklch(from var(--fh-tone) calc(l - 0.12) c calc(h - 30)) 0, transparent 60%),
+      var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
+  }
+
+}

@@ -1,0 +1,64 @@
+/*
+ * Firehorse — Body (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  /* —— Body: top row, main, foot, inside the safe area —— */
+  .fh-canvas__body {
+    position: absolute;
+    inset: calc(var(--fh-canvas-safe-t) * var(--_u)) calc(var(--fh-canvas-safe-r) * var(--_u)) calc(var(--fh-canvas-safe-b) * var(--_u)) calc(var(--fh-canvas-safe-l) * var(--_u));
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--fh-canvas-pad) * 0.4 * var(--_u));
+    padding: calc(var(--fh-canvas-pad) * var(--_u));
+  }
+
+  .fh-canvas__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: calc(16 * var(--_u)) calc(24 * var(--_u));
+  }
+
+  .fh-canvas__main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: calc(var(--fh-canvas-sub) * 0.75 * var(--_u));
+    min-block-size: 0;
+  }
+
+  .fh-canvas__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: calc(12 * var(--_u)) calc(32 * var(--_u));
+    padding-block-start: calc(var(--fh-canvas-small) * 0.9 * var(--_u));
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: calc(var(--fh-canvas-small) * var(--_u));
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    & b { color: var(--fh-tone); font-weight: inherit; }
+
+    /* The foot's first and last items are joined by an etched line in a split complement of the
+     * canvas root, like the site's closing marks. */
+    &::after {
+      content: "";
+      order: 1;
+      flex: 1 1 calc(48 * var(--_u));
+      align-self: center;
+      border-block-start: calc(2 * var(--_hair)) dashed oklch(from var(--fh-canvas-root) clamp(0.62, l, 0.8) max(calc(c * 0.8), 0.12) calc(h + 150));
+    }
+    & > :last-child:not(:first-child) { order: 2; }
+  }
+
+}

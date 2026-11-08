@@ -1,0 +1,22 @@
+/*
+ * Firehorse — Order confirmation (CNF)
+ * components/commerce · layer fh.components · docs /commerce/#CNF
+ */
+
+@layer fh.components {
+  /* —— Order confirmation —— */
+  .fh-confirm {
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+    justify-items: start;
+
+    & > .fh-icon-tile { --fh-icon-tile: 3rem; }
+    & h3 { margin: 0; font-family: var(--fh-font-display); font-size: var(--fh-text-h3); font-weight: var(--fh-weight-bold); letter-spacing: -0.03em; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-paycard__front,
+    .fh-paycard__back,
+    .fh-product__media > * { transition: none; }
+  }
+}

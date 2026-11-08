@@ -1,0 +1,1604 @@
+{
+  "publishedFrom": "devops.semantic_types",
+  "types": [
+    {
+      "key": "access_token_ref",
+      "label": "Access token",
+      "placeholder": null,
+      "help": "A vault reference. The value is never an example secret.",
+      "htmlInputType": "password",
+      "inputMode": null,
+      "autocomplete": "off",
+      "example": "vault:redacted",
+      "options": null
+    },
+    {
+      "key": "api_key_secret_ref",
+      "label": "API key",
+      "placeholder": null,
+      "help": "A vault reference. The value is never an example secret.",
+      "htmlInputType": "password",
+      "inputMode": null,
+      "autocomplete": "off",
+      "example": "vault:redacted",
+      "options": null
+    },
+    {
+      "key": "assigned_id",
+      "label": "Assigned id",
+      "placeholder": "asg_ab12cd34ef",
+      "help": "An id assigned outside this record.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "asg_8uu5jk20jn",
+      "options": null
+    },
+    {
+      "key": "barcode_format",
+      "label": "Barcode format",
+      "placeholder": null,
+      "help": "The symbology.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "upc",
+      "options": {
+        "kind": "list",
+        "options": [
+          "qr",
+          "ean13",
+          "ean8",
+          "code128",
+          "upc"
+        ]
+      }
+    },
+    {
+      "key": "barcode_image_asset",
+      "label": "Barcode image",
+      "placeholder": null,
+      "help": "A description of the file. No third-party image URL.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"description\":\"Barcode graphic encoding barcode_value\",\"meta\":{\"mime\":\"image/png\",\"width\":320,\"height\":120}}",
+      "options": null
+    },
+    {
+      "key": "barcode_metadata",
+      "label": "Barcode metadata",
+      "placeholder": null,
+      "help": "Structured barcode facts.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"format\":\"ean13\",\"checksum\":true}",
+      "options": null
+    },
+    {
+      "key": "barcode_scan_status",
+      "label": "Scan status",
+      "placeholder": null,
+      "help": "How the last scan finished.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "read",
+      "options": {
+        "kind": "list",
+        "options": [
+          "unread",
+          "read",
+          "rejected"
+        ]
+      }
+    },
+    {
+      "key": "barcode_value",
+      "label": "Barcode value",
+      "placeholder": "012345678901",
+      "help": "A numeric barcode body.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "708009361223",
+      "options": null
+    },
+    {
+      "key": "bitrate_kbps",
+      "label": "Bitrate",
+      "placeholder": null,
+      "help": "Kilobits per second.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "132",
+      "options": null
+    },
+    {
+      "key": "block_hash",
+      "label": "Block hash",
+      "placeholder": "0xabababababababababababababababababababababababababababababababab",
+      "help": "A 32-byte hex hash.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0x5adf83b8b2e25d917fe1bf9dd669eedd4cdc2521bd1e6e32eebc6930d5772286",
+      "options": null
+    },
+    {
+      "key": "block_number",
+      "label": "Block number",
+      "placeholder": null,
+      "help": "A chain height.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "18720417",
+      "options": null
+    },
+    {
+      "key": "btc_wallet_address",
+      "label": "Bitcoin address",
+      "placeholder": "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+      "help": "A bc1q address.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": "off",
+      "example": "bc1qgy8gacxc5s86hgn27xezt6udcwzm85sd06mpru",
+      "options": null
+    },
+    {
+      "key": "chain_id",
+      "label": "Chain id",
+      "placeholder": null,
+      "help": "An EVM chain id.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "3218",
+      "options": null
+    },
+    {
+      "key": "channels",
+      "label": "Channels",
+      "placeholder": null,
+      "help": "Audio channels.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "2",
+      "options": null
+    },
+    {
+      "key": "checkbox",
+      "label": "Checkbox",
+      "placeholder": null,
+      "help": "Yes or no.",
+      "htmlInputType": "checkbox",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "true",
+      "options": null
+    },
+    {
+      "key": "city",
+      "label": "City",
+      "placeholder": null,
+      "help": "A city name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "address-level2",
+      "example": "Lyon",
+      "options": null
+    },
+    {
+      "key": "codec",
+      "label": "Codec",
+      "placeholder": null,
+      "help": "A media codec.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "vp9",
+      "options": {
+        "kind": "list",
+        "options": [
+          "h264",
+          "aac",
+          "opus",
+          "vp9",
+          "flac"
+        ]
+      }
+    },
+    {
+      "key": "computed_button",
+      "label": "Button",
+      "placeholder": null,
+      "help": "A computed action label.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Open",
+      "options": null
+    },
+    {
+      "key": "computed_formula",
+      "label": "Formula",
+      "placeholder": null,
+      "help": "A computed value.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Computed",
+      "options": null
+    },
+    {
+      "key": "computed_lookup",
+      "label": "Lookup",
+      "placeholder": null,
+      "help": "A value looked up from another record.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "73bbedb5-73bb-4db5-a880-1880477673bb",
+      "options": null
+    },
+    {
+      "key": "computed_rollup",
+      "label": "Rollup",
+      "placeholder": null,
+      "help": "A rolled-up count.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "13",
+      "options": null
+    },
+    {
+      "key": "computed_slug",
+      "label": "Slug",
+      "placeholder": "demo-item",
+      "help": "Derived from the title.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "item",
+      "options": null
+    },
+    {
+      "key": "country_code",
+      "label": "Country",
+      "placeholder": null,
+      "help": "ISO 3166 alpha-2.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "country",
+      "example": "MX",
+      "options": {
+        "kind": "list",
+        "options": [
+          "US",
+          "GB",
+          "CA",
+          "DE",
+          "FR",
+          "JP",
+          "MX",
+          "BR"
+        ]
+      }
+    },
+    {
+      "key": "created_at",
+      "label": "Created",
+      "placeholder": null,
+      "help": "When the row was created.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2026-11-06T01:23:40.903Z",
+      "options": null
+    },
+    {
+      "key": "crypto_amount",
+      "label": "Crypto amount",
+      "placeholder": null,
+      "help": "A scaled decimal amount.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "1.04537992",
+      "options": null
+    },
+    {
+      "key": "crypto_currency_code",
+      "label": "Crypto currency",
+      "placeholder": null,
+      "help": "A ticker.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "SOL",
+      "options": {
+        "kind": "list",
+        "options": [
+          "BTC",
+          "ETH",
+          "SOL"
+        ]
+      }
+    },
+    {
+      "key": "date",
+      "label": "Date",
+      "placeholder": null,
+      "help": "A calendar date.",
+      "htmlInputType": "date",
+      "inputMode": null,
+      "autocomplete": "off",
+      "example": "2024-01-01",
+      "options": null
+    },
+    {
+      "key": "deleted_at",
+      "label": "Deleted",
+      "placeholder": null,
+      "help": "When the row was deleted, if it was.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2026-11-06T01:23:40.919Z",
+      "options": null
+    },
+    {
+      "key": "description",
+      "label": "Description",
+      "placeholder": null,
+      "help": "A short description.",
+      "htmlInputType": "textarea",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "A working description of this record.",
+      "options": null
+    },
+    {
+      "key": "display_name",
+      "label": "Display name",
+      "placeholder": null,
+      "help": "The name people see.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "name",
+      "example": "Maya Chen",
+      "options": null
+    },
+    {
+      "key": "document_file",
+      "label": "Document",
+      "placeholder": null,
+      "help": "A description of the file. No third-party image URL.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"description\":\"A PDF document titled title\",\"meta\":{\"mime\":\"application/pdf\"}}",
+      "options": null
+    },
+    {
+      "key": "domain_name",
+      "label": "Domain",
+      "placeholder": "demo.example.com",
+      "help": "An example domain.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": "url",
+      "example": "demo.example.com",
+      "options": null
+    },
+    {
+      "key": "duns_number",
+      "label": "DUNS",
+      "placeholder": "123456789",
+      "help": "Nine digits.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "460211219",
+      "options": null
+    },
+    {
+      "key": "duration_iso8601",
+      "label": "Duration",
+      "placeholder": "PT1H30M",
+      "help": "An ISO-8601 duration.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "PT8H94M",
+      "options": null
+    },
+    {
+      "key": "duration_minutes",
+      "label": "Minutes",
+      "placeholder": null,
+      "help": "A duration in minutes.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "155",
+      "options": null
+    },
+    {
+      "key": "duration_seconds",
+      "label": "Seconds",
+      "placeholder": null,
+      "help": "A duration in seconds.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "372",
+      "options": null
+    },
+    {
+      "key": "ein",
+      "label": "EIN",
+      "placeholder": "12-3456789",
+      "help": "An employer identification number.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "97-3156490",
+      "options": null
+    },
+    {
+      "key": "email",
+      "label": "Email",
+      "placeholder": "name@example.com",
+      "help": "An example.com address.",
+      "htmlInputType": "email",
+      "inputMode": "email",
+      "autocomplete": "email",
+      "example": "maya.chen@example.com",
+      "options": null
+    },
+    {
+      "key": "entity_reference",
+      "label": "Record",
+      "placeholder": null,
+      "help": "The id of a related record.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "1da65ec4-1da6-4ec4-a6ad-26ad5e911da6",
+      "options": null
+    },
+    {
+      "key": "eth_wallet_address",
+      "label": "Ethereum address",
+      "placeholder": "0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed",
+      "help": "An EIP-55 address.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": "off",
+      "example": "0xBD4220C55B8918506DCeC7d2e11c428283D6CEa4",
+      "options": null
+    },
+    {
+      "key": "external_id",
+      "label": "External id",
+      "placeholder": "ext_ab12cd34ef56",
+      "help": "An id from another system.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "ext_05pjul3nylmj",
+      "options": null
+    },
+    {
+      "key": "family_name",
+      "label": "Family name",
+      "placeholder": null,
+      "help": "A family name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "family-name",
+      "example": "Okoye",
+      "options": null
+    },
+    {
+      "key": "fiat_amount",
+      "label": "Amount",
+      "placeholder": null,
+      "help": "Minor units.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "608",
+      "options": null
+    },
+    {
+      "key": "fiat_currency_code",
+      "label": "Currency",
+      "placeholder": null,
+      "help": "ISO 4217.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "off",
+      "example": "CAD",
+      "options": {
+        "kind": "list",
+        "options": [
+          "USD",
+          "EUR",
+          "GBP",
+          "JPY",
+          "CAD",
+          "AUD",
+          "CHF"
+        ]
+      }
+    },
+    {
+      "key": "first_name",
+      "label": "First name",
+      "placeholder": null,
+      "help": "A given name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "given-name",
+      "example": "Maya",
+      "options": null
+    },
+    {
+      "key": "full_name",
+      "label": "Full name",
+      "placeholder": null,
+      "help": "Given name and family name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "name",
+      "example": "Jordan Hale",
+      "options": null
+    },
+    {
+      "key": "gas_price",
+      "label": "Gas price",
+      "placeholder": null,
+      "help": "A non-negative decimal.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "49.17",
+      "options": null
+    },
+    {
+      "key": "gas_used",
+      "label": "Gas used",
+      "placeholder": null,
+      "help": "Gas units.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "86281",
+      "options": null
+    },
+    {
+      "key": "given_name",
+      "label": "Given name",
+      "placeholder": null,
+      "help": "A given name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "given-name",
+      "example": "Sam",
+      "options": null
+    },
+    {
+      "key": "gtin",
+      "label": "GTIN",
+      "placeholder": "0123456789012",
+      "help": "A 13-digit trade item number.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "7687681785202",
+      "options": null
+    },
+    {
+      "key": "honorific",
+      "label": "Honorific",
+      "placeholder": null,
+      "help": "A name prefix.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Mr",
+      "options": {
+        "kind": "list",
+        "options": [
+          "Mx",
+          "Ms",
+          "Mr",
+          "Dr"
+        ]
+      }
+    },
+    {
+      "key": "image_asset",
+      "label": "Image",
+      "placeholder": null,
+      "help": "A description of the file. No third-party image URL.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"description\":\"Head-and-shoulders portrait, natural light, plain background\",\"meta\":{\"mime\":\"image/jpeg\",\"width\":512,\"height\":512}}",
+      "options": null
+    },
+    {
+      "key": "initials",
+      "label": "Initials",
+      "placeholder": "MC",
+      "help": "Two letters.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "JX",
+      "options": null
+    },
+    {
+      "key": "isbn_10",
+      "label": "ISBN-10",
+      "placeholder": "0",
+      "help": "A checksummed ISBN-10.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "4603065752",
+      "options": null
+    },
+    {
+      "key": "isbn_13",
+      "label": "ISBN-13",
+      "placeholder": "0",
+      "help": "A checksummed ISBN-13.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "9299421884158",
+      "options": null
+    },
+    {
+      "key": "json_object",
+      "label": "JSON",
+      "placeholder": null,
+      "help": "A JSON object. Shape follows the column when one is known.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"kind\":\"record\"}",
+      "options": null
+    },
+    {
+      "key": "key_status",
+      "label": "Key status",
+      "placeholder": null,
+      "help": "Whether a key is usable.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "rotated",
+      "options": {
+        "kind": "list",
+        "options": [
+          "active",
+          "rotated",
+          "revoked"
+        ]
+      }
+    },
+    {
+      "key": "language_code",
+      "label": "Language",
+      "placeholder": null,
+      "help": "ISO 639.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "language",
+      "example": "es",
+      "options": {
+        "kind": "list",
+        "options": [
+          "en",
+          "es",
+          "fr",
+          "de",
+          "pt",
+          "ja"
+        ]
+      }
+    },
+    {
+      "key": "last_name",
+      "label": "Last name",
+      "placeholder": null,
+      "help": "A family name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "family-name",
+      "example": "Chen",
+      "options": null
+    },
+    {
+      "key": "latitude",
+      "label": "Latitude",
+      "placeholder": null,
+      "help": "Degrees north.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "-10.4344",
+      "options": null
+    },
+    {
+      "key": "legal_name",
+      "label": "Legal name",
+      "placeholder": null,
+      "help": "The registered name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "organization",
+      "example": "Rascode LLC",
+      "options": null
+    },
+    {
+      "key": "lifecycle_stage",
+      "label": "Lifecycle",
+      "placeholder": null,
+      "help": "Where the record is in its life.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "sunset",
+      "options": {
+        "kind": "list",
+        "options": [
+          "idea",
+          "planned",
+          "building",
+          "live",
+          "sunset"
+        ]
+      }
+    },
+    {
+      "key": "local_datetime",
+      "label": "Local date and time",
+      "placeholder": null,
+      "help": "An ISO-8601 local timestamp.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2024-06-15T14:30:00.000Z",
+      "options": null
+    },
+    {
+      "key": "long_text",
+      "label": "Long text",
+      "placeholder": null,
+      "help": "A paragraph.",
+      "htmlInputType": "textarea",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Notes a person would actually write.",
+      "options": null
+    },
+    {
+      "key": "longitude",
+      "label": "Longitude",
+      "placeholder": null,
+      "help": "Degrees east.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "-39.4575",
+      "options": null
+    },
+    {
+      "key": "markdown",
+      "label": "Markdown",
+      "placeholder": null,
+      "help": "Markdown source.",
+      "htmlInputType": "textarea",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "## Overview\n\nA short section.",
+      "options": null
+    },
+    {
+      "key": "media_file",
+      "label": "Media file",
+      "placeholder": null,
+      "help": "A description of the file. No third-party image URL.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"description\":\"A media file for this record\",\"meta\":{\"mime\":\"application/octet-stream\"}}",
+      "options": null
+    },
+    {
+      "key": "media_format",
+      "label": "Media format",
+      "placeholder": null,
+      "help": "The kind of media.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "document",
+      "options": {
+        "kind": "list",
+        "options": [
+          "image",
+          "audio",
+          "video",
+          "document"
+        ]
+      }
+    },
+    {
+      "key": "middle_name",
+      "label": "Middle name",
+      "placeholder": null,
+      "help": "A middle name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "additional-name",
+      "example": "Quinn",
+      "options": null
+    },
+    {
+      "key": "mime_type",
+      "label": "MIME type",
+      "placeholder": null,
+      "help": "An IANA media type.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "video/mp4",
+      "options": {
+        "kind": "list",
+        "options": [
+          "image/jpeg",
+          "image/png",
+          "image/webp",
+          "application/pdf",
+          "text/plain",
+          "audio/mpeg",
+          "video/mp4"
+        ]
+      }
+    },
+    {
+      "key": "name_prefix",
+      "label": "Name prefix",
+      "placeholder": null,
+      "help": "A prefix.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Mx",
+      "options": {
+        "kind": "list",
+        "options": [
+          "Mx",
+          "Dr"
+        ]
+      }
+    },
+    {
+      "key": "name_suffix",
+      "label": "Name suffix",
+      "placeholder": null,
+      "help": "A suffix.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "III",
+      "options": {
+        "kind": "list",
+        "options": [
+          "Jr",
+          "Sr",
+          "III"
+        ]
+      }
+    },
+    {
+      "key": "nationality_code",
+      "label": "Nationality",
+      "placeholder": null,
+      "help": "ISO 3166 alpha-2.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "MX",
+      "options": {
+        "kind": "list",
+        "options": [
+          "US",
+          "GB",
+          "CA",
+          "DE",
+          "FR",
+          "JP",
+          "MX",
+          "BR"
+        ]
+      }
+    },
+    {
+      "key": "network_name",
+      "label": "Network",
+      "placeholder": null,
+      "help": "A chain name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "solana",
+      "options": {
+        "kind": "list",
+        "options": [
+          "ethereum",
+          "polygon",
+          "solana",
+          "bitcoin"
+        ]
+      }
+    },
+    {
+      "key": "nickname",
+      "label": "Nickname",
+      "placeholder": null,
+      "help": "A short name.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "nickname",
+      "example": "Jo",
+      "options": null
+    },
+    {
+      "key": "nonce",
+      "label": "Nonce",
+      "placeholder": null,
+      "help": "A transaction nonce.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "384",
+      "options": null
+    },
+    {
+      "key": "number_(decimal)",
+      "label": "Decimal",
+      "placeholder": null,
+      "help": "A decimal number.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "44.71",
+      "options": null
+    },
+    {
+      "key": "number_(whole)",
+      "label": "Whole number",
+      "placeholder": null,
+      "help": "A whole number.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "48",
+      "options": null
+    },
+    {
+      "key": "owner_reference",
+      "label": "Owner",
+      "placeholder": null,
+      "help": "The owning record.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "010f3939-010f-4939-a77e-277ef21c010f",
+      "options": null
+    },
+    {
+      "key": "parent_reference",
+      "label": "Parent",
+      "placeholder": null,
+      "help": "The parent record.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "99c01ea2-99c0-4ea2-a52c-252c4ed799c0",
+      "options": null
+    },
+    {
+      "key": "percentage",
+      "label": "Percentage",
+      "placeholder": null,
+      "help": "Zero to one hundred.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "91",
+      "options": null
+    },
+    {
+      "key": "permaweb_data_hash",
+      "label": "Permaweb hash",
+      "placeholder": "0x0",
+      "help": "A 32-byte hex hash.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0x94a9463abc1e8858fe49984f5d74df934b192ff909e98b7849eb56b82fde13ea",
+      "options": null
+    },
+    {
+      "key": "phone_e164",
+      "label": "Phone",
+      "placeholder": "+15550100100",
+      "help": "E.164, no spaces.",
+      "htmlInputType": "tel",
+      "inputMode": "tel",
+      "autocomplete": "tel",
+      "example": "+14005222613",
+      "options": null
+    },
+    {
+      "key": "postal_code",
+      "label": "Postal code",
+      "placeholder": "97201",
+      "help": "A US ZIP.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": "postal-code",
+      "example": "10544",
+      "options": null
+    },
+    {
+      "key": "preferred_name",
+      "label": "Preferred name",
+      "placeholder": null,
+      "help": "The name to use.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "nickname",
+      "example": "Jordan",
+      "options": null
+    },
+    {
+      "key": "priority",
+      "label": "Priority",
+      "placeholder": null,
+      "help": "How soon this needs attention.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "low",
+      "options": {
+        "kind": "list",
+        "options": [
+          "low",
+          "medium",
+          "high",
+          "urgent"
+        ]
+      }
+    },
+    {
+      "key": "private_key_ref",
+      "label": "Private key",
+      "placeholder": null,
+      "help": "A vault reference. The value is never an example secret.",
+      "htmlInputType": "password",
+      "inputMode": null,
+      "autocomplete": "off",
+      "example": "vault:redacted",
+      "options": null
+    },
+    {
+      "key": "pronouns",
+      "label": "Pronouns",
+      "placeholder": null,
+      "help": "Pronouns.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "she/her",
+      "options": {
+        "kind": "list",
+        "options": [
+          "she/her",
+          "he/him",
+          "they/them"
+        ]
+      }
+    },
+    {
+      "key": "public_key",
+      "label": "Public key",
+      "placeholder": "0x0",
+      "help": "A hex public key.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0x915165a12f3885d52381a0815521e10c191e53e16ed41fb6961ffc83d5c548ea",
+      "options": null
+    },
+    {
+      "key": "qr_payload",
+      "label": "QR payload",
+      "placeholder": null,
+      "help": "What the code encodes.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "RASCODE-DEMO",
+      "options": null
+    },
+    {
+      "key": "quantity",
+      "label": "Quantity",
+      "placeholder": null,
+      "help": "How many.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "8",
+      "options": null
+    },
+    {
+      "key": "query",
+      "label": "Query",
+      "placeholder": null,
+      "help": "A search query.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "semantic types",
+      "options": null
+    },
+    {
+      "key": "rich_text",
+      "label": "Rich text",
+      "placeholder": null,
+      "help": "Formatted text as plain content.",
+      "htmlInputType": "textarea",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "A sentence with emphasis.",
+      "options": null
+    },
+    {
+      "key": "sample_rate_hz",
+      "label": "Sample rate",
+      "placeholder": null,
+      "help": "Hertz.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "47848",
+      "options": null
+    },
+    {
+      "key": "secret_key_ref",
+      "label": "Secret key",
+      "placeholder": null,
+      "help": "A vault reference. The value is never an example secret.",
+      "htmlInputType": "password",
+      "inputMode": null,
+      "autocomplete": "off",
+      "example": "vault:redacted",
+      "options": null
+    },
+    {
+      "key": "short_code",
+      "label": "Code",
+      "placeholder": "ABCD",
+      "help": "A short code.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "GEYH",
+      "options": null
+    },
+    {
+      "key": "short_text",
+      "label": "Short text",
+      "placeholder": null,
+      "help": "Free short text. The phrase follows the record.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Launch checklist",
+      "options": null
+    },
+    {
+      "key": "slug",
+      "label": "Slug",
+      "placeholder": "demo-item",
+      "help": "Lowercase words joined by hyphens.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": "off",
+      "example": "demo-item",
+      "options": null
+    },
+    {
+      "key": "smart_contract_address",
+      "label": "Contract",
+      "placeholder": "0x0",
+      "help": "An EIP-55 contract address.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0x6747EbE1e3622c8Df220DA0B837353315ADb0E40",
+      "options": null
+    },
+    {
+      "key": "sol_wallet_address",
+      "label": "Solana address",
+      "placeholder": "0",
+      "help": "A base58 address.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": "off",
+      "example": "b7Mk4bVQGVBVcy9QpHuiB7iCa4SiXs8eoHT",
+      "options": null
+    },
+    {
+      "key": "sort_order",
+      "label": "Sort order",
+      "placeholder": null,
+      "help": "A display order.",
+      "htmlInputType": "number",
+      "inputMode": "decimal",
+      "autocomplete": null,
+      "example": "19",
+      "options": null
+    },
+    {
+      "key": "state_region_code",
+      "label": "State",
+      "placeholder": null,
+      "help": "A region code.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "address-level1",
+      "example": "WA",
+      "options": {
+        "kind": "list",
+        "options": [
+          "OR",
+          "CA",
+          "NY",
+          "TX",
+          "WA"
+        ]
+      }
+    },
+    {
+      "key": "status",
+      "label": "Status",
+      "placeholder": null,
+      "help": "Where the record stands.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "paused",
+      "options": {
+        "kind": "list",
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "archived"
+        ]
+      }
+    },
+    {
+      "key": "street_address",
+      "label": "Street",
+      "placeholder": null,
+      "help": "A street address.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": "street-address",
+      "example": "16 Market Street",
+      "options": null
+    },
+    {
+      "key": "system_created_time",
+      "label": "Created time",
+      "placeholder": null,
+      "help": "A system timestamp.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2024-06-15T14:30:00.000Z",
+      "options": null
+    },
+    {
+      "key": "system_id",
+      "label": "System id",
+      "placeholder": null,
+      "help": "An incrementing id.",
+      "htmlInputType": "number",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "1",
+      "options": null
+    },
+    {
+      "key": "system_modified_time",
+      "label": "Modified time",
+      "placeholder": null,
+      "help": "A system timestamp at or after creation.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2026-11-06T01:23:41.095Z",
+      "options": null
+    },
+    {
+      "key": "system_uuid",
+      "label": "Id",
+      "placeholder": null,
+      "help": "A UUID.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "54acf8a6-54ac-48a6-aea8-aea8448f54ac",
+      "options": null
+    },
+    {
+      "key": "tags",
+      "label": "Tags",
+      "placeholder": null,
+      "help": "One tag from the list.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "featured",
+      "options": {
+        "kind": "list",
+        "options": [
+          "demo",
+          "featured",
+          "internal"
+        ]
+      }
+    },
+    {
+      "key": "tax_id_number",
+      "label": "Tax id",
+      "placeholder": "0",
+      "help": "A tax identifier.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "419692025",
+      "options": null
+    },
+    {
+      "key": "time",
+      "label": "Time",
+      "placeholder": "14:30",
+      "help": "Hours and minutes.",
+      "htmlInputType": "time",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "09:27:00",
+      "options": null
+    },
+    {
+      "key": "timestamp",
+      "label": "Timestamp",
+      "placeholder": null,
+      "help": "An ISO-8601 timestamp.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2024-06-15T14:30:00.000Z",
+      "options": null
+    },
+    {
+      "key": "timezone_id",
+      "label": "Timezone",
+      "placeholder": null,
+      "help": "An IANA timezone.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "America/Los_Angeles",
+      "options": {
+        "kind": "list",
+        "options": [
+          "America/New_York",
+          "America/Los_Angeles",
+          "Europe/London",
+          "UTC"
+        ]
+      }
+    },
+    {
+      "key": "title",
+      "label": "Title",
+      "placeholder": null,
+      "help": "A title.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "Weekly review",
+      "options": null
+    },
+    {
+      "key": "token_contract_address",
+      "label": "Token contract",
+      "placeholder": "0x0",
+      "help": "An EIP-55 token contract.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0x63d06846f649C3fDB34fF78e01c6D7A587db5614",
+      "options": null
+    },
+    {
+      "key": "token_id",
+      "label": "Token id",
+      "placeholder": "0",
+      "help": "A token id.",
+      "htmlInputType": "text",
+      "inputMode": "numeric",
+      "autocomplete": null,
+      "example": "5480",
+      "options": null
+    },
+    {
+      "key": "token_standard",
+      "label": "Token standard",
+      "placeholder": null,
+      "help": "A token standard.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "erc1155",
+      "options": {
+        "kind": "list",
+        "options": [
+          "erc20",
+          "erc721",
+          "erc1155"
+        ]
+      }
+    },
+    {
+      "key": "transaction_hash",
+      "label": "Transaction hash",
+      "placeholder": "0x0",
+      "help": "A 32-byte hex hash.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0xef111265ee51e58ee929598f6709594baa88155fa4aeb1c20fd00e71117a793d",
+      "options": null
+    },
+    {
+      "key": "transaction_status",
+      "label": "Transaction status",
+      "placeholder": null,
+      "help": "How a transaction stands.",
+      "htmlInputType": "text",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "failed",
+      "options": {
+        "kind": "list",
+        "options": [
+          "pending",
+          "confirmed",
+          "failed"
+        ]
+      }
+    },
+    {
+      "key": "transcript",
+      "label": "Transcript",
+      "placeholder": null,
+      "help": "Spoken words as text.",
+      "htmlInputType": "textarea",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "The first sentence of the recording.",
+      "options": null
+    },
+    {
+      "key": "updated_at",
+      "label": "Updated",
+      "placeholder": null,
+      "help": "When the row last changed.",
+      "htmlInputType": "datetime-local",
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "2026-11-06T01:23:41.116Z",
+      "options": null
+    },
+    {
+      "key": "url",
+      "label": "URL",
+      "placeholder": "https://example.com/demo",
+      "help": "An https URL.",
+      "htmlInputType": "url",
+      "inputMode": "url",
+      "autocomplete": "url",
+      "example": "https://example.com/demo",
+      "options": null
+    },
+    {
+      "key": "username",
+      "label": "Username",
+      "placeholder": "maya.chen",
+      "help": "A handle.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": "username",
+      "example": "maya.chen",
+      "options": null
+    },
+    {
+      "key": "vat_number",
+      "label": "VAT number",
+      "placeholder": "GB123456789",
+      "help": "A VAT number.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "GB326725263",
+      "options": null
+    },
+    {
+      "key": "wallet_address",
+      "label": "Wallet address",
+      "placeholder": "0x0",
+      "help": "An EIP-55 address.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0x9E22B4539c624FDc64A2154E263ef2A8ddf168b7",
+      "options": null
+    },
+    {
+      "key": "wallet_signature",
+      "label": "Signature",
+      "placeholder": "0x0",
+      "help": "A hex signature.",
+      "htmlInputType": "text",
+      "inputMode": "text",
+      "autocomplete": null,
+      "example": "0xcc5a9330f4b8a1256450538401abadc8d7c045af9b1fa87689da70e8eddbcd9b321fb08701c1e8c2dd0cdae8106576e93856b36ab102372cc5b0874542bb112896",
+      "options": null
+    },
+    {
+      "key": "waveform_data",
+      "label": "Waveform",
+      "placeholder": null,
+      "help": "Peak data for a waveform. Not an audio URL.",
+      "htmlInputType": null,
+      "inputMode": null,
+      "autocomplete": null,
+      "example": "{\"peaks\":[0.1,0.4,0.2]}",
+      "options": null
+    }
+  ]
+}

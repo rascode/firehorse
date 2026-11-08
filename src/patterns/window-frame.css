@@ -1,0 +1,51 @@
+/*
+ * Firehorse — Window frame
+ * patterns · layer fh.patterns
+ */
+
+@layer fh.patterns {
+  /* —— Window frame ——
+   * Product evidence in browser chrome (three dots + bar).
+   *   <figure class="fh-window"><div class="fh-window__bar"></div>…</figure> */
+  .fh-window {
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    box-shadow: var(--fh-shadow-overlay);
+    container: fh-window / inline-size;
+  }
+
+  .fh-window__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    min-block-size: 2.25rem;
+    padding-inline: var(--fh-inset-control);
+    background-color: var(--fh-color-surface-chrome);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wide);
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.6rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone-rose);
+      box-shadow:
+        0.95rem 0 0 var(--fh-tone-amber),
+        1.9rem 0 0 var(--fh-tone-lime);
+      margin-inline-end: 2.2rem;
+    }
+  }
+
+  .fh-window__body {
+    padding: clamp(var(--fh-inset-tile), 4cqi, var(--fh-inset-card));
+  }
+
+}

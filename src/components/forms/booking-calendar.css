@@ -1,0 +1,106 @@
+/*
+ * Firehorse — Booking calendar (CAL-3)
+ * components/forms · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Booking calendar (CAL-3): month grid beside the day's times ——
+   * Open days take a faint fill; the picked day and time take the primary.
+   *   <div class="fh-cal-book" data-fh="CAL-3.1">
+   *     <div class="fh-cal-book__layout">
+   *       <div class="fh-cal-book__month">…head, week, grid…</div>
+   *       <div class="fh-cal-book__times">…groups of fh-chip…</div>
+   *     </div>
+   *   </div> */
+  .fh-cal-book {
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+    outline: none;
+  }
+
+  .fh-cal-book__layout {
+    display: grid;
+    gap: var(--fh-gap-sectioned);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    align-items: start;
+  }
+
+  .fh-cal-book__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    margin-block-end: var(--fh-gap-related);
+  }
+
+  .fh-cal-book__label {
+    margin: 0;
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-medium);
+  }
+
+  .fh-cal-book__week,
+  .fh-cal-book__grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: var(--fh-gap-bound);
+  }
+
+  .fh-cal-book__week {
+    margin-block-end: var(--fh-gap-bound);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    text-align: center;
+  }
+
+  .fh-cal-book__day {
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-subtle);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    font-variant-numeric: tabular-nums;
+    cursor: default;
+
+    &[data-open="true"] {
+      background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent);
+      color: var(--fh-color-text);
+      cursor: var(--fh-cursor-action);
+    }
+    &[data-open="true"]:hover {
+      background-color: color-mix(in oklab, var(--fh-color-text) 9%, transparent);
+    }
+    &[data-today="true"] {
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+    &[aria-pressed="true"] {
+      background-color: var(--fh-color-primary);
+      color: var(--fh-color-on-primary);
+    }
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 1px;
+    }
+  }
+
+  .fh-cal-book__times { display: grid; gap: var(--fh-gap-grouped); }
+  .fh-cal-book__group { display: grid; gap: var(--fh-gap-bound); }
+  .fh-cal-book__chips {
+    flex-wrap: wrap;
+    margin: 0;
+
+    & .fh-chip {
+      cursor: var(--fh-cursor-action);
+      font: inherit;
+      font-size: var(--fh-text-caption);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}

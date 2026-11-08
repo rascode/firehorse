@@ -1,0 +1,34 @@
+/*
+ * Firehorse — Form layout (FLD)
+ * components/forms · layer fh.components · docs /forms/#FLD
+ */
+
+@layer fh.components {
+  /* —— Form layout ——
+   * Fields flow into 1 or 2 columns depending on the form's slot.
+   * `fh-field--full` always spans the row. */
+  .fh-form {
+    display: grid;
+    gap: var(--fh-gap-sectioned) var(--fh-gap-grouped-wide);
+    container: fh-form / inline-size;
+  }
+
+  .fh-form__row {
+    display: grid;
+    gap: var(--fh-gap-sectioned) var(--fh-gap-grouped-wide);
+  }
+
+  @container fh-form (inline-size >= 34rem) {
+    .fh-form__row {
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    }
+  }
+
+  .fh-form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    padding-block-start: var(--fh-inset-tight);
+  }
+}

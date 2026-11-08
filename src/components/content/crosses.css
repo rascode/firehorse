@@ -1,0 +1,31 @@
+/*
+ * Firehorse — Crosses (CTB)
+ * components/content · layer fh.components · docs /patterns/#CTB
+ */
+
+@layer fh.components {
+  /* —— Crosses ——
+   * Small registration crosses at the four corners of an etched box.
+   * One class, no extra markup. */
+  .fh-crosses {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -4.5px;
+      pointer-events: none;
+      --_c: var(--fh-color-cross);
+      background:
+        linear-gradient(var(--_c), var(--_c)) 0 4px / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) 4px 0 / 1px 9px,
+        linear-gradient(var(--_c), var(--_c)) 100% 4px / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) calc(100% - 4px) 0 / 1px 9px,
+        linear-gradient(var(--_c), var(--_c)) 0 calc(100% - 4px) / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) 4px 100% / 1px 9px,
+        linear-gradient(var(--_c), var(--_c)) 100% calc(100% - 4px) / 9px 1px,
+        linear-gradient(var(--_c), var(--_c)) calc(100% - 4px) 100% / 1px 9px;
+      background-repeat: no-repeat;
+    }
+  }
+}

@@ -4,10 +4,10 @@
   "name": "Forms",
   "tone": "orange",
   "title": "Forms · Firehorse",
-  "description": "Firehorse forms: fields and selects, segmented controls, switches and checks, upload, range and tags, and sign-in and sign-up layouts.",
+  "description": "Firehorse forms: fields and selects, entity pickers, segmented controls, switches and checks, upload, range and tags, and sign-in and sign-up layouts.",
   "headline": "Sign in and sign up, <em>ready to drop in</em>",
   "lede": "One block holds both forms. The switch flips between them with no JavaScript, and the title, lede and footer follow it. The art is an etched contour sheet with the tone palette flowing through it, the same treatment as the horse up top. Point <code>--fh-auth-art</code> at your own linework to make it yours.",
-  "scripts": [],
+  "scripts": ["/sample-data.js"],
   "icon": "square-pen",
   "summary": [
     {
@@ -27,11 +27,11 @@
     <!-- ═══════════════ FORMS ═══════════════ -->
     <section id="forms" class="fh-section fh-section--ruled site-anchor" style="--site-h: 2600px; --site-hn: 3600px" data-tone="teal" aria-labelledby="forms-title" data-fh-label="Forms" data-fh-index="06">
 
-      <div class="site-demo site-auth" data-fh-id="AUT" data-fh-name="Sign in &amp; sign up">
-        <div class="site-demo__head"><h3>Sign in &amp; sign up</h3><p>Three layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Plain is the form alone.</p></div>
+      <div class="site-demo site-auth" data-fh-id="AUT" data-fh-groups="Layouts|Method" data-fh-name="Sign in &amp; sign up">
+        <div class="site-demo__head"><h3>Sign in &amp; sign up</h3><p>Four layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Glass frosts the form over the art; Plain is the form alone.</p></div>
         <div class="site-auth__grid">
           <figure class="site-auth__item site-auth__item--wide"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="teal"><b class="fh-chip__index">01</b>Split</span><span>Etched art beside the form</span></figcaption>
-<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account" data-fh-id="AUT-01" data-fh-name="Split · etched art">
+<section class="fh-auth" data-tone="teal" aria-label="Sign in or create an account" data-fh-id="AUT-1.1" data-fh-name="Split · etched art">
   <div class="fh-auth__art" aria-hidden="true"></div>
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
@@ -75,7 +75,7 @@
 </section>
           </figure>
           <figure class="site-auth__item"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="violet"><b class="fh-chip__index">02</b>Card</span><span>Form floating on full-bleed art</span></figcaption>
-<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account" data-fh-id="AUT-02" data-fh-name="Card · full-bleed art">
+<section class="fh-auth fh-auth--card" data-tone="violet" aria-label="Sign in or create an account" data-fh-id="AUT-1.2" data-fh-name="Card · full-bleed art">
   <div class="fh-auth__art" aria-hidden="true"></div>
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
@@ -119,7 +119,7 @@
 </section>
           </figure>
           <figure class="site-auth__item"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="sky"><b class="fh-chip__index">03</b>Plain</span><span>The form alone, for tight spaces</span></figcaption>
-<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account" data-fh-id="AUT-03" data-fh-name="Plain · no art">
+<section class="fh-auth fh-auth--plain" data-tone="sky" aria-label="Sign in or create an account" data-fh-id="AUT-1.3" data-fh-name="Plain · no art">
   <div class="fh-auth__panel">
     <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind Studio</b></p>
     <fieldset class="fh-segmented fh-auth__switch">
@@ -161,6 +161,90 @@
   </div>
 </section>
           </figure>
+          <figure class="site-auth__item site-auth__item--wide"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="orange"><b class="fh-chip__index">04</b>Glass</span><span>Form frosted over full-bleed art</span></figcaption>
+<section class="fh-auth fh-auth--glass" data-tone="orange" aria-label="Sign in or create an account" data-fh-id="AUT-1.4" data-fh-name="Glass · frosted over art">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__corner">
+    <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Colour scheme</legend><label><input type="radio" name="auth-glass-scheme" value="light" checked> Light</label><label><input type="radio" name="auth-glass-scheme" value="dark"> Dark</label></fieldset>
+  </div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><span class="fh-auth__logo" style="--fh-auth-logo: none" aria-hidden="true"></span><b>Northwind Studio</b></p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-glass" id="auth-glass-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-glass" id="auth-glass-up" value="up"> Sign up</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">Two minutes. No card needed.</p>
+    </header>
+    <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-glass-email">Email</label><input class="fh-input" id="auth-glass-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-glass-pass">Password</label><input class="fh-input" id="auth-glass-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
+      <button class="fh-button" type="submit">Sign in</button>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-glass-name">Name</label><input class="fh-input" id="auth-glass-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
+      <div class="fh-field"><label for="auth-glass-new-email">Email</label><input class="fh-input" id="auth-glass-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-glass-new-pass">Password</label><input class="fh-input" id="auth-glass-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"></div>
+      <button class="fh-button" type="submit">Create account</button>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-glass-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-glass-in">Sign in</label></p>
+  </div>
+</section>
+          </figure>
+          <figure class="site-auth__item site-auth__item--wide"><figcaption><span class="fh-chip fh-chip--indexed fh-chip--sm" data-tone="lime"><b class="fh-chip__index">05</b>Method</span><span>Password first, or an emailed link</span></figcaption>
+<section class="fh-auth" data-tone="lime" aria-label="Sign in or create an account" data-fh-id="AUT-2.1" data-fh-name="Method · password or email link">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i><b>Northwind</b> Admin</p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-method-mode" id="auth-method-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-method-mode" id="auth-method-up" value="up"> Create account</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">We email you a link to verify your address.</p>
+    </header>
+    <fieldset class="fh-segmented fh-segmented--sm fh-auth__method" data-fh-auth="in">
+      <legend class="fh-sr-only">Sign in with</legend>
+      <label><input type="radio" name="auth-method-how" value="password" checked> Password</label>
+      <label><input type="radio" name="auth-method-how" value="link"> Email link</label>
+    </fieldset>
+    <form class="fh-auth__form" data-fh-auth="in" data-fh-method="password" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-method-id">Username or email</label><input class="fh-input" id="auth-method-id" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
+      <div class="fh-field"><label for="auth-method-pass">Password</label><input class="fh-input" id="auth-method-pass" name="password" type="password" autocomplete="current-password" required></div>
+      <button class="fh-button" type="submit">Sign in</button>
+    </form>
+    <details class="fh-auth__forgot" data-fh-auth="in" data-fh-method="password">
+      <summary>Forgot password?</summary>
+      <form class="fh-auth__form" method="post" action="/auth/forgot">
+        <div class="fh-field"><label for="auth-method-reset">Username or email</label><input class="fh-input" id="auth-method-reset" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
+        <button class="fh-button fh-button--secondary" type="submit">Send reset link</button>
+      </form>
+    </details>
+    <form class="fh-auth__form" data-fh-auth="in" data-fh-method="link" method="post" action="/auth/link">
+      <div class="fh-field"><label for="auth-method-link">Username or email</label><input class="fh-input" id="auth-method-link" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"><p class="fh-field__hint">We email a one-time link to the address on your account.</p></div>
+      <button class="fh-button" type="submit">Email me a link</button>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-method-new-email">Email</label><input class="fh-input" id="auth-method-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-method-user">Username</label><div class="fh-input-group"><span aria-hidden="true">@</span><input class="fh-input" id="auth-method-user" name="username" autocomplete="username" required placeholder="yourname" aria-describedby="auth-method-rules"></div>
+        <ul class="fh-auth__rules" id="auth-method-rules"><li data-state="met">3–32 chars</li><li data-state="met">Starts with a letter</li><li data-state="met">Letters, numbers, _ only</li><li data-state="checking">Checking…</li></ul></div>
+      <button class="fh-button" type="submit">Send verification link</button>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-method-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-method-in">Sign in</label></p>
+  </div>
+</section>
+          </figure>
         </div>
       </div>
     </section>
@@ -169,10 +253,10 @@
       <div class="fh-stack fh-stack--xl">
 
         <div class="fh-split">
-          <div class="site-demo site-anchor" id="c-form" data-fh-id="FLD">
-            <div class="site-demo__head"><h3>Fields</h3><p>The "Required" chip comes from the input's own <code>required</code> attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted.</p></div>
+          <div class="site-demo site-anchor" id="c-form" data-fh-id="FLD" data-fh-groups="Fields|Dictation|Quiet">
+            <div class="site-demo__head"><h3>Fields</h3><p>The "Required" chip comes from the input's own <code>required</code> attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with <code>aria-invalid="true"</code> (for errors the server sends back).</p></div>
             <div class="site-demo__stage" data-demo>
-<form class="fh-form" novalidate onsubmit="event.preventDefault()">
+<form class="fh-form" novalidate onsubmit="event.preventDefault()" data-fh-id="FLD-1.1" data-fh-name="Fields">
   <div class="fh-form__row">
     <div class="fh-field">
       <label for="f-email">Work email</label>
@@ -207,7 +291,7 @@
             </div>
           </div>
           <div class="site-demo site-anchor" id="c-choice" data-fh-id="CHO">
-            <div class="site-demo__head"><h3>Choices</h3><p>Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard.</p></div>
+            <div class="site-demo__head"><h3>Choices</h3><p>Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add <code>fh-segmented--stack</code> to stack its options.</p></div>
             <div class="site-demo__stage" data-demo>
 <div class="fh-stack fh-stack--lg">
   <fieldset class="fh-segmented">
@@ -222,6 +306,136 @@
   <label class="fh-check"><input type="radio" name="plan" checked> Annual, two months free</label>
 </div>
             </div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-dictate" data-fh-id="FLD-2" data-fh-name="Dictation">
+          <div class="site-demo__head"><h3>Dictation field</h3><p>Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with <code>data-fh-dictate</code> (or drive the same markup yourself).</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-field fh-field--dictate" data-fh-dictate data-fh-id="FLD-2.1" data-fh-name="Dictation">
+  <label for="f-dictate">Message</label>
+  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+    <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
+    <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
+  </div>
+  <textarea class="fh-textarea" id="f-dictate" placeholder="A few lines is plenty."></textarea>
+  <p class="fh-dictate__live" role="status" hidden>
+    <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+    <span class="fh-dictate__interim"></span>
+  </p>
+  <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-quiet" data-fh-id="FLD-3" data-fh-name="Quiet">
+          <div class="site-demo__head"><h3>Quiet field</h3><p>A barely-there lift off the canvas, no border. Default fields already use a light fill (<code>--fh-color-field</code>); quiet is fainter still. Use <code>fh-field--quiet</code> or <code>fh-input--quiet</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-field fh-field--quiet" data-fh-id="FLD-3.1" data-fh-name="Quiet">
+  <label for="f-quiet">Notes</label>
+  <textarea class="fh-textarea" id="f-quiet" placeholder="Optional detail"></textarea>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-form-steps" data-fh-id="STP-2" data-fh-name="Form steps">
+          <div class="site-demo__head"><h3>Form steps</h3><p>Numbered form sections with outline-cube heads (CUB-1.4). Wide slots put the head sticky beside the fields.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-form-steps">
+  <section class="fh-form-step" data-fh-id="STP-2.1" data-fh-name="Form step">
+    <header class="fh-form-step__head">
+      <div class="fh-form-step__text">
+        <ul class="fh-cubes fh-form-step__cube" data-tone="sky"><li><b class="fh-cube fh-cube--outline">01</b></li></ul>
+        <h3 class="fh-form-step__title">About you</h3>
+        <p class="fh-muted" style="margin:0">Who we are talking to.</p>
+      </div>
+    </header>
+    <div class="fh-form-step__body fh-form">
+      <div class="fh-field"><label for="fs-name">Name</label><input class="fh-input" id="fs-name" value="Ada Lovelace"></div>
+      <div class="fh-field"><label for="fs-email">Email</label><input class="fh-input" id="fs-email" type="email" value="ada@analytical.engine"></div>
+    </div>
+  </section>
+  <section class="fh-form-step">
+    <header class="fh-form-step__head">
+      <div class="fh-form-step__text">
+        <ul class="fh-cubes fh-form-step__cube" data-tone="teal"><li><b class="fh-cube fh-cube--outline">02</b></li></ul>
+        <h3 class="fh-form-step__title">The job <i class="fh-icon fh-icon--check fh-form-step__done" aria-label="complete"></i></h3>
+        <p class="fh-muted" style="margin:0">What you need done.</p>
+      </div>
+    </header>
+    <div class="fh-form-step__body fh-form">
+      <div class="fh-field"><label for="fs-job">Brief</label><textarea class="fh-textarea" id="fs-job" rows="3">Connect the warehouse to the agent inbox.</textarea></div>
+    </div>
+  </section>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-review" data-fh-id="RVW" data-fh-groups="Review">
+          <div class="site-demo__head"><h3>Review rows</h3><p>Label, value, an Edit action on the right. Muted and quoted values for empty or multi-line answers.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-review" data-fh-id="RVW-1.1" data-fh-name="Review">
+  <div class="fh-review__row">
+    <dt>Name</dt>
+    <dd>Ada Lovelace</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+  <div class="fh-review__row">
+    <dt>Company</dt>
+    <dd class="fh-review__muted">Not given</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+  <div class="fh-review__row">
+    <dt>Brief</dt>
+    <dd class="fh-review__quote">Connect the warehouse to the agent inbox.</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+</dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-cal-book" data-fh-id="CAL-3" data-fh-name="Booking">
+          <div class="site-demo__head"><h3>Booking calendar</h3><p>A quiet month grid beside the chosen day's times. Open days take a faint fill; the picked day and time take the primary. Under Calendar pickers (CAL).</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-cal-book" data-fh-id="CAL-3.1" data-fh-name="Booking calendar">
+  <div class="fh-cal-book__layout">
+    <div class="fh-cal-book__month">
+      <div class="fh-cal-book__head">
+        <p class="fh-cal-book__label">November 2026</p>
+        <div class="fh-cluster" style="gap: var(--fh-gap-bound)"><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Previous month">‹</button><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Next month">›</button></div>
+      </div>
+      <div class="fh-cal-book__week" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="fh-cal-book__grid" role="group" aria-label="November 2026">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <button type="button" class="fh-cal-book__day" disabled>1</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">2</button>
+        <button type="button" class="fh-cal-book__day" data-open="true" data-today="true" aria-pressed="true">3</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">4</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">5</button>
+        <button type="button" class="fh-cal-book__day" disabled>6</button>
+        <button type="button" class="fh-cal-book__day" disabled>7</button>
+      </div>
+    </div>
+    <div class="fh-cal-book__times">
+      <p class="fh-cal-book__label">Tue 3 Nov</p>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Morning</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Morning times">
+          <button type="button" class="fh-chip" data-tone="sky" aria-pressed="true">10:00</button>
+          <button type="button" class="fh-chip">11:30</button>
+        </div>
+      </div>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Afternoon</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Afternoon times">
+          <button type="button" class="fh-chip">14:00</button>
+          <button type="button" class="fh-chip">16:30</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
         </div>
 
@@ -260,5 +474,286 @@
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-tags" data-fh-id="TAG" data-fh-groups="Field|Inline">
+          <div class="site-demo__head"><h3>Tag field</h3><p>Toned chips with a remove button and an input in one field. The inline variant adds no chrome until it is used: a text link with no tags, then a small round plus that opens room for one more.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-field fh-field--optional" data-fh-id="TAG-1.1" data-fh-name="Field"><label for="tg-channels">Channels</label>
+    <div class="fh-tags">
+      <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
+      <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
+      <input id="tg-channels" placeholder="Add a channel">
+    </div>
+  </div>
+  <div class="fh-cluster" data-fh-id="TAG-2.1" data-fh-name="Inline · empty">
+    <button type="button" class="fh-button fh-button--sm fh-button--ghost"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i>Tag</button>
+  </div>
+  <div class="fh-tags fh-tags--inline" data-fh-id="TAG-2.2" data-fh-name="Inline · adding">
+    <input aria-label="Add a tag" placeholder="Add a tag">
+  </div>
+  <div class="fh-tags fh-tags--inline" data-fh-id="TAG-2.3" data-fh-name="Inline · with tags">
+    <span class="fh-chip" data-tone="orange">applications <button class="fh-chip__remove" type="button" aria-label="Remove applications"></button></span>
+    <span class="fh-chip" data-tone="lime">health <button class="fh-chip__remove" type="button" aria-label="Remove health"></button></span>
+    <button class="fh-tags__add" type="button" aria-label="Add a tag"></button>
+  </div>
+  <div class="fh-tags fh-tags--inline" data-fh-id="TAG-2.4" data-fh-name="Inline · link entry">
+    <span class="fh-chip" data-tone="sky">utbms.com <button class="fh-chip__remove" type="button" aria-label="Remove utbms.com"></button></span>
+    <span class="fh-tags__entry"><button class="fh-tags__prefix" type="button" aria-label="Protocol: https, click for http">https://</button><input aria-label="Link" placeholder="example.com/page"></span>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-entity" data-fh-id="ENT" data-fh-groups="Shapes|Content">
+          <div class="site-demo__head"><h3>Entity picker</h3><p>Choose an account, person or client by its identity: avatar, an etch line, the name and a second line, a figure for the use case, then the chevron. The open list groups its options, and each option is the same row as the selection. Real radios underneath, so it submits and takes arrow keys with no script; <code>firehorse.js</code> mirrors the pick into the trigger and fires <code>fh:entity</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-grid" data-cols="3" style="--fh-grid-min: 16rem; --fh-gap: var(--fh-space-6)">
+  <div class="fh-field" data-fh-id="ENT-1.1" data-fh-name="Field">
+    <span class="fh-field__label" id="ent-a-l">Account</span>
+    <div class="fh-entity-picker" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-a" aria-haspopup="listbox" aria-labelledby="ent-a-l ent-a-v" style="anchor-name: --ent-a">
+        <span class="fh-entity__value" id="ent-a-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-a" popover role="listbox" aria-labelledby="ent-a-l" style="position-anchor: --ent-a">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-a" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh-id="ENT-1.2" data-fh-name="Rounded">
+    <span class="fh-field__label" id="ent-b-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--rounded" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-b" aria-haspopup="listbox" aria-labelledby="ent-b-l ent-b-v" style="anchor-name: --ent-b">
+        <span class="fh-entity__value" id="ent-b-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-b" popover role="listbox" aria-labelledby="ent-b-l" style="position-anchor: --ent-b">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-b" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh-id="ENT-1.3" data-fh-name="Etched">
+    <span class="fh-field__label" id="ent-c-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--etched" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-c" aria-haspopup="listbox" aria-labelledby="ent-c-l ent-c-v" style="anchor-name: --ent-c">
+        <span class="fh-entity__value" id="ent-c-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-c" popover role="listbox" aria-labelledby="ent-c-l" style="position-anchor: --ent-c">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-c" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh-id="ENT-2.1" data-fh-name="No avatar">
+    <span class="fh-field__label" id="ent-d-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--etched" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-d" aria-haspopup="listbox" aria-labelledby="ent-d-l ent-d-v" style="anchor-name: --ent-d">
+        <span class="fh-entity__value" id="ent-d-v">
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-d" popover role="listbox" aria-labelledby="ent-d-l" style="position-anchor: --ent-d">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="northwind" checked>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="rascode">
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>12</b><small>Open</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="halcyon">
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>2</b><small>Open</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-d" value="juniper">
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Open</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh-id="ENT-2.2" data-fh-name="Counter">
+    <span class="fh-field__label" id="ent-e-l">Account</span>
+    <div class="fh-entity-picker fh-entity-picker--rounded" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-e" aria-haspopup="listbox" aria-labelledby="ent-e-l ent-e-v" style="anchor-name: --ent-e">
+        <span class="fh-entity__value" id="ent-e-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+          <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="5 open actions"><b>5</b></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-e" popover role="listbox" aria-labelledby="ent-e-l" style="position-anchor: --ent-e">
+        <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="northwind" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="5 open actions"><b>5</b></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="rascode">
+            <span class="fh-avatar fh-avatar--circle" data-tone="accent">RC</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Rascode &amp; Company</b><small>Admin · 9 seats</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="rose" aria-label="12 open actions"><b>12</b></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Clients</legend>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="halcyon">
+            <span class="fh-avatar fh-avatar--circle" data-tone="teal">HH</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Halcyon Health</b><small>Client · viewer</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="amber" aria-label="2 open actions"><b>2</b></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-e" value="juniper">
+            <span class="fh-avatar fh-avatar--circle" data-tone="lime">JL</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Juniper Labs</b><small>Client · editor</small></span>
+            <span class="fh-entity__stat fh-entity__stat--count" data-tone="neutral" aria-label="0 open actions"><b>0</b></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="fh-field" data-fh-id="ENT-2.3" data-fh-name="Person · due today">
+    <span class="fh-field__label" id="ent-f-l">Assignee</span>
+    <div class="fh-entity-picker" data-fh-entity>
+      <button class="fh-entity" type="button" popovertarget="ent-f" aria-haspopup="listbox" aria-labelledby="ent-f-l ent-f-v" style="anchor-name: --ent-f">
+        <span class="fh-entity__value" id="ent-f-v">
+          <span class="fh-avatar fh-avatar--circle" data-tone="violet">AM</span>
+          <span class="fh-entity__sep"></span>
+          <span class="fh-entity__who"><b>Ava Marlow</b><small>Design lead</small></span>
+          <span class="fh-entity__stat" data-tone="rose"><b>3</b><small>Due</small></span>
+        </span>
+      </button>
+      <div class="fh-entity-picker__list" id="ent-f" popover role="listbox" aria-labelledby="ent-f-l" style="position-anchor: --ent-f">
+        <fieldset class="fh-entity-picker__group"><legend>Team</legend>
+          <label class="fh-entity"><input type="radio" name="ent-f" value="ava" checked>
+            <span class="fh-avatar fh-avatar--circle" data-tone="violet">AM</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Ava Marlow</b><small>Design lead</small></span>
+            <span class="fh-entity__stat" data-tone="rose"><b>3</b><small>Due</small></span>
+          </label>
+          <label class="fh-entity"><input type="radio" name="ent-f" value="mateo">
+            <span class="fh-avatar fh-avatar--circle" data-tone="sky">MO</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Mateo Ortiz</b><small>Engineer</small></span>
+            <span class="fh-entity__stat" data-tone="amber"><b>1</b><small>Due</small></span>
+          </label>
+        </fieldset>
+        <fieldset class="fh-entity-picker__group"><legend>Contractors</legend>
+          <label class="fh-entity"><input type="radio" name="ent-f" value="priya">
+            <span class="fh-avatar fh-avatar--circle" data-tone="orange">PN</span>
+            <span class="fh-entity__sep"></span>
+            <span class="fh-entity__who"><b>Priya Nand</b><small>Copy · until Dec</small></span>
+            <span class="fh-entity__stat" data-tone="neutral"><b>0</b><small>Due</small></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+          </div>
+        </div>
+
+{{SEMANTIC_FIELDS}}
       </div>
     </section>

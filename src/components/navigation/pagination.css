@@ -1,0 +1,68 @@
+/*
+ * Firehorse — Pagination (NAV)
+ * components/navigation · layer fh.components · docs /components/navigation/#NAV
+ */
+
+@layer fh.components {
+  /* —— Pagination ——
+   *   <nav class="fh-pagination" aria-label="Pages">
+   *     <a href="?p=1" rel="prev">Prev</a>
+   *     <a href="?p=1">1</a> <a href="?p=2" aria-current="page">2</a> <span>…</span>
+   *     <a href="?p=3" rel="next">Next</a>
+   *   </nav> */
+  .fh-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    font-variant-numeric: tabular-nums;
+
+    & > :is(a, button, span) {
+      display: inline-grid;
+      place-items: center;
+      min-inline-size: 2.25rem;
+      block-size: 2.25rem;
+      padding-inline: var(--fh-inset-tight);
+      border: var(--fh-border-thin) solid transparent;
+      border-radius: var(--fh-radius-sm);
+      background: none;
+      color: var(--fh-color-text-muted);
+      text-decoration: none;
+    }
+
+    & > :is(a, button):hover {
+      border-color: var(--fh-color-border-strong);
+      color: var(--fh-color-text);
+    }
+
+    & > [aria-current] {
+      border-color: var(--fh-color-text);
+      color: var(--fh-color-text);
+    }
+
+    & > :is([rel="prev"], [rel="next"]) {
+      padding-inline: var(--fh-inset-control);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      font-size: var(--fh-text-label);
+    }
+
+    & > [rel="next"] {
+      margin-inline-start: auto;
+    }
+
+    & > [aria-disabled="true"] {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  @container (inline-size < 26rem) {
+    .fh-pagination > :not([rel], [aria-current]) {
+      display: none;
+    }
+  }
+
+}

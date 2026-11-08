@@ -1,0 +1,2268 @@
+/* Homepage concept (/home-concept/, unlisted prototype). Page-only: the real homepage and
+   site.css are untouched. Loaded before site.css, so rules are scoped under :has(.site-hc)
+   or .site-hc to win where they overlap.
+
+   The hero replicates the footer close exactly as it stands at the bottom of the homepage,
+   without _rascode: the logo, the etch line and the horses. Nothing else on the page. */
+body:has(.site-hc) :is(.fh-header, .fh-dock, .site-page-hero, .site-footer, .fh-panel) { display: none; }
+body:has(.site-hc) .site-backdrop__art { display: none; } /* the fixed horse; the hero draws its own (the blueprint grid stays) */
+body:has(.site-hc) .fh-main { padding: 0; margin: 0; }
+
+.site-hc {
+  position: relative;
+  isolation: isolate;
+  /* Full window, like the fixed backdrop: out of the content column, edge to edge. */
+  inline-size: 100vw;
+  margin-inline: calc(50% - 50vw);
+  block-size: 100vh;
+  overflow: clip;
+}
+
+/* The horses: the backdrop's art in its footer state, the same math on the same full-window
+   box. Width min(94vw, 84vh x 1.579); flush right (the homepage script resolves --_art-xn
+   to 1 at desktop widths); 72% down; then lifted 6vh and scaled 1.22 from 60% / bottom, the end
+   of site-foot-forward. Ink at 26%, the light at its footer strength (0.85), no soft mask. */
+.site-hc__art {
+  --_art: url("/img/backdrop/firehorse-horse.webp?v=4");
+  --_ink: color-mix(in oklab, var(--fh-color-text) 26%, transparent);
+  --_art-w: min(94vw, calc(84vh * 1.579));
+  --_art-xn: 1;
+  --_scale: 1.8; /* the footer's horse is 1.22; scaled well past it here */
+  --_glint: linear-gradient(90deg, transparent 0%, var(--site-walk-5) 5%, var(--site-walk-6) 11%, var(--site-walk-7) 15%, var(--site-walk-8) 22%, var(--site-walk-0) 26%, var(--site-walk-1) 33%, var(--site-walk-2) 37%, var(--site-walk-3) 41%, transparent 47%, transparent 100%);
+  --_glint-b: linear-gradient(90deg, transparent 0%, var(--site-walk-3) 6%, var(--site-walk-1) 12%, var(--fh-root-tint-1) 17%, var(--site-walk-8) 23%, var(--site-walk-6) 27%, transparent 33%, transparent 100%);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+@media (width < 48rem) {
+  .site-hc__art { --_art-w: calc(71vh * 1.579); --_art-xn: 0.92; }
+}
+.site-hc__ink, .site-hc__sweep {
+  position: absolute;
+  inset: 0;
+  /* Top of the art on the top edge of the window and its right edge on the window's right
+     edge: pinned at x 100%, y 0 and scaled from that corner, so it grows down and to the left. */
+  mask: var(--_art) calc(var(--_art-xn) * 100%) 0 / var(--_art-w) auto no-repeat;
+  transform-origin: 100% 0; /* from the top right: the art's right edge stays on the window's right edge */
+  transform: scale(var(--_scale, 1.22));
+}
+.site-hc__ink { background: var(--_ink); }
+.site-hc__sweep { overflow: hidden; opacity: 0.85; }
+.site-hc__glint {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc((100% - var(--_art-w)) * var(--_art-xn) - var(--_art-w) * 0.5);
+  inline-size: calc(var(--_art-w) * 3);
+  background: var(--_glint) 0 0 / calc(100% / 3) 100% repeat-x;
+  transform: skewX(-16deg);
+  translate: -33.3333% 0;
+}
+.site-hc__glint--b {
+  background-image: var(--_glint-b);
+  background-position: calc(var(--_art-w) * 0.37) 0;
+  transform: skewX(11deg);
+  opacity: 0.7;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__glint { animation: site-flow 9s linear infinite; }
+  .site-hc__glint--b { animation-duration: 14.3s; }
+}
+
+/* The marks, where the tall footer puts them: the page's content edges, the row's foot
+   50vh - 2.575rem above the bottom of the window (the footer's bottom padding), with the
+   legal line's row (gap + 1.2 line box) kept as space so the etch lands on the same line.
+   Values copied from .site-footer__marks / __fh / __etch, not the classes, which carry the
+   footer's scroll-driven entrance. */
+.site-hc__marks {
+  position: absolute;
+  inset-inline: max(var(--fh-page-margin), (100% - var(--fh-content-max)) / 2);
+  inset-block-end: calc(50vh - 2.575rem);
+  display: grid;
+  /* The etch runs on to the content's right edge, under the headline. */
+  grid-template-columns: auto minmax(var(--fh-space-8), 1fr);
+  grid-template-rows: auto 0; /* row 2 has no height; it gives the stack under the logo the logo's column to sit in */
+  container-type: inline-size; /* the content width, as the homepage hero's grid: its cqi sizes the headline */
+  align-items: end;
+  padding-block-end: calc(var(--fh-space-1-5) + var(--fh-text-label) * 1.2);
+  font-size: var(--fh-heading-size);
+}
+.site-hc__fh {
+  margin: 0;
+  font-family: var(--fh-font-sans);
+  font-size: 1em;
+  font-weight: 800; /* heavier than the footer's 700 (Inter runs to 900) */
+  letter-spacing: var(--fh-tracking-wordmark); /* -0.05em, tighter than the footer's heading tracking (-0.035em) */
+  line-height: 1;
+  color: var(--fh-color-text-strong);
+}
+.site-hc__etch {
+  margin-block-end: 0.215em;
+  margin-inline-start: 0.08em;
+  border-block-end: 2px dashed oklch(from var(--site-walk-3) clamp(0.62, l, 0.8) max(c, 0.14) h);
+}
+
+/* Frost: from the top of the etch line to the bottom of the window, the horses blurred and
+   washed the way the site frosts its backdrop between hero and footer (blur 5px, the art at
+   about 55%). A flat wash, no gradient; a hard edge on the line. Its top is the etch's top,
+   from the same numbers that place the marks: the row's foot, the legal row's space, the
+   etch's 0.215em lift and its 2px. The logo sits above it, unfrosted. */
+.site-hc__frost {
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc(100vh - (50vh - 2.575rem) - (var(--fh-space-1-5) + var(--fh-text-label) * 1.2) - var(--fh-heading-size) * 0.215 - 2px) 0;
+  z-index: 0;
+  background: color-mix(in oklab, var(--fh-color-canvas) 45%, transparent);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+}
+.site-hc__marks { z-index: 1; }
+
+/* Top left, where the header logo was: three of the homepage's sections as EYE-5.2 segmented
+   eyebrow pills, stacked. On the content edge (the page's inset, not the window edge), the
+   first pill centred on the header bar's line (its top + half its height, less half a pill). */
+.site-hc__sections {
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: max(var(--fh-page-margin), (100% - var(--fh-content-max)) / 2);
+  inset-block-start: calc(var(--site-chrome-top, 1rem) + (var(--fh-header-height, 3.25rem) - 1.625rem) / 2);
+  /* Stacked, each pill as wide as its own value; the label segment is held to the longest
+     label so the dashed etch before each value lines up on the left. The label is mono caps
+     (Geist Mono, 0.1em tracking), so its width is characters x (1ch + 0.1em): --_chars is the
+     longest label's length, "Start here" = 10. */
+  --_chars: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--fh-space-2);
+}
+.site-hc__sections .fh-eyebrow-pill { margin: 0; text-decoration: none; }
+.site-hc__sections .fh-dot + .fh-eyebrow-pill__seg { flex: none; inline-size: calc(var(--_chars) * (1ch + 0.1em)); }
+.site-hc__sections .fh-eyebrow-pill:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+/* Dots solid at rest; the Doppler ripple (Firehorse's fh-doppler, as on .fh-dot--live) only
+   while the pill is hovered or focused. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__sections .fh-eyebrow-pill:is(:hover, :focus-visible) .fh-dot { animation: fh-doppler var(--fh-duration-pulse) ease-out infinite; }
+}
+
+/* The homepage headline on the right, split by the etch line. Same size as the homepage
+   (.site-hero .fh-display: clamp(2.6rem, 1rem + 5cqi, 5.6rem), cqi of the content width),
+   weight, tracking, leading and halo; the rotator and its colours come from the homepage's
+   own classes. "The design system" rests just above the line; "that ___." hangs just below. */
+.site-hc__tag {
+  margin: 0;
+  font-size: clamp(2.6rem, 1rem + 5cqi, 5.6rem);
+  font-weight: var(--fh-display-weight);
+  letter-spacing: var(--fh-tracking-wordmark); /* the logo's tracking, so the headline sets with it */
+  line-height: 0.96;
+  color: var(--fh-color-text-strong, var(--fh-color-text));
+  text-shadow: 0 0 0.5em color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
+}
+.site-hc__tag-top, .site-hc__tag-turn { position: absolute; inset-inline-end: 0; white-space: nowrap; }
+/* Bottom of the words a little above the etch (the etch sits 0.215em of the logo's size above
+   the marks' row foot, plus the legal row's space below that). */
+.site-hc__tag-top { inset-block-end: calc(var(--fh-space-1-5) + var(--fh-text-label) * 1.2 + var(--fh-heading-size) * 0.215 + 2px + var(--fh-space-3)); }
+.site-hc__tag-turn { inset-block-start: calc(100% - (var(--fh-space-1-5) + var(--fh-text-label) * 1.2) - var(--fh-heading-size) * 0.215 + var(--fh-space-3)); }
+.site-hc__tag em { font-style: normal; color: var(--fh-color-text-muted); }
+
+/* Top right: the homepage header's Download from Git, in the same place (the header bar's
+   line, the content's right edge less the bar's 5px inset) and the same look: the rules
+   .site-header-oval .site-git applies, resolved, since this page has no header around it. */
+.site-hc__git {
+  --_c: var(--fh-color-accent);
+  display: flex;
+  align-items: center;
+  gap: var(--fh-space-2); /* the header's actions gap */
+  position: absolute;
+  z-index: 1;
+  inset-inline-end: calc(max(var(--fh-page-margin), (100% - var(--fh-content-max)) / 2) + 5px);
+  inset-block-start: calc(var(--site-chrome-top, 1rem) + (var(--fh-header-height, 3.25rem) - 2rem) / 2);
+}
+.site-hc__git .site-git {
+  --fh-button-bg: var(--site-nav-fill);
+  --fh-button-fg: var(--fh-color-text);
+  --fh-button-border: var(--fh-color-etch, var(--fh-color-border-strong));
+  gap: var(--fh-space-2);
+  color: var(--fh-color-text);
+  /* Fully rounded, a grey etch (not the accent), the text a step up from the header's 11px. */
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--fh-radius-pill, 999px);
+  background-color: var(--site-nav-fill);
+  backdrop-filter: blur(var(--fh-blur-chrome));
+  padding-inline: var(--fh-space-4);
+  font-size: 0.8rem;
+}
+/* A downward arrow in the theme colour, in place of the GitHub mark. */
+.site-hc__git .site-git::before { display: none; }
+.site-hc__git .site-git .fh-icon { --fh-icon-size: 1.1em; color: var(--fh-color-accent); }
+.site-hc__down { rotate: 90deg; } /* the set has no plain down arrow: arrow-right, turned */
+.site-hc__git .site-git:is(:hover, :focus-visible) { border-color: var(--fh-color-text-subtle); background-color: var(--site-nav-fill); }
+
+/* Under the logo, on the left: the homepage eyebrow (EYE-5.2), just below the line, the
+   same drop below the marks' row as "that ___." on the right. Its dot is solid (no Doppler). */
+/* Under the line, left: a two-line lede, then the eyebrow chip. The stack is
+   placed in the marks' grid, column 1 (the logo's column, so 100% is the logo's width), row 2
+   (just below the row the logo and etch sit in); absolute, so the line does not move. */
+.site-hc__below {
+  position: absolute;
+  grid-area: 2 / 1 / 3 / 2;
+  inset-inline-start: 0;
+  inset-block-start: var(--fh-space-5);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* the logo's width; only the chip runs past it */
+  justify-items: start;
+  gap: var(--fh-space-4);
+  inline-size: 100%;
+}
+.site-hc__lede {
+  /* Two lines: "The design system built for" then "modern workflows" on its own. */
+  inline-size: max-content;
+  max-inline-size: none;
+  margin: 0;
+  font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.45rem);
+  font-weight: var(--fh-weight-medium, 500);
+  line-height: var(--fh-leading-snug, 1.3);
+  letter-spacing: var(--fh-tracking-body, -0.01em);
+  color: var(--fh-color-text-muted);
+}
+.site-hc__meta {
+  --fh-tone: var(--fh-color-accent);
+  margin: 0;
+  inline-size: max-content; /* the chip keeps its own width, past the logo's */
+  max-inline-size: none;
+}
+
+/* Every pill on the page (the three sections and the eyebrow) at the foundational eyebrow size,
+   --fh-text-label, nudged up 10%. */
+.site-hc :is(.site-hc__sections, .site-hc__marks) .fh-eyebrow-pill { font-size: calc(var(--fh-text-label) * 1.1); }
+
+/* —— Intro ——
+   Plays once on load, in order, CSS only (opacity, transform, clip-path, filter), about 2.9s:
+     1. Horses      0.00s  wipe up from the foot of the window (the homepage's reveal) with a
+                           focus pull: blurred and a touch large, settling sharp.
+     2. Logo        0.55s  folds up from its baseline (a flap on rotateX), springing to rest.
+     3. Etch        0.80s  draws out from the logo to the right edge (scaleX, expo-out); the
+                    1.00s  spine draws up from the underscore.
+     4. Headline    1.00s  "The design system" rises out of the line; "that ___." drops from it
+                           (blur-up reveals, the common hero-title pattern).
+     5. Chrome      1.30s  section pills (staggered) and the top-right controls fade up.
+     6. Frost       1.35s  rises from the bottom of the window up to the etch line, with Download from Git.
+     7. Eyebrow     2.10s  last, once the frost is up: wipes in from left to right in one smooth pass.
+   Like the homepage, it holds until the horse art is decoded (fh-ready), and reduced motion
+   shows everything at rest. Reload to replay. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc {
+    --_e-io: cubic-bezier(0.65, 0, 0.35, 1);      /* in-out: big, weighted moves */
+    --_e-out: cubic-bezier(0.16, 1, 0.3, 1);      /* expo-out: draws and reveals */
+    --_e-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* back-out: a little overshoot */
+  }
+  /* On the Firehorse motion system (MOT-1, MOT-2): the art (unveil), logo (fold), headline
+     (blur, drop), tagline (rise), nav links (staggered rise), corner tools (rise), frost (lift)
+     and eyebrow (wipe) are data-fh-enter attributes in the page, timed with --fh-at. Only the
+     etch keeps its own intro here, because it also draws back on scroll. */
+  .site-hc__marks { perspective: 40em; }
+  .site-hc__etch { transform-origin: 0 50%; animation: hc-draw 0.7s var(--_e-out) 0.8s both; }
+  :root.fh-js:not(.fh-ready) .site-hc .site-hc__etch { animation-play-state: paused; }
+}
+@keyframes hc-horses-in {
+  from { clip-path: inset(100% 0 0 0); filter: blur(12px); scale: 1.06; opacity: 0.4; }
+  60% { filter: blur(2px); opacity: 1; }
+  to { clip-path: inset(0 0 0 0); filter: none; scale: 1; opacity: 1; }
+}
+@keyframes hc-fade { from { opacity: 0; } }
+/* The frost rises from below the window's bottom edge to the etch line: its own height, so it
+   starts fully out of view. */
+@keyframes hc-frost-up { from { translate: 0 100%; } to { translate: 0 0; } }
+@keyframes hc-fold-up { from { opacity: 0; transform: rotateX(-95deg); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes hc-draw { from { scale: 0 1; } to { scale: 1 1; } }
+/* Blur-up reveals away from the line: each half starts against it, blurred, and settles
+   outward into place. */
+@keyframes hc-rise { from { opacity: 0; translate: 0 0.45em; filter: blur(10px); } to { opacity: 1; translate: 0 0; filter: none; } }
+@keyframes hc-drop { from { opacity: 0; translate: 0 -0.45em; filter: blur(10px); } to { opacity: 1; translate: 0 0; filter: none; } }
+@keyframes hc-up { from { opacity: 0; translate: 0 0.6rem; } }
+@keyframes hc-wipe { from { clip-path: inset(-2px 100% -2px -2px round 999px); opacity: 0.4; } to { clip-path: inset(-2px -2px -2px -2px round 999px); opacity: 1; } }
+
+/* The eyebrow's filled end is the Download from Git link: on-tone text and arrow, a touch
+   deeper on hover. */
+.site-hc__meta-git { text-decoration: none; transition: background-color var(--fh-duration-fast) var(--fh-ease-standard); }
+.site-hc__meta-git .fh-icon { --fh-icon-size: 1.1em; color: inherit; }
+.site-hc__meta-git:is(:hover, :focus-visible) { background-color: oklch(from var(--fh-tone) calc(l - 0.06) c h); }
+.site-hc__meta-git:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+/* Download from Git in the eyebrow at the same weight as the Download from Git button
+   (.fh-button: --fh-weight-heavy, 700). */
+.site-hc__meta-git strong { font-weight: var(--fh-weight-heavy); }
+
+/* KC's launcher on this page: a solid block of the theme tone, held to a legible lightness the
+   same way as the filled eyebrow end (EYE-5.4), with KC's drawing (currentColor) flipped dark
+   or light from it so the outline reads. */
+body:has(.site-hc) .site-kc-launch {
+  --_kc: light-dark(oklch(from var(--fh-color-accent) min(l, 0.52) c h), oklch(from var(--fh-color-accent) max(l, 0.74) c h));
+  --_kc-on: oklch(from var(--_kc) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
+  border: var(--fh-border-thin) solid var(--_kc);
+  background: var(--_kc);
+  color: var(--_kc-on);
+  backdrop-filter: none;
+}
+body:has(.site-hc) .site-kc-launch .site-kc-face { background: none; color: var(--_kc-on); }
+body:has(.site-hc) .site-kc-launch:is(:hover, :focus-visible) { border-color: oklch(from var(--_kc) calc(l - 0.06) c h); background: oklch(from var(--_kc) calc(l - 0.06) c h); }
+/* Its label: an etched (dashed) underline in the text's own colour, held on the wrapper so it
+   stays still while the words roll over on hover (.fh-roll, as on the header button). */
+.site-hc__meta-label {
+  display: inline-block;
+  padding-block-end: 0.15em;
+  border-block-end: var(--fh-border-thin) dashed color-mix(in oklab, currentColor 70%, transparent);
+  line-height: 1.2;
+}
+
+/* Theme colour: a solid dot in the theme colour (held legible, as the filled eyebrow end),
+   right of Download from Git, the scheme pill's height; a small chevron inside in the
+   on-colour, nudged 1px down so it sits optically centred. It opens a light, etched, rounded
+   vertical list of five roots hanging from it (anchored), no heavy menu. */
+.site-hc__root { position: relative; display: inline-flex; }
+.site-hc__root-btn {
+  --_d: light-dark(oklch(from var(--fh-color-accent) min(l, 0.52) c h), oklch(from var(--fh-color-accent) max(l, 0.74) c h));
+  anchor-name: --hc-root;
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--_d);
+  color: oklch(from var(--_d) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
+  cursor: var(--fh-cursor-action, pointer);
+  transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-hc__root-btn .fh-icon { --fh-icon-size: 0.8rem; translate: 0 1px; transition: rotate var(--fh-duration-fast) var(--fh-ease-standard); }
+.site-hc__root-btn:is(:hover, :focus-visible) { background: oklch(from var(--_d) calc(l - 0.06) c h); }
+.site-hc__root-btn:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-hc__root:has(.site-hc__roots:popover-open) .site-hc__root-btn .fh-icon { rotate: 180deg; translate: 0 -1px; }
+.site-hc__roots {
+  position-anchor: --hc-root;
+  position: fixed;
+  inset: auto;
+  top: anchor(bottom);
+  right: anchor(right); /* hangs from the dot, flush with its right edge, so it stays on screen */
+  margin: var(--fh-space-2) 0 0;
+  padding: var(--fh-space-1-5);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: 1.25rem;
+  background: var(--site-nav-fill, color-mix(in oklab, var(--fh-color-canvas) 80%, transparent));
+  backdrop-filter: blur(var(--fh-blur-chrome, 12px));
+  color: var(--fh-color-text);
+  box-shadow: none;
+}
+.site-hc__roots ul { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.site-hc__roots button {
+  display: flex;
+  align-items: center;
+  gap: var(--fh-space-2);
+  inline-size: 100%;
+  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: var(--fh-weight-medium) var(--fh-text-label) / 1.2 var(--fh-font-mono);
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  text-align: start;
+  white-space: nowrap;
+  cursor: var(--fh-cursor-action, pointer);
+}
+.site-hc__roots button > i { flex: none; inline-size: 0.85rem; aspect-ratio: 1; border-radius: 50%; background: var(--_c); }
+.site-hc__roots button:is(:hover, :focus-visible) { background: color-mix(in oklab, var(--_c) 12%, transparent); }
+.site-hc__roots button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+.site-hc__roots button[aria-pressed="true"] { font-weight: var(--fh-weight-heavy); }
+.site-hc__roots button[aria-pressed="true"] > i { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--_c); }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__roots:popover-open { animation: hc-roots-in 0.18s var(--fh-ease-out) both; }
+}
+@keyframes hc-roots-in { from { opacity: 0; translate: 0 -4px; } }
+/* KC on the page's right margin, the content edge the logo, line, headline and top-right
+   controls all keep (not the window's 16px corner). */
+body:has(.site-hc) .site-kc-launch { inset-inline-end: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2); }
+/* KC at the theme dot's size: 2rem, no padding and no border (the dot has none), the face
+   filling it. On hover he still opens out to "Ask KC". */
+body:has(.site-hc) .site-kc-launch { padding: 0; border: 0; }
+body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
+
+/* The spine: a subtle grey dashed etch from the logo's underscore up to the middle of the
+   Start here chip (the lowest of the three), behind it.
+   home-concept.js sets its left, top and height. Draws up from the underscore in the intro. */
+.site-hc__spine {
+  position: absolute;
+  z-index: 0;
+  inline-size: 0;
+  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  transform-origin: 50% 100%; /* on the underscore's left edge, flush with the chips' left border */
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__spine { animation: hc-spine 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1s both; }
+  :root.fh-js:not(.fh-ready) .site-hc__spine { animation-play-state: paused; }
+}
+@keyframes hc-spine { from { scale: 1 0; } to { scale: 1 1; } }
+
+/* The rotating word waits: "scales" holds still until the chip under the logo has landed (2.9s)
+   (no breather), then the cycle starts. Every word's offset moves by the hold; the first
+   word also gets a hold animation (listed last, so it wins while it runs) that keeps it showing
+   until then, and the cycle takes over exactly where it shows the first word, so nothing jumps. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__tag .fh-rotator { --_hold: 2.9s; } /* starts as the chip under the logo lands (2.9s) */
+  .site-hc__tag .fh-rotator > * { animation-delay: calc(var(--_hold) + var(--_k, 0) * var(--_step) - var(--_step) * 0.1923); }
+  .site-hc__tag .fh-rotator > :first-child {
+    animation-name: fh-rotator-7, hc-word-hold;
+    animation-duration: calc(var(--_step) * 7), var(--_hold);
+    animation-delay: calc(var(--_hold) - var(--_step) * 0.1923), 0s;
+    animation-iteration-count: infinite, 1;
+    animation-fill-mode: both, none;
+    animation-timing-function: var(--fh-ease-out), linear;
+  }
+}
+@keyframes hc-word-hold { from, to { opacity: 1; translate: 0 0; } }
+
+/* Violet on load: this page always opens on Violet (#8b5cf6, from the library), whatever the day's
+   colour or a saved pick says; the theme-colour dot changes it for the visit (home-concept.js sets
+   --site-hc-pick). The same derivation as site.css's root rule, so every harmony follows. Named
+   themes keep their own accent, as there. */
+:root:has(.site-hc):not([data-fh-theme]) {
+  --_pick: var(--site-hc-pick, #8b5cf6);
+  --fh-root: var(--_pick);
+  --fh-color-accent: var(--_pick);
+  --fh-color-accent-hover: oklch(from var(--_pick) calc(l + 0.06) c h);
+  --fh-color-accent-text: light-dark(oklch(from var(--_pick) min(l, 0.5) c h), oklch(from var(--_pick) max(l, 0.74) c h));
+}
+
+/* "The design system": a lighter frost behind the words, a step under the lower half's
+   (blur 3px and a 25% wash against 5px and 45%), held just around the phrase. */
+.site-hc__tag-top { isolation: isolate; }
+.site-hc__tag-top::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -0.08em -0.22em -0.04em;
+  border-radius: var(--fh-radius-sm);
+  background: color-mix(in oklab, var(--fh-color-canvas) 25%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  pointer-events: none;
+}
+
+/* Start here stands out: the tone-tinted pill (EYE-3.1's --tone) in a vivid step of the root, the
+   +40° analogous (the walk's +40 step, one end of the horse light's sweep, taken from the accent
+   directly), its chroma lifted and held to a
+   legible lightness per scheme. Follows any root; the label column and etch stay aligned. */
+.site-hc__vivid {
+  --fh-tone: light-dark(
+    oklch(from var(--fh-color-accent) min(calc(l + 0.02), 0.56) min(calc(c * 1.2), 0.26) calc(h + 40)),
+    oklch(from var(--fh-color-accent) max(calc(l + 0.06), 0.74) min(calc(c * 1.2), 0.24) calc(h + 40)));
+  border-color: color-mix(in oklab, var(--fh-tone) 55%, transparent);
+}
+.site-hc__vivid :is(.fh-eyebrow-pill__seg, strong) { color: var(--fh-tone); }
+.site-hc__vivid .fh-eyebrow-pill__seg + .fh-eyebrow-pill__seg { border-inline-start-color: color-mix(in oklab, var(--fh-tone) 45%, transparent); }
+/* Its dot is live: the Doppler runs continuously (the other two ripple only on hover). */
+
+/* Send to an agent, under the headline on the right; home-concept.js sets its width (that of
+   "The design system") and top. The button fills it, label and icons centred. */
+.site-hc__agents { position: absolute; inset-inline-end: 0; z-index: 1; }
+.site-hc__agents > .fh-button { inline-size: auto; justify-content: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__agents { animation: hc-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both; }
+  :root.fh-js:not(.fh-ready) .site-hc__agents { animation-play-state: paused; }
+}
+
+/* "modern workflows": underlined by a line that runs a little past the words and ends in an
+   arrowhead pointing right, in the accent's text colour. */
+.site-hc__arrowline {
+  position: relative;
+  display: inline-block;
+  padding-inline-end: 0.9em;
+  color: var(--fh-color-text);
+}
+.site-hc__arrowline::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -0.14em;
+  block-size: 1.5px;
+  background: var(--fh-color-accent-text);
+}
+.site-hc__arrowline::before {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0.5px;
+  inset-block-end: calc(-0.14em - 0.22em + 0.75px);
+  inline-size: 0.44em;
+  block-size: 0.44em;
+  border-block-start: 1.5px solid var(--fh-color-accent-text);
+  border-inline-end: 1.5px solid var(--fh-color-accent-text);
+  rotate: 45deg;
+  transform-origin: 50% 50%;
+}
+
+/* —— The agent picker, as Explore tiles ——
+   The homepage menu (site-features.js) restyled on this page only, in the spirit of the Explore
+   cards: the button's own width, a plain etched panel, the web agents as open tiles on one dashed
+   grid (five across: a solid cube in the agent's tone, a numbered mono eyebrow, the name set large,
+   an arrow up and to the right that slides and takes the tone on hover), the terminal agents as a
+   row of mono cells, and a quiet copy link. Behaviour is the menu's own, unchanged. */
+.site-hc__agents .fh-menu.site-agents__menu {
+  inline-size: anchor-size(width);
+  min-inline-size: min(36rem, calc(100vi - 2rem));
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--site-nav-radius, 3px);
+  background-color: var(--fh-color-surface-menu, color-mix(in oklab, var(--fh-color-surface) 92%, transparent));
+  backdrop-filter: blur(14px);
+  box-shadow: none;
+  counter-reset: hc-agent;
+}
+/* header: a mono eyebrow on the left, the hint on the right, a dashed rule under them */
+.site-hc__agents .site-agents__head { padding: var(--fh-space-4) var(--fh-space-5); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); background: none; }
+.site-hc__agents .site-agents__head::before { display: none; }
+.site-hc__agents .site-agents__menu .fh-menu__label { margin: var(--fh-space-4) var(--fh-space-5) var(--fh-space-2); }
+
+/* the web agents: Explore tiles, five across, on one dashed grid edge to edge */
+.site-hc__agents .site-agents__grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-inline: 0;
+  border-inline-start: 0;
+  border-radius: 0;
+}
+.site-hc__agents .site-agents__grid > button {
+  --_t: light-dark(oklch(from var(--fh-tone) min(l, 0.52) c h), oklch(from var(--fh-tone) max(l, 0.74) c h));
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--fh-space-1-5);
+  min-block-size: 0;
+  padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-3-5, 0.875rem);
+  counter-increment: hc-agent;
+}
+.site-hc__agents .site-agents__grid > button:nth-child(5n) { border-inline-end: 0; }
+.site-hc__agents .site-agents__grid > button:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent); box-shadow: none; }
+/* the cube: solid in the tone, the icon flipped dark or light to read on it (as Explore's) */
+.site-hc__agents .site-agents__grid .fh-icon-tile {
+  --fh-icon-tile: 2rem;
+  margin-block-end: var(--fh-space-1);
+  border: 0;
+  border-radius: var(--fh-radius-md);
+  background: var(--_t);
+  color: oklch(from var(--_t) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+}
+.site-hc__agents .site-agents__grid > button:is(:hover, :focus-visible) .fh-icon-tile { scale: 1; }
+/* as an Explore tile: a numbered mono eyebrow ("01"), the name large, the note muted under it */
+.site-hc__agents .site-agents__name { display: grid; gap: 0.2rem; min-inline-size: 0; }
+.site-hc__agents .site-agents__name::before {
+  content: counter(hc-agent, decimal-leading-zero);
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  letter-spacing: var(--fh-tracking-caps);
+  color: var(--fh-color-text-subtle);
+}
+.site-hc__agents .site-agents__name b {
+  font-size: var(--fh-text-lede, 1.125rem);
+  font-weight: var(--fh-heading-weight);
+  letter-spacing: var(--fh-tracking-tight);
+  line-height: 1.1;
+}
+.site-hc__agents .site-agents__name small {
+  display: block;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fh-text-caption, 0.75rem);
+  color: var(--fh-color-text-muted);
+}
+/* the arrow: top right, up and to the right, in the tone on hover */
+.site-hc__agents .site-agents__grid .site-agents__go {
+  position: absolute;
+  inset-block-start: var(--fh-space-4);
+  inset-inline-end: var(--fh-space-4);
+  opacity: 1;
+  translate: none;
+  font-size: 1rem;
+  color: var(--fh-color-text-subtle);
+  transition: translate var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast);
+}
+.site-hc__agents .site-agents__grid > button:is(:hover, :focus-visible) .site-agents__go { translate: 2px -2px; color: var(--_t); }
+
+/* the terminal agents: one row of mono cells on the same dashed grid */
+.site-hc__agents .site-agents__cli { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-hc__agents .site-agents__cli > button {
+  display: grid;
+  gap: var(--fh-space-1);
+  justify-items: start;
+  margin: 0;
+  padding: var(--fh-space-3) 2.75rem var(--fh-space-3) var(--fh-space-5);
+  border: 0;
+  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+  border-radius: 0;
+  background: none;
+  position: relative;
+}
+.site-hc__agents .site-agents__cli > button:last-child { border-inline-end: 0; }
+.site-hc__agents .site-agents__cli > button b { font-size: var(--fh-text-small); font-weight: var(--fh-heading-weight); }
+.site-hc__agents .site-agents__cli > button code { max-inline-size: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fh-text-label); color: var(--fh-color-text-subtle); background: none; padding: 0; }
+.site-hc__agents .site-agents__cli .site-agents__go { position: absolute; inset-block-start: var(--fh-space-3); inset-inline-end: var(--fh-space-4); }
+.site-hc__agents .site-agents__cli > button:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent); }
+
+/* foot: the copy-only action as a quiet etched pill, right-aligned */
+.site-hc__agents .site-agents__foot { display: flex; justify-content: flex-end; padding: var(--fh-space-3) var(--fh-space-5); border: 0; background: none; }
+.site-hc__agents .site-agents__copy { border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: 999px; background: none; }
+
+/* number sits in the icon row, beside the arrow, so each tile is one line shorter */
+.site-hc__agents .site-agents__grid > button { position: relative; }
+.site-hc__agents .site-agents__name::before {
+  position: absolute;
+  inset-block-start: calc(var(--fh-space-3) + 0.55rem);
+  inset-inline-end: 2.4rem;
+  line-height: 1;
+}
+.site-hc__agents .site-agents__head { padding-block: var(--fh-space-2-5, 0.625rem); }
+
+/* Send to an agent trigger: frosted white pill, an etched ring around it, bold label, up arrow */
+.site-hc__agents > .fh-button {
+  gap: var(--fh-space-2);
+  min-block-size: 2.5rem;
+  padding-inline: var(--fh-space-5);
+  border: 0;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: inset 0 0 0 var(--fh-border-thin) oklch(1 0 0 / 0.7);
+  color: oklch(0.16 0 0);
+  font-size: 0.875rem;
+  font-weight: 700;
+  outline: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  outline-offset: 4px;
+  transition: background-color 160ms ease, outline-color 160ms ease;
+}
+.site-hc__agents > .fh-button:hover { background: oklch(1 0 0 / 0.72); outline-color: var(--fh-color-accent); }
+.site-hc__agents > .fh-button:focus-visible { outline: 2px solid var(--fh-color-accent); outline-offset: 4px; }
+.site-hc__agents > .fh-button > .fh-icon--send { display: none; }
+.site-hc__agents > .fh-button > .fh-icon--chevron-down {
+  --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3Cpath d='M12 19V5'/%3E%3C/svg%3E");
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-hc__agents > .fh-button:hover > .fh-icon--chevron-down { transform: translateY(-2px); }
+
+
+/* "modern workflows": its own line, mono caps, heavier than the line above */
+.site-hc__arrowline {
+  display: inline-block;
+  margin-block-start: 0.15em;
+  padding-inline-end: 0;
+  font-family: var(--fh-font-mono);
+  font-size: 1.05em;
+  font-weight: 800;
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  color: var(--fh-color-text);
+}
+.site-hc__arrowline::before { content: none; }
+.site-hc__arrowline::after { inset-block-end: -0.2em; block-size: 1.5px; background: var(--fh-color-text); }
+
+/* The chip under the lede grows to meet the agent button: both 2.5rem tall */
+.site-hc__marks .fh-eyebrow-pill.site-hc__meta { font-size: calc(var(--fh-text-label) * 1.3); min-block-size: 2.5rem; }
+
+/* The button is narrow now, so the picker opens up from it, right edges aligned, at a set width */
+.site-hc__agents .fh-menu.site-agents__menu { inline-size: min(45rem, calc(100vi - 2rem)); min-inline-size: 0; }
+@supports (position-area: top) {
+  .site-hc__agents .fh-menu.site-agents__menu[data-up] { position-area: block-start span-inline-start; }
+}
+
+/* The eyebrow chip, now top right in place of the Download from Git button, at that button's
+   scale (32px tall, 0.8rem type). */
+.site-hc__git .fh-eyebrow-pill.site-hc__meta { font-size: 0.8rem; min-block-size: 2rem; margin: 0; }
+
+/* The lede: one line, tucked right under the logo, "The" starting under the f of "firehorse"
+   (offset set by home-concept.js as --hc-lede-x), a down arrow after "workflows". */
+.site-hc__below { inset-block-start: var(--fh-space-2); }
+.site-hc__lede { padding-inline-start: var(--hc-lede-x, 0.6em); }
+.site-hc__lede-down {
+  --fh-icon-size: 0.95em;
+  margin-inline-start: 0.35em;
+  rotate: 90deg;
+  vertical-align: -0.1em;
+  color: var(--fh-color-text);
+}
+
+/* —— Below the fold: "Build with" and the services flowing past ——
+   A wide, light, roomy box under the hero. The services run right to left in grey; the one
+   passing just right of the label is lit in its brand colour (home-concept.js), one at a time. */
+.site-hc-svc {
+  inline-size: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding-block: var(--fh-space-16, 4rem) var(--fh-space-20, 5rem);
+  padding-inline: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+}
+.site-hc-svc__box {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(var(--fh-space-6), 4vw, var(--fh-space-12));
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+  padding-inline: clamp(var(--fh-space-6), 4vw, var(--fh-space-12));
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--fh-radius-lg, 12px);
+  background: light-dark(oklch(1 0 0 / 0.42), oklch(0.18 0 0 / 0.42));
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.site-hc-svc__lead {
+  margin: 0;
+  white-space: nowrap;
+  font-size: clamp(1.75rem, 1rem + 2.2vw, 3rem);
+  font-weight: var(--fh-heading-weight);
+  letter-spacing: var(--fh-tracking-wordmark, -0.05em);
+  line-height: 1;
+  color: var(--fh-color-text);
+}
+.site-hc-svc__track {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 88%, transparent);
+}
+.site-hc-svc__list {
+  display: flex;
+  inline-size: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: hc-svc-flow var(--_flow, 70s) linear infinite;
+}
+.site-hc-svc__track:hover .site-hc-svc__list { animation-play-state: paused; }
+@keyframes hc-svc-flow { to { translate: -50% 0; } }
+.site-hc-svc__item {
+  --_brand: var(--fh-color-text);
+  --_lit: light-dark(oklch(from var(--_brand) min(l, 0.6) c h), oklch(from var(--_brand) max(l, 0.74) c h));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-inline-end: clamp(var(--fh-space-8), 4vw, var(--fh-space-16));
+  white-space: nowrap;
+  font-size: clamp(1.25rem, 0.9rem + 1.1vw, 1.875rem);
+  font-weight: var(--fh-heading-weight);
+  letter-spacing: var(--fh-tracking-tight);
+  color: var(--fh-color-text-subtle);
+  opacity: 0.5;
+  filter: grayscale(1);
+  transition: color 450ms ease, opacity 450ms ease, filter 450ms ease;
+}
+.site-hc-svc__item .fh-icon { --fh-icon-size: 0.9em; }
+.site-hc-svc__item.is-lit { color: var(--_lit); opacity: 1; filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  .site-hc-svc__list { animation: none; flex-wrap: wrap; inline-size: auto; row-gap: var(--fh-space-4); }
+  .site-hc-svc__item[aria-hidden] { display: none; }
+}
+@media (width < 48rem) {
+  .site-hc-svc__box { grid-template-columns: minmax(0, 1fr); padding-block: var(--fh-space-12); }
+}
+
+/* —— Build with, revised: edge to edge, flush to the hero, half the height ——————————— */
+.site-hc-svc { position: relative; z-index: 2; padding: 0; }
+.site-hc-svc__box {
+  padding-block: clamp(2.25rem, 4.5vw, 4rem);
+  padding-inline: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+  border-inline: 0;
+  border-radius: 0;
+}
+.site-hc-svc__intro { display: grid; gap: var(--fh-space-1); }
+.site-hc-svc__lead { font-size: var(--fh-text-lede, 1.125rem); letter-spacing: var(--fh-tracking-tight); }
+.site-hc-svc__sub { margin: 0; max-inline-size: 15rem; font-size: var(--fh-text-caption, 0.8125rem); line-height: 1.4; color: var(--fh-color-text-muted); }
+.site-hc-svc__item { font-size: clamp(1.0625rem, 0.85rem + 0.6vw, 1.375rem); cursor: pointer; border-radius: var(--fh-radius-sm); outline-offset: 6px; }
+.site-hc-svc__item:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); }
+
+/* The send card: floats above the service under the pointer (or focus). Built like the agent
+   picker: a dashed-etch frame cut into cells. A header row (eyebrow + count); a body of two
+   cells, the service tile (icon, number, arrow, name, note) and the prompt; a footer row of two
+   equal actions, Copy | Open. */
+.site-hc-svc__card {
+  --_brand: var(--fh-color-text);
+  --_b: light-dark(oklch(from var(--_brand) min(l, 0.55) c h), oklch(from var(--_brand) max(l, 0.74) c h));
+  --_on: oklch(from var(--_b) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
+  --_etch: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch, var(--fh-color-border)));
+  position: absolute;
+  z-index: 3;
+  inset-block-end: var(--_y, 100%);
+  inset-inline-start: var(--_x, 0);
+  inline-size: min(32rem, calc(100vw - 2rem));
+  display: grid;
+  border: var(--_etch);
+  border-radius: var(--site-nav-radius, 3px);
+  background: light-dark(oklch(1 0 0 / 0.82), oklch(0.19 0 0 / 0.84));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  translate: 0 6px;
+  visibility: hidden;
+  transition: opacity 180ms ease, translate 220ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 220ms;
+}
+.site-hc-svc__card[data-open] { opacity: 1; translate: 0 0; visibility: visible; transition-delay: 0s; }
+.site-hc-svc__card::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: var(--_caret, 2rem);
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  translate: -50% -50%;
+  rotate: 45deg;
+  background: inherit;
+  border-inline-end: var(--_etch);
+  border-block-end: var(--_etch);
+}
+.site-hc-svc__card :is(.hc-c-mono) {
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  color: var(--fh-color-text-subtle);
+}
+/* header row */
+.site-hc-svc__card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fh-space-3);
+  padding: var(--fh-space-3) var(--fh-space-4);
+  border-block-end: var(--_etch);
+}
+.site-hc-svc__card-head .hc-c-title { color: var(--fh-color-text); font-weight: var(--fh-weight-bold, 700); }
+/* body: tile cell | prompt cell */
+.site-hc-svc__card-body { display: grid; grid-template-columns: 11rem minmax(0, 1fr); }
+.site-hc-svc__card-tile {
+  position: relative;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--fh-space-1-5, 0.375rem);
+  padding: var(--fh-space-4);
+  border-inline-end: var(--_etch-soft);
+}
+.site-hc-svc__card-cube { display: grid; place-items: center; inline-size: 2rem; aspect-ratio: 1; margin-block-end: var(--fh-space-1); border-radius: var(--fh-radius-md); background: var(--_b); color: var(--_on); font-size: 0.95rem; }
+.site-hc-svc__card-tile .hc-c-num { position: absolute; inset-block-start: calc(var(--fh-space-4) + 0.55rem); inset-inline-end: 2.4rem; line-height: 1; }
+.site-hc-svc__card-tile .hc-c-go { position: absolute; inset-block-start: var(--fh-space-4); inset-inline-end: var(--fh-space-4); color: var(--_b); }
+.site-hc-svc__card-tile b { font-size: var(--fh-text-lede, 1.125rem); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-tracking-tight); line-height: 1.1; color: var(--fh-color-text); }
+.site-hc-svc__card-tile small { font-size: var(--fh-text-caption, 0.75rem); color: var(--fh-color-text-muted); }
+.site-hc-svc__card-prompt { display: grid; grid-template-rows: auto 1fr; gap: var(--fh-space-1-5, 0.375rem); padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-4); min-inline-size: 0; }
+.site-hc-svc__card textarea {
+  display: block;
+  inline-size: 100%;
+  min-block-size: 5.5rem;
+  resize: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  line-height: 1.6;
+  color: var(--fh-color-text);
+}
+.site-hc-svc__card textarea:focus-visible { outline: none; }
+.site-hc-svc__card-prompt:focus-within { box-shadow: inset 0 0 0 1px var(--_b); }
+/* footer row: two equal actions */
+.site-hc-svc__card-foot { display: grid; grid-template-columns: 1fr 1fr; border-block-start: var(--_etch); }
+.site-hc-svc__card-foot button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fh-space-2);
+  min-block-size: 2.75rem;
+  padding: 0 var(--fh-space-4);
+  border: 0;
+  background: none;
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  font-weight: var(--fh-weight-bold, 700);
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  color: var(--fh-color-text);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.site-hc-svc__card-foot button + button { border-inline-start: var(--_etch-soft); }
+.site-hc-svc__card-foot button .fh-icon { --fh-icon-size: 1.05em; transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
+.site-hc-svc__card-foot button:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+.site-hc-svc__card-foot .site-hc-svc__send { color: var(--_b); }
+.site-hc-svc__card-foot .site-hc-svc__send:hover { background: var(--_b); color: var(--_on); }
+.site-hc-svc__card-foot .site-hc-svc__send:hover .fh-icon { translate: 2px -2px; }
+.site-hc-svc__card-foot button:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
+@media (prefers-reduced-motion: reduce) { .site-hc-svc__card { transition: none; } }
+
+/* —— The horses recede as the page scrolls, then hold ——
+   The art is fixed to the window. Over the first window-height of scroll its scale eases from
+   the hero's 1.8 down to 1.15, so the horses feel pushed back into the page; after that they
+   stay put, fixed, behind everything below. */
+@property --_scale { syntax: "<number>"; inherits: true; initial-value: 1.22; }
+.site-hc__art { position: fixed; }
+
+/* Placeholder room below "Build with" until the next sections land, so the page can scroll far
+   enough for the horses to finish receding and you can see them hold, fixed. */
+.site-hc-svc { margin-block-end: 70vh; }
+
+/* Subtler: 1.8 → 1.62, and it locks once the logo reaches the top of the window
+   (--hc-lock, the logo's distance from the page top, set by home-concept.js). */
+
+
+/* The lit service flips in as it reaches the label: the same roll as Download from Git
+   (.fh-roll), played once on entry. Leaving snaps back with no transition; the copy is the same
+   word, so it doesn't show. */
+.site-hc-svc__item .fh-roll { transition: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc-svc__item.is-lit .fh-roll {
+    translate: 0 calc(-1 * var(--_line));
+    clip-path: inset(var(--_line) -0.25em calc(-1 * var(--_line)) -0.25em);
+    transition: translate var(--fh-duration-slow) var(--fh-ease-out), clip-path var(--fh-duration-slow) var(--fh-ease-out);
+  }
+}
+
+/* —— Site nav: Start here, then Docs ▾ · Build with Firehorse · Design patterns ——————————
+   One row, top left. Docs opens a tile menu (the agent picker's card language: dashed etch
+   cells, tone cubes, numbers, arrows). Once the page scrolls, a copy docks top centre as the
+   global nav (home-concept.js). */
+.site-hc-nav { flex-direction: row; align-items: center; gap: var(--fh-space-2); }
+.site-hc-nav__links { display: flex; align-items: center; }
+.site-hc-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  block-size: 1.875rem;
+  padding-inline: var(--fh-space-3);
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-family: var(--fh-font-mono);
+  font-size: calc(var(--fh-text-label) * 1.1);
+  font-weight: var(--fh-weight-bold, 700);
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fh-color-text);
+  cursor: pointer;
+  transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-hc-nav__link:hover { background: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+.site-hc-nav__link:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-hc-nav__link .fh-icon { --fh-icon-size: 1.05em; color: var(--fh-color-accent); transition: rotate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
+.site-hc-nav:has(.site-hc-docs:popover-open) .site-hc-nav__link[popovertarget] { background: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+.site-hc-nav:has(.site-hc-docs:popover-open) .site-hc-nav__link[popovertarget] .fh-icon { rotate: 180deg; }
+.site-hc .site-hc-nav__link:not(.x) { font-size: calc(var(--fh-text-label) * 1.1); }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc .site-hc-nav__links > * { animation: hc-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) calc(1.36s + var(--_i, 0) * 0.06s) both; }
+  .site-hc .site-hc-nav__links > :nth-child(2) { --_i: 1; }
+  .site-hc .site-hc-nav__links > :nth-child(3) { --_i: 2; }
+  :root.fh-js:not(.fh-ready) .site-hc .site-hc-nav__links > * { animation-play-state: paused; }
+}
+
+/* The Docs menu */
+.site-hc-docs {
+  --_etch: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch, var(--fh-color-border)));
+  position: fixed;
+  position-anchor: --hc-docs;
+  inset: auto;
+  margin: var(--fh-space-2) 0 0;
+  inline-size: min(56rem, calc(100vw - 2rem));
+  padding: 0;
+  overflow: visible;
+  border: var(--_etch);
+  border-radius: var(--site-nav-radius, 3px);
+  background: light-dark(oklch(1 0 0 / 0.86), oklch(0.19 0 0 / 0.86));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  color: var(--fh-color-text);
+  text-align: start;
+}
+@supports (position-area: bottom) {
+  .site-hc-docs { position-area: block-end span-inline-end; position-try-fallbacks: flip-inline; }
+}
+.site-hc-docs:popover-open { display: grid; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc-docs:popover-open { animation: hc-docs-in 220ms cubic-bezier(0.16, 1, 0.3, 1); }
+}
+@keyframes hc-docs-in { from { opacity: 0; translate: 0 -6px; } }
+.site-hc-docs :is(.site-hc-docs__title, .site-hc-docs__count, .site-hc-docs__label, .site-hc-docs__num) {
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  color: var(--fh-color-text-subtle);
+}
+.site-hc-docs__head { display: flex; justify-content: space-between; align-items: center; padding: var(--fh-space-3) var(--fh-space-4); border-block-end: var(--_etch); }
+.site-hc-docs__title { color: var(--fh-color-text) !important; font-weight: var(--fh-weight-bold, 700); }
+.site-hc-docs__groups { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.site-hc-docs__group + .site-hc-docs__group { border-inline-start: var(--_etch-soft); }
+.site-hc-docs__label { margin: 0; padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-2); }
+.site-hc-docs__grid { display: grid; }
+.site-hc-docs__tile {
+  --_t: light-dark(oklch(from var(--fh-tone, var(--fh-color-accent)) min(l, 0.52) c h), oklch(from var(--fh-tone, var(--fh-color-accent)) max(l, 0.74) c h));
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: var(--fh-space-3);
+  align-items: center;
+  padding: var(--fh-space-3) var(--fh-space-4);
+  border-block-start: var(--_etch-soft);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+.site-hc-docs__cube { grid-row: 1 / 3; display: grid; place-items: center; inline-size: 1.875rem; aspect-ratio: 1; border-radius: var(--fh-radius-md); background: var(--_t); color: oklch(from var(--_t) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); font-size: 0.85rem; }
+.site-hc-docs__tile b { font-size: var(--fh-text-body, 0.9375rem); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-tracking-tight); line-height: 1.15; padding-inline-end: 2.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.site-hc-docs__tile small { font-size: var(--fh-text-caption, 0.75rem); color: var(--fh-color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.site-hc-docs__num { position: absolute; inset-block-start: var(--fh-space-3); inset-inline-end: 2.1rem; line-height: 1.2; }
+.site-hc-docs__go { position: absolute; inset-block-start: var(--fh-space-3); inset-inline-end: var(--fh-space-3); color: var(--fh-color-text-subtle); transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1), color 160ms ease; }
+.site-hc-docs__tile:hover { background: color-mix(in oklab, var(--_t) 8%, transparent); }
+.site-hc-docs__tile:hover .site-hc-docs__go { translate: 2px -2px; color: var(--_t); }
+.site-hc-docs__tile:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
+.site-hc-docs__foot { display: grid; grid-template-columns: repeat(3, 1fr); border-block-start: var(--_etch); }
+.site-hc-docs__foot a {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--fh-space-2);
+  min-block-size: 2.75rem; padding: 0 var(--fh-space-4);
+  font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-bold, 700);
+  letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; text-decoration: none; color: var(--fh-color-text);
+}
+.site-hc-docs__foot a + a { border-inline-start: var(--_etch-soft); }
+.site-hc-docs__foot a .fh-icon { color: var(--fh-color-accent); }
+.site-hc-docs__foot a:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+@media (width < 52rem) { .site-hc-docs__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } .site-hc-docs__group:nth-child(3) { border-inline-start: 0; } }
+
+/* The docked copy: top centre, a frosted etched pill, shown once the page has scrolled */
+.site-hc-nav--dock {
+  position: fixed;
+  z-index: 60;
+  inset-block-start: var(--fh-space-3);
+  inset-inline-start: 50%;
+  display: flex;
+  padding: 0.3125rem;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: 999px;
+  background: light-dark(oklch(1 0 0 / 0.72), oklch(0.19 0 0 / 0.72));
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  translate: -50% -140%;
+  opacity: 0;
+  visibility: hidden;
+  transition: translate 380ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease, visibility 0s linear 380ms;
+}
+.site-hc-nav--dock[data-show] { translate: -50% 0; opacity: 1; visibility: visible; transition-delay: 0s; }
+.site-hc-nav--dock .fh-eyebrow-pill { margin: 0; text-decoration: none; font-size: calc(var(--fh-text-label) * 1.1); }
+@supports (position-area: bottom) { .site-hc-nav--dock .site-hc-docs { position-area: block-end; position-try-fallbacks: none; } }
+.site-hc[data-nav-docked] :is(.site-hc__sections, .site-hc__spine) { opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
+.site-hc-next { min-block-size: 1px; scroll-margin-block-start: 5rem; }
+.site-hc-docs { inline-size: min(62rem, calc(100vw - 2rem)); }
+.site-hc-docs__tile b { padding-inline-end: 2.5rem; }
+/* "modern workflows" on its own line, heavier */
+.site-hc__arrowline { font-weight: var(--fh-weight-heavy, 800); }
+.site-hc__lede { line-height: 1.5; }
+.site-hc__arrowline { font-weight: 800; }
+/* "The design system built for" at half size; "modern workflows" keeps its size */
+.site-hc__lede { font-size: calc(var(--fh-text-body, 1rem) * 0.5); line-height: 1.6; }
+.site-hc__arrowline { font-size: calc(var(--fh-text-body, 1rem) * 0.85); line-height: 1.5; }
+.site-hc__lede-down { --fh-icon-size: calc(var(--fh-text-body, 1rem) * 0.85); }
+
+/* Top right chip: "No JS" and the gzip size stay folded away until Download from Git is hovered
+   (or focused); then they slide out to the left, and fold back in after. */
+.site-hc__git .site-hc__meta > :is(:nth-child(3), :nth-child(4)) {
+  max-inline-size: 0;
+  padding-inline: 0;
+  border-inline-start-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    max-inline-size 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    padding-inline 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms ease,
+    border-inline-start-width 0s linear 420ms;
+}
+.site-hc__git .site-hc__meta:has(.site-hc__meta-git:is(:hover, :focus-visible)) > :is(:nth-child(3), :nth-child(4)) {
+  max-inline-size: 9rem;
+  padding-inline: var(--_pb, 0.6em);
+  border-inline-start-width: var(--fh-border-thin);
+  opacity: 1;
+  transition:
+    max-inline-size 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    padding-inline 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 260ms ease 80ms,
+    border-inline-start-width 0s;
+}
+@media (prefers-reduced-motion: reduce) { .site-hc__git .site-hc__meta > * { transition: none !important; } }
+
+/* The scheme pill stays in the page (site.js and the CSS read its radios) but out of sight;
+   a single "Dark" chip right of the Git chip toggles light / dark. Black with white text in
+   light mode, the opposite in dark. */
+.site-hc__git .site-hc__scheme-src { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; pointer-events: none; }
+.site-hc__dark {
+  display: inline-flex;
+  align-items: center;
+  block-size: 2rem;
+  padding-inline: var(--fh-space-3-5, 0.875rem);
+  border: 0;
+  border-radius: 999px;
+  background: light-dark(#000, #fff);
+  color: light-dark(#fff, #000);
+  font-family: var(--fh-font-mono);
+  font-size: 0.8rem;
+  font-weight: var(--fh-weight-bold, 700);
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, scale 160ms ease;
+}
+.site-hc__dark:hover { scale: 1.04; }
+.site-hc__dark:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
+
+/* "The design system built for": back up to a readable size */
+.site-hc__lede { font-size: 0.8125rem; }
+
+/* Start here: the label and a right arrow, one segment, no separator */
+.site-hc__sections .site-hc__vivid .fh-dot + .fh-eyebrow-pill__seg { inline-size: auto; display: inline-flex; align-items: center; gap: 0.4em; }
+.site-hc-nav--dock .site-hc__vivid .fh-eyebrow-pill__seg { display: inline-flex; align-items: center; gap: 0.4em; }
+.site-hc__start-go { --fh-icon-size: 1.05em; color: var(--fh-tone); transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
+.site-hc__vivid:hover .site-hc__start-go { translate: 2px 0; }
+
+/* Docs menu: the full width of the page's content column (page margin to page margin), just
+   under its button, on a light frost. */
+.site-hc-docs,
+.site-hc-nav--dock .site-hc-docs {
+  position-area: none;
+  position-try-fallbacks: none;
+  inset-block-start: anchor(bottom);
+  inset-block-end: auto;
+  inset-inline: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+  inline-size: auto;
+  max-inline-size: none;
+  margin: var(--fh-space-2) 0 0;
+  background: light-dark(oklch(1 0 0 / 0.5), oklch(0.18 0 0 / 0.5));
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+}
+
+/* Docs menu: slides down from under the nav, quick off the mark with a soft settle; closing
+   plays the same move in reverse (slides back up, easing in). */
+.site-hc-docs { animation: none !important; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc-docs {
+    --_in: cubic-bezier(0.22, 1, 0.36, 1);   /* fast out, gentle settle */
+    --_out: cubic-bezier(0.64, 0, 0.78, 0);  /* the reverse: gentle start, fast finish */
+    clip-path: inset(0 0 100% 0);
+    translate: 0 -10px;
+    opacity: 0;
+    transition:
+      clip-path 220ms var(--_out),
+      translate 220ms var(--_out),
+      opacity 160ms linear 60ms,
+      display 220ms allow-discrete,
+      overlay 220ms allow-discrete;
+  }
+  .site-hc-docs:popover-open {
+    clip-path: inset(0 0 -1px 0);
+    translate: 0 0;
+    opacity: 1;
+    transition:
+      clip-path 320ms var(--_in),
+      translate 320ms var(--_in),
+      opacity 120ms linear,
+      display 320ms allow-discrete,
+      overlay 320ms allow-discrete;
+  }
+  @starting-style {
+    .site-hc-docs:popover-open { clip-path: inset(0 0 100% 0); translate: 0 -10px; opacity: 0; }
+  }
+}
+
+/* —— Scroll choreography: floating nav links, the logo lock, the etch ———————————— */
+.site-hc-nav--dock { display: none !important; } /* the old docked copy, retired */
+.site-hc-float {
+  position: fixed;
+  z-index: 60;
+  inset-block-start: var(--_y, 1.75rem);
+  inset-inline-start: 0;
+  translate: var(--_x, 0) 0;
+  padding: 0.3125rem;
+  border-radius: 999px;
+  isolation: isolate;
+}
+/* the frost and etch come in with the slide (--_p, 0 → 1) */
+.site-hc-float::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: inherit;
+  background: light-dark(oklch(1 0 0 / 0.72), oklch(0.19 0 0 / 0.72));
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  opacity: var(--_p, 0);
+}
+.site-hc-float .site-hc-nav__links { margin-block: -0.3125rem; padding-block: 0.3125rem; }
+.site-hc-float .site-hc-nav__links > * { animation: none; }
+.site-hc-float .site-hc-nav__link { font-size: calc(var(--fh-text-label) * 1.1); }
+/* while it rides with the row it sits where the row was, so trim its own padding */
+.site-hc-float:not([data-locked]) { margin-inline-start: -0.3125rem; margin-block-start: -0.3125rem; }
+.site-hc-float[data-locked] { margin: -0.3125rem 0 0; }
+
+/* the logo copy: fixed, follows the page up, shrinks to 78%, locks on the nav row */
+.site-hc-mark__link {
+  position: fixed;
+  z-index: 60;
+  inset-block-start: var(--_t, 0);
+  inset-inline-start: var(--_l, 0);
+  display: none;
+  color: inherit;
+  text-decoration: none;
+  transform-origin: 0 0;
+  scale: var(--_s, 1);
+}
+.site-hc-mark__link[data-on] { display: block; }
+.site-hc-mark { margin: 0; white-space: nowrap; }
+.site-hc-mark__link:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 4px; }
+
+/* the etch draws back toward the logo (scaleX set by home-concept.js; the intro's scale
+   still plays first) */
+.site-hc__etch { transform-origin: 0 50%; }
+
+/* The scheme chip names the mode you're in: "Light" in light, "Dark" in dark; the word rolls
+   between the two as the page cross-fades (a view transition) into the other scheme. */
+.site-hc__dark-roll { display: inline-grid; block-size: 1.2em; line-height: 1.2em; overflow: hidden; inline-size: 5.6ch; justify-items: center; }
+.site-hc__dark-roll > span { transition: translate 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+.site-hc__dark[aria-pressed="true"] .site-hc__dark-roll > span { translate: 0 -100%; }
+@media (prefers-reduced-motion: reduce) { .site-hc__dark-roll > span { transition: none; } }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 480ms; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* —— Scroll choreography, compositor-driven (replaces the per-frame script) ——————————
+   One scroll range for everything: 0 → --hc-lock (set on :root by home-concept.js). */
+.site-hc-float,
+.site-hc-float:not([data-locked]),
+.site-hc-float[data-locked] { margin: 0; }
+.site-hc-float { inset-block-start: var(--_y, 1.5rem); translate: var(--_x0, 0) 0; will-change: translate; }
+.site-hc-float::before { opacity: 0; }
+.site-hc-mark__link { display: none; inset-block-start: var(--_t0, 0); will-change: translate, scale; }
+:root[data-hc-choreo] .site-hc-mark__link { display: block; }
+:root[data-hc-choreo] .site-hc__fh { visibility: hidden; }
+.site-hc__etch { will-change: transform; }
+
+/* the horses recede on the compositor: a plain scale on the art's layers (their own
+   transform keeps the hero's 1.8), 1 → 0.9 (= 1.8 → 1.62), locked at the same point */
+
+
+:is(.site-hc__ink, .site-hc__sweep) { will-change: scale; }
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-hc__art > :is(.site-hc__ink, .site-hc__sweep) {
+      animation: hc-recede-s linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 var(--hc-lock, 48vh);
+    }
+    .site-hc-float { animation: hc-float-x cubic-bezier(0.45, 0, 0.55, 1) both; animation-timeline: scroll(root block); animation-range: 0 var(--hc-lock, 48vh); }
+    .site-hc-float::before { animation: hc-fade-in linear both; animation-timeline: scroll(root block); animation-range: 0 var(--hc-lock, 48vh); }
+    .site-hc-mark__link { animation: hc-mark-up linear both; animation-timeline: scroll(root block); animation-range: 0 var(--hc-lock, 48vh); }
+    .site-hc .site-hc__etch {
+      animation: hc-draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both, hc-etch-back linear both;
+      animation-timeline: auto, scroll(root block);
+      animation-range: normal, 0 var(--hc-lock, 48vh);
+    }
+    .site-hc .site-hc__sections > a.site-hc__vivid {
+      animation: hc-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.3s both, hc-fade-out linear both;
+      animation-timeline: auto, scroll(root block);
+      animation-range: normal, 0 calc(var(--hc-lock, 48vh) / 3);
+    }
+    .site-hc .site-hc__spine {
+      animation: hc-spine 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1s both, hc-fade-out linear both;
+      animation-timeline: auto, scroll(root block);
+      animation-range: normal, 0 calc(var(--hc-lock, 48vh) / 2.5);
+    }
+  }
+}
+@keyframes hc-recede-s { from { scale: 1; } to { scale: 0.9; } }
+@keyframes hc-float-x { from { translate: var(--_x0, 0) 0; } to { translate: var(--_x1, 0) 0; } }
+@keyframes hc-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hc-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes hc-mark-up { from { translate: 0 0; scale: 1; } to { translate: 0 calc(-1 * var(--hc-lock, 48vh)); scale: 0.78; } }
+@keyframes hc-etch-back { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+/* Download from Git: no dashed underline */
+.site-hc__meta-label { border-block-end: 0; padding-block-end: 0; }
+
+/* The lede, under the start of the etch: one voice, mono caps at modern workflows' weight;
+   "modern workflows" no longer styled apart. */
+.site-hc__lede {
+  font-family: var(--fh-font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: var(--fh-tracking-caps);
+  text-transform: uppercase;
+  line-height: 1.6;
+  color: var(--fh-color-text);
+}
+.site-hc__arrowline { font: inherit; letter-spacing: inherit; color: inherit; padding: 0; }
+.site-hc__arrowline::after, .site-hc__arrowline::before { content: none; }
+.site-hc__lede-down { --fh-icon-size: 1em; }
+
+/* The lede on one line, set tight */
+.site-hc__lede { line-height: 1.3; white-space: nowrap; }
+
+/* The tagline swings in last, like a sign hung from its top edge: a short pendulum that
+   settles quickly. Starts once the chip and the rest have landed (~3s). */
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc .site-hc__lede {
+    transform-origin: 50% 0;
+    animation: hc-swing 1.1s cubic-bezier(0.25, 0.8, 0.35, 1) 3s both;
+  }
+
+}
+@keyframes hc-swing {
+  0%   { opacity: 0; transform: perspective(600px) rotateX(-55deg); }
+  30%  { opacity: 1; transform: perspective(600px) rotateX(14deg); }
+  55%  { transform: perspective(600px) rotateX(-6deg); }
+  78%  { transform: perspective(600px) rotateX(2deg); }
+  100% { opacity: 1; transform: perspective(600px) rotateX(0deg); }
+}
+
+/* No Start here: the nav row begins with Docs at the content edge */
+.site-hc__sections .site-hc-nav__links { margin-inline-start: calc(-1 * var(--fh-space-3)); }
+
+/* Send to an agent rides up with the page, scaling to the nav pill's height, and locks level
+   with the nav (its middle on the pill's middle), on the right. At the lock its label flips
+   (the Download from Git roll) and its arrow turns from up to down: the menu now opens below. */
+.site-hc__agents .hc-agent-roll { transition: none; }
+.site-hc__agents > .fh-button > .fh-icon--chevron-down { transition: rotate 380ms cubic-bezier(0.22, 1, 0.36, 1), translate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
+.site-hc__agents[data-locked] > .fh-button > .fh-icon--chevron-down { rotate: 180deg; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__agents[data-locked] .hc-agent-roll {
+    translate: 0 calc(-1 * var(--_line));
+    clip-path: inset(var(--_line) -0.25em calc(-1 * var(--_line)) -0.25em);
+    transition: translate var(--fh-duration-slow) var(--fh-ease-out), clip-path var(--fh-duration-slow) var(--fh-ease-out);
+  }
+  .site-hc__agents:not([data-locked]) .hc-agent-roll {
+    transition: translate var(--fh-duration-slow) var(--fh-ease-out), clip-path var(--fh-duration-slow) var(--fh-ease-out);
+  }
+}
+/* hover nudge follows the arrow's direction */
+.site-hc__agents[data-locked] > .fh-button:hover > .fh-icon--chevron-down { translate: 0 2px; }
+
+/* Send to an agent, matched to the nav pill from the start: the etch sits right on the edge
+   (no gap), 40px tall like the pill, the nav links' type size. */
+.site-hc__agents > .fh-button {
+  min-block-size: 0;
+  block-size: 2.5rem;
+  outline: 0;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  font-size: calc(var(--fh-text-label) * 1.1);
+  padding-inline: var(--fh-space-4);
+}
+.site-hc__agents > .fh-button:hover { outline: 0; border-color: var(--fh-color-accent); }
+.site-hc__agents > .fh-button:focus-visible { outline: 2px solid var(--fh-color-accent); outline-offset: 2px; }
+
+/* Dark mode: the pieces that had light-only colours now follow the scheme */
+.site-hc-mark { color: var(--fh-color-text); }
+.site-hc__agents > .fh-button {
+  background: light-dark(oklch(1 0 0 / 0.55), oklch(0.16 0 0 / 0.55));
+  box-shadow: inset 0 0 0 var(--fh-border-thin) light-dark(oklch(1 0 0 / 0.7), oklch(1 0 0 / 0.08));
+  color: light-dark(oklch(0.16 0 0), oklch(0.97 0 0));
+}
+.site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.72), oklch(0.2 0 0 / 0.72)); }
+
+/* Build with: the flow no longer pauses just because the pointer is over it; it pauses only
+   while a send card is open. A resting pointer gets a quiet "aiming" cue before the card. */
+.site-hc-svc__track:hover .site-hc-svc__list { animation-play-state: running; }
+.site-hc-svc__item.is-aiming { opacity: 0.85; }
+.site-hc-svc__item.is-aiming span { text-decoration: underline dashed; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: color-mix(in oklab, currentColor 45%, transparent); }
+
+/* Send to an agent: solid, like the scheme chip — black with white text in light mode,
+   white with black text in dark mode. */
+.site-hc__agents > .fh-button {
+  background: light-dark(#000, #fff);
+  color: light-dark(#fff, #000);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.site-hc__agents > .fh-button:hover { background: light-dark(oklch(0.24 0 0), oklch(0.9 0 0)); }
+.site-hc__agents > .fh-button > .fh-icon { color: inherit; }
+
+/* "Build with" at the logo's size and weight (the marks' heading size, 800, wordmark tracking);
+   its line underneath a step larger and a third narrower. */
+.site-hc-svc__lead {
+  font-size: var(--fh-heading-size, 2.2rem);
+  font-weight: 800;
+  letter-spacing: var(--fh-tracking-wordmark, -0.05em);
+  line-height: 1;
+}
+.site-hc-svc__intro { gap: var(--fh-space-2); }
+.site-hc-svc__sub { font-size: 0.9375rem; max-inline-size: 10rem; line-height: 1.4; }
+/* "_build with": the logo as it sits in the top bar once you've scrolled (78% of the hero
+   logo), lowercase, with the accent underscore */
+.site-hc-svc__lead { font-size: calc(var(--fh-heading-size, 2.2rem) * 0.78); }
+
+/* A light frost behind the logo (as behind "The design system"); it fades out as the logo
+   rides up and is gone by the time it locks in the top bar. */
+.site-hc__fh, .site-hc-mark { position: relative; isolation: isolate; }
+.site-hc__fh::before, .site-hc-mark::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -0.08em -0.22em -0.06em;
+  border-radius: var(--fh-radius-sm);
+  background: color-mix(in oklab, var(--fh-color-canvas) 25%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-hc-mark::before { animation: hc-fade-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--hc-lock, 48vh); }
+  }
+}
+/* the invisible stand-in that keeps Send to an agent's place in the hero for measuring */
+.site-hc__agents-ghost { visibility: hidden; pointer-events: none; animation: none !important; }
+
+/* Send to an agent dressed exactly like the nav pill: the same light frost and dashed etch */
+.site-hc__agents > .fh-button {
+  background: light-dark(oklch(1 0 0 / 0.72), oklch(0.19 0 0 / 0.72));
+  color: var(--fh-color-text);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.86), oklch(0.23 0 0 / 0.86)); border-color: var(--fh-color-text-subtle); }
+.site-hc__agents > .fh-button > .fh-icon { color: var(--fh-color-accent); }
+
+/* The Git chip, docked bottom right beside KC (placed by home-concept.js) */
+.site-hc__meta--dock {
+  position: fixed;
+  z-index: 40;
+  inset-inline-end: var(--_r, 4rem);
+  inset-block-end: var(--_b, 1rem);
+  margin: 0;
+  font-size: 0.8rem;
+  min-block-size: 2rem;
+  background: light-dark(oklch(1 0 0 / 0.72), oklch(0.19 0 0 / 0.72));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+/* No JS and the gzip size fold away until Download from Git is hovered, sliding out to the left */
+.site-hc__meta--dock > :is(:nth-child(3), :nth-child(4)) {
+  max-inline-size: 0;
+  padding-inline: 0;
+  border-inline-start-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-inline-size 420ms cubic-bezier(0.16, 1, 0.3, 1), padding-inline 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease, border-inline-start-width 0s linear 420ms;
+}
+.site-hc__meta--dock:has(.site-hc__meta-git:is(:hover, :focus-visible)) > :is(:nth-child(3), :nth-child(4)) {
+  max-inline-size: 9rem;
+  padding-inline: var(--_pb, 0.6em);
+  border-inline-start-width: var(--fh-border-thin);
+  opacity: 1;
+  transition: max-inline-size 420ms cubic-bezier(0.16, 1, 0.3, 1), padding-inline 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 260ms ease 80ms, border-inline-start-width 0s;
+}
+@media (prefers-reduced-motion: reduce) { .site-hc__meta--dock > * { transition: none !important; } }
+
+/* the tagline a little tighter */
+.site-hc__lede { letter-spacing: 0.05em; }
+
+/* Nav links and the tagline: one weight (800), both tracked tighter */
+.site-hc-nav__link { font-weight: 800; letter-spacing: 0.04em; }
+.site-hc__lede { letter-spacing: 0.03em; }
+
+/* The spine, full height: the top run draws down from the window's top to the underscore, the
+   bottom run down from under the tagline to the window's foot. On scroll both draw back toward
+   the logo — the top run's top comes down, the bottom run's foot goes up — gone at the lock. */
+.site-hc__spine { transform-origin: 50% 100%; }
+.site-hc__spine--down { transform-origin: 50% 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc .site-hc__spine { animation: hc-spine-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1s both; }
+  .site-hc .site-hc__spine--down { animation: hc-spine-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both; }
+  @supports (animation-timeline: scroll()) {
+    .site-hc .site-hc__spine, .site-hc .site-hc__spine--down {
+      animation: hc-spine-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1s both, hc-spine-out linear both;
+      animation-timeline: auto, scroll(root block);
+      animation-range: normal, 0 var(--hc-lock, 48vh);
+    }
+    .site-hc .site-hc__spine--down { animation-delay: 1.1s, 0s; }
+  }
+}
+@keyframes hc-spine-in { from { scale: 1 0; } }
+@keyframes hc-spine-out { from { transform: scaleY(1); } to { transform: scaleY(0); } }
+.site-hc[data-nav-docked] .site-hc__spine { opacity: 1; }
+
+/* —— The problem / the solution ——————————————————————————————————————————
+   Two frosted halves, edge to edge, under "Build with". The gap between them is clear (no
+   frost), and the same clear gap sits above them. Problem left-aligned, solution right. */
+.site-hc-svc { margin-block-end: 0; }
+.site-hc-ps {
+  --_gap: clamp(1rem, 2vw, 1.75rem);
+  --_edge: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+  --_etch: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch, var(--fh-color-border)));
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--_gap);
+  inline-size: 100vw;
+  margin-inline: calc(50% - 50vw);
+  margin-block: var(--_gap) 70vh; /* the 70vh is placeholder room until the next sections land */
+}
+.site-hc-ps__card {
+  display: grid;
+  align-content: start;
+  gap: var(--fh-space-5);
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+  border-block: var(--_etch);
+  background: light-dark(oklch(1 0 0 / 0.42), oklch(0.18 0 0 / 0.42));
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.site-hc-ps__card--problem { padding-inline: var(--_edge) clamp(1.5rem, 4vw, 3.5rem); border-inline-end: var(--_etch); text-align: start; justify-items: start; }
+.site-hc-ps__card--solution { padding-inline: clamp(1.5rem, 4vw, 3.5rem) var(--_edge); border-inline-start: var(--_etch); text-align: end; justify-items: end; }
+.site-hc-ps__eyebrow {
+  display: flex;
+  gap: var(--fh-space-3);
+  margin: 0;
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fh-color-text-subtle);
+}
+.site-hc-ps__eyebrow > :first-child { color: var(--fh-color-accent); }
+.site-hc-ps__card--solution .site-hc-ps__eyebrow > :first-child { color: var(--fh-color-text-subtle); }
+.site-hc-ps__card--solution .site-hc-ps__eyebrow > :last-child { color: var(--fh-color-accent); }
+.site-hc-ps__title {
+  display: grid;
+  margin: 0;
+  font-size: clamp(2.75rem, 1.2rem + 4.2vw, 5.25rem);
+  font-weight: 800;
+  letter-spacing: var(--fh-tracking-wordmark, -0.05em);
+  line-height: 0.92;
+  color: var(--fh-color-text);
+}
+.site-hc-ps__title > :first-child { color: var(--fh-color-text-subtle); }
+.site-hc-ps__body {
+  margin: 0;
+  max-inline-size: 34rem;
+  font-size: var(--fh-text-lede, 1.125rem);
+  line-height: 1.55;
+  color: var(--fh-color-text-muted);
+  text-wrap: pretty;
+}
+.site-hc-ps__rows {
+  display: grid;
+  inline-size: min(100%, 34rem);
+  margin: var(--fh-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  border-block-start: var(--_etch-soft);
+}
+.site-hc-ps__rows li {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--fh-space-4);
+  align-items: baseline;
+  padding-block: var(--fh-space-3);
+  border-block-end: var(--_etch-soft);
+}
+.site-hc-ps__card--solution .site-hc-ps__rows li { grid-template-columns: minmax(0, 1fr) 7.5rem; }
+.site-hc-ps__card--solution .site-hc-ps__rows li > b { order: 2; }
+.site-hc-ps__rows b {
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-label);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fh-color-text);
+}
+.site-hc-ps__rows span { font-size: var(--fh-text-body, 0.9375rem); color: var(--fh-color-text-muted); }
+@media (width < 52rem) {
+  .site-hc-ps { grid-template-columns: minmax(0, 1fr); }
+  .site-hc-ps__card--problem, .site-hc-ps__card--solution { padding-inline: var(--_edge); border-inline: 0; }
+}
+
+/* Problem / solution, revised: inside the page's width (left card on the left content edge,
+   right card on the right), each a full window tall less an even margin, the same gap all
+   round. Etch lines top and bottom only, sitting right on the frost's edges. */
+.site-hc-ps {
+  inline-size: auto;
+  margin-inline: 0;
+  padding-inline: var(--_edge);
+  margin-inline: calc(50% - 50vw);
+  inline-size: 100vw;
+  box-sizing: border-box;
+  padding-block: var(--_gap);
+  margin-block: 0 70vh;
+}
+.site-hc-ps__card,
+.site-hc-ps__card--problem,
+.site-hc-ps__card--solution {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fh-space-5);
+  block-size: calc(100vh - var(--_gap) * 2);
+  min-block-size: 32rem;
+  box-sizing: border-box;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  border: 0;
+  border-block: var(--_etch);
+  background-clip: border-box;
+}
+.site-hc-ps__card--problem { align-items: flex-start; }
+.site-hc-ps__card--solution { align-items: flex-end; }
+.site-hc-ps__body { margin-block-start: auto; }
+
+/* Light / Dark, docked bottom right between the Git chip and KC, KC's height */
+.site-hc__dark--dock { position: fixed; z-index: 40; inset-inline-end: var(--_r, 4rem); inset-block-end: var(--_b, 1rem); block-size: 2rem; }
+
+/* —— Typeface picker: a black "T" left of the theme-colour dot ——————————————————————
+   Picks one of eleven faces (ten sans, Geist Serif) through the system's own switch, data-fh-type on <html>
+   (layer fh.config, which sits above tokens and themes in the cascade), so every token-driven
+   face follows. The Firehorse wordmark is pinned and never changes. */
+@layer fh.config {
+  [data-fh-type="geist-serif"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Geist Serif", ui-serif, Georgia, serif;
+    --fh-font-display: "Geist Serif", ui-serif, Georgia, serif;
+    --fh-tracking-tight: -0.03em; --fh-tracking-snug: -0.02em; --fh-tracking-heading: -0.015em;
+  }
+  [data-fh-type="roboto"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-display: "Roboto", ui-sans-serif, system-ui, sans-serif;
+    --fh-tracking-tight: -0.03em; --fh-tracking-snug: -0.02em; --fh-tracking-heading: -0.015em;
+  }
+  [data-fh-type="open-sans"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-display: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+    --fh-tracking-tight: -0.03em; --fh-tracking-snug: -0.02em; --fh-tracking-heading: -0.015em;
+  }
+  [data-fh-type="poppins"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    --fh-tracking-tight: -0.035em; --fh-tracking-snug: -0.025em; --fh-tracking-heading: -0.02em;
+  }
+  [data-fh-type="montserrat"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    --fh-tracking-tight: -0.04em; --fh-tracking-snug: -0.03em; --fh-tracking-heading: -0.02em;
+  }
+  [data-fh-type="lato"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
+    --fh-font-display: "Lato", ui-sans-serif, system-ui, sans-serif;
+    --fh-tracking-tight: -0.025em; --fh-tracking-snug: -0.02em; --fh-tracking-heading: -0.01em;
+  }
+  [data-fh-type="system"] {
+    font-family: var(--fh-font-sans);
+    --fh-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --fh-font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --fh-tracking-tight: -0.03em; --fh-tracking-snug: -0.02em; --fh-tracking-heading: -0.015em;
+  }
+}
+/* the wordmark stays the brand face whatever is picked */
+.site-hc__fh, .site-hc-mark, .site-hc-mark__link .site-hc-mark { font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important; }
+
+.site-hc__type { position: relative; display: inline-flex; }
+.site-hc__type-btn {
+  anchor-name: --hc-type;
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: light-dark(#000, #fff);
+  color: light-dark(#fff, #000);
+  font: 800 0.95rem / 1 var(--fh-font-sans);
+  cursor: pointer;
+  transition: scale 160ms ease, background-color 200ms ease;
+}
+.site-hc__type-btn:hover { scale: 1.06; }
+.site-hc__type-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-hc__types {
+  position-anchor: --hc-type;
+  position: fixed;
+  inset: auto;
+  top: anchor(bottom);
+  right: anchor(right);
+  margin: var(--fh-space-2) 0 0;
+  min-inline-size: 15rem;
+  padding: 0;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--site-nav-radius, 3px);
+  background: light-dark(oklch(1 0 0 / 0.86), oklch(0.19 0 0 / 0.86));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  color: var(--fh-color-text);
+}
+.site-hc__types-head {
+  margin: 0;
+  padding: var(--fh-space-3) var(--fh-space-4);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  font: 800 var(--fh-text-label) / 1.2 var(--fh-font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.site-hc__types ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.site-hc__types li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-hc__types button {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--fh-space-3);
+  inline-size: 100%;
+  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-4);
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.site-hc__types button:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+.site-hc__types button:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
+.site-hc__types-aa { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.site-hc__types-name { display: grid; gap: 0.1rem; }
+.site-hc__types-name b { font-size: var(--fh-text-body, 0.9375rem); font-weight: 700; font-family: inherit; }
+.site-hc__types-name small { font: 600 var(--fh-text-label) / 1.2 var(--fh-font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-hc__types button[aria-pressed="true"] { background: color-mix(in oklab, var(--fh-color-accent) 10%, transparent); }
+.site-hc__types button[aria-pressed="true"] .site-hc__types-aa { color: var(--fh-color-accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__types:popover-open { animation: hc-docs-in 200ms cubic-bezier(0.22, 1, 0.36, 1); }
+}
+
+/* —— Configuration over code ——————————————————————————————————————————————
+   One frosted panel inside the page's width, the same clear gap above it as the cards above,
+   etch lines on its top and bottom edges. Built from the homepage's "Good artists copy" parts
+   (site-open quote, cite, numbered steps). */
+.site-hc-ps { margin-block-end: 0; }
+.site-hc-cfg {
+  --_gap: clamp(1rem, 2vw, 1.75rem);
+  --_edge: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  inline-size: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding: 0 var(--_edge) var(--_gap);
+  margin-block-end: 70vh; /* placeholder room until the next sections land */
+}
+.site-hc-cfg__panel {
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.75rem, 3.5vw, 3rem);
+  padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3.5rem);
+  border-block: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  background: light-dark(oklch(1 0 0 / 0.42), oklch(0.18 0 0 / 0.42));
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.site-hc-cfg__panel .site-open__body { display: grid; gap: var(--fh-space-4); margin: 0; }
+.site-hc-cfg__panel .site-open__display--quote em { font-style: normal; color: var(--fh-color-accent); }
+.site-hc-cfg__blurb {
+  max-inline-size: 44rem;
+  margin: 0;
+  font-size: var(--fh-text-lede, 1.125rem);
+  line-height: 1.6;
+  text-align: center;
+  color: var(--fh-color-text-muted);
+  text-wrap: pretty;
+}
+.site-hc-cfg__blurb a {
+  color: var(--fh-color-text);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--fh-color-accent);
+}
+.site-hc-cfg__blurb a:hover { color: var(--fh-color-accent); }
+.site-hc-cfg__panel .site-open__steps { inline-size: 100%; padding: 0; }
+
+/* The T and the colour dot: fixed top right. As Send to an agent rides up to just under them
+   they slide left (and settle on the nav row's centre line) to sit beside it, finishing as it
+   locks — on the scroll timeline, so it tracks the scroll exactly. */
+.site-hc__git.is-fixed {
+  position: fixed;
+  z-index: 61;
+  inset-inline-end: calc(max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2) + 5px);
+  inset-block-start: calc(var(--site-chrome-top, 1rem) + (var(--fh-header-height, 3.25rem) - 2rem) / 2);
+  will-change: translate;
+}
+
+/* Smoother scrolling: the big frosted panels blur less and drop the saturation pass (backdrop
+   blur is re-rendered every frame the art moves underneath; cost grows with the radius). */
+.site-hc-svc__box, .site-hc-ps__card, .site-hc-cfg__panel {
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+}
+.site-hc-float::before, .site-hc__agents > .fh-button { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.site-hc-svc__box, .site-hc-ps__card, .site-hc-cfg__panel, .site-hc-float, .site-hc__agents.is-fixed, .site-hc-mark__link { transform: translateZ(0); }
+
+/* The rotating words: room for ascenders and descenders (g, y, p) in every typeface. The
+   clip box grows by padding in em (so it scales with the face and size), and the same negative
+   margin keeps the line's height and the baseline exactly where they were. */
+.site-hc__tag .fh-rotator {
+  padding-block: 0.14em 0.28em;
+  margin-block: -0.14em -0.28em;
+  overflow-clip-margin: 0.02em;
+  vertical-align: baseline;
+}
+
+/* Colour and typeface changes open out as a circle from the button used (home-concept.js
+   animates the new snapshot's clip); the old look holds still underneath. */
+:root[data-hc-vt="reveal"]::view-transition-old(root),
+:root[data-hc-vt="reveal"]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+:root[data-hc-vt="reveal"]::view-transition-new(root) { z-index: 1; }
+
+/* —— Smooth scrolling: live blur only where it is small or up top ——————————————————
+   Measured in the browser: every backdrop blur forces a full re-render of the horses behind it
+   on every scrolled frame, and with a dozen of them the page dropped to ~40fps. The large panels
+   and the fixed chrome now use a dense translucent "faux frost" fill instead (no per-frame
+   cost); the hero's own frosts stay live. Hidden pieces carry no blur at all. */
+.site-hc-svc__box, .site-hc-ps__card, .site-hc-cfg__panel {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  background: light-dark(oklch(0.985 0.002 90 / 0.8), oklch(0.17 0 0 / 0.8)) !important;
+}
+.site-hc-float::before, .site-hc__agents > .fh-button, .site-hc__meta--dock, .site-hc__types, .site-hc-docs,
+.site-hc-svc__card, .site-hc__agents-ghost *, .site-hc-mark::before {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.site-hc-float::before, .site-hc__agents > .fh-button { background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9)); }
+.site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.97), oklch(0.23 0 0 / 0.95)); }
+.site-hc__meta--dock { background: light-dark(oklch(0.99 0 0 / 0.92), oklch(0.19 0 0 / 0.92)); }
+.site-hc__types, .site-hc-docs, .site-hc-svc__card { background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95)) !important; }
+.site-hc-mark::before { background: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent); }
+/* the art is drawn once into its own layer; its light sweep rests once the logo has locked */
+.site-hc__art { will-change: transform; contain: strict; }
+:root:has(.fh-lock > .site-hc__agents[data-locked]) :is(.site-hc__sweep, .site-hc__sweep *, .site-hc__glint) { animation-play-state: paused !important; }
+
+
+/* —— Theme colour dot: the tip of a paintbrush ——————————————————————————————
+   Only the head of the brush: bristles and ferrule rising from the dot's bottom edge, the
+   handle cut off by the circle. Drawn in the dot's on-colour. */
+.site-hc__root-btn { overflow: hidden; }
+.site-hc__brush {
+  place-self: end center;
+  inline-size: 1.15rem;
+  block-size: 1.44rem;
+  margin-block-end: -0.12rem;
+  fill: currentColor;
+  transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-hc__root-btn:is(:hover, :focus-visible) .site-hc__brush,
+.site-hc__root:has(.site-hc__roots:popover-open) .site-hc__brush { translate: 0 -0.12rem; }
+
+/* —— Backdrop picker: the camera, left of the T ——————————————————————————————
+   Same black / white circle as the T. Its list matches the typeface list: a thumbnail of each
+   backdrop, its name and a line. A pick sets data-hc-bg on <html>; the hero art swaps. */
+.site-hc__bg { position: relative; display: inline-flex; }
+.site-hc__bg-btn {
+  anchor-name: --hc-bg;
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: light-dark(#000, #fff);
+  color: light-dark(#fff, #000);
+  cursor: pointer;
+  transition: scale 160ms ease, background-color 200ms ease;
+}
+.site-hc__cam { inline-size: 1.05rem; block-size: 1.05rem; }
+.site-hc__bg-btn:hover { scale: 1.06; }
+.site-hc__bg-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-hc__bgs {
+  position-anchor: --hc-bg;
+  position: fixed;
+  inset: auto;
+  top: anchor(bottom);
+  right: anchor(right);
+  margin: var(--fh-space-2) 0 0;
+  min-inline-size: 17rem;
+  max-block-size: calc(100vh - 6rem);
+  overflow: auto;
+  padding: 0;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--site-nav-radius, 3px);
+  background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95));
+  color: var(--fh-color-text);
+}
+.site-hc__bgs ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.site-hc__bgs li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-hc__bgs button {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--fh-space-3);
+  inline-size: 100%;
+  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-4);
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.site-hc__bgs button:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+.site-hc__bgs button:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
+.site-hc__bgs button[aria-pressed="true"] { background: color-mix(in oklab, var(--fh-color-accent) 10%, transparent); }
+.site-hc__bgs button[aria-pressed="true"] .site-hc__bgs-thumb { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-accent); }
+.site-hc__bgs-thumb {
+  --_blur: 5px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  inline-size: 3.25rem;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  border: var(--fh-border-thin) solid var(--fh-color-etch, var(--fh-color-border));
+  background-color: var(--fh-color-canvas);
+}
+.site-hc__bgs-credit {
+  margin: 0;
+  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-4);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  font: 600 var(--fh-text-label) / 1.2 var(--fh-font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fh-color-text-subtle);
+}
+.site-hc__bgs-credit a { color: inherit; }
+.site-hc__bgs-credit a:hover { color: var(--fh-color-accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .site-hc__bgs:popover-open { animation: hc-docs-in 200ms cubic-bezier(0.22, 1, 0.36, 1); }
+}
+
+/* —— The scenes ——————————————————————————————————————————————————————————————
+   One layer under the horses' ink, the full window. Off for Firehorse; for any other pick the
+   horses step out and the scene fades in. Blueprint shows nothing: the site's grid alone.
+   Each scene's look is shared by its thumbnail ([data-scene]) and the hero (:root[data-hc-bg]). */
+.site-hc__scene {
+  --_blur: 48px;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  opacity: 0;
+  transition: opacity 0.6s var(--fh-ease-standard, ease);
+  background: var(--_img, none) var(--_pos, center) / cover no-repeat;
+}
+:root[data-hc-bg]:not([data-hc-bg="firehorse"], [data-hc-bg="blueprint"]) .site-hc__scene { opacity: 1; }
+:root[data-hc-bg]:not([data-hc-bg="firehorse"]) .site-hc__art > :is(.site-hc__ink, .site-hc__sweep) { visibility: hidden; }
+.site-hc__scene::before, .site-hc__scene::after,
+.site-hc__bgs-thumb::before, .site-hc__bgs-thumb::after { content: none; position: absolute; pointer-events: none; }
+
+/* Firehorse (thumbnail only; the hero keeps its own art) */
+.site-hc__bgs-thumb[data-scene="firehorse"]::before {
+  content: "";
+  inset: 0;
+  background: color-mix(in oklab, var(--fh-color-text) 45%, transparent);
+  mask: url("/img/backdrop/firehorse-horse.webp?v=4") 100% 0 / 150% auto no-repeat;
+}
+/* Blueprint (thumbnail): the grid */
+.site-hc__bgs-thumb[data-scene="blueprint"] {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--fh-color-text) 14%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--fh-color-text) 14%, transparent) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Aurora: bright, airy, flowing. Soft colour fields drifting over a pale sky, and long ribbons
+   of light sweeping across them. */
+:is(:root[data-hc-bg="aurora"] .site-hc__scene, .site-hc__bgs-thumb[data-scene="aurora"]) {
+  background-color: light-dark(oklch(0.985 0.012 230), oklch(0.16 0.03 260));
+}
+:is(:root[data-hc-bg="aurora"] .site-hc__scene, .site-hc__bgs-thumb[data-scene="aurora"])::before {
+  content: "";
+  inset: -15%;
+  background:
+    radial-gradient(38% 46% at 18% 28%, light-dark(oklch(0.9 0.11 175 / 0.95), oklch(0.72 0.17 170 / 0.8)), transparent 70%),
+    radial-gradient(44% 52% at 78% 22%, light-dark(oklch(0.87 0.1 245 / 0.9), oklch(0.62 0.18 255 / 0.8)), transparent 70%),
+    radial-gradient(40% 44% at 62% 76%, light-dark(oklch(0.89 0.1 330 / 0.85), oklch(0.62 0.2 320 / 0.7)), transparent 70%),
+    radial-gradient(34% 40% at 28% 82%, light-dark(oklch(0.94 0.09 90 / 0.9), oklch(0.7 0.14 80 / 0.55)), transparent 70%),
+    radial-gradient(30% 34% at 48% 46%, light-dark(oklch(0.99 0.02 200 / 0.9), oklch(0.8 0.1 190 / 0.35)), transparent 72%);
+  filter: blur(var(--_blur)) saturate(1.15);
+}
+:is(:root[data-hc-bg="aurora"] .site-hc__scene, .site-hc__bgs-thumb[data-scene="aurora"])::after {
+  content: "";
+  inset: -30% -20%;
+  background:
+    radial-gradient(60% 9% at 40% 38%, light-dark(oklch(1 0 0 / 0.9), oklch(0.85 0.15 165 / 0.55)), transparent 72%),
+    radial-gradient(55% 7% at 62% 58%, light-dark(oklch(0.97 0.05 300 / 0.8), oklch(0.75 0.17 300 / 0.45)), transparent 72%),
+    radial-gradient(50% 6% at 46% 70%, light-dark(oklch(0.98 0.05 200 / 0.75), oklch(0.78 0.13 210 / 0.4)), transparent 72%);
+  transform: rotate(-14deg);
+  filter: blur(calc(var(--_blur) * 0.45));
+}
+
+/* Auric field: a glow radiating from behind the headline's side, ringed by faint lines. */
+:is(:root[data-hc-bg="aura"] .site-hc__scene, .site-hc__bgs-thumb[data-scene="aura"]) {
+  background-color: light-dark(oklch(0.985 0.008 80), oklch(0.13 0.015 300));
+}
+:is(:root[data-hc-bg="aura"] .site-hc__scene, .site-hc__bgs-thumb[data-scene="aura"])::before {
+  content: "";
+  inset: -10%;
+  background: radial-gradient(circle at 66% 44%,
+    light-dark(oklch(1 0.02 95), oklch(0.97 0.05 95)) 0 5%,
+    light-dark(oklch(0.94 0.11 92 / 0.95), oklch(0.85 0.15 85 / 0.85)) 11%,
+    light-dark(oklch(0.88 0.12 45 / 0.8), oklch(0.7 0.18 35 / 0.7)) 20%,
+    light-dark(oklch(0.84 0.12 350 / 0.62), oklch(0.6 0.2 345 / 0.55)) 31%,
+    light-dark(oklch(0.82 0.11 290 / 0.45), oklch(0.5 0.18 290 / 0.42)) 43%,
+    light-dark(oklch(0.88 0.07 220 / 0.25), oklch(0.42 0.12 240 / 0.25)) 55%,
+    transparent 68%);
+  filter: blur(calc(var(--_blur) * 0.6));
+}
+:is(:root[data-hc-bg="aura"] .site-hc__scene, .site-hc__bgs-thumb[data-scene="aura"])::after {
+  content: "";
+  inset: 0;
+  background: repeating-radial-gradient(circle at 66% 44%, transparent 0 calc(var(--_blur) * 0.9), color-mix(in oklab, var(--fh-color-text) 9%, transparent) calc(var(--_blur) * 0.9 + 0.5px) calc(var(--_blur) * 0.9 + 1.5px));
+  mask: radial-gradient(circle at 66% 44%, #000 0 18%, transparent 62%);
+}
+.site-hc__bgs-thumb[data-scene="aura"] { --_blur: 4px; }
+
+/* Photos (Unsplash): home-concept.js puts the picked photo on the scene as --_img / --_pos and
+   sets data-hc-photo on <html>. A wash in the page colour so the type holds. */
+:root[data-hc-photo] .site-hc__scene { opacity: 1; }
+:root[data-hc-photo] .site-hc__scene::after {
+  content: "";
+  inset: 0;
+  z-index: 1;
+  background: light-dark(oklch(1 0 0 / 0.42), oklch(0.13 0 0 / 0.5));
+}
+/* Drift reveal on: the canvas draws the photo through a moving mask; the flat photo steps out. */
+.site-hc__drift { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; display: none; }
+:root[data-hc-photo][data-hc-drift] .site-hc__scene::before { display: none; }
+:root[data-hc-photo][data-hc-drift] .site-hc__drift { display: block; }
+
+/* The picker's photo grid and the effect switch */
+.site-hc__bgs { inline-size: 20rem; }
+.site-hc__bgs-label {
+  margin: 0;
+  padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-2);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  font: 800 var(--fh-text-label) / 1.2 var(--fh-font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.site-hc__bgs ul.site-hc__bgs-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--fh-space-2);
+  padding: 0 var(--fh-space-4) var(--fh-space-3);
+}
+.site-hc__bgs .site-hc__bgs-grid li + li { border: 0; }
+.site-hc__bgs .site-hc__bgs-grid button {
+  display: grid;
+  grid-template-columns: none;
+  gap: 0.3rem;
+  padding: 0;
+  background: none;
+}
+.site-hc__bgs-photo {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  border: var(--fh-border-thin) solid var(--fh-color-etch, var(--fh-color-border));
+  background: var(--fh-color-surface, var(--fh-color-canvas)) center / cover no-repeat;
+  transition: scale 160ms ease;
+}
+.site-hc__bgs-grid button:hover .site-hc__bgs-photo { scale: 1.04; }
+.site-hc__bgs-grid button[aria-pressed="true"] .site-hc__bgs-photo { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-accent); }
+.site-hc__bgs-grid button[aria-pressed="true"] { background: none; }
+.site-hc__bgs-cap {
+  overflow: hidden;
+  font: 600 0.6rem / 1.2 var(--fh-font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--fh-color-text-subtle);
+}
+.site-hc__bgs-grid button[aria-pressed="true"] .site-hc__bgs-cap { color: var(--fh-color-text); }
+.site-hc__bgs button.site-hc__bgs-fx {
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+}
+.site-hc__bgs button.site-hc__bgs-fx[aria-pressed] { background: none; }
+.site-hc__bgs-switch {
+  position: relative;
+  inline-size: 2.1rem;
+  block-size: 1.2rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+  transition: background-color 160ms ease;
+}
+.site-hc__bgs-switch::after {
+  content: "";
+  position: absolute;
+  inset-block: 0.15rem;
+  inset-inline-start: 0.15rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--fh-color-canvas);
+  transition: translate 180ms var(--fh-ease-out, ease);
+}
+.site-hc__bgs-fx[aria-pressed="true"] .site-hc__bgs-switch { background: var(--fh-color-accent); }
+.site-hc__bgs-fx[aria-pressed="true"] .site-hc__bgs-switch::after { translate: 0.9rem 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-hc-bg="aurora"] .site-hc__scene::before { animation: hc-aurora-drift 26s ease-in-out infinite alternate; }
+  :root[data-hc-bg="aurora"] .site-hc__scene::after { animation: hc-aurora-flow 18s ease-in-out infinite alternate; }
+  :root[data-hc-bg="aura"] .site-hc__scene::before { animation: hc-aura-breathe 9s ease-in-out infinite alternate; }
+  :root[data-hc-bg="aura"] .site-hc__scene::after { animation: hc-aura-breathe 9s ease-in-out infinite alternate-reverse; }
+}
+@keyframes hc-aurora-drift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(3%, -2%, 0) rotate(6deg) scale(1.06); }
+  100% { transform: translate3d(-3%, 2%, 0) rotate(-4deg) scale(1.02); }
+}
+@keyframes hc-aurora-flow {
+  0% { transform: rotate(-14deg) translate3d(-6%, 0, 0); }
+  100% { transform: rotate(-9deg) translate3d(6%, -3%, 0); }
+}
+@keyframes hc-aura-breathe { from { scale: 1; opacity: 0.9; } to { scale: 1.07; opacity: 1; } }
+
+/* Drift reveal: how much of the photo shows, 50–90% (home-concept.js turns it into the wave
+   field's cut). Dimmed while the reveal is off. */
+.site-hc__bgs-amt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  align-items: center;
+  gap: var(--fh-space-3);
+  padding: 0 var(--fh-space-4) var(--fh-space-3);
+}
+.site-hc__bgs-amt input { inline-size: 100%; margin: 0; accent-color: var(--fh-color-accent); cursor: pointer; }
+.site-hc__bgs-amt output { font-variant-numeric: tabular-nums; }
+.site-hc__bgs-fx[aria-pressed="false"] + .site-hc__bgs-amt { opacity: 0.45; }
+
+/* Drift styles: free and Pro (site/drift.js holds the library; tier is data there). */
+.site-hc__bgs ul.site-hc__bgs-drifts {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--fh-space-1-5, 0.375rem);
+  padding: 0 var(--fh-space-4) var(--fh-space-3);
+}
+.site-hc__bgs .site-hc__bgs-drifts li + li { border: 0; }
+.site-hc__bgs .site-hc__bgs-drifts button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.5rem;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: 999px;
+  font: 600 0.62rem / 1.2 var(--fh-font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-hc__bgs .site-hc__bgs-drifts button[aria-pressed="true"] { border-style: solid; border-color: var(--fh-color-accent); color: var(--fh-color-accent); }
+.site-hc__bgs-pro {
+  padding: 0.05rem 0.3rem;
+  border-radius: 999px;
+  background: var(--fh-color-text);
+  color: var(--fh-color-canvas);
+  font-size: 0.52rem;
+  font-weight: 800;
+}
+.site-hc__bgs-fx[aria-pressed="false"] ~ :is(.site-hc__bgs-amt, .site-hc__bgs-drifts) { opacity: 0.45; }
+
+/* The etch line from the logo to the right edge: its own colour, worked out from the theme's
+   accent. The accent's split complement (hue + 150deg), held at a vivid chroma and a lightness
+   that reads on each scheme, so it pops and belongs to the theme without echoing its colour:
+   Violet → gold, Firehorse orange → cyan, Emerald → magenta, Blue → orange, Amber → azure. */
+.site-hc__etch {
+  --hc-etch: light-dark(
+    oklch(from var(--fh-color-accent) 0.64 max(c, 0.19) calc(h + 150)),
+    oklch(from var(--fh-color-accent) 0.82 max(c, 0.16) calc(h + 150))
+  );
+  border-block-end-color: var(--hc-etch);
+  filter: drop-shadow(0 0 5px color-mix(in oklab, var(--hc-etch) 45%, transparent));
+}
+
+/* Every backdrop recedes on scroll the way the horses do: the system's fh-recede (MOT-3.1) on
+   the scene, over the logo's lock distance, from the top right as the horses. */
+.site-hc__scene.fh-recede { --fh-recede-range: var(--fh-lock, 48vh); }
+
+/* Photos draw on the scene's ::before, not the scene itself, so a photo can be lifted: --_lift
+   (a photo's data-lift, e.g. 0.13) crops that share off the top, moving the subject up the page.
+   The layer runs that much above the window and is covered to the taller box, so nothing shows
+   at the bottom. The drift canvas does the same sum (site/drift.js, setPhoto's lift). */
+:root[data-hc-photo] .site-hc__scene { background-image: none; }
+:root[data-hc-photo] .site-hc__scene::before {
+  content: "";
+  inset: calc(var(--_lift, 0) / (1 - var(--_lift, 0)) * -100%) 0 0 0;
+  background: var(--_img) var(--_pos, center) / cover no-repeat;
+}
+
+/* Eleven faces now: the typeface list scrolls inside itself if the window is short. */
+.site-hc__types { max-block-size: calc(100vh - 6rem); overflow: auto; }
+
+/* The picked typeface carries through the whole page: every heading level (h1–h6), quotes and
+   body copy below the hero take the switch's face, not only the hero. Held in fh.base so a
+   component or label that deliberately sets mono still keeps it. */
+@layer fh.base {
+  :root[data-fh-type] :is(h1, h2, h3, h4, h5, h6, blockquote) { font-family: var(--fh-font-display); }
+  :root[data-fh-type] :is(p, li, figcaption, dd, dt, label, a, button) { font-family: var(--fh-font-sans); }
+}
+
+/* Fit to height (a photo's data-fit="height"): the whole photo shows, top to bottom, so nothing
+   in it (the horses) is cropped away. It sits flush right, as the horse art does; the window to
+   its left is the photo's own edge colour (data-fill, sampled from its left edge), and its left
+   edge feathers into that colour so there is no seam. --_ar is the photo's width / height. */
+.site-hc__scene[data-fit="height"] { background-color: var(--_fill, transparent); }
+/* …and behind it, the same photo enlarged and blurred across the whole window, so the left side
+   is the photo too (home-concept.js adds the layer; the drift canvas draws its own). */
+.site-hc__scene-fill { position: absolute; inset: -4%; display: none; background: var(--_img) center 70% / cover no-repeat; filter: blur(36px) brightness(0.92); }
+:root[data-hc-photo]:not([data-hc-drift]) .site-hc__scene[data-fit="height"] .site-hc__scene-fill { display: block; }
+:root[data-hc-photo] .site-hc__scene[data-fit="height"]::before {
+  inset: 0;
+  background: var(--_img) right center / auto 100% no-repeat;
+  mask: linear-gradient(to right, transparent calc(100% - var(--_ar, 1) * 100vh), #000 calc(100% - var(--_ar, 1) * 100vh * 0.8));
+}
+
+.site-hc__scene[data-fit="height"]::before { z-index: 1; }
+.site-hc__scene::after { z-index: 2; }
+.site-hc__bgs-amt { grid-template-columns: minmax(0, 1fr) 8.5rem; }
+
+/* —— On the Firehorse motion system: glide and lock (MOT-4.2, MOT-4.3), dock beside (MOT-4.4, Pro)
+   The enhancer builds them from the page's data-fh-glide / data-fh-lock / data-fh-dock-beside
+   attributes and shares the logo's lock distance as --fh-lock; the page keeps its own touches. */
+:root { --hc-lock: var(--fh-lock, 48vh); }
+.fh-glide .site-hc-nav__links { margin: -0.3125rem 0; padding-block: 0.3125rem; }
+.fh-glide .site-hc-nav__link { font-size: calc(var(--fh-text-label) * 1.1); }
+.fh-lock > .site-hc__agents { position: static; inset: auto; inline-size: auto; }
+.fh-lock .site-hc__fh { color: var(--fh-color-text); white-space: nowrap; }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-lock .site-hc__fh::before { animation: hc-fade-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fh-lock, 48vh); }
+  }
+}
+
+/* "From backdrop": the theme colour follows the picked backdrop (home-concept.js samples the
+   photo's most vivid colour). Its dot shows that colour, ringed with a dashed etch. */
+.site-hc__roots button > i.site-hc__roots-auto { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-text-subtle); outline: 1px dashed var(--fh-color-text-subtle); outline-offset: 3px; }
+.site-hc__roots button[aria-pressed="true"] > i.site-hc__roots-auto { outline-color: var(--_c); }

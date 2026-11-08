@@ -1,0 +1,105 @@
+/*
+ * Firehorse — Breadcrumb (MRK)
+ * components/actions · layer fh.components · docs /components/actions/#MRK
+ */
+
+@layer fh.components {
+  /* —— Breadcrumb ——
+   *   <nav class="fh-breadcrumb" aria-label="Breadcrumb" data-tone="teal">
+   *     <a class="fh-breadcrumb__back" href="/services" aria-label="Back">
+   *       <span class="fh-dot fh-dot--live"></span></a>
+   *     <ol>
+   *       <li><a href="/services">Services</a></li>
+   *       <li><span aria-current="page">Data architecture</span></li>
+   *     </ol>
+   *   </nav>
+   */
+  .fh-breadcrumb {
+    display: flex;
+    inline-size: fit-content;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    max-inline-size: 100%;
+    padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
+    border: var(--fh-border-thin) solid var(--fh-color-rule);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-widest);
+    line-height: var(--fh-leading-snug);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+
+    & ol {
+      display: flex;
+      align-items: center;
+      min-inline-size: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & li {
+      display: inline-flex;
+      align-items: center;
+      min-inline-size: 0;
+    }
+
+    & li + li::before {
+      content: "";
+      inline-size: 0.7rem;
+      block-size: 0.7rem;
+      margin-inline: var(--fh-gap-bound);
+      flex: none;
+      background-color: color-mix(in oklab, var(--fh-color-text-muted) 55%, transparent);
+      mask: var(--fh-icon-chevron-right) center / contain no-repeat;
+    }
+
+    & a {
+      color: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+    }
+
+    & [aria-current] {
+      overflow: hidden;
+      color: var(--fh-color-text);
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-wider);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  /* On narrow slots, keep only the current page and its parent. */
+  @container (inline-size < 30rem) {
+    .fh-breadcrumb li:not(:nth-last-child(-n + 2)) {
+      display: none;
+    }
+
+    .fh-breadcrumb li:nth-last-child(2)::before {
+      display: none;
+    }
+  }
+
+  .fh-breadcrumb__back {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: 1.35rem;
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-pill);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover {
+      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+    }
+  }
+
+}

@@ -1,0 +1,142 @@
+/*
+ * Firehorse — Formats (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+@layer fh.components {
+  /* —— Formats (native px; safe areas from each platform) —— */
+
+  /* Link preview: Open Graph / X card / LinkedIn share, 1.91:1 */
+  .fh-canvas--og { --fh-canvas-w: 1200; --fh-canvas-h: 630; }
+
+  /* YouTube thumbnail. The timestamp covers the bottom-right corner. */
+  .fh-canvas--yt-thumb {
+    --fh-canvas-w: 1280;
+    --fh-canvas-h: 720;
+    --fh-canvas-pad: 64;
+    --fh-canvas-title: 112;
+    --fh-canvas-sub: 34;
+    --fh-canvas-small: 22;
+    --fh-canvas-measure: 9ch;
+  }
+
+  /* YouTube channel banner. Only the centre 1546 × 423 shows everywhere. */
+  .fh-canvas--yt-banner {
+    --fh-canvas-w: 2560;
+    --fh-canvas-h: 1440;
+    --fh-canvas-safe-t: 508;
+    --fh-canvas-safe-r: 507;
+    --fh-canvas-safe-b: 509;
+    --fh-canvas-safe-l: 507;
+    --fh-canvas-pad: 28;
+    --fh-canvas-frame: 48;
+    --fh-canvas-grid: 48;
+    --fh-canvas-title: 96;
+    --fh-canvas-sub: 30;
+    --fh-canvas-small: 22;
+    --fh-canvas-measure: 14ch;
+  }
+
+  /* X and Bluesky header, 3:1. The profile photo sits over the lower left. */
+  .fh-canvas--x-header {
+    --fh-canvas-w: 1500;
+    --fh-canvas-h: 500;
+    --fh-canvas-safe-t: 40;
+    --fh-canvas-safe-r: 40;
+    --fh-canvas-safe-b: 40;
+    --fh-canvas-safe-l: 420;
+    --fh-canvas-pad: 36;
+    --fh-canvas-title: 76;
+    --fh-canvas-sub: 26;
+    --fh-canvas-small: 18;
+    --fh-canvas-measure: 14ch;
+  }
+
+  /* LinkedIn profile banner, 4:1. The photo covers the lower left; phones trim the sides. */
+  .fh-canvas--li-banner {
+    --fh-canvas-w: 1584;
+    --fh-canvas-h: 396;
+    --fh-canvas-safe-t: 40;
+    --fh-canvas-safe-r: 120;
+    --fh-canvas-safe-b: 40;
+    --fh-canvas-safe-l: 420;
+    --fh-canvas-pad: 28;
+    --fh-canvas-title: 64;
+    --fh-canvas-sub: 24;
+    --fh-canvas-small: 17;
+    --fh-canvas-measure: 16ch;
+  }
+
+  /* Instagram / Threads / LinkedIn feed post, 4:5. The profile grid trims it to 3:4. */
+  .fh-canvas--post {
+    --fh-canvas-w: 1080;
+    --fh-canvas-h: 1350;
+    --fh-canvas-safe-r: 34;
+    --fh-canvas-safe-l: 34;
+    --fh-canvas-pad: 76;
+    --fh-canvas-title: 112;
+    --fh-canvas-sub: 36;
+    --fh-canvas-small: 24;
+    --fh-canvas-measure: 9ch;
+  }
+
+  /* Square post / carousel slide, 1:1 */
+  .fh-canvas--square {
+    --fh-canvas-w: 1080;
+    --fh-canvas-h: 1080;
+    --fh-canvas-pad: 80;
+    --fh-canvas-title: 104;
+    --fh-canvas-sub: 34;
+    --fh-canvas-small: 24;
+    --fh-canvas-measure: 10ch;
+  }
+
+  /* Story, Reel, Short, TikTok: 9:16. App chrome covers the top and bottom bands. */
+  .fh-canvas--story {
+    --fh-canvas-w: 1080;
+    --fh-canvas-h: 1920;
+    --fh-canvas-safe-t: 250;
+    --fh-canvas-safe-r: 64;
+    --fh-canvas-safe-b: 340;
+    --fh-canvas-safe-l: 64;
+    --fh-canvas-pad: 40;
+    --fh-canvas-title: 128;
+    --fh-canvas-sub: 40;
+    --fh-canvas-small: 26;
+    --fh-canvas-measure: 8ch;
+  }
+
+  /* Album, single or podcast cover, 3000 × 3000 */
+  .fh-canvas--cover {
+    --fh-canvas-w: 3000;
+    --fh-canvas-h: 3000;
+    --fh-canvas-pad: 210;
+    --fh-canvas-frame: 90;
+    --fh-canvas-grid: 75;
+    --fh-canvas-title: 360;
+    --fh-canvas-sub: 96;
+    --fh-canvas-small: 64;
+    --fh-canvas-index: 900;
+    --fh-canvas-measure: 7ch;
+  }
+
+  /* Business card, 3.5 × 2 in at 300 dpi (trim size). Keep text ⅛ in inside the trim. */
+  .fh-canvas--card {
+    --fh-canvas-w: 1050;
+    --fh-canvas-h: 600;
+    --fh-canvas-safe-t: 38;
+    --fh-canvas-safe-r: 38;
+    --fh-canvas-safe-b: 38;
+    --fh-canvas-safe-l: 38;
+    --fh-canvas-pad: 34;
+    --fh-canvas-frame: 0;
+    --fh-canvas-grid: 25;
+    --fh-canvas-title: 60;
+    --fh-canvas-sub: 26;
+    --fh-canvas-small: 19;
+    --fh-canvas-measure: 14ch;
+
+    &::after { content: none; }
+  }
+
+}

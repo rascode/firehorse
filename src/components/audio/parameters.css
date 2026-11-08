@@ -1,0 +1,47 @@
+/*
+ * Firehorse — Parameters (PRM)
+ * components/audio · layer fh.components · docs /audio/#PRM
+ */
+
+@layer fh.components {
+  /* —— Parameter field: label, range and a formatted readout ——
+   *   <label class="fh-param">
+   *     <span class="fh-param__label">High-pass <small>Hz</small></span>
+   *     <input class="fh-scrub" type="range" min="40" max="2000" step="10" value="80" data-unit="Hz">
+   *     <output class="fh-param__value">80 Hz</output>
+   *   </label> */
+  .fh-params {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
+  }
+  .fh-param {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "label value" "range range" "hint hint";
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
+    align-items: center;
+
+    & > .fh-scrub { grid-area: range; }
+    & > .fh-param__hint { grid-area: hint; margin: 0; color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
+  }
+  .fh-param__label {
+    grid-area: label;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+  .fh-param__value {
+    grid-area: value;
+    padding: 0.1rem 0.45rem;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-sm);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-variant-numeric: tabular-nums;
+  }
+
+}

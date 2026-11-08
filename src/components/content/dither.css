@@ -1,0 +1,73 @@
+/*
+ * Firehorse — Dither (DTH)
+ * components/content · layer fh.components · docs /components/content/#DTH
+ */
+
+@layer fh.components {
+  /* —— Dither (DTH) ——
+   * Turns a picture into a halftone: dots (or lines) that grow where the
+   * picture is light, on a dark ground. Pure CSS: the picture and a dot
+   * screen are blended, then pushed to two values with contrast.
+   *   <figure class="fh-dither" data-tone="lime">
+   *     <span class="fh-dither__plate"><img src="…" alt="…"></span>
+   *   </figure>
+   * Without data-tone the dots are white; with it they take the tone.
+   *   modifiers  --paper (dark dots on a light ground)
+   *              --lines (a line screen instead of dots)
+   *              --fine · --coarse (dot size 4px · 9px)
+   *   knobs      --fh-dither-size (screen pitch, 6px)
+   *              --fh-dither-ratio (4 / 3) · --fh-dither-radius
+   *              --fh-dither-gain (brightness before the screen: 1.3, 0.8 on --paper) */
+  .fh-dither {
+    --_size: var(--fh-dither-size, 6px);
+    position: relative;
+    aspect-ratio: var(--fh-dither-ratio, 4 / 3);
+    margin: 0;
+    overflow: clip;
+    isolation: isolate;
+    border-radius: var(--fh-dither-radius, var(--fh-card-radius, var(--fh-radius-md)));
+  }
+  .fh-dither--fine { --_size: var(--fh-dither-size, 4px); }
+  .fh-dither--coarse { --_size: var(--fh-dither-size, 9px); }
+
+  /* The plate does the halftone; everything inside it is thresholded. */
+  .fh-dither__plate {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background-color: var(--fh-color-on-ink);
+    filter: contrast(28) invert(1);
+  }
+  .fh-dither--paper .fh-dither__plate { filter: contrast(28); }
+  .fh-dither__plate > img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    filter: grayscale(1) blur(calc(var(--_size) / 4)) brightness(var(--fh-dither-gain, 1.3)) invert(1);
+  }
+  .fh-dither--paper .fh-dither__plate > img {
+    filter: grayscale(1) blur(calc(var(--_size) / 4)) brightness(var(--fh-dither-gain, 0.8));
+  }
+  .fh-dither__plate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--fh-color-ink) calc(var(--_size) * 0.12), var(--fh-color-on-ink) calc(var(--_size) * 0.62)) 0 0 / var(--_size) var(--_size);
+    mix-blend-mode: screen;
+  }
+  .fh-dither--lines .fh-dither__plate::after {
+    background: linear-gradient(180deg, var(--fh-color-ink), var(--fh-color-on-ink) 50%, var(--fh-color-ink)) 0 0 / 100% var(--_size);
+  }
+
+  /* A tone colours the dots (light ground) or the ground (paper). */
+  .fh-dither[data-tone]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--fh-tone);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .fh-dither--paper[data-tone]::after { mix-blend-mode: screen; }
+}

@@ -1,0 +1,31 @@
+/*
+ * Firehorse — Price
+ * components/commerce · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Price —— */
+  .fh-price {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--fh-gap-bound) var(--fh-gap-related);
+    margin: 0;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: clamp(1.45rem, 1.1rem + 1.6cqi, 1.75rem);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: var(--fh-tracking-mono);
+    line-height: var(--fh-leading-heading);
+    font-variant-numeric: tabular-nums;
+
+    & > b,
+    & > strong { color: var(--fh-color-text); font-size: var(--fh-text-body); font-weight: var(--fh-weight-medium); }
+    & > s,
+    & > del { color: var(--fh-color-text-subtle); font-size: 0.88em; }
+    & > small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wide); text-transform: uppercase; }
+    &:has(> s, > del) > :is(b, strong) { color: var(--fh-tone, var(--fh-color-danger)); }
+  }
+  .fh-price--lg > :is(b, strong) { font-family: var(--fh-font-figure); font-size: var(--fh-text-h3); letter-spacing: -0.02em; }
+
+}

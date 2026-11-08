@@ -1,0 +1,58 @@
+/*
+ * Firehorse — Skeleton (FBK)
+ * components/feedback · layer fh.components · docs /components/overlays/#FBK
+ */
+
+@layer fh.components {
+  /* —— Skeleton ——
+   *   <div class="fh-skeleton" style="--fh-lines: 3"></div>
+   *   <span class="fh-skeleton fh-skeleton--block" style="block-size: 8rem"></span> */
+  .fh-skeleton {
+    --_line: 0.9em;
+    --_gap: 0.6em;
+
+    display: block;
+    block-size: calc(var(--fh-lines, 1) * (var(--_line) + var(--_gap)) - var(--_gap));
+    border-radius: var(--fh-radius-sm);
+    background:
+      linear-gradient(90deg, transparent 0 30%, color-mix(in oklab, var(--fh-color-text) 6%, transparent) 50%, transparent 70%)
+        0 0 / 300% 100%,
+      repeating-linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--fh-color-text) 8%, transparent) 0 var(--_line),
+        transparent var(--_line) calc(var(--_line) + var(--_gap))
+      );
+    mask: linear-gradient(90deg, black 0 82%, transparent) no-repeat;
+  }
+
+  .fh-skeleton--block {
+    block-size: auto;
+    min-block-size: 2.5rem;
+    mask: none;
+    background:
+      linear-gradient(90deg, transparent 0 30%, color-mix(in oklab, var(--fh-color-text) 6%, transparent) 50%, transparent 70%)
+        0 0 / 300% 100%,
+      color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+  }
+
+  .fh-skeleton--circle {
+    inline-size: var(--fh-skeleton-size, 2.5rem);
+    block-size: auto;
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    mask: none;
+    background: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-skeleton {
+      animation: fh-shimmer 1.6s linear infinite;
+    }
+  }
+
+  @keyframes fh-shimmer {
+    from { background-position: 100% 0, 0 0; }
+    to { background-position: -50% 0, 0 0; }
+  }
+
+}

@@ -1,0 +1,162 @@
+<!--@meta {
+  "path": "/motion/",
+  "order": 12,
+  "name": "Motion",
+  "tone": "violet",
+  "title": "Motion · Firehorse",
+  "description": "Firehorse motion: tokens, named entrances, intro sequences, scroll-linked recede, glide and lock, the circle reveal and Drift, so every motion a visitor sees ships in the system.",
+  "headline": "Motion, <em>in the system</em>",
+  "lede": "Firehorse isn't just a site. Firehorse is a system. Every intro, glide, lock, recede and reveal you see on these pages ships as tokens, attributes and rules, so you and your agents rebuild it exactly instead of guessing.",
+  "styles": ["/motion-page.css"],
+  "scripts": ["/motion-page.js"],
+  "icon": "sparkles",
+  "summary": [
+    { "value": "10", "label": "Entrances", "blurb": "Named, ordered with one attribute, held until the page is ready." },
+    { "value": "0", "label": "Keyframes to write", "blurb": "Tokens and attributes only; reduced motion shows everything at rest." },
+    { "value": "3+", "label": "Free of every Pro piece", "blurb": "Each paid motion ships beside at least three free ones." }
+  ]
+}-->
+<!--@main-->
+    <!-- ═══════════════ MOTION ═══════════════ -->
+    <section id="motion" class="fh-section fh-section--ruled site-anchor" data-tone="violet" aria-labelledby="motion-title" data-fh-label="Motion" data-fh-index="01">
+      <header class="fh-section-head">
+        <p class="fh-eyebrow" id="motion-title">Motion contract</p>
+        <h2 class="fh-heading">Most design systems stop at motion. Firehorse doesn't.</h2>
+        <p class="fh-lede">Copy a site and you get its boxes, not its timing. Agents left to guess motion guess differently every time: janky intros, inconsistent flows. Here every motion has a name, an Index ID and a rule, written down for people and for agents.</p>
+      </header>
+
+      <div class="fh-stack fh-stack--xl" data-fh-id="MOT" data-fh-name="Motion" data-fh-groups="Entrances|Sequences|Scroll-linked|Choreography|Drift">
+
+        <!-- MOT-1 Entrances -->
+        <div class="site-demo site-anchor" id="m-entrances" data-fh-id="MOT-1">
+          <div class="site-demo__head"><h3>Entrances</h3><p>Put <code>data-fh-enter</code> on an element and it enters once the page is ready. Step <code>n</code> starts at n × <code>--fh-intro-beat</code> (150ms); <code>--fh-at</code> sets an exact time. Press Replay.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="site-motion-grid" data-fh-intro>
+  <div class="site-motion-tile" data-fh-enter="rise" data-fh-step="1" data-fh-id="MOT-1.1" data-fh-name="Rise">rise</div>
+  <div class="site-motion-tile" data-fh-enter="drop" data-fh-step="2" data-fh-id="MOT-1.2" data-fh-name="Drop">drop</div>
+  <div class="site-motion-tile" data-fh-enter="fade" data-fh-step="3" data-fh-id="MOT-1.3" data-fh-name="Fade">fade</div>
+  <div class="site-motion-tile" data-fh-enter="scale" data-fh-step="4" data-fh-id="MOT-1.4" data-fh-name="Scale">scale</div>
+  <div class="site-motion-tile" data-fh-enter="blur" data-fh-step="5" data-fh-id="MOT-1.5" data-fh-name="Blur">blur</div>
+  <div class="site-motion-tile" data-fh-enter="fold" data-fh-step="6" data-fh-id="MOT-1.6" data-fh-name="Fold">fold</div>
+  <div class="site-motion-tile site-motion-tile--line" data-fh-id="MOT-1.7" data-fh-name="Draw">draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
+  <div class="site-motion-tile" data-fh-enter="wipe" data-fh-step="8" data-fh-id="MOT-1.8" data-fh-name="Wipe">wipe</div>
+  <div class="site-motion-tile site-motion-tile--art" data-fh-enter="unveil" data-fh-step="9" data-fh-id="MOT-1.9" data-fh-name="Unveil">unveil</div>
+  <div class="site-motion-tile site-motion-tile--clip" data-fh-id="MOT-1.10" data-fh-name="Lift"><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
+</div>
+          </div>
+          <div class="site-motion-bar"><button type="button" class="fh-button fh-button--sm fh-button--secondary" data-motion-replay="#m-entrances"><i class="fh-icon fh-icon--rotate-ccw" aria-hidden="true"></i>Replay</button></div>
+        </div>
+
+        <!-- MOT-2 Sequences -->
+        <div class="site-demo site-anchor" id="m-sequences" data-fh-id="MOT-2">
+          <div class="site-demo__head"><h3>Sequences</h3><p>An intro's order lives on its section. <code>data-fh-intro</code> marks the owner; <code>data-fh-enter-children</code> staggers a list by <code>--fh-stagger</code> (60ms). The homepage hero is written exactly this way.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="site-motion-hero" data-fh-intro data-fh-id="MOT-2.1" data-fh-name="Intro">
+  <p class="site-motion-hero__mark" data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
+  <span class="site-motion-hero__line" data-fh-enter="draw" data-fh-step="4"></span>
+  <p class="site-motion-hero__top" data-fh-enter="blur" data-fh-step="6">The design system</p>
+  <p class="site-motion-hero__turn" data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
+  <ul class="site-motion-hero__chips" data-fh-enter-children data-fh-step="9" data-fh-id="MOT-2.2" data-fh-name="Staggered list">
+    <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
+  </ul>
+</div>
+          </div>
+          <div class="site-motion-bar"><button type="button" class="fh-button fh-button--sm fh-button--secondary" data-motion-replay="#m-sequences"><i class="fh-icon fh-icon--rotate-ccw" aria-hidden="true"></i>Replay</button></div>
+        </div>
+
+        <!-- MOT-3 Scroll-linked -->
+        <div class="site-demo site-anchor" id="m-scroll" data-fh-id="MOT-3">
+          <div class="site-demo__head"><h3>Scroll-linked</h3><p>CSS only, on the page's scroll timeline: it tracks the scroll exactly and costs no script per frame. Scroll the page and watch these.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="site-motion-scroll">
+  <div class="site-motion-frame"><div class="site-motion-art fh-recede" style="--fh-recede-range: 60vh" data-fh-id="MOT-3.1" data-fh-name="Recede"></div><span>fh-recede</span></div>
+  <div class="site-motion-frame"><div class="site-motion-art site-motion-art--b fh-scroll-fade" style="--fh-recede-range: 60vh" data-fh-id="MOT-3.2" data-fh-name="Scroll fade"></div><span>fh-scroll-fade</span></div>
+  <div class="site-motion-frame"><div class="site-motion-art site-motion-art--c fh-reveal" data-fh-id="MOT-3.3" data-fh-name="Reveal"></div><span>fh-reveal</span></div>
+  <div class="site-motion-frame"><div class="site-motion-art site-motion-art--d fh-parallax" style="--fh-depth: 0.3" data-fh-id="MOT-3.4" data-fh-name="Parallax"></div><span>fh-parallax</span></div>
+</div>
+          </div>
+          <p class="site-motion-note" data-fh-id="MOT-3.5" data-fh-name="Progress">Page progress: <code>&lt;div class="fh-scroll-progress"&gt;&lt;/div&gt;</code> draws the line at the top of this page.</p>
+          <div class="fh-scroll-progress" aria-hidden="true"></div>
+        </div>
+
+        <!-- MOT-4 Choreography -->
+        <div class="site-demo site-anchor" id="m-choreo" data-fh-id="MOT-4">
+          <div class="site-demo__head"><h3>Choreography</h3><p>Script measures once and on resize; the motion itself still runs on the scroll timeline. The circle reveal, glide and lock are free in the enhancer (<code>firehorse.js</code>); dock beside is Firehorse Pro. See them together on the <a href="/home-concept/">homepage concept</a>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="site-motion-choreo">
+  <div class="site-motion-card" data-fh-id="MOT-4.1" data-fh-name="Circle reveal">
+    <b>Circle reveal</b><small>Free · <code>Firehorse.reveal(change, from)</code></small>
+    <button type="button" class="fh-button fh-button--sm" data-motion-reveal>Change the tone</button>
+  </div>
+  <div class="site-motion-card" data-fh-id="MOT-4.2" data-fh-name="Glide">
+    <b>Glide</b><small>Free · <code>data-fh-glide="center"</code></small>
+    <code class="site-motion-code">&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
+  </div>
+  <div class="site-motion-card" data-fh-id="MOT-4.3" data-fh-name="Lock">
+    <b>Lock</b><small>Free · <code>data-fh-lock</code></small>
+    <code class="site-motion-code">&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
+  </div>
+  <div class="site-motion-card" data-fh-id="MOT-4.4" data-fh-name="Dock beside">
+    <b>Dock beside <span class="site-motion-pro">Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
+    <code class="site-motion-code">&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <!-- MOT-5 Drift -->
+        <div class="site-demo site-anchor" id="m-drift" data-fh-id="MOT-5">
+          <div class="site-demo__head"><h3>Drift</h3><p>A photo shows a set share at a time; the rest rests under a soft veil and drifts in, so the photo's tone holds. Five styles are free, three are Pro. <code>import { createDrift } from "/drift.js"</code>.</p></div>
+          <div class="site-demo__stage">
+<div class="site-motion-drift">
+  <canvas class="site-motion-drift__canvas" aria-hidden="true"></canvas>
+  <div class="site-motion-drift__bar">
+    <div class="site-motion-drift__styles" role="group" aria-label="Drift style">
+      <button type="button" data-drift="wave" aria-pressed="true" data-fh-id="MOT-5.1" data-fh-name="Wave">Wave</button>
+      <button type="button" data-drift="silk" aria-pressed="false" data-fh-id="MOT-5.2" data-fh-name="Silk">Silk</button>
+      <button type="button" data-drift="eddy" aria-pressed="false" data-fh-id="MOT-5.3" data-fh-name="Eddy">Eddy</button>
+      <button type="button" data-drift="panels" aria-pressed="false" data-fh-id="MOT-5.4" data-fh-name="Panels">Panels</button>
+      <button type="button" data-drift="ripple" aria-pressed="false" data-fh-id="MOT-5.5" data-fh-name="Ripple">Ripple</button>
+      <button type="button" data-drift="dapple" aria-pressed="false" data-fh-id="MOT-5.6" data-fh-name="Dapple · Pro">Dapple <span class="site-motion-pro">Pro</span></button>
+      <button type="button" data-drift="tides" aria-pressed="false" data-fh-id="MOT-5.7" data-fh-name="Tide lines · Pro">Tide lines <span class="site-motion-pro">Pro</span></button>
+      <button type="button" data-drift="shutters" aria-pressed="false" data-fh-id="MOT-5.8" data-fh-name="Shutters · Pro">Shutters <span class="site-motion-pro">Pro</span></button>
+    </div>
+    <label class="site-motion-drift__amt">Showing <output>74</output>%<input type="range" min="0" max="90" value="74" aria-label="How much of the photo shows"></label>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <!-- Tokens -->
+        <div class="site-demo site-anchor" id="m-tokens">
+          <div class="site-demo__head"><h3>Tokens</h3><p>Every timing comes from a token; no component or page writes its own milliseconds or curves.</p></div>
+          <div class="site-demo__stage">
+<div class="site-ease site-motion-ease">
+  <div data-tone="sky"><span>--fh-ease-out</span><div class="site-ease__track"><i style="--e: var(--fh-ease-out)"></i></div></div>
+  <div data-tone="violet"><span>--fh-ease-expo-out</span><div class="site-ease__track"><i style="--e: var(--fh-ease-expo-out)"></i></div></div>
+  <div data-tone="orange"><span>--fh-ease-in-out</span><div class="site-ease__track"><i style="--e: var(--fh-ease-in-out)"></i></div></div>
+  <div data-tone="lime"><span>--fh-ease-spring</span><div class="site-ease__track"><i style="--e: var(--fh-ease-spring)"></i></div></div>
+  <div data-tone="teal"><span>--fh-ease-glide</span><div class="site-ease__track"><i style="--e: var(--fh-ease-glide)"></i></div></div>
+  <div data-tone="rose"><span>--fh-ease-in</span><div class="site-ease__track"><i style="--e: var(--fh-ease-in)"></i></div></div>
+</div>
+<p class="site-motion-note">Durations: instant 80ms · fast 150ms · base 220ms · slow 420ms · enter 600ms · reveal 720ms · intro 900ms · scene 1.1s. Beat 150ms · stagger 60ms · rise 0.6rem · recede to 0.9.</p>
+          </div>
+        </div>
+
+        <!-- Rules -->
+        <div class="site-demo site-anchor" id="m-rules">
+          <div class="site-demo__head"><h3>Rules</h3><p>The same seven hold for every piece; the agent contract carries them.</p></div>
+          <div class="site-demo__stage">
+<ol class="site-motion-rules">
+  <li><b>Reduced motion wins.</b> Everything appears in place; scroll pieces hold still; Drift shows one still frame.</li>
+  <li><b>Content is never parked.</b> Without script nothing is hidden; intros run only with <code>fh-js</code> and <code>fh-ready</code> arrives within 2s.</li>
+  <li><b>Transform and opacity only.</b> Clips and masks for draws and wipes; never width, height, top, left or margins.</li>
+  <li><b>Tokens only.</b> A new timing becomes a token first.</li>
+  <li><b>One owner per sequence.</b> The order lives on its section.</li>
+  <li><b>Scroll-linked on the compositor.</b> Script measures once and on resize, never per frame.</li>
+  <li><b>Budget.</b> No live blur on large or fixed surfaces; loops pause off screen; Drift runs at about 30fps.</li>
+</ol>
+          </div>
+        </div>
+      </div>
+    </section>

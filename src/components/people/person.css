@@ -1,0 +1,40 @@
+/*
+ * Firehorse — Person (TST)
+ * components/people · layer fh.components · docs /components/content/#TST
+ */
+
+@layer fh.components {
+  /* —— Person: avatar + name + role —— */
+  .fh-person {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    color: var(--fh-color-text);
+    text-decoration: none;
+  }
+
+  .fh-person__text {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > b {
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+    }
+
+    & > span {
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  a.fh-person:hover b {
+    color: var(--fh-tone);
+  }
+
+}

@@ -11,8 +11,15 @@ const re = /<div class="site-demo__head"><h3>(.*?)<\/h3>(?:<p>(.*?)<\/p>|<code>(
 const blocks = [];
 for (const m of html.matchAll(re)) blocks.push({ title: strip(m[1]), note: strip(m[2] || (m[3] ? "`" + m[3] + "`" : "")), code: m[4].replace(/ data-fh-(?:id|name)="[^"]*"/g, "").replace(/\s+$/, "") });
 // Firehorse Index IDs, so a heading reads "CHP · Chips".
-let ids = {};
-try { for (const f of JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families) ids[f.name] = f.id; } catch {}
+let ids = {}, tagged = {};
+try {
+  const fams = JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families;
+  for (const f of fams) ids[f.name] = f.id;
+  // Groups that are demos of their own (AVT-1 Shapes, CUB-2 Cube cards) head their own block.
+  for (const f of fams) for (const g of f.groups ?? []) if (g.demo) ids[g.name] ??= g.id;
+  // The Index's markup carries data-fh on every component root; prefer it over the raw demo.
+  for (const f of fams) { if (f.markup) tagged[f.id] = f.markup; for (const g of f.groups ?? []) if (g.markup) tagged[g.id] = g.markup; }
+} catch {}
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 let md = `# Firehorse — component markup
 
@@ -29,14 +36,18 @@ let md = `# Firehorse — component markup
 | Type | \`fh-display\` \`fh-title\` \`fh-heading\` \`fh-subheading\` \`fh-lede\` \`fh-body\` \`fh-small\` \`fh-label\` \`fh-eyebrow\` \`fh-mono\` \`fh-index\` \`fh-price\` \`fh-signature\` \`fh-prose\` \`fh-muted\` \`fh-subtle\` |
 | Actions | \`fh-button\` (\`--secondary\` \`--outline\` \`--ghost\` \`--accent\` \`--plain\` \`--sm\` \`--lg\` \`--block\` \`--icon\`) \`fh-action\` (\`--lg\`) \`fh-link\` (\`--quiet\`) \`fh-roll\` \`fh-close\` |
 | Markers | \`fh-dot\` (\`--live\`) \`fh-eyebrow-pill\` (\`--sentence\`) \`fh-breadcrumb\` \`fh-badge\` (\`--solid\`) |
-| Content | \`fh-card\` (\`__meta\` \`__title\` \`__body\` \`__footer\` \`__price\` \`--solid\`) \`fh-stats\` \`fh-checklist\` \`fh-steps\` (\`--grid\`) \`fh-quote\` \`fh-crosses\` \`fh-table-wrap\` \`fh-table\` (\`--reflow\`) \`fh-matrix\` |
+| Content | \`fh-card\` (\`__meta\` \`__title\` \`__body\` \`__footer\` \`__price\` \`--solid\`) \`fh-stats\` \`fh-kv\` (\`__full\` \`--fields\` \`--single\`) \`[data-fh-rows]\` \`[data-fh-rows-select]\` \`fh-checklist\` \`fh-steps\` (\`--grid\`) \`fh-quote\` \`fh-crosses\` \`fh-table-wrap\` \`fh-table\` (\`--reflow\`) \`fh-matrix\` \`fh-deck\` (\`__card\` \`__card--split\` \`__media\` \`__body\` \`__caption\` \`__caption--top\` \`__index\` \`__title\` \`__meta\` \`--hero\` \`--fade\` \`--blur\` \`--lift\` \`--fan\` \`--count\` \`--x\` \`--reverse\` \`--flush\` \`--plain\`) \`fh-member\` (\`__art\` \`__glyphs\` \`__body\` \`__name\` \`__id\` \`__facts\` \`__role\` \`__stamp\` \`__tagline\` \`__meta\` \`__badge\` \`--glow\` \`--square\` \`--plates\` \`--smear\`) \`fh-story\` (\`__head\` \`__logo\` \`__tag\` \`__field\` \`__field--lines\` \`__mark\` \`__figure\` \`__figure-label\` \`__ring\` \`__chart\` \`__foot\` \`__quote\` \`__link\` \`__media\` \`--deep\` \`--ink\` \`--paper\` \`--duotone\` \`--glare\`) \`fh-speed\` (\`__smear\` \`__img\` \`--orbit\` \`--still\`) \`fh-dither\` (\`__plate\` \`--paper\` \`--lines\` \`--fine\` \`--coarse\`) \`fh-glass\` (\`--dark\` \`--clear\` \`--pill\` \`--prism\`) |
+| Admin (admin.css) | \`fh-app\` \`fh-backdrop\` \`fh-frost\` \`[data-fh-frost-select]\` \`fh-masthead\` (\`__mark\` \`__caption\` \`__index\` \`__title\` \`__foot\` \`__meta\` \`__tools\` \`--bar\`) \`fh-record\` (\`--cover\` \`__cover\`) \`fh-section-card\` (\`__head\` \`__title\` \`__tools\` \`__lede\` \`__subhead\` \`__note\` \`__foot\` \`--inset\` \`--aside\`) \`fh-metrics\` \`fh-metric\` (\`__label\` \`__value\` \`__sub\` \`__source\` \`__row\` \`__more\` \`__delta\` \`__figure\` \`--needed\` \`--spread\` \`--tinted\` \`--wide\` \`--full\`) \`fh-gauge\` \`fh-tracker\` (\`__head\` \`__meter\` \`__done\` \`__body\` \`__log\`) \`fh-quick\` (\`__label\` \`__action\`) \`fh-check-cards\` \`fh-check-card\` (\`__check\` \`__area\` \`__icon\` \`__title\` \`__meter\` \`__above\` \`__below\`) |
+| People | \`fh-social\` (\`__photo\` \`__body\` \`__name\` \`__check\` \`__bio\` \`__foot\` \`__stats\` \`--fade\` \`--dark\`) |
+| Commerce | \`fh-invoice\` (\`__cover\` \`__head\` \`__logo\` \`__number\` \`__title\` \`__parties\` \`__label\` \`__dates\` \`__items\` \`__totals\` \`__total\` \`__sign\` \`__foot\` \`--classic\`) \`fh-pay\` (\`--float\` \`__mark\` \`__doc\` \`__amount\` \`__icon\` \`__panel\` \`__head\` \`__route\` \`__party\` \`__sum\` \`__total\` \`__details\` \`__actions\`) |
 | Forms | \`fh-form\` (\`__row\` \`__actions\`) \`fh-field\` (\`--optional\` \`__hint\` \`__error\`) \`fh-input\` \`fh-textarea\` \`fh-select\` \`fh-select-wrap\` \`fh-input-group\` \`fh-check\` \`fh-switch\` \`fh-segmented\` |
 | Disclosure | \`fh-accordion\` \`fh-tabs\` (\`--mono\`) \`fh-dialog\` (\`__header\` \`__body\` \`__footer\`) \`fh-menu\` \`fh-toaster\` \`fh-toast\` |
 | Chrome | \`fh-header\` (\`__bar\` \`__brand\` \`__actions\` \`__toggle\`) \`fh-nav\` \`fh-nav__link\` \`fh-drawer\` (\`__group\`) \`fh-mega\` (\`__grid\` \`__rail\`) \`fh-footer\` (\`__columns\` \`__column\` \`__base\`) |
-| Patterns | \`fh-hero\` \`fh-hero__actions\` \`fh-hero-split\` \`fh-section-head\` \`fh-etched-split\` (\`__pane\`) \`fh-cta-band\` (\`__main\` \`__title\` \`__aside\` \`__people\` \`__fine\`) \`fh-window\` (\`__bar\` \`__body\`) \`fh-letter\` (\`__portrait\`) \`fh-panel\` \`fh-panel-inset\` \`[data-fh-panel-start]\` \`fh-footer--tall\` |
+| Design patterns | \`fh-hero\` \`fh-hero__actions\` \`fh-hero-split\` \`fh-section-head\` \`fh-etched-split\` (\`__pane\`) \`fh-cta-band\` (\`__main\` \`__title\` \`__aside\` \`__people\` \`__fine\`) \`fh-window\` (\`__bar\` \`__body\`) \`fh-letter\` (\`__portrait\`) \`fh-panel\` \`fh-panel-inset\` \`[data-fh-panel-start]\` \`fh-footer--tall\` |
 | Media | \`fh-canvas\` (\`__body\` \`__top\` \`__main\` \`__foot\` \`__title\` \`__sub\` \`__eyebrow\` \`__mark\` \`__badge\` \`__index\` \`__cubes\` \`__media\` \`__ui\` (\`--crop\`) \`--og\` \`--yt-thumb\` \`--yt-banner\` \`--x-header\` \`--li-banner\` \`--post\` \`--square\` \`--story\` \`--cover\` \`--card\` \`--center\` \`--split\` \`--row\` \`--plain\` \`--plate\` \`--native\` \`__cubes--rows\`) \`[data-fh-guides]\` |
 | Slides | \`fh-slide\` (\`--title\` \`--section\` \`--middle\` \`__list\` \`__stats\` \`__quote\` \`__cite\` \`__code\`) on an \`fh-canvas\`; reveal.js: \`dist/reveal.css\` |
 | Helpers | \`fh-sr-only\` \`fh-skip\` \`fh-reveal\` \`fh-reveal-children\` \`fh-hide-narrow\` \`fh-hide-wide\` \`fh-tone-text\` \`fh-text-start|center|end\` \`fh-nowrap\` \`fh-tabular\` \`fh-full\` |
+| Spacing (HIG) | gaps by relationship: \`--fh-gap-bound\` (4) \`--fh-gap-related\` (8) \`--fh-gap-grouped\` (12) \`--fh-gap-grouped-wide\` (16) \`--fh-gap-sectioned\` (24) \`--fh-gap-separated\` (48); padding: \`--fh-inset-tight\` \`--fh-inset-control\` \`--fh-inset-tile\` \`--fh-inset-card\` \`--fh-inset-page\`. Never a raw \`--fh-space-*\` in a component (/guidelines/). |
 
 Attributes: \`data-tone\` (tone), \`data-fh-scheme\` (light | dark | auto),
 \`data-fh-theme\` (brand), \`data-cols\` (grid max columns), \`data-label\` (table reflow).
@@ -105,6 +116,7 @@ Attributes: \`data-tone\` (tone), \`data-fh-scheme\` (light | dark | auto),
 ## Components
 
 `;
+for (const b of blocks) if (tagged[ids[b.title]]) b.code = tagged[ids[b.title]];
 for (const b of blocks) md += `### ${ids[b.title] ? ids[b.title] + " · " : ""}${b.title}\n\n${b.note ? b.note + "\n\n" : ""}\`\`\`html\n${b.code}\n\`\`\`\n\n`;
 writeFileSync(join(root, "agent/components.md"), md);
 console.log(`agent/components.md: ${blocks.length} components`);

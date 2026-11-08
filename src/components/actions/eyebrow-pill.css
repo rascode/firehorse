@@ -1,0 +1,348 @@
+/*
+ * Firehorse — Eyebrow pill (EYE)
+ * components/actions · layer fh.components · docs /components/actions/#EYE
+ */
+
+@layer fh.components {
+  /* —— Eyebrow pill ——
+   *   <p class="fh-eyebrow-pill" data-tone="sky">
+   *     <span class="fh-dot fh-dot--live"></span> Data architecture
+   *   </p>
+   */
+  .fh-eyebrow-pill {
+    display: flex;
+    inline-size: fit-content;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    max-inline-size: 100%;
+    margin: 0;
+    padding: 0.35rem var(--fh-inset-control) 0.35rem 0.55rem;
+    border: var(--fh-border-thin) solid var(--fh-color-rule);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-widest);
+    line-height: var(--fh-leading-snug);
+    text-transform: uppercase;
+
+    & a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+    }
+
+    & strong,
+    & [aria-current] {
+      overflow: hidden;
+      color: var(--fh-color-text);
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-wider);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  /* Same pill, sentence case — announcements ("Now accepting…"). */
+  .fh-eyebrow-pill--sentence {
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-caption);
+    letter-spacing: var(--fh-tracking-body);
+    text-transform: none;
+  }
+
+  /* —— Eyebrow pill variants ——
+   * One component, many treatments. Combine one shape, one line and
+   * any content parts.
+   *
+   * Shape:   (pill)  --rounded  --sharp  --oval  --tab
+   * Line:    (solid) --etched  --dotted  --double  --ghost  --underline
+   *          --bracket  --tone  --solid  --gradient  --glass
+   * Size:    --sm  --lg
+   * Parts:   __seg (split segments)  __index  __count  __action  .fh-avatar  .fh-kbd
+   *          --filled-end (last __seg solid in the tone, on-tone text)
+   */
+  .fh-eyebrow-pill {
+    --_line: var(--fh-color-rule);
+    --_fill: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+  }
+
+  /* Shapes */
+  .fh-eyebrow-pill--rounded { border-radius: var(--fh-radius-md); }
+  .fh-eyebrow-pill--sharp { border-radius: var(--fh-radius-sm); }
+
+  .fh-eyebrow-pill--oval {
+    padding: 0.6rem 1.1rem 0.6rem 0.85rem;
+    border-radius: 50% / 100%;
+  }
+
+  .fh-eyebrow-pill--tab {
+    border-block-end: 0;
+    border-radius: var(--fh-radius-md) var(--fh-radius-md) 0 0;
+    padding-block-end: 0.45rem;
+    box-shadow: 0 1px 0 var(--fh-color-canvas);
+  }
+
+  /* Lines */
+  .fh-eyebrow-pill--etched {
+    border-style: dashed;
+    border-color: var(--fh-color-etch);
+    background-color: transparent;
+  }
+
+  .fh-eyebrow-pill--dotted {
+    border-style: dotted;
+    border-width: 1.5px;
+    border-color: var(--fh-color-etch);
+    background-color: transparent;
+  }
+
+  .fh-eyebrow-pill--double {
+    border-style: double;
+    border-width: 3px;
+    border-color: var(--fh-color-etch);
+  }
+
+  .fh-eyebrow-pill--ghost {
+    padding-inline: 0;
+    border-color: transparent;
+    background-color: transparent;
+  }
+
+  .fh-eyebrow-pill--underline {
+    padding-inline: 0 var(--fh-inset-tight);
+    border-width: 0 0 var(--fh-border-thin);
+    border-style: dashed;
+    border-color: var(--fh-color-etch);
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  /* Registration-mark corners, no box. */
+  .fh-eyebrow-pill--bracket {
+    --_c: var(--fh-color-cross);
+
+    border-color: transparent;
+    border-radius: 0;
+    background:
+      linear-gradient(var(--_c), var(--_c)) 0 0 / 6px 1px,
+      linear-gradient(var(--_c), var(--_c)) 0 0 / 1px 6px,
+      linear-gradient(var(--_c), var(--_c)) 100% 0 / 6px 1px,
+      linear-gradient(var(--_c), var(--_c)) 100% 0 / 1px 6px,
+      linear-gradient(var(--_c), var(--_c)) 0 100% / 6px 1px,
+      linear-gradient(var(--_c), var(--_c)) 0 100% / 1px 6px,
+      linear-gradient(var(--_c), var(--_c)) 100% 100% / 6px 1px,
+      linear-gradient(var(--_c), var(--_c)) 100% 100% / 1px 6px;
+    background-repeat: no-repeat;
+  }
+
+  .fh-eyebrow-pill--tone {
+    border-color: color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    background-color: color-mix(in oklab, var(--fh-tone) 9%, transparent);
+    color: color-mix(in oklab, var(--fh-tone) 60%, var(--fh-color-text));
+  }
+
+  .fh-eyebrow-pill--solid {
+    border-color: var(--fh-tone);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+
+    & .fh-dot {
+      background-color: var(--fh-color-on-tone);
+      box-shadow: none;
+    }
+
+    & :is(strong, [aria-current], a) {
+      color: inherit;
+    }
+  }
+
+  /* A border that sweeps around the tone wheel. */
+  .fh-eyebrow-pill--gradient {
+    position: relative;
+    border-color: transparent;
+    background:
+      linear-gradient(var(--fh-color-canvas), var(--fh-color-canvas)) padding-box,
+      conic-gradient(
+        from var(--fh-sweep, 0deg),
+        var(--fh-tone),
+        oklch(from var(--fh-tone) l c calc(h + 70)),
+        oklch(from var(--fh-tone) l c calc(h + 140)),
+        var(--fh-tone)
+      ) border-box;
+  }
+
+  @property --fh-sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-eyebrow-pill--gradient {
+      animation: fh-sweep-border 6s linear infinite;
+    }
+  }
+
+  @keyframes fh-sweep-border {
+    to {
+      --fh-sweep: 360deg;
+    }
+  }
+
+  .fh-eyebrow-pill--glass {
+    border-color: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 45%, transparent);
+    backdrop-filter: blur(10px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, white 10%, transparent),
+      0 6px 18px -8px color-mix(in oklab, black 60%, transparent);
+  }
+
+  /* Sizes */
+  .fh-eyebrow-pill--sm {
+    gap: var(--fh-gap-bound);
+    padding: 0.22rem 0.55rem 0.22rem 0.4rem;
+    font-size: var(--fh-text-micro);
+  }
+
+  .fh-eyebrow-pill--lg {
+    gap: var(--fh-gap-related);
+    padding: 0.5rem 1rem 0.5rem 0.75rem;
+    font-size: var(--fh-text-caption);
+  }
+
+  /* Filled end (EYE-5.4): the last segment is a solid block of the pill's tone, the dot's
+     colour, running to the pill's right edge, held to a legible lightness, its text flipped
+     dark or light to read on it.
+     For the segmented pill (__seg); --_pb / --_pe are the pill's block and end padding it
+     fills out to (the default shape's; shapes with other padding set their own). */
+  .fh-eyebrow-pill--filled-end {
+    --_pb: 0.35rem;
+    --_pe: var(--fh-inset-control);
+
+    & > .fh-eyebrow-pill__seg:last-child {
+      align-self: stretch;
+      margin-block: calc(-1 * var(--_pb));
+      margin-inline-end: calc(-1 * var(--_pe));
+      padding-block: var(--_pb);
+      padding-inline: var(--fh-inset-tight) var(--_pe);
+      border-inline-start: 0;
+      border-start-end-radius: inherit;
+      border-end-end-radius: inherit;
+      /* Legible in both schemes: the tone's hue with its lightness clamped (at most 0.52 on
+         light, at least 0.74 on dark, the site's rule for coloured text), and the text flipped
+         dark or light from the fill's own lightness. */
+      --_end: light-dark(oklch(from var(--fh-tone) min(l, 0.52) c h), oklch(from var(--fh-tone) max(l, 0.74) c h));
+      background-color: var(--_end);
+      color: oklch(from var(--_end) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
+
+      & :is(strong, b) { color: inherit; }
+    }
+  }
+
+  /* Parts */
+  .fh-eyebrow-pill__seg {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    white-space: nowrap;
+
+    & + & {
+      padding-inline-start: var(--fh-inset-tight);
+      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  .fh-eyebrow-pill__index {
+    padding-inline-end: var(--fh-inset-tight);
+    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    color: var(--fh-tone);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-eyebrow-pill__count {
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: 1.15rem;
+    padding: 0.08rem 0.3rem;
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-tone);
+    color: var(--fh-color-on-tone);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-eyebrow-pill .fh-eyebrow-pill__action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    margin-inline-start: var(--fh-gap-bound);
+    padding-inline-start: var(--fh-inset-tight);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-bold);
+    text-decoration: none;
+
+    &::after {
+      content: "";
+      inline-size: 0.75em;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover::after {
+      translate: 0.1rem -0.1rem;
+    }
+  }
+
+  .fh-eyebrow-pill > .fh-avatar {
+    --fh-avatar-size: 1.25rem;
+
+    margin-inline-start: -0.25rem;
+  }
+
+  /* Dot variants */
+  .fh-dot--ring {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--fh-tone);
+  }
+
+  .fh-dot--square {
+    border-radius: 1px;
+  }
+
+  .fh-dot--diamond {
+    border-radius: 1px;
+    rotate: 45deg;
+    scale: 0.85;
+  }
+
+  .fh-dot--bar {
+    inline-size: 0.2rem;
+    aspect-ratio: 1 / 3;
+    border-radius: 1px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-dot--blink {
+      animation: fh-blink-dot 1.1s steps(1, end) infinite;
+    }
+  }
+
+  @keyframes fh-blink-dot {
+    50% {
+      opacity: 0.15;
+    }
+  }
+
+}

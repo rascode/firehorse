@@ -1,0 +1,80 @@
+/*
+ * Firehorse — Stats (STA)
+ * components/content · layer fh.components · docs /components/content/#STA
+ */
+
+@layer fh.components {
+  /* —— Stats strip ——
+   * Grouped figures with shared dashed rules and a 7px outer radius.
+   *   <dl class="fh-stats">
+   *     <div><dt>Timeline</dt><dd>2–3 wk</dd></div> …
+   *   </dl>  */
+  .fh-stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    overflow: hidden;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: var(--fh-gap-related);
+      padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      background-color: color-mix(in oklab, var(--fh-tone) 2.5%, transparent);
+    }
+
+    & dt {
+      order: -1;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      color: var(--fh-color-text-muted);
+    }
+
+    & dd {
+      margin: 0;
+      font-family: var(--fh-font-figure);
+      font-size: var(--fh-text-stat);
+      font-weight: var(--fh-display-weight);
+      letter-spacing: var(--fh-tracking-tightest);
+      line-height: var(--fh-leading-none);
+      font-variant-numeric: tabular-nums;
+      color: var(--fh-color-text);
+    }
+
+    & dd + dd {
+      font-family: var(--fh-font-sans);
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-body);
+      line-height: var(--fh-leading-normal);
+      color: var(--fh-color-text-muted);
+    }
+  }
+
+  /* Two, three or four-plus figures: one row once there's room,
+   * otherwise pairs. Never leaves an orphan cell for 2 or 3 items. */
+  @container (inline-size >= 34rem) {
+    .fh-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fh-stats:not(:has(> :nth-child(4))) {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+  }
+
+  @container (inline-size >= 56rem) {
+    .fh-stats {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+  }
+
+}

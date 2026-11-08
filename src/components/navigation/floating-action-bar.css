@@ -1,0 +1,58 @@
+/*
+ * Firehorse — Floating action bar (FAB)
+ * components/navigation · layer fh.components · docs /components/navigation/#FAB
+ */
+
+@layer fh.components {
+  /* —— Floating action bar ——
+   * A pill that floats above the bottom edge and surfaces once the
+   * visitor has scrolled a screen. Pure CSS where scroll-driven
+   * animations exist; always visible otherwise.
+   *   <nav class="fh-float" aria-label="Quick actions">…chips, cubes, buttons…</nav> */
+  .fh-float {
+    position: fixed;
+    z-index: var(--fh-z-overlay);
+    inset-inline: 0;
+    inset-block-end: calc(var(--fh-gap-sectioned) + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    inline-size: fit-content;
+    max-inline-size: calc(100% - 2 * var(--fh-gap-grouped-wide));
+    margin-inline: auto;
+    padding: var(--fh-inset-tight);
+    padding-inline-start: var(--fh-inset-control);
+    overflow-x: auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.2);
+    box-shadow: var(--fh-shadow-overlay);
+    scrollbar-width: none;
+
+    & .fh-button {
+      border-radius: var(--fh-radius-pill);
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .fh-float {
+      animation: fh-float-in linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 40vh 70vh;
+    }
+  }
+
+  @keyframes fh-float-in {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      visibility: visible;
+    }
+  }
+}

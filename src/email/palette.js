@@ -19,12 +19,11 @@ export const palette = {
       "onAccent": "#1a1306"
     },
     "fonts": {
-      "sans": "\"Avenir Next\", Avenir, \"Segoe UI Variable\", \"Segoe UI\", ui-sans-serif, system-ui, sans-serif",
+      "sans": "",
       "display": "",
       "mono": ""
     },
-    "radius": 10,
-    "button": "pill"
+    "radius": 7
   },
   "firehorse": {
     "label": "Firehorse",
@@ -72,11 +71,35 @@ export const palette = {
     },
     "fonts": {
       "sans": "",
-      "display": "\"Iowan Old Style\", \"Palatino Linotype\", Palatino, \"Book Antiqua\", Georgia, serif",
+      "display": "",
       "mono": ""
     },
-    "radius": 0,
-    "button": "sharp"
+    "radius": 7
+  },
+  "lipizzaner": {
+    "label": "Lipizzaner",
+    "light": {
+      "canvas": "#fafafa",
+      "surface": "#ffffff",
+      "text": "#181611",
+      "muted": "#5c5c5c",
+      "accent": "#6b1d2a",
+      "onAccent": "#fbf8f1"
+    },
+    "dark": {
+      "canvas": "#181611",
+      "surface": "#1e1c17",
+      "text": "#f1f0ef",
+      "muted": "#9b9892",
+      "accent": "#d4bc85",
+      "onAccent": "#17130c"
+    },
+    "fonts": {
+      "sans": "",
+      "display": "",
+      "mono": ""
+    },
+    "radius": 7
   },
   "mustang": {
     "label": "Mustang",
@@ -98,10 +121,9 @@ export const palette = {
     },
     "fonts": {
       "sans": "",
-      "display": "\"Avenir Next Condensed\", \"Roboto Condensed\", \"Arial Narrow\"",
+      "display": "",
       "mono": ""
     },
-    "radius": 7,
-    "button": "flat"
+    "radius": 7
   }
 };

@@ -4,6 +4,17 @@
  * documentation chrome only; they are not part of the system.
  */
 
+/* Geist Serif (Vercel, SIL OFL 1.1; see fonts/GEIST-OFL.txt): the display face
+   of the Lipizzaner theme. Self-hosted until it lands on Google Fonts. */
+@font-face {
+  font-family: "Geist Serif";
+  src: url("/fonts/GeistSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 /* —— Scheme: dark-first, honors an explicit host theme and the
  *    in-page switch (which always wins). —— */
 :root { color-scheme: dark; }
@@ -43,11 +54,13 @@ body::before {
   text-decoration: none;
 }
 .site-mark__bar { color: var(--fh-color-accent); }
-/* Header logo: the wordmark, with the version tag (EYE-17) to its right. */
+/* Header logo: the wordmark, with the version tag (EYE-5.1) to its right. */
 .site-mark--tagged { display: inline-flex; align-items: center; gap: var(--fh-space-3); font-size: 1.2rem; line-height: 1; }
 .site-mark--tagged .site-mark__word { display: inline-flex; align-items: baseline; gap: 0.05em; }
 .site-mark--tagged .site-mark__tag { flex: none; inline-size: max-content; max-inline-size: none; }
 .site-mark__tag { letter-spacing: var(--fh-tracking-wider); white-space: nowrap; }
+/* Narrow headers: the tag drops its "Premium design system" segment and keeps the version, so the menu button stays on screen. */
+@container fh-frame (inline-size < 25rem) { .site-mark--tagged .site-mark__tag .fh-eyebrow-pill__index { display: none; } }
 .site-mark__sub {
   margin-inline-start: var(--fh-space-2);
   padding: 0.12rem 0.4rem;
@@ -82,7 +95,7 @@ body::before {
 .site-scheme > label { padding: 0.38rem 0.6rem; font-size: 0.58rem; }
 
 /* —— Hero —— */
-/* The meta pill (EYE-18, segmented): "No JavaScript required" shortens to
+/* The meta pill (EYE-5.2, segmented): "No JavaScript required" shortens to
    "No JS" when the hero is too narrow to hold the full line. */
 .site-hero__meta-short { display: none; }
 @container fh-frame (inline-size < 30rem) {
@@ -90,8 +103,11 @@ body::before {
   .site-hero__meta-short { display: inline; }
 }
 .site-hero {
+  /* The drop: extra room above the hero so the first row of stat cards ends at the bottom of an
+   * 800px-tall window and the second row starts just below the fold. A spacing token, not a number. */
+  --site-hero-drop: var(--fh-space-16);
   position: relative;
-  padding-block: clamp(1.25rem, 3cqi, 2.5rem) var(--fh-section-space);
+  padding-block: calc(clamp(1.25rem, 3cqi, 2.5rem) + var(--site-hero-drop)) var(--fh-section-space);
 }
 .site-hero__grid {
   display: grid;
@@ -120,26 +136,13 @@ body::before {
   font-style: normal;
   color: var(--fh-color-text-muted);
 }
-.site-install {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--fh-space-3);
-  max-inline-size: 100%;
-  padding: 0.45rem 0.45rem 0.45rem var(--fh-space-4);
-  border: 1px dashed var(--fh-color-etch);
-  border-radius: var(--fh-radius-sm);
-  font-family: var(--fh-font-mono);
-  font-size: var(--fh-text-caption);
-  color: var(--fh-color-text);
-}
 /* —— Hero intro ——
  * Plays once on load, in order: the horse draws in (see Hero backdrop),
- * then the title, then the buttons and the install bar, then the
+ * then the title, then the buttons, then the
  * descriptions (eyebrow, lede) and the facts. Opacity and transform only. */
 @media (prefers-reduced-motion: no-preference) {
   .site-hero .fh-display,
   .site-hero .fh-hero__actions,
-  .site-hero .site-install,
   .site-hero .fh-eyebrow-pill,
   .site-hero .fh-lede,
   .site-hero .site-facts {
@@ -149,7 +152,6 @@ body::before {
    * a quarter second on any connection; only the backdrop waits for fh-ready. */
   .site-hero .fh-display { --_intro-at: 0.05s; }
   .site-hero .fh-hero__actions { --_intro-at: 0.3s; }
-  .site-hero .site-install { --_intro-at: 0.4s; }
   .site-hero .fh-eyebrow-pill { --_intro-at: 0.55s; }
   .site-hero .fh-lede { --_intro-at: 0.6s; }
   .site-hero .site-facts { --_intro-at: 0.75s; }
@@ -181,22 +183,6 @@ body::before {
   :root.fh-js .site-page-cards > .fh-card:not(.is-in) { opacity: 0; translate: 0 0.9rem; }
 }
 @keyframes site-fade { from { opacity: 0; } }
-.site-hero .site-install {
-  /* Sits under the buttons as a solid, full-width bar matching the button row,
-     so it reads as part of the call to action over the horse. */
-  display: flex;
-  inline-size: 100%;
-  max-inline-size: 27.75rem;
-  margin-block-start: calc(var(--fh-space-2) * -1);
-  border-style: solid;
-  border-color: var(--fh-color-border);
-  background-color: var(--site-frost);
-}
-.site-hero .site-install code { flex: 1; }
-.site-install code { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-inline-size: 0; }
-.site-install code::before { content: "$ "; color: var(--fh-color-text-subtle); }
-/* The self-hosted install URL is long: on phones it wraps instead of hiding the Copy button. */
-@media (width < 48rem) { .site-install code { white-space: normal; overflow-wrap: anywhere; text-overflow: clip; } }
 
 /* —— Container-native, live: the section under the hero that holds the
  *    breathing window, with the copy that says what to watch. —— */
@@ -223,6 +209,11 @@ body::before {
   font-size: var(--fh-text-small);
   overflow: hidden;
 }
+/* Rascode HIG · Frame: the copy beside the window stands one card inset
+   in from the content line, and the table's first column starts on that
+   same line, so the heading, lede, rows and note share one left edge. */
+.site-adapt__copy > :not(.site-adapt__table) { padding-inline-start: var(--fh-inset-card); }
+.site-adapt__table :is(th, td):first-child { padding-inline-start: calc(var(--fh-inset-card) - var(--fh-border-thin)); }
 .site-adapt__table :is(th, td) {
   padding: var(--fh-space-3) var(--fh-space-4);
   text-align: start;
@@ -423,7 +414,7 @@ body::before {
   letter-spacing: var(--fh-tracking-wider);
   text-transform: uppercase;
   color: var(--fh-color-text-muted);
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   list-style: none;
 }
 .site-code > summary::-webkit-details-marker { display: none; }
@@ -674,7 +665,7 @@ body::before {
   border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
   border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
   background-color: var(--site-frost);
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: background-color var(--fh-duration-fast);
 }
 .site-tiers__radio { position: absolute; inset: 0; margin: 0; opacity: 0; pointer-events: none; }
@@ -747,7 +738,7 @@ body::before {
   font: inherit;
   text-decoration: underline dashed;
   text-underline-offset: 0.2em;
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
 }
 /* Narrow: each token becomes a two-line row: the name, then preview and value. */
 .site-tokens { container-type: inline-size; }
@@ -807,7 +798,20 @@ body::before {
   grid-template-columns: repeat(9, 1fr);
   block-size: 6px;
 }
-.site-spectrum > i { background-color: var(--fh-tone); }
+/* The band is the root's palette laid out by hue, the root at the centre and its two split
+ * complements as bookends (one accent at each end).
+ * Decorative, no text on it, so no contrast clamp: lightness is lifted into a vivid band
+ * (0.66–0.82) and chroma kept up, so it reads bright in both schemes, never muddy or dark. */
+.site-spectrum > i { background-color: oklch(from var(--_w, var(--fh-root)) clamp(0.66, l, 0.82) max(c, 0.15) h); }
+.site-spectrum > i:nth-child(1) { --_w: var(--site-walk-5); }
+.site-spectrum > i:nth-child(2) { --_w: var(--site-walk-6); }
+.site-spectrum > i:nth-child(3) { --_w: var(--site-walk-7); }
+.site-spectrum > i:nth-child(4) { --_w: var(--site-walk-8); }
+.site-spectrum > i:nth-child(5) { --_w: var(--site-walk-0); }
+.site-spectrum > i:nth-child(6) { --_w: var(--site-walk-4); }
+.site-spectrum > i:nth-child(7) { --_w: var(--site-walk-1); }
+.site-spectrum > i:nth-child(8) { --_w: var(--site-walk-2); }
+.site-spectrum > i:nth-child(9) { --_w: var(--site-walk-3); }
 
 /* —— Misc —— */
 .site-anchor:not(.fh-section) { scroll-margin-block-start: var(--fh-space-2); }
@@ -977,7 +981,7 @@ body::before {
 }
 .site-service__go:is(:hover, :focus-visible) .fh-icon { color: currentColor; translate: 0.2rem 0; }
 /* How it works: the same etched cells as the hero facts (fh-stats). Three
- * steps share dashed rules, each with an indexed eyebrow pill (EYE-17) over its title,
+ * steps share dashed rules, each with an indexed eyebrow pill (EYE-5.1) over its title,
  * and the button sits in a fourth cell. No gradient. */
 .site-services__strip {
   display: grid;
@@ -1023,10 +1027,7 @@ body::before {
   display: flex; flex-direction: column; justify-content: space-between; gap: var(--fh-space-8);
   padding: var(--fh-space-7);
   border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  background:
-    radial-gradient(90% 70% at 0% 0%, color-mix(in oklab, var(--fh-tone) 28%, transparent), transparent 70%),
-    radial-gradient(80% 60% at 100% 100%, color-mix(in oklab, var(--fh-tone-violet) 18%, transparent), transparent 70%),
-    var(--fh-color-canvas);
+  background: var(--fh-color-canvas);
 }
 .site-lead__aside::before {
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0.5;
@@ -1062,7 +1063,7 @@ body::before {
   border-color: color-mix(in oklab, var(--fh-color-text) 24%, transparent);
   background-color: transparent;
   color: var(--fh-color-text-muted);
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
 }
 .site-lead__needs .fh-chip.fh-chip--tone::before {
   inline-size: 0.8rem;
@@ -1162,7 +1163,7 @@ body::before {
   border-radius: var(--fh-radius-md) 0 0 var(--fh-radius-md);
   background: var(--fh-tone); color: var(--fh-color-on-tone);
   font: var(--fh-weight-semibold) var(--fh-text-small) / 1 var(--fh-font-sans); letter-spacing: var(--fh-tracking-wide);
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: padding var(--fh-duration-fast, 150ms) var(--fh-ease-out);
 }
 .site-lead-tab:hover { padding-left: var(--fh-space-3); }
@@ -1255,7 +1256,7 @@ body::before {
   text-decoration: underline;
   text-decoration-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
   text-underline-offset: 0.25em;
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: color var(--fh-duration-fast), text-decoration-color var(--fh-duration-fast);
 }
 .site-dock-link .fh-icon { color: var(--fh-tone); font-size: 0.7rem; transition: translate var(--fh-duration-fast) var(--fh-ease-out); }
@@ -1300,6 +1301,7 @@ body::before {
 .fh-burger.site-hover > span::after { inline-size: 70%; }
 .fh-burger.site-focus { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
 .site-menu-static { position: static; display: block; opacity: 1; translate: none; margin-block-start: var(--fh-space-3); max-inline-size: 16rem; }
+.site-menu-static.fh-profile-menu { max-inline-size: 21rem; }
 
 /* Phone frame */
 .site-phone { display: grid; grid-template-rows: 1fr auto; inline-size: min(100%, 20rem); block-size: 26rem; margin-inline: auto; overflow: hidden; border: 6px solid var(--fh-color-surface-chrome); border-radius: 2rem; background: var(--fh-color-canvas); box-shadow: var(--fh-shadow-overlay); }
@@ -1327,6 +1329,9 @@ body::before {
 
 /* Catalog */
 .site-cat-filter { margin-block-end: var(--fh-space-4); }
+.site-cat-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-3) var(--fh-space-6); margin-block-end: var(--fh-space-4); }
+.site-cat-tools > .site-cat-filter { margin: 0; }
+.site-cat__stage > :is(.fh-social, .fh-member, .fh-story) { justify-self: center; inline-size: 100%; }
 .site-cat { display: grid; grid-template-rows: minmax(0, 1fr) auto; background: none; border: 0; }
 .site-cat[hidden] { display: none; }
 /* The stage is a mat, not a card: no border, no surface, only crop marks
@@ -1412,11 +1417,6 @@ body::before {
 
 /* Config */
 pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-md); white-space: pre-wrap; overflow-wrap: anywhere; }
-/* Phones: the floating bar owns the bottom edge, and the theme select lives in
- * the menu, so the floating Theme button steps aside. */
-@media (width < 48rem) { .site-config-fab { display: none; } }
-.site-config-fab { position: fixed; inset-block-end: calc(var(--fh-space-4) + env(safe-area-inset-bottom, 0px)); inset-inline-start: calc(var(--fh-space-4) + env(safe-area-inset-left, 0px)); z-index: 40; box-shadow: var(--fh-shadow-overlay); }
-
 /* Adaptive */
 .site-adaptive { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--fh-space-2); margin-block-end: var(--fh-space-6); }
 .site-adaptive__swatch { display: grid; gap: var(--fh-space-1); padding: var(--fh-space-5) var(--fh-space-4); border-radius: var(--fh-radius-md); }
@@ -1425,7 +1425,7 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
 .site-adaptive__live { display: grid; gap: var(--fh-space-3); align-content: start; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg); transition: background-color 200ms; }
 .site-adaptive__live p { margin: 0; }
 .site-adaptive__pick { display: inline-flex; align-items: center; gap: var(--fh-space-2); font-size: var(--fh-text-small); }
-.site-adaptive__pick input { inline-size: 2.5rem; block-size: 2rem; padding: 0; border: 0; background: none; cursor: pointer; }
+.site-adaptive__pick input { inline-size: 2.5rem; block-size: 2rem; padding: 0; border: 0; background: none; cursor: var(--fh-cursor-action); }
 
 /* Icons */
 .site-icon-uses { margin-block-end: var(--fh-space-6); }
@@ -1433,7 +1433,7 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
 .site-icons-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-3); margin-block-end: var(--fh-space-3); }
 .site-icons-bar .fh-search { flex: 0 1 18rem; }
 .site-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr)); gap: 1px; overflow: hidden; border: var(--fh-border-thin) solid var(--fh-color-border); border-radius: var(--fh-radius-md); background: var(--fh-color-border); }
-.site-icon { display: grid; justify-items: center; gap: var(--fh-space-2); padding: var(--fh-space-4) var(--fh-space-1); border: 0; background: var(--fh-color-surface); color: var(--fh-color-text); font: inherit; cursor: pointer; }
+.site-icon { display: grid; justify-items: center; gap: var(--fh-space-2); padding: var(--fh-space-4) var(--fh-space-1); border: 0; background: var(--fh-color-surface); color: var(--fh-color-text); font: inherit; cursor: var(--fh-cursor-action); }
 .site-icon > .fh-icon { font-size: 1.35rem; }
 .site-icon > span { max-inline-size: 100%; overflow: hidden; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: 0.58rem; text-overflow: ellipsis; white-space: nowrap; }
 .site-icon:hover { background: color-mix(in oklab, var(--fh-tone) 10%, var(--fh-color-surface)); color: var(--fh-tone); }
@@ -1534,7 +1534,7 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
   background: none;
   color: inherit;
   text-align: start;
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: background-color var(--fh-duration-fast), box-shadow var(--fh-duration-fast);
 }
 .site-agents__grid .fh-icon-tile { --fh-icon-tile: 1.9rem; flex: none; transition: scale var(--fh-duration-fast) var(--fh-ease-out); }
@@ -1576,7 +1576,7 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
   background: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent);
   color: inherit;
   text-align: start;
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
 }
 .site-agents__cli b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
@@ -1599,6 +1599,26 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
    theme's button style; this only sets its place and width. */
 .site-agents__foot { padding: var(--fh-space-4) var(--fh-space-3) var(--fh-space-3); }
 .site-agents__copy { inline-size: 100%; }
+/* "Don't see your agent?": a quiet, etched callout under the menu's actions; opens into a
+   three-field request (agent, link, email) that goes to the team to add it. */
+.site-agents__ask { margin: 0 var(--fh-space-3) var(--fh-space-3); border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: var(--fh-radius-md, 10px); }
+.site-agents__ask > summary { display: flex; align-items: center; gap: var(--fh-space-3); padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-3); list-style: none; cursor: pointer; }
+.site-agents__ask > summary::-webkit-details-marker { display: none; }
+.site-agents__ask-q { display: grid; gap: 0.1rem; flex: 1; min-inline-size: 0; }
+.site-agents__ask-q b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
+.site-agents__ask-q small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption, 0.75rem); }
+.site-agents__ask > summary .fh-icon { color: var(--fh-color-text-subtle); transition: rotate var(--fh-duration-fast) var(--fh-ease-standard); }
+.site-agents__ask[open] > summary .fh-icon { rotate: 180deg; }
+.site-agents__ask > summary:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; border-radius: inherit; }
+.site-agents__ask-form { display: grid; gap: var(--fh-space-2); padding: 0 var(--fh-space-3) var(--fh-space-3); }
+.site-agents__ask-form label { display: grid; gap: 0.25rem; }
+.site-agents__ask-form label > span { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; color: var(--fh-color-text-muted); }
+.site-agents__ask-form label small { text-transform: none; letter-spacing: 0; color: var(--fh-color-text-subtle); }
+.site-agents__ask-form input { inline-size: 100%; padding: 0.45rem 0.6rem; border: var(--fh-border-thin) solid var(--fh-color-border, var(--fh-color-etch)); border-radius: var(--fh-radius-sm, 6px); background: var(--fh-color-canvas); color: var(--fh-color-text); font: inherit; font-size: var(--fh-text-small); }
+.site-agents__ask-form input:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
+.site-agents__ask-hp { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
+.site-agents__ask-send { justify-self: start; }
+.site-agents__ask-status { margin: 0; min-block-size: 1em; font-size: var(--fh-text-caption, 0.75rem); color: var(--fh-color-text-muted); }
 .site-agents__menu :is(.site-agents__grid, .site-agents__cli) > button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1687,13 +1707,45 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
  * right; a slow band of light passes through it (transform-only, so it
  * costs no paint). Past the hero it frosts over (blur + dim on a static
  * layer, then the sweep stops). */
+:root {
+  /* The root's palette, built the way a painter balances one: mostly analogous (±20°, ±40° —
+   * colours that read as one family), tone steps of the root itself, and two split
+   * complements (150° and 210° round the wheel) for contrast. The opposites come in softer
+   * (chroma eased, capped) so they add interest without fighting the root: roughly 60 / 30 / 10.
+   * Chroma is capped throughout so no stop clips out of sRGB into a muddy neighbour. The order
+   * is a loop: root, the warm side, its far accent, a tint, the other accent, the cool side, a
+   * deep root, back to the root. */
+  --site-walk-0: var(--fh-root);
+  --site-walk-1: oklch(from var(--fh-root) calc(l + 0.04) min(c, 0.2) calc(h + 20));
+  --site-walk-2: oklch(from var(--fh-root) calc(l + 0.06) min(calc(c * 0.92), 0.19) calc(h + 40));
+  --site-walk-3: oklch(from var(--fh-root) calc(l + 0.05) min(calc(c * 0.78), 0.16) calc(h + 150));
+  --site-walk-4: oklch(from var(--fh-root) calc(l + (1 - l) * 0.35) calc(c * 0.7) h);
+  --site-walk-5: oklch(from var(--fh-root) calc(l + 0.05) min(calc(c * 0.78), 0.16) calc(h + 210));
+  --site-walk-6: oklch(from var(--fh-root) calc(l + 0.06) min(calc(c * 0.92), 0.19) calc(h - 40));
+  --site-walk-7: oklch(from var(--fh-root) calc(l + 0.04) min(c, 0.2) calc(h - 20));
+  --site-walk-8: oklch(from var(--fh-root) calc(l * 0.9) min(calc(c * 1.05), 0.2) h);
+}
+/* The rotating words take only the root's close family: the root, its analogous steps
+ * (±20°, ±40°), the tint and the deep. The split complements (walk-3, walk-5) are left out, so
+ * whatever the root, every word stays in harmony with the rest. */
+.site-hero__turn .fh-rotator > :nth-child(9n + 1) { --_w: var(--site-walk-0); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 2) { --_w: var(--site-walk-1); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 3) { --_w: var(--site-walk-2); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 4) { --_w: var(--site-walk-4); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 5) { --_w: var(--site-walk-7); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 6) { --_w: var(--site-walk-8); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 7) { --_w: var(--site-walk-6); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 8) { --_w: var(--site-walk-7); }
+.site-hero__turn .fh-rotator > :nth-child(9n + 9) { --_w: var(--site-walk-1); }
+/* Text needs contrast: the walk keeps its hues, lightness is clamped per scheme. */
+.site-hero__turn .fh-rotator > * { --fh-tone: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.52) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.74) c h)); }
 .site-backdrop {
   --_ink: color-mix(in oklab, var(--fh-color-text) 26%, transparent);
   /* Two bands of light, each one tile per horse width. Uneven stops, different
      angles, widths and speeds (9s vs 14.3s never line up), so the colour
      drifts across the horse instead of marching in a straight line. */
-  --_glint: linear-gradient(90deg, transparent 0%, var(--fh-tone-sky) 5%, var(--fh-tone-teal) 11%, var(--fh-tone-lime) 15%, var(--fh-tone-amber) 22%, var(--fh-tone-orange) 26%, var(--fh-tone-rose) 33%, var(--fh-tone-fuchsia) 37%, var(--fh-tone-violet) 41%, transparent 47%, transparent 100%);
-  --_glint-b: linear-gradient(90deg, transparent 0%, var(--fh-tone-violet) 6%, var(--fh-tone-rose) 12%, var(--fh-tone-amber) 17%, var(--fh-tone-teal) 23%, var(--fh-tone-sky) 27%, transparent 33%, transparent 100%);
+  --_glint: linear-gradient(90deg, transparent 0%, var(--site-walk-5) 5%, var(--site-walk-6) 11%, var(--site-walk-7) 15%, var(--site-walk-8) 22%, var(--site-walk-0) 26%, var(--site-walk-1) 33%, var(--site-walk-2) 37%, var(--site-walk-3) 41%, transparent 47%, transparent 100%);
+  --_glint-b: linear-gradient(90deg, transparent 0%, var(--site-walk-3) 6%, var(--site-walk-1) 12%, var(--fh-root-tint-1) 17%, var(--site-walk-8) 23%, var(--site-walk-6) 27%, transparent 33%, transparent 100%);
   --_cycle: 9s;
   --_cycle-b: 14.3s;
   --_art: url("img/backdrop/firehorse-horse.webp?v=4");
@@ -1710,7 +1762,6 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(120% 80% at 70% 40%, color-mix(in oklab, var(--fh-tone-sky, #38bdf8) 7%, transparent), transparent 70%),
     linear-gradient(color-mix(in oklab, var(--fh-color-text) 1.75%, transparent) 1px, transparent 1px) 0 0 / 120px 120px,
     linear-gradient(90deg, color-mix(in oklab, var(--fh-color-text) 1.75%, transparent) 1px, transparent 1px) 0 0 / 120px 120px,
     linear-gradient(color-mix(in oklab, var(--fh-color-text) 0.75%, transparent) 1px, transparent 1px) 0 0 / 24px 24px,
@@ -1797,19 +1848,14 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
   .site-backdrop { --_art-w: calc(71vh * 1.579); --_art-xn: 0.92; --_art-pos: calc(var(--_art-xn) * 100%) 50%; }
 }
 
-/* —— Footer: the hoof elevation etched behind the right side of the menu —— */
-.site-footer .fh-footer__columns { position: relative; isolation: isolate; }
-.site-footer .fh-footer__columns::after {
-  content: "";
-  position: absolute;
-  inset-block: var(--fh-space-3);
-  inset-inline-end: var(--fh-space-3);
-  inline-size: min(42%, 24rem);
-  z-index: -1;
-  pointer-events: none;
-  background: color-mix(in oklab, var(--fh-color-text) 30%, transparent);
-  mask: url("img/backdrop/firehorse-hoof.webp") right center / contain no-repeat;
-}
+/* Each theme can bring its own horse: the backdrop swaps its art with the theme.
+   Lipizzaner → Maestoso, etched from a photo by scripts/horse/lipizzaner/etch.py
+   (same canvas and proportions as the default sheet, so the placement holds). */
+:root[data-fh-theme="lipizzaner"] .site-backdrop { --_art: url("img/backdrop/lipizzaner-horse.webp?v=1"); }
+/* Lipizzaner doesn't do the rainbow: every rotating hero word takes the accent (gold by night, claret by day). */
+:root[data-fh-theme="lipizzaner"] .site-hero__turn .fh-rotator > [data-tone] { --fh-tone: var(--fh-color-accent-text); }
+
+/* —— Footer: no etched hoof shading inside it; the horse behind the page carries the art. —— */
 
 /* —— Firehorse Index ——
  * IDs sit beside every implementation. Family IDs lead each demo title,
@@ -1908,12 +1954,16 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-index__variants { display: flex; flex-wrap: wrap; gap: 3px; }
 .site-index__variants a { min-inline-size: 1.7rem; padding: 0.05rem 0.3rem; border: var(--fh-border-thin) solid var(--fh-color-border); border-radius: var(--fh-radius-sm); color: var(--fh-color-text-muted); font: var(--fh-text-micro) / 1.5 var(--fh-font-mono); text-align: center; text-decoration: none; }
 .site-index__variants a:hover { border-color: var(--fh-color-border-strong); color: var(--fh-color-text); }
+/* Groups: siblings sit together, a gap between groups (EYE 1.1 1.2 · 2.1 …). */
+.site-index__gap { inline-size: 0.5rem; }
+/* A group's ID on its variants row label. */
+.site-variants dt > .site-id { justify-self: start; }
 
 /* —— KC, the Firehorse guide —— */
 .site-kc-face { display: inline-grid; place-items: center; overflow: hidden; inline-size: 1.75rem; aspect-ratio: 1; border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone-sky) 50%, transparent); border-radius: var(--fh-radius-pill); background: radial-gradient(circle at 50% 35%, color-mix(in oklab, var(--fh-tone-sky) 22%, var(--fh-color-canvas)), var(--fh-color-canvas)); color: var(--fh-tone-sky); }
 .site-kc-face svg { inline-size: 92%; block-size: 92%; }
 .site-kc-face--lg { inline-size: 3rem; border-radius: var(--fh-radius-md); }
-.site-kc-launch { position: fixed; inset-block-end: calc(var(--fh-space-4) + env(safe-area-inset-bottom, 0px)); inset-inline-end: calc(var(--fh-space-4) + env(safe-area-inset-right, 0px)); z-index: 40; display: inline-flex; align-items: center; gap: var(--fh-space-2); padding: 0.3rem 0.85rem 0.3rem 0.3rem; border: var(--fh-border-thin) solid var(--fh-color-border-strong); border-radius: var(--fh-radius-pill); background: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent); backdrop-filter: blur(12px); color: var(--fh-color-text); font: var(--fh-weight-medium) var(--fh-text-small) / 1 var(--fh-font-sans); box-shadow: var(--fh-shadow-overlay); cursor: pointer; }
+.site-kc-launch { position: fixed; inset-block-end: calc(var(--fh-space-4) + env(safe-area-inset-bottom, 0px)); inset-inline-end: calc(var(--fh-space-4) + env(safe-area-inset-right, 0px)); z-index: 40; display: inline-flex; align-items: center; gap: var(--fh-space-2); padding: 0.3rem 0.85rem 0.3rem 0.3rem; border: var(--fh-border-thin) solid var(--fh-color-border-strong); border-radius: var(--fh-radius-pill); background: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent); backdrop-filter: blur(12px); color: var(--fh-color-text); font: var(--fh-weight-medium) var(--fh-text-small) / 1 var(--fh-font-sans); box-shadow: var(--fh-shadow-overlay); cursor: var(--fh-cursor-action); }
 /* Display settings: theme and mode float to the left of Ask KC.
    site-index.js writes KC's width to --site-kc-w so the gap stays even. */
 .site-float {
@@ -1950,7 +2000,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   background: color-mix(in oklab, var(--fh-color-surface) 82%, transparent);
   backdrop-filter: blur(10px);
   color: var(--fh-color-text);
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
 }
 .site-tp__trigger:is(:hover, :focus-visible) { border-color: var(--fh-color-text-muted); outline: none; }
@@ -2010,7 +2060,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   font-size: 0.64rem;
   letter-spacing: var(--fh-tracking-wide);
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: background-color var(--fh-duration-fast), box-shadow var(--fh-duration-fast);
 }
 .site-tp__radio { position: absolute; inset: 0; margin: 0; opacity: 0; pointer-events: none; }
@@ -2097,7 +2147,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   background-color: var(--fh-color-canvas);
   color: var(--fh-color-text);
   font-family: var(--fh-font-sans);
-  cursor: pointer;
+  cursor: var(--fh-cursor-action);
   transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
 
   &:hover { border-color: var(--fh-color-text-subtle); }
@@ -2167,7 +2217,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
 /* Stacks of demos. */
 .fh-section > .fh-stack--xl { --fh-gap: var(--site-demo-gap); }
 /* Small companions keep a tighter, but real, gap. */
-.fh-section > :is(.site-tokens-tools, .site-icons-bar, .site-cat-filters, .fh-chips) + *,
+.fh-section > :is(.site-tokens-tools, .site-icons-bar, .site-cat-filters, .site-cat-tools, .fh-chips) + *,
 .fh-section > * + .site-note { margin-block-start: var(--site-tight); }
 
 /* Inside a demo: roomier head, stage, variant rows and markup bar. */
@@ -2251,38 +2301,125 @@ figcaption .site-id--end { margin-inline-start: auto; }
   pointer-events: none;
   transition-delay: 0s, var(--fh-duration-base), 0s, 0s;
 }
-/* Hero summary: cube cards joined into one etched strip (as on rascode.dev), kept quiet.
- * No fills: the cells are clear and the cubes are etched outlines; only the number
- * carries the page's tone, and it stays one tone across the strip. */
-.site-page-summary {
-  --fh-cube-card-min: 14rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min)), 1fr));
-  gap: 0;
-  margin: var(--site-sub) 0 0;
-  padding: 0;
-  list-style: none;
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: var(--fh-radius-md);
-  overflow: hidden;
-}
-.site-page-summary > .fh-cube-card {
-  --_c: var(--fh-tone);
-  align-items: flex-start;
-  padding: var(--fh-space-5);
+/* Home: the hero eyebrow (and its live dot), the dock's Firehorse pill and the stat numerals take the
+ * mark's underline colour exactly (--fh-color-accent), not the text-tuned accent tone. */
+.site-hero__meta, .site-facts, .site-hero ~ .fh-dock .fh-dock__heading[data-tone="accent"] { --fh-tone: var(--fh-color-accent); }
+
+/* Global header: the mark on the left, the navigation in an etched oval in the middle of the
+ * page (pill ends), Download from GitHub on the right as a matching pill. Both pills are filled
+ * like the page hero's summary cards (the tone at 5% over a frosted canvas). Thin: the header is
+ * 3.25rem tall and the oval hugs its links. Four links: Docs, Pro, Rascode open dropdowns. */
+:root:has(.site-header-oval) { --fh-header-height: 3.25rem; --site-oval-gap: var(--fh-space-2); --site-chrome-top: var(--fh-space-4); }
+.site-header-oval {
+  --_c: var(--fh-tone, var(--fh-color-accent));
+  --_pill-fill: color-mix(in oklab, var(--_c) 5%, color-mix(in oklab, var(--fh-color-canvas) 72%, transparent));
+  --_pill-etch: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
+  inset-block-start: var(--site-chrome-top);
+  margin-block-start: var(--site-chrome-top);
   border: 0;
-  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-  border-radius: 0;
   background: none;
+  backdrop-filter: none;
 }
-.site-page-summary .fh-cube {
-  --_cube: var(--fh-tone);
-  border: var(--fh-border-thin) dashed var(--fh-color-etch);
-  background: none;
-  color: var(--fh-tone);
+.site-header-oval > .fh-header__bar { min-block-size: var(--fh-header-height); gap: var(--fh-space-4); }
+.site-header-oval .fh-nav {
+  justify-self: center;
+  gap: var(--fh-space-1);
+  padding: 0.2rem var(--fh-space-2);
+  border: var(--_pill-etch);
+  border-radius: var(--fh-radius-pill, 999px);
+  background-color: var(--_pill-fill);
+  backdrop-filter: blur(var(--fh-blur-chrome));
 }
-.site-page-summary .fh-cube-card__text b { color: var(--fh-color-text-strong); }
+.site-header-oval .fh-nav__link { padding: var(--fh-space-1-5) var(--fh-space-3); }
+.site-header-oval .site-git {
+  --fh-button-bg: var(--_pill-fill);
+  --fh-button-fg: var(--fh-color-text);
+  --fh-button-border: color-mix(in oklab, var(--_c) 40%, transparent);
+  color: var(--fh-color-text);
+  border: var(--_pill-etch);
+  border-radius: var(--fh-radius-pill, 999px);
+  background-color: var(--_pill-fill);
+  backdrop-filter: blur(var(--fh-blur-chrome));
+  padding-inline: var(--fh-space-4);
+}
+.site-header-oval .site-git:is(:hover, :focus-visible) { border-color: color-mix(in oklab, var(--_c) 70%, transparent); background-color: color-mix(in oklab, var(--_c) 10%, var(--_pill-fill)); }
+/* Phones: the menu button gets the same pill so the header still reads as one shape. */
+.site-header-oval .fh-header__toggle { border: var(--_pill-etch); border-radius: var(--fh-radius-pill, 999px); background-color: var(--_pill-fill); }
+:root:has(.site-header-oval) {
+  --fh-dock-offset: calc(var(--site-chrome-top) + var(--fh-header-height) + var(--site-oval-gap));
+  scroll-padding-block-start: calc(var(--site-chrome-top) + var(--fh-header-height));
+}
+.fh-mega { inset-block-start: calc(var(--site-chrome-top) + var(--fh-header-height)); }
+.site-page-hero { position: relative; }
+
+/* The dropdowns: etched, rounded, each item a title and a quiet line. */
+.site-nav-panel {
+  min-inline-size: 17rem;
+  max-block-size: none;
+  padding: var(--fh-space-2);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--fh-radius-lg);
+  margin-block-start: var(--site-oval-gap);
+}
+.site-nav-panel > a:not(.site-nav-item) { display: grid; gap: 0.1rem; padding: var(--fh-space-2) var(--fh-space-3); border-radius: var(--fh-radius-md); }
+.site-nav-panel > a small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+
+/* One navigation row when pinned. Once the page dock engages, the header slides up out of
+ * view and the dock moves to the top, carrying the home mark and the menu itself: one sticky
+ * row instead of two. Phones drop the section pill and the Next button (the lit chip already
+ * names the section), so the row is home · chips · menu. Back near the top, the header returns. */
+.site-dock-home, .site-dock-menu { display: none; }
+.fh-header { transition: opacity var(--fh-duration-base) var(--fh-ease-standard), visibility 0s linear 0s; }
+:root.fh-js:has(.site-page-dock[data-active="true"], .site-hero ~ .fh-dock[data-active="true"]) {
+  --fh-dock-offset: var(--site-chrome-top) !important;
+  scroll-padding-block-start: calc(var(--site-chrome-top) + var(--fh-header-height));
+}
+:root.fh-js:has(.site-page-dock[data-active="true"], .site-hero ~ .fh-dock[data-active="true"]):not(:has(.fh-header [popover]:popover-open)) .fh-header {
+  opacity: 0;
+  visibility: hidden;
+  transition-delay: 0s, var(--fh-duration-base);
+}
+/* align-self: start keeps the dock its own height. Stretched, it fills the grid row its own negative margin
+ * sized, so it could never shrink from two rows to one. */
+.site-page-dock { align-self: start; transition-property: opacity, visibility, background-color, border-color; }
+/* It waits in the header's place (no slide from under the header): it only fades in, on its final pixels. */
+.site-page-dock { --fh-dock-offset: var(--site-chrome-top); }
+.fh-dock[data-active="true"] .site-dock-home {
+  display: inline-flex;
+  align-items: baseline;
+  flex: none;
+  color: var(--fh-color-text);
+  font-weight: var(--fh-weight-bold);
+  letter-spacing: var(--fh-tracking-heading);
+  text-decoration: none;
+}
+.fh-dock[data-active="true"] .site-dock-home .site-mark__bar { color: var(--fh-color-accent); }
+.fh-dock[data-active="true"] .site-dock-menu { display: inline-grid; flex: none; }
+@container fh-frame (inline-size < 48rem) {
+  .fh-dock[data-active="true"] .fh-dock__bar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "home chips menu";
+    align-items: center;
+  }
+  .fh-dock[data-active="true"] .site-dock-home { grid-area: home; }
+  .fh-dock[data-active="true"] .site-dock-menu { grid-area: menu; }
+  .fh-dock[data-active="true"] .fh-dock__actions { display: none; }
+  .fh-dock[data-active="true"] .fh-dock__bar > .fh-chips { margin-inline: 0; padding-inline: 0; }
+}
+
+/* Hero summary: the cube-card strip (fh-cube-cards--strip) under the page head; one tone across it. */
+.site-page-summary { margin: var(--site-sub) 0 0; }
+.site-page-summary > .fh-cube-card { --_c: var(--fh-tone); padding: var(--fh-space-5); }
+/* Separate cards with air between them (not one joined strip), and the number in a solid cube of
+ * the theme root. The cube text flips dark or light from the fill's lightness so it always reads. */
+.site-page-summary.fh-cube-cards--strip { gap: var(--fh-gap-grouped-wide, var(--fh-space-4)); overflow: visible; border: 0; border-radius: 0; }
+.site-page-summary.fh-cube-cards--strip > .fh-cube-card { border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-md); }
+.site-page-summary.fh-cube-cards--strip .fh-cube {
+  border: 0;
+  background: var(--_c);
+  color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+  font-weight: var(--fh-display-weight);
+}
 @container (inline-size >= 30rem) { .site-page-summary .fh-cube-card__text small { min-block-size: 2lh; } }
 .site-page-cards .fh-card__footer .fh-cubes { gap: var(--fh-space-1-5); }
 .fh-drawer .site-drawer__sub { padding-inline-start: var(--fh-space-4); }
@@ -2310,6 +2447,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
 @container site-demo (inline-size < 46rem) {
   .site-media { grid-template-columns: minmax(0, 1fr); }
   .site-media dd > :is(.fh-canvas--story, .fh-canvas--post, .fh-canvas--square, .fh-canvas--cover) { max-inline-size: 22rem; }
+  .site-media--wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .fh-section-head .site-media__guides { align-self: end; flex: none; }
 /* The Export note opens the offset panel (data-fh-panel-start): the panel draws its edges and fill. */
@@ -2327,7 +2465,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-builder__item { position: relative; display: grid; gap: var(--fh-space-1); }
 .site-builder__mini { border-radius: var(--fh-radius-sm); box-shadow: 0 0 0 1px var(--fh-color-rule); overflow: hidden; }
 .site-builder__item[aria-current] .site-builder__mini { box-shadow: 0 0 0 2px var(--fh-color-accent); }
-.site-builder__pick { position: absolute; inset: 0 0 auto; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: var(--fh-radius-sm); background: transparent; cursor: pointer; }
+.site-builder__pick { position: absolute; inset: 0 0 auto; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: var(--fh-radius-sm); background: transparent; cursor: var(--fh-cursor-action); }
 .site-builder__pick:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
 .site-builder__tools { display: flex; align-items: center; gap: 0; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); }
 .site-builder__tools > span { margin-inline-end: auto; }
@@ -2361,16 +2499,16 @@ figcaption .site-id--end { margin-inline-start: auto; }
   --site-frost: color-mix(in oklab, var(--fh-color-canvas) 62%, transparent);
   --site-frost-blur: 8px;
 }
-main :is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   -webkit-backdrop-filter: blur(var(--site-frost-blur));
   backdrop-filter: blur(var(--site-frost-blur));
 }
-:root:not([data-fh-theme]) main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+:root:not([data-fh-theme]) main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   --fh-card-bg: var(--site-frost);
   --fh-chip-bg: var(--site-frost);
 }
-:root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
-main :is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-chip-card, .fh-cube-card):not(:is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+:root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-chip-card, .fh-cube-card):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   background-color: var(--site-frost);
 }
 .site-page-summary > .fh-cube-card { background: none; }
@@ -2407,3 +2545,1477 @@ main :is(.site-demo, .site-page-summary, .site-install, .site-brief, .site-pg-te
 .site-demo__stage--flush { padding: 0; }
 .site-patterns__note .fh-body { margin-block-start: var(--fh-space-2); max-inline-size: 60ch; }
 .site-panel-demo .fh-grid { margin-block-start: var(--fh-space-4); }
+
+/* —— Developer portal (/developer/) —— */
+.site-dev__search { flex: 0 1 22rem; min-inline-size: min(16rem, 100%); }
+.site-dev__groups { display: grid; gap: var(--fh-space-10); }
+.site-dev__group { display: grid; gap: var(--fh-space-3); }
+.site-dev__group[hidden] { display: none; }
+.site-dev__group-head { display: grid; gap: var(--fh-space-1); }
+.site-dev__group-head h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--fh-space-2); margin: 0; font-size: var(--fh-text-h4); }
+.site-dev__group-head h3 code { color: var(--fh-color-text-subtle); font-size: var(--fh-text-label); }
+.site-dev__group-head p { max-inline-size: 72ch; margin: 0; color: var(--fh-color-text-muted); }
+.site-dev__group th[scope="row"] { display: grid; gap: 0.1rem; }
+.site-dev__group th[scope="row"] small { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); font-weight: var(--fh-weight-regular); }
+.site-dev__group td code { font-size: var(--fh-text-label); }
+.site-dev__group tr[hidden] { display: none; }
+.site-dev__open { padding: 0; border: 0; background: none; color: var(--fh-color-text); font: inherit; font-weight: var(--fh-weight-medium); text-align: start; cursor: var(--fh-cursor-action); text-decoration: underline; text-decoration-color: color-mix(in oklab, currentColor 30%, transparent); text-underline-offset: 0.2em; }
+.site-dev__open:hover { text-decoration-color: currentColor; }
+.site-dev__open:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+.site-dev__cascade { display: grid; gap: 0.15rem; margin: 0; padding-inline-start: 3ch; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); }
+.site-dev__cascade .site-dev__open { font-weight: var(--fh-weight-regular); text-decoration: none; }
+.site-dev__cascade .site-dev__open:hover { text-decoration: underline; }
+.site-dev__viewer .fh-detail__body { padding-block-start: 0; }
+.site-dev__pre { max-block-size: none; margin: 0; padding: var(--fh-space-4); overflow: auto; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); line-height: 1.65; tab-size: 2; white-space: pre; }
+.site-dev__c { color: var(--fh-color-text-subtle); }
+.site-dev__a { color: var(--fh-tone-violet); }
+.site-dev__s { color: var(--fh-tone-sky); }
+.site-dev__v { color: var(--fh-tone-teal); }
+
+/* —— Stacking deck demos (DEK): pin under the header and the floating bar —— */
+:is(#c-deck, #c-deck-alt) .fh-deck {
+  --fh-deck-top: calc(var(--fh-header-height) + var(--fh-dock-height) + var(--fh-space-4));
+  --fh-deck-height: min(70svh, 30rem);
+  --fh-deck-gap: 12rem;
+}
+#c-deck .fh-deck {
+  --fh-deck-hero-top: calc(var(--fh-header-height) + var(--fh-dock-height));
+  --fh-deck-hero-height: min(calc(100svh - var(--fh-header-height) - var(--fh-dock-height)), 44rem);
+}
+
+/* Rascode HIG · Frame: text that stands on its own (page hero, section
+   heads) lines up with the text inside the framed blocks below it, one
+   card inset in from the content line, so no text sits on an etched edge. */
+main > .fh-section > :is(.fh-section-head, .fh-hero),
+main > .fh-section > .fh-hero-split,
+main > .site-hero .site-hero__grid > .fh-hero { padding-inline: var(--fh-inset-card); }
+/* The mark stands on the same text line as the page head below it. */
+.site-header-oval .fh-header__brand { padding-inline-start: var(--fh-inset-card); }
+/* A label that captions a framed table starts where the table's text starts. */
+.fh-label:has(+ .fh-table-wrap) { padding-inline-start: calc(var(--fh-inset-card) + var(--fh-border-thin)); }
+/* A note under a framed demo stands on the same line as the section head. */
+main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
+
+/* Theming › Harmony & overlays demo. */
+.site-harmony__row { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: var(--fh-gap-grouped); }
+.site-harmony__sw { display: grid; gap: 0.2rem; min-inline-size: 0; }
+.site-harmony__sw > span { block-size: 3rem; border-radius: var(--fh-radius-md); border: var(--fh-border-thin) dashed var(--fh-color-etch); }
+.site-harmony__sw code { font-size: var(--fh-text-micro); overflow-wrap: anywhere; }
+.site-harmony__sw small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+.site-harmony__pick { max-inline-size: 14rem; }
+.site-harmony__pick input[type="color"] { inline-size: 100%; block-size: 2.5rem; padding: 0.15rem; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-md); background: none; }
+.site-harmony__card { min-block-size: 9rem; overflow: hidden; }
+.site-harmony__photo { margin: 0; padding: 0; display: grid; }
+.site-harmony__photo > img { inline-size: 100%; block-size: 100%; object-fit: cover; grid-area: 1 / 1; }
+.site-harmony__photo > figcaption { grid-area: 1 / 1; align-self: end; padding: var(--fh-inset-control); }
+
+/* Easter egg · root picker: hover the mark and a grid of 32 colours (plus a free picker) opens
+ * under it. Picking one sets --site-pick on the page; the root, the accent family and every
+ * harmony derived from them follow, so the whole site re-tints at once. */
+/* Colour of the day: with no pick of their own, Firehorse-theme visitors get a root generated
+ * from today's date (layout.html sets --site-day before first paint), so the site wears a new
+ * colour every day and everyone sees the same one. Named themes keep their own accent. */
+:root[data-site-root], :root[data-site-day]:not([data-fh-theme]) {
+  --_pick: var(--site-pick, var(--site-day));
+  --fh-root: var(--_pick);
+  --fh-color-accent: var(--_pick);
+  --fh-color-accent-hover: oklch(from var(--_pick) calc(l + 0.06) c h);
+  --fh-color-accent-text: light-dark(oklch(from var(--_pick) min(l, 0.5) c h), oklch(from var(--_pick) max(l, 0.74) c h));
+}
+.site-root-pick__today { display: inline-flex; align-items: center; gap: var(--fh-space-1-5); font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); }
+.site-root-pick__today::before { content: ""; inline-size: 0.75rem; aspect-ratio: 1; border-radius: var(--fh-radius-round, 50%); background: var(--site-day); }
+.site-header-oval .fh-header__brand { anchor-name: --site-brand; }
+.site-root-pick {
+  position-anchor: --site-brand;
+  inset: auto;
+  inset-block-start: calc(anchor(bottom) + var(--fh-space-2));
+  inset-inline-start: anchor(left);
+  margin: 0;
+  inline-size: min(22rem, calc(100vw - 2rem));
+  padding: var(--fh-space-4);
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-accent) 40%, transparent);
+  border-radius: var(--fh-radius-lg);
+  background: color-mix(in oklab, var(--fh-color-accent) 5%, color-mix(in oklab, var(--fh-color-canvas) 88%, transparent));
+  backdrop-filter: blur(var(--fh-blur-chrome));
+  color: var(--fh-color-text);
+  box-shadow: var(--fh-shadow-lg, 0 1rem 2.5rem rgb(0 0 0 / 0.35));
+}
+.site-root-pick:popover-open { display: grid; gap: var(--fh-space-3); }
+@media (prefers-reduced-motion: no-preference) {
+  .site-root-pick { transition: opacity 160ms var(--fh-ease-out), translate 160ms var(--fh-ease-out), display 160ms allow-discrete, overlay 160ms allow-discrete; }
+  @starting-style { .site-root-pick:popover-open { opacity: 0; translate: 0 -0.35rem; } }
+}
+.site-root-pick__title { margin: 0; display: grid; gap: 0.15rem; font-weight: 600; }
+.site-root-pick__title small { font-weight: 400; color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+.site-root-pick__grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: var(--fh-space-1-5); }
+.site-root-pick__grid button {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: var(--fh-radius-sm);
+  background: var(--_c);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+  transition: scale 120ms var(--fh-ease-out);
+}
+.site-root-pick__grid button:is(:hover, :focus-visible) { scale: 1.12; }
+.site-root-pick__grid button[aria-pressed="true"] { outline: 2px solid var(--fh-color-text); outline-offset: 2px; }
+.site-root-pick__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--fh-space-2); }
+.site-root-pick__any { display: inline-flex; align-items: center; gap: var(--fh-space-2); font-size: var(--fh-text-caption); cursor: pointer; }
+.site-root-pick__any input { inline-size: 2rem; block-size: 2rem; padding: 0; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-sm); background: none; cursor: pointer; }
+
+/* Menu items: an icon tile, a title and a quiet line. Each tile takes a step of the root's hue
+ * walk (--_w, set per item or per Docs column), clamped for contrast, so every menu re-tints
+ * with the root colour. */
+.site-nav-item {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  column-gap: var(--fh-space-3);
+  row-gap: 0.05rem;
+  align-items: center;
+  padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) var(--fh-space-2);
+  border-radius: var(--fh-radius-md);
+  color: var(--fh-color-text);
+  text-decoration: none;
+  transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-nav-item:has(> small) > .site-nav-ico { grid-row: span 2; }
+.site-nav-item > small { grid-column: 2; color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); line-height: 1.35; }
+.site-nav-item:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--_t, var(--fh-color-accent)) 9%, transparent); }
+.site-nav-item, .site-nav-ico, .site-mega-new { --_t: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.5) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.76) c h)); }
+.site-nav-ico {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_t) 40%, transparent);
+  border-radius: var(--fh-radius-md);
+  background-color: color-mix(in oklab, var(--_t) 12%, transparent);
+  color: var(--_t);
+}
+.site-nav-ico > .fh-icon { --fh-icon-size: 1rem; }
+.site-nav-ico--rascode::before, .site-rascode-wordmark {
+  content: "";
+  display: block;
+  background-color: currentColor;
+  mask: url("/img/brand/rascode-mark.svg") center / contain no-repeat;
+  inline-size: 1.1rem;
+  block-size: 1rem;
+}
+.site-rascode-wordmark { mask-image: url("/img/brand/rascode-wordmark.svg"); inline-size: 5.25rem; block-size: 1.2rem; color: var(--fh-color-text); }
+.site-nav-panel__brand { padding-block: var(--fh-space-2); }
+.site-nav-panel { min-inline-size: 19rem; }
+.site-nav-panel > hr { margin-block: var(--fh-space-1); border: 0; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+
+/* Docs: the same etched, rounded panel as Pro and Rascode, floating under the oval, with the
+ * pages in columns (generated by scripts/pages.mjs) and a footer rail. */
+.site-docs-mega {
+  inset-inline: 0;
+  inline-size: min(68rem, calc(100vw - 2 * var(--fh-page-margin, 1rem)));
+  margin-inline: auto;
+  margin-block-start: var(--site-oval-gap);
+  max-block-size: calc(100dvh - var(--fh-header-height) - var(--site-oval-gap) * 4);
+  padding: var(--fh-space-3);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--fh-radius-lg);
+  background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+  box-shadow: var(--fh-shadow-menu);
+}
+.site-docs-mega .fh-mega__grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr)); gap: var(--fh-space-2); border: 0; }
+.site-docs-mega .fh-mega__grid > section { padding: var(--fh-space-1); border: 0; }
+.site-docs-mega .fh-mega__grid h3 { margin: var(--fh-space-1) var(--fh-space-2) var(--fh-space-2); }
+.site-docs-mega .fh-mega__grid h3::before { background-color: var(--_t, var(--fh-tone)); }
+.site-docs-mega .fh-mega__grid ul { gap: 0; }
+.site-docs-mega .fh-mega__grid section { --_t: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.5) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.76) c h)); }
+.site-docs-mega .fh-mega__grid .site-nav-item { color: var(--fh-color-text); font-size: var(--fh-text-small); }
+.site-docs-mega .site-nav-item > small { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.site-docs-mega .fh-mega__rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), auto));
+  justify-content: start;
+  align-items: start;
+  gap: var(--fh-space-2) var(--fh-space-4);
+  margin-block-start: var(--fh-space-2);
+  padding: var(--fh-space-3) var(--fh-space-1) var(--fh-space-1);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+}
+.site-mega-new { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-1) var(--fh-space-3); padding-inline: var(--fh-space-2); }
+.site-mega-new h3 { display: inline-flex; align-items: center; gap: var(--fh-space-1-5); margin: 0; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--_t); }
+.site-mega-new ul { display: flex; flex-wrap: wrap; gap: var(--fh-space-1) var(--fh-space-3); margin: 0; padding: 0; list-style: none; }
+.site-mega-new a { color: var(--fh-color-text-muted); font-size: var(--fh-text-small); text-decoration: none; }
+.site-mega-new a:hover { color: var(--fh-color-text); }
+
+/* Scheme, back in the header: a small etched pill left of Download, matching the oval and the
+ * GitHub pill. Three icon-only radios (light, dark, system); the lit one gets a soft root fill.
+ * Radios, so CSS switches the scheme without script; site.js only remembers the choice. */
+.fh-header__actions:has(.site-scheme-pill) { align-items: center; gap: var(--fh-space-2); }
+.site-scheme-pill {
+  display: inline-flex;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0.125rem;
+  border: var(--_pill-etch, var(--fh-border-thin) dashed var(--fh-color-etch));
+  border-radius: var(--fh-radius-pill, 999px);
+  background-color: var(--_pill-fill, transparent);
+  backdrop-filter: blur(var(--fh-blur-chrome));
+}
+.site-scheme-pill label {
+  display: grid;
+  place-items: center;
+  inline-size: 1.625rem;
+  block-size: 1.625rem;
+  border-radius: var(--fh-radius-pill, 999px);
+  color: var(--fh-color-text-muted);
+  cursor: pointer;
+  transition: color var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-scheme-pill .fh-icon { --fh-icon-size: 0.85rem; }
+.site-scheme-pill input { position: absolute; opacity: 0; inline-size: 1px; block-size: 1px; pointer-events: none; }
+.site-scheme-pill label:hover { color: var(--fh-color-text); }
+.site-scheme-pill label:has(:checked) { color: var(--fh-color-text); background-color: color-mix(in oklab, var(--fh-color-accent) 16%, transparent); }
+.site-scheme-pill label:has(:focus-visible) { outline: 2px solid var(--fh-color-focus, var(--fh-color-accent)); outline-offset: 1px; }
+@media (width < 48rem) { .fh-header__actions .site-scheme-pill { display: none; } }
+
+/* Sticky navigation. Once a page dock engages (home included), the main header slides away and
+ * the dock alone holds the top. Its chips take their colours from the theme root: a left-to-right
+ * step through the root's harmonious walk (--site-walk-*), clamped for contrast, so the on-page
+ * nav re-tints with the theme, the colour of the day and the picker. */
+.fh-dock .fh-chips > .fh-chip--indexed { --fh-tone: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.5) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.74) c h)); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 1) { --_w: var(--site-walk-7); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 2) { --_w: var(--site-walk-8); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 3) { --_w: var(--site-walk-0); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 4) { --_w: var(--site-walk-1); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 5) { --_w: var(--site-walk-2); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 6) { --_w: var(--site-walk-3); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 7) { --_w: var(--site-walk-6); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 8) { --_w: var(--site-walk-5); }
+.fh-dock .fh-chips > .fh-chip--indexed:nth-child(9n + 9) { --_w: var(--site-walk-4); }
+/* The dock's GitHub link steps back: a quiet etched pill in muted text, not a filled button. */
+.fh-dock .fh-dock__actions .site-git {
+  --fh-button-bg: transparent;
+  --fh-button-fg: var(--fh-color-text-muted);
+  --fh-button-border: var(--fh-color-etch);
+  background: transparent;
+  color: var(--fh-color-text-muted);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--fh-radius-pill, 999px);
+  box-shadow: none;
+  font-weight: var(--fh-weight-medium, 500);
+}
+.fh-dock .fh-dock__actions .site-git:is(:hover, :focus-visible) { color: var(--fh-color-text); border-color: color-mix(in oklab, var(--fh-color-accent) 45%, transparent); background: color-mix(in oklab, var(--fh-color-accent) 6%, transparent); }
+
+/* The engaged dock floats: no edge-to-edge band, just its bar in the same etched pill as the
+ * header oval (dashed outline, pill ends, the tone at 5% over frosted canvas), hanging
+ * --fh-space-4 below the top of the window. The reading-progress line runs along the pill's
+ * flat bottom edge, inside the rounded ends. */
+.fh-dock[data-active="true"] {
+  background: transparent;
+  border-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+/* No padding transition: the bar must not slide its contents (the mark) into place. */
+.fh-dock .fh-dock__bar { anchor-name: --site-dock-bar; transition: none; }
+.fh-dock[data-active="true"] .fh-dock__bar {
+  --_c: var(--fh-tone, var(--fh-color-accent));
+  padding: var(--fh-space-1) var(--fh-space-1) var(--fh-space-1) calc(var(--fh-inset-card) - var(--fh-border-thin));
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
+  border-radius: var(--fh-radius-pill, 999px);
+  background-color: color-mix(in oklab, var(--_c) 5%, color-mix(in oklab, var(--fh-color-canvas) 72%, transparent));
+  -webkit-backdrop-filter: blur(var(--fh-blur-chrome));
+  backdrop-filter: blur(var(--fh-blur-chrome));
+}
+@supports (anchor-name: --a) {
+  .fh-dock[data-active="true"] .fh-dock__progress {
+    position-anchor: --site-dock-bar;
+    inset-inline: calc(anchor(left) + var(--fh-space-6)) calc(anchor(right) + var(--fh-space-6));
+    inset-block-end: auto;
+    inset-block-start: calc(anchor(bottom) - 2px);
+    border-radius: 1px;
+  }
+}
+@supports not (anchor-name: --a) {
+  .fh-dock[data-active="true"] .fh-dock__progress { display: none; }
+}
+/* Inside the floating pill, its buttons take pill ends too. */
+.fh-dock[data-active="true"] .fh-dock__bar :is(.fh-button, .site-dock-cta) { border-radius: var(--fh-radius-pill, 999px); }
+
+/* Engaged dock: the section pill with its live dot steps out (the chips already name the section);
+ * the menu sits at the right end. */
+.fh-dock[data-active="true"] .fh-dock__identity { display: none; }
+
+.fh-dock .site-dock-menu {
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: 0;
+  border-radius: var(--fh-radius-pill, 999px);
+  background: transparent;
+  box-shadow: none;
+}
+.fh-dock .site-dock-menu:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+
+/* The component paints a full-width band behind a stuck dock (the bar's ::after, under a
+ * scroll-state query). The floating pill replaces it, so the band never shows on the site. */
+.fh-dock[data-active="true"] .fh-dock__bar::after { content: none; }
+@container scroll-state(stuck: top) {
+  .fh-dock__bar::after { content: none; }
+}
+
+/* The lock. The engaged dock pill takes the header bar's exact place (same top, --site-chrome-top,
+ * same height, --fh-header-height, same start padding), so its "_firehorse" sits on the header's
+ * own pixels. The header fades in place as the dock fades in: one mark, locked into the sticky
+ * bar. Then the letters fold away, "ire" and "orse" collapse to nothing, leaving "_fh". The
+ * underscore never moves. site.js measures each fold; em values are the fallback. */
+.fh-dock[data-active="true"] .fh-dock__bar { box-sizing: border-box; min-block-size: var(--fh-header-height); }
+.fh-dock[data-active="true"] .site-dock-home { line-height: 1; margin-inline-end: var(--fh-space-2); }
+.site-dock-home .site-mark__word { display: inline-flex; align-items: baseline; gap: 0; }
+.site-dock-home .site-mark__bar { margin-inline-end: 0.05em; }
+.site-dock-fold { display: inline-block; overflow: clip; white-space: nowrap; max-inline-size: 0; opacity: 0; }
+.site-dock-fold--ire { --_w: 1.25em; }
+.site-dock-fold--orse { --_w: 1.95em; }
+@media (prefers-reduced-motion: no-preference) {
+  .fh-dock[data-active="true"] .site-dock-home { animation: site-lock-in var(--fh-duration-base) var(--fh-ease-standard) both; }
+  .fh-dock[data-active="true"] .site-dock-fold { animation: site-fold 560ms cubic-bezier(0.65, 0, 0.35, 1) 520ms both; }
+  .fh-dock[data-active="true"] .site-dock-fold--orse { animation-delay: 470ms; }
+}
+@keyframes site-lock-in { from { opacity: 0; } }
+@keyframes site-fold {
+  from { max-inline-size: var(--_w); opacity: 1; letter-spacing: inherit; filter: blur(0); }
+  60% { opacity: 0.6; }
+  to { max-inline-size: 0; opacity: 0; letter-spacing: -0.5em; filter: blur(1px); }
+}
+/* Engaged dock layout: the mark holds the first third; the chips begin a third of the way across
+ * the pill and scroll sideways when they don't fit.
+ * No fade mask on the scroller: in a pill this tight it read as a shadow on the last chip. */
+@container fh-frame (inline-size >= 48rem) {
+  .fh-dock[data-active="true"] .fh-dock__bar,
+  .site-hero ~ .fh-dock .fh-dock__bar {
+    display: grid;
+    grid-template-columns: calc(100% / 3 - var(--fh-space-2)) minmax(0, 1fr) auto auto;
+    grid-template-areas: none;
+    align-items: center;
+    column-gap: var(--fh-space-2);
+  }
+  .fh-dock[data-active="true"] .site-dock-home, .site-hero ~ .fh-dock .site-dock-home { grid-area: 1 / 1; justify-self: start; }
+  .fh-dock[data-active="true"] .fh-dock__bar > .fh-chips, .site-hero ~ .fh-dock .fh-dock__bar > .fh-chips { grid-area: 1 / 2; justify-content: start; margin: 0; }
+  .fh-dock[data-active="true"] .fh-dock__bar > .site-dock-menu, .site-hero ~ .fh-dock .fh-dock__bar > .site-dock-menu { grid-area: 1 / 3; }
+  .fh-dock[data-active="true"] .fh-dock__bar > .fh-dock__actions, .site-hero ~ .fh-dock .fh-dock__bar > .fh-dock__actions { grid-area: 1 / 4; }
+}
+.fh-dock[data-active="true"] .fh-dock__bar > .fh-chips {
+  min-inline-size: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.fh-dock[data-active="true"] .fh-dock__bar > .fh-chips::-webkit-scrollbar { display: none; }
+
+/* Home dock, before it locks: no section pill at all, the same height and layout as the locked
+ * pill (the mark's slot held open, chips a third across), and it rides up to the header's own
+ * place (--site-chrome-top) instead of stopping under the header. It engages exactly as it
+ * arrives there: data-engage points at a marker set one header-height below the dock's top
+ * (less the chrome gap), so the marker crosses the engage line when the dock reaches its spot.
+ * The header fades as the pill and mark appear on the same pixels: nothing moves, it locks. */
+:is(.site-page-dock, .site-hero ~ .fh-dock) .fh-dock__identity { display: none; }
+.site-hero ~ .fh-dock { --fh-dock-offset: var(--site-chrome-top); }
+.site-hero ~ .fh-dock .fh-dock__bar {
+  box-sizing: border-box;
+  min-block-size: var(--fh-header-height);
+  padding: var(--fh-space-1) var(--fh-space-1) var(--fh-space-1) calc(var(--fh-inset-card) - var(--fh-border-thin));
+  border: var(--fh-border-thin) dashed transparent;
+  align-items: center;
+}
+.site-hero ~ .fh-dock:not([data-active="true"]) .site-dock-home { display: inline-flex; visibility: hidden; }
+.site-hero ~ .fh-dock:not([data-active="true"]) .site-dock-menu { display: inline-grid; visibility: hidden; }
+.site-dock-lock { display: block; position: relative; inset-block-start: calc(var(--fh-header-height) + 4px - var(--site-chrome-top)); block-size: 0; pointer-events: none; }
+
+/* Sub-page docks are invisible until they engage, but give them the locked box already so the
+ * moment they appear nothing reflows: the mark is on its final pixels as it fades in. */
+.site-page-dock .fh-dock__bar {
+  box-sizing: border-box;
+  min-block-size: var(--fh-header-height);
+  padding: var(--fh-space-1) var(--fh-space-1) var(--fh-space-1) calc(var(--fh-inset-card) - var(--fh-border-thin));
+  border: var(--fh-border-thin) dashed transparent;
+  align-items: center;
+}
+
+/* Site colours follow the theme. On the site, a named tone (sky, teal, lime…) no longer means
+ * that fixed hue: each name is a step of the root's harmonious walk, clamped for text contrast
+ * (light: L ≤ 0.5, dark: L ≥ 0.74). Section eyebrows, numerals, card meta, the dock's outline and
+ * progress line all stay in the root's family, whatever the theme or colour of the day.
+ * Live demos keep the real palette (the tone docs must show true sky, teal…). Status colours
+ * (success, danger, warning, live) are untouched. */
+:root {
+  --fh-tone-sky: light-dark(oklch(from var(--site-walk-1) min(l, 0.5) c h), oklch(from var(--site-walk-1) max(l, 0.74) c h));
+  --fh-tone-teal: light-dark(oklch(from var(--site-walk-2) min(l, 0.5) c h), oklch(from var(--site-walk-2) max(l, 0.74) c h));
+  --fh-tone-lime: light-dark(oklch(from var(--site-walk-3) min(l, 0.5) c h), oklch(from var(--site-walk-3) max(l, 0.74) c h));
+  --fh-tone-fuchsia: light-dark(oklch(from var(--site-walk-4) min(l, 0.5) c h), oklch(from var(--site-walk-4) max(l, 0.74) c h));
+  --fh-tone-rose: light-dark(oklch(from var(--site-walk-5) min(l, 0.5) c h), oklch(from var(--site-walk-5) max(l, 0.74) c h));
+  --fh-tone-orange: light-dark(oklch(from var(--site-walk-6) min(l, 0.5) c h), oklch(from var(--site-walk-6) max(l, 0.74) c h));
+  --fh-tone-amber: light-dark(oklch(from var(--site-walk-7) min(l, 0.5) c h), oklch(from var(--site-walk-7) max(l, 0.74) c h));
+  --fh-tone-violet: light-dark(oklch(from var(--site-walk-8) min(l, 0.5) c h), oklch(from var(--site-walk-8) max(l, 0.74) c h));
+}
+.site-demo {
+  --fh-tone-sky: light-dark(var(--fh-sky-700), var(--fh-sky-400));
+  --fh-tone-teal: light-dark(var(--fh-teal-700), var(--fh-teal-400));
+  --fh-tone-lime: light-dark(var(--fh-lime-700), var(--fh-lime-400));
+  --fh-tone-fuchsia: light-dark(var(--fh-fuchsia-700), var(--fh-fuchsia-400));
+  --fh-tone-rose: light-dark(var(--fh-rose-700), var(--fh-rose-400));
+  --fh-tone-orange: light-dark(var(--fh-orange-700), var(--fh-orange-400));
+  --fh-tone-amber: light-dark(var(--fh-amber-700), var(--fh-amber-400));
+  --fh-tone-violet: light-dark(var(--fh-violet-700), var(--fh-violet-400));
+}
+
+/* The GitHub button carries over like the mark. The header's "Download from Git" pill and the
+ * dock's are the same pill (same size, fill, etch) on the same pixels: the dock ends on the
+ * content edge and the header's actions step in by the dock's end padding and border. As the header fades, the dock's label flips up into place;
+ * the button itself never moves. The menu sits just left of it, where the scheme pill was. */
+/* The dock stays inside the page width; the header's actions step in by the dock's end padding
+ * and border instead, so the two GitHub pills still meet on the same pixels. */
+.site-header-oval .fh-header__actions { margin-inline-end: calc(var(--fh-space-1) + var(--fh-border-thin)); }
+.fh-dock .fh-dock__actions .site-git {
+  --_c: var(--fh-color-accent);
+  --fh-button-bg: color-mix(in oklab, var(--_c) 5%, color-mix(in oklab, var(--fh-color-canvas) 72%, transparent));
+  --fh-button-fg: var(--fh-color-text);
+  color: var(--fh-color-text);
+  background-color: color-mix(in oklab, var(--_c) 5%, color-mix(in oklab, var(--fh-color-canvas) 72%, transparent));
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
+  padding-inline: var(--fh-space-4);
+}
+.fh-dock .fh-dock__actions .site-git:is(:hover, :focus-visible) { color: var(--fh-color-text); border-color: color-mix(in oklab, var(--_c) 70%, transparent); background-color: color-mix(in oklab, var(--_c) 10%, transparent); }
+.fh-dock .fh-dock__actions .site-git > .fh-roll { display: inline-block; transform-origin: 50% 50% -0.5em; backface-visibility: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .fh-dock[data-active="true"] .fh-dock__actions .site-git > .fh-roll { animation: site-git-flip 520ms cubic-bezier(0.34, 1.3, 0.64, 1) 80ms both; }
+}
+@keyframes site-git-flip { from { opacity: 0; transform: perspective(14em) rotateX(-90deg); } to { opacity: 1; transform: none; } }
+/* Progress line: kept in place, but only shown once the dock has locked into the sticky bar. */
+.fh-dock:not([data-active="true"]) .fh-dock__progress { opacity: 0; }
+.fh-dock .fh-dock__progress { transition: opacity var(--fh-duration-base) var(--fh-ease-standard); }
+/* Home: while the dock rides up under the header its GitHub pill stays hidden, so it never
+ * shows doubled beside the header's; it appears (and flips) as the dock locks. */
+.site-hero ~ .fh-dock:not([data-active="true"]) .fh-dock__actions { visibility: hidden; }
+/* Progress fills the pill. Instead of a line under it, the locked dock's own background fills
+ * from left to right as the page scrolls: the read part takes a stronger wash of the root, the
+ * unread part keeps the pill's frosted fill. Driven by the page scroll (no script); browsers
+ * without scroll timelines keep the thin line. */
+@property --site-read { syntax: "<number>"; inherits: true; initial-value: 0; }
+@supports (animation-timeline: scroll()) {
+  .fh-dock[data-active="true"] .fh-dock__bar {
+    position: relative;
+    isolation: isolate;
+    animation: site-read linear both;
+    animation-timeline: scroll(root block);
+  }
+  /* The read part is a pill of its own inside the pill: it starts as the left cap (one bar
+   * height wide) and grows to the full width, its leading end curved like the container's. */
+  .fh-dock[data-active="true"] .fh-dock__bar::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: -1;
+    inline-size: calc(var(--fh-header-height) + (100% - var(--fh-header-height)) * var(--site-read));
+    border-radius: var(--fh-radius-pill, 999px);
+    background-color: light-dark(color-mix(in oklab, var(--fh-root) 4%, transparent), color-mix(in oklab, var(--fh-root) 5%, transparent));
+    pointer-events: none;
+  }
+  .fh-dock[data-active="true"] .fh-dock__progress { display: none; }
+}
+@keyframes site-read { to { --site-read: 1; } }
+
+/* In-page jumps land a section's top etch exactly on the sticky bar's bottom edge: the scroll
+ * padding is the bar's bottom (--site-chrome-top + --fh-header-height; the header shares it) and
+ * sections drop the component's negative margin that lands the eyebrow instead. */
+main > .fh-section[id] { scroll-margin-block-start: 0; }
+/* Without the enhancer, in-page links still glide (the enhancer drives its own eased scroll). */
+@media (prefers-reduced-motion: no-preference) { html:not(.fh-js) { scroll-behavior: smooth; } }
+/* Work with Rascode: the three service cards stand apart (a grouped-wide gap) instead of sharing
+ * one ruled drawing, so each draws its own full etched outline and rounded corners. */
+.site-services__grid.fh-grid--ruled {
+  --fh-gap: var(--fh-gap-grouped-wide);
+  gap: var(--fh-gap-grouped-wide);
+  border: 0;
+}
+.site-services__grid.fh-grid--ruled > .site-service {
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-md);
+}
+
+/* Theme picker in the header: one round etched button, left of the light / dark pill. */
+.site-theme-btn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  padding: 0;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-accent) 40%, transparent);
+  border-radius: var(--fh-radius-round, 50%);
+  background-color: color-mix(in oklab, var(--fh-color-accent) 5%, color-mix(in oklab, var(--fh-color-canvas) 72%, transparent));
+  backdrop-filter: blur(var(--fh-blur-chrome));
+  color: var(--fh-color-text-muted);
+  cursor: pointer;
+  anchor-name: --site-theme-btn;
+  transition: color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-theme-btn .fh-icon { --fh-icon-size: 0.95rem; }
+.site-theme-btn:is(:hover, :focus-visible, :has(+ :popover-open)) { color: var(--fh-color-text); border-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
+@media (width < 48rem) { .fh-header__actions .site-theme-btn { display: none; } }
+
+/* The picker: an etched panel under the button; each row is one theme in its own colours, with
+ * a square, edge-framed horse avatar (the breed's etching, inked in the theme's accent). */
+.site-tp2 {
+  position-anchor: --site-theme-btn;
+  inset: auto;
+  inset-block-start: calc(anchor(bottom) + var(--fh-space-2));
+  inset-inline-end: calc(anchor(right) - var(--fh-space-10));
+  margin: 0;
+  inline-size: min(23rem, calc(100vw - 2rem));
+  padding: var(--fh-space-2);
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-accent) 40%, transparent);
+  border-radius: var(--fh-radius-lg);
+  background: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+  color: var(--fh-color-text);
+  box-shadow: var(--fh-shadow-menu);
+}
+.site-tp2:popover-open { display: grid; gap: var(--fh-space-1); }
+@media (prefers-reduced-motion: no-preference) {
+  .site-tp2 { transition: opacity 160ms var(--fh-ease-out), translate 160ms var(--fh-ease-out), display 160ms allow-discrete, overlay 160ms allow-discrete; }
+  @starting-style { .site-tp2:popover-open { opacity: 0; translate: 0 -0.35rem; } }
+}
+.site-tp2__head { display: flex; align-items: baseline; justify-content: space-between; padding: var(--fh-space-1) var(--fh-space-2) var(--fh-space-2); }
+.site-tp2__head b { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; }
+.site-tp2__head small { display: inline-flex; align-items: center; gap: var(--fh-space-1); color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+.site-tp2__list { display: grid; gap: var(--fh-space-1); }
+.site-tp2__item {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto 1rem;
+  align-items: center;
+  gap: var(--fh-space-3);
+  padding: var(--fh-space-2);
+  border: var(--fh-border-thin) dashed transparent;
+  border-radius: var(--fh-radius-md);
+  background-color: var(--fh-color-canvas);
+  color: var(--fh-color-text);
+  cursor: pointer;
+  transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-tp2__item:hover { border-color: color-mix(in oklab, var(--fh-color-accent) 35%, transparent); }
+.site-tp2__item:has(:checked) { border-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
+.site-tp2__item:has(:focus-visible) { outline: 2px solid var(--fh-color-accent); outline-offset: 1px; }
+/* Square avatar with an edge frame: an outer rule, a canvas gap, then the image well. */
+.site-tp2__avatar {
+  position: relative;
+  inline-size: 3rem;
+  aspect-ratio: 1;
+  border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+  border-radius: 4px;
+  padding: 3px;
+  background: var(--fh-color-canvas);
+  box-shadow: inset 0 0 0 3px var(--fh-color-canvas), inset 0 0 0 4px color-mix(in oklab, var(--fh-color-accent) 45%, transparent);
+}
+.site-tp2__avatar::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 1px;
+  background:
+    linear-gradient(color-mix(in oklab, var(--fh-color-accent) 85%, var(--fh-color-text)), color-mix(in oklab, var(--fh-color-accent) 85%, var(--fh-color-text)));
+  -webkit-mask: var(--_horse) center / cover no-repeat;
+  mask: var(--_horse) center / cover no-repeat;
+}
+.site-tp2__avatar::after { content: ""; position: absolute; inset: 4px; z-index: -1; border-radius: 1px; background: color-mix(in oklab, var(--fh-color-accent) 10%, var(--fh-color-surface)); }
+.site-tp2__avatar { isolation: isolate; }
+.site-tp2__text { display: grid; gap: 0.1rem; min-inline-size: 0; }
+.site-tp2__text b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-bold); }
+.site-tp2__text small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); line-height: 1.3; }
+.site-tp2__swatches { display: inline-flex; }
+.site-tp2__swatches > i { inline-size: 0.7rem; block-size: 0.7rem; border-radius: 50%; box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 25%, transparent); }
+.site-tp2__swatches > i + i { margin-inline-start: -0.2rem; }
+.site-tp2__check { --fh-icon-size: 0.9rem; color: var(--fh-color-accent); opacity: 0; }
+.site-tp2__item:has(:checked) .site-tp2__check { opacity: 1; }
+.site-tp2__foot { display: flex; justify-content: flex-end; padding: var(--fh-space-1) var(--fh-space-1) 0; }
+.site-tp2__guides { display: grid; gap: var(--fh-space-2); padding: var(--fh-space-3) var(--fh-space-1) var(--fh-space-2); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
+.site-tp2__guides .fh-chip[aria-pressed="true"] { border-style: solid; border-color: var(--fh-color-accent); color: var(--fh-color-text); }
+
+/* The light / dark pill, collapsed: only the current mode shows, in an etched circle the size of
+ * the theme button. Hover or focus opens it leftwards over its neighbour (no layout shift); the
+ * current mode stays at the right end, so the circle never moves. */
+.site-scheme-pill {
+  position: relative;
+  inline-size: 2rem;
+  block-size: 2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  backdrop-filter: none;
+}
+.site-scheme-pill__track {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-accent) 40%, transparent);
+  border-radius: var(--fh-radius-pill, 999px);
+  background-color: color-mix(in oklab, var(--fh-color-accent) 5%, color-mix(in oklab, var(--fh-color-canvas) 88%, transparent));
+  backdrop-filter: blur(var(--fh-blur-chrome));
+  overflow: clip;
+}
+.site-scheme-pill__track > label {
+  inline-size: calc(2rem - 2 * var(--fh-border-thin));
+  block-size: calc(2rem - 2 * var(--fh-border-thin));
+  flex: none;
+  transition: max-inline-size 220ms var(--fh-ease-standard), opacity 160ms var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-scheme-pill__track > label:has(:checked) { order: 1; }
+.site-scheme-pill:not(:hover, :focus-within) .site-scheme-pill__track > label:not(:has(:checked)) { max-inline-size: 0; opacity: 0; }
+.site-scheme-pill__track > label:not(:has(:checked)) { max-inline-size: 2rem; }
+.site-scheme-pill:not(:hover, :focus-within) .site-scheme-pill__track > label:has(:checked) { background-color: transparent; }
+.site-scheme-pill:is(:hover, :focus-within) .site-scheme-pill__track { border-color: color-mix(in oklab, var(--fh-color-accent) 65%, transparent); }
+
+/* KC, collapsed: just his avatar in an etched circle (the same etch and frosted fill as the header
+ * controls, no drop shadow). Hover or keyboard focus opens him leftwards to read "Ask KC". */
+.site-kc-launch {
+  gap: 0;
+  padding: 0.2rem;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-accent) 40%, transparent);
+  background: color-mix(in oklab, var(--fh-color-accent) 5%, color-mix(in oklab, var(--fh-color-canvas) 80%, transparent));
+  box-shadow: none;
+}
+.site-kc-launch .site-kc-face { inline-size: 2rem; border: 0; }
+.site-kc-launch__label {
+  display: inline-block;
+  max-inline-size: 0;
+  overflow: clip;
+  white-space: nowrap;
+  opacity: 0;
+  transition: max-inline-size 260ms var(--fh-ease-standard), opacity 180ms var(--fh-ease-standard), padding 260ms var(--fh-ease-standard);
+}
+.site-kc-launch:is(:hover, :focus-visible) { border-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
+.site-kc-launch:is(:hover, :focus-visible) .site-kc-launch__label { max-inline-size: 5rem; opacity: 1; padding-inline: var(--fh-space-2) var(--fh-space-2); }
+
+/* The menu drawer, opened from the sticky bar (or the header on phones). It no longer brings the
+ * header back over the bar. On wider screens it is a floating etched panel like the other menus,
+ * hanging under the right end of the bar and scrolling inside itself; on phones it is a sheet
+ * that starts below the chrome. */
+.fh-drawer#site-drawer { inset-block-start: calc(var(--site-chrome-top) + var(--fh-header-height) + var(--site-oval-gap)); }
+@media (width >= 48rem) {
+  .fh-drawer#site-drawer {
+    inset-block-end: auto;
+    inset-inline: auto max(var(--fh-page-margin, 1rem), calc((100vw - var(--fh-content-max, 100vw)) / 2));
+    inline-size: min(22rem, calc(100vw - 2rem));
+    max-block-size: calc(100dvh - var(--site-chrome-top) - var(--fh-header-height) - var(--site-oval-gap) * 3);
+    padding: var(--fh-space-2) var(--fh-space-4);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border-radius: var(--fh-radius-lg);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+    box-shadow: var(--fh-shadow-menu);
+  }
+  .fh-drawer#site-drawer .fh-drawer__group { padding-block: var(--fh-space-3); }
+  .fh-drawer#site-drawer .fh-drawer__group a { font-size: var(--fh-text-body); padding-block: var(--fh-space-1); }
+}
+
+/* The menu, rich: on wider screens the drawer is the full map in one etched panel. Docs on the
+ * left in their columns (the same icon tiles as the Docs menu), and a rail on the right with Pro,
+ * Rascode and Get Firehorse. Every tile takes a step of the root's walk. Phones keep the lists. */
+.site-drawer-rich { display: none; }
+@media (width >= 48rem) {
+  .fh-drawer#site-drawer { inline-size: min(64rem, calc(100vw - 2 * var(--fh-page-margin, 1rem))); padding: var(--fh-space-3); }
+  .fh-drawer#site-drawer > .fh-drawer__group { display: none; }
+  .site-drawer-rich { display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: var(--fh-space-3); }
+  .site-drawer-rich__docs .fh-mega__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--fh-space-2); border: 0; }
+  .site-drawer-rich__docs .fh-mega__grid > section { padding: 0; border: 0; --_t: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.5) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.76) c h)); }
+  .site-drawer-rich__docs .fh-mega__grid h3 { display: flex; align-items: center; gap: var(--fh-space-1-5); margin: var(--fh-space-1) var(--fh-space-2) var(--fh-space-1); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-heavy); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: color-mix(in oklab, var(--fh-color-text) 70%, transparent); }
+  .site-drawer-rich__docs .fh-mega__grid h3::before { content: ""; inline-size: 0.4rem; aspect-ratio: 1; border-radius: 50%; background-color: var(--_t); }
+  .site-drawer-rich__docs .fh-mega__grid ul { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+  .site-drawer-rich__docs .site-nav-item > small { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .site-drawer-rich__rail { display: grid; align-content: start; gap: var(--fh-space-3); padding-inline-start: var(--fh-space-3); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+  .site-drawer-rich__rail section { display: grid; gap: 0; }
+  .site-drawer-rich__label { margin: var(--fh-space-1) var(--fh-space-2) var(--fh-space-2); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-heavy); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-muted); }
+  .site-drawer-rich__docs > .site-drawer-rich__label { margin-block-end: var(--fh-space-1); }
+  .fh-drawer#site-drawer .site-nav-item { font-size: var(--fh-text-small); padding-block: var(--fh-space-1-5); }
+  .fh-drawer#site-drawer a.site-nav-item:hover { color: var(--fh-color-text); }
+}
+
+/* The horse starts large (where it will end), shrinks back over the first viewport of scroll,
+ * rides small down the page, and comes forward again at the footer. Over the last full viewport (from when the
+ * footer starts to arrive to the very end of the page) the etched horse grows, rises and sharpens
+ * from the frosted background into the foreground, its moving light strengthens, and the root's
+ * palette blooms behind it (root, both split complements, a tint), so the page ends in colour.
+ * Scroll-driven, no script; reduced motion just shows it clear. The footer stands on it. */
+.site-footer.fh-footer--panel { background-color: transparent; }
+.site-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  background: none;
+}
+.site-backdrop.is-footer .site-backdrop__reveal { -webkit-mask-image: none; mask-image: none; }
+.site-backdrop__horse, .site-backdrop__sweep { transform-origin: 60% 100%; }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Longer and eased: each move plays over two viewports of scroll, slow in and slow out. */
+    .site-backdrop { --_reach: 200vh; --_glide: cubic-bezier(0.45, 0, 0.55, 1); }
+    .site-backdrop::after { animation: site-foot-bloom linear both; animation-timeline: scroll(root block); animation-range: calc(100% - var(--_reach)) 100%; }
+    /* Two moves on two properties, so they compose: the opening shrink drives `scale` and
+     * `translate` over the first viewport of scroll; the closing return drives `transform` over
+     * the last. The horses start where they end, shrink back, ride small, then return. */
+    .site-backdrop__horse, .site-backdrop__sweep { will-change: transform, scale, translate; }
+    .site-backdrop__horse { animation: site-top-back var(--_glide) both, site-foot-forward var(--_glide) both; animation-timeline: scroll(root block), scroll(root block); animation-range: 0 var(--_reach), calc(100% - var(--_reach)) 100%; }
+    .site-backdrop__sweep { animation: site-top-back var(--_glide) both, site-foot-forward var(--_glide) both, site-foot-light linear both; animation-timeline: scroll(root block), scroll(root block), scroll(root block); animation-range: 0 var(--_reach), calc(100% - var(--_reach)) 100%, calc(100% - var(--_reach)) 100%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) { .site-backdrop.is-footer::after { opacity: 1; } }
+@keyframes site-top-back {
+  from { scale: 1.22; translate: 0 -6vh; }
+  to { scale: 1; translate: 0 0; }
+}
+@keyframes site-foot-forward {
+  from { transform: none; }
+  to { transform: translateY(-6vh) scale(1.22); }
+}
+@keyframes site-foot-light { from { opacity: 0.42; } to { opacity: 0.85; } }
+@keyframes site-foot-bloom { from { opacity: 0; } to { opacity: 1; } }
+/* Menu layout, refined: edge to edge with the page's content width. Top: Docs in four columns
+ * (System, Components, Product UI, Media) with Pro as the rail. An etched rule runs across, then
+ * the foot: Rascode and Get Firehorse side by side, half each, split by a dashed rule, their
+ * links in a row. */
+@media (width >= 48rem) {
+  .fh-drawer#site-drawer {
+    inset-inline: max(var(--fh-page-margin), (100% - var(--fh-content-max)) / 2);
+    inline-size: auto;
+  }
+  .site-drawer-rich { grid-template-columns: minmax(0, 1fr) 15rem; row-gap: 0; }
+  .site-drawer-rich__docs .fh-mega__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .site-drawer-rich__docs, .site-drawer-rich__rail { padding-block-end: var(--fh-space-3); }
+  .site-drawer-rich__foot {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-block-start: var(--fh-space-3);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+  }
+  .site-drawer-rich__foot > section { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; column-gap: var(--fh-space-2); }
+  .site-drawer-rich__foot > section > .site-drawer-rich__label { grid-column: 1 / -1; }
+  .site-drawer-rich__foot > section + section { padding-inline-start: var(--fh-space-3); margin-inline-start: var(--fh-space-3); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+}
+/* The menu: the theme's menu surface (white on light, at --fh-menu-opacity), blur, no drop shadow. */
+@media (width >= 48rem) {
+  .fh-drawer#site-drawer {
+    background: var(--fh-color-surface-menu);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome));
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    box-shadow: none;
+  }
+}
+@media (width >= 48rem) {
+  .site-drawer-rich .site-nav-item > .fh-roll { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+/* Global navigation, matched to the sticky menu: the theme's menu surface (the raised surface at
+ * --fh-menu-opacity) and no drop shadow on every dropdown; the Docs panel spans the page's content width with its four columns side by
+ * side and its rail under an etched rule. */
+.site-docs-mega, .site-nav-panel, .site-tp2 {
+  background: var(--fh-color-surface-menu);
+  -webkit-backdrop-filter: blur(var(--fh-blur-chrome));
+  backdrop-filter: blur(var(--fh-blur-chrome));
+  box-shadow: none;
+}
+@media (width >= 48rem) {
+  .site-docs-mega {
+    inset-inline: max(var(--fh-page-margin), (100% - var(--fh-content-max)) / 2);
+    inline-size: auto;
+    margin-inline: 0;
+  }
+  .site-docs-mega .fh-mega__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Work with Rascode: the Rascode wordmark heads the section, above its chapter eyebrow. */
+.site-services__logo { display: block; inline-size: 9rem; block-size: 2.1rem; margin-block-end: var(--fh-space-4); color: var(--fh-color-text); }
+
+/* Menu middle band, between the map and the foot: New on the left (recent additions as chips, each
+ * dot a different colour of the root's palette), Featured on the right (a card with the palette
+ * itself laid out as a band). Etched rules above and between, like the foot. */
+@media (width >= 48rem) {
+  .site-drawer-rich__mid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-block: var(--fh-space-3);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+  }
+  .site-drawer-rich__mid > * + * { padding-inline-start: var(--fh-space-3); margin-inline-start: var(--fh-space-3); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+  .site-drawer-rich__label .fh-icon { --fh-icon-size: 0.8rem; vertical-align: -0.1em; }
+  .site-drawer-new__chips { display: flex; flex-wrap: wrap; gap: var(--fh-space-1-5); padding-inline: var(--fh-space-2); }
+  .site-drawer-new__chip {
+    --_t: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.5) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.76) c h));
+    display: inline-flex; align-items: center; gap: var(--fh-space-1-5);
+    padding: 0.3rem 0.7rem 0.3rem 0.55rem;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_t) 45%, transparent);
+    border-radius: var(--fh-radius-pill, 999px);
+    background-color: color-mix(in oklab, var(--_t) 8%, transparent);
+    color: var(--fh-color-text); font-size: var(--fh-text-small); text-decoration: none;
+  }
+  .site-drawer-new__chip > i { inline-size: 0.45rem; aspect-ratio: 1; border-radius: 50%; background-color: var(--_t); }
+  .site-drawer-new__chip:is(:hover, :focus-visible) { border-color: color-mix(in oklab, var(--_t) 80%, transparent); background-color: color-mix(in oklab, var(--_t) 16%, transparent); }
+  .site-drawer-feature {
+    display: grid; align-content: start; gap: var(--fh-space-2);
+    color: var(--fh-color-text); text-decoration: none;
+  }
+  .site-drawer-feature .site-drawer-rich__label { margin-inline: var(--fh-space-2); margin-block-end: 0; }
+  .site-drawer-feature__body { display: grid; gap: 0.2rem; padding-inline: var(--fh-space-2); }
+  .site-drawer-feature__body b { font-size: var(--fh-text-body); }
+  .site-drawer-feature__body small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); line-height: 1.4; }
+  .site-drawer-feature__band { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; margin-inline: var(--fh-space-2); block-size: 0.6rem; }
+  .site-drawer-feature__band > i { border-radius: 2px; background-color: oklch(from var(--_w) clamp(0.66, l, 0.82) max(c, 0.15) h); }
+  .site-drawer-feature__go { display: inline-flex; align-items: center; gap: var(--fh-space-1); padding-inline: var(--fh-space-2); color: var(--fh-color-accent-text); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; }
+  .site-drawer-feature:is(:hover, :focus-visible) .site-drawer-feature__go { text-decoration: underline; text-underline-offset: 0.2em; }
+}
+
+/* Footer close: _firehorse on the page's left edge, _rascode (a link to Rascode's design system
+ * consulting) on its right edge, joined on their shared baseline by a dashed etch in a split
+ * complement of the root. Close under them: the legal line under _firehorse, the Pro
+ * call centred, rascode.dev under _rascode. The marks share one font size; the wordmark is sized
+ * so its baseline (95 / 119 of its box) sits on the text's. */
+.site-footer__marks {
+  --_fs: var(--fh-heading-size); /* the theme's secondary header: the marks and section titles match */
+  display: grid;
+  grid-template-columns: auto minmax(var(--fh-space-8), 1fr) auto;
+  align-items: end;
+  row-gap: var(--fh-space-1-5);
+  padding-block-start: var(--fh-space-8);
+  font-size: var(--_fs);
+}
+.site-footer__fh { grid-area: 1 / 1; font-size: 1em; font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-heading-tracking); line-height: 1; }
+.site-footer__etch {
+  grid-area: 1 / 2;
+  margin-block-end: 0.215em;
+  margin-inline-start: 0.08em;
+  border-block-end: 2px dashed oklch(from var(--site-walk-3) clamp(0.62, l, 0.8) max(c, 0.14) h);
+  transform-origin: 0 50%;
+}
+.site-footer__rascode { grid-area: 1 / 3; display: block; color: var(--fh-color-text-strong, var(--fh-color-text)); }
+.site-footer__rascode .site-rascode-wordmark { inline-size: calc(1.1em * 521 / 119); block-size: 1.1em; color: inherit; }
+.site-footer__rascode:is(:hover, :focus-visible) { color: var(--fh-color-accent-text); }
+.site-footer__legal, .site-footer__url { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-muted); }
+.site-footer__legal { grid-area: 2 / 1; justify-self: start; }
+.site-footer__url { grid-area: 2 / 3; justify-self: end; text-decoration: none; }
+.site-footer__url:is(:hover, :focus-visible) { color: var(--fh-color-text); text-decoration: underline; text-underline-offset: 0.3em; }
+
+/* Footer base: the Pro call, all caps and underlined so it reads as a link. */
+.site-footer__pro { grid-area: 2 / 2; justify-self: center; display: inline-flex; align-items: center; gap: var(--fh-space-2); color: var(--fh-color-text); font-family: var(--fh-font-mono); font-size: var(--fh-text-small); font-weight: var(--fh-weight-bold); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
+.site-footer__pro:is(:hover, :focus-visible) { color: var(--fh-color-accent-text); text-decoration-color: currentColor; }
+.site-footer__pro .fh-icon { --fh-icon-size: 0.9em; }
+
+/* The close arrives as the page ends: _firehorse rises in, the etch draws itself from the "e"
+ * towards Rascode, then _rascode and the line beneath land. Driven by the page scroll, it
+ * completes exactly at the bottom of the page. Reduced motion shows it all at once. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-footer__fh, .site-footer__etch, .site-footer__rascode, .site-footer__legal, .site-footer__pro, .site-footer__url { animation-timeline: scroll(root block); animation-fill-mode: both; animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1); }
+    /* In order: _firehorse, the etch drawing across, _rascode; then the legal line and
+     * rascode.dev roll up one after the other from the foot of their own line. */
+    .site-footer__fh { animation-name: site-close-rise; animation-range: calc(100% - 70vh) calc(100% - 50vh); }
+    .site-footer__etch { animation-name: site-close-draw; animation-range: calc(100% - 54vh) calc(100% - 26vh); }
+    .site-footer__rascode { animation-name: site-close-rise; animation-range: calc(100% - 30vh) calc(100% - 16vh); }
+    .site-footer__pro { animation-name: site-close-fade; animation-range: calc(100% - 62vh) calc(100% - 42vh); }
+    .site-footer__legal, .site-footer__url { animation: none; }
+    .site-footer__legal > span, .site-footer__url > span { animation-timeline: scroll(root block); animation-fill-mode: both; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); animation-name: site-close-roll; }
+    .site-footer__legal > span { animation-range: calc(100% - 17vh) calc(100% - 8vh); }
+    .site-footer__url > span { animation-range: calc(100% - 9vh) 100%; }
+  }
+}
+@keyframes site-close-rise { from { opacity: 0; translate: 0 0.35em; filter: blur(4px); } to { opacity: 1; translate: 0 0; filter: blur(0); } }
+@keyframes site-close-draw { from { scale: 0 1; opacity: 0.4; } to { scale: 1 1; opacity: 1; } }
+/* Roll up from the foot of the line: the text rises inside its own clipped line box. */
+.site-footer__legal, .site-footer__url { display: inline-block; overflow: clip; overflow-clip-margin: 0.15em; line-height: 1.2; }
+.site-footer__legal > span, .site-footer__url > span { display: inline-block; }
+@keyframes site-close-roll { from { translate: 0 110%; opacity: 0; } 60% { opacity: 1; } to { translate: 0 0; opacity: 1; } }
+@keyframes site-close-fade { from { opacity: 0; translate: 0 0.4rem; } to { opacity: 1; translate: 0 0; } }
+/* The page's last screen. At the bottom of the page: the marks' row sits on the window's centre
+ * line; an etched rule runs edge to edge halfway between the top of the marks and the top of the
+ * window; the Pro call stands just above that rule, its arrow ending on the footer panel's edge
+ * (the dashed line just right of centre); the footer links have scrolled away above the fold.
+ *   --_pb  room under the close: half a window less the close's lower half (logo row centre
+ *          to the bottom of the legal line, 2.75rem)
+ *   --_pt  room above the logos: the other half of the window, less the logo row's top half */
+.site-footer.fh-footer--tall {
+  --_pb: calc(50vh - 2.575rem);
+  --_pt: calc(50vh - 1.2rem + 0.5rem);
+  padding-block-end: var(--_pb);
+  overflow-x: clip;
+}
+.site-footer.fh-footer--tall .site-footer__marks { position: relative; padding-block-start: var(--_pt); }
+.site-footer.fh-footer--tall .site-footer__marks::before {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--_pt) / 2);
+  inset-inline: calc(-1 * max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2) - 20px);
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  pointer-events: none;
+}
+@container fh-frame (inline-size >= 78rem) {
+  .site-footer.fh-footer--tall .site-footer__pro {
+    position: absolute;
+    grid-area: auto; /* a placed grid item would take its cell as the containing block */
+    inset-block-end: calc(100% - var(--_pt) / 2 + var(--fh-space-3));
+    inset-inline-end: calc(100% - min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem)));
+  }
+}
+
+/* A live dot (the Doppler) sits over the underscore of _rascode, in the theme's primary colour.
+ * The underscore spans x 8–66 of the 521-wide wordmark; its top is at 95 / 119 of the height. */
+.site-footer__rascode { position: relative; }
+.site-footer__dot {
+  --fh-tone: var(--fh-color-accent);
+  --fh-dot-size: 0.24em;
+  position: absolute;
+  inset-inline-start: calc(37 / 521 * 100%);
+  inset-block-end: calc((119 - 95) / 119 * 100% + 0.22em);
+  translate: -50% 0;
+}
+
+/* —— Open sections (prototypes, /open/) ——————————————————————————————
+ * One idea per screen, in the footer's spirit: tall and wide, etched rules running edge to edge
+ * above and below, the root's palette as a soft glow, mono caps for labels, heavy type for the
+ * idea itself. Nothing boxed; space and rules do the grouping. */
+.site-open {
+  position: relative;
+  isolation: isolate;
+  min-block-size: max(36rem, 86vh);
+  align-content: center;
+  row-gap: var(--fh-space-10);
+  padding-block: var(--fh-space-16);
+}
+
+.site-open__tag { margin: 0 0 calc(-1 * var(--fh-space-6)); padding-inline: var(--fh-inset-card); white-space: nowrap; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-open__tag b { color: var(--fh-color-accent-text); margin-inline-end: var(--fh-space-2); }
+.site-open__rule { grid-column: full; inline-size: 100%; margin: 0; border: 0; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+.site-open__body { display: grid; justify-items: start; gap: var(--fh-space-6); margin: 0; padding-inline: var(--fh-inset-card); }
+.site-open__eyebrow { display: inline-flex; align-items: center; gap: var(--fh-space-2); margin: 0; font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-muted); }
+.site-open__eyebrow .fh-dot { --fh-tone: var(--fh-color-accent); }
+.site-open__display { max-inline-size: 16ch; margin: 0; font-size: clamp(2.6rem, 1.2rem + 5vw, 6rem); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tight); line-height: 0.98; text-wrap: balance; }
+.site-open__display em { font-style: normal; color: var(--fh-color-text-muted); }
+.site-open__display--quote { max-inline-size: 22ch; font-size: clamp(2rem, 1rem + 3.4vw, 4.2rem); }
+.site-open__heading { margin: 0; font-size: var(--fh-heading-size); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-heading-tracking); line-height: 1.05; }
+.site-open__heading--centre { justify-self: stretch; text-align: center; }
+.site-open__lede { max-inline-size: 46ch; margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-lede); line-height: var(--fh-leading-relaxed); }
+.site-open__link, .site-open__cite { display: inline-flex; align-items: center; gap: var(--fh-space-2); font-family: var(--fh-font-mono); font-size: var(--fh-text-small); font-weight: var(--fh-weight-bold); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text); }
+.site-open__link { text-decoration: underline; text-underline-offset: 0.35em; text-decoration-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
+.site-open__cite { font-weight: var(--fh-weight-medium); font-size: var(--fh-text-label); color: var(--fh-color-text-muted); }
+.site-open__cite .fh-dot { --fh-tone: var(--fh-color-accent); }
+
+/* B · Spotlight */
+.site-open__split { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: center; gap: var(--fh-space-12); padding-inline: var(--fh-inset-card); }
+@container fh-frame (inline-size < 56rem) { .site-open__split { grid-template-columns: 1fr; } }
+.site-open__copy { display: grid; gap: var(--fh-space-5); }
+.site-open__specs { display: grid; margin: 0; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-open__specs > div { display: flex; justify-content: space-between; gap: var(--fh-space-4); padding-block: var(--fh-space-3); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-open__specs dt { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-open__specs dd { margin: 0; font-size: var(--fh-text-small); }
+.site-open__stage { display: grid; place-items: center; min-block-size: 22rem; margin: 0; }
+.site-open__measured { position: relative; display: inline-block; zoom: 2; }
+.site-open__dim { position: absolute; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: 0.3rem; letter-spacing: var(--fh-tracking-caps); }
+.site-open__dim b { position: absolute; font-weight: var(--fh-weight-medium); white-space: nowrap; }
+.site-open__dim--h { inset-inline: 0; inset-block-end: -0.9rem; border-block-start: 0.5px dashed oklch(from var(--site-walk-3) clamp(0.62, l, 0.8) max(c, 0.14) h); }
+.site-open__dim--h b { inset-inline-start: 50%; inset-block-start: 0.2rem; translate: -50% 0; }
+.site-open__dim--v { inset-block: 0; inset-inline-start: -0.9rem; border-inline-start: 0.5px dashed oklch(from var(--site-walk-3) clamp(0.62, l, 0.8) max(c, 0.14) h); }
+.site-open__dim--v b { inset-block-start: 50%; inset-inline-end: 0.3rem; translate: 0 -50%; }
+
+/* C · Pairs */
+.site-open__pairs { display: grid; gap: var(--fh-space-8); margin: 0; padding: 0 var(--fh-inset-card); list-style: none; }
+.site-open__pairs > li {
+  --_t: oklch(from var(--_w) clamp(0.62, l, 0.8) max(c, 0.14) h);
+  display: grid;
+  grid-template-columns: auto minmax(var(--fh-space-8), 1fr) auto;
+  align-items: end;
+  row-gap: var(--fh-space-1-5);
+  font-size: var(--fh-heading-size);
+}
+.site-open__pairs b { font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-heading-tracking); line-height: 1; }
+.site-open__pairs i { margin: 0 var(--fh-space-3) 0.2em; border-block-end: 2px dashed var(--_t); }
+.site-open__pairs small { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-muted); }
+/* Captions span past their word so the columns size to the words and the line starts right after them. */
+.site-open__pairs small:first-of-type { grid-column: 1 / 3; }
+.site-open__pairs small:last-of-type { grid-column: 2 / 4; justify-self: end; text-align: end; }
+
+/* D · Numbers */
+.site-open__numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding-inline: var(--fh-inset-card); }
+.site-open__numbers > div { display: grid; align-content: end; gap: var(--fh-space-3); padding: var(--fh-space-4) var(--fh-space-8) var(--fh-space-4) 0; }
+.site-open__numbers > div + div { padding-inline-start: var(--fh-space-8); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-open__numbers dt { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-open__numbers dd { margin: 0; font-size: clamp(4rem, 2rem + 6vw, 8.5rem); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tightest); line-height: 0.9; font-variant-numeric: tabular-nums; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.76) c h)); }
+.site-open__numbers p { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+@container fh-frame (inline-size < 48rem) { .site-open__numbers { grid-template-columns: 1fr; } .site-open__numbers > div + div { padding-inline-start: 0; border-inline-start: 0; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); } }
+
+/* E · Quote */
+.site-open--quote .site-open__body { justify-items: center; text-align: center; }
+/* The header and sticky-bar mark at its small size reads lighter than the same weight at the
+ * footer's size; one step heavier (Inter 800) makes them read as one mark. */
+.fh-header .site-mark, .site-dock-home.site-mark { font-weight: 800; }
+
+/* Open card options (prototypes F–I on /open/). The shared solid cube: a fill from the section's walk step, text flipped dark or light from its lightness. */
+.site-open__pad { padding-inline: var(--fh-inset-card); }
+.site-open__cube {
+  --_f: var(--_w, var(--fh-color-accent));
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: var(--fh-radius-md);
+  background: var(--_f);
+  color: oklch(from var(--_f) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+  font-size: var(--fh-text-lede);
+  font-weight: var(--fh-display-weight);
+  font-variant-numeric: tabular-nums;
+}
+.site-open__cube .fh-icon { font-size: 1.2rem; }
+
+/* F · Open cards: columns, a dashed rule between, no box. */
+.site-open__features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0 var(--fh-inset-card); list-style: none; }
+.site-open__features > li { display: grid; align-content: start; justify-items: start; gap: var(--fh-space-4); padding: var(--fh-space-2) var(--fh-space-8) var(--fh-space-2) 0; }
+.site-open__features > li + li { padding-inline-start: var(--fh-space-8); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-open__features h3, .site-open__steps h3 { margin: var(--fh-space-2) 0 0; font-size: var(--fh-text-lede); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-heading-tracking); line-height: 1.1; }
+.site-open__features p, .site-open__steps p { margin: 0; max-inline-size: 34ch; color: var(--fh-color-text-muted); line-height: var(--fh-leading-relaxed); }
+.site-open__features .site-open__link { margin-block-start: auto; padding-block-start: var(--fh-space-2); }
+@container fh-frame (inline-size < 52rem) {
+  .site-open__features { grid-template-columns: 1fr; gap: var(--fh-space-8); }
+  .site-open__features > li, .site-open__features > li + li { padding: 0; border: 0; }
+}
+
+/* G · Steps: cubes on one dashed line that runs between them. */
+.site-open__steps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--fh-space-6); margin: 0; padding: 0 var(--fh-inset-card); list-style: none; counter-reset: none; }
+.site-open__steps > li:not(:last-child)::after { content: ""; position: absolute; inset-inline: calc(2.75rem + var(--fh-space-3)) calc(var(--fh-space-3) - var(--fh-space-6)); inset-block-start: 1.375rem; border-block-start: 2px dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+.site-open__steps > li { position: relative; display: grid; justify-items: start; gap: var(--fh-space-2); }
+@container fh-frame (inline-size < 52rem) {
+  .site-open__steps { grid-template-columns: 1fr; gap: var(--fh-space-8); }
+  .site-open__steps > li:not(:last-child)::after { inset-inline: 1.375rem auto; inset-block: calc(2.75rem + var(--fh-space-2)) calc(var(--fh-space-2) - var(--fh-space-8)); border-block-start: 0; border-inline-start: 2px dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+}
+
+/* H · Index: each card is a full-width row between edge-to-edge rules. */
+.site-open__index { margin: 0; padding: 0; list-style: none; }
+.site-open__index > li { border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+.site-open__index a {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  align-items: center;
+  gap: var(--fh-space-6);
+  padding: var(--fh-space-8) var(--fh-inset-card);
+  color: var(--fh-color-text);
+  text-decoration: none;
+  transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-open__index small { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); color: var(--fh-color-text-subtle); }
+.site-open__index b { font-size: clamp(2rem, 1rem + 3vw, 3.6rem); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tight); line-height: 1; }
+.site-open__index span { color: var(--fh-color-text-muted); }
+.site-open__index .fh-icon { font-size: 1.5rem; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.74) c h)); transition: translate var(--fh-duration-fast) var(--fh-ease-standard); }
+.site-open__index a:hover { background-color: color-mix(in oklab, var(--_w) 7%, transparent); }
+.site-open__index a:hover .fh-icon { translate: 0.4rem 0; }
+.site-open__index a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+@container fh-frame (inline-size < 52rem) { .site-open__index a { grid-template-columns: 2.5rem minmax(0, 1fr) auto; } .site-open__index span { grid-column: 2; grid-row: 2; } }
+
+/* I · Specimens: an open grid, dashed lines between cells only, a mono label under each. */
+.site-open__specimens { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; overflow: hidden; }
+.site-open__specimens > li { display: grid; grid-template-rows: 1fr auto; gap: var(--fh-space-4); min-block-size: 12rem; padding: var(--fh-space-6) var(--fh-inset-card); margin: 0 0 -1px -1px; border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-open__specimens > li > div { display: grid; place-items: center; }
+.site-open__specimens .fh-input { max-inline-size: 15rem; }
+.site-open__specimens .fh-progress { inline-size: min(100%, 12rem); }
+.site-open__specimens small { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+@container fh-frame (inline-size < 52rem) { .site-open__specimens { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* —— Home, open layout ——————————————————————————————————————————————
+ * The hero owns the first screen; the figures get a screen of their own below the fold. */
+.site-hero {
+  display: grid;
+  align-content: center;
+  min-block-size: 100svh;
+  padding-block: calc(var(--fh-header-height) + var(--fh-space-8)) var(--fh-space-16);
+}
+@container fh-frame (inline-size >= 64rem) { .site-hero__grid { grid-template-columns: minmax(0, 1fr); } }
+.site-hero .fh-display { font-size: clamp(2.6rem, 1rem + 5cqi, 5.6rem); letter-spacing: var(--fh-tracking-tight); line-height: 0.96; }
+
+/* By the numbers: a full screen, the title centred, six even cards in one row. */
+.site-numbers { min-block-size: 100svh; row-gap: var(--fh-space-10); padding-block: var(--fh-space-8); }
+.site-numbers__head { display: grid; justify-items: center; gap: var(--fh-space-6); padding-inline: var(--fh-inset-card); text-align: center; }
+.site-numbers__head .site-open__display { max-inline-size: none; }
+.site-numbers__row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--fh-space-4); margin: 0; padding-inline: var(--fh-inset-card); }
+.site-numbers__row > div {
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: var(--fh-space-3);
+  min-block-size: 15rem;
+  padding: var(--fh-space-6);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+  border-radius: var(--fh-radius-lg, var(--fh-radius-md));
+  background: color-mix(in oklab, var(--fh-color-canvas) 72%, transparent);
+  backdrop-filter: blur(6px);
+  transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-numbers__row > div:hover { border-color: color-mix(in oklab, var(--_w) 60%, transparent); }
+.site-numbers__row dt { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-numbers__row dd { margin: 0; }
+.site-numbers__row dd:first-of-type {
+  grid-row: 3;
+  font-size: clamp(3rem, 0.5rem + 4.4vw, 5.4rem);
+  font-weight: var(--fh-display-weight);
+  letter-spacing: var(--fh-tracking-tightest, -0.05em);
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.76) c h));
+}
+.site-numbers__row dd small { font-size: 0.32em; letter-spacing: var(--fh-tracking-caps); color: var(--fh-color-text-muted); margin-inline-start: 0.2em; }
+.site-numbers__row dd:last-of-type { grid-row: 4; padding-block-start: var(--fh-space-3); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: var(--fh-leading-snug); min-block-size: calc(3lh + var(--fh-space-3)); }
+@container fh-frame (inline-size < 72rem) { .site-numbers__row { grid-template-columns: repeat(3, minmax(0, 1fr)); } .site-numbers__row > div { min-block-size: 14rem; } }
+@container fh-frame (inline-size < 40rem) { .site-numbers__row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .site-numbers__row > div { min-block-size: 12rem; padding: var(--fh-space-4); } }
+
+/* Principles: the open-cards grid, three across, rules between, numbered solid cubes. */
+.site-open__features--grid { row-gap: var(--fh-space-12); }
+.site-open__features--grid > li + li { padding-inline-start: 0; border-inline-start: 0; }
+.site-open__features--grid > li:not(:nth-child(3n + 1)) { padding-inline-start: var(--fh-space-8); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-open__features--grid .site-open__cube { font-size: var(--fh-text-body); }
+.site-principles header { display: grid; gap: var(--fh-space-3); }
+.site-take .fh-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-6); }
+
+/* Shared head for the home's open sections: chapter or eyebrow, a display line, a lede. */
+.site-adapt__head { display: grid; justify-items: start; gap: var(--fh-space-5); padding-inline: var(--fh-inset-card); }
+.site-adapt__head .site-open__display { max-inline-size: 18ch; }
+
+/* Container-native: one block of markup in three slots of different widths. */
+.site-slots { display: grid; grid-template-columns: 13rem 22rem minmax(0, 1fr); align-items: start; gap: var(--fh-space-5); padding-inline: var(--fh-inset-card); }
+.site-slot--l { grid-column: 1 / -1; }
+.site-slots__key { display: grid; align-content: start; margin: 0; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-slots__key > div { display: grid; gap: var(--fh-space-1-5); padding-block: var(--fh-space-4); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-slots__key dt { display: flex; align-items: center; gap: var(--fh-space-3); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-slots__key dt b { display: inline-grid; place-items: center; inline-size: 1.6rem; block-size: 1.6rem; border-radius: var(--fh-radius-sm); background: var(--fh-color-accent); color: var(--fh-color-on-accent); }
+.site-slots__key dd { margin: 0; color: var(--fh-color-text-muted); }
+.site-slot { display: grid; gap: var(--fh-space-3); margin: 0; min-inline-size: 0; }
+.site-slot__dim { display: flex; align-items: center; gap: var(--fh-space-3); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-slot__dim b { display: inline-grid; place-items: center; inline-size: 1.6rem; block-size: 1.6rem; border-radius: var(--fh-radius-sm); background: var(--fh-color-accent); color: var(--fh-color-on-accent); font-weight: var(--fh-weight-bold); }
+.site-slot__dim span { color: var(--fh-color-text); }
+.site-slot__dim code { margin-inline-start: auto; font-size: inherit; color: var(--fh-color-text-subtle); background: none; padding: 0; }
+.site-slot__dim::after { content: ""; order: 2; flex: 1; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+.site-slot__dim code { order: 3; margin-inline-start: 0; }
+.site-slot__frame { container-type: inline-size; display: grid; gap: var(--fh-space-3); padding: var(--fh-space-3); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); border-radius: var(--fh-radius-md); }
+@container fh-frame (inline-size < 74rem) { .site-slots { grid-template-columns: 1fr; } .site-slot--s { max-inline-size: 13rem; } .site-slot--m { max-inline-size: 22rem; } }
+
+/* Principles: six rules as full-width rows, big titles, the CSS each one stands on at the end. */
+.site-rules { margin: 0; padding: 0; list-style: none; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+.site-rules > li {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1.35fr) minmax(0, 1.15fr) 8rem;
+  align-items: center;
+  gap: var(--fh-space-8);
+  padding: var(--fh-space-8) var(--fh-inset-card);
+  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+}
+.site-rules .site-open__cube { font-size: var(--fh-text-body); }
+.site-rules h3 { margin: 0; font-size: clamp(1.8rem, 0.8rem + 2.4vw, 3.2rem); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tight); line-height: 1; }
+.site-rules p { margin: 0; max-inline-size: 48ch; color: var(--fh-color-text-muted); line-height: var(--fh-leading-relaxed); }
+.site-rules > li > code { justify-self: end; padding: 0; background: none; font-family: var(--fh-font-mono); font-size: var(--fh-text-small); color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.74) c h)); }
+@container fh-frame (inline-size < 56rem) {
+  .site-rules > li { grid-template-columns: 2.75rem minmax(0, 1fr); gap: var(--fh-space-3) var(--fh-space-5); }
+  .site-rules p, .site-rules > li > code { grid-column: 2; justify-self: start; }
+}
+
+/* Explore: every category as an open tile on one dashed grid; the cube and hover take the walk. */
+.site-explore { row-gap: var(--fh-space-12); }
+.site-explore__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); margin: 0; padding: 0; list-style: none; overflow: hidden; border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); }
+.site-explore__grid > li { margin: 0 0 -1px -1px; border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-explore__grid :is(a, .site-tile) {
+  position: relative;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--fh-space-3);
+  block-size: 100%;
+  min-block-size: 13rem;
+  padding: var(--fh-space-6) var(--fh-inset-card);
+  color: var(--fh-color-text);
+  text-decoration: none;
+  transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-explore__grid .site-open__cube { --_f: var(--_w); margin-block-end: var(--fh-space-3); }
+.site-explore__grid small { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-explore__grid b { font-size: clamp(1.4rem, 1rem + 0.9vw, 1.9rem); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-heading-tracking); line-height: 1.05; }
+.site-explore__grid span:not(.site-open__cube) { color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: var(--fh-leading-snug); }
+.site-explore__grid :is(a, .site-tile) > .fh-icon--arrow-right { position: absolute; inset-block-start: var(--fh-space-6); inset-inline-end: var(--fh-inset-card); font-size: 1.25rem; color: var(--fh-color-text-subtle); transition: translate var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast); }
+.site-explore__grid a:hover { background-color: color-mix(in oklab, var(--_w) 8%, transparent); }
+.site-explore__grid a:hover > .fh-icon--arrow-right { translate: 0.35rem 0; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.74) c h)); }
+.site-explore__grid a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+
+/* Home: the woven-in prototypes. Pairs and Start here follow the section before them, so they
+ * size to their content rather than owning a screen. */
+.site-connect, .site-start { min-block-size: 0; padding-block: var(--fh-space-12) var(--fh-space-16); }
+.site-connect__head { justify-items: center; text-align: center; padding-block-end: var(--fh-space-4); }
+.site-sheet { row-gap: var(--fh-space-12); }
+.site-sheet__zoom { padding-block-start: var(--fh-space-6); }
+.site-open__steps h4 { margin: var(--fh-space-2) 0 0; font-size: var(--fh-text-lede); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-heading-tracking); line-height: 1.1; }
+.site-open__steps h4 + p { margin: 0; color: var(--fh-color-text-muted); }
+.site-take { row-gap: var(--fh-space-12); }
+.site-take__quote { justify-items: center; text-align: center; }
+.site-take__quote .site-open__display--quote { max-inline-size: 24ch; }
+.site-take__mark { font: inherit; letter-spacing: inherit; color: var(--fh-color-text); text-decoration: none; border-block-end: 0.06em dashed color-mix(in oklab, var(--fh-color-accent) 70%, transparent); transition: border-color var(--fh-duration-fast) var(--fh-ease-standard); }
+.site-take__mark:hover { border-block-end-color: var(--fh-color-accent); }
+.site-take__mark:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 0.1em; }
+.site-take__actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--fh-space-6); }
+.site-start__soon { opacity: 0.7; }
+
+/* Landing-page summary as Explore tiles (meta "summaryStyle": "tiles"): the cells fill the row,
+ * the cube holds the figure. */
+.site-page-tiles { grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr)); }
+.site-page-tiles .site-open__cube { inline-size: auto; min-inline-size: 2.75rem; padding-inline: 0.6rem; }
+.site-page-tiles .site-tile { min-block-size: 0; }
+
+/* —— Sticky navigation: flat frost, tone etch, 3px corners ——————————————————
+ * The header oval and the engaged dock share one shape (they lock on the same pixels): white
+ * frost in light mode, black in dark, no tone tint and no read-progress shading; a dashed edge in
+ * the tone; 3px corners. Download from Git follows as a rounded rectangle. */
+:root {
+  --site-nav-radius: 3px;
+  --site-nav-fill: light-dark(rgb(255 255 255 / 0.72), rgb(0 0 0 / 0.55));
+  --site-nav-etch: var(--fh-border-thin) dashed var(--fh-color-accent);
+}
+.site-header-oval { --_pill-fill: var(--site-nav-fill); --_pill-etch: var(--site-nav-etch); }
+.site-header-oval :is(.fh-nav, .site-git, .fh-header__toggle) { border-radius: var(--site-nav-radius); }
+.site-header-oval .site-git:is(:hover, :focus-visible) { background-color: var(--site-nav-fill); }
+.fh-dock[data-active="true"] .fh-dock__bar {
+  border: var(--site-nav-etch);
+  border-radius: var(--site-nav-radius);
+  background-color: var(--site-nav-fill);
+}
+.fh-dock[data-active="true"] .fh-dock__bar::before { content: none; }
+.fh-dock[data-active="true"] .fh-dock__bar :is(.fh-button, .site-dock-cta),
+.fh-dock .fh-dock__actions .site-git { border-radius: var(--site-nav-radius); }
+.fh-dock .fh-dock__actions .site-git { --fh-button-bg: var(--site-nav-fill); background-color: var(--site-nav-fill); border: var(--site-nav-etch); }
+.fh-dock .fh-dock__actions .site-git:is(:hover, :focus-visible) { background-color: var(--site-nav-fill); }
+
+/* Hero meta chip (v1.1 · MIT · No JavaScript required · KB): no border. */
+.site-hero .site-hero__meta { border: 0; }
+
+/* J · Frosted cards (prototype, /open/). Flat frost (white in light mode, black in dark), a dashed
+ * etch, no gradients. Three bands, top to bottom: label and title, a spread in the middle, then
+ * the copy and a link. Two across stand 70% of the screen tall; three and four step down. */
+.site-frosts { display: grid; grid-template-rows: auto 1fr auto; min-block-size: var(--_h); gap: 0 var(--fh-space-6); padding-inline: var(--fh-inset-card); }
+.site-frosts--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); --_h: max(30rem, 70svh); --_t: clamp(2rem, 1rem + 2.6vw, 3.4rem); }
+.site-frosts--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); --_h: max(26rem, 58svh); --_t: clamp(1.7rem, 1rem + 1.6vw, 2.5rem); }
+.site-frosts--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); --_h: max(22rem, 46svh); --_t: clamp(1.4rem, 0.9rem + 1.1vw, 2rem); }
+.site-frost {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  padding: clamp(var(--fh-space-6), 3cqi, var(--fh-space-10));
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: var(--site-nav-radius, 3px);
+  background-color: var(--site-nav-fill, light-dark(rgb(255 255 255 / 0.72), rgb(0 0 0 / 0.55)));
+  -webkit-backdrop-filter: blur(var(--fh-blur-chrome, 14px));
+  backdrop-filter: blur(var(--fh-blur-chrome, 14px));
+  transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
+}
+.site-frost:hover { border-color: color-mix(in oklab, var(--_w) 70%, transparent); }
+.site-frost header { display: grid; gap: var(--fh-space-4); }
+.site-frost small { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-frost h3 { margin: 0; font-size: var(--_t); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tight); line-height: 1; text-wrap: balance; }
+.site-frost__spread { display: grid; place-items: center; min-block-size: 0; padding-block: var(--fh-space-6); }
+.site-frost footer { display: grid; justify-items: start; gap: var(--fh-space-4); padding-block-start: var(--fh-space-5); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-frost footer p { margin: 0; max-inline-size: 46ch; color: var(--fh-color-text-muted); line-height: var(--fh-leading-relaxed); }
+/* Spreads: solid swatches of the walk, a big figure, or a solid cube. */
+.site-frost__swatches { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: var(--fh-space-2); inline-size: 100%; }
+.site-frost__swatches i { aspect-ratio: 1 / 2.2; border-radius: var(--site-nav-radius, 3px); }
+.site-frost__big { font-size: clamp(6rem, 2rem + 10vw, 13rem); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tightest, -0.05em); line-height: 0.85; font-variant-numeric: tabular-nums; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.76) c h)); }
+.site-frost__big--sm { font-size: clamp(4rem, 1.5rem + 5vw, 7rem); }
+.site-frost__cube { --_f: var(--_w); display: inline-grid; place-items: center; inline-size: clamp(5rem, 3rem + 4vw, 8rem); aspect-ratio: 1; border-radius: var(--fh-radius-md); background: var(--_f); color: oklch(from var(--_f) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); }
+.site-frost__cube .fh-icon { font-size: 2.6rem; }
+@container fh-frame (inline-size < 64rem) { .site-frosts--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .site-frosts--3 { grid-template-columns: 1fr; } .site-frosts:is(.site-frosts--3, .site-frosts--4) { min-block-size: 0; row-gap: var(--fh-space-6); } }
+@container fh-frame (inline-size < 44rem) { .site-frosts--2, .site-frosts--4 { grid-template-columns: 1fr; } .site-frosts { min-block-size: 0; row-gap: var(--fh-space-6); } }
+.site-open--frosted { row-gap: var(--fh-space-6); }
+.site-open--frosted .site-frosts + .site-open__eyebrow { margin-block-start: var(--fh-space-10); }
+
+/* K–V · Twelve frosted concepts (prototype, /open/): a six-column grid of frosted cards. */
+.site-concepts { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--fh-space-6); padding-inline: var(--fh-inset-card); --_t: clamp(1.6rem, 1rem + 1.5vw, 2.6rem); }
+.site-concepts > .site-concept { grid-row: auto; grid-template-rows: auto 1fr auto; min-block-size: max(26rem, 52svh); }
+.site-concept--wide { grid-column: span 4; }
+.site-concept--narrow, .site-concept--third { grid-column: span 2; }
+.site-concept--half { grid-column: span 3; }
+@container fh-frame (inline-size < 64rem) { .site-concepts > .site-concept { grid-column: span 3; } }
+@container fh-frame (inline-size < 44rem) { .site-concepts > .site-concept { grid-column: 1 / -1; } }
+.site-concept .site-frost__spread { inline-size: 100%; }
+.site-concept code { font-size: 0.88em; }
+.site-concept small { font-family: var(--fh-font-mono); }
+
+/* K · layer stack */
+.site-c-layers { display: grid; gap: 3px; inline-size: 100%; max-inline-size: 30rem; margin: 0; padding: 0; list-style: none; }
+.site-c-layers li { display: flex; justify-content: space-between; padding: 0.3rem var(--fh-space-3); border-radius: 3px; background: color-mix(in oklab, var(--fh-color-text) calc(4% + var(--_i, 0) * 1.2%), transparent); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); }
+.site-c-layers li span { color: var(--fh-color-text-subtle); }
+.site-c-layers li.site-c-layers__you { background: var(--_w); color: oklch(from var(--_w) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); }
+.site-c-layers li.site-c-layers__you span { color: inherit; opacity: 0.8; }
+/* L · the stable: each row carries its own theme */
+.site-c-stable { display: grid; gap: var(--fh-space-2); inline-size: 100%; margin: 0; padding: 0; list-style: none; }
+.site-c-stable li { display: grid; grid-template-columns: 1.6rem 1fr auto; align-items: center; gap: var(--fh-space-3); padding-block: var(--fh-space-2); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-c-stable__chip { inline-size: 1.6rem; block-size: 1.6rem; border-radius: 3px; background: var(--fh-color-accent); }
+.site-c-stable b { font-weight: var(--fh-heading-weight); }
+.site-c-stable code { color: var(--fh-color-text-subtle); }
+/* M, N · labelled stacks */
+.site-c-stack { display: grid; gap: var(--fh-space-4); inline-size: 100%; }
+.site-c-labelled { display: grid; gap: var(--fh-space-2); justify-items: start; }
+.site-c-labelled small { font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-c-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-gap-related); }
+.site-c-row .fh-input { inline-size: 9rem; }
+.site-c-trio { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-evenly; inline-size: 100%; }
+.site-c-trio .site-c-labelled { justify-items: center; }
+/* O · scheme split */
+.site-c-split { display: grid; grid-template-columns: 1fr 1fr; inline-size: 100%; border-radius: 3px; overflow: hidden; }
+.site-c-scheme { display: grid; gap: var(--fh-space-2); padding: var(--fh-space-4); background: var(--fh-color-canvas); color: var(--fh-color-text); }
+.site-c-scheme small { font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; color: var(--fh-color-text-subtle); }
+.site-c-scheme b { font-size: 2.6rem; font-weight: var(--fh-display-weight); line-height: 1; }
+.site-c-scheme__ink, .site-c-scheme__accent { block-size: 0.5rem; border-radius: 3px; background: var(--fh-color-text-muted); }
+.site-c-scheme__accent { inline-size: 60%; background: var(--fh-color-accent); }
+/* P · Index ID */
+.site-c-id { display: grid; justify-items: center; gap: var(--fh-space-2); text-align: center; }
+.site-c-id b { font-size: clamp(3.5rem, 2rem + 3vw, 5.5rem); font-weight: var(--fh-display-weight); letter-spacing: 0.02em; line-height: 0.9; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.76) c h)); }
+.site-c-id span { color: var(--fh-color-text-muted); }
+.site-c-id code { color: var(--fh-color-text-subtle); }
+/* Q · token chain */
+.site-c-chain { display: grid; gap: var(--fh-space-3); inline-size: 100%; margin: 0; padding: 0; list-style: none; }
+.site-c-chain li { display: grid; grid-template-columns: 1.4rem 1fr auto; align-items: center; gap: var(--fh-space-3); }
+.site-c-chain li + li { padding-block-start: var(--fh-space-3); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-c-chain span { inline-size: 1.4rem; block-size: 1.4rem; border-radius: 3px; }
+.site-c-chain small { font-size: var(--fh-text-label); text-transform: uppercase; letter-spacing: var(--fh-tracking-caps); color: var(--fh-color-text-subtle); }
+/* R · schema map */
+.site-c-map { display: grid; inline-size: 100%; margin: 0; }
+.site-c-map > div { display: flex; justify-content: space-between; gap: var(--fh-space-4); padding-block: var(--fh-space-3); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-c-map dd { margin: 0; font-weight: var(--fh-heading-weight); }
+/* S · agent files */
+.site-c-files { display: grid; gap: var(--fh-space-1-5); inline-size: 100%; margin: 0; padding: var(--fh-space-4); border-radius: 3px; background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); font-family: var(--fh-font-mono); font-size: var(--fh-text-small); white-space: normal; }
+.site-c-files span::before { content: "GET "; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.74) c h)); }
+/* T · weight */
+.site-c-weight { display: grid; justify-items: center; gap: var(--fh-space-3); text-align: center; }
+.site-c-weight b { font-size: clamp(3.5rem, 2rem + 3vw, 5.5rem); font-weight: var(--fh-display-weight); letter-spacing: var(--fh-tracking-tight); line-height: 0.9; color: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.76) c h)); }
+.site-c-weight small { font-size: 0.35em; margin-inline-start: 0.15em; color: var(--fh-color-text-muted); }
+.site-c-weight span { color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+/* U · native */
+.site-c-native { display: grid; justify-items: start; gap: var(--fh-space-4); inline-size: 100%; }
+.site-c-details { inline-size: 100%; border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); padding-block: var(--fh-space-3); }
+.site-c-details summary { cursor: pointer; font-weight: var(--fh-heading-weight); }
+.site-c-details p { margin: var(--fh-space-2) 0 0; color: var(--fh-color-text-muted); }
+.site-c-pop { padding: var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-accent); border-radius: 3px; background: var(--site-nav-fill); color: var(--fh-color-text); backdrop-filter: blur(14px); }
+/* V · the walk */
+.site-c-walk { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; inline-size: 100%; margin: 0; padding: 0; list-style: none; }
+.site-c-walk li { display: grid; gap: var(--fh-space-2); justify-items: center; min-inline-size: 0; }
+.site-c-walk span { inline-size: 100%; aspect-ratio: 1 / 2.4; border-radius: 3px; }
+.site-c-walk small { font-size: 0.6rem; color: var(--fh-color-text-subtle); writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+
+/* Header and dock logo: larger (the two stay the same size so the dock locks onto the header mark). */
+.fh-header .site-mark, .fh-header .site-mark--tagged, .site-dock-home.site-mark { font-size: 1.5rem; }
+
+/* W–Y · Habit cards (prototypes on /open/): Helm's Today habits on the Explore tile.
+   The tile, cube, dashed grid and type are Explore's own; the area sets the tone. */
+.site-open--habits { row-gap: var(--fh-space-10); }
+.site-habits { display: grid; row-gap: var(--fh-space-6); }
+.site-habits__head { display: grid; gap: var(--fh-space-2); }
+.site-habits__head p:last-child { margin: 0; max-inline-size: 62ch; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); line-height: var(--fh-leading-relaxed); }
+.site-habits [data-area="fit"] { --_w: oklch(0.74 0.17 55); }
+.site-habits [data-area="health"] { --_w: oklch(0.8 0.17 130); }
+.site-habits [data-area="mind"] { --_w: oklch(0.72 0.13 235); }
+.site-habits [data-area="soul"] { --_w: oklch(0.7 0.15 300); }
+.site-habit {
+  --_ink: light-dark(oklch(from var(--_w) min(l, 0.5) c h), oklch(from var(--_w) max(l, 0.76) c h));
+  inline-size: 100%;
+  min-block-size: 15rem;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.site-explore__grid .site-habit:hover { background-color: color-mix(in oklab, var(--_w) 8%, transparent); }
+.site-explore__grid .site-habit:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+.site-habit[data-done] { background-color: color-mix(in oklab, var(--_w) 5%, transparent); }
+.site-habit[data-done] b { color: var(--fh-color-text-muted); }
+
+/* The etched check takes the arrow's place; done fills it with the tone. */
+.site-habit__check {
+  position: absolute;
+  inset-block-start: var(--fh-space-6);
+  inset-inline-end: var(--fh-inset-card);
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  border-radius: 50%;
+  color: transparent;
+  font-size: 0.85rem;
+  transition: border-color var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast);
+}
+.site-habit:hover .site-habit__check { border-style: solid; border-color: var(--_ink); }
+.site-habit[data-done] .site-habit__check { border: 0; background: var(--_w); color: oklch(from var(--_w) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); }
+
+/* A hairline along the foot of the tile, filled to the share done. */
+.site-habit__bar { position: absolute; inset: auto 0 0; block-size: 2px; }
+.site-habit__bar::before { content: ""; display: block; inline-size: var(--_p, 0%); block-size: 100%; background: var(--_w); }
+
+/* X · Count cube: the target in the cube, points where the arrow sat, the week underneath. */
+.site-habit__pts { position: absolute; inset-block-start: var(--fh-space-6); inset-inline-end: var(--fh-inset-card); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); }
+.site-explore__grid .site-habit[data-done] .site-habit__pts { color: var(--_ink); }
+.site-habit--count .site-open__cube { font-size: var(--fh-text-lede); }
+.site-explore__grid .site-habit__week { display: flex; gap: var(--fh-space-1); margin-block-start: auto; padding-block-start: var(--fh-space-3); }
+.site-explore__grid .site-habit__week > span {
+  display: grid;
+  place-items: center;
+  inline-size: 1.35rem;
+  block-size: 1.35rem;
+  border-radius: var(--fh-radius-sm);
+  font-family: var(--fh-font-mono);
+  font-size: 0.62rem;
+  color: var(--fh-color-text-subtle);
+  box-shadow: inset 0 0 0 var(--fh-border-thin) var(--fh-color-etch-soft, var(--fh-color-etch));
+}
+.site-explore__grid .site-habit__week > [data-on] { box-shadow: none; background: color-mix(in oklab, var(--_w) 22%, transparent); color: var(--_ink); }
+.site-explore__grid .site-habit__week > [data-today] { box-shadow: inset 0 0 0 var(--fh-border-thin) var(--_w); }
+.site-habit--count { grid-template-rows: auto auto auto auto 1fr; }
+
+/* Y · Index row: one line per habit, three across, on the same dashed grid. */
+.site-explore__grid--rows { grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr)); }
+.site-explore__grid .site-habit--row small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.site-explore__grid .site-habit--row {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  justify-items: stretch;
+  gap: var(--fh-space-4);
+  min-block-size: 0;
+  padding-block: var(--fh-space-5);
+}
+.site-explore__grid .site-habit--row .site-open__cube { inline-size: 2.5rem; block-size: 2.5rem; margin: 0; }
+.site-habit__name { display: grid; gap: var(--fh-space-1); min-inline-size: 0; }
+.site-explore__grid .site-habit--row .site-habit__name b { font-size: var(--fh-text-lede); line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.site-explore__grid .site-habit__frac { font-family: var(--fh-font-mono); font-size: var(--fh-text-small); font-variant-numeric: tabular-nums; color: var(--fh-color-text-subtle); }
+.site-explore__grid .site-habit__frac b { font-family: var(--fh-font-mono); font-size: var(--fh-text-lede); letter-spacing: 0; color: var(--_ink); }
+.site-habit--row .site-habit__check { position: static; }
+
+/* Sample data panel (Forms › Field types → Generate) */
+.fh-field__hint .fh-field__sample { margin-inline-start: var(--fh-gap-bound); }
+.site-sample { --fh-dialog-size: min(36rem, 92vw); }
+.site-sample__out {
+  max-block-size: 16rem;
+  overflow: auto;
+  margin: 0;
+  padding: var(--fh-inset-card);
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-md);
+  background: var(--fh-color-surface-raised);
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-caption);
+  line-height: var(--fh-leading-snug);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.site-kc__voice { margin: 0 0 var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+.site-kc__voice em { font-style: italic; }

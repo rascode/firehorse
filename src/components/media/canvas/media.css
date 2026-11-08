@@ -1,0 +1,82 @@
+/*
+ * Firehorse — Media (THB)
+ * components/media/canvas · layer fh.components · docs /media/#THB
+ */
+
+/*
+ * Media — artboards for the things you ship outside the app: social
+ * posts and stories, profile headers, video thumbnails, link cards,
+ * cover art, business cards and slides.
+ *
+ *   <article class="fh-canvas fh-canvas--og" data-tone="accent">
+ *     <div class="fh-canvas__body">
+ *       <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>brand</span><p class="fh-canvas__eyebrow">Label</p></div>
+ *       <div class="fh-canvas__main"><h2 class="fh-canvas__title">Title <em>in two tones</em></h2><p class="fh-canvas__sub">One line.</p></div>
+ *       <div class="fh-canvas__foot"><span>brand.com</span><span>2026</span></div>
+ *     </div>
+ *   </article>
+ *
+ * A canvas has a native size in pixels (--fh-canvas-w × --fh-canvas-h)
+ * and is designed in those pixels: every length inside is
+ * calc(N * var(--_u)), where --_u is one native pixel at whatever size
+ * the canvas is drawn. It fills its slot and scales as one picture.
+ * .fh-canvas--native draws it at its real size, which is what
+ * `npx firehorse-export` screenshots to PNG.
+ *
+ * The body sits inside the safe area (--fh-canvas-safe-t/-r/-b/-l):
+ * the part that survives crops, profile photos and app chrome.
+ * data-fh-guides outlines it and shades what the platform covers.
+ *
+ * Slides are canvases too: <section class="fh-canvas fh-slide">, 1280 × 720,
+ * plus slide pieces (list, stats, quote, code). With reveal.js, add
+ * dist/reveal.css after it.
+ */
+
+@layer fh.components {
+  /* —— Media ——
+   * As a direct child of the canvas it is the background (with a scrim);
+   * inside the body it is a framed picture. */
+  .fh-canvas__media {
+    margin: 0;
+
+    & img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+  }
+
+  .fh-canvas > .fh-canvas__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, color-mix(in oklab, var(--fh-color-canvas) 94%, transparent) 8%, color-mix(in oklab, var(--fh-color-canvas) 40%, transparent) 55%, transparent);
+    }
+  }
+
+  .fh-canvas__body .fh-canvas__media {
+    position: relative;
+    min-block-size: 0;
+    overflow: hidden;
+    border: var(--_hair) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-sunken);
+  }
+
+  .fh-canvas__body .fh-canvas__media--round {
+    align-self: center;
+    aspect-ratio: 1;
+    block-size: auto;
+    border: calc(10 * var(--_u)) solid var(--fh-tone);
+    border-radius: 50%;
+  }
+
+  /* A quiet plate under the body, for copy over busy art. */
+  .fh-canvas--plate .fh-canvas__body {
+    border: var(--_hair) dashed var(--fh-color-etch);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 82%, transparent);
+    backdrop-filter: blur(calc(14 * var(--_u)));
+  }
+
+}

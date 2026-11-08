@@ -1,0 +1,65 @@
+/*
+ * Firehorse — Segment switch (SEG)
+ * components/finance · layer fh.components · docs /finance/#SEG
+ * All / Business / Personal, then the entities inside Business.
+ *
+ *   <nav class="fh-segment" aria-label="Segment">
+ *     <a href="?s=all" aria-current="true">All</a>
+ *     <a href="?s=business" data-tone="amber">Business <b>3</b></a>
+ *     <a href="?s=personal" data-tone="sky">Personal <b>4</b></a>
+ *   </nav>
+ *   <nav class="fh-segment fh-segment--entities" aria-label="Business"> <a …>Rascode</a> … </nav>
+ */
+@layer fh.components {
+  .fh-segment {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound);
+    padding: var(--fh-inset-tight);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-pill);
+
+    & > a, & > button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-bound);
+      padding: var(--fh-inset-tight) var(--fh-inset-tile);
+      border: 0;
+      border-radius: var(--fh-radius-pill);
+      background: none;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fh-color-text-muted);
+      cursor: var(--fh-cursor-action);
+    }
+    & > :is(a, button):hover { color: var(--fh-color-text); }
+    & > :is(a, button):focus-visible { outline: 2px solid var(--fh-tone, var(--fh-color-text)); outline-offset: 2px; }
+    & > :is([aria-current="true"], [aria-pressed="true"]) {
+      background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 14%, transparent);
+      color: var(--fh-color-text);
+    }
+    & b {
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+      color: var(--fh-color-text-muted);
+    }
+  }
+
+  /* Entities: smaller chips under the Business switch. */
+  .fh-segment--entities {
+    border-style: none;
+    padding: 0;
+    & > :is(a, button) {
+      padding: var(--fh-inset-tight) var(--fh-inset-control);
+      border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      text-transform: none;
+      letter-spacing: normal;
+      font-family: var(--fh-font-sans);
+      font-size: var(--fh-text-small);
+    }
+  }
+}

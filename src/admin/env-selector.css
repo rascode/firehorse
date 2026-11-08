@@ -1,0 +1,215 @@
+/*
+ * Firehorse — Env selector (ENV)
+ * admin · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Environment selector (ENV) ——
+   *   <button class="fh-env" data-fh-env="local" popovertarget="env">
+   *     <span class="fh-env__name">Local</span>
+   *     <span class="fh-env__host">helm.rascode.local</span>
+   *   </button>
+   *   <div id="env" popover class="fh-menu fh-env-menu">
+   *     <p class="fh-menu__label">Open Helm in</p>
+   *     <a role="menuitemradio" aria-checked="true" data-fh-env="local" href="…">…</a>
+   *     <hr><p class="fh-env-menu__data" data-fh-env="local">Data · …</p>
+   *   </div>
+   * The trigger always shows where you are; the menu reopens the same page
+   * in another environment and says which database this one is using.
+   * data-fh-warn on the trigger marks a mismatch (local app, hosted data). */
+  .fh-env {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-item-gap);
+    min-block-size: 2rem;
+    padding: 0 var(--fh-item-inline);
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-env-tone) 45%, transparent);
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-env-tone) 10%, transparent);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    cursor: var(--fh-cursor-action);
+    anchor-name: --fh-env;
+
+    &::before {
+      content: "";
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-env-tone);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-env-tone) 24%, transparent);
+    }
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-env-tone) 16%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
+  }
+
+  .fh-env__name { font-weight: var(--fh-weight-medium); }
+
+  .fh-env__host {
+    color: var(--fh-color-text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .fh-env[data-fh-warn]::after {
+    content: attr(data-fh-warn);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--fh-radius-pill);
+    background-color: var(--fh-tone-amber);
+    color: var(--fh-color-on-primary);
+    letter-spacing: var(--fh-tracking-wider);
+  }
+
+  @container fh-app (inline-size < 40rem) {
+    .fh-env__host { display: none; }
+    /* Phones: the bar keeps the environment and account; the scheme switch
+       moves out (it stays on the sign-in screen). */
+    .fh-app__bar-end > .fh-segmented { display: none; }
+  }
+
+  /* —— Environment selector, pill trigger (ADM-ENV --pill) ——
+   * The trigger built from the segmented eyebrow pill (EYE-5.2): live dot,
+   * the environment on the left, the host on the right, a chevron to say it
+   * opens. At rest only the dot and the environment show; hover, keyboard
+   * focus or an open menu reveals the host and chevron.
+   *   <button class="fh-eyebrow-pill fh-env-pill" data-fh-env="local" popovertarget="env">
+   *     <span class="fh-dot"></span>
+   *     <span class="fh-eyebrow-pill__seg"><strong>Local</strong></span>
+   *     <span class="fh-eyebrow-pill__seg fh-env-pill__host">helm.rascode.local</span>
+   *     <span class="fh-env-pill__chevron" aria-hidden="true"></span>
+   *   </button>
+   */
+  .fh-env-pill {
+    --fh-tone: var(--fh-env-tone);
+    gap: 0;
+    padding-inline-end: var(--fh-inset-control);
+    /* Etched: a dashed border in the environment's colour, no fill; the dot stays solid. */
+    border-style: dashed;
+    border-color: color-mix(in oklab, var(--fh-env-tone) 60%, transparent);
+    background-color: transparent;
+    cursor: var(--fh-cursor-action);
+    anchor-name: --fh-env;
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      padding var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > .fh-dot { margin-inline-end: var(--fh-gap-related); }
+
+    /* The parts that reveal: they collapse to nothing at rest. */
+    & > .fh-env-pill__host,
+    & > .fh-env-pill__chevron {
+      max-inline-size: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        max-inline-size var(--fh-duration-base) var(--fh-ease-standard),
+        opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        margin var(--fh-duration-base) var(--fh-ease-standard),
+        padding var(--fh-duration-base) var(--fh-ease-standard);
+    }
+
+    & > .fh-env-pill__host {
+      margin-inline-start: 0;
+      padding-inline-start: 0;
+      border-inline-start-color: transparent;
+      color: var(--fh-color-text-muted);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    & > .fh-env-pill__chevron {
+      flex: none;
+      inline-size: 0.7rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text-subtle);
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &:has(+ .fh-env-menu:popover-open) {
+      border-color: var(--fh-env-tone);
+
+      & > .fh-env-pill__host {
+        max-inline-size: 20rem;
+        margin-inline-start: var(--fh-gap-related);
+        padding-inline-start: var(--fh-inset-tight);
+        border-inline-start-color: var(--fh-color-etch);
+        opacity: 1;
+      }
+
+      & > .fh-env-pill__chevron {
+        max-inline-size: 0.7rem;
+        margin-inline-start: var(--fh-gap-related);
+        opacity: 1;
+      }
+    }
+
+    &:has(+ .fh-env-menu:popover-open) > .fh-env-pill__chevron { rotate: 180deg; }
+
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
+
+    &[data-fh-warn]::after {
+      content: attr(data-fh-warn);
+      margin-inline-start: var(--fh-gap-related);
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--fh-radius-pill);
+      background-color: var(--fh-tone-amber);
+      color: var(--fh-color-on-primary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &, & > * { transition: none; }
+    }
+  }
+
+  .fh-env-menu {
+    min-inline-size: 17rem;
+    position-anchor: --fh-env;
+
+    & > [data-fh-env] {
+      justify-content: flex-start;
+    }
+
+    & > a[data-fh-env]::before {
+      content: "";
+      flex: none;
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-env-tone);
+    }
+
+    & > a[aria-checked="true"] { font-weight: var(--fh-weight-medium); }
+
+    & small {
+      margin-inline-start: auto;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+    }
+  }
+
+  .fh-env-menu__data {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0.35rem 0.65rem 0.45rem;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+
+    & b {
+      color: var(--fh-env-tone);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+}

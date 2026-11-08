@@ -20,7 +20,7 @@ import { Button, Dialog, DialogTrigger, DialogContent, DropdownMenu, DropdownMen
 </Dialog>
 ```
 
-Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect.
+Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2).
 
 Themes:
 

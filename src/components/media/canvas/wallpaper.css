@@ -1,0 +1,161 @@
+/*
+ * Firehorse — Home screen wallpapers (WAL)
+ * components/media/canvas · layer fh.components · docs /media/#WAL
+ *
+ * A wallpaper drawn on the phone's own home-screen grid: the brand on icon
+ * row 1, the page title on row 2, an etched rule, then a dashed cell where
+ * each icon lands and the dock. Every length is native pixels and comes
+ * from the device preset below, so the art lines up with the launcher.
+ *
+ * Presets are ESTIMATES until measured on a device: screen sizes are
+ * official, the grid is derived from Apple's widget sizes (iPhone) or the
+ * launcher's usual padding (Pixel, Galaxy). To correct one, override its
+ * --fh-wall-* numbers; nothing else changes.
+ *
+ *   --fh-wall-side   workspace padding left/right (px)
+ *   --fh-wall-icon   icon size (px)
+ *   --fh-wall-top    top of the first icon row (px)
+ *   --fh-wall-row    row pitch, icon top to icon top (px)
+ *   --fh-wall-dock   top of the dock icons (px)
+ *   --fh-wall-cols / --fh-wall-rows / --fh-wall-band (rows the title takes)
+ */
+
+@layer fh.components {
+  .fh-canvas--wall {
+    --fh-wall-cols: 4;
+    --fh-wall-rows: 6;
+    --fh-wall-band: 2;
+    --fh-wall-radius: 0.225;
+    --fh-wall-scale: 1;
+    --_icon: calc(var(--fh-wall-icon) * var(--fh-wall-scale));
+    --_pitch: calc((var(--fh-canvas-w) - 2 * var(--fh-wall-side)) / var(--fh-wall-cols));
+    --_x: calc(var(--fh-wall-side) + (var(--_pitch) - var(--_icon)) / 2);
+    --fh-canvas-title: calc(var(--_icon) * 0.8);
+    --fh-canvas-small: calc(var(--_icon) * 0.15);
+    --fh-canvas-measure: none;
+    /* Lines are drawn about one point wide (3 px at @3x), so they read on the phone. */
+    --_hair: max(1px, calc(3 * var(--_u)));
+
+    /* A fixed image: flat fill, no glow, no frame (phone corners crop it). */
+    &::before { background: var(--_guide), var(--fh-canvas-art) center / cover no-repeat; background-color: var(--fh-color-canvas); }
+    &::after { content: none; }
+  }
+
+  /* —— Title band: brand on row 1, page title on row 2 —— */
+  .fh-canvas__band {
+    position: absolute;
+    inset-inline: calc(var(--_x) * var(--_u));
+    inset-block-start: calc(var(--fh-wall-top) * var(--_u));
+    z-index: 1;
+    display: grid;
+    grid-template-rows: repeat(2, calc(var(--_icon) * var(--_u)));
+    row-gap: calc((var(--fh-wall-row) - var(--_icon)) * var(--_u));
+    min-inline-size: 0;
+
+    & > .fh-canvas__top { flex-wrap: nowrap; align-self: center; }
+    & > .fh-canvas__title {
+      align-self: end;
+      overflow: hidden;
+      margin: 0;
+      line-height: 0.8;
+      white-space: nowrap;
+    }
+
+    /* Etched rule between the band and the icons, with a tone tick under column 1. */
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block-start: calc(100% + (var(--fh-wall-row) - var(--_icon)) / 2 * var(--_u));
+      pointer-events: none;
+    }
+    &::after {
+      inset-inline: calc((var(--fh-wall-side) - var(--_x)) * var(--_u));
+      border-block-start: var(--_hair) dashed var(--fh-color-etch);
+    }
+    &::before {
+      inset-inline-start: 0;
+      z-index: 1;
+      inline-size: calc(var(--_icon) * var(--_u));
+      block-size: max(2px, calc(var(--_icon) * 0.03 * var(--_u)));
+      margin-block-start: calc(var(--_icon) * -0.015 * var(--_u));
+      background-color: var(--fh-tone);
+    }
+  }
+
+  /* —— Icon cells and dock: one dashed cell per icon slot —— */
+  .fh-canvas__cells,
+  .fh-canvas__dock {
+    position: absolute;
+    inset-inline: calc(var(--fh-wall-side) * var(--_u));
+    display: grid;
+    grid-template-columns: repeat(var(--fh-wall-cols), minmax(0, 1fr));
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    pointer-events: none;
+
+    & > li {
+      justify-self: center;
+      inline-size: calc(var(--_icon) * var(--_u));
+      block-size: calc(var(--_icon) * var(--_u));
+      border: var(--_hair) dashed var(--fh-color-etch);
+      border-radius: calc(var(--_icon) * var(--fh-wall-radius) * var(--_u));
+    }
+  }
+
+  .fh-canvas__cells {
+    inset-block-start: calc((var(--fh-wall-top) + var(--fh-wall-band) * var(--fh-wall-row)) * var(--_u));
+    block-size: calc((var(--fh-wall-rows) - var(--fh-wall-band)) * var(--fh-wall-row) * var(--_u));
+    grid-auto-rows: calc(var(--fh-wall-row) * var(--_u));
+  }
+
+  .fh-canvas__dock {
+    inset-block-start: calc(var(--fh-wall-dock) * var(--_u));
+    block-size: calc(var(--_icon) * var(--_u));
+    grid-auto-rows: calc(var(--_icon) * var(--_u));
+  }
+
+  /* No cells: title band only. */
+  .fh-canvas--wall-clean .fh-canvas__cells,
+  .fh-canvas--wall-clean .fh-canvas__dock { display: none; }
+
+  /* —— Device presets (native px) —— */
+
+  /* iPhone 17, 17 Pro, 18 Pro — 6.3″, 402 × 874 pt @3x */
+  .fh-canvas--wall-iphone { --fh-canvas-w: 1206; --fh-canvas-h: 2622; --fh-canvas-safe-t: 186; --fh-wall-side: 54; --fh-wall-icon: 183; --fh-wall-top: 225; --fh-wall-row: 300; --fh-wall-dock: 2283; }
+  /* iPhone 15, 15 Pro, 16 — 6.1″, 393 × 852 pt @3x */
+  .fh-canvas--wall-iphone-61 { --fh-canvas-w: 1179; --fh-canvas-h: 2556; --fh-canvas-safe-t: 177; --fh-wall-side: 49.5; --fh-wall-icon: 180; --fh-wall-top: 216; --fh-wall-row: 294; --fh-wall-dock: 2220; }
+  /* iPhone Air — 6.5″, 420 × 912 pt @3x */
+  .fh-canvas--wall-iphone-air { --fh-canvas-w: 1260; --fh-canvas-h: 2736; --fh-canvas-safe-t: 204; --fh-wall-side: 60; --fh-wall-icon: 190.5; --fh-wall-top: 231; --fh-wall-row: 310.5; --fh-wall-dock: 2389.5; }
+  /* iPhone 17 Pro Max, 18 Pro Max — 6.9″, 440 × 956 pt @3x */
+  .fh-canvas--wall-iphone-max { --fh-canvas-w: 1320; --fh-canvas-h: 2868; --fh-canvas-safe-t: 186; --fh-wall-side: 66; --fh-wall-icon: 193.5; --fh-wall-top: 225; --fh-wall-row: 325.5; --fh-wall-dock: 2518.5; }
+
+  /* Android: 4 × 5 by default; --wall-5x5 for the denser grid. Row 1 holds
+   * At a Glance (Pixel) or nothing (Galaxy): remove it to free the band. */
+  .fh-canvas--wall-pixel,
+  .fh-canvas--wall-pixel-xl,
+  .fh-canvas--wall-galaxy,
+  .fh-canvas--wall-galaxy-qhd { --fh-wall-rows: 5; --fh-wall-radius: 0.5; }
+  .fh-canvas--wall-galaxy,
+  .fh-canvas--wall-galaxy-qhd { --fh-wall-radius: 0.3; }
+  /* Pixel 11 Pro (and 10 Pro) — 1280 × 2856 */
+  .fh-canvas--wall-pixel { --fh-canvas-w: 1280; --fh-canvas-h: 2856; --fh-canvas-safe-t: 150; --fh-wall-side: 50; --fh-wall-icon: 174; --fh-wall-top: 252; --fh-wall-row: 403; --fh-wall-dock: 2308; }
+  /* Pixel 11 Pro XL (and 10 Pro XL) — 1344 × 2992 */
+  .fh-canvas--wall-pixel-xl { --fh-canvas-w: 1344; --fh-canvas-h: 2992; --fh-canvas-safe-t: 157; --fh-wall-side: 52; --fh-wall-icon: 183; --fh-wall-top: 264; --fh-wall-row: 422; --fh-wall-dock: 2417; }
+  /* Galaxy S26, S25 — 1080 × 2340 */
+  .fh-canvas--wall-galaxy { --fh-canvas-w: 1080; --fh-canvas-h: 2340; --fh-canvas-safe-t: 90; --fh-wall-side: 56; --fh-wall-icon: 158; --fh-wall-top: 173; --fh-wall-row: 346; --fh-wall-dock: 1986; }
+  /* Galaxy S26+ / Ultra, S25+ / Ultra at QHD+ — 1440 × 3120 */
+  .fh-canvas--wall-galaxy-qhd { --fh-canvas-w: 1440; --fh-canvas-h: 3120; --fh-canvas-safe-t: 120; --fh-wall-side: 75; --fh-wall-icon: 210; --fh-wall-top: 231; --fh-wall-row: 461; --fh-wall-dock: 2648; }
+
+  .fh-canvas--wall-5x5 { --fh-wall-cols: 5; --fh-wall-scale: 0.86; }
+
+  /* —— Guides: status bar, and the title band against its two icon rows —— */
+  .fh-canvas--wall[data-fh-guides] {
+    --_guide-fill: color-mix(in oklab, var(--fh-color-warning) 18%, transparent);
+    --_guide: linear-gradient(var(--_guide-fill) 0 0) top / 100% calc(var(--fh-canvas-safe-t) * var(--_u)) no-repeat;
+
+    & .fh-canvas__band { outline: max(1px, calc(2 * var(--_u))) dashed var(--fh-color-warning); }
+  }
+}

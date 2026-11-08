@@ -1,0 +1,155 @@
+/*
+ * Firehorse — Pricing tiers (TIR)
+ * components/content · layer fh.components · docs /components/content/#TIR
+ */
+
+@layer fh.components {
+  /* —— Pricing tiers ——
+   * One etched sheet: the tiers share dashed rules (like the stats strip),
+   * each is numbered 01, 02… and carries a rule in its tone along the top.
+   * The price block sits over an edge-to-edge dashed baseline, features run
+   * one per row between full-width rules with a bare tone check, and the
+   * featured tier gets a tone wash, a tone outline, a heavier top rule and
+   * its tag on the name line.
+   *   <div class="fh-tiers">
+   *     <article class="fh-tier" data-tone="sky" data-featured="Most picked">
+   *       <header><p class="fh-tier__name">Agent</p><p class="fh-tier__price"><b>$1,695</b>/mo</p>
+   *         <p class="fh-tier__note">3-day free trial</p></header>
+   *       <p class="fh-tier__pitch">…</p>
+   *       <ul class="fh-checklist" data-tone>…</ul>
+   *       <a class="fh-button fh-button--block">Start trial</a>
+   *     </article>
+   *   </div>
+   * Knob: --fh-tier-pad (the tier's side padding; rules run past it). */
+  .fh-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 0;
+    align-items: stretch;
+    counter-reset: fh-tier;
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+  }
+
+  .fh-tier {
+    --_pad: var(--fh-tier-pad, var(--fh-inset-card));
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--fh-gap-sectioned);
+    padding: var(--fh-inset-card) var(--_pad) var(--fh-inset-card);
+    border: 0;
+    border-radius: 0;
+    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    counter-increment: fh-tier;
+    container: fh-tier / inline-size;
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    /* The tone rule along the top edge. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -1px 0 auto;
+      block-size: 2px;
+      background-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      pointer-events: none;
+    }
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-tone) 3%, transparent); }
+
+    & > header {
+      display: grid;
+      gap: var(--fh-gap-related);
+    }
+
+    /* The price block's baseline runs edge to edge. */
+    & > header,
+    & > .fh-tier__price {
+      margin-inline: calc(var(--_pad) * -1);
+      padding-inline: var(--_pad);
+      padding-block-end: var(--fh-inset-card);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & > header > .fh-tier__price { margin-inline: 0; padding: 0; border: 0; }
+
+    & > .fh-button,
+    & > .fh-tier__actions {
+      margin-block-start: auto;
+    }
+
+    &:is([data-featured], .fh-tier--featured) {
+      background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-tone) 45%, transparent);
+
+      &::after { block-size: 3px; background-color: var(--fh-tone); }
+    }
+
+    /* data-featured="Most picked": the tag on the name line, at the right. */
+    &[data-featured]::before {
+      content: attr(data-featured);
+      position: absolute;
+      inset-block-start: calc(var(--fh-gap-sectioned) - 0.1rem);
+      inset-inline-end: var(--_pad);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--fh-radius-pill);
+      background-color: var(--fh-tone);
+      color: var(--fh-color-on-tone);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+
+    &[data-featured=""]::before {
+      content: "Popular";
+    }
+  }
+
+  .fh-tier__name {
+    display: flex;
+    align-items: baseline;
+    gap: var(--fh-gap-related);
+    margin: 0;
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    &::before {
+      content: counter(fh-tier, decimal-leading-zero);
+      color: var(--fh-color-text-subtle);
+    }
+  }
+
+  .fh-tier__price {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+
+    & > b {
+      margin-inline-end: 0.15em;
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-figure);
+      font-size: clamp(2.3rem, 1.5rem + 4cqi, 2.9rem);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: -0.045em;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .fh-tier__note {
+    margin: 0;
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+}

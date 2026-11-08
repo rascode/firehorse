@@ -1,0 +1,232 @@
+/*
+ * Firehorse — Card (CAT)
+ * components/content · layer fh.components · docs /components/content/#CAT
+ */
+
+@layer fh.components {
+  /* —— Card ——
+   * The Firehorse catalog card: dashed etched cell, tone-colored meta,
+   * whole-card link, price + action footer.
+   *
+   *   <article class="fh-card" data-tone="teal">
+   *     <p class="fh-card__meta">Data architecture</p>
+   *     <h3 class="fh-card__title"><a href="…">Schema design</a></h3>
+   *     <p class="fh-card__body">…</p>
+   *     <footer class="fh-card__footer">
+   *       <p class="fh-card__price"><span>From</span> <b>$1,250</b></p>
+   *       <span class="fh-action" data-tone>View</span>
+   *     </footer>
+   *   </article>
+   *
+   * The title link stretches over the card; other links stay clickable.
+   */
+  .fh-card {
+    --_pad-b: clamp(var(--fh-gap-sectioned), 4cqi, var(--fh-gap-sectioned));
+    --_pad-i: clamp(var(--fh-gap-grouped-wide), 4cqi, var(--fh-gap-sectioned));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100%;
+    padding: var(--_pad-b) var(--_pad-i);
+    /* Every visual decision is a config token (tokens/config.css):
+     * set data-fh-card on <html> and every card follows. */
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-card-radius, var(--fh-radius-none));
+    background-color: var(--fh-card-bg, transparent);
+    box-shadow: var(--fh-card-shadow, none);
+    backdrop-filter: var(--fh-card-backdrop, none);
+    container: fh-card / inline-size;
+    transition: background-color var(--fh-duration-base) var(--fh-ease-standard), box-shadow var(--fh-duration-base) var(--fh-ease-standard);
+
+    &:has(.fh-card__title a:hover, .fh-card__title a:focus-visible) {
+      background-color: color-mix(in oklab, var(--fh-tone) 9%, transparent);
+    }
+
+    &:has(.fh-card__title a:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  /* Cards inside a ruled grid drop their own border: the grid draws it. */
+  .fh-grid--ruled > .fh-card {
+    border-block-start: 0;
+    border-inline-start: 0;
+  }
+
+  .fh-card--solid {
+    --fh-card-border-style: solid;
+    --fh-card-border-color: var(--fh-color-rule);
+    --fh-card-bg: var(--fh-color-surface);
+  }
+
+  /* Media: an image (or any art) flush to the card's top edge.
+   *   <article class="fh-card"><figure class="fh-card__media"><img …></figure>…</article>
+   * Ratio follows --fh-card-media-ratio / data-fh-card-media. */
+  .fh-card__media {
+    position: relative;
+    margin: calc(var(--_pad-b) * -1) calc(var(--_pad-i) * -1) var(--fh-gap-grouped-wide);
+    aspect-ratio: var(--fh-card-media-ratio, 16 / 9);
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    background-color: var(--fh-color-surface-sunken);
+
+    & > :is(img, video, svg) {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* Cover: the media fills the card and the content sits on a scrim. */
+  .fh-card--cover {
+    --fh-card-border-style: solid;
+    --fh-card-border-color: transparent;
+    justify-content: flex-end;
+    min-block-size: max(100%, 18rem);
+    overflow: hidden;
+    color: var(--fh-color-on-media);
+    isolation: isolate;
+
+    & .fh-card__media {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      margin: 0;
+      aspect-ratio: auto;
+      border-radius: inherit;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        display: var(--fh-card-content-scrim, block);
+        background: linear-gradient(180deg, transparent 30%, var(--fh-color-scrim));
+      }
+    }
+
+    & .fh-card__body { color: color-mix(in oklab, currentColor 80%, transparent); }
+    & .fh-card__content { flex-grow: 0; }
+  }
+
+  /* Content: an optional wrapper for everything but the media. On its own
+   * it changes nothing; with data-fh-card-content="frost" it becomes a pane
+   * of frosted glass over the card's art (tokens/config.css).
+   *   <article class="fh-card fh-card--cover" data-fh-card-content="frost">
+   *     <figure class="fh-card__media"><img …></figure>
+   *     <div class="fh-card__content"><p class="fh-card__meta">…</p><h3 class="fh-card__title">…</h3>…</div>
+   *   </article> */
+  .fh-card__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    /* With a pane, it reaches out to --fh-card-content-inset from the card's edge. */
+    margin: calc(var(--fh-card-content-inset, var(--_pad-b)) - var(--_pad-b)) calc(var(--fh-card-content-inset, var(--_pad-i)) - var(--_pad-i));
+    padding: var(--fh-card-content-pad, 0);
+    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border-radius: var(--fh-card-content-radius, 0);
+    background-color: var(--fh-card-content-bg, transparent);
+    backdrop-filter: var(--fh-card-content-backdrop, none);
+  }
+  .fh-card__media + .fh-card__content { margin-block-start: 0; }
+
+  .fh-card__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    margin: 0 0 var(--fh-gap-grouped);
+    color: var(--fh-tone);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    line-height: 1;
+    text-transform: uppercase;
+
+    & svg {
+      inline-size: 0.72rem;
+      block-size: 0.72rem;
+    }
+  }
+
+  .fh-card__title {
+    margin: 0;
+    font-size: var(--fh-text-h4);
+    font-weight: var(--fh-subheading-weight);
+    letter-spacing: var(--fh-tracking-heading);
+    line-height: var(--fh-leading-heading);
+
+    & a {
+      color: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  .fh-card__body {
+    margin: var(--fh-gap-grouped) 0 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-body);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
+    margin-block-start: auto;
+    padding-block-start: var(--fh-inset-card);
+
+    /* Interactive footer content sits above the stretched link. */
+    & :is(a, button) {
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+  .fh-card__price {
+    display: grid;
+    gap: var(--fh-gap-bound);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    line-height: var(--fh-leading-heading);
+    text-transform: uppercase;
+
+    & :is(b, strong) {
+      color: var(--fh-tone);
+      font-size: var(--fh-text-body);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: 0.01em;
+      text-transform: none;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  /* On a narrow card, the footer stacks. */
+  @container fh-card (inline-size < 17rem) {
+    .fh-card__footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+}

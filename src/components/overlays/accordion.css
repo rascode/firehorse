@@ -1,0 +1,87 @@
+/*
+ * Firehorse — Accordion (ACC)
+ * components/overlays · layer fh.components · docs /components/overlays/#ACC
+ */
+
+@layer fh.components {
+  /* —— Accordion ——
+   * One rounded, etched shell with dashed row rules (iOS cell group).
+   *   <div class="fh-accordion">
+   *     <details name="faq"><summary>Question?</summary><div>Answer</div></details>
+   *   </div>
+   * Use the same `name` on each <details> for exclusive open. */
+  .fh-accordion {
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-lg);
+    overflow: hidden;
+
+    & > details + details {
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+
+    & summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-gap-sectioned);
+      padding: var(--fh-inset-card) clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card));
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-body);
+      font-weight: var(--fh-weight-semibold);
+      letter-spacing: var(--fh-tracking-heading);
+      line-height: var(--fh-leading-normal);
+      list-style: none;
+      cursor: var(--fh-cursor-action);
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      /* plus → × */
+      &::after {
+        content: "";
+        flex: none;
+        inline-size: 1.9rem;
+        aspect-ratio: 1;
+        border: var(--fh-border-thick) solid color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+        border-radius: var(--fh-radius-pill);
+        background:
+          linear-gradient(currentColor, currentColor) center / 0.75rem 1.5px no-repeat,
+          linear-gradient(currentColor, currentColor) center / 1.5px 0.75rem no-repeat;
+        transition:
+          rotate var(--fh-duration-base) var(--fh-ease-standard),
+          border-color var(--fh-duration-fast) var(--fh-ease-standard);
+      }
+
+      &:focus-visible {
+        outline-offset: -2px;
+      }
+    }
+
+    & details[open] > summary::after {
+      rotate: 45deg;
+      border-color: color-mix(in oklab, var(--fh-color-text) 45%, transparent);
+    }
+
+    & details > :not(summary) {
+      padding: 0 clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card)) var(--fh-inset-card);
+      max-inline-size: var(--fh-measure);
+      color: var(--fh-color-text-muted);
+      line-height: var(--fh-leading-relaxed);
+    }
+
+    /* Smooth height where the browser supports it. */
+    & details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size var(--fh-duration-base) var(--fh-ease-out),
+        content-visibility var(--fh-duration-base) allow-discrete;
+    }
+
+    & details[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+}

@@ -55,7 +55,7 @@ Browser floor for the default build: Chrome/Edge 123, Firefox 128, Safari 17.5.
 ## Priority order when making a decision
 
 1. Accessibility and keyboard behavior
-2. An existing `fh-*` component or pattern (see components.md)
+2. An existing `fh-*` component or design pattern (see components.md)
 3. Layout primitives (`fh-stack`, `fh-cluster`, `fh-grid`, `fh-split`)
 4. Semantic tokens
 5. New CSS (last resort, and only with tokens)
@@ -63,6 +63,12 @@ Browser floor for the default build: Chrome/Edge 123, Firefox 128, Safari 17.5.
 ## Page skeleton
 
 ```html
+<head>
+  …
+  <!-- Required: the design system this page is built on (audits and agents read it). -->
+  <meta name="design-system" content="firehorse@1.1.0">
+  <link rel="design-system" href="https://firehorse.rascode.dev/index.json">
+</head>
 <body>
   <a class="fh-skip" href="#main">Skip to content</a>
   <div class="fh-page">
@@ -128,23 +134,41 @@ same height.
 
 ## The Firehorse Index (IDs)
 
-Every component family and variant has a stable ID: three letters for the
-family (`CHP` chips, `TIR` pricing tiers, `DTB` datatable), plus a two-digit
-number for a variant (`CHP-03` filled chip with icon). When a person names an
+Every component family, group and variant has a stable ID: three letters for
+the family (`CHP` chips, `TIR` pricing tiers, `DTB` datatable), a number for a
+group of related variants (`CHP-1` chip kinds), and a dot for a variant in that
+group (`CHP-1.3` filled chip with icon). Variants that share the number before
+the dot are siblings. Retired IDs forward to their replacement under "Former
+IDs" in [index.md](index.md); use the new one. When a person names an
 ID, look it up in [index.md](index.md) (or `index.json`) and use that markup
 exactly: same classes and structure, new content. Never invent an ID; if one
 isn't listed, say so. When you describe what you built, cite the IDs you used.
 KC (the Firehorse guide, [kc.md](kc.md)) turns plain descriptions into IDs.
 
-## Patterns (page layouts)
+### data-fh: the reference on the page
 
-Patterns are whole page layouts with an ID, like components (named for the parts
-of a saddle; Firehorse is the horse, themes are the saddles, patterns are the trees): `FND` Fender,
+Every component root you ship carries `data-fh="<ID>"`: the variant when you
+know it (`data-fh="EYE-5.2"`), else the group or family (`data-fh="BTN"`).
+The markup in index.md and components.md already has it; keep it when you copy
+or adapt a block. Parts (`fh-card__title`), layout primitives (`fh-stack`,
+`fh-grid`) and utilities need none. Something you had to build that Firehorse
+doesn't have gets `data-fh="local:<name>"`, never an invented ID: that marks it
+as deliberate custom work and puts it on the list of components to add.
+
+Check a page with `npx firehorse-audit <file | folder | url>`. It reports
+untagged component roots (and names their ID), tags that disagree with their
+classes, retired or unknown IDs, and elements that aren't connected to
+Firehorse at all. `--fix` writes the missing tags; `--json` is for you.
+
+## Design patterns (page layouts)
+
+Design patterns are whole page layouts with an ID, like components (named for the parts
+of a saddle; Firehorse is the horse, themes are the saddles, design patterns are the trees): `FND` Fender,
 `CIN` Cinch, built from blocks such as `PNL` offset panel and `ESP` etched split.
 Each has a spec in [patterns.md](patterns.md): what it's built from, what to
 **keep** (the fit: never change these), what to **change freely** (theme,
 tones, content, the listed knobs) and how it behaves on phones. When a person
-names a pattern, build that composition with its markup and keep every Keep rule.
+names a design pattern, build that composition with its markup and keep every Keep rule.
 
 ## Floating bar (dock)
 
@@ -167,21 +191,36 @@ using the section's real number.
 
 ## Motion
 
-Motion is a layer you opt into. All of it sits under
-`prefers-reduced-motion: no-preference` and uses `--fh-ease-out`,
-`--fh-ease-in-out` and the `--fh-duration-*` tokens.
-- Flip: wrap link and button labels in `<span class="fh-roll">`; the label rolls on
-  hover/focus. Use it on every menu link, nav link, chip and button label.
-- Rollover heading: `.fh-rollover` + `.fh-rollover__item`; forward rolls up, back
-  rolls down. `Firehorse.rollover(el, html, "up"|"down")`, or
-  `data-fh-rollover="sections"` to follow `[data-fh-label]` sections.
-- Reveal: `fh-reveal` (+ `--fade|--scale|--left|--right|--blur`), or `fh-reveal-children`.
-  Scroll-driven (`animation-timeline: view()`), no script. Use on a few key
-  elements, not every card: on long pages each one costs a frame of work.
-- Parallax `fh-parallax` (`--fh-depth`), page progress `fh-scroll-progress`.
-- The enhancer pauses time-based loops in off-screen sections and handles in-page
-  links (smooth for short jumps, cut-and-glide for long ones, focus moves to the
-  target). Never move layout in an animation; never animate width/height.
+Firehorse isn't just a site; it is a system, and motion is part of the contract. Anything a
+visitor sees move on a Firehorse site is a named piece with an Index ID (MOT, on
+https://firehorse.rascode.dev/motion/). Build motion from these pieces; never write your own
+keyframes, milliseconds or curves.
+- Tokens: `--fh-duration-instant|fast|base|slow|enter|reveal|intro|scene`, `--fh-ease-out`,
+  `--fh-ease-in-out`, `--fh-ease-expo-out`, `--fh-ease-spring`, `--fh-ease-glide`, `--fh-ease-in`,
+  `--fh-intro-beat` (150ms), `--fh-stagger` (60ms), `--fh-motion-rise`, `--fh-recede-to`.
+- Entrances (MOT-1): `data-fh-enter="rise|drop|fade|scale|blur|fold|draw|wipe|unveil|lift"`.
+  Order with `data-fh-step="n"` (n × beat) or `style="--fh-at: 1.1s"`.
+- Sequences (MOT-2): `data-fh-intro` on the section that owns the order;
+  `data-fh-enter-children` staggers a list. Intros run only once `<html>` has `fh-js` and hold
+  until `fh-ready`; put this in `<head>`:
+  `<script>(d=>{d.classList.add("fh-js");setTimeout(()=>d.classList.add("fh-ready"),2e3)})(document.documentElement)</script>`
+- Scroll-linked (MOT-3, CSS only): `fh-recede` (full-window art steps back, set
+  `--fh-recede-range`), `fh-scroll-fade`, `fh-reveal` (+ `--fade|--scale|--left|--right|--blur`)
+  or `fh-reveal-children`, `fh-parallax` (`--fh-depth`), `fh-scroll-progress`. Use reveals on a few
+  key elements, not every card.
+- Choreography (MOT-4, the enhancer): `Firehorse.reveal(change, fromEl)` opens a look change as
+  a circle from the control (free); `data-fh-glide="center"` hands a nav from its place to a
+  centred pill on scroll (free); `data-fh-lock` rides an element up and locks it on a line
+  (`data-fh-lock-to`, `-align`, `-scale`, `-origin`, `="clone"` + `-href` for a logo) (free);
+  `data-fh-dock-beside` slides an element beside a lock (Pro). The first lock shares `--fh-lock`.
+- Drift (MOT-5, `drift.js`): a photo shows a set share at a time under a soft veil.
+  `createDrift(canvas)`, `setPhoto(img, pos, lift, { fit })`, `setStyle("wave|silk|eddy|panels|ripple")`
+  (free; `dapple|tides|shutters` are Pro), `setShare(0–1)`.
+- Rules: everything under `prefers-reduced-motion: no-preference`; content is never parked
+  hidden (no script = visible); transform, opacity, clip and mask only, never layout; one owner
+  per sequence; scroll-linked motion runs on the scroll timeline, script only measures; no live
+  blur on large or fixed surfaces. Word rolls: `fh-roll` on link and button labels; rollover
+  headings: `.fh-rollover`.
 
 ## Optional enhancer
 
@@ -196,7 +235,7 @@ Never make content depend on it.
 ## Themes (decide once)
 
 A theme is every design decision in one attribute: type, color in light and
-dark, radius, density, and the avatar, card, card-media, button, chip and table
+dark, radius, density, and the avatar, card, card-media, card-content, button, chip and table
 styles. Put it on `<html>`:
 
 ```html
@@ -280,7 +319,7 @@ set the color and add `data-fh-surface`; never hand-pick text colors for it:
 - Audio: `fh-player` (wrap a real `<audio controls>`; it stays as the no-JS fallback),
   `fh-play` (+ `--sm|--lg|--solid`, `aria-pressed` = playing), `fh-wave` (`data-peaks`,
   `data-fh-wave-style="mirror|bottom|line"`), `fh-scrub`, `fh-volume`, `fh-audio-btn`,
-  `fh-eq`, `fh-tracks` + `fh-track`, `fh-captions`, `fh-reel`, `fh-mixer` + `fh-channel`,
+  `fh-eq`, `fh-tracks` + `fh-track`, `fh-captions`, `fh-line-reel`, `fh-mixer` + `fh-channel`,
   `fh-meter-level`, `fh-params` + `fh-param`, `fh-stages`. Load `@rascode/firehorse/audio`
   to wire them; it sets `--p` (progress) and `--level` (live level). Use `data-fh-play`,
   `data-fh-wave`, `data-fh-time`, `data-fh-duration`, `data-fh-volume`, `data-fh-mute`,
@@ -315,6 +354,8 @@ chrome yourself from these rules.
 - [ ] No hex / rgb / px spacing in your CSS
 - [ ] No viewport-width media queries
 - [ ] Every class is `fh-*` (or your own app-prefixed class with token-only values)
+- [ ] `<head>` declares the design system (`<meta name="design-system">` and `<link rel="design-system">`)
+- [ ] Every component root has `data-fh`; custom blocks are `data-fh="local:<name>"`; `npx firehorse-audit` is clean
 - [ ] One accent per view
 - [ ] Narrow the container to ~320px: nothing overflows
 - [ ] Tab through: every control shows focus

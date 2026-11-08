@@ -1,0 +1,201 @@
+/*
+ * Firehorse — Dictation field (FLD-2)
+ * components/forms · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Dictation field (FLD-2) ——
+   * A free-text field you can type into or talk into. The label and a
+   * small Text | Transcribe switch share the first row (the label stays a
+   * direct child, so its Required / Optional chip still works). While
+   * transcribing, a live caption under the box shows a waveform, the
+   * clock and the words being heard. Progressive: without the switch it
+   * is a plain textarea. dist/firehorse.js wires any [data-fh-dictate]
+   * field to the browser's speech recognition; React and other apps can
+   * drive the same markup themselves (aria-pressed, data-listening).
+   *
+   *   <div class="fh-field fh-field--dictate" data-fh-dictate>
+   *     <label for="msg">Message</label>
+   *     <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+   *       <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
+   *       <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
+   *     </div>
+   *     <textarea class="fh-textarea" id="msg"></textarea>
+   *     <p class="fh-dictate__live" role="status" hidden>
+   *       <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+   *       <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+   *       <span class="fh-dictate__interim"></span>
+   *     </p>
+   *     <p class="fh-dictate__error" role="alert" hidden></p>
+   *   </div> */
+  .fh-field--dictate {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+
+    & > label {
+      grid-column: 1;
+    }
+
+    & > .fh-dictate {
+      grid-column: 2;
+      justify-self: end;
+    }
+
+    & > :not(label, .fh-dictate) {
+      grid-column: 1 / -1;
+    }
+
+    &[data-listening] .fh-textarea {
+      border-color: color-mix(in oklab, var(--fh-color-danger) 55%, transparent);
+    }
+  }
+
+  .fh-dictate {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .fh-dictate__mode {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    padding: 0.3rem 0.65rem;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: var(--fh-cursor-action);
+    transition:
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      color var(--fh-duration-base) var(--fh-ease-standard);
+
+    &:hover {
+      color: var(--fh-color-text);
+    }
+
+    &[aria-pressed="true"] {
+      background-color: var(--fh-color-primary);
+      color: var(--fh-color-on-primary);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    & > svg,
+    & > .fh-icon {
+      inline-size: 0.8rem;
+      block-size: 0.8rem;
+    }
+  }
+
+  /* Recording: a red dot and the clock ride the Transcribe button. */
+  .fh-field--dictate[data-listening] .fh-dictate__mode[data-mode="voice"]::after {
+    content: "";
+    inline-size: 0.4rem;
+    aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
+    background-color: var(--fh-color-danger);
+    animation: fh-dictate-blink 1.2s ease-in-out infinite;
+  }
+
+  .fh-dictate__live {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .fh-dictate__clock {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-dictate__interim {
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-caption);
+    font-style: italic;
+    letter-spacing: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-dictate__wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    block-size: 0.9rem;
+
+    & > i {
+      inline-size: 2px;
+      block-size: 30%;
+      border-radius: 1px;
+      background-color: var(--fh-color-danger);
+      animation: fh-dictate-wave 0.9s ease-in-out infinite;
+    }
+
+    & > i:nth-child(2) { animation-delay: -0.15s; }
+    & > i:nth-child(3) { animation-delay: -0.3s; }
+    & > i:nth-child(4) { animation-delay: -0.45s; }
+    & > i:nth-child(5) { animation-delay: -0.6s; }
+  }
+
+  .fh-dictate__error {
+    margin: 0;
+    color: var(--fh-color-danger);
+    font-size: var(--fh-text-caption);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  @keyframes fh-dictate-wave {
+    0%, 100% { block-size: 25%; }
+    50% { block-size: 100%; }
+  }
+
+  @keyframes fh-dictate-blink {
+    50% { opacity: 0.25; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-dictate__wave > i,
+    .fh-field--dictate[data-listening] .fh-dictate__mode[data-mode="voice"]::after {
+      animation: none;
+    }
+
+    .fh-dictate__wave > i:nth-child(odd) { block-size: 70%; }
+  }
+}

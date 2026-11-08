@@ -1,0 +1,125 @@
+/*
+ * Firehorse — Balance (BAL)
+ * components/finance · layer fh.components · docs /finance/#BAL
+ *
+ *   <section class="fh-balance" data-tone="teal">
+ *     <p class="fh-balance__label">Total balance</p>
+ *     <p class="fh-balance__figure"><span class="fh-balance__currency">$</span>48,210<span class="fh-balance__cents">.33</span></p>
+ *     <dl class="fh-balance__meta"><div><dt>Available</dt><dd>$41,005.10</dd></div> …</dl>
+ *     <div class="fh-balance__split" role="img" aria-label="Business 62%, Personal 38%">
+ *       <span style="--fh-share: 62%" data-tone="amber"></span><span style="--fh-share: 38%" data-tone="sky"></span>
+ *     </div>
+ *     <ul class="fh-balance__legend"><li data-tone="amber"><span>Business</span><b>$29,890.40</b></li> …</ul>
+ *   </section>
+ */
+@layer fh.components {
+  .fh-balance {
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-card);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 2.5%, transparent);
+    container-type: inline-size;
+  }
+
+  .fh-balance__label,
+  .fh-balance__meta dt,
+  .fh-balance__legend span {
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-balance__figure {
+    margin: 0;
+    font-family: var(--fh-font-figure);
+    font-size: clamp(var(--fh-text-stat), 9cqi, var(--fh-text-display));
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-tightest);
+    line-height: var(--fh-leading-none);
+    font-variant-numeric: tabular-nums;
+    color: var(--fh-color-text);
+
+    &[data-flow="owed"] { color: var(--fh-color-danger); }
+  }
+
+  .fh-balance__currency,
+  .fh-balance__cents {
+    font-size: 0.5em;
+    vertical-align: 0.7em;
+    color: var(--fh-color-text-muted);
+  }
+  .fh-balance__cents { vertical-align: baseline; }
+
+  .fh-balance__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    margin: 0;
+
+    & > div { display: grid; gap: var(--fh-gap-bound); }
+    & dd {
+      margin: 0;
+      font-family: var(--fh-font-figure);
+      font-size: var(--fh-text-large);
+      font-variant-numeric: tabular-nums;
+    }
+    & [data-status="pending"] dd { color: var(--fh-color-warning); }
+    & [data-status="declined"] dd { color: var(--fh-color-danger); }
+  }
+
+  /* Share bar: one segment per span, width from --fh-share. */
+  .fh-balance__split {
+    display: flex;
+    gap: 2px;
+    block-size: var(--fh-gap-related);
+    border-radius: var(--fh-radius-pill);
+    overflow: hidden;
+
+    & > span {
+      flex: 0 0 var(--fh-share, 0%);
+      min-inline-size: 2px;
+      background-color: var(--fh-tone, var(--fh-color-etch-soft));
+    }
+  }
+
+  .fh-balance__legend {
+    display: grid;
+    gap: var(--fh-gap-related);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & li {
+      display: flex;
+      align-items: baseline;
+      gap: var(--fh-gap-related);
+      padding-block-end: var(--fh-inset-tight);
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    }
+    & li::before {
+      content: "";
+      flex: none;
+      inline-size: var(--fh-gap-related);
+      block-size: var(--fh-gap-related);
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone, var(--fh-color-etch-soft));
+    }
+    & b {
+      margin-inline-start: auto;
+      font-family: var(--fh-font-figure);
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+    }
+    & li[data-flow="owed"] b { color: var(--fh-color-danger); }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-balance__legend { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); column-gap: var(--fh-gap-sectioned); }
+  }
+}

@@ -1,0 +1,448 @@
+/*
+ * Firehorse — Entity picker (ENT)
+ * components/forms · layer fh.components · docs /forms/#ENT
+ */
+
+@layer fh.components {
+  /* —— Entity picker: choose an account, person, client or project ——
+   * A field whose value is a thing with an identity. The trigger is an
+   * entity row (avatar, an etched separator, name and a second line, a
+   * stat, then the chevron); the list is a popover of the same rows in
+   * groups, so every option looks like the selected one. The options are
+   * real radios: they submit with the form and arrow keys move between
+   * them with no JavaScript. firehorse.js mirrors the pick into the
+   * trigger, closes the list and fires fh:entity.
+   *
+   *   <div class="fh-field">
+   *     <span class="fh-field__label" id="acct-l">Account</span>
+   *     <div class="fh-entity-picker" data-fh-entity>
+   *       <button class="fh-entity" type="button" popovertarget="acct" aria-haspopup="listbox"
+   *               aria-labelledby="acct-l acct-v" style="anchor-name: --acct">
+   *         <span class="fh-entity__value" id="acct-v">
+   *           <span class="fh-avatar fh-avatar--circle" data-tone="sky">NS</span>
+   *           <span class="fh-entity__sep"></span>
+   *           <span class="fh-entity__who"><b>Northwind Studio</b><small>Owner · 4 seats</small></span>
+   *           <span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span>
+   *         </span>
+   *       </button>
+   *       <div class="fh-entity-picker__list" id="acct" popover role="listbox" aria-labelledby="acct-l" style="position-anchor: --acct">
+   *         <fieldset class="fh-entity-picker__group"><legend>Workspaces</legend>
+   *           <label class="fh-entity"><input type="radio" name="account" value="northwind" checked>
+   *             …the same parts…
+   *           </label>
+   *         </fieldset>
+   *       </div>
+   *     </div>
+   *   </div>
+   *
+   * Shape: default (field fill, like fh-select), --rounded (pill with an edge), --etched
+   * (dashed etch, no fill). Content is whatever parts you put in the row:
+   * leave out the avatar and separator for a text-only picker, or just
+   * the separator for avatar and name with no line between; the stat is
+   * any figure for the use case (open actions, unread, balance, seats);
+   * fh-entity__stat--count draws it as a toned counter; fh-entity__meter
+   * is a small progress bar with its figure (a share: ownership, quota).
+   * Knobs: --fh-entity-avatar, --fh-entity-radius, --fh-entity-list-width. */
+  .fh-entity-picker {
+    --fh-entity-avatar: 1.9rem;
+    --fh-entity-radius: var(--fh-radius-sm);
+    /* Lines inside the picker (separator, stat edge, group rules) are etched. */
+    --_line: dashed;
+    position: relative;
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  /* The row: shared by the trigger and every option. */
+  .fh-entity {
+    --fh-avatar-size: var(--fh-entity-avatar, 1.9rem);
+    display: flex;
+    align-items: center;
+    gap: var(--fh-item-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 2.5rem;
+    padding: var(--fh-gap-bound) var(--fh-item-inline) var(--fh-gap-bound) var(--fh-gap-bound);
+    border: var(--fh-border-thin) solid transparent;
+    border-radius: var(--fh-entity-radius, var(--fh-radius-sm));
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      box-shadow var(--fh-duration-fast) var(--fh-ease-standard);
+
+    /* Text only: no avatar, so the row starts with the name. */
+    &:not(:has(.fh-avatar)) { padding-inline-start: var(--fh-item-inline); }
+
+    & .fh-avatar { flex: none; }
+  }
+
+  .fh-entity__value {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: inherit;
+    min-inline-size: 0;
+  }
+
+  /* The etch line between the avatar and the name. */
+  /* The separator is an etched arc round the avatar's right side that
+     runs the full height of the row, top edge to bottom edge, centred on
+     the avatar. On a rounded row it mirrors the row's own rounded end, so
+     the two close a circle round the avatar. It overlaps the avatar
+     rather than taking room of its own. */
+  .fh-entity__sep {
+    --_p: var(--fh-gap-related);
+    --_r: calc(var(--fh-avatar-size, 1.9rem) / 2 + var(--_p));
+    flex: none;
+    align-self: stretch;
+    inline-size: var(--_r);
+    margin-block: calc(var(--_p) * -1);
+    margin-inline-start: calc((var(--fh-avatar-size, 1.9rem) / 2 + var(--fh-item-gap)) * -1);
+    border: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
+    border-inline-start: 0;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: min(var(--_r), calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_p)));
+    border-end-end-radius: min(var(--_r), calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_p)));
+    pointer-events: none;
+  }
+
+  /* A row with the arc keeps the same room above, below and before the
+     avatar, so the arc is centred on it and spans the row edge to edge. */
+  .fh-entity:has(.fh-entity__sep) {
+    padding-block: var(--fh-gap-related);
+    padding-inline-start: var(--fh-gap-related);
+  }
+
+  /* The arc follows the avatar's shape class. */
+  .fh-entity:has(.fh-avatar--circle) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-pill); }
+  .fh-entity:has(.fh-avatar--square) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-sm); }
+  .fh-entity:has(.fh-avatar--rounded) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-md); }
+
+  .fh-entity__who {
+    display: grid;
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > b {
+      overflow: hidden;
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > small {
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-caption);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  /* A share of something (ownership, quota, capacity): a small progress
+   * bar with its figure beside it, at the end of the row.
+   *   <span class="fh-entity__meter" data-tone="fuchsia"><progress class="fh-progress" value="60" max="100">60%</progress><b>60%</b></span> */
+  .fh-entity__meter {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin-inline-start: auto;
+    padding-inline-start: var(--fh-inset-control);
+
+    & > .fh-progress { --fh-progress-size: 0.3rem; inline-size: 3rem; }
+    & > b {
+      min-inline-size: 3ch;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+      text-align: end;
+    }
+  }
+
+  /* A figure about the entity, configured per use case: open actions,
+   * unread, balance. Number on top, a mono label under it. */
+  .fh-entity__stat {
+    display: grid;
+    flex: none;
+    justify-items: end;
+    margin-inline-start: auto;
+    padding-inline-start: var(--fh-inset-control);
+    border-inline-start: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
+    line-height: 1.1;
+
+    & > b {
+      color: var(--fh-tone, var(--fh-color-text));
+      font-family: var(--fh-font-figure);
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & > small {
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  /* --count: the figure alone, as a toned counter. Give it an aria-label
+   * ("5 open actions") since there is no visible label. */
+  .fh-entity__stat--count {
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: 1.35rem;
+    block-size: 1.35rem;
+    padding-inline: 0.4rem;
+    border: 0;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 16%, transparent);
+
+    & > b { font-size: var(--fh-text-label); line-height: 1; }
+    & > small { display: none; }
+  }
+
+  /* —— Trigger —— */
+  .fh-entity-picker > .fh-entity {
+    background-color: var(--fh-color-field);
+
+    /* Chevron, like fh-profile and fh-select-wrap. */
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      margin-inline-start: var(--fh-gap-bound);
+      background-color: var(--fh-color-text-subtle);
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover { background-color: var(--fh-color-field-hover); }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+    }
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    &:has(~ .fh-entity-picker__list:popover-open),
+    &[aria-expanded="true"],
+    &[data-state="open"] {
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+
+      &::after { rotate: 180deg; }
+    }
+
+    /* Nothing chosen yet: the placeholder line. */
+    & .fh-entity__placeholder { color: var(--fh-color-text-subtle); font-size: var(--fh-text-small); }
+
+    @media (pointer: coarse) { min-block-size: var(--fh-tap-target); }
+  }
+
+  /* —— List —— */
+  .fh-entity-picker__list {
+    --fh-avatar-size: var(--fh-entity-avatar, 1.9rem);
+    inline-size: max(anchor-size(inline), var(--fh-entity-list-width, 18rem));
+    max-inline-size: min(26rem, 100vi - 2rem);
+    max-block-size: min(24rem, 60dvh);
+    margin: 0;
+    padding: var(--fh-inset-tight);
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+    color: var(--fh-color-text);
+    box-shadow: var(--fh-shadow-menu);
+    opacity: 0;
+    translate: 0 -0.25rem;
+    transition:
+      opacity var(--fh-duration-fast) var(--fh-ease-out),
+      translate var(--fh-duration-fast) var(--fh-ease-out),
+      overlay var(--fh-duration-fast) allow-discrete,
+      display var(--fh-duration-fast) allow-discrete;
+
+    &:popover-open,
+    &[data-state="open"] {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) { transition: none; translate: none; }
+  }
+
+  @supports not (inline-size: anchor-size(inline)) {
+    .fh-entity-picker__list { inline-size: var(--fh-entity-list-width, 18rem); }
+  }
+
+  @supports (position-area: bottom) {
+    .fh-entity-picker__list {
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline;
+      margin-block-start: var(--fh-gap-bound);
+    }
+  }
+
+  /* A group: its label, then its rows. Groups after the first get a rule. */
+  .fh-entity-picker__group {
+    display: grid;
+    gap: 0.1rem;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    /* The rule sits on the bottom of the group before, so a legend never cuts it. */
+    &:has(+ &) {
+      margin-block-end: var(--fh-gap-bound);
+      padding-block-end: var(--fh-inset-tight);
+      border-block-end: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
+    }
+
+    & > :is(legend, .fh-entity-picker__label) {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--fh-gap-related);
+      inline-size: 100%;
+      margin: 0;
+      padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+
+      & > small { color: var(--fh-color-text-subtle); font-size: inherit; letter-spacing: inherit; }
+    }
+  }
+
+  /* An option: the row, a hidden radio, a check when chosen. */
+  .fh-entity-picker__list .fh-entity {
+    position: relative;
+    padding-inline-end: var(--fh-inset-control);
+
+    & > input {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: 0.85rem;
+      aspect-ratio: 1;
+      margin-inline-start: var(--fh-gap-bound);
+      background-color: var(--fh-color-text);
+      mask: var(--fh-icon-check) center / contain no-repeat;
+      opacity: 0;
+    }
+
+    &:not(:has(.fh-entity__stat))::after { margin-inline-start: auto; }
+
+    &:hover,
+    &:has(> input:focus-visible),
+    &[data-highlighted] {
+      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+      outline: none;
+    }
+
+    &:has(> input:checked),
+    &[aria-selected="true"],
+    &[data-state="checked"] {
+      background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 7%, transparent);
+
+      &::after { opacity: 1; }
+    }
+
+    &:has(> input:disabled),
+    &[data-disabled] { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  /* —— Shapes —— */
+
+  /* --rounded: a pill trigger, round avatars, soft options. */
+  .fh-entity-picker--rounded {
+    --fh-entity-radius: var(--fh-radius-pill);
+
+    /* On the picker, so the separator's arc takes the same round. */
+    --fh-avatar-radius: var(--fh-radius-pill);
+    & .fh-avatar { --fh-avatar-radius: var(--fh-radius-pill); }
+
+    /* The pill has an etched edge all the way round, so it reads as a
+       control on any fill; it firms up on hover and while the list is open. */
+    & > .fh-entity {
+      padding-inline-end: var(--fh-gap-grouped);
+      border-style: dashed;
+      border-color: var(--fh-color-etch);
+
+      &:hover { border-color: var(--fh-color-border-strong); }
+      &:has(~ .fh-entity-picker__list:popover-open) { border-color: var(--fh-color-border-strong); }
+    }
+
+    & .fh-entity-picker__list { border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-gap-grouped)); }
+  }
+
+  /* --etched: drawn in dashed etch lines on no fill, like fh-profile. */
+  .fh-entity-picker--etched {
+    --_line: dashed;
+
+    & > .fh-entity {
+      border-style: dashed;
+      border-color: var(--fh-color-etch);
+      background-color: transparent;
+
+      &:hover {
+        border-style: solid;
+        background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent);
+      }
+
+      &:has(~ .fh-entity-picker__list:popover-open),
+      &[aria-expanded="true"],
+      &[data-state="open"] {
+        border-style: solid;
+        border-color: var(--fh-color-border-strong);
+        box-shadow: none;
+      }
+    }
+
+    & .fh-entity-picker__list .fh-entity + .fh-entity::before {
+      content: "";
+      position: absolute;
+      inset-block-start: -0.05rem;
+      inset-inline: var(--fh-gap-related);
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      pointer-events: none;
+    }
+  }
+
+  /* Inside a field, the field's label sits over the trigger like any input. */
+  .fh-field > .fh-entity-picker { inline-size: 100%; }
+
+  @media (forced-colors: active) {
+    .fh-entity-picker > .fh-entity { border-color: ButtonText; }
+    .fh-entity-picker__list .fh-entity:has(> input:checked) { outline: 2px solid Highlight; }
+  }
+}

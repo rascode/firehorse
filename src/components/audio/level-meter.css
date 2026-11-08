@@ -1,0 +1,24 @@
+/*
+ * Firehorse — Level meter (MIX)
+ * components/audio · layer fh.components · docs /audio/#MIX
+ */
+
+@layer fh.components {
+  /* —— Level meter ——
+   *   <span class="fh-meter-level" style="--level:.6" role="meter" aria-valuenow="60"></span> */
+  .fh-meter-level {
+    --_seg: 6%;
+
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 3rem;
+    block-size: 0.35rem;
+    border-radius: 1px;
+    background:
+      linear-gradient(90deg, transparent calc(var(--level) * 100%), color-mix(in oklab, var(--fh-color-text) 14%, transparent) 0),
+      linear-gradient(90deg, var(--fh-color-success) 0 64%, var(--fh-color-warning) 64% 86%, var(--fh-color-danger) 86%);
+    mask: repeating-linear-gradient(90deg, black 0 calc(var(--_seg) - 2px), transparent calc(var(--_seg) - 2px) var(--_seg));
+  }
+  .fh-meter-level--v { inline-size: 0.35rem; block-size: 3rem; min-inline-size: 0; rotate: 180deg; writing-mode: vertical-lr; }
+
+}

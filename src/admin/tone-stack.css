@@ -1,0 +1,198 @@
+/*
+ * Firehorse — Tone stack (ADM-TNS)
+ * admin · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Tone stack (ADM-TNS) ——
+   * A dashboard told in coloured panels stacked tight: a hero panel up top
+   * (the greeting and the numbers that matter), then panels that open and
+   * close in place, each in its own tone. Panels are <details>; give them a
+   * shared name to keep one open at a time.
+   *   <div class="fh-tone-stack">
+   *     <section class="fh-tone-panel fh-tone-panel--hero" data-tone="amber">
+   *       <header class="fh-tone-panel__head"><h2 class="fh-tone-panel__title">Welcome back</h2><div class="fh-tone-panel__tools">…</div></header>
+   *       <div class="fh-tone-panel__body">
+   *         <dl class="fh-tone-panel__figures"><div><dt>Outstanding</dt><dd>$18,420</dd></div>…</dl>
+   *       </div>
+   *     </section>
+   *     <details class="fh-tone-panel" data-tone="orange" name="dash">
+   *       <summary class="fh-tone-panel__head"><h2 class="fh-tone-panel__title">Clients</h2><span class="fh-tone-panel__toggle" aria-hidden="true"></span></summary>
+   *       <div class="fh-tone-panel__body"><table class="fh-tone-panel__table">…</table></div>
+   *     </details>
+   *   </div>
+   * Fills are soft tints of the tone at a fixed lightness, the same in light and
+   * dark schemes; text is the same hue, dark. Opening
+   * and closing animate the height where the browser can. Still under
+   * reduced motion.
+   *   knobs  --fh-tone-stack-gap (0.375rem) · --fh-tone-panel-radius (1.25rem)
+   *          --fh-tone-panel-light (0.85, fill lightness)
+   *          --fh-tone-panel-chroma (0.6, how much colour the fill keeps) */
+  .fh-tone-stack {
+    display: grid;
+    gap: var(--fh-tone-stack-gap, 0.375rem);
+  }
+
+  .fh-tone-panel {
+    --_fill: oklch(from var(--fh-tone, var(--fh-color-accent)) var(--fh-tone-panel-light, 0.85) calc(c * var(--fh-tone-panel-chroma, 0.6)) h);
+    --_ink: oklch(from var(--_fill) 0.34 calc(c * 1.6) h);
+    border-radius: var(--fh-tone-panel-radius, 1.25rem);
+    background-color: var(--_fill);
+    color: var(--_ink);
+    container: fh-tone-panel / inline-size;
+    interpolate-size: allow-keywords;
+  }
+  .fh-tone-panel--hero {
+    --_fill: oklch(from var(--fh-tone, var(--fh-color-accent)) 0.86 calc(c * 1.05) h);
+    --_ink: oklch(from var(--_fill) 0.3 calc(c * 1.2) h);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-block-size: clamp(14rem, 42cqi, 20rem);
+  }
+
+  .fh-tone-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-control) var(--fh-inset-control) var(--fh-inset-control) var(--fh-inset-card);
+    list-style: none;
+  }
+  summary.fh-tone-panel__head { cursor: var(--fh-cursor-action); }
+  summary.fh-tone-panel__head::-webkit-details-marker { display: none; }
+  .fh-tone-panel--hero > .fh-tone-panel__head { align-items: start; padding-block-start: var(--fh-gap-sectioned); }
+
+  .fh-tone-panel__title {
+    margin: 0;
+    color: inherit;
+    font-family: var(--fh-font-display);
+    font-size: clamp(1.1rem, 3.2cqi, 1.35rem);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+  .fh-tone-panel--hero .fh-tone-panel__title {
+    max-inline-size: 14ch;
+    font-size: clamp(1.75rem, 6cqi, 2.75rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .fh-tone-panel__tools {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    padding: 0.25rem;
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-color-on-ink) 75%, transparent);
+    color: var(--fh-color-ink);
+  }
+
+  /* The toggle: a rounded square with a chevron that turns. */
+  .fh-tone-panel__toggle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2.5rem;
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in oklab, currentColor 35%, transparent);
+    border-radius: 0.75rem;
+  }
+  .fh-tone-panel__toggle::before {
+    content: "";
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-inline-end: 1.5px solid currentColor;
+    border-block-end: 1.5px solid currentColor;
+    rotate: 45deg;
+    translate: 0 -20%;
+  }
+  .fh-tone-panel[open] .fh-tone-panel__toggle::before { rotate: 225deg; translate: 0 20%; }
+  summary.fh-tone-panel__head:hover .fh-tone-panel__toggle { background-color: color-mix(in oklab, currentColor 10%, transparent); }
+
+  .fh-tone-panel__body {
+    padding: 0 var(--fh-inset-card) var(--fh-inset-card);
+  }
+  .fh-tone-panel--hero > .fh-tone-panel__body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-sectioned);
+  }
+
+  .fh-tone-panel__figures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-grouped-wide) clamp(var(--fh-gap-sectioned), 6cqi, var(--fh-gap-separated));
+    margin: 0;
+  }
+  .fh-tone-panel__figures dt {
+    margin-block-end: var(--fh-gap-bound);
+    font-size: var(--fh-text-small);
+    opacity: 0.8;
+  }
+  .fh-tone-panel__figures dd {
+    margin: 0;
+    font-family: var(--fh-font-figure, var(--fh-font-display));
+    font-size: clamp(1.6rem, 5cqi, 2.4rem);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .fh-tone-panel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-grouped-wide);
+    font-size: var(--fh-text-small);
+  }
+  .fh-tone-panel__actions :is(a, button) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+    opacity: 0.85;
+    cursor: var(--fh-cursor-action);
+  }
+  .fh-tone-panel__actions :is(a, button):hover { opacity: 1; }
+
+  /* A table in the panel's own ink: label row small, values large. */
+  .fh-tone-panel__table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .fh-tone-panel__table th {
+    padding: 0 var(--fh-inset-control) var(--fh-inset-tight) 0;
+    font-size: var(--fh-text-small);
+    font-weight: 400;
+    text-align: start;
+    opacity: 0.75;
+  }
+  .fh-tone-panel__table td {
+    padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) 0;
+    font-size: clamp(1rem, 2.8cqi, 1.25rem);
+  }
+  .fh-tone-panel__table :is(th, td):last-child { padding-inline-end: 0; text-align: end; }
+  .fh-tone-panel__table small { font-size: 0.65em; opacity: 0.8; }
+  @container fh-tone-panel (inline-size < 30rem) {
+    .fh-tone-panel__table :is(th, td):nth-child(2) { display: none; }
+  }
+
+  /* —— Motion: panels open and close in place —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-tone-panel::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition: block-size 0.35s var(--fh-ease-out), content-visibility 0.35s allow-discrete;
+    }
+    .fh-tone-panel[open]::details-content { block-size: auto; }
+    .fh-tone-panel__toggle::before { transition: rotate 0.3s var(--fh-ease-out), translate 0.3s var(--fh-ease-out); }
+  }
+}

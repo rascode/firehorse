@@ -1,0 +1,371 @@
+/*
+ * Firehorse — Stacking deck (DEK)
+ * components/content · layer fh.components · docs /components/content/#DEK
+ */
+
+/* The step a --count deck shows; animated by scroll, so it is registered. */
+@property --fh-deck-step {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 1;
+}
+
+@layer fh.components {
+  /* —— Stacking deck (DEK) ——
+   * Full-width panels that pin as you scroll. Each next panel slides up
+   * over the last, and the ones underneath shrink and darken into a deck,
+   * their top edges peeking out above the panel in front. Pure CSS:
+   * position: sticky for the stack, a scroll-driven animation for the
+   * recede. Works in the page or in any scroll box.
+   *   <ol class="fh-deck">
+   *     <li class="fh-deck__card" data-tone="orange">
+   *       <img class="fh-deck__media" src="…" alt="">
+   *       <p class="fh-deck__caption"><span class="fh-deck__index">01</span><span class="fh-deck__title">Branding</span></p>
+   *     </li>
+   *     …
+   *   </ol>
+   * Two to eight cards. A card is a tone surface on its own; add
+   * __media (an img, video or picture) to fill it with a picture, and
+   * __body for any other content. The caption sits on the bottom: index
+   * left, title right, a hairline under both.
+   *
+   * Deck modifiers
+   *   --hero     the first card is a full-height hero (flush, under the
+   *              header) and the cards after it come in inset over it
+   *   --fade     cards behind fade out instead of darkening
+   *   --blur     cards behind blur
+   *   --lift     cards behind tilt back in 3D
+   *   --fan      cards behind fan out a degree or two, more of each showing
+   *   --count    a sticky 01 / 04 readout follows the card in front
+   *   --x        the deck runs sideways in its own scroll row
+   *   --reverse  the cards wait in a pile at the bottom and rise off it
+   *   --flush    no corners · --plain  no caption rule
+   * Card and caption parts
+   *   __card--split   picture on one half, body and caption on the other
+   *                   (picture over text in a narrow slot)
+   *   __caption--top  the caption on top, the body below it
+   *   __meta          a small mono line inside __title or __index
+   * Knobs
+   *   --fh-deck-height (each card, min(78svh, 44rem)) · --fh-deck-top
+   *   (where the stack pins: under the header) · --fh-deck-peek (0.75rem)
+   *   · --fh-deck-gap (scroll between cards, 30svh) · --fh-deck-shrink
+   *   (scale lost per card behind, 0.05) · --fh-deck-dim (0.18)
+   *   · --fh-deck-fade · --fh-deck-blur · --fh-deck-tilt · --fh-deck-fan
+   *   · --fh-deck-radius · --fh-deck-inset (side room for the cards over
+   *   a hero) · --fh-deck-hero-height · --fh-deck-hero-top
+   *   · --fh-deck-width (each card in an --x deck) · --fh-deck-bottom
+   *   (where a --reverse pile sits)
+   * Without scroll-driven animations, or under reduced motion, the cards
+   * still pin and stack; they just don't recede, and --count hides. */
+  .fh-deck {
+    --_top: var(--fh-deck-top, calc(var(--fh-header-height, 0px) + var(--fh-gap-grouped-wide)));
+    --_peek: var(--fh-deck-peek, 0.75rem);
+    --_h: var(--fh-deck-height, min(78svh, 44rem));
+    --_gap: var(--fh-deck-gap, 30svh);
+    --_shrink: var(--fh-deck-shrink, 0.05);
+    --_dim: var(--fh-deck-dim, 0.18);
+    --_fade: var(--fh-deck-fade, 0);
+    --_blur: var(--fh-deck-blur, 0px);
+    --_tilt: var(--fh-deck-tilt, 0deg);
+    --_fan: var(--fh-deck-fan, 0deg);
+    --_n: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--_gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    container: fh-deck-list / inline-size;
+    view-timeline: --fh-deck block;
+  }
+
+  /* One more gap after the last card, so the full deck holds a moment
+   * before the section scrolls it away. */
+  .fh-deck::after {
+    content: "";
+  }
+
+  .fh-deck:has(> :nth-child(2):last-child) { --_n: 2; }
+  .fh-deck:has(> :nth-child(3):last-child) { --_n: 3; }
+  .fh-deck:has(> :nth-child(4):last-child) { --_n: 4; }
+  .fh-deck:has(> :nth-child(5):last-child) { --_n: 5; }
+  .fh-deck:has(> :nth-child(6):last-child) { --_n: 6; }
+  .fh-deck:has(> :nth-child(7):last-child) { --_n: 7; }
+  .fh-deck:has(> :nth-child(8):last-child) { --_n: 8; }
+
+  .fh-deck > :nth-child(1) { --_i: 0; }
+  .fh-deck > :nth-child(2) { --_i: 1; }
+  .fh-deck > :nth-child(3) { --_i: 2; }
+  .fh-deck > :nth-child(4) { --_i: 3; }
+  .fh-deck > :nth-child(5) { --_i: 4; }
+  .fh-deck > :nth-child(6) { --_i: 5; }
+  .fh-deck > :nth-child(7) { --_i: 6; }
+  .fh-deck > :nth-child(8) { --_i: 7; }
+  .fh-deck > :nth-child(even) { --_dir: -1; }
+
+  .fh-deck__card {
+    --_k: calc(var(--_n) - 1 - var(--_i, 0));
+    --_bg: color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 82%, var(--fh-color-canvas));
+    position: sticky;
+    inset-block-start: calc(var(--_top) + var(--_i, 0) * var(--_peek));
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    flex: none;
+    block-size: var(--_h);
+    overflow: clip;
+    isolation: isolate;
+    container: fh-deck / inline-size;
+    border-radius: var(--fh-deck-radius, var(--fh-card-radius, var(--fh-radius-lg)));
+    background-color: var(--_bg);
+    color: var(--fh-color-on-ink);
+    /* Ink or white, from the card's own lightness (as on-tone does). */
+    color: oklch(from var(--_bg) clamp(0.2, (0.62 - l) * 999, 1) 0 h);
+    box-shadow: inset 0 1px 0 color-mix(in oklab, var(--fh-color-on-ink) 18%, transparent);
+    transform-origin: 50% 0;
+  }
+
+  /* A picture fills the card under everything else. */
+  .fh-deck__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .fh-deck__media > :is(img, video) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Over a picture, a soft scrim behind the caption keeps it readable. */
+  .fh-deck__card:has(> .fh-deck__media) { color: var(--fh-color-on-ink); }
+  .fh-deck__card:has(> .fh-deck__media)::before {
+    content: "";
+    position: absolute;
+    inset: 40% 0 0;
+    z-index: -1;
+    background: linear-gradient(to top, var(--fh-color-scrim), transparent);
+    pointer-events: none;
+  }
+
+  .fh-deck__body {
+    grid-row: 1;
+    align-self: center;
+    padding: clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
+  }
+  .fh-deck__body :is(p, h2, h3, h4, li) { color: inherit; }
+
+  .fh-deck__caption {
+    grid-row: 2;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide);
+    margin: 0 clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated));
+    padding-block-end: var(--fh-inset-control);
+    border-block-end: 1px solid color-mix(in oklab, currentColor 55%, transparent);
+    font-family: var(--fh-font-display);
+    font-size: clamp(1.5rem, 7cqi, 4.5rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .fh-deck__index { font-variant-numeric: tabular-nums; }
+  .fh-deck__title { text-align: end; }
+
+  /* —— Caption on top —— */
+  .fh-deck__card:has(> .fh-deck__caption--top) { grid-template-rows: auto minmax(0, 1fr); }
+  .fh-deck__card:has(> .fh-deck__caption--top) > .fh-deck__body { grid-row: 2; }
+  .fh-deck__caption--top {
+    grid-row: 1;
+    margin: clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) 0;
+  }
+
+  /* —— Meta line: year, client, tags —— */
+  .fh-deck__meta {
+    display: block;
+    margin-block-start: var(--fh-gap-related);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .fh-deck--plain .fh-deck__caption {
+    border-block-end: 0;
+    padding-block-end: 0;
+  }
+
+  .fh-deck--flush .fh-deck__card {
+    border-radius: 0;
+  }
+
+  /* —— Split card: picture on one half, words on the other —— */
+  .fh-deck__card--split {
+    grid-template:
+      "media" minmax(0, 1fr)
+      "body" auto
+      "caption" auto
+      / minmax(0, 1fr);
+  }
+  .fh-deck__card--split:has(> .fh-deck__media) {
+    color: oklch(from var(--_bg) clamp(0.2, (0.62 - l) * 999, 1) 0 h);
+  }
+  .fh-deck__card--split:has(> .fh-deck__media)::before { content: none; }
+  .fh-deck__card--split > .fh-deck__media {
+    position: static;
+    z-index: auto;
+    grid-area: media;
+    min-block-size: 0;
+  }
+  .fh-deck__card--split > .fh-deck__body { grid-area: body; align-self: start; padding-block-end: 0; }
+  .fh-deck__card--split > .fh-deck__caption { grid-area: caption; margin-block-start: var(--fh-gap-grouped-wide); }
+
+  @container fh-deck-list (inline-size >= 40rem) {
+    .fh-deck__card--split {
+      grid-template:
+        "media body" minmax(0, 1fr)
+        "media caption" auto
+        / minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+    .fh-deck__card--split > .fh-deck__body { align-self: center; padding-block-end: clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)); }
+    .fh-deck__card--split > .fh-deck__caption { margin-block-start: 0; }
+  }
+
+  /* —— Hero handoff: a full-height first card the deck slides over —— */
+  .fh-deck--hero > :first-child {
+    inset-block-start: var(--fh-deck-hero-top, var(--fh-header-height, 0px));
+    block-size: var(--fh-deck-hero-height, calc(100svh - var(--fh-header-height, 0px)));
+    border-radius: 0;
+  }
+  .fh-deck--hero > :not(:first-child) {
+    margin-inline: var(--fh-deck-inset, clamp(var(--fh-gap-grouped-wide), 4cqi, var(--fh-gap-separated)));
+  }
+
+  /* —— Recede styles —— */
+  .fh-deck--fade { --_dim: var(--fh-deck-dim, 0); --_fade: var(--fh-deck-fade, 0.3); }
+  .fh-deck--blur { --_dim: var(--fh-deck-dim, 0.06); --_blur: var(--fh-deck-blur, 3px); }
+  .fh-deck--lift { --_dim: var(--fh-deck-dim, 0.12); --_tilt: var(--fh-deck-tilt, 10deg); }
+  .fh-deck--fan {
+    --_peek: var(--fh-deck-peek, 1.5rem);
+    --_shrink: var(--fh-deck-shrink, 0.03);
+    --_fan: var(--fh-deck-fan, 1.5deg);
+  }
+
+  /* —— Count: 01 / 04, following the card in front —— */
+  .fh-deck--count::before {
+    display: none;
+  }
+
+  /* —— Sideways: the deck is its own scroll row —— */
+  .fh-deck--x {
+    --_h: var(--fh-deck-height, min(60svh, 26rem));
+    --_gap: var(--fh-deck-gap, var(--fh-gap-separated));
+    flex-direction: row;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: var(--fh-inset-tight);
+    view-timeline: none;
+    scroll-timeline: --fh-deck inline;
+  }
+  .fh-deck--x > .fh-deck__card {
+    flex: 0 0 var(--fh-deck-width, min(85%, 36rem));
+    inset-block-start: auto;
+    inset-inline-start: calc(var(--_i, 0) * var(--_peek));
+    transform-origin: 0 50%;
+  }
+
+  /* —— Reverse: a pile at the bottom; the front card rises off it —— */
+  .fh-deck--reverse > .fh-deck__card {
+    z-index: calc(var(--_n) - var(--_i, 0));
+    inset-block-start: auto;
+    inset-block-end: calc(var(--fh-deck-bottom, var(--fh-gap-grouped-wide)) + var(--_i, 0) * var(--_peek));
+  }
+
+  /* —— The motion ——
+   * Card i shrinks (and darkens, fades, blurs, tilts or fans, by
+   * modifier) from the moment it pins until the last card lands, so the
+   * deck behind grows deeper with every card. --reverse runs it the other
+   * way: cards in the pile grow to full size as they reach the front. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .fh-deck__card:not(:last-child) {
+        animation: fh-deck-recede linear both;
+        animation-timeline: --fh-deck;
+        animation-range:
+          exit-crossing calc(var(--_i) / var(--_n) * 100%)
+          exit-crossing calc((var(--_n) - 1) / var(--_n) * 100%);
+      }
+
+      .fh-deck--x > .fh-deck__card:not(:last-child) {
+        animation-range: calc(var(--_i) / (var(--_n) - 1) * 100%) 100%;
+      }
+
+      .fh-deck--reverse > .fh-deck__card:not(:last-child) {
+        animation: none;
+      }
+      .fh-deck--reverse > .fh-deck__card:not(:first-child) {
+        animation: fh-deck-rise linear both;
+        animation-timeline: --fh-deck;
+        animation-range:
+          entry-crossing 0%
+          entry-crossing calc((var(--_i) - 0.3) / var(--_n) * 100%);
+      }
+
+      .fh-deck--count::before {
+        content: counter(fh-deck-step, decimal-leading-zero) " / " counter(fh-deck-total, decimal-leading-zero);
+        counter-reset: fh-deck-step var(--fh-deck-step) fh-deck-total var(--_n);
+        position: sticky;
+        z-index: 10;
+        inset-block-start: calc(var(--_top) + var(--fh-gap-grouped));
+        display: block;
+        align-self: end;
+        block-size: 2rem;
+        margin-block-end: calc(-2rem - var(--_gap));
+        margin-inline-end: var(--fh-gap-grouped);
+        padding: 0 var(--fh-inset-control);
+        border-radius: var(--fh-radius-pill);
+        background-color: color-mix(in oklab, var(--fh-color-canvas) 72%, transparent);
+        backdrop-filter: blur(10px);
+        color: var(--fh-color-text);
+        font-family: var(--fh-font-mono);
+        font-size: var(--fh-text-small);
+        font-variant-numeric: tabular-nums;
+        line-height: 2rem;
+        animation: fh-deck-count linear both;
+        animation-timeline: --fh-deck;
+        animation-range: exit-crossing 0% exit-crossing calc((var(--_n) - 1) / var(--_n) * 100%);
+      }
+    }
+  }
+
+  @keyframes fh-deck-recede {
+    to {
+      scale: calc(1 - var(--_k) * var(--_shrink));
+      rotate: calc(var(--_k) * var(--_fan) * var(--_dir, 1));
+      transform: perspective(80rem) rotateX(calc(var(--_k) * var(--_tilt)));
+      filter: brightness(calc(1 - var(--_k) * var(--_dim))) blur(calc(var(--_k) * var(--_blur)));
+      opacity: calc(1 - var(--_k) * var(--_fade));
+    }
+  }
+
+  @keyframes fh-deck-rise {
+    from {
+      scale: calc(1 - var(--_i) * var(--_shrink));
+      rotate: calc(var(--_i) * var(--_fan) * var(--_dir, 1));
+      transform: perspective(80rem) rotateX(calc(var(--_i) * var(--_tilt)));
+      filter: brightness(calc(1 - var(--_i) * var(--_dim))) blur(calc(var(--_i) * var(--_blur)));
+      opacity: calc(1 - var(--_i) * var(--_fade));
+    }
+  }
+
+  @keyframes fh-deck-count {
+    from { --fh-deck-step: 1; }
+    to { --fh-deck-step: var(--_n); }
+  }
+}

@@ -1,0 +1,176 @@
+/*
+ * Firehorse — intros (MOT-1, MOT-2)
+ * ---------------------------------------------------------------
+ * Named entrances, played in a set order, written as attributes:
+ *
+ *   <section data-fh-intro>
+ *     <h1 data-fh-enter="fold" data-fh-step="4">…</h1>
+ *     <span data-fh-enter="draw" data-fh-step="5"></span>
+ *     <p data-fh-enter="drop" style="--fh-at: 1.1s">…</p>
+ *     <ul data-fh-enter-children data-fh-step="8">…</ul>
+ *   </section>
+ *
+ * Entrances: rise · drop · fade · scale · blur · fold · draw · wipe ·
+ * unveil (full-window art) · lift (a panel rising from below its box).
+ * Step n starts at n × --fh-intro-beat; --fh-at sets an exact time;
+ * listed children follow one another by --fh-stagger.
+ *
+ * Contract:
+ *   - Runs only under prefers-reduced-motion: no-preference, and only
+ *     once <html> has fh-js (set by the page or the enhancer); without
+ *     script nothing is ever hidden.
+ *   - Holds until <html> has fh-ready (the enhancer adds it once fonts
+ *     and the intro's images load, 2s at most), so it never plays
+ *     against a half-loaded page.
+ *   - Transform, opacity, filter and clip only; never layout.
+ */
+
+@layer fh.utilities {
+  @media (prefers-reduced-motion: no-preference) {
+    :root.fh-js :is([data-fh-enter], [data-fh-enter-children] > *) {
+      animation: var(--_fh-enter, fh-enter-rise) var(--_fh-enter-time, var(--fh-duration-intro)) var(--_fh-enter-ease, var(--fh-ease-out)) var(--fh-at, calc(var(--fh-step, 0) * var(--fh-intro-beat) + var(--_fh-i, 0) * var(--fh-stagger))) both;
+    }
+    :root.fh-js:not(.fh-ready) :is([data-fh-enter], [data-fh-enter-children] > *) { animation-play-state: paused; }
+
+    [data-fh-enter="rise"], [data-fh-enter-children=""], [data-fh-enter-children="rise"] { --_fh-enter: fh-enter-rise; }
+    [data-fh-enter="drop"], [data-fh-enter-children="drop"] { --_fh-enter: fh-enter-drop; }
+    [data-fh-enter="fade"], [data-fh-enter-children="fade"] { --_fh-enter: fh-enter-fade; --_fh-enter-ease: var(--fh-ease-standard); }
+    [data-fh-enter="scale"], [data-fh-enter-children="scale"] { --_fh-enter: fh-enter-scale; }
+    [data-fh-enter="blur"], [data-fh-enter-children="blur"] { --_fh-enter: fh-enter-blur; }
+    [data-fh-enter="fold"] { --_fh-enter: fh-enter-fold; --_fh-enter-ease: var(--fh-ease-spring); --_fh-enter-time: var(--fh-duration-enter); transform-origin: 50% 100%; }
+    [data-fh-enter="draw"] { --_fh-enter: fh-enter-draw; --_fh-enter-ease: var(--fh-ease-expo-out); transform-origin: 0 50%; }
+    [data-fh-enter="draw"]:dir(rtl) { transform-origin: 100% 50%; }
+    [data-fh-enter="wipe"] { --_fh-enter: fh-enter-wipe; --_fh-enter-ease: var(--fh-ease-expo-out); }
+    [data-fh-enter="unveil"] { --_fh-enter: fh-enter-unveil; --_fh-enter-ease: var(--fh-ease-in-out); --_fh-enter-time: var(--fh-duration-scene); }
+    [data-fh-enter="lift"] { --_fh-enter: fh-enter-lift; --_fh-enter-ease: var(--fh-ease-expo-out); }
+    /* children inherit the list's entrance: set it on the children, not the list */
+    [data-fh-enter-children] { --_fh-list-step: var(--fh-step, 0); }
+    [data-fh-enter-children] > * { --fh-step: var(--_fh-list-step); }
+
+    [data-fh-step="1"] { --fh-step: 1; }
+    [data-fh-step="2"] { --fh-step: 2; }
+    [data-fh-step="3"] { --fh-step: 3; }
+    [data-fh-step="4"] { --fh-step: 4; }
+    [data-fh-step="5"] { --fh-step: 5; }
+    [data-fh-step="6"] { --fh-step: 6; }
+    [data-fh-step="7"] { --fh-step: 7; }
+    [data-fh-step="8"] { --fh-step: 8; }
+    [data-fh-step="9"] { --fh-step: 9; }
+    [data-fh-step="10"] { --fh-step: 10; }
+    [data-fh-step="11"] { --fh-step: 11; }
+    [data-fh-step="12"] { --fh-step: 12; }
+    [data-fh-step="13"] { --fh-step: 13; }
+    [data-fh-step="14"] { --fh-step: 14; }
+    [data-fh-step="15"] { --fh-step: 15; }
+    [data-fh-step="16"] { --fh-step: 16; }
+    [data-fh-step="17"] { --fh-step: 17; }
+    [data-fh-step="18"] { --fh-step: 18; }
+    [data-fh-step="19"] { --fh-step: 19; }
+    [data-fh-step="20"] { --fh-step: 20; }
+    [data-fh-step="21"] { --fh-step: 21; }
+    [data-fh-step="22"] { --fh-step: 22; }
+    [data-fh-step="23"] { --fh-step: 23; }
+    [data-fh-step="24"] { --fh-step: 24; }
+    [data-fh-enter-children] > :nth-child(2) { --_fh-i: 1; }
+    [data-fh-enter-children] > :nth-child(3) { --_fh-i: 2; }
+    [data-fh-enter-children] > :nth-child(4) { --_fh-i: 3; }
+    [data-fh-enter-children] > :nth-child(5) { --_fh-i: 4; }
+    [data-fh-enter-children] > :nth-child(6) { --_fh-i: 5; }
+    [data-fh-enter-children] > :nth-child(7) { --_fh-i: 6; }
+    [data-fh-enter-children] > :nth-child(8) { --_fh-i: 7; }
+    [data-fh-enter-children] > :nth-child(9) { --_fh-i: 8; }
+    [data-fh-enter-children] > :nth-child(10) { --_fh-i: 9; }
+    [data-fh-enter-children] > :nth-child(11) { --_fh-i: 10; }
+    [data-fh-enter-children] > :nth-child(12) { --_fh-i: 11; }
+    [data-fh-enter-children] > :nth-child(n + 13) { --_fh-i: 12; }
+  }
+
+  @keyframes fh-enter-rise { from { opacity: 0; translate: 0 var(--fh-motion-rise); } }
+  @keyframes fh-enter-drop { from { opacity: 0; translate: 0 calc(var(--fh-motion-rise) * -0.75); filter: blur(10px); } to { opacity: 1; translate: 0 0; filter: none; } }
+  @keyframes fh-enter-fade { from { opacity: 0; } }
+  @keyframes fh-enter-scale { from { opacity: 0; scale: 0.96; } }
+  @keyframes fh-enter-blur { from { opacity: 0; translate: 0 calc(var(--fh-motion-rise) * 0.75); filter: blur(10px); } to { opacity: 1; translate: 0 0; filter: none; } }
+  @keyframes fh-enter-fold { from { opacity: 0; transform: perspective(40em) rotateX(-95deg); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+  @keyframes fh-enter-draw { from { scale: 0 1; } to { scale: 1 1; } }
+  @keyframes fh-enter-wipe { from { clip-path: inset(-2px 100% -2px -2px round 999px); opacity: 0.4; } to { clip-path: inset(-2px -2px -2px -2px round 999px); opacity: 1; } }
+  @keyframes fh-enter-unveil { from { clip-path: inset(100% 0 0 0); filter: blur(12px); scale: 1.06; opacity: 0.4; } 60% { filter: blur(2px); opacity: 1; } to { clip-path: inset(0 0 0 0); filter: none; scale: 1; opacity: 1; } }
+  @keyframes fh-enter-lift { from { translate: 0 100%; } to { translate: 0 0; } }
+
+  /* —— Scroll-linked (MOT-3.1, MOT-3.2) ——
+   * fh-recede: scales from 1 / --fh-recede-to down to 1 over the first
+   * --fh-recede-range of the page's scroll, then holds, so full-window art
+   * steps back without ever showing an edge. --fh-recede-origin sets the
+   * corner it shrinks toward (top right by default, as the Firehorse horses).
+   * fh-scroll-fade: fades out over the same range. Both ride the root scroll
+   * timeline on the compositor; without support they simply sit still. */
+  .fh-recede { transform-origin: var(--fh-recede-origin, 100% 0); scale: calc(1 / var(--fh-recede-to)); }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .fh-recede { animation: fh-recede linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fh-recede-range); will-change: scale; }
+      .fh-scroll-fade { animation: fh-scroll-fade linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fh-recede-range); }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) { .fh-recede { scale: 1; } }
+  @keyframes fh-recede { from { scale: calc(1 / var(--fh-recede-to)); } to { scale: 1; } }
+  @keyframes fh-scroll-fade { to { opacity: 0; } }
+
+  /* —— Glide and lock (MOT-4.2, MOT-4.3) ——
+   * Built by the enhancer (firehorse.js) from data-fh-glide / data-fh-lock. It measures; these
+   * rules move. One scroll range per piece, on the root scroll timeline. */
+  .fh-choreo-ghost { visibility: hidden; pointer-events: none; }
+  .fh-lock-source { opacity: 0; }
+  .fh-glide {
+    position: fixed;
+    z-index: calc(var(--fh-z-sticky) + 40);
+    inset-block-start: var(--_fh-y, 1rem);
+    inset-inline-start: 0;
+    padding: var(--fh-glide-pad, 0.3125rem);
+    border-radius: 999px;
+    isolation: isolate;
+    translate: var(--_fh-x0, 0) 0;
+    will-change: translate;
+  }
+  /* the pill: an etched, frosted capsule that fades in as the glide leaves its place */
+  .fh-glide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border-radius: inherit;
+    background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9));
+    opacity: 0;
+  }
+  .fh-glide > * > * { animation: none; }
+  .fh-lock {
+    position: fixed;
+    z-index: calc(var(--fh-z-sticky) + 40);
+    inset-block-start: var(--_fh-top, 0);
+    inset-inline-start: var(--_fh-left, 0);
+    inline-size: var(--_fh-w, auto);
+    margin: 0;
+    color: inherit;
+    text-decoration: none;
+    transform-origin: var(--_fh-o, 0 0);
+    will-change: translate, scale;
+  }
+  .fh-lock > * { margin: 0; }
+  a.fh-lock:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 4px; }
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .fh-glide { animation: fh-glide-x var(--fh-ease-glide) both; animation-timeline: scroll(root block); animation-range: 0 var(--fh-glide-range, var(--fh-lock, 48vh)); }
+      .fh-glide::before { animation: fh-glide-pill linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fh-glide-range, var(--fh-lock, 48vh)); }
+      .fh-lock { animation: fh-lock linear both; animation-timeline: scroll(root block); animation-range: 0 var(--_fh-dist, 48vh); }
+    }
+  }
+  @keyframes fh-glide-x { from { translate: var(--_fh-x0, 0) 0; } to { translate: var(--_fh-x1, 0) 0; } }
+  @keyframes fh-glide-pill { to { opacity: 1; } }
+  @keyframes fh-lock { from { translate: 0 0; scale: 1; } to { translate: 0 calc(-1 * var(--_fh-dist, 48vh)); scale: var(--_fh-s, 1); } }
+
+  /* —— Circle reveal (MOT-4.1) ——
+   * Firehorse.reveal(change, from) runs change() as a view transition and
+   * opens the new look out as a circle from the control that made it. */
+  :root[data-fh-vt="reveal"]::view-transition-old(root),
+  :root[data-fh-vt="reveal"]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  :root[data-fh-vt="reveal"]::view-transition-new(root) { z-index: 1; }
+}

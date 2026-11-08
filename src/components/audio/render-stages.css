@@ -1,0 +1,95 @@
+/*
+ * Firehorse — Render stages (STG)
+ * components/audio · layer fh.components · docs /audio/#STG
+ */
+
+@layer fh.components {
+  /* —— Staged progress (renders, exports, uploads) ——
+   *   <div class="fh-stages" style="--p:.46" data-tone="violet">
+   *     <div class="fh-stages__head"><b>Rendering</b><span>46%</span></div>
+   *     <span class="fh-stages__track"></span>
+   *     <ol class="fh-stages__list"><li data-state="done">Voice</li><li data-state="active">Mix</li><li>Export</li></ol>
+   *     <p class="fh-stages__meta"><span>Mixing background…</span><span>~40s left</span></p>
+   *   </div> */
+  .fh-stages {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+  }
+  .fh-stages__head,
+  .fh-stages__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    margin: 0;
+    font-size: var(--fh-text-small);
+
+    & > :last-child { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; }
+  }
+  .fh-stages__head > b { font-weight: var(--fh-weight-medium); }
+  .fh-stages__meta > :first-child { color: var(--fh-color-text-muted); }
+  .fh-stages__track {
+    position: relative;
+    display: block;
+    block-size: 0.4rem;
+    overflow: hidden;
+    border-radius: var(--fh-radius-pill);
+    background: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      inline-size: calc(var(--p) * 100%);
+      border-radius: inherit;
+      background: var(--fh-tone, var(--fh-color-accent));
+      transition: inline-size 600ms var(--fh-ease-out);
+    }
+  }
+  .fh-stages[data-state="active"] .fh-stages__track::after {
+    background:
+      repeating-linear-gradient(-45deg, color-mix(in oklab, white 22%, transparent) 0 6px, transparent 6px 12px) 0 0 / 34px 100%,
+      var(--fh-tone, var(--fh-color-accent));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-stages[data-state="active"] .fh-stages__track::after { animation: fh-stages-flow 0.8s linear infinite; }
+  }
+  @keyframes fh-stages-flow { to { background-position: 34px 0, 0 0; } }
+  .fh-stages__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-bound);
+      padding: 0.15rem 0.55rem;
+      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-radius: var(--fh-radius-pill);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+    & > li::before { content: ""; inline-size: 0.4rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background-color: currentColor; opacity: 0.5; }
+    & > li[data-state="done"] { color: var(--fh-color-text-muted); }
+    & > li[data-state="done"]::before { opacity: 1; background-color: var(--fh-color-success); }
+    & > li[data-state="active"] { border-style: solid; border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 60%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
+    & > li[data-state="active"]::before { opacity: 1; }
+    & > li[data-state="failed"] { color: var(--fh-color-danger); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-stages__list > li[data-state="active"]::before { animation: fh-stage-pulse 1.1s ease-in-out infinite; }
+  }
+  @keyframes fh-stage-pulse { 50% { scale: 0.55; opacity: 0.45; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-play,
+    .fh-play::after,
+    .fh-stages__track::after { transition: none; }
+  }
+}

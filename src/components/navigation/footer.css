@@ -1,0 +1,93 @@
+/*
+ * Firehorse — Footer
+ * components/navigation · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Footer —— */
+  .fh-footer {
+    padding-block: var(--fh-section-space) var(--fh-inset-card);
+  }
+
+  /* Ruled grid: the grid draws top/left, each column right/bottom,
+   * so lines stay continuous at any column count. */
+  .fh-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-footer__column {
+    padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
+    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & h2,
+    & h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-related);
+      margin: 0 0 var(--fh-gap-grouped-wide);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--fh-color-text) 78%, transparent);
+
+      &::before {
+        content: "";
+        inline-size: 0.4rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background-color: var(--fh-tone);
+        box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-tone) 35%, transparent);
+      }
+    }
+
+    & ul {
+      display: grid;
+      gap: var(--fh-gap-related);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      color: var(--fh-color-text-muted);
+      font-size: 0.84rem;
+      font-weight: var(--fh-weight-book);
+      letter-spacing: var(--fh-tracking-body);
+      text-decoration: none;
+      transition: color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &:hover {
+        color: var(--fh-tone);
+      }
+    }
+  }
+
+  .fh-footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    padding-block-start: var(--fh-inset-card);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+
+    & a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--fh-color-text);
+      }
+    }
+  }
+}

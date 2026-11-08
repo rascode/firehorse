@@ -9,6 +9,9 @@
 <meta name="theme-color" content="#161616">
 <!-- KC's live endpoint (POST {agent, message, history, page} → {reply}). Empty: KC answers from the index on the page. -->
 <meta name="fh-kc-endpoint" content="">
+<!-- The design system this page is built on: audits and agents read it to pick the right Index. -->
+<meta name="design-system" content="firehorse@{{DS_VERSION}}">
+<link rel="design-system" href="https://firehorse.rascode.dev/index.json">
 <meta property="og:title" content="{{OG_TITLE}}">
 <meta property="og:description" content="{{OG_DESCRIPTION}}">
 <meta property="og:url" content="{{URL}}">
@@ -26,15 +29,16 @@
 <link rel="alternate" type="application/json" title="Design tokens" href="tokens.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300..900&family=Hanken+Grotesk:wght@300..700&family=Archivo:wght@300..700&display=swap">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" as="image" href="/img/backdrop/firehorse-horse.webp?v=4" fetchpriority="high">
 <script>/* Hero intro: hold the animation until the horse art is decoded, so it plays smoothly. */(()=>{const d=document.documentElement,go=()=>d.classList.add("fh-ready");d.classList.add("fh-js");const i=new Image();i.src="/img/backdrop/firehorse-horse.webp?v=4";(i.decode?i.decode():Promise.reject()).then(go,go);setTimeout(go,2000)})();</script>
 <link rel="stylesheet" href="firehorse.css">
 <link rel="stylesheet" href="themes/rascode.css">
 <link rel="stylesheet" href="themes.css">
-<script>try{var t=localStorage.getItem("fh-theme");if(t!==null)t?document.documentElement.setAttribute("data-fh-theme",t):document.documentElement.removeAttribute("data-fh-theme")}catch(e){}</script>
+<script>/* ?theme=<name> / ?scheme=light|dark|auto in the URL wins and is remembered, so a link can open the site in a given look. */try{var q=new URLSearchParams(location.search),qt=q.get("theme"),qs=q.get("scheme");if(qt!==null&&/^[a-z0-9-]{0,40}$/.test(qt))localStorage.setItem("fh-theme",qt==="firehorse"?"":qt);if(qs&&/^(light|dark|auto)$/.test(qs))localStorage.setItem("fh-scheme",qs)}catch(e){}try{var t=localStorage.getItem("fh-theme");if(t!==null)t?document.documentElement.setAttribute("data-fh-theme",t):document.documentElement.removeAttribute("data-fh-theme")}catch(e){}/* Colour of the day: the golden angle times the day number, so consecutive days sit far apart on the wheel. */try{var D=document.documentElement,n=new Date(),k=Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/864e5),hue=Math.round(k*137.508%360);D.style.setProperty("--site-day","oklch(0.68 0.19 "+hue+")");D.setAttribute("data-site-day","");}catch(e){}try{var r=localStorage.getItem("fh-root");if(r&&/^#[0-9a-f]{6}$/i.test(r)){document.documentElement.style.setProperty("--site-pick",r);document.documentElement.setAttribute("data-site-root","")}}catch(e){}</script>
 <link rel="stylesheet" href="icons.css">
+{{STYLES}}
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -71,10 +75,6 @@
 
 <script type="module" src="firehorse.js"></script>
 <script src="attribution.js" defer></script>
-<!-- Display settings: the theme, to the left of Ask KC (bottom right). The color mode sits in the header. -->
-<div class="site-float" role="group" aria-label="Theme">
-  <select class="fh-select site-theme-select" data-fh-theme-select aria-label="Theme"><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select>
-</div>
 <script src="site.js" defer></script>
 <script type="module" src="site-features.js"></script>
 <script type="module" src="site-index.js"></script>

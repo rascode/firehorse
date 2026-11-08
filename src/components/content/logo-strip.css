@@ -1,0 +1,64 @@
+/*
+ * Firehorse — Logo strip (LGS)
+ * components/content · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Logo strip (LGS) ——
+   * Grayscale marks that come to full color on hover. Add
+   * fh-logos--marquee for an endless scroll (duplicate the list once).
+   * Only show logos you have permission to use. */
+  .fh-logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-gap-sectioned) clamp(var(--fh-gap-sectioned), 6cqi, var(--fh-gap-separated));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & :is(img, svg) {
+      block-size: var(--fh-logo-height, 1.5rem);
+      inline-size: auto;
+      opacity: 0.6;
+      filter: grayscale(1);
+      transition:
+        opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        filter var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    & :is(img, svg):hover {
+      opacity: 1;
+      filter: none;
+    }
+  }
+
+  .fh-logos--marquee {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow: hidden;
+    mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+
+    & > * {
+      flex: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-logos--marquee > * {
+      animation: fh-marquee var(--fh-marquee-duration, 30s) linear infinite;
+    }
+
+    .fh-logos--marquee:hover > * {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes fh-marquee {
+    to {
+      translate: calc(-100% - var(--fh-gap-separated)) 0;
+    }
+  }
+
+}

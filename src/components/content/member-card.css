@@ -1,0 +1,346 @@
+/*
+ * Firehorse — Member card (MBR)
+ * components/content · layer fh.components · docs /components/content/#MBR
+ */
+
+@layer fh.components {
+  /* —— Member card (MBR) ——
+   * A pass for one person: an art panel on top, a big two-line name with
+   * an ID number, a dotted rule, mono facts, and a round "made by" stamp
+   * in the corner. The art carries a glitch: blocks of the picture shift
+   * colour and loose ASCII glyphs flicker over it, and the stamp's ring of
+   * text turns slowly. Pure CSS; all still under reduced motion.
+   *   <article class="fh-member" data-tone="orange">
+   *     <div class="fh-member__art"><img src="…" alt=""><span class="fh-member__glyphs" aria-hidden="true"></span></div>
+   *     <div class="fh-member__body">
+   *       <h3 class="fh-member__name">Ava Rascoe</h3>
+   *       <span class="fh-member__id">#291832</span>
+   *       <dl class="fh-member__facts">
+   *         <div><dt>Account creation</dt><dd>Fri 10 Apr, 2026</dd></div>
+   *         <div><dt>Current</dt><dd>Active</dd></div>
+   *       </dl>
+   *       <p class="fh-member__role">Studio team<br>Senior developer</p>
+   *       <svg class="fh-member__stamp" viewBox="0 0 100 100" aria-hidden="true">…</svg>
+   *     </div>
+   *   </article>
+   * The card follows the scheme; data-fh-scheme="light" on it gives the
+   * paper look on a dark page. data-tone colours the stamp and the glow.
+   * Drop __glyphs for a clean picture, or the stamp for a plain corner.
+   *   modifiers  --glow (a soft tone halo behind the card)
+   *              --square (no corners)
+   *              --plates (art and body as two separate plates)
+   *              --smear (the glitch smears the picture sideways instead
+   *              of recolouring it)
+   *   parts      __tagline (a mono line under the name) · __meta (a quiet
+   *              row: ID left, role right) · __badge (a holographic tile
+   *              holding a mark, in place of the stamp)
+   *   knobs      --fh-member-width (22rem) · --fh-member-art-ratio (16 / 10)
+   *              --fh-member-radius · --fh-member-glitch (time per hop, 2.8s)
+   *              --fh-member-turn (one stamp turn, 28s) */
+  .fh-member {
+    --_tone: var(--fh-tone, var(--fh-color-accent));
+    display: grid;
+    grid-template-rows: auto 1fr;
+    inline-size: 100%;
+    max-inline-size: var(--fh-member-width, 22rem);
+    overflow: clip;
+    container: fh-member / inline-size;
+    border-radius: var(--fh-member-radius, var(--fh-radius-lg));
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: 0 0 0 1px var(--fh-color-border);
+  }
+
+  .fh-member--glow {
+    box-shadow:
+      0 0 0 1px var(--fh-color-border),
+      0 1.5rem 5rem -1rem color-mix(in oklab, var(--_tone) 55%, transparent);
+  }
+  .fh-member--square { border-radius: 0; }
+
+  /* —— Art, with its glitch —— */
+  .fh-member__art {
+    position: relative;
+    aspect-ratio: var(--fh-member-art-ratio, 16 / 10);
+    overflow: clip;
+    background-color: color-mix(in oklab, var(--_tone) 70%, var(--fh-color-canvas));
+  }
+  .fh-member__art > :is(img, video, picture) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Blocks of the picture, recoloured. Each mask layer is one block. */
+  .fh-member__glyphs {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: hue-rotate(22deg) saturate(1.3) contrast(1.12) brightness(1.14);
+    mask-image:
+      linear-gradient(var(--fh-color-ink) 0 0), linear-gradient(var(--fh-color-ink) 0 0), linear-gradient(var(--fh-color-ink) 0 0),
+      linear-gradient(var(--fh-color-ink) 0 0), linear-gradient(var(--fh-color-ink) 0 0);
+    mask-repeat: no-repeat;
+    mask-size: 16% 10%, 9% 15%, 22% 6%, 8% 8%, 12% 11%;
+    mask-position: 8% 30%, 62% 18%, 70% 64%, 28% 78%, 92% 42%;
+  }
+
+  /* Loose ASCII over the picture. */
+  .fh-member__glyphs::before,
+  .fh-member__glyphs::after {
+    position: absolute;
+    color: var(--fh-color-on-ink);
+    font-family: var(--fh-font-mono);
+    font-size: clamp(0.4rem, 2.6cqi, 0.6rem);
+    line-height: 1.05;
+    white-space: pre;
+    text-shadow: 0 0 0.4em color-mix(in oklab, var(--fh-color-ink) 40%, transparent);
+  }
+  .fh-member__glyphs::before {
+    content: "  #/SM/\A 8  $_04\A   X_#H/\A #     4\A HM  _  #\A 40    I";
+    inset: 16% auto auto 8%;
+  }
+  .fh-member__glyphs::after {
+    content: "M_ H5  S4\A##  H  /#\A _04_   H\A    4\A  _S/H\A 4 HH# /I";
+    inset: auto 7% 12% auto;
+    text-align: end;
+  }
+
+  /* —— Body —— */
+  .fh-member__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: repeat(5, auto) 1fr;
+    column-gap: var(--fh-gap-grouped-wide);
+    padding: clamp(var(--fh-inset-tile), 6cqi, var(--fh-inset-card));
+  }
+
+  .fh-member__name {
+    grid-column: 1;
+    margin: 0;
+    font-family: var(--fh-font-display);
+    font-size: clamp(1.75rem, 12cqi, 2.75rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .fh-member__id {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    padding-block-start: 0.35em;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+
+  .fh-member__facts {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide);
+    margin: clamp(var(--fh-gap-sectioned), 9cqi, var(--fh-gap-sectioned)) 0 0;
+    padding-block-start: var(--fh-inset-tile);
+    border-block-start: 1px dotted var(--fh-color-text-subtle);
+  }
+  .fh-member__facts > div:last-child { text-align: end; }
+  .fh-member__facts :is(dt, dd),
+  .fh-member__role {
+    margin: 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .fh-member__role {
+    grid-column: 1;
+    grid-row: 6;
+    align-self: end;
+    margin-block-start: var(--fh-gap-sectioned);
+  }
+
+  .fh-member__stamp {
+    grid-column: 2;
+    grid-row: 6;
+    align-self: end;
+    inline-size: clamp(3.25rem, 22cqi, 4.5rem);
+    block-size: auto;
+    margin-block-start: var(--fh-gap-sectioned);
+    color: var(--_tone);
+    fill: currentColor;
+    stroke: currentColor;
+  }
+  .fh-member__stamp circle { fill: none; stroke-width: 0.8; }
+  .fh-member__stamp text {
+    stroke: none;
+    font-family: var(--fh-font-mono);
+    font-size: calc(8.4 * 1px); /* SVG user units in the stamp viewBox, not a reading size */
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+  .fh-member__stamp path:not([fill="none"]) { stroke: none; }
+
+  /* —— Plates: art and body as two separate pieces —— */
+  .fh-member--plates {
+    gap: var(--fh-gap-bound);
+    overflow: visible;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .fh-member--plates > :is(.fh-member__art, .fh-member__body) {
+    border-radius: var(--fh-member-radius, var(--fh-radius-lg));
+  }
+  .fh-member--plates > .fh-member__body {
+    background-color: var(--fh-color-surface-raised);
+    box-shadow: 0 0 0 1px var(--fh-color-border);
+  }
+  /* —— data-fh-card-content="frost" ——
+   * The art runs the full card and the body floats over its lower part on
+   * a frosted pane (plates: the art plate does). Where style queries aren't
+   * supported the body keeps its place and only takes the pane. */
+  .fh-member > .fh-member__body {
+    position: relative;
+    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border-radius: var(--fh-card-content-radius, 0);
+    background-color: var(--fh-card-content-bg, transparent);
+    backdrop-filter: var(--fh-card-content-backdrop, none);
+  }
+  .fh-member--plates > .fh-member__body {
+    background-color: var(--fh-card-content-bg, var(--fh-color-surface-raised));
+  }
+  @container style(--fh-card-content: frost) {
+    .fh-member > :is(.fh-member__art, .fh-member__body) { grid-area: 1 / 1 / -1 / -1; }
+    .fh-member > .fh-member__art { aspect-ratio: auto; }
+    .fh-member > .fh-member__body {
+      align-self: end;
+      margin: 46cqi var(--fh-card-content-inset, 0px) var(--fh-card-content-inset, 0px);
+      padding: var(--fh-card-content-pad, var(--fh-inset-tile));
+    }
+    .fh-member--plates > .fh-member__body { box-shadow: none; }
+  }
+
+  .fh-member--plates.fh-member--glow > .fh-member__art {
+    box-shadow: 0 1.5rem 5rem -1rem color-mix(in oklab, var(--_tone) 55%, transparent);
+  }
+
+  .fh-member__tagline {
+    grid-column: 1 / -1;
+    margin: var(--fh-gap-grouped-wide) 0 0;
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-small);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .fh-member__meta {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped-wide);
+    margin: var(--fh-gap-grouped-wide) 0 0;
+    padding-block-start: var(--fh-inset-tile);
+    border-block-start: 1px solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* A holographic tile: a soft iridescent sheen under a dark mark. */
+  .fh-member__badge {
+    grid-column: 2;
+    grid-row: 6;
+    align-self: end;
+    display: grid;
+    place-items: center;
+    inline-size: clamp(2.25rem, 14cqi, 2.75rem);
+    aspect-ratio: 1;
+    margin-block-start: var(--fh-gap-sectioned);
+    border-radius: 28%;
+    background:
+      radial-gradient(circle at 30% 20%, color-mix(in oklab, var(--fh-color-on-ink) 70%, transparent), transparent 55%),
+      conic-gradient(from 200deg, oklch(0.9 0.09 200), oklch(0.93 0.1 120), oklch(0.92 0.08 60), oklch(0.88 0.1 330), oklch(0.9 0.09 260), oklch(0.9 0.09 200));
+    color: color-mix(in oklab, var(--fh-color-ink) 80%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-on-ink) 55%, transparent);
+  }
+  .fh-member__badge > svg {
+    inline-size: 55%;
+    block-size: auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* —— Smear: the glitch drags the picture sideways in streaks —— */
+  .fh-member--smear .fh-member__glyphs {
+    backdrop-filter: blur(4px) saturate(1.25) brightness(1.1);
+    background-image: repeating-linear-gradient(90deg, color-mix(in oklab, var(--fh-color-on-ink) 22%, transparent) 0 1px, transparent 1px 3px);
+    mask-size: 34% 5%, 26% 7%, 40% 4%, 22% 6%, 30% 5%;
+    mask-position: 4% 34%, 30% 46%, 0% 58%, 40% 70%, 8% 82%;
+  }
+
+  /* —— Motion —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-member__stamp text {
+      animation: fh-member-turn var(--fh-member-turn, 28s) linear infinite;
+    }
+    .fh-member__glyphs {
+      animation: fh-member-hop calc(var(--fh-member-glitch, 2.8s) * 3) steps(1, end) infinite;
+    }
+    .fh-member__glyphs::before {
+      animation: fh-member-glyphs-a calc(var(--fh-member-glitch, 2.8s) * 3) steps(1, end) infinite;
+    }
+    .fh-member--smear .fh-member__glyphs {
+      animation-name: fh-member-smear;
+    }
+    .fh-member__badge {
+      animation: fh-member-sheen 9s ease-in-out infinite alternate;
+    }
+    .fh-member__glyphs::after {
+      animation: fh-member-glyphs-b calc(var(--fh-member-glitch, 2.8s) * 3) steps(1, end) infinite;
+    }
+  }
+
+  @keyframes fh-member-turn {
+    to { rotate: 1turn; }
+  }
+
+  /* Three states, held a third of the cycle each, with a quick stutter. */
+  @keyframes fh-member-hop {
+    0%, 30% { mask-position: 8% 30%, 62% 18%, 70% 64%, 28% 78%, 92% 42%; }
+    31%, 32% { mask-position: 12% 34%, 58% 22%, 74% 60%, 24% 74%, 88% 46%; }
+    33%, 63% { mask-position: 40% 12%, 18% 58%, 86% 30%, 54% 86%, 6% 70%; }
+    64%, 65% { mask-position: 44% 16%, 22% 54%, 82% 34%, 50% 82%, 10% 66%; }
+    66%, 100% { mask-position: 74% 76%, 34% 26%, 12% 12%, 86% 52%, 50% 48%; }
+  }
+  @keyframes fh-member-smear {
+    0%, 30% { mask-position: 4% 34%, 30% 46%, 0% 58%, 40% 70%, 8% 82%; }
+    31%, 32% { mask-position: 10% 34%, 36% 46%, 6% 58%, 46% 70%, 14% 82%; }
+    33%, 63% { mask-position: 0% 22%, 18% 30%, 6% 40%, 26% 52%, 2% 62%; }
+    64%, 65% { mask-position: 6% 22%, 24% 30%, 12% 40%, 32% 52%, 8% 62%; }
+    66%, 100% { mask-position: 12% 44%, 0% 54%, 30% 64%, 6% 74%, 20% 86%; }
+  }
+  @keyframes fh-member-sheen {
+    to { filter: hue-rotate(40deg) brightness(1.04); }
+  }
+  @keyframes fh-member-glyphs-a {
+    0%, 32% { content: "  #/SM/\A 8  $_04\A   X_#H/\A #     4\A HM  _  #\A 40    I"; }
+    33%, 65% { content: "H/S  /\A  _4 #/\A X  SS\A  IHH  4\A #   _\A    X 8"; }
+    66%, 100% { content: " 4#\A_S/H  /\A  IX 0\A H#S/ #\A   4 HH\A I  _ #"; }
+  }
+  @keyframes fh-member-glyphs-b {
+    0%, 32% { content: "M_ H5  S4\A##  H  /#\A _04_   H\A    4\A  _S/H\A 4 HH# /I"; }
+    33%, 65% { content: "S8  4 X\A  S8M\A _ H\A #/ 0 4\A  X8I8"; }
+    66%, 100% { content: "_M18 /MX4\A HM X818\A  _ _0H8\A    4\A #  I"; }
+  }
+}

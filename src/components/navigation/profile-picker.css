@@ -1,0 +1,267 @@
+/*
+ * Firehorse — Profile picker (PRF)
+ * components/navigation · layer fh.components · docs /components/navigation/#PRF
+ */
+
+@layer fh.components {
+  /* —— Profile picker (PRF) ——
+   * Who's signed in, and everything about their session, one click away.
+   * The trigger is an etched pill (avatar, name, role); the menu is an
+   * fh-menu with an identity card on top, optional facts, the usual menu
+   * items, an inline setting row (e.g. colour scheme), a profile switcher
+   * (menuitemradio) and sign out. Popover + anchor positioning: no JS.
+   *
+   *   <button class="fh-profile" type="button" popovertarget="me" style="anchor-name: --me">
+   *     <span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span>
+   *     <span class="fh-profile__who"><b>Justin Rascoe</b><small>@rascode · Owner</small></span>
+   *   </button>
+   *   <div id="me" popover class="fh-menu fh-profile-menu" role="menu" style="position-anchor: --me">
+   *     <div class="fh-profile-menu__card" data-tone="sky">
+   *       <span class="fh-avatar fh-avatar--circle">JR</span>
+   *       <span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span>
+   *       <span class="fh-badge" data-tone="sky">Owner</span>
+   *     </div>
+   *     <dl class="fh-profile-menu__facts"><div><dt>Member</dt><dd>2019</dd></div> …</dl>
+   *     <p class="fh-menu__label">Account</p>
+   *     <a href="…"><i class="fh-icon fh-icon--user"></i>Profile<kbd>⌘P</kbd></a> …
+   *     <div class="fh-profile-menu__row"><span>Theme</span><fieldset class="fh-segmented fh-segmented--sm">…</fieldset></div>
+   *     <hr>
+   *     <p class="fh-menu__label">Switch profile</p>
+   *     <button role="menuitemradio" aria-checked="true" class="fh-profile-menu__option">
+   *       <span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Rascode</b><small>Owner</small></span>
+   *     </button>
+   *     <hr>
+   *     <button class="fh-menu__danger"><i class="fh-icon fh-icon--log-out"></i>Sign out</button>
+   *   </div>
+   * --compact: avatar only (narrow bars). --reveal: avatar only until hover,
+   * focus or an open menu, then the full chip. The trigger shows a ring while its menu is open. */
+  .fh-profile {
+    --fh-avatar-size: 1.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    max-inline-size: 16rem;
+    padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: 0.7rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text-subtle);
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover {
+      border-style: solid;
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+
+    &:has(+ .fh-profile-menu:popover-open) {
+      border-style: solid;
+      border-color: var(--fh-color-border-strong);
+      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+
+      &::after { rotate: 180deg; }
+    }
+
+    & > .fh-avatar { flex: none; }
+  }
+
+  .fh-profile__who {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > b {
+      overflow: hidden;
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > small {
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wide);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .fh-profile--compact {
+    padding: 0.2rem;
+
+    & > .fh-profile__who,
+    &::after { display: none; }
+  }
+
+  /* --reveal: avatar only at rest; hover, keyboard focus or an open menu
+   * extends it to the full chip (name, handle, chevron). */
+  .fh-profile--reveal {
+    gap: 0;
+    padding: 0.2rem;
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      padding var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > .fh-profile__who,
+    &::after {
+      max-inline-size: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        max-inline-size var(--fh-duration-base) var(--fh-ease-standard),
+        opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        margin var(--fh-duration-base) var(--fh-ease-standard),
+        rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:not(:hover, :focus-visible, :has(+ .fh-profile-menu:popover-open)) {
+      border-color: transparent;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &:has(+ .fh-profile-menu:popover-open) {
+      padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
+
+      & > .fh-profile__who {
+        max-inline-size: 12rem;
+        margin-inline-start: var(--fh-gap-related);
+        opacity: 1;
+      }
+
+      &::after {
+        max-inline-size: 0.7rem;
+        margin-inline-start: var(--fh-gap-related);
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &, & > *, &::after { transition: none; }
+    }
+  }
+
+  .fh-profile-menu {
+    --fh-avatar-size: 1.75rem;
+    min-inline-size: 18rem;
+    max-inline-size: min(22rem, 100vi - 2rem);
+    max-block-size: min(36rem, 85dvh);
+  }
+
+  @supports (position-area: bottom) {
+    .fh-profile-menu { position-area: block-end span-inline-start; }
+  }
+
+  .fh-profile-menu__card {
+    --fh-avatar-size: 2.75rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    margin: calc(-1 * var(--fh-gap-bound)) calc(-1 * var(--fh-gap-bound)) var(--fh-gap-bound);
+    padding: var(--fh-inset-tile) var(--fh-inset-control);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 5%, transparent);
+  }
+
+  .fh-profile-menu__id {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > b {
+      overflow: hidden;
+      font-weight: var(--fh-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > small {
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-caption);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .fh-profile-menu__card .fh-profile-menu__id > b { font-size: var(--fh-text-body); }
+
+  /* A row of small facts under the card (member since, plan, role…). */
+  .fh-profile-menu__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    margin: 0 0 var(--fh-gap-bound);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-sm);
+
+    & > div {
+      display: grid;
+      gap: 0.15rem;
+      padding: var(--fh-inset-tight) var(--fh-inset-control);
+
+      & + div { border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
+    }
+
+    & dt {
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+
+    & dd {
+      margin: 0;
+      font-family: var(--fh-font-figure);
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  /* A setting that lives in the menu: label on one side, control on the other. */
+  .fh-profile-menu__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    padding: 0.35rem 0.65rem;
+    font-size: var(--fh-text-small);
+
+    & > :first-child {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-grouped);
+    }
+
+    & > :first-child > .fh-icon { color: var(--fh-color-text-subtle); }
+  }
+
+  /* A profile to switch to: avatar and two lines, check when current. */
+  .fh-menu > .fh-profile-menu__option { gap: var(--fh-gap-related); padding-block: 0.4rem; }
+
+}

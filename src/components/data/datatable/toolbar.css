@@ -1,0 +1,217 @@
+/*
+ * Firehorse — Toolbar (DTB)
+ * components/data/datatable · layer fh.components · docs /data/#DTB
+ */
+
+@layer fh.components {
+  /* —— Toolbar —— */
+  /* One quiet row: identity (title · count · views) on the left, tools on
+   * the right. Every control shares one height (--fh-dt-control). */
+  .fh-dt__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
+    padding: var(--fh-inset-control) var(--fh-inset-control);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  .fh-dt__tools {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  /* Toolbar segmented controls: square-shouldered, sans, no white fill. */
+  .fh-dt__toolbar .fh-segmented {
+    flex-direction: row;
+    gap: 0;
+    padding: 2px;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-sm);
+
+    & > label {
+      min-block-size: calc(var(--_ctl) - 6px);
+      padding: 0 var(--fh-inset-tight);
+      border-radius: calc(var(--fh-radius-sm) - 2px);
+      font-family: var(--fh-font-sans);
+      font-size: var(--fh-text-caption);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-body);
+      text-transform: none;
+
+      & .fh-icon { font-size: 0.9em; opacity: 0.8; }
+    }
+    & > label:has(:checked) {
+      background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+      color: var(--fh-color-text);
+    }
+  }
+  .fh-dt__density > label { min-inline-size: 1.6rem; font-family: var(--fh-font-mono); }
+
+  .fh-dt__title {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin: 0;
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-heading);
+    white-space: nowrap;
+  }
+
+  .fh-dt__count {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+    white-space: nowrap;
+  }
+
+  .fh-dt__spacer { flex: 1; }
+
+  .fh-dt .fh-dt__search {
+    flex: 0 1 12rem;
+    min-inline-size: 7rem;
+    min-block-size: var(--_ctl);
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    background-color: transparent;
+    font-size: var(--fh-text-small);
+    transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    block-size: var(--_ctl);
+    &:focus-within { border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent); }
+    & input { block-size: 100%; padding-block: 0; font-size: inherit; }
+  }
+
+  /* Narrow: title and count, then views, then a full-width search, then tools. */
+  @container fh-dt (inline-size < 36rem) {
+    .fh-dt__toolbar { gap: var(--fh-gap-related); }
+    .fh-dt__count { flex: 1; text-align: end; }
+    .fh-dt__spacer { display: none; }
+    .fh-dt__views { flex: 1 1 100%; }
+    .fh-dt .fh-dt__search { flex: 1 1 100%; order: 1; }
+    .fh-dt__tools, .fh-dt__density, .fh-dt__tool--action { order: 2; }
+    .fh-dt__tool--action { margin-inline-start: auto; }
+  }
+
+  /* Toolbar tool: a quiet button with an icon, label and optional count. */
+  .fh-dt__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    min-block-size: var(--_ctl);
+    padding: 0 var(--fh-inset-tight);
+    border: var(--fh-border-thin) solid transparent;
+    border-radius: var(--fh-button-radius, var(--fh-radius-sm));
+    background: none;
+    color: var(--fh-color-text-muted);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    white-space: nowrap;
+    cursor: var(--fh-cursor-action);
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); color: var(--fh-color-text); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
+    &:disabled { opacity: 0.4; cursor: default; background: none; }
+    & > .fh-icon { font-size: 0.95em; }
+    &[aria-pressed="true"],
+    &[data-active] {
+      background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent);
+      color: var(--fh-color-text);
+
+      & > .fh-icon { color: var(--fh-tone); }
+    }
+
+    /* Active count: a mono figure in the tone, no filled bubble. */
+    & b {
+      color: var(--fh-tone);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+    }
+  }
+
+  /* Primary action: an etched tone outline at control height. */
+  .fh-dt__tool--action {
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    color: var(--fh-color-text);
+
+    & > .fh-icon { color: var(--fh-tone); }
+    &:hover { border-style: solid; background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent); }
+  }
+
+  /* —— Popover panels (filter, sort, group, fields) —— */
+  .fh-dt__panel {
+    inline-size: min(26rem, calc(100vw - 2rem));
+    max-block-size: min(28rem, 70vh);
+    margin: 0;
+    padding: var(--fh-inset-control);
+    overflow: auto;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: var(--fh-shadow-menu);
+
+    &:popover-open { display: grid; gap: var(--fh-gap-related); }
+
+    & h3 {
+      margin: 0 0 var(--fh-gap-bound);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  @supports (position-area: bottom) {
+    .fh-dt__panel {
+      position-area: bottom span-right;
+      position-try-fallbacks: flip-inline, flip-block;
+      margin-block-start: var(--fh-gap-bound);
+    }
+  }
+
+  .fh-dt__rule {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
+    gap: var(--fh-gap-bound);
+    align-items: center;
+
+    & :is(select, input) { min-block-size: 2rem; padding-block: 0.25rem; font-size: var(--fh-text-small); }
+  }
+
+  .fh-dt__field-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tight) var(--fh-inset-tight);
+    border-radius: var(--fh-radius-sm);
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+    & > span { display: inline-flex; align-items: center; gap: var(--fh-gap-related); }
+  }
+
+  /* —— Active filters —— */
+  .fh-dt__filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    &:empty { display: none; }
+  }
+
+  /* Narrow slot: hide the toolbar labels, keep the icons. */
+  @container fh-dt (inline-size < 44rem) {
+    .fh-dt__tool > span { display: none; }
+    .fh-dt__search { flex: 1 1 10rem; }
+    .fh-dt__title { flex-basis: 100%; }
+  }
+}

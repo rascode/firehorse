@@ -1,0 +1,391 @@
+/*
+ * Firehorse — Dock (DCK)
+ * components/navigation · layer fh.components · docs /components/navigation/#DCK
+ */
+
+/*
+ * Firehorse — dock: the floating bar, cubes, chips and chip cards
+ * ---------------------------------------------------------------
+ * The dock is the masthead that rides under the site header on
+ * rascode.dev. At rest it is a quiet row (usually just the
+ * breadcrumb pill). Once the page scrolls far enough for it to pin,
+ * it "engages": it gains a blurred surface, the small title slides
+ * in, the snapshot cubes appear, and its outline CTA fills in.
+ *
+ *   <div class="fh-dock fh-frame" data-tone="sky">
+ *     <div class="fh-dock__bar">
+ *       <div class="fh-dock__identity">
+ *         <p class="fh-eyebrow-pill">…</p>
+ *         <p class="fh-dock__title">Landscaping agent</p>
+ *       </div>
+ *       <ul class="fh-cubes">
+ *         <li><b class="fh-cube">$1,695</b> per month</li> …
+ *       </ul>
+ *       <div class="fh-dock__actions"><a class="fh-button fh-button--outline">Talk to Wes</a></div>
+ *     </div>
+ *     <span class="fh-dock__progress"></span>
+ *   </div>
+ *
+ * Engaging needs no JavaScript in browsers with scroll-state
+ * container queries (it engages when it sticks). Elsewhere, and to
+ * hand off the header CTA, the optional enhancer (dist/firehorse.js)
+ * sets data-active="true". Both paths share one set of styles.
+ */
+
+@layer fh.components {
+  /* —— Dock —— */
+  .fh-dock {
+    position: sticky;
+    inset-block-start: var(--fh-dock-offset, var(--fh-header-height));
+    z-index: calc(var(--fh-z-sticky) - 1);
+    border-block-end: var(--fh-border-thin) dashed transparent;
+    /* A frame (inline-size) that can also report when it is stuck. */
+    container: fh-frame / inline-size scroll-state;
+    transition:
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      border-color var(--fh-duration-base) var(--fh-ease-standard);
+  }
+
+  .fh-dock__bar {
+    position: relative;
+    display: flex;
+    /* One row, always. Engaging slides the title in; if the bar could wrap,
+     * that would add a row, grow the sticky bar and shift the whole page. */
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    padding-block: var(--fh-inset-control) var(--fh-inset-tile);
+
+    & > .fh-chips {
+      flex: 0 4 auto;
+      flex-wrap: nowrap;
+      min-inline-size: 0;
+      padding-block: 3px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      mask-image: linear-gradient(to right, black calc(100% - 1.5rem), transparent);
+    }
+    & > .fh-dock__actions { flex: none; }
+  }
+
+  .fh-dock__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: clip;
+    overflow-clip-margin: 4px;
+
+    & .fh-eyebrow-pill {
+      flex: none;
+    }
+  }
+
+  /* Square portrait plate (agent, author, account). */
+  .fh-dock__avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-heavy);
+
+    & > img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .fh-dock__text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.18rem;
+    min-inline-size: 0;
+  }
+
+  /* The small title is collapsed at rest and slides in on engage. */
+  .fh-dock__title {
+    max-inline-size: 0;
+    margin: 0;
+    overflow: hidden;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-heading);
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    translate: -0.35rem 0;
+    transition:
+      max-inline-size var(--fh-duration-base) var(--fh-ease-out),
+      opacity var(--fh-duration-base) var(--fh-ease-standard),
+      translate var(--fh-duration-base) var(--fh-ease-out);
+  }
+
+  .fh-dock__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .fh-dock .fh-cubes,
+  .fh-dock .fh-chips {
+    opacity: 0;
+    visibility: hidden;
+    translate: -0.35rem 0;
+    transition:
+      opacity var(--fh-duration-base) var(--fh-ease-standard) 0.1s,
+      translate var(--fh-duration-base) var(--fh-ease-out) 0.1s,
+      visibility 0s linear var(--fh-duration-slow);
+  }
+
+  .fh-dock__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    margin-inline-start: auto;
+  }
+
+  /* Reading / scroll progress on the bar's bottom edge, driven by the
+   * page scroll itself — no script. Hidden until the dock engages;
+   * set data-fh-progress="off" (or data-mode="reader") for no animation. */
+  .fh-dock__progress {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: -1px;
+    block-size: 2px;
+    background-color: var(--fh-tone);
+    transform-origin: 0 50%;
+    scale: 0 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--fh-duration-base) var(--fh-ease-standard);
+  }
+
+  .fh-dock[data-active="true"] > .fh-dock__progress,
+  .fh-dock:is(:stuck) > .fh-dock__progress {
+    opacity: 1;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .fh-dock:not([data-fh-progress="off"], [data-mode="reader"]) .fh-dock__progress {
+      animation: fh-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  .fh-dock[data-fh-progress="off"] .fh-dock__progress,
+  .fh-dock[data-mode="reader"] .fh-dock__progress {
+    animation: none;
+  }
+
+  @keyframes fh-progress {
+    to {
+      scale: 1 1;
+    }
+  }
+
+  /* —— Engaged state (one block of rules, two triggers) —— */
+  .fh-dock[data-active="true"] {
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 92%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    border-block-end-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+
+    & .fh-dock__title {
+      max-inline-size: min(48cqi, 36rem);
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    & :is(.fh-cubes, .fh-chips) {
+      opacity: 1;
+      visibility: visible;
+      translate: 0 0;
+      transition-delay: 0.1s, 0.1s, 0s;
+    }
+
+    /* The outline CTA fills in, after the title has landed. */
+    & .fh-dock__actions .fh-button--outline {
+      --_bg: var(--fh-color-primary);
+      --_fg: var(--fh-color-on-primary);
+      /* Depth comes from the theme's button style (data-fh-button), like every other CTA. */
+      --_shadow: var(--fh-button-shadow, none);
+      --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+      --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
+
+      transition-delay: 0.35s;
+    }
+  }
+
+  @container scroll-state(stuck: top) {
+    .fh-dock__title {
+      max-inline-size: min(48cqi, 36rem);
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    .fh-dock :is(.fh-cubes, .fh-chips) {
+      opacity: 1;
+      visibility: visible;
+      translate: 0 0;
+      transition-delay: 0.1s, 0.1s, 0s;
+    }
+
+    .fh-dock__actions .fh-button--outline {
+      --_bg: var(--fh-color-primary);
+      --_fg: var(--fh-color-on-primary);
+      /* Depth comes from the theme's button style (data-fh-button), like every other CTA. */
+      --_shadow: var(--fh-button-shadow, none);
+      --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+      --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
+
+      transition-delay: 0.35s;
+    }
+  }
+
+  /* The scroll-state container can't style itself, so when stuck its
+   * surface is painted by the bar's ::after, widened from the content
+   * column to the frame's full width. */
+  @container scroll-state(stuck: top) {
+    .fh-dock__bar::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline: calc((100% - 100cqi) / 2);
+      z-index: -1;
+      border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      background-color: color-mix(in oklab, var(--fh-color-canvas) 92%, transparent);
+      backdrop-filter: blur(var(--fh-blur-chrome));
+      pointer-events: none;
+    }
+  }
+
+  /* Header hand-off: while a dock is engaged, the header's own CTA steps
+   * back to an inverted fill (canvas behind, text colour on top) so the
+   * dock's action is the one primary on screen; it stays clickable.
+   * (Needs data-active — set by the enhancer.) */
+  :root:has(.fh-dock[data-active="true"]) .fh-header__actions > .fh-button:not(.fh-button--secondary, .fh-button--ghost) {
+    --fh-button-bg: var(--fh-color-canvas);
+    --fh-button-fg: var(--fh-color-text);
+    --fh-button-border: color-mix(in oklab, var(--fh-color-text) 35%, transparent);
+    --fh-button-shadow: none;
+    --fh-button-shadow-hover: none;
+    --fh-button-sheen: 0;
+    transition: background-color var(--fh-duration-slow) var(--fh-ease-out), color var(--fh-duration-slow) var(--fh-ease-out), border-color var(--fh-duration-slow) var(--fh-ease-out);
+  }
+
+  /* Narrow docks: the pill yields to the small title, cubes hide,
+   * the CTA compacts. */
+  /* Narrow docks: two fixed rows that never change height.
+   *   row 1 — identity (title + current section) and a compact CTA
+   *   row 2 — the section chips as a swipeable strip
+   * The title is always shown here (no slide-in), so engaging changes
+   * colour, never layout. firehorse.js keeps the active chip in view and
+   * rolls the .fh-dock__heading to the section you're in. */
+  @container fh-frame (inline-size < 48rem) {
+    .fh-dock__bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "identity actions" "chips chips";
+      gap: var(--fh-gap-related) var(--fh-gap-grouped);
+      padding-block: var(--fh-inset-tight);
+    }
+    .fh-dock__identity { grid-area: identity; }
+    .fh-dock__actions { grid-area: actions; }
+    .fh-dock__bar > .fh-chips {
+      grid-area: chips;
+      gap: var(--fh-gap-bound);
+      margin-inline: calc(var(--fh-page-margin, 1rem) * -1);
+      padding-inline: var(--fh-page-margin, 1rem);
+      padding-block: 2px;
+      scroll-snap-type: x proximity;
+      scroll-padding-inline: var(--fh-page-margin, 1rem);
+      mask-image: linear-gradient(90deg, transparent, black var(--fh-gap-grouped-wide), black calc(100% - var(--fh-gap-sectioned)), transparent);
+    }
+    .fh-dock__bar > .fh-chips > .fh-chip {
+      scroll-snap-align: start;
+      padding: 0.3rem 0.65rem;
+      font-size: var(--fh-text-caption);
+    }
+
+    /* Chips are always visible on narrow docks: they are the navigation. */
+    .fh-dock .fh-dock__bar > .fh-chips,
+    .fh-dock:not([data-active="true"]) .fh-dock__bar > .fh-chips {
+      opacity: 1;
+      visibility: visible;
+      translate: none;
+    }
+
+    .fh-dock .fh-cubes,
+    .fh-dock .fh-eyebrow-pill:not(.fh-dock__heading) {
+      display: none;
+    }
+
+    .fh-dock .fh-dock__title {
+      max-inline-size: none;
+      opacity: 1;
+      translate: none;
+      font-size: var(--fh-text-body);
+    }
+    .fh-dock__meta { font-size: var(--fh-text-micro); }
+
+    /* CTA collapses to its icon; the label stays for assistive tech. */
+    .fh-dock__actions .fh-button {
+      inline-size: 2.25rem;
+      min-block-size: 2.25rem;
+      padding-inline: 0;
+      justify-content: center;
+    }
+    .fh-dock__actions .fh-button:has(> .fh-roll, > span)::before { margin: 0; }
+    .fh-dock__actions .fh-button > :is(.fh-roll, span) {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  /* Rolling section heading: the dock's title follows where you are. */
+  /* Plain: a bold title. As an eyebrow pill (.fh-eyebrow-pill.fh-dock__heading)
+   * it reads like "● Data | 04 / 16": live dot and both segments follow the
+   * section's tone and roll with it. */
+  .fh-dock__heading:not(.fh-eyebrow-pill) {
+    display: flex;
+    min-inline-size: 0;
+    margin: 0;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-lede);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-heading);
+  }
+  .fh-dock__identity .fh-eyebrow-pill.fh-dock__heading {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    transition: border-color var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > .fh-eyebrow-pill__seg { min-inline-size: 0; }
+    & > .fh-eyebrow-pill__seg:last-child { flex: none; }
+    & .fh-dot { transition: background-color var(--fh-duration-base) var(--fh-ease-standard); }
+  }
+
+}

@@ -48,6 +48,19 @@
 .pg-tools .fh-dt__tool { min-block-size: 1.75rem; padding-inline: 0.4rem; }
 .pg-tools [data-act="drag"] { cursor: grab; }
 .pg-drop { block-size: 4px; margin: -2px 0; border-radius: 2px; background: var(--fh-tone-lime); box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone-lime) 25%, transparent); }
-.pg .site-config-fab { display: none; }
 .pg-library { min-inline-size: 0; }
 .pg-library > .fh-search { min-inline-size: 0; }
+
+/* Phones: a read-only preview. The builder needs a pointer and room, so the
+ * library, block tools, width switch and Clear step aside, the frame runs at
+ * phone width, and a note says where to build. */
+.pg-phone-note { display: none; }
+@container pg (inline-size < 48rem) {
+  .pg-phone-note { display: grid; max-inline-size: 30rem; margin: 0 auto var(--fh-space-4); }
+  .pg-library, .pg-widths, .pg-tools, [data-pg="clear"] { display: none !important; }
+  .pg-app { grid-template-columns: minmax(0, 1fr); }
+  .pg-stage { padding: var(--fh-space-4) var(--fh-space-3) var(--fh-space-12); }
+  .pg-frame { inline-size: min(390px, 100%) !important; }
+  .pg-block, .pg-block:hover, .pg-block:focus-within { outline-color: transparent; }
+  .pg-preset { min-inline-size: 0; flex: 1 1 12rem; }
+}

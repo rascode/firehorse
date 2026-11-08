@@ -1,0 +1,53 @@
+/*
+ * Firehorse — Hero (CIN)
+ * patterns · layer fh.patterns · docs /patterns/#CIN
+ */
+
+@layer fh.patterns {
+  /* —— Hero ——
+   *   <section class="fh-section fh-section--hero">
+   *     <div class="fh-hero">
+   *       <p class="fh-eyebrow-pill">…</p>
+   *       <h1 class="fh-display">…</h1>
+   *       <p class="fh-lede">…</p>
+   *       <div class="fh-hero__actions">…buttons…</div>
+   *     </div>
+   *   </section> */
+  .fh-section--hero {
+    padding-block: var(--fh-page-top) var(--fh-section-space);
+  }
+
+  .fh-hero {
+    display: grid;
+    gap: var(--fh-gap-sectioned);
+    justify-items: start;
+    max-inline-size: 44rem;
+
+    & > .fh-display,
+    & > .fh-title {
+      margin-block-start: var(--fh-gap-bound);
+    }
+  }
+
+  .fh-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-grouped);
+    margin-block-start: var(--fh-gap-related);
+  }
+
+  /* Hero with media: copy left, frame right; stacks when narrow. */
+  .fh-hero-split {
+    display: grid;
+    gap: var(--fh-gap-separated);
+    align-items: center;
+  }
+
+  @container (inline-size >= 60rem) {
+    .fh-hero-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--fh-gap-separated);
+    }
+  }
+
+}

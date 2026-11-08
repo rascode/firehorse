@@ -1,0 +1,89 @@
+/*
+ * Firehorse — Guides (GDS)
+ * utilities · layer fh.utilities
+ *
+ * Designer overlays drawn over the whole page, for checking placement. Pure CSS: put any
+ * mix of these words in data-fh-guides on <html> (the docs site's theme panel does it):
+ *
+ *   cols-12   the 12 columns and gutters of the content area (fh-cols)
+ *   cols-16   the 16-column alternative
+ *   golden    golden sections: lines at 38.2% and 61.8% across and down
+ *   thirds    rule of thirds
+ *   baseline  horizontal rhythm every --fh-guides-baseline (8px)
+ *   modular   square modules every --fh-guides-module (32px), on the 8-point grid
+ *   safe      the page margins and the content edges, plus the device's safe areas
+ *
+ * Columns line up with the page frame (--fh-content-max, --fh-page-margin) and the
+ * column gutter (--fh-cols-gutter). The overlay never takes clicks.
+ */
+
+@layer fh.utilities {
+  :root {
+    --fh-guides-color: color-mix(in oklab, var(--fh-color-accent) 55%, transparent);
+    --fh-guides-fill: color-mix(in oklab, var(--fh-color-accent) 9%, transparent);
+    --fh-guides-baseline: var(--fh-space-2);
+    --fh-guides-module: var(--fh-space-8);
+    --fh-cols-gutter: var(--fh-space-6);
+  }
+
+  html[data-fh-guides]::before,
+  html[data-fh-guides]::after {
+    content: "";
+    position: fixed;
+    inset-block: 0;
+    z-index: 2147483000;
+    pointer-events: none;
+  }
+
+  /* Columns: the content area only. */
+  html[data-fh-guides~="cols-12"]::before,
+  html[data-fh-guides~="cols-16"]::before {
+    --_n: 12;
+    --_edge: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+    inset-inline: var(--_edge);
+    background-image: linear-gradient(to right, var(--fh-guides-fill) 0 calc(100% - var(--fh-cols-gutter)), transparent 0);
+    background-size: calc((100% + var(--fh-cols-gutter)) / var(--_n)) 100%;
+    background-repeat: repeat-x;
+    outline: 1px dashed var(--fh-guides-color);
+  }
+  html[data-fh-guides~="cols-16"]::before { --_n: 16; }
+
+  /* Everything else: one layer, each guide adding its own image. */
+  html[data-fh-guides]::after {
+    --_none: linear-gradient(transparent, transparent);
+    --_line: 1px;
+    --_c: var(--fh-guides-color);
+    inset-inline: 0;
+    background-image:
+      var(--_golden, var(--_none)), var(--_golden-y, var(--_none)),
+      var(--_thirds, var(--_none)), var(--_thirds-y, var(--_none)),
+      var(--_baseline, var(--_none)),
+      var(--_modular, var(--_none)), var(--_modular-y, var(--_none)),
+      var(--_safe, var(--_none));
+  }
+  html[data-fh-guides~="golden"]::after {
+    --_golden: linear-gradient(to right, transparent calc(38.2% - 0.5px), var(--_c) 0 calc(38.2% + 0.5px), transparent 0 calc(61.8% - 0.5px), var(--_c) 0 calc(61.8% + 0.5px), transparent 0);
+    --_golden-y: linear-gradient(to bottom, transparent calc(38.2% - 0.5px), var(--_c) 0 calc(38.2% + 0.5px), transparent 0 calc(61.8% - 0.5px), var(--_c) 0 calc(61.8% + 0.5px), transparent 0);
+  }
+  html[data-fh-guides~="thirds"]::after {
+    --_thirds: linear-gradient(to right, transparent calc(33.333% - 0.5px), var(--_c) 0 calc(33.333% + 0.5px), transparent 0 calc(66.667% - 0.5px), var(--_c) 0 calc(66.667% + 0.5px), transparent 0);
+    --_thirds-y: linear-gradient(to bottom, transparent calc(33.333% - 0.5px), var(--_c) 0 calc(33.333% + 0.5px), transparent 0 calc(66.667% - 0.5px), var(--_c) 0 calc(66.667% + 0.5px), transparent 0);
+  }
+  html[data-fh-guides~="baseline"]::after {
+    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 1px, transparent 1px var(--fh-guides-baseline));
+  }
+  html[data-fh-guides~="modular"]::after {
+    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module));
+    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module));
+  }
+  html[data-fh-guides~="safe"]::after {
+    --_m: var(--fh-page-margin);
+    --_e: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+    --_safe: linear-gradient(to right,
+      color-mix(in oklab, var(--fh-color-danger) 10%, transparent) 0 max(var(--_m), env(safe-area-inset-left, 0px)),
+      transparent 0 calc(var(--_e) - 1px), var(--_c) 0 var(--_e),
+      transparent 0 calc(100% - var(--_e)), var(--_c) 0 calc(100% - var(--_e) + 1px),
+      transparent 0 calc(100% - max(var(--_m), env(safe-area-inset-right, 0px))),
+      color-mix(in oklab, var(--fh-color-danger) 10%, transparent) 0);
+  }
+}

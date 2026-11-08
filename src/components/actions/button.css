@@ -1,0 +1,276 @@
+/*
+ * Firehorse — Button (BTN)
+ * components/actions · layer fh.components · docs /components/actions/#BTN
+ */
+
+/*
+ * Firehorse — button
+ * ---------------------------------------------------------------
+ * The Firehorse CTA is a flat rounded rect (3px), mono uppercase, a
+ * solid fill with no sheen or shadow. data-fh-button="convex" (or a
+ * theme) brings back the convex fill: it bends toward the visitor at
+ * rest, the shadow inverts on hover, and it sinks on press.
+ *
+ *   <a class="fh-button" href="/contact">Discuss a project</a>
+ *   <button class="fh-button fh-button--secondary">Cancel</button>
+ *
+ * Primary buttons get an up-right arrow automatically. Opt out with
+ * `fh-button--plain`. Add `data-tone="sky"` for a tone-lit top edge.
+ * `fh-button--flat` is solid black with white text in every scheme and
+ * theme: no sheen, shadow or press. A command in `<code>` keeps its case.
+ *
+ * Public knobs: --fh-button-bg, --fh-button-fg, --fh-button-border,
+ * --fh-button-radius, --fh-button-font. Depth (set by data-fh-button):
+ * --fh-button-sheen, --fh-button-shadow, --fh-button-shadow-hover,
+ * --fh-button-shadow-active, --fh-button-lift.
+ */
+
+@layer fh.components {
+  .fh-button {
+    --_bg: var(--fh-button-bg, var(--fh-color-primary));
+    --_fg: var(--fh-button-fg, var(--fh-color-on-primary));
+    --_border: var(--fh-button-border, var(--_bg));
+    --_shadow: var(--fh-button-shadow, none);
+    --_sheen: var(--fh-button-sheen, 0);
+    --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
+    --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
+    --_lift: var(--fh-button-lift, 0px);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-gap-related);
+    min-block-size: 2.25rem;
+    padding: 0.55rem var(--fh-inset-tile);
+    border: var(--fh-border-thin) solid var(--_border);
+    border-radius: var(--fh-button-radius, var(--fh-radius-sm));
+    background-color: var(--_bg);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--_bg) calc(100% - 14% * var(--_sheen)), white),
+      var(--_bg) 55%,
+      color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), black)
+    );
+    color: var(--_fg);
+    font-family: var(--fh-button-font, var(--fh-font-mono));
+    font-size: 0.7rem;
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: var(--fh-tracking-widest);
+    line-height: var(--fh-leading-snug);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: var(--fh-cursor-action);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    translate: 0 var(--_lift);
+    box-shadow: var(--_shadow);
+    transition:
+      translate var(--fh-duration-base) var(--fh-ease-out),
+      box-shadow var(--fh-duration-base) var(--fh-ease-out),
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      color var(--fh-duration-base) var(--fh-ease-standard),
+      opacity var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover {
+      box-shadow: var(--_shadow-hover);
+    }
+
+    &:active {
+      --_lift: 2px;
+      box-shadow: var(--_shadow-active);
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* Auto arrow on primary CTAs */
+    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon)::after {
+      content: "";
+      inline-size: 0.85em;
+      block-size: 0.85em;
+      flex: none;
+      background-color: currentColor;
+      mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+
+    &:hover::after {
+      translate: 0.1rem -0.1rem;
+    }
+
+    /* A command or path inside a button keeps its case. */
+    & code {
+      font: inherit;
+      letter-spacing: var(--fh-tracking-none);
+      text-transform: none;
+    }
+
+    & > svg {
+      inline-size: 1em;
+      block-size: 1em;
+      flex: none;
+    }
+
+    @media (pointer: coarse) {
+      min-block-size: var(--fh-tap-target);
+    }
+
+    @media (forced-colors: active) {
+      border-color: ButtonText;
+    }
+  }
+
+  /* —— Variants —— */
+
+  /* Bordered variants stay flat: no depth at rest, hover or press. */
+  .fh-button--secondary,
+  .fh-button--outline,
+  .fh-button--ghost {
+    --_shadow: none;
+    --_shadow-hover: none;
+    --_shadow-active: none;
+    --_lift: 0px;
+
+    background-image: none;
+  }
+
+  .fh-button--secondary {
+    --_bg: transparent;
+    --_fg: var(--fh-color-text);
+    --_border: var(--fh-color-border-strong);
+
+    &:hover {
+      --_border: var(--fh-color-text);
+    }
+  }
+
+  .fh-button--outline {
+    --_bg: transparent;
+    --_fg: var(--fh-color-text);
+    --_border: var(--fh-color-text);
+
+    border-width: var(--fh-border-heavy);
+
+    &:hover {
+      --_bg: var(--fh-color-primary);
+      --_fg: var(--fh-color-on-primary);
+    }
+  }
+
+  .fh-button--ghost {
+    --_bg: transparent;
+    --_fg: var(--fh-color-text-muted);
+    --_border: transparent;
+
+    &:hover {
+      --_fg: var(--fh-color-text);
+      --_bg: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    }
+  }
+
+  /* Flat: solid ink, white text, no sheen, shadow or press, whatever the
+   * scheme or theme. Keeps the primary arrow; add --plain to drop it. */
+  .fh-button--flat {
+    --_bg: var(--fh-color-ink);
+    --_fg: var(--fh-color-on-ink);
+    --_border: var(--fh-color-ink);
+    --_shadow: none;
+    --_shadow-hover: none;
+    --_shadow-active: none;
+    --_lift: 0px;
+
+    background-image: none;
+
+    &:hover {
+      --_bg: color-mix(in oklab, var(--fh-color-ink) 82%, var(--fh-color-on-ink));
+      --_border: var(--_bg);
+    }
+
+    &:active {
+      --_lift: 0px;
+    }
+  }
+
+  /* Scarce: at most one filled accent button per view. */
+  .fh-button--accent {
+    --_bg: var(--fh-color-accent);
+    --_fg: var(--fh-color-on-accent);
+  }
+
+  /* —— Sizes —— */
+  .fh-button--sm {
+    min-block-size: 2rem;
+    padding: 0.42rem var(--fh-inset-control);
+    font-size: var(--fh-text-micro);
+  }
+
+  .fh-button--lg {
+    min-block-size: 2.75rem;
+    padding: 0.75rem 1.35rem;
+    font-size: 0.76rem;
+  }
+
+  .fh-button--block {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  .fh-button--icon {
+    inline-size: 2.25rem;
+    padding: 0;
+    aspect-ratio: 1;
+  }
+
+  /* Round: a circle (with --icon) or a full pill; for a single-glyph primary action. */
+  .fh-button--round { border-radius: var(--fh-radius-round); }
+  .fh-button--icon > .fh-icon { margin: 0; }
+
+  /* Busy: keeps its size, swaps label for a spinner. */
+  .fh-button[aria-busy="true"] {
+    color: transparent;
+    pointer-events: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      inline-size: 1em;
+      block-size: 1em;
+      border: 2px solid var(--_fg);
+      border-inline-end-color: transparent;
+      border-radius: var(--fh-radius-round);
+      animation: fh-spin 0.7s linear infinite;
+    }
+  }
+
+  /* —— Tone edge ——
+   * A 1px masked edge in the page tone: bright at the crown, fading
+   * down the sides, absent at the base. Primary buttons only. */
+  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost) {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--fh-tone) 72%, white) 0%,
+        color-mix(in oklab, var(--fh-tone) 52%, transparent) 38%,
+        transparent 72%
+      );
+      mask:
+        linear-gradient(black 0 0) content-box exclude,
+        linear-gradient(black 0 0);
+      pointer-events: none;
+    }
+  }
+
+}

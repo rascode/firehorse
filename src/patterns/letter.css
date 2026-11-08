@@ -1,0 +1,40 @@
+/*
+ * Firehorse — Letter
+ * patterns · layer fh.patterns
+ */
+
+@layer fh.patterns {
+  /* —— Letter ——
+   * Founder note: long-form copy with a signature and a sticky
+   * portrait that drops above the text in narrow slots. */
+  .fh-letter {
+    display: grid;
+    gap: clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated));
+    align-items: start;
+  }
+
+  .fh-letter__portrait {
+    max-inline-size: 18rem;
+    margin: 0;
+
+    & img {
+      inline-size: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border: var(--fh-border-thin) solid var(--fh-color-rule);
+      border-radius: var(--fh-radius-sm);
+    }
+  }
+
+  @container (inline-size >= 52rem) {
+    .fh-letter {
+      grid-template-columns: minmax(0, 1.35fr) minmax(12rem, 0.65fr);
+    }
+
+    .fh-letter__portrait {
+      position: sticky;
+      inset-block-start: calc(var(--fh-header-height) + var(--fh-gap-sectioned));
+      max-inline-size: none;
+    }
+  }
+}

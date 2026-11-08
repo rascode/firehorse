@@ -1,0 +1,70 @@
+/*
+ * Firehorse — Dropzone (UPL)
+ * components/forms · layer fh.components · docs /forms/#UPL
+ */
+
+@layer fh.components {
+  /* —— Dropzone ——
+   *   <label class="fh-dropzone">
+   *     <input type="file" multiple>
+   *     <span class="fh-dropzone__title">Drop files or browse</span>
+   *     <span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span>
+   *   </label>
+   * The enhancer adds data-dragging while files hover over it. */
+  .fh-dropzone {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-card) var(--fh-inset-card);
+    border: var(--fh-border-thick) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-color-field) 35%, transparent);
+    color: var(--fh-color-text-muted);
+    text-align: center;
+    cursor: var(--fh-cursor-action);
+    transition:
+      border-color var(--fh-duration-fast) var(--fh-ease-standard),
+      background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      inline-size: 1.5rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-tone);
+      mask: var(--fh-icon-upload) center / contain no-repeat;
+    }
+
+    & > input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: var(--fh-cursor-action);
+    }
+
+    &:hover,
+    &[data-dragging] {
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent);
+    }
+
+    &:has(:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  .fh-dropzone__title {
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-semibold);
+  }
+
+  .fh-dropzone__hint {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+}

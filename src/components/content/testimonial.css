@@ -1,0 +1,51 @@
+/*
+ * Firehorse — Testimonial (TST)
+ * components/content · layer fh.components · docs /components/content/#TST
+ */
+
+@layer fh.components {
+  /* —— Testimonial —— */
+  .fh-testimonial {
+    display: grid;
+    gap: var(--fh-gap-sectioned);
+    margin: 0;
+    padding: clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+
+    & > blockquote {
+      margin: 0;
+      color: var(--fh-color-text);
+      font-size: clamp(1.1rem, 0.9rem + 1.2cqi, 1.5rem);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-heading);
+      line-height: 1.45;
+      text-wrap: pretty;
+
+      &::before {
+        content: "“";
+        display: block;
+        margin-block-end: var(--fh-gap-related);
+        color: var(--fh-tone);
+        font-family: var(--fh-font-mono);
+        font-size: 2.5rem;
+        line-height: 0.6;
+      }
+    }
+
+    & > figcaption {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-gap-grouped);
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+
+      & b {
+        display: block;
+        color: var(--fh-color-text);
+        font-weight: var(--fh-weight-semibold);
+      }
+    }
+  }
+
+}

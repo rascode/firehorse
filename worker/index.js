@@ -5,6 +5,10 @@
 //                          drawn with the Firehorse email templates (src/email)
 // Set them with `npx wrangler secret put <NAME>`.
 //
+// POST /api/agent-request — "Don't see your agent?" from the Send to an agent menu: an agent
+// (or agent system) someone uses and wants in Firehorse's list. Delivered like a lead (webhook
+// and/or Resend to LEAD_TO) so the team can open a PR adding it to AGENTS in site-features.js.
+//
 // POST /api/subscribe — The Stable mailing list. Forwarded server-to-server to
 // the Rascode forms API (api.rascode.dev/v1/forms/firehorse/stable-subscribe),
 // so sign-ups and their campaign attribution land in Rascode admin and the
@@ -24,6 +28,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/api/subscribe") return subscribe(request, env);
+    if (url.pathname === "/api/agent-request") return agentRequest(request, env);
     if (url.pathname !== "/api/lead") return env.ASSETS.fetch(request);
     if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
@@ -138,4 +143,47 @@ async function subscribe(request, env) {
     }).catch(() => {});
   }
   return json({ ok: true });
+}
+
+async function agentRequest(request, env) {
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  let input;
+  try { input = await request.json(); } catch { return json({ error: "Send JSON." }, 400); }
+  if (clean(input.website, 200)) return json({ ok: true }); // honeypot filled: drop quietly
+  const req = {
+    agent: clean(input.agent, 120),
+    link: clean(input.link, 300),
+    email: clean(input.email, 200),
+    page: clean(input.page, 300),
+    at: new Date().toISOString(),
+    country: request.cf?.country ?? "",
+  };
+  const attr = input.attribution && typeof input.attribution === "object" ? input.attribution : {};
+  for (const k of ATTRIBUTION) { const v = clean(attr[k], 500); if (v) req[k] = v; }
+  if (!req.agent) return json({ error: "Tell us which agent." }, 422);
+  if (req.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(req.email)) return json({ error: "That email doesn't look right." }, 422);
+
+  const line = `Agent request: ${req.agent}${req.link ? ` (${req.link})` : ""}${req.email ? ` from ${req.email}` : ""}`;
+  const jobs = [];
+  if (env.LEAD_WEBHOOK_URL) {
+    jobs.push(fetch(env.LEAD_WEBHOOK_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: line, agentRequest: req }) }));
+  }
+  if (env.RESEND_API_KEY && env.LEAD_TO) {
+    const rows = Object.entries(req).filter(([, v]) => v).map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#666">${esc(k)}</td><td style="padding:4px 0">${esc(String(v))}</td></tr>`).join("");
+    jobs.push(fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        from: env.LEAD_FROM ?? "Firehorse <leads@rascode.dev>",
+        to: env.LEAD_TO.split(","),
+        ...(req.email ? { reply_to: req.email } : {}),
+        subject: `Firehorse agent request: ${req.agent}`,
+        html: `<p>Someone wants an agent added to the Send to an agent list. Add it to <code>AGENTS</code> in <code>site/site-features.js</code> and open a PR.</p><table>${rows}</table>`,
+        text: `${line}\n\n${Object.entries(req).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join("\n")}`,
+      }),
+    }));
+  }
+  if (!jobs.length) return json({ error: "Requests aren't connected here yet." }, 503);
+  const results = await Promise.allSettled(jobs);
+  return results.some((r) => r.status === "fulfilled" && r.value.ok) ? json({ ok: true }) : json({ error: "Couldn't send that. Try again in a minute." }, 502);
 }

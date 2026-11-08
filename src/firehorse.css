@@ -8,40 +8,240 @@
 
 @layer fh.reset, fh.tokens, fh.base, fh.layout, fh.components, fh.patterns, fh.themes, fh.config, fh.utilities;
 
+/* Every module, in cascade order: within a layer, a later file wins a tie
+ * with an earlier one, so keep this order when adding files. One file per
+ * component; the folders match the docs categories. */
+/* tokens */
 @import "./tokens/primitives.css";
 @import "./tokens/semantic.css";
 @import "./tokens/adaptive.css";
 @import "./tokens/config.css";
 
+/* base */
 @import "./base/reset.css";
 @import "./base/document.css";
 @import "./base/typography.css";
 
+/* layout */
 @import "./layout/frame.css";
 @import "./layout/primitives.css";
+@import "./layout/cols.css";
 
-@import "./components/button.css";
-@import "./components/marker.css";
-@import "./components/content.css";
-@import "./components/disclosure.css";
-@import "./components/form.css";
-@import "./components/auth.css";
-@import "./components/table.css";
-@import "./components/datatable.css";
-@import "./components/chrome.css";
-@import "./components/dock.css";
-@import "./components/feedback.css";
-@import "./components/identity.css";
-@import "./components/navigation.css";
-@import "./components/showcase.css";
-@import "./components/panels.css";
-@import "./components/commerce.css";
-@import "./components/audio.css";
-@import "./components/media.css";
+/* components/actions */
+@import "./components/actions/button.css";
+@import "./components/actions/action-link.css";
+@import "./components/actions/text-link.css";
+@import "./components/actions/rollover-heading.css";
+@import "./components/actions/dot.css";
+@import "./components/actions/eyebrow-pill.css";
+@import "./components/actions/breadcrumb.css";
+@import "./components/actions/badge.css";
 
-@import "./patterns/patterns.css";
+/* components/content */
+@import "./components/content/checklist.css";
+@import "./components/content/steps.css";
+@import "./components/content/card.css";
+@import "./components/content/stats.css";
+@import "./components/content/quote.css";
+@import "./components/content/crosses.css";
+@import "./components/content/word-rotator.css";
+
+/* components/overlays */
+@import "./components/overlays/accordion.css";
+
+/* components/navigation */
+@import "./components/navigation/tabs.css";
+
+/* components/overlays */
+@import "./components/overlays/dialog.css";
+@import "./components/overlays/menu.css";
+@import "./components/overlays/toast.css";
+@import "./components/overlays/sheet.css";
+
+/* components/forms */
+@import "./components/forms/field.css";
+@import "./components/forms/input.css";
+@import "./components/forms/input-group.css";
+@import "./components/forms/checkbox-radio.css";
+@import "./components/forms/switch.css";
+@import "./components/forms/segmented.css";
+@import "./components/forms/form-layout.css";
+@import "./components/forms/dropzone.css";
+@import "./components/forms/range.css";
+@import "./components/forms/tag-field.css";
+@import "./components/forms/entity-picker.css";
+@import "./components/forms/dictation-field.css";
+@import "./components/forms/form-step.css";
+@import "./components/forms/review-rows.css";
+@import "./components/forms/booking-calendar.css";
+@import "./components/forms/auth.css";
+@import "./components/forms/auth-page.css";
+
+/* components/data */
+@import "./components/data/table.css";
+@import "./components/data/comparison-matrix.css";
+
+/* components/data/datatable */
+@import "./components/data/datatable/base.css";
+@import "./components/data/datatable/toolbar.css";
+@import "./components/data/datatable/grid.css";
+@import "./components/data/datatable/bulk-actions.css";
+@import "./components/data/datatable/cells.css";
+@import "./components/data/datatable/views.css";
+
+/* components/navigation */
+@import "./components/navigation/header.css";
+@import "./components/navigation/nav.css";
+@import "./components/navigation/drawer.css";
+@import "./components/navigation/mega-panel.css";
+@import "./components/navigation/footer.css";
+
+/* components/actions */
+@import "./components/actions/cubes.css";
+@import "./components/actions/chips.css";
+@import "./components/actions/chip-cards.css";
+@import "./components/actions/cube-cards.css";
+
+/* components/navigation */
+@import "./components/navigation/dock.css";
+@import "./components/navigation/floating-action-bar.css";
+
+/* components/feedback */
+@import "./components/feedback/alert.css";
+@import "./components/feedback/banner.css";
+@import "./components/feedback/progress.css";
+@import "./components/feedback/meter.css";
+@import "./components/feedback/ring.css";
+@import "./components/feedback/spinner.css";
+@import "./components/feedback/skeleton.css";
+@import "./components/feedback/empty-state.css";
+@import "./components/feedback/tooltip.css";
+
+/* components/people */
+@import "./components/people/avatar.css";
+
+/* components/content */
+@import "./components/content/list.css";
+@import "./components/content/timeline.css";
+@import "./components/content/chat.css";
+@import "./components/content/description-list.css";
+@import "./components/content/key-value.css";
+@import "./components/content/kbd.css";
+@import "./components/content/divider.css";
+@import "./components/content/code-block.css";
+
+/* components/people */
+@import "./components/people/avatar-group.css";
+@import "./components/people/person.css";
+@import "./components/people/social-card.css";
+
+/* components/content */
+
+/* components/navigation */
+@import "./components/navigation/pagination.css";
+@import "./components/navigation/stepper.css";
+@import "./components/navigation/toc.css";
+@import "./components/navigation/search.css";
+@import "./components/navigation/sidenav.css";
+
+/* components/content */
+@import "./components/content/pricing-tiers.css";
+@import "./components/content/feature.css";
+@import "./components/content/testimonial.css";
+@import "./components/content/logo-strip.css";
+@import "./components/content/bento-grid.css";
+@import "./components/content/carousel.css";
+@import "./components/content/deck.css";
+@import "./components/content/member-card.css";
+@import "./components/content/story-card.css";
+@import "./components/content/speed-blur.css";
+@import "./components/content/dither.css";
+@import "./components/content/liquid-glass.css";
+
+/* components/overlays */
+@import "./components/overlays/detail-drawer.css";
+
+/* components/navigation */
+@import "./components/navigation/hamburger.css";
+@import "./components/navigation/overlay-nav.css";
+
+/* components/overlays */
+
+/* components/navigation */
+@import "./components/navigation/profile-picker.css";
+
+/* components/overlays */
+@import "./components/overlays/command-menu.css";
+
+/* components/navigation */
+@import "./components/navigation/tab-bar.css";
+
+/* components/finance */
+@import "./components/finance/balance.css";
+@import "./components/finance/segment.css";
+@import "./components/finance/account.css";
+@import "./components/finance/ledger.css";
+@import "./components/finance/vcard.css";
+@import "./components/finance/connection.css";
+
+/* components/commerce */
+@import "./components/commerce/price.css";
+@import "./components/commerce/product-card.css";
+@import "./components/commerce/swatches.css";
+@import "./components/commerce/quantity-stepper.css";
+@import "./components/commerce/product-gallery.css";
+@import "./components/commerce/product-page.css";
+@import "./components/commerce/trust-row.css";
+@import "./components/commerce/cart.css";
+@import "./components/commerce/choice-cards.css";
+@import "./components/commerce/payment-card.css";
+@import "./components/commerce/checkout.css";
+@import "./components/commerce/reviews.css";
+@import "./components/commerce/order-confirmation.css";
+@import "./components/commerce/invoice.css";
+
+/* components/audio */
+@import "./components/audio/player.css";
+@import "./components/audio/play-button.css";
+@import "./components/audio/waveform.css";
+@import "./components/audio/scrubber.css";
+@import "./components/audio/toggles.css";
+@import "./components/audio/equalizer.css";
+@import "./components/audio/playlist.css";
+@import "./components/audio/captions.css";
+@import "./components/audio/line-reel.css";
+@import "./components/audio/mixer.css";
+@import "./components/audio/level-meter.css";
+@import "./components/audio/parameters.css";
+@import "./components/audio/render-stages.css";
+
+/* components/media/canvas */
+@import "./components/media/canvas/base.css";
+@import "./components/media/canvas/body.css";
+@import "./components/media/canvas/type.css";
+@import "./components/media/canvas/media.css";
+@import "./components/media/canvas/components.css";
+@import "./components/media/canvas/layouts.css";
+@import "./components/media/canvas/formats.css";
+@import "./components/media/canvas/wallpaper.css";
+@import "./components/media/canvas/guides.css";
+
+/* components/media */
+@import "./components/media/slides.css";
+
+/* patterns */
+@import "./patterns/hero.css";
+@import "./patterns/section-head.css";
+@import "./patterns/etched-split.css";
+@import "./patterns/cta-band.css";
+@import "./patterns/window-frame.css";
+@import "./patterns/letter.css";
 @import "./patterns/panel.css";
 
+/* utilities */
 @import "./utilities/tone.css";
+@import "./utilities/harmony.css";
 @import "./utilities/helpers.css";
 @import "./utilities/motion.css";
+@import "./utilities/intro.css";
+@import "./utilities/guides.css";

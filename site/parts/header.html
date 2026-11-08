@@ -1,23 +1,18 @@
   <!-- ═══════════════ HEADER ═══════════════ -->
-  <header class="fh-header fh-frame">
+  <header class="fh-header fh-frame site-header-oval">
     <div class="fh-header__bar">
-      <a class="site-mark site-mark--tagged fh-header__brand" href="/" aria-label="Firehorse home, premium design system, version 1.1"><span class="site-mark__word"><span class="site-mark__bar">_</span>firehorse</span><span class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sm site-mark__tag" data-tone="neutral"><span class="fh-eyebrow-pill__index">Premium design system</span>v1.1</span></a>
+      <a class="site-mark site-mark--tagged fh-header__brand" href="/" aria-label="Firehorse home, version 1.1"><span class="site-mark__word"><span class="site-mark__bar">_</span>firehorse</span><span class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sm site-mark__tag" data-tone="neutral">v1.1</span></a>
 
       <nav class="fh-nav" aria-label="Site">
         <button class="fh-nav__link" type="button" popovertarget="mega-docs"><span class="fh-roll">Docs</span></button>
-        <a class="fh-nav__link" href="playground.html"><span class="fh-roll">Playground</span></a>
-        <a class="fh-nav__link" href="stable/"><span class="fh-roll">The Stable</span></a>
-        <a class="fh-nav__link" href="/pro/"><span class="fh-roll">Pro</span></a>
-        <a class="fh-nav__link" href="#services"><span class="fh-roll">Work with us</span></a>
+        <button class="fh-nav__link site-nav-menu" type="button" popovertarget="nav-pro"><span class="fh-roll">Pro</span></button>
+        <a class="fh-nav__link" href="/stable/"><span class="fh-roll">The Stable</span></a>
+        <button class="fh-nav__link site-nav-menu" type="button" popovertarget="nav-rascode"><span class="fh-roll">Rascode</span></button>
       </nav>
 
       <div class="fh-header__actions">
-        <fieldset class="fh-segmented site-scheme" aria-label="Color scheme">
-          <legend class="fh-sr-only">Color scheme</legend>
-          <label><input type="radio" name="scheme" id="scheme-dark" value="dark"> Dark</label>
-          <label><input type="radio" name="scheme" id="scheme-light" value="light"> Light</label>
-          <label><input type="radio" name="scheme" id="scheme-auto" value="auto"> Auto</label>
-        </fieldset>
+        <button class="site-theme-btn" type="button" popovertarget="theme-picker" aria-label="Choose a theme" title="Theme"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i></button>
+        <fieldset class="site-scheme-pill" aria-label="Colour scheme"><legend class="fh-sr-only">Colour scheme</legend><span class="site-scheme-pill__track"><label title="Light"><input type="radio" name="scheme" value="light"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i><span class="fh-sr-only">Light</span></label><label title="Dark"><input type="radio" name="scheme" value="dark"><i class="fh-icon fh-icon--moon" aria-hidden="true"></i><span class="fh-sr-only">Dark</span></label><label title="Match system"><input type="radio" name="scheme" value="auto"><i class="fh-icon fh-icon--monitor" aria-hidden="true"></i><span class="fh-sr-only">Match system</span></label></span></fieldset>
         <a class="fh-button fh-button--sm fh-button--plain site-git" href="https://github.com/rascode/firehorse" rel="noopener"><span class="fh-roll">Download from Git</span></a>
       </div>
 
@@ -25,14 +20,76 @@
     </div>
   </header>
 
+  <!-- Easter egg: hover the mark to repaint the site from a new root colour (site.js). -->
+  <div id="site-root-pick" popover="manual" class="site-root-pick" aria-label="Pick the root colour">
+    <p class="site-root-pick__title">Paint the herd<small>A new colour every day. Pick your own and the whole site follows.</small></p>
+    <div class="site-root-pick__grid">
+      <button type="button" style="--_c: #ef4444" data-root="#ef4444" aria-label="Red" title="Red"></button>
+      <button type="button" style="--_c: #f43f5e" data-root="#f43f5e" aria-label="Rose" title="Rose"></button>
+      <button type="button" style="--_c: #ff5a1f" data-root="#ff5a1f" aria-label="Firehorse" title="Firehorse"></button>
+      <button type="button" style="--_c: #f97316" data-root="#f97316" aria-label="Orange" title="Orange"></button>
+      <button type="button" style="--_c: #f59e0b" data-root="#f59e0b" aria-label="Amber" title="Amber"></button>
+      <button type="button" style="--_c: #facc15" data-root="#facc15" aria-label="Yellow" title="Yellow"></button>
+      <button type="button" style="--_c: #ffd700" data-root="#ffd700" aria-label="Gold" title="Gold"></button>
+      <button type="button" style="--_c: #ffb347" data-root="#ffb347" aria-label="Tangerine" title="Tangerine"></button>
+      <button type="button" style="--_c: #84cc16" data-root="#84cc16" aria-label="Lime" title="Lime"></button>
+      <button type="button" style="--_c: #7fff00" data-root="#7fff00" aria-label="Chartreuse" title="Chartreuse"></button>
+      <button type="button" style="--_c: #22c55e" data-root="#22c55e" aria-label="Green" title="Green"></button>
+      <button type="button" style="--_c: #10b981" data-root="#10b981" aria-label="Emerald" title="Emerald"></button>
+      <button type="button" style="--_c: #14b8a6" data-root="#14b8a6" aria-label="Teal" title="Teal"></button>
+      <button type="button" style="--_c: #40e0d0" data-root="#40e0d0" aria-label="Turquoise" title="Turquoise"></button>
+      <button type="button" style="--_c: #06b6d4" data-root="#06b6d4" aria-label="Cyan" title="Cyan"></button>
+      <button type="button" style="--_c: #0ea5e9" data-root="#0ea5e9" aria-label="Sky" title="Sky"></button>
+      <button type="button" style="--_c: #00bfff" data-root="#00bfff" aria-label="Deep sky" title="Deep sky"></button>
+      <button type="button" style="--_c: #3b82f6" data-root="#3b82f6" aria-label="Blue" title="Blue"></button>
+      <button type="button" style="--_c: #4169e1" data-root="#4169e1" aria-label="Royal" title="Royal"></button>
+      <button type="button" style="--_c: #6366f1" data-root="#6366f1" aria-label="Indigo" title="Indigo"></button>
+      <button type="button" style="--_c: #8b5cf6" data-root="#8b5cf6" aria-label="Violet" title="Violet"></button>
+      <button type="button" style="--_c: #a855f7" data-root="#a855f7" aria-label="Purple" title="Purple"></button>
+      <button type="button" style="--_c: #b19cd9" data-root="#b19cd9" aria-label="Lavender" title="Lavender"></button>
+      <button type="button" style="--_c: #d946ef" data-root="#d946ef" aria-label="Fuchsia" title="Fuchsia"></button>
+      <button type="button" style="--_c: #ff00ff" data-root="#ff00ff" aria-label="Magenta" title="Magenta"></button>
+      <button type="button" style="--_c: #ec4899" data-root="#ec4899" aria-label="Pink" title="Pink"></button>
+      <button type="button" style="--_c: #ff1493" data-root="#ff1493" aria-label="Deep pink" title="Deep pink"></button>
+      <button type="button" style="--_c: #ff6b9d" data-root="#ff6b9d" aria-label="Bubblegum" title="Bubblegum"></button>
+      <button type="button" style="--_c: #ff7f50" data-root="#ff7f50" aria-label="Coral" title="Coral"></button>
+      <button type="button" style="--_c: #e11d48" data-root="#e11d48" aria-label="Crimson" title="Crimson"></button>
+      <button type="button" style="--_c: #be123c" data-root="#be123c" aria-label="Raspberry" title="Raspberry"></button>
+      <button type="button" style="--_c: #ff2400" data-root="#ff2400" aria-label="Scarlet" title="Scarlet"></button>
+    </div>
+    <div class="site-root-pick__foot">
+      <label class="site-root-pick__any"><input type="color" value="#ff5a1f" aria-label="Any colour"><span>Any colour</span></label>
+      <span class="site-root-pick__today">Today&rsquo;s colour</span>
+      <button type="button" class="fh-button fh-button--sm fh-button--plain" data-root-reset title="Back to today&rsquo;s colour">Reset</button>
+    </div>
+  </div>
+
+  <!-- Header dropdowns (native popovers, anchored to their buttons). -->
+  <div id="nav-pro" popover class="fh-menu site-nav-panel">
+    <p class="fh-menu__label">Firehorse Pro</p>
+    <a class="site-nav-item" href="/pro/" style="--_w: var(--site-walk-0)"><span class="site-nav-ico"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds on top of the free core</small></a>
+    <a class="site-nav-item" href="/pro/keys/" style="--_w: var(--site-walk-3)"><span class="site-nav-ico"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Copy-only secrets, reveal, rotation</small></a>
+    <a class="site-nav-item" href="/pro/project-management/" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones, schedules, date pickers</small></a>
+    <a class="site-nav-item" href="/forms/#c-field-types" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><span class="fh-roll">Sample data</span><small>Generate values from any field type</small></a>
+    <hr>
+    <a class="site-nav-item" href="/pro/#pricing" style="--_w: var(--site-walk-8)"><span class="site-nav-ico"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing &amp; early access</span></a>
+  </div>
+  <div id="nav-rascode" popover class="fh-menu site-nav-panel">
+    <p class="fh-menu__label site-nav-panel__brand"><span class="site-rascode-wordmark" role="img" aria-label="Rascode"></span></p>
+    <a class="site-nav-item" href="#services" style="--_w: var(--site-walk-0)"><span class="site-nav-ico site-nav-ico--rascode" aria-hidden="true"></span><span class="fh-roll">Work with us</span><small>Design, AI and data, built on Firehorse</small></a>
+    <a class="site-nav-item" href="/playground.html" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-roll">Playground</span><small>Build a page from the library</small></a>
+    <hr>
+    <a class="site-nav-item" href="/llms.txt" style="--_w: var(--site-walk-7)"><span class="site-nav-ico"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><span class="fh-roll">llms.txt</span><small>The site, written for agents</small></a>
+  </div>
+
   <!-- Mega panel: the docs map (native popover). The grid is generated from site/pages by scripts/pages.mjs. -->
-  <div id="mega-docs" popover class="fh-mega fh-frame">
+  <div id="mega-docs" popover class="fh-mega site-docs-mega">
 {{DOCS_MEGA}}
     <div class="fh-mega__rail">
-      <a class="fh-action" data-tone="amber" href="/components/#index">The Firehorse Index</a>
-      <a class="fh-action" data-tone="lime" href="/playground.html">Open the playground</a>
-      <section data-tone="fuchsia">
-        <h3>New</h3>
+      <a class="site-nav-item" href="/components/#index" style="--_w: var(--site-walk-4)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><span class="fh-roll">The Firehorse Index</span><small>Every component, by ID</small></a>
+      <a class="site-nav-item" href="/playground.html" style="--_w: var(--site-walk-6)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-roll">Open the playground</span><small>Build a page from the library</small></a>
+      <section class="site-mega-new" style="--_w: var(--site-walk-5)">
+        <h3><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i>New</h3>
         <ul>
           <li><a href="/media/"><span class="fh-roll">Media &amp; slides</span></a></li>
           <li><a href="#motion"><span class="fh-roll">Motion layer</span></a></li>
@@ -49,36 +106,88 @@
 
   <!-- Drawer (narrow header) -->
   <div id="site-drawer" popover class="fh-drawer">
+    <!-- Wider screens: the full map, grouped. Phones get the plain lists below. -->
+    <div class="site-drawer-rich">
+      <section class="site-drawer-rich__docs" aria-label="Docs">
+        <h3 class="site-drawer-rich__label">Docs</h3>
+{{DOCS_MEGA}}
+      </section>
+      <div class="site-drawer-rich__rail">
+      <section aria-label="Firehorse Pro">
+        <h3 class="site-drawer-rich__label">Pro</h3>
+        <a class="site-nav-item" href="/pro/" style="--_w: var(--site-walk-0)"><span class="site-nav-ico"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds to the core</small></a>
+        <a class="site-nav-item" href="/pro/keys/" style="--_w: var(--site-walk-3)"><span class="site-nav-ico"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Secrets, reveal, rotation</small></a>
+        <a class="site-nav-item" href="/pro/project-management/" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones and schedules</small></a>
+        <a class="site-nav-item" href="/forms/#c-field-types" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><span class="fh-roll">Sample data</span><small>Values from any field type</small></a>
+        <a class="site-nav-item" href="/pro/#pricing" style="--_w: var(--site-walk-8)"><span class="site-nav-ico"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing</span><small>Early access</small></a>
+      </section>
+      </div>
+      <div class="site-drawer-rich__mid">
+      <section class="site-drawer-new" aria-label="New">
+        <h3 class="site-drawer-rich__label"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i> New</h3>
+        <div class="site-drawer-new__chips">
+          <a class="site-drawer-new__chip" href="/media/" style="--_w: var(--site-walk-0)"><i aria-hidden="true"></i><span class="fh-roll">Media &amp; slides</span></a>
+          <a class="site-drawer-new__chip" href="#motion" style="--_w: var(--site-walk-3)"><i aria-hidden="true"></i><span class="fh-roll">Motion layer</span></a>
+          <a class="site-drawer-new__chip" href="#data" style="--_w: var(--site-walk-1)"><i aria-hidden="true"></i><span class="fh-roll">Datatables</span></a>
+          <a class="site-drawer-new__chip" href="#menus" style="--_w: var(--site-walk-5)"><i aria-hidden="true"></i><span class="fh-roll">Drawers &amp; menus</span></a>
+          <a class="site-drawer-new__chip" href="#forms" style="--_w: var(--site-walk-6)"><i aria-hidden="true"></i><span class="fh-roll">Sign-in forms</span></a>
+          <a class="site-drawer-new__chip" href="#catalog" style="--_w: var(--site-walk-2)"><i aria-hidden="true"></i><span class="fh-roll">Card catalog</span></a>
+          <a class="site-drawer-new__chip" href="#icons" style="--_w: var(--site-walk-7)"><i aria-hidden="true"></i><span class="fh-roll">Icons</span></a>
+          <a class="site-drawer-new__chip" href="#themes" style="--_w: var(--site-walk-4)"><i aria-hidden="true"></i><span class="fh-roll">Themes</span></a>
+        </div>
+      </section>
+      <a class="site-drawer-feature" href="/theming/#c-harmony">
+        <span class="site-drawer-rich__label">Featured</span>
+        <span class="site-drawer-feature__body"><b>Colour harmony</b><small>One root colour in, a balanced palette out: analogous steps, tone steps and two split complements, as a CSS function and overlays.</small></span>
+        <span class="site-drawer-feature__band" aria-hidden="true"><i style="--_w: var(--site-walk-5)"></i><i style="--_w: var(--site-walk-6)"></i><i style="--_w: var(--site-walk-7)"></i><i style="--_w: var(--site-walk-8)"></i><i style="--_w: var(--site-walk-0)"></i><i style="--_w: var(--site-walk-4)"></i><i style="--_w: var(--site-walk-1)"></i><i style="--_w: var(--site-walk-2)"></i><i style="--_w: var(--site-walk-3)"></i></span>
+        <span class="site-drawer-feature__go">Explore harmony <i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></span>
+      </a>
+      </div>
+      <div class="site-drawer-rich__foot">
+      <section aria-label="Rascode">
+        <h3 class="site-drawer-rich__label">Rascode</h3>
+        <a class="site-nav-item" href="#services" style="--_w: var(--site-walk-0)"><span class="site-nav-ico site-nav-ico--rascode" aria-hidden="true"></span><span class="fh-roll">Work with us</span><small>Design, AI and data</small></a>
+        <a class="site-nav-item" href="/stable/" style="--_w: var(--site-walk-6)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><span class="fh-roll">The Stable</span><small>Systems built on Firehorse</small></a>
+        <a class="site-nav-item" href="/playground.html" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-roll">Playground</span><small>Build a page from the library</small></a>
+      </section>
+      <section aria-label="Get Firehorse">
+        <h3 class="site-drawer-rich__label">Get Firehorse</h3>
+        <a class="site-nav-item" href="https://github.com/rascode/firehorse" rel="noopener" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--github" aria-hidden="true"></i></span><span class="fh-roll">From Git</span><small>Clone the repository</small></a>
+        <a class="site-nav-item" href="https://github.com/rascode/firehorse/archive/refs/heads/main.zip" style="--_w: var(--site-walk-7)"><span class="site-nav-ico"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></span><span class="fh-roll">As a ZIP</span><small>Everything, zipped</small></a>
+        <a class="site-nav-item" href="/llms.txt" style="--_w: var(--site-walk-4)"><span class="site-nav-ico"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><span class="fh-roll">llms.txt</span><small>The site, for agents</small></a>
+      </section>
+      </div>
+    </div>
     <div class="fh-drawer__group">
       <p class="fh-label">Docs</p>
       <ul>
 {{DOCS_LIST}}
-        <li><a href="playground.html"><span class="fh-roll">Playground</span></a></li>
-        <li><a href="stable/"><span class="fh-roll">The Stable</span></a></li>
-        <li><span aria-disabled="true">Design library · coming soon</span></li>
-        <li><a href="#services"><span class="fh-roll">Work with Rascode</span></a></li>
+      </ul>
+    </div>
+    <div class="fh-drawer__group">
+      <p class="fh-label">Pro</p>
+      <ul>
+        <li><a href="/pro/"><span class="fh-roll">Pro overview</span></a></li>
+        <li><a href="/pro/keys/"><span class="fh-roll">Key fields</span></a></li>
+        <li><a href="/pro/project-management/"><span class="fh-roll">Project management</span></a></li>
+        <li><a href="/forms/#c-field-types"><span class="fh-roll">Sample data</span></a></li>
+        <li><a href="/pro/#pricing"><span class="fh-roll">Pricing &amp; early access</span></a></li>
+      </ul>
+    </div>
+    <div class="fh-drawer__group">
+      <p class="fh-label">Rascode</p>
+      <ul>
+        <li><a href="#services"><span class="fh-roll">Work with us</span></a></li>
+        <li><a href="/stable/"><span class="fh-roll">The Stable</span></a></li>
+        <li><a href="/playground.html"><span class="fh-roll">Playground</span></a></li>
+        <li><a href="https://github.com/rascode/firehorse"><span class="fh-roll">Download from Git</span></a></li>
+        <li><a href="https://github.com/rascode/firehorse/archive/refs/heads/main.zip"><span class="fh-roll">Download ZIP</span></a></li>
+        <li><a href="/llms.txt"><span class="fh-roll">llms.txt</span></a></li>
       </ul>
     </div>
     <div class="fh-drawer__group">
       <p class="fh-label">Theme</p>
-      <select class="fh-select" data-fh-theme-select aria-label="Theme" style="margin-block-start: var(--fh-space-3)"><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select>
-    </div>
-    <div class="fh-drawer__group">
-      <p class="fh-label">Scheme</p>
-      <fieldset class="fh-segmented site-scheme" aria-label="Color scheme" style="margin-block-start: var(--fh-space-3)">
-        <legend class="fh-sr-only">Color scheme</legend>
-        <label><input type="radio" name="scheme-m" value="dark"> Dark</label>
-        <label><input type="radio" name="scheme-m" value="light"> Light</label>
-        <label><input type="radio" name="scheme-m" value="auto"> Auto</label>
-      </fieldset>
-    </div>
-    <div class="fh-drawer__group">
-      <p class="fh-label">Get it</p>
-      <ul>
-        <li><a href="https://github.com/rascode/firehorse"><span class="fh-roll">GitHub repository</span></a></li>
-        <li><a href="https://github.com/rascode/firehorse/archive/refs/heads/main.zip"><span class="fh-roll">Download ZIP</span></a></li>
-        <li><a href="llms.txt"><span class="fh-roll">llms.txt</span></a></li>
-      </ul>
+      <select class="fh-select" data-fh-theme-select aria-label="Theme" style="margin-block-start: var(--fh-space-3)"><option value="">Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option><option value="lipizzaner">Lipizzaner</option></select>
     </div>
   </div>
 

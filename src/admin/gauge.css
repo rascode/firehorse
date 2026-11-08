@@ -1,0 +1,90 @@
+/*
+ * Firehorse — Gauge (GAU)
+ * admin · layer fh.components · docs /admin/#GAU
+ */
+
+@layer fh.components {
+  /* —— Gauge ——
+   * A full-circle meter from one custom property: the figure in the
+   * middle, a caption under it, and an indicator with rounded ends that
+   * runs clockwise from the top. The indicator takes the tone, so set
+   * data-tone from the value (lime when healthy, amber, red) where it
+   * matters.
+   *   <div class="fh-gauge" data-tone="lime" style="--fh-value: 64" role="img" aria-label="64% of the limit used">
+   *     <b>64%</b><small>of limit</small>
+   *   </div>
+   * --fh-value is 0–100 (registered by the ring, so it animates when it
+   * changes). Knobs: --fh-gauge-size (diameter, 8rem), --fh-gauge-width
+   * (indicator thickness, 0.65rem). The gauge is a size container, so the
+   * figure and the rounded ends scale with it. */
+  .fh-gauge {
+    --_v: clamp(0, var(--fh-value, 0), 100);
+    --_w: var(--fh-gauge-width, 0.65rem);
+    --_fill: var(--fh-tone, var(--fh-color-text));
+    display: inline-grid;
+    grid-template-areas: "dial";
+    place-items: center;
+    inline-size: var(--fh-gauge-size, 8rem);
+    max-inline-size: 100%;
+    aspect-ratio: 1;
+    margin: 0;
+    container-type: inline-size;
+    text-align: center;
+
+    /* Track and indicator. */
+    &::before {
+      content: "";
+      grid-area: dial;
+      inline-size: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-pill);
+      background: conic-gradient(var(--_fill) calc(var(--_v) * 3.6deg), color-mix(in oklab, var(--fh-color-text) 10%, transparent) 0);
+      mask: radial-gradient(farthest-side, transparent calc(100% - var(--_w)), var(--fh-color-text) calc(100% - var(--_w) + 0.5px));
+    }
+
+    /* Rounded ends: a dot at the start (top) and one where the value ends. */
+    &::after {
+      --_r: calc((100cqi - var(--_w)) / 2);
+      --_a: calc(var(--_v) * 3.6deg);
+      content: "";
+      grid-area: dial;
+      inline-size: 100%;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(circle calc(var(--_w) / 2) at 50% calc(var(--_w) / 2), var(--_fill) calc(100% - 0.5px), transparent),
+        radial-gradient(circle calc(var(--_w) / 2) at calc(50cqi + var(--_r) * sin(var(--_a))) calc(50cqi - var(--_r) * cos(var(--_a))), var(--_fill) calc(100% - 0.5px), transparent);
+      opacity: clamp(0, var(--_v), 1);
+      pointer-events: none;
+    }
+
+    & > b,
+    & > small { grid-area: dial; }
+
+    & > b {
+      align-self: center;
+      font-family: var(--fh-font-figure);
+      font-size: calc(100cqi / 4.5);
+      font-weight: var(--fh-weight-medium);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    /* The caption sits under the figure, inside the circle. */
+    & > small {
+      align-self: center;
+      translate: 0 calc(100cqi / 6.5);
+      max-inline-size: calc(100cqi - var(--_w) * 4);
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: max(var(--fh-text-micro), calc(100cqi / 14));
+      letter-spacing: var(--fh-tracking-wider);
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    &:has(> small) > b { translate: 0 calc(100cqi / -18); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-gauge { transition: --fh-value var(--fh-duration-slow) var(--fh-ease-out); }
+  }
+}

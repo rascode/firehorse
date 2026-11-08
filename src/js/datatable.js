@@ -81,7 +81,7 @@ export const types = {
   percent: { icon: "percent", kind: "number", agg: "avg", render: (v, f) => (v == null ? "" : `<span class="fh-cell__bar" data-tone="${f.tone ?? "sky"}" style="--v:${Math.max(0, Math.min(100, v))}"><i></i><span>${Math.round(v)}%</span></span>`) },
   progress: { icon: "loader-circle", kind: "number", agg: "avg", render: (v, f) => types.percent.render(v, f) },
   select: { icon: "circle-dot", kind: "option", render: (v, f) => (v ? `<span class="fh-pill" data-tone="${toneOf(f, v)}">${esc(v)}</span>` : "") },
-  status: { icon: "activity", kind: "option", render: (v, f) => (v ? `<span class="fh-status" data-tone="${toneOf(f, v)}">${esc(v)}</span>` : "") },
+  status: { icon: "activity", kind: "option", render: (v, f) => (v ? `<span class="fh-status${optionOf(f, v)?.live ? " fh-status--live" : ""}" data-tone="${toneOf(f, v)}">${esc(v)}</span>` : "") },
   multi: { icon: "list-checks", kind: "options", render: (v = [], f) => v.map((x) => `<span class="fh-pill" data-tone="${toneOf(f, x)}">${esc(x)}</span>`).join("") },
   tags: { icon: "tag", kind: "options", render: (v = [], f) => v.map((x) => `<span class="fh-pill" data-tone="${f.tone ?? "neutral"}">#${esc(x)}</span>`).join("") },
   date: {

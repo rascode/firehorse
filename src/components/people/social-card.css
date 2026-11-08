@@ -1,0 +1,155 @@
+/*
+ * Firehorse — Social card (SCD)
+ * components/people · layer fh.components · docs /components/avatars/#SCD
+ */
+
+@layer fh.components {
+  /* —— Social card (SCD) ——
+   * A profile at a glance: a portrait, the name with a verified mark, a
+   * short bio, two counts and Follow. Three treatments of the same markup:
+   * the portrait framed above a plain body, the portrait running the full
+   * card and fading into a frosted body (--fade), or into a dark one
+   * (--dark).
+   *   <article class="fh-social">
+   *     <img class="fh-social__photo" src="…" alt="Maya Okafor">
+   *     <div class="fh-social__body">
+   *       <h3 class="fh-social__name">Maya <i class="fh-icon fh-icon--circle-check fh-social__check" role="img" aria-label="Verified"></i></h3>
+   *       <p class="fh-social__bio">Product engineer and designer.</p>
+   *       <div class="fh-social__foot">
+   *         <dl class="fh-social__stats">
+   *           <div><dt><i class="fh-icon fh-icon--user" aria-hidden="true"></i><span class="fh-sr-only">Following</span></dt><dd>24</dd></div>
+   *           <div><dt><i class="fh-icon fh-icon--eye" aria-hidden="true"></i><span class="fh-sr-only">Followers</span></dt><dd>1.8K</dd></div>
+   *         </dl>
+   *         <button class="fh-button fh-button--sm" type="button">Follow</button>
+   *       </div>
+   *     </div>
+   *   </article>
+   *   modifiers  --fade (full-bleed portrait into a frosted body)
+   *              --dark (full-bleed portrait into a dark body)
+   *   knobs      --fh-social-width (19rem) · --fh-social-radius (1.75rem)
+   *              --fh-social-ratio (3 / 4 for --fade and --dark)
+   *              --fh-social-blur (18px, the frost) */
+  .fh-social {
+    --_r: var(--fh-social-radius, 1.75rem);
+    position: relative;
+    display: grid;
+    inline-size: 100%;
+    max-inline-size: var(--fh-social-width, 19rem);
+    padding: 0.5rem;
+    overflow: clip;
+    isolation: isolate;
+    container: fh-social / inline-size;
+    border-radius: var(--_r);
+    background-color: var(--fh-color-surface-raised);
+    color: var(--fh-color-text);
+    box-shadow: 0 0 0 1px var(--fh-color-border), 0 1.25rem 3rem -1.5rem color-mix(in oklab, var(--fh-color-ink) 45%, transparent);
+  }
+
+  .fh-social__photo {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: calc(var(--_r) - 0.5rem);
+  }
+
+  .fh-social__body {
+    display: grid;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tile) var(--fh-inset-control) var(--fh-inset-tight);
+  }
+  .fh-social__name {
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
+    margin: 0;
+    font-family: var(--fh-font-display);
+    font-size: clamp(1.15rem, 7cqi, 1.4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .fh-social__check {
+    --fh-icon-size: 0.85em;
+    color: var(--fh-color-success);
+  }
+  .fh-social__bio {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: 1.45;
+  }
+  .fh-social__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    margin-block-start: var(--fh-gap-grouped);
+  }
+  .fh-social__stats {
+    display: flex;
+    gap: var(--fh-gap-grouped-wide);
+    margin: 0;
+  }
+  .fh-social__stats > div { display: flex; align-items: center; gap: 0.35em; }
+  .fh-social__stats dt { display: inline-flex; color: var(--fh-color-text-muted); }
+  .fh-social__stats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; font-size: var(--fh-text-small); }
+  .fh-social__foot > .fh-button { border-radius: var(--fh-radius-pill); }
+
+  /* —— Full-bleed treatments —— */
+  :is(.fh-social--fade, .fh-social--dark) {
+    padding: 0;
+    aspect-ratio: var(--fh-social-ratio, 3 / 4);
+    align-content: end;
+  }
+  :is(.fh-social--fade, .fh-social--dark) > .fh-social__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    block-size: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+  /* The frost: a blur that grows toward the bottom, under a soft wash. */
+  :is(.fh-social--fade, .fh-social--dark) > .fh-social__body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    backdrop-filter: blur(var(--fh-social-blur, 18px));
+    mask-image: linear-gradient(to bottom, transparent, var(--fh-color-ink) 45%);
+    display: var(--fh-card-content-scrim, block);
+    background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--_wash) 72%, transparent) 50%, color-mix(in oklab, var(--_wash) 88%, transparent));
+  }
+  .fh-social--fade { --_wash: var(--fh-color-surface-raised); }
+
+  /* —— data-fh-card-content="frost" ——
+   * The body becomes a frosted pane: framed, it rides up over the bottom
+   * of the portrait; faded or dark, it floats inset over the picture in
+   * place of the graded blur. */
+  .fh-social > .fh-social__body {
+    position: relative;
+    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border-radius: var(--fh-card-content-radius, 0);
+    background-color: var(--fh-card-content-bg, transparent);
+    backdrop-filter: var(--fh-card-content-backdrop, none);
+  }
+  .fh-social:not(.fh-social--fade, .fh-social--dark) > .fh-social__body {
+    margin: calc(var(--fh-card-content-overlap, 0px) * -1) var(--fh-card-content-inset, 0px) 0;
+    padding: var(--fh-card-content-pad, var(--fh-inset-tile) var(--fh-inset-control) var(--fh-inset-tight));
+  }
+  :is(.fh-social--fade, .fh-social--dark) > .fh-social__body {
+    margin: var(--fh-card-content-inset, 0px);
+    padding: var(--fh-card-content-pad, var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-tile));
+  }
+  .fh-social--dark {
+    --_wash: var(--fh-color-ink);
+    color: var(--fh-color-on-ink);
+    --fh-color-text: var(--fh-color-on-ink);
+    --fh-color-text-muted: color-mix(in oklab, var(--fh-color-on-ink) 72%, transparent);
+  }
+  .fh-social--dark .fh-social__check { color: var(--fh-color-on-ink); }
+  .fh-social--dark .fh-social__foot > .fh-button {
+    background-color: var(--fh-color-on-ink);
+    color: var(--fh-color-ink);
+  }
+}

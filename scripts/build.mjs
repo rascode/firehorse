@@ -31,6 +31,9 @@ const entry = join(src, "firehorse.css");
 sizes["firehorse.css"] = build(entry, join(dist, "firehorse.css"), modern, false);
 sizes["firehorse.min.css"] = build(entry, join(dist, "firehorse.min.css"), modern, true);
 sizes["firehorse.compat.min.css"] = build(entry, join(dist, "firehorse.compat.min.css"), compat, true);
+// Admin category: operator UI, shipped as its own stylesheet (load after firehorse.css).
+sizes["admin.css"] = build(join(src, "admin/admin.css"), join(dist, "admin.css"), modern, false);
+sizes["admin.min.css"] = build(join(src, "admin/admin.css"), join(dist, "admin.min.css"), modern, true);
 // Optional icon set, shipped as its own stylesheet.
 sizes["icons.css"] = build(join(src, "icons/icons.css"), join(dist, "icons.css"), modern, true);
 writeFileSync(join(dist, "icons.json"), readFileSync(join(src, "icons/icons.json")));
@@ -51,10 +54,15 @@ sizes["themes.css"] = allThemes.length;
 
 // —— Optional JavaScript modules (enhancer, datatable, …) ——
 for (const f of readdirSync(join(src, "js"))) {
-  if (!f.endsWith(".js")) continue;
-  const js = readFileSync(join(src, "js", f), "utf8");
-  writeFileSync(join(dist, f), js);
-  sizes[f] = js.length;
+  if (f.endsWith(".js")) {
+    const js = readFileSync(join(src, "js", f), "utf8");
+    writeFileSync(join(dist, f), js);
+    sizes[f] = js.length;
+  } else if (f.endsWith(".d.ts")) {
+    // Ship TypeScript types next to the JS (e.g. datatable.d.ts).
+    writeFileSync(join(dist, f), readFileSync(join(src, "js", f), "utf8"));
+    sizes[f] = statSync(join(src, "js", f)).size;
+  }
 }
 
 // —— Token manifest (W3C DTCG-style JSON + TypeScript names) ——

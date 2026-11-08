@@ -1,0 +1,286 @@
+/*
+ * Firehorse — Metric tile (MET)
+ * admin · layer fh.components · docs /admin/#MET
+ */
+
+@layer fh.components {
+  /* —— Metric tiles ——
+   * One fact per tile: what it is, its value, a line under it, and where
+   * it came from. Tiles sit in fh-metrics, as many across as fit.
+   *   <div class="fh-metrics">
+   *     <article class="fh-metric" data-tone="teal">
+   *       <p class="fh-metric__label"><i class="fh-icon fh-icon--scale"></i>Legal</p>
+   *       <p class="fh-metric__value">LLC</p>
+   *       <p class="fh-metric__sub">Formed 2019 · Delaware</p>
+   *       <p class="fh-metric__source">State records</p>
+   *     </article>
+   *   </div>
+   * Parts: label (icon tinted by the tone), value (figure font), sub,
+   * source, and an fh-progress for a share done (the value then reads
+   * as a percentage). Modifiers: fh-metric--needed (something still to
+   * fill in: dashed and quiet), and an <a class="fh-metric"> is a tile
+   * that opens its area. fh-metric--spread puts the label and the line
+   * under it at the top, a wide gap, then the value and anything else at
+   * the bottom (--fh-metric-gap, 3rem); tiles in a row line up at both
+   * ends. Every tile has a bold title and a medium figure. Each part has a fixed row (label,
+   * description, gap, figure, chart or progress or people, source,
+   * detail) and tiles in fh-metrics share the rows, so figures line up
+   * across a row of tiles whatever each one carries. fh-metric--tinted is a stronger tone wash with a
+   * tone edge, for the tile that leads a row; fh-metric--wide takes two
+   * columns; fh-metric--full the whole row, and a table in it fills it. __row holds avatars (fh-avatars), cubes and chips; a cube,
+   * avatar or chip last in __label sits at the far right. __more is a
+   * <details> on an etched line at the foot of the tile, a chevron at
+   * the right; open, the detail shows below it and the tile grows in
+   * place, so the chevron stays under the pointer. Give a tile whose
+   * detail needs room fh-metric--full. __delta is the change beside the value, centred on it: data-trend="up|down|flat" picks the arrow and
+   * colour, and data-good="down" on the tile (or the delta) flips the
+   * colours for figures where down is good (cost, churn). An
+   * fh-sparkline, fh-ring or fh-gauge sits in a tile as it is. Knobs: --fh-metrics-min (tile width, 12rem),
+   * --fh-metric-pad. */
+  .fh-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-metrics-min, 12rem)), 1fr));
+    gap: var(--fh-gap-grouped);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* One anatomy for every tile (Rascode HIG). Each part has a fixed row:
+       1 title · 2 description · 3 gap · 4 figure · 5 chart, progress,
+       people or gauge · 6 source · 7 detail
+     so in fh-metrics the tiles share rows (subgrid) and figures, charts
+     and sources line up across a row whatever each tile carries. The gap
+     row takes the slack, so a row of tiles lines up at both ends. */
+  .fh-metric {
+    --_gap: var(--fh-gap-related);
+    display: grid;
+    grid-template-rows: auto auto minmax(var(--_gap), 1fr) auto auto auto auto;
+    row-gap: 0;
+    min-inline-size: 0;
+    margin: 0;
+    padding: var(--fh-metric-pad, var(--fh-inset-tile));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 3%, var(--fh-color-surface));
+    color: var(--fh-color-text);
+    text-decoration: none;
+
+    & > * { margin: 0; min-inline-size: 0; }
+
+    /* Spacing by relationship: title, description, figure and source are
+       parts of one fact (bound); a chart, progress, people row or detail
+       belongs with the figure (related). */
+    &::before { content: ""; grid-row: 3; min-block-size: var(--_gap); }
+    & > .fh-metric__label { grid-row: 1; }
+    & > .fh-metric__sub { grid-row: 2; margin-block-start: var(--fh-gap-bound); }
+    /* Figures sit on the bottom of their shared row, so a row of tiles
+       reads along one line; a gauge or ring is the figure of its tile. */
+    & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: end; }
+    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
+    & > :is(.fh-gauge, .fh-ring) { grid-row: 4; align-self: end; }
+    /* A picker is the figure of a tile whose value can be changed (a manager, an owner). */
+    & > .fh-entity-picker { grid-row: 4; align-self: end; }
+    & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
+    & > .fh-metric__more { grid-row: 7; margin-block-start: var(--fh-gap-related); }
+    /* The source stays bound to what is above it (4px). With no chart,
+       progress or people row under the figure, it moves up into that row,
+       right under the figure, instead of leaving the row's height between. */
+    &:not(:has(> :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__source { grid-row: 5; }
+
+    /* A tile with a detail and no source puts the detail on the source
+       line: "Breakdown" reads level with "People" and "State records",
+       and the row of tiles keeps one height. */
+    &:not(:has(> .fh-metric__source)) > .fh-metric__more {
+      grid-row: 6;
+      /* On the source line it is the source line: bound to the figure,
+         no rule of its own. The rule comes back when it opens. */
+      margin-block-start: calc(var(--fh-gap-bound) - var(--fh-border-thin));
+      border-block-start-color: transparent;
+      & > summary { padding-block-start: 0; }
+      &[open] { border-block-start-color: var(--fh-color-etch-soft); }
+      &[open] > summary { padding-block-start: var(--fh-gap-related); }
+    }
+    &:not(:has(> .fh-metric__source, > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__more { grid-row: 5; }
+  }
+
+  .fh-metric__label {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & > .fh-icon { flex: none; color: var(--fh-tone, var(--fh-color-text-muted)); }
+  }
+
+  .fh-metric__value {
+    overflow-wrap: anywhere;
+    font-family: var(--fh-font-figure);
+    font-size: var(--fh-text-h3);
+    font-weight: var(--fh-weight-medium);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--fh-leading-tight);
+  }
+
+  .fh-metric__sub {
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-snug);
+  }
+
+  .fh-metric__source {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  /* Needed: a fact still to fill in. */
+  .fh-metric--needed {
+    border-style: dashed;
+    border-color: var(--fh-color-etch);
+    background-color: transparent;
+
+    & .fh-metric__value { color: var(--fh-color-text-subtle); }
+  }
+
+  /* A tile that opens its area. */
+  a.fh-metric {
+    transition: border-color var(--fh-duration-fast) var(--fh-ease-out), background-color var(--fh-duration-fast) var(--fh-ease-out);
+
+    &:hover { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 45%, transparent); }
+    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  /* Spread: the same anatomy with a wide gap (--fh-metric-gap, 48px) between
+     the description and the figure. */
+  .fh-metric--spread { --_gap: var(--fh-metric-gap, var(--fh-gap-separated)); }
+
+  /* Shared rows when every item in the set is a tile. */
+  @supports (grid-template-rows: subgrid) {
+    .fh-metrics:not(:has(> :not(.fh-metric))) {
+      /* The set's own row gap would land between every shared row; tiles
+         space themselves instead. */
+      row-gap: 0;
+
+      & > .fh-metric {
+        grid-row: span 7;
+        grid-template-rows: subgrid;
+        margin-block-end: var(--fh-gap-grouped);
+      }
+    }
+  }
+
+  /* Tinted: a stronger wash of the tone and a tone edge, for the tile
+     that leads a row. */
+  .fh-metric--tinted {
+    border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 35%, transparent);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, var(--fh-color-surface));
+  }
+
+  /* Wide: two columns of the row, for a tile carrying a chart or a list. */
+  .fh-metric--wide { grid-column: span 2; }
+
+  /* Full: the whole width of the row, for a tile carrying a table. */
+  .fh-metric--full { grid-column: 1 / -1; }
+
+  /* A table or key value list in a tile fills it edge to edge. */
+  .fh-metric > :is(.fh-table-wrap, .fh-kv, .fh-dl),
+  .fh-metric__more > :is(.fh-table-wrap, .fh-kv, .fh-dl) { inline-size: 100%; }
+  @container (inline-size < 30rem) { .fh-metric--wide { grid-column: auto; } }
+
+  /* Avatars, cubes and chips on one line. */
+  .fh-metric__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+  }
+
+  .fh-metric__label > :is(.fh-cube, .fh-avatar, .fh-avatars, .fh-chip):last-child:not(:first-child) { margin-inline-start: auto; }
+
+  /* More: an etched line with a chevron; open, the detail shows below it
+     and the tile grows in place (no jump), so closing is the same click. */
+  .fh-metric__more {
+    margin-block-start: var(--fh-gap-related);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-gap-grouped);
+      padding-block: var(--fh-inset-control) 0;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      list-style: none;
+      cursor: var(--fh-cursor-action);
+
+      &::-webkit-details-marker { display: none; }
+      & > .fh-icon { flex: none; color: var(--fh-tone, var(--fh-color-text-muted)); }
+      &:hover { color: var(--fh-color-text); }
+      &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; border-radius: var(--fh-radius-sm); }
+    }
+
+    &[open] > summary { padding-block-end: var(--fh-gap-related); }
+    &[open] > summary > .fh-icon { rotate: 180deg; }
+    & > :not(summary) { margin-block-start: var(--fh-gap-related); }
+  }
+
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-metric__more > summary > .fh-icon { transition: rotate var(--fh-duration-fast) var(--fh-ease-out); }
+  }
+
+  /* Delta: the change, with an arrow; up is good unless data-good="down". */
+  .fh-metric__delta {
+    --_good: var(--fh-color-success);
+    --_bad: var(--fh-color-danger);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    inline-size: fit-content;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--_c, var(--fh-color-text-muted)) 14%, transparent);
+    color: var(--_c, var(--fh-color-text-muted));
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    font-variant-numeric: tabular-nums;
+
+    &[data-trend="up"] { --_c: var(--_good); }
+    &[data-trend="down"] { --_c: var(--_bad); }
+    &[data-trend="up"]::before { content: "▲"; font-size: 0.7em; }
+    &[data-trend="down"]::before { content: "▼"; font-size: 0.7em; }
+    &[data-trend="flat"]::before { content: "■"; font-size: 0.6em; }
+  }
+
+  :is(.fh-metric[data-good="down"], .fh-metric__delta[data-good="down"]) .fh-metric__delta,
+  .fh-metric__delta[data-good="down"] { --_good: var(--fh-color-danger); --_bad: var(--fh-color-success); }
+
+  /* Value and delta on one line. */
+  .fh-metric__figure {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+  }
+
+  /* Avatars or a sparkline on the figure line sit at the far right, so
+     every tile keeps one line for its figure. */
+  .fh-metric__figure > :is(.fh-avatars, .fh-avatar, .fh-sparkline) { margin-inline-start: auto; }
+  .fh-metric__figure > .fh-sparkline { inline-size: min(7rem, 45%); block-size: 1.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
+
+  .fh-metric > .fh-sparkline { inline-size: 100%; block-size: 2.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
+  .fh-metric > :is(.fh-gauge, .fh-ring) { justify-self: center; }
+}

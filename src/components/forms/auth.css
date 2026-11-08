@@ -1,0 +1,425 @@
+/*
+ * Firehorse — Auth (AUT)
+ * components/forms · layer fh.components · docs /forms/#AUT
+ */
+
+/*
+ * Firehorse — auth (sign in / sign up)
+ * ---------------------------------------------------------------
+ * A drop-in login block: one component holds both forms, and a
+ * segmented switch flips between them with no JavaScript (radios +
+ * :has()). Any element marked data-fh-auth="in" or "up" shows only in
+ * that mode, so titles, ledes and footers follow the switch too.
+ *
+ * The art panel is an etched contour sheet (art/etch-contours.svg)
+ * drawn in the ink colour, with a slow band of the tone palette
+ * flowing through it, the same treatment as the Firehorse hero. Point
+ * --fh-auth-art at any SVG or PNG with transparency to use your own.
+ *
+ *   <section class="fh-auth" aria-label="Account">
+ *     <div class="fh-auth__art" aria-hidden="true"></div>
+ *     <div class="fh-auth__panel">
+ *       <fieldset class="fh-segmented fh-auth__switch">
+ *         <legend class="fh-sr-only">Account</legend>
+ *         <label><input type="radio" name="auth" value="in" checked> Sign in</label>
+ *         <label><input type="radio" name="auth" value="up"> Sign up</label>
+ *       </fieldset>
+ *       <form class="fh-auth__form" data-fh-auth="in">…</form>
+ *       <form class="fh-auth__form" data-fh-auth="up">…</form>
+ *     </div>
+ *   </section>
+ *
+ * Layouts: default is split (art beside the form, art on top in narrow
+ * slots); --card floats the form over full-bleed art; --glass fills the
+ * block with art and frosts the form over it (art on top when narrow);
+ * --plain drops the art. All of them respond to the container, not the viewport.
+ *
+ * Sign-in method (AUT-2.1): a small second switch inside sign in picks
+ * password or an emailed link. Anything marked data-fh-method="password"
+ * or "link" shows only for that method, the same way data-fh-auth works:
+ *
+ *   <fieldset class="fh-segmented fh-segmented--sm fh-auth__method" data-fh-auth="in">
+ *     <legend class="fh-sr-only">Sign in with</legend>
+ *     <label><input type="radio" name="method" value="password" checked> Password</label>
+ *     <label><input type="radio" name="method" value="link"> Email link</label>
+ *   </fieldset>
+ *   <form class="fh-auth__form" data-fh-auth="in" data-fh-method="password">…</form>
+ *   <details class="fh-auth__forgot" data-fh-auth="in" data-fh-method="password">
+ *     <summary>Forgot password?</summary>
+ *     <form class="fh-auth__form">…</form>
+ *   </details>
+ *   <form class="fh-auth__form" data-fh-auth="in" data-fh-method="link">…</form>
+ *
+ * .fh-auth__rules is a live checklist under a field (username or
+ * password rules): li[data-state="met" | "unmet" | "checking"].
+ * .fh-auth-page centres the block on a full-height canvas for a
+ * standalone sign-in route.
+ */
+
+@layer fh.components {
+  .fh-auth {
+    --fh-auth-art: url("art/etch-contours.svg");
+    --fh-auth-ink: color-mix(in oklab, var(--fh-color-text) 34%, transparent);
+    --fh-auth-flow: 9s;
+    --fh-auth-flow-b: 14.3s;
+    /* Firehorse glass: the landing page's see-through pane (80%) frosted
+       with the chrome blur, so the art reads through softly, not loudly. */
+    --fh-auth-glass: color-mix(in oklab, var(--fh-color-surface) 80%, transparent);
+    --fh-auth-glass-blur: var(--fh-blur-chrome);
+    position: relative;
+    display: grid;
+    container: fh-auth / inline-size;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    isolation: isolate;
+  }
+
+  /* —— Art: ink linework with two bands of the tone palette drifting through it ——
+   * The same treatment as the Firehorse hero horse: two bands at different
+   * angles and speeds (9s and 14.3s never line up), so the colour wanders
+   * across the linework and the art reads as alive though it is static.
+   * Transform-only motion; the mask cuts everything to the linework. */
+  .fh-auth__art {
+    position: relative;
+    min-block-size: 9rem;
+    overflow: hidden;
+    background-color: var(--fh-auth-ink);
+    mask: var(--fh-auth-art) center / cover no-repeat;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: -10%;
+      inset-inline-start: -100%;
+      inline-size: 300%;
+      translate: -33.3333% 0;
+    }
+
+    &::before {
+      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-sky) 5%, var(--fh-tone-teal) 11%, var(--fh-tone-lime) 15%, var(--fh-tone-amber) 22%, var(--fh-tone-orange) 26%, var(--fh-tone-rose) 33%, var(--fh-tone-fuchsia) 37%, var(--fh-tone-violet) 41%, transparent 47%, transparent 100%) 0 0 / calc(100% / 3) 100% repeat-x;
+      transform: skewX(-16deg);
+      opacity: 0.55;
+    }
+
+    &::after {
+      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-violet) 6%, var(--fh-tone-rose) 12%, var(--fh-tone-amber) 17%, var(--fh-tone-teal) 23%, var(--fh-tone-sky) 27%, transparent 33%, transparent 100%) 37% 0 / calc(100% / 3) 100% repeat-x;
+      transform: skewX(11deg);
+      opacity: 0.4;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-auth__art::before,
+    .fh-auth__art::after {
+      will-change: translate;
+      animation: fh-auth-flow var(--fh-auth-flow) linear infinite;
+    }
+    .fh-auth__art::after { animation-duration: var(--fh-auth-flow-b); }
+  }
+
+  @keyframes fh-auth-flow {
+    to { translate: 0 0; }
+  }
+
+  /* —— Corner: a control pinned to the block's top-end corner (scheme switch) ——
+   * Sits over the art in every layout; frosted so it reads on any linework. */
+  .fh-auth__corner {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: var(--fh-gap-grouped-wide);
+    inset-inline-end: var(--fh-gap-grouped-wide);
+
+    & .fh-segmented {
+      background-color: var(--fh-auth-glass);
+      backdrop-filter: blur(var(--fh-auth-glass-blur)) saturate(1.2);
+    }
+  }
+
+  /* —— Logo: any wordmark SVG, drawn in the text colour so one file
+   * serves light and dark. Point --fh-auth-logo at it; set
+   * --fh-auth-logo-ratio to its width / height. —— */
+  .fh-auth__logo {
+    --fh-auth-logo: none;
+    display: block;
+    inline-size: var(--fh-auth-logo-size, 7.5rem);
+    aspect-ratio: var(--fh-auth-logo-ratio, 4);
+    background-color: var(--fh-color-text);
+    mask: var(--fh-auth-logo) left center / contain no-repeat;
+  }
+
+  /* —— Panel —— */
+  .fh-auth__panel {
+    position: relative;
+    display: grid;
+    align-content: center;
+    gap: var(--fh-gap-sectioned);
+    inline-size: 100%;
+    max-inline-size: 27rem;
+    margin-inline: auto;
+    padding: clamp(var(--fh-inset-card), 6cqi, var(--fh-inset-card)) clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
+  }
+
+  .fh-auth__brand {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
+  }
+
+  .fh-auth__head {
+    display: grid;
+    gap: var(--fh-gap-related);
+
+    & h1,
+    & h2,
+    & h3 {
+      margin: 0;
+      font-size: clamp(1.5rem, 1.2rem + 1.6cqi, 2rem);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    & p {
+      margin: 0;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+    }
+  }
+
+  /* Login fields are all required; skip the per-field Required chips. */
+  .fh-auth .fh-field:has([required]) > label::after { display: none; }
+
+  .fh-auth__switch {
+    inline-size: 100%;
+  }
+
+  /* The auth switches hold two short labels, so they stay on one row at
+     every width instead of stacking like other segmented controls. */
+  .fh-auth .fh-segmented:is(.fh-auth__switch, .fh-auth__method) {
+    flex-direction: row;
+    border-radius: var(--fh-radius-pill);
+
+    & > label {
+      min-inline-size: 0;
+      padding-inline: var(--fh-inset-tight);
+      border-radius: var(--fh-radius-pill);
+    }
+  }
+
+  .fh-auth__form {
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+    margin: 0;
+
+    & .fh-button[type="submit"] { inline-size: 100%; justify-content: center; }
+  }
+
+  /* Remember me · forgot password */
+  .fh-auth__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
+    font-size: var(--fh-text-small);
+
+    & a { color: var(--fh-color-text-muted); }
+    & a:hover { color: var(--fh-tone, var(--fh-color-text)); }
+  }
+
+  .fh-auth__social {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+    gap: var(--fh-gap-related);
+
+    & .fh-button { justify-content: center; }
+  }
+
+  .fh-auth__foot {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    text-align: center;
+
+    /* The "Sign up" / "Sign in" link is a <label for> the switch's radio. */
+    & label {
+      color: var(--fh-color-text);
+      text-decoration: underline;
+      text-decoration-color: var(--fh-color-etch);
+      text-underline-offset: 0.2em;
+      cursor: var(--fh-cursor-action);
+    }
+    & label:hover { text-decoration-color: currentColor; }
+  }
+
+  .fh-auth__fine {
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-micro);
+    text-align: center;
+  }
+
+  /* —— Mode: show only what belongs to the checked side —— */
+  .fh-auth:has(.fh-auth__switch input[value="up"]:checked) [data-fh-auth="in"],
+  .fh-auth:not(:has(.fh-auth__switch input[value="up"]:checked)) [data-fh-auth="up"] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-auth [data-fh-auth] { animation: fh-auth-in var(--fh-duration-base) var(--fh-ease-out); }
+  }
+
+  @keyframes fh-auth-in {
+    from { opacity: 0; translate: 0 0.35rem; }
+  }
+
+  /* —— Split (default): art beside the form when there's room, on top when not.
+   *    The columns come from auto-fit (the block can't query its own width);
+   *    the art's divider follows the layout through a query on fh-auth. —— */
+  .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr));
+  }
+
+  .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) .fh-auth__art {
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+  }
+
+  @container fh-auth (inline-size >= 46rem) {
+    .fh-auth__panel { min-block-size: 36rem; }
+
+    .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) .fh-auth__art {
+      border-block-end: 0;
+      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  /* —— Card: the form floats on full-bleed art —— */
+  .fh-auth--card {
+    min-block-size: 38rem;
+    padding: clamp(var(--fh-inset-tile), 5cqi, var(--fh-inset-card));
+    place-items: center;
+
+    & .fh-auth__art {
+      position: absolute;
+      inset: 0;
+      min-block-size: 0;
+    }
+
+    & .fh-auth__panel {
+      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border-radius: var(--fh-radius-lg);
+      background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
+      box-shadow: var(--fh-shadow-overlay);
+    }
+  }
+
+  /* —— Glass (AUT-1.4): full-bleed art, the form as frosted glass over it ——
+   * Wide: the art fills the block and the panel floats over it, blurred
+   * and saturated so the moving colour glows through. Narrow (phones): the
+   * art sits on top as a header, the same as the split layout. The block
+   * can't query its own width, so the children move between the two. */
+  .fh-auth--glass {
+    grid-template-columns: minmax(0, 1fr);
+
+    & > .fh-auth__art {
+      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    }
+  }
+
+  @container fh-auth (inline-size >= 46rem) {
+    .fh-auth--glass > .fh-auth__art {
+      grid-area: 1 / 1;
+      min-block-size: 40rem;
+      border-block-end: 0;
+    }
+
+    .fh-auth--glass > .fh-auth__panel {
+      grid-area: 1 / 1;
+      place-self: center;
+      inline-size: min(27rem, 100% - 2 * var(--fh-gap-sectioned));
+      min-block-size: 0;
+      margin-block: var(--fh-gap-sectioned);
+      border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+      border-radius: var(--fh-radius-lg);
+      background-color: var(--fh-auth-glass);
+      backdrop-filter: blur(var(--fh-auth-glass-blur)) saturate(1.2);
+      /* A crisp top edge catches the light; no gradient wash. */
+      box-shadow:
+        inset 0 1px 0 color-mix(in oklab, var(--fh-color-text) 10%, transparent),
+        var(--fh-shadow-overlay);
+    }
+  }
+
+  /* —— Plain: no art —— */
+  .fh-auth--plain .fh-auth__art { display: none; }
+
+  /* —— Method (AUT-2.1): password or an emailed link, inside sign in —— */
+  .fh-auth__method {
+    inline-size: 100%;
+  }
+
+  .fh-auth:has(.fh-auth__method input[value="link"]:checked) [data-fh-method="password"],
+  .fh-auth:not(:has(.fh-auth__method input[value="link"]:checked)) [data-fh-method="link"] {
+    display: none;
+  }
+
+  /* Forgot password: a disclosure under the password form, holding its own form. */
+  .fh-auth__forgot {
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+    font-size: var(--fh-text-small);
+
+    & > summary {
+      inline-size: fit-content;
+      color: var(--fh-color-text-muted);
+      text-decoration: underline;
+      text-decoration-color: var(--fh-color-etch);
+      text-underline-offset: 0.2em;
+      list-style: none;
+      cursor: var(--fh-cursor-action);
+    }
+    & > summary::-webkit-details-marker { display: none; }
+    & > summary:hover { color: var(--fh-color-text); text-decoration-color: currentColor; }
+  }
+
+  /* —— Rules checklist under a field —— */
+  .fh-auth__rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    margin: 0;
+    padding: 0;
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+    list-style: none;
+
+    & > li {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-bound);
+    }
+    & > li::before {
+      content: "";
+      inline-size: 0.4rem;
+      block-size: 0.4rem;
+      border: var(--fh-border-thin) solid currentColor;
+      border-radius: 50%;
+    }
+    & > li[data-state="met"] { color: var(--fh-color-success); }
+    & > li[data-state="met"]::before { background-color: currentColor; }
+    & > li[data-state="unmet"] { color: var(--fh-color-danger); }
+    & > li[data-state="checking"]::before { border-style: dashed; }
+  }
+
+}

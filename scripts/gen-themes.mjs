@@ -44,7 +44,7 @@ const adaptive = new Set(decls(adaptiveSupports).map(([n]) => n));
 const presets = {};
 for (const m of configCss.matchAll(/\[data-fh-([\w-]+)="([\w-]+)"\]\s*\{([^}]*)\}/g)) (presets[m[1]] ??= {})[m[2]] = decls(m[3]);
 const densityRamp = decls(configCss.match(/\[data-fh-density\]\s*\{([^}]*)\}/)[1]);
-const CONFIG_KEYS = { avatar: "avatar", card: "card", cardMedia: "card-media", button: "button", chip: "chip", radius: "radius", density: "density", table: "table" };
+const CONFIG_KEYS = { avatar: "avatar", card: "card", cardMedia: "card-media", cardContent: "card-content", button: "button", chip: "chip", radius: "radius", density: "density", table: "table", type: "type" };
 
 /* —— OKLCH ⇄ sRGB ——————————————————————————————————————————— */
 const toLin = (x) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4);
@@ -103,6 +103,8 @@ export function compile(def, { source = "" } = {}) {
   if (font.sans) add("--fh-font-sans", font.sans);
   // Always set the display face, so a theme nested in another never inherits its headings.
   add("--fh-font-display", font.display ?? "var(--fh-font-sans)");
+  // Figures follow the display face unless the theme names its own.
+  add("--fh-font-figure", font.figure ?? "var(--fh-font-display)");
   if (font.mono) add("--fh-font-mono", font.mono);
   if (font.script) add("--fh-font-script", font.script);
 
@@ -233,7 +235,15 @@ ${pad(fallback).replace(/^ {4}/gm, "      ")}
   const plain = (v) => (v ? v.replace(/var\([^()]*(\([^()]*\))?[^()]*\),?\s*/g, "").replace(/,\s*$/, "").trim() : "");
   const fonts = { sans: plain(font.sans), display: plain(font.display), mono: plain(font.mono) };
   const radius = { sharp: 0, soft: 10, round: 16 }[config.radius] ?? 7;
-  const manifest = { name, base: Boolean(def.base), label: def.label ?? name, tagline: def.tagline ?? "", description: def.description ?? "", breed: def.breed ?? "", config, swatches, fonts, radius, css: `themes/${name}.css` };
+  // horse.line / horse.voice ship for the site theme picker and KC (Maestoso et al.).
+  const horse = def.horse && typeof def.horse === "object"
+    ? {
+        name: def.horse.name ?? "",
+        ...(def.horse.line ? { line: String(def.horse.line) } : {}),
+        ...(Array.isArray(def.horse.voice) && def.horse.voice.length ? { voice: def.horse.voice.map(String) } : {}),
+      }
+    : undefined;
+  const manifest = { name, base: Boolean(def.base), label: def.label ?? name, tagline: def.tagline ?? "", description: def.description ?? "", breed: def.breed ?? "", ...(horse ? { horse } : {}), config, swatches, fonts, radius, css: `themes/${name}.css` };
   return { name, css, manifest };
 }
 
