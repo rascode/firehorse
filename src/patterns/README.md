@@ -1,4 +1,4 @@
-# Patterns
+# Design patterns
 
 Page-level compositions in `fh.patterns`: hero (Cinch), section head, etched split, CTA band, window frame, letter, and the offset panel.
 

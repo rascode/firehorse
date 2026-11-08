@@ -19,6 +19,12 @@
   };
   const saved = store.get("fh-scheme");
   if (saved) $$(`input[name="scheme"][value="${saved}"], input[name="scheme-m"][value="${saved}"]`).forEach((r) => (r.checked = true));
+  // Nothing chosen yet: light up the scheme the page already uses, without remembering it.
+  else {
+    const cs = getComputedStyle(document.documentElement).colorScheme;
+    const now = /light/.test(cs) && /dark/.test(cs) ? "auto" : /light/.test(cs) ? "light" : "dark";
+    $$(`input[name="scheme"][value="${now}"]`).forEach((r) => (r.checked = true));
+  }
   $$('input[name="scheme"], input[name="scheme-m"]').forEach((r) => r.addEventListener("change", () => setScheme(r.value)));
   // Clicking a label would focus its radio, and focusing a control in the
   // sticky header scrolls the page. Check it ourselves and focus without scrolling.
@@ -59,7 +65,13 @@
   /* —— Hero backdrop: frost over once the hero has mostly scrolled away —— */
   const backdrop = $(".site-backdrop"), hero = $("#top");
   if (backdrop && hero) {
-    new IntersectionObserver(([e]) => backdrop.classList.toggle("is-frosted", !e.isIntersecting), { rootMargin: "0px 0px -55% 0px" }).observe(hero);
+    // Frosted between the hero and the footer; clear again as the footer arrives, when the horse
+    // comes forward (site.css drives that from the page scroll).
+    let heroIn = true, footIn = false;
+    const paint = () => { backdrop.classList.toggle("is-frosted", !heroIn && !footIn); backdrop.classList.toggle("is-footer", footIn); };
+    new IntersectionObserver(([e]) => { heroIn = e.isIntersecting; paint(); }, { rootMargin: "0px 0px -55% 0px" }).observe(hero);
+    const foot = $(".site-footer");
+    if (foot) new IntersectionObserver(([e]) => { footIn = e.isIntersecting; paint(); }).observe(foot);
   }
 
   /* —— Cards rise in as they scroll into view (category cards, component groups) —— */
@@ -402,4 +414,96 @@
     let lastW = innerWidth, t;
     addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(t); t = setTimeout(prime, 300); });
   }
+})();
+
+/* Easter egg · root picker. Hover (or keyboard-focus) the Firehorse mark: a grid of colours opens
+ * under it. A pick sets --site-pick and data-site-root on <html> (see site.css), so the root, the
+ * accent and every harmony re-tint live. Remembered per browser; Reset clears it. */
+(() => {
+  const brand = document.querySelector(".site-header-oval .fh-header__brand");
+  const pop = document.getElementById("site-root-pick");
+  if (!brand || !pop || !pop.showPopover) return;
+  const html = document.documentElement;
+  const swatches = [...pop.querySelectorAll("[data-root]")];
+  const any = pop.querySelector('input[type="color"]');
+  const mark = (hex) => swatches.forEach((b) => b.setAttribute("aria-pressed", String(!!hex && b.dataset.root === hex)));
+  const apply = (hex) => {
+    if (hex) { html.style.setProperty("--site-pick", hex); html.setAttribute("data-site-root", ""); }
+    else { html.style.removeProperty("--site-pick"); html.removeAttribute("data-site-root"); }
+    try { hex ? localStorage.setItem("fh-root", hex) : localStorage.removeItem("fh-root"); } catch (e) {}
+    mark(hex);
+    if (hex && any) any.value = hex;
+  };
+  let saved = null;
+  try { saved = localStorage.getItem("fh-root"); } catch (e) {}
+  mark(saved); if (saved && any) any.value = saved;
+
+  let t;
+  const open = () => { clearTimeout(t); if (!pop.matches(":popover-open")) pop.showPopover(); };
+  const close = (delay = 280) => { clearTimeout(t); t = setTimeout(() => { if (pop.matches(":popover-open")) pop.hidePopover(); }, delay); };
+  const fine = matchMedia("(hover: hover) and (pointer: fine)");
+  brand.addEventListener("pointerenter", () => { if (fine.matches) { clearTimeout(t); t = setTimeout(open, 220); } });
+  brand.addEventListener("pointerleave", () => close());
+  pop.addEventListener("pointerenter", () => clearTimeout(t));
+  pop.addEventListener("pointerleave", () => close());
+  brand.addEventListener("focus", () => { if (brand.matches(":focus-visible")) open(); });
+  brand.addEventListener("blur", () => { setTimeout(() => { if (!pop.contains(document.activeElement)) close(0); }, 0); });
+  pop.addEventListener("focusout", (e) => { if (!pop.contains(e.relatedTarget) && e.relatedTarget !== brand) close(0); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && pop.matches(":popover-open")) { close(0); brand.focus(); } });
+  document.addEventListener("pointerdown", (e) => { if (pop.matches(":popover-open") && !pop.contains(e.target) && !brand.contains(e.target)) close(0); });
+  pop.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-root]");
+    if (b) apply(b.dataset.root);
+    if (e.target.closest("[data-root-reset]")) apply(null);
+  });
+  if (any) any.addEventListener("input", () => apply(any.value));
+  // Picking a theme means wanting its colours: drop a custom root so the theme's accent shows.
+  document.addEventListener("change", (e) => { if (e.target.matches?.("[data-fh-theme-select]")) apply(null); });
+})();
+
+/* Dock mark fold: measure "ire" and "orse" in the mark's own font so they collapse from their exact width. */
+(() => {
+  const folds = [...document.querySelectorAll(".site-dock-fold")];
+  if (!folds.length) return;
+  const size = () => folds.forEach((f) => {
+    const probe = document.createElement("span");
+    probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
+    probe.textContent = f.textContent;
+    // The dock mark is hidden until it engages; measure beside the header mark, same font.
+    (document.querySelector(".fh-header .site-mark__word") ?? f.parentElement).append(probe);
+    const w = probe.getBoundingClientRect().width;
+    probe.remove();
+    if (w) f.style.setProperty("--_w", w + "px");
+  });
+  (document.fonts?.ready ?? Promise.resolve()).then(size);
+  addEventListener("resize", size, { passive: true });
+})();
+
+/* Home: place the horse so its left dimension line (the "11.2" rule, x = 29 of the 1453px art)
+ * stands exactly on the right edge of the first stat card (Design tokens). Solves the art's
+ * horizontal anchor (--_art-xn) from the card's position and the art's rendered width; re-runs on
+ * resize. Narrow screens keep their own crop. */
+(() => {
+  const backdrop = document.querySelector(".site-backdrop");
+  const card = document.querySelector(".site-hero .site-facts > :first-child, .site-hero .fh-lede");
+  if (!backdrop || !card) return;
+  // x of the left dimension line in each theme's horse art (same 1453px canvas).
+  const LINES = { "": 29 / 1453, lipizzaner: 42.5 / 1453 };
+  const line = () => LINES[document.documentElement.getAttribute("data-fh-theme") ?? ""] ?? LINES[""];
+  const probe = document.createElement("div");
+  probe.style.cssText = "position:absolute;visibility:hidden;block-size:0;inline-size:var(--_art-w)";
+  backdrop.append(probe);
+  const place = () => {
+    backdrop.style.removeProperty("--_art-xn");
+    if (!matchMedia("(width >= 48rem)").matches) return;
+    const W = backdrop.clientWidth, artW = probe.getBoundingClientRect().width;
+    if (!artW || artW >= W) return;
+    const target = card.getBoundingClientRect().right;
+    // Never past 1: the art stays whole on the right edge.
+    backdrop.style.setProperty("--_art-xn", String(Math.min(1, Math.max(0, (target - line() * artW) / (W - artW)))));
+  };
+  (document.fonts?.ready ?? Promise.resolve()).then(place);
+  addEventListener("resize", place, { passive: true });
+  new ResizeObserver(place).observe(card);
+  new MutationObserver(place).observe(document.documentElement, { attributes: true, attributeFilter: ["data-fh-theme"] });
 })();

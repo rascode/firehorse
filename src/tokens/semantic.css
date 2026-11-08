@@ -29,6 +29,17 @@
     --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
     --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
     --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    /* Headings, set per theme: the secondary header (section titles, .fh-heading) and the display
+     * (hero, .fh-display). Size, weight and tracking travel together. */
+    --fh-heading-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+    --fh-heading-weight: var(--fh-weight-heavy);
+    --fh-heading-tracking: var(--fh-tracking-tight);
+    --fh-display-weight: var(--fh-weight-heavy);
+    /* Card and block titles: one step under the heading, same face, so every title reads as one voice. */
+    --fh-subheading-weight: var(--fh-weight-bold);
+    /* Menus and dropdowns: the raised surface (white on light) at an opacity a theme sets. */
+    --fh-menu-opacity: 0.86;
+    --fh-color-surface-menu: color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent);
     --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
     --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
     --fh-color-field: light-dark(var(--fh-gray-50), var(--fh-gray-875)); /* a whisper off the surface in both schemes */

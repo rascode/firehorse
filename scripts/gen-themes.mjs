@@ -235,7 +235,15 @@ ${pad(fallback).replace(/^ {4}/gm, "      ")}
   const plain = (v) => (v ? v.replace(/var\([^()]*(\([^()]*\))?[^()]*\),?\s*/g, "").replace(/,\s*$/, "").trim() : "");
   const fonts = { sans: plain(font.sans), display: plain(font.display), mono: plain(font.mono) };
   const radius = { sharp: 0, soft: 10, round: 16 }[config.radius] ?? 7;
-  const manifest = { name, base: Boolean(def.base), label: def.label ?? name, tagline: def.tagline ?? "", description: def.description ?? "", breed: def.breed ?? "", config, swatches, fonts, radius, css: `themes/${name}.css` };
+  // horse.line / horse.voice ship for the site theme picker and KC (Maestoso et al.).
+  const horse = def.horse && typeof def.horse === "object"
+    ? {
+        name: def.horse.name ?? "",
+        ...(def.horse.line ? { line: String(def.horse.line) } : {}),
+        ...(Array.isArray(def.horse.voice) && def.horse.voice.length ? { voice: def.horse.voice.map(String) } : {}),
+      }
+    : undefined;
+  const manifest = { name, base: Boolean(def.base), label: def.label ?? name, tagline: def.tagline ?? "", description: def.description ?? "", breed: def.breed ?? "", ...(horse ? { horse } : {}), config, swatches, fonts, radius, css: `themes/${name}.css` };
   return { name, css, manifest };
 }
 

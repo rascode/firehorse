@@ -13,8 +13,11 @@
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-bound);
+    padding: 0;
     padding-block-end: 0.2em;
+    border: 0;
     border-block-end: var(--fh-border-thin) dashed color-mix(in oklab, var(--_color) 45%, transparent);
+    background: none;
     color: var(--_color);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-caption);
@@ -24,6 +27,7 @@
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
+    cursor: var(--fh-cursor-action);
     transition:
       color var(--fh-duration-fast) var(--fh-ease-standard),
       border-color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -49,6 +53,13 @@
     &[data-tone] {
       --_color: var(--fh-tone);
     }
+  }
+
+  /* <button class="fh-action"> keeps the link look (no UA button chrome).
+   * Padding / border / background already match on .fh-action; appearance
+   * clears remaining UA button chrome without wiping the dashed underline. */
+  button.fh-action {
+    appearance: none;
   }
 
   .fh-action--lg {

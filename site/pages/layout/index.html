@@ -4,7 +4,7 @@
   "name": "Layout",
   "tone": "lime",
   "title": "Layout · Firehorse",
-  "description": "Firehorse layout: the frame and its named lines, container queries, stack, cluster and auto grid. Page layouts live on Patterns.",
+  "description": "Firehorse layout: the frame and its named lines, container queries, stack, cluster and auto grid. Page layouts live on Design patterns.",
   "headline": "A frame, its slots, and the box you're in",
   "lede": "Every page, section and header is a <code>.fh-frame</code>: a grid with named <code>full</code> and <code>content</code> lines. Each direct child becomes a query container, so whatever you put inside measures its slot.",
   "scripts": [],
@@ -17,7 +17,7 @@
     },
     {
       "value": "3",
-      "label": "Page patterns",
+      "label": "Page design patterns",
       "blurb": "The hero, the etched split and the call-to-action band."
     }
   ]
@@ -35,24 +35,44 @@
         </div>
 
         <div class="fh-grid" data-cols="3" style="--fh-grid-min: 17rem">
-          <div class="site-demo" data-fh-id="STK">
-            <div class="site-demo__head"><h3>Stack</h3><code>.fh-stack</code></div>
+          <div class="site-demo" data-fh-id="STK" data-fh-groups="Stack">
+            <div class="site-demo__head"><h3>Stack</h3><code>.fh-stack · --2xs … --2xl</code></div>
             <div class="site-demo__stage site-demo__stage--grid" data-demo>
-<div class="fh-stack fh-stack--sm">
-  <p class="fh-label">Flow</p>
-  <p class="fh-body">One gap between siblings, set by <code>--fh-gap</code>.</p>
-  <a class="fh-action" href="#layout">Read more</a>
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-stack fh-stack--2xs" data-fh-id="STK-1.1" data-fh-name="2xs">
+    <p class="fh-label">2xs</p>
+    <p class="fh-small fh-muted" style="margin:0">Tightest sibling gap.</p>
+  </div>
+  <div class="fh-stack fh-stack--sm" data-fh-id="STK-1.2" data-fh-name="sm">
+    <p class="fh-label">sm</p>
+    <p class="fh-body" style="margin:0">One gap between siblings, set by <code>--fh-gap</code>.</p>
+    <a class="fh-action" href="#layout">Read more</a>
+  </div>
+  <div class="fh-stack fh-stack--2xl" data-fh-id="STK-1.3" data-fh-name="2xl">
+    <p class="fh-label">2xl</p>
+    <p class="fh-small fh-muted" style="margin:0">Widest stack gap.</p>
+  </div>
 </div>
             </div>
           </div>
-          <div class="site-demo" data-fh-id="CLS">
-            <div class="site-demo__head"><h3>Cluster</h3><code>.fh-cluster</code></div>
+          <div class="site-demo" data-fh-id="CLS" data-fh-groups="Cluster">
+            <div class="site-demo__head"><h3>Cluster</h3><code>.fh-cluster · --between · --end</code></div>
             <div class="site-demo__stage site-demo__stage--grid" data-demo>
-<div class="fh-cluster">
-  <span class="fh-badge" data-tone="sky">Agents</span>
-  <span class="fh-badge" data-tone="teal">Data</span>
-  <span class="fh-badge" data-tone="orange">Automation</span>
-  <span class="fh-badge">Managed</span>
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-cluster" data-fh-id="CLS-1.1" data-fh-name="Default">
+    <span class="fh-badge" data-tone="sky">Agents</span>
+    <span class="fh-badge" data-tone="teal">Data</span>
+    <span class="fh-badge" data-tone="orange">Automation</span>
+    <span class="fh-badge">Managed</span>
+  </div>
+  <div class="fh-cluster fh-cluster--between" data-fh-id="CLS-1.2" data-fh-name="Between" style="inline-size: 100%">
+    <span class="fh-label">Between</span>
+    <span class="fh-badge" data-tone="lime">Flush ends</span>
+  </div>
+  <div class="fh-cluster fh-cluster--end" data-fh-id="CLS-1.3" data-fh-name="End" style="inline-size: 100%">
+    <span class="fh-badge" data-tone="sky">End</span>
+    <span class="fh-badge" data-tone="teal">aligned</span>
+  </div>
 </div>
             </div>
           </div>
@@ -70,14 +90,93 @@
       </div>
     </section>
 
-    <!-- ═══════════════ PATTERNS ═══════════════ -->
-    <section id="layout-patterns" class="fh-section fh-section--ruled site-anchor" data-tone="orange" aria-labelledby="layout-patterns-title" data-fh-label="Patterns" data-fh-index="11">
+    <!-- ═══════════════ COLUMNS & GUIDES ═══════════════ -->
+    <section id="columns" class="fh-section fh-section--ruled site-anchor" data-tone="violet" aria-labelledby="columns-title" data-fh-label="Columns" data-fh-index="03">
       <header class="fh-section-head">
         <div>
-          <p class="site-chapter" data-tone="orange"><b>02</b> Patterns</p>
-          <h2 id="layout-patterns-title" class="fh-heading">Patterns have their own page</h2>
-          <p class="fh-lede">The frame, stack, cluster and grid here are the thread. Whole page layouts built from them, with their anatomy, rules and markup, live on <a class="fh-link" href="/patterns/">Patterns</a>: Fender, Cinch, the offset panel, the etched split and the CTA band.</p>
+          <p class="site-chapter" data-tone="violet"><b>02</b> Columns</p>
+          <h2 id="columns-title" class="fh-heading">Twelve columns, sixteen when you need them</h2>
+          <p class="fh-lede">For placing text and images off the obvious lines: offsets, asymmetric splits, overlaps. Children say where they sit with <code>data-span</code> and <code>data-start</code>. Like everything else here it follows its container: under 40rem it stacks, from 40rem <code>data-span-md</code> applies, from 60rem the full placement. The thinking behind it is the Rascode SDF grid policy.</p>
         </div>
-        <a class="fh-action fh-action--lg" href="/patterns/">Open Patterns</a>
+      </header>
+      <div class="fh-stack fh-stack--xl">
+        <div class="site-demo site-anchor" id="c-cols" data-fh-id="COL" data-fh-groups="Columns|Compositions" data-fh-name="Columns">
+          <div class="site-demo__head"><h3>Columns</h3><p>The grid itself. <code>data-cols="16"</code> for the finer one; a child <code>.fh-cols[data-subgrid]</code> keeps nested content on the parent's lines.</p><code>.fh-cols[data-cols] &gt; [data-span][data-start]</code></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cols" data-fh-id="COL-1.1" data-fh-name="12 columns">
+  <div class="fh-card fh-card--solid" data-span="12">12</div>
+  <div class="fh-card fh-card--solid" data-span="8">8</div>
+  <div class="fh-card fh-card--solid" data-span="4">4</div>
+  <div class="fh-card fh-card--solid" data-span="3">3</div>
+  <div class="fh-card fh-card--solid" data-span="6">6</div>
+  <div class="fh-card fh-card--solid" data-span="3">3</div>
+</div>
+<div class="fh-cols" data-cols="16" data-fh-id="COL-1.2" data-fh-name="16 columns">
+  <div class="fh-card fh-card--solid" data-span="10">10 of 16</div>
+  <div class="fh-card fh-card--solid" data-span="6">6</div>
+  <div class="fh-card fh-card--solid" data-span="5" data-start="3">5, from 3</div>
+  <div class="fh-card fh-card--solid" data-span="7" data-start="10">7, from 10</div>
+</div>
+<div class="fh-cols" data-fh-id="COL-1.3" data-fh-name="Subgrid">
+  <div class="fh-cols" data-subgrid data-span="8" data-start="3">
+    <div class="fh-card fh-card--solid" data-span="5">Nested 5</div>
+    <div class="fh-card fh-card--solid" data-span="3">Nested 3</div>
+  </div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo" data-fh-id="COL-2" data-fh-name="Compositions">
+          <div class="site-demo__head"><h3>Compositions</h3><p>Three placements to start from. Offset: copy held to the left, the image breaking right. Asymmetric: a 5 / 7 split with the image dropped. Broken: two pieces sharing rows, so one overlaps the other.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--xl">
+<div class="fh-cols" data-fh-id="COL-2.1" data-fh-name="Offset">
+  <div class="fh-stack" data-span="5" data-start="2" data-span-md="8">
+    <p class="fh-eyebrow-pill" data-tone="violet"><span class="fh-dot"></span>Offset</p>
+    <h3 class="fh-heading">Copy from column 2</h3>
+    <p class="fh-body">The text starts one column in; the picture takes the right half and runs to the edge of the grid.</p>
+  </div>
+  <div class="fh-card fh-card--solid" data-span="6" data-start="7" data-row="1" style="min-block-size: 12rem">Image · 7–12</div>
+</div>
+<div class="fh-cols" data-fh-id="COL-2.2" data-fh-name="Asymmetric">
+  <div class="fh-card fh-card--solid" data-span="5" style="min-block-size: 10rem">5</div>
+  <div class="fh-card fh-card--solid" data-span="7" data-align="end" style="min-block-size: 16rem">7 · dropped to the bottom</div>
+</div>
+<div class="fh-cols" data-fh-id="COL-2.3" data-fh-name="Broken">
+  <div class="fh-card fh-card--solid" data-span="7" data-start="1" data-row="1" data-row-span="2" style="min-block-size: 16rem">Image · 1–7, two rows</div>
+  <div class="fh-card" data-span="6" data-start="6" data-row="2" data-layer="over">Card · 6–11, over the image</div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-guides" data-fh-id="GDS" data-fh-groups="Guides" data-fh-name="Guides">
+          <div class="site-demo__head"><h3>Guides</h3><p>Designer overlays over the whole page, in CSS. Put any mix of the words in <code>data-fh-guides</code> on <code>&lt;html&gt;</code>; on this site, turn them on from the theme panel. They never take clicks.</p><code>html[data-fh-guides="cols-12 golden baseline"]</code></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-cluster" data-site-guides>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="cols-12" data-fh-id="GDS-1.1" data-fh-name="12 columns">12 columns</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="cols-16" data-fh-id="GDS-1.2" data-fh-name="16 columns">16 columns</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="golden" data-fh-id="GDS-1.3" data-fh-name="Golden sections">Golden sections</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="thirds" data-fh-id="GDS-1.4" data-fh-name="Thirds">Thirds</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="baseline" data-fh-id="GDS-1.5" data-fh-name="Baseline">Baseline</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="modular" data-fh-id="GDS-1.6" data-fh-name="Modular">Modular</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="safe" data-fh-id="GDS-1.7" data-fh-name="Safe areas">Safe areas</button>
+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PATTERNS ═══════════════ -->
+    <section id="layout-patterns" class="fh-section fh-section--ruled site-anchor" data-tone="orange" aria-labelledby="layout-patterns-title" data-fh-label="Design patterns" data-fh-index="11">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="orange"><b>03</b> Design patterns</p>
+          <h2 id="layout-patterns-title" class="fh-heading">Design patterns have their own page</h2>
+          <p class="fh-lede">The frame, stack, cluster and grid here are the thread. Whole page layouts built from them, with their anatomy, rules and markup, live on <a class="fh-link" href="/patterns/">Design patterns</a>: Fender, Cinch, the offset panel, the etched split and the CTA band.</p>
+        </div>
+        <a class="fh-action fh-action--lg" href="/patterns/">Open design patterns</a>
       </header>
     </section>

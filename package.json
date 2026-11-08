@@ -61,8 +61,14 @@
     "./icons.css": "./dist/icons.css",
     "./icons.json": "./dist/icons.json",
     "./reveal.css": "./dist/reveal.css",
-    "./datatable": "./dist/datatable.js",
-    "./datatable.js": "./dist/datatable.js",
+    "./datatable": {
+      "types": "./dist/datatable.d.ts",
+      "default": "./dist/datatable.js"
+    },
+    "./datatable.js": {
+      "types": "./dist/datatable.d.ts",
+      "default": "./dist/datatable.js"
+    },
     "./audio": "./dist/audio.js",
     "./audio.js": "./dist/audio.js"
   },
@@ -70,6 +76,8 @@
     "dist",
     "src",
     "agent",
+    "mcp",
+    "index-ledger.json",
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
@@ -83,7 +91,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "lint": "node scripts/lint.mjs",
-    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check && node scripts/audit-test.mjs",
+    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check && node scripts/audit-test.mjs && node test/mcp.test.mjs",
     "prepublishOnly": "npm test && node scripts/gen-index.mjs",
     "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/pack-site.mjs && node scripts/not-found.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
     "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
@@ -105,12 +113,15 @@
     "safari >= 17.5"
   ],
   "dependencies": {
-    "node-html-parser": "^7.0.1"
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "node-html-parser": "^7.0.1",
+    "zod": "^3.25.76"
   },
   "bin": {
     "firehorse-schema": "./scripts/schema.mjs",
     "firehorse-audit": "./scripts/audit.mjs",
     "firehorse-theme": "./scripts/gen-themes.mjs",
-    "firehorse-export": "./scripts/export-media.mjs"
+    "firehorse-export": "./scripts/export-media.mjs",
+    "firehorse-mcp": "./mcp/server.mjs"
   }
 }

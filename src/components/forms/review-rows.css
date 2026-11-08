@@ -1,0 +1,65 @@
+/*
+ * Firehorse — Review rows (RVW)
+ * components/forms · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Review rows (RVW): label, value, Edit on the right ——
+   *   <dl class="fh-review" data-fh="RVW-1.1">
+   *     <div class="fh-review__row">
+   *       <dt>Name</dt>
+   *       <dd>Ada Lovelace</dd>
+   *       <button type="button" class="fh-action fh-review__edit">Edit</button>
+   *     </div>
+   *   </dl>
+   * Values can take fh-review__muted or fh-review__quote. */
+  .fh-review {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin: 0;
+    border-block-start: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    container: fh-review / inline-size;
+  }
+
+  .fh-review__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
+    padding-block: var(--fh-gap-grouped-wide);
+    border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+  }
+
+  .fh-review__row > dt {
+    grid-column: 1;
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+  }
+
+  .fh-review__row > dd {
+    grid-column: 1;
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+    overflow-wrap: anywhere;
+  }
+
+  .fh-review__edit {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+  }
+
+  .fh-review__muted { color: var(--fh-color-text-muted); }
+  .fh-review__quote { color: var(--fh-color-text); white-space: pre-line; }
+
+  @container fh-review (inline-size >= 36rem) {
+    .fh-review__row { grid-template-columns: 9rem minmax(0, 1fr) auto; }
+    .fh-review__row > dt { padding-block-start: 0.1rem; }
+    .fh-review__row > dd { grid-column: 2; }
+    .fh-review__edit { grid-column: 3; grid-row: 1; }
+  }
+}

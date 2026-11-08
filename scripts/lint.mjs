@@ -25,6 +25,8 @@ const defined = new Set();
 const read = (f) => readFileSync(f, "utf8").replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
 for (const f of new Set([...coreFiles, ...files])) for (const m of read(f).matchAll(/(--[\w-]+)\s*:/g)) defined.add(m[1]);
 for (const f of new Set([...coreFiles, ...files])) for (const m of read(f).matchAll(/@property\s+(--[\w-]+)/g)) defined.add(m[1]);
+// CSS custom functions: @function --name(--arg <type>, …) defines its arguments for its own body.
+for (const f of new Set([...coreFiles, ...files])) for (const m of read(f).matchAll(/@function\s+--[\w-]+\(([^)]*)\)/g)) for (const arg of m[1].matchAll(/(--[\w-]+)/g)) defined.add(arg[1]);
 
 const PRIMITIVE = /--fh-(gray|ember|sky|lime|orange|teal|fuchsia|violet|rose|amber|green|red)-\d+/;
 for (const f of files) {

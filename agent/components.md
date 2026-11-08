@@ -20,7 +20,7 @@
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
 | Disclosure | `fh-accordion` `fh-tabs` (`--mono`) `fh-dialog` (`__header` `__body` `__footer`) `fh-menu` `fh-toaster` `fh-toast` |
 | Chrome | `fh-header` (`__bar` `__brand` `__actions` `__toggle`) `fh-nav` `fh-nav__link` `fh-drawer` (`__group`) `fh-mega` (`__grid` `__rail`) `fh-footer` (`__columns` `__column` `__base`) |
-| Patterns | `fh-hero` `fh-hero__actions` `fh-hero-split` `fh-section-head` `fh-etched-split` (`__pane`) `fh-cta-band` (`__main` `__title` `__aside` `__people` `__fine`) `fh-window` (`__bar` `__body`) `fh-letter` (`__portrait`) `fh-panel` `fh-panel-inset` `[data-fh-panel-start]` `fh-footer--tall` |
+| Design patterns | `fh-hero` `fh-hero__actions` `fh-hero-split` `fh-section-head` `fh-etched-split` (`__pane`) `fh-cta-band` (`__main` `__title` `__aside` `__people` `__fine`) `fh-window` (`__bar` `__body`) `fh-letter` (`__portrait`) `fh-panel` `fh-panel-inset` `[data-fh-panel-start]` `fh-footer--tall` |
 | Media | `fh-canvas` (`__body` `__top` `__main` `__foot` `__title` `__sub` `__eyebrow` `__mark` `__badge` `__index` `__cubes` `__media` `__ui` (`--crop`) `--og` `--yt-thumb` `--yt-banner` `--x-header` `--li-banner` `--post` `--square` `--story` `--cover` `--card` `--center` `--split` `--row` `--plain` `--plate` `--native` `__cubes--rows`) `[data-fh-guides]` |
 | Slides | `fh-slide` (`--title` `--section` `--middle` `__list` `__stats` `__quote` `__cite` `__code`) on an `fh-canvas`; reveal.js: `dist/reveal.css` |
 | Helpers | `fh-sr-only` `fh-skip` `fh-reveal` `fh-reveal-children` `fh-hide-narrow` `fh-hide-wide` `fh-tone-text` `fh-text-start|center|end` `fh-nowrap` `fh-tabular` `fh-full` |
@@ -92,6 +92,19 @@ Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
 
 ## Components
 
+### HLP · Text align helpers
+
+`fh-text-start`, `fh-text-center`, `fh-text-end`. Also z and measure tokens: `--fh-z-raised`, `--fh-z-drawer`, `--fh-measure-narrow`.
+
+```html
+<div class="fh-stack fh-stack--lg" style="max-inline-size: var(--fh-measure-narrow)">
+  <p class="fh-text-start" style="margin:0">Start · flush to the start edge.</p>
+  <p class="fh-text-center" style="margin:0">Center · middle of the measure.</p>
+  <p class="fh-text-end" style="margin:0">End · flush to the end edge.</p>
+  <p class="fh-small fh-muted" style="margin:0">z: raised <code>1</code>, drawer <code>25</code> · measure-narrow <code>36rem</code></p>
+</div>
+```
+
 ### TYP-1 · Type presets
 
 Four faces as one attribute: `data-fh-type` sets the sans and display families and the heading tracking each face wants (Hanken Grotesk at −5%, Archivo at −3%). A theme picks one with `config.type`. Presets name the family only: load the font yourself.
@@ -119,19 +132,21 @@ Motion you opt into, not a library you load. It runs on the platform (transition
     <p class="site-motion__note">Hover or focus: the label rolls up and its twin rolls in.</p></dd></div>
   <div><dt>Rollover<code>Firehorse.rollover()</code></dt><dd>
     <div class="site-motion__row">
-      <p class="site-motion__roll" data-tone="sky"><span class="fh-rollover" id="motion-roll" data-fh="MTL"><span class="fh-rollover__item"><b>04</b>Data</span></span></p>
+      <p class="site-motion__roll" data-tone="sky"><span class="fh-rollover" id="motion-roll"><span class="fh-rollover__item"><b>04</b>Data</span></span></p>
       <div class="fh-cluster" style="--fh-gap: var(--fh-space-2)">
         <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-roll="-1">Back</button>
         <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-roll="1">Forward</button>
       </div>
     </div>
     <p class="site-motion__note">Rolls up going forward, down going back. The floating bar's title uses it.</p></dd></div>
-  <div><dt>Reveal<code>.fh-reveal · --scale · --left · --blur</code></dt><dd>
+  <div><dt>Reveal<code>.fh-reveal · --fade · --scale · --left · --right · --blur</code></dt><dd>
     <div class="site-motion__scroller" tabindex="0" aria-label="Reveal demo, scrollable">
-      <article class="fh-card fh-reveal" data-tone="sky"><p class="fh-card__meta">01</p><h4 class="fh-card__title">Fade and rise</h4></article>
-      <article class="fh-card fh-reveal fh-reveal--scale" data-tone="lime"><p class="fh-card__meta">02</p><h4 class="fh-card__title">Scale in</h4></article>
-      <article class="fh-card fh-reveal fh-reveal--left" data-tone="amber"><p class="fh-card__meta">03</p><h4 class="fh-card__title">From the left</h4></article>
-      <article class="fh-card fh-reveal fh-reveal--blur" data-tone="fuchsia"><p class="fh-card__meta">04</p><h4 class="fh-card__title">Out of focus</h4></article>
+      <article class="fh-card fh-reveal" data-tone="sky" data-fh="MTL-1.1"><p class="fh-card__meta">01</p><h4 class="fh-card__title">Fade and rise</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--fade" data-tone="teal" data-fh="MTL-1.2"><p class="fh-card__meta">02</p><h4 class="fh-card__title">Fade only</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--scale" data-tone="lime" data-fh="MTL-1.3"><p class="fh-card__meta">03</p><h4 class="fh-card__title">Scale in</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--left" data-tone="amber" data-fh="MTL-1.4"><p class="fh-card__meta">04</p><h4 class="fh-card__title">From the left</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--right" data-tone="orange" data-fh="MTL-1.5"><p class="fh-card__meta">05</p><h4 class="fh-card__title">From the right</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--blur" data-tone="fuchsia" data-fh="MTL-1.6"><p class="fh-card__meta">06</p><h4 class="fh-card__title">Out of focus</h4></article>
     </div>
     <p class="site-motion__note">Scroll the box. Each card runs on its own view timeline, no script.</p></dd></div>
   <div><dt>Rules<code>always on</code></dt><dd>
@@ -163,28 +178,121 @@ The rolling word in a headline, without the usual wiring: no library, no word ar
 </dl>
 ```
 
-### STK · Stack
+### MOT-1 · Entrances
 
-`.fh-stack`
+Put `data-fh-enter` on an element and it enters once the page is ready. Step `n` starts at n × `--fh-intro-beat` (150ms); `--fh-at` sets an exact time. Press Replay.
 
 ```html
-<div class="fh-stack fh-stack--sm">
-  <p class="fh-label">Flow</p>
-  <p class="fh-body">One gap between siblings, set by <code>--fh-gap</code>.</p>
-  <a class="fh-action" href="#layout">Read more</a>
+<div class="site-motion-grid" data-fh-intro>
+  <div class="site-motion-tile" data-fh-enter="rise" data-fh-step="1">rise</div>
+  <div class="site-motion-tile" data-fh-enter="drop" data-fh-step="2">drop</div>
+  <div class="site-motion-tile" data-fh-enter="fade" data-fh-step="3">fade</div>
+  <div class="site-motion-tile" data-fh-enter="scale" data-fh-step="4">scale</div>
+  <div class="site-motion-tile" data-fh-enter="blur" data-fh-step="5">blur</div>
+  <div class="site-motion-tile" data-fh-enter="fold" data-fh-step="6">fold</div>
+  <div class="site-motion-tile site-motion-tile--line">draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
+  <div class="site-motion-tile" data-fh-enter="wipe" data-fh-step="8">wipe</div>
+  <div class="site-motion-tile site-motion-tile--art" data-fh-enter="unveil" data-fh-step="9">unveil</div>
+  <div class="site-motion-tile site-motion-tile--clip"><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
+</div>
+```
+
+### MOT-2 · Sequences
+
+An intro's order lives on its section. `data-fh-intro` marks the owner; `data-fh-enter-children` staggers a list by `--fh-stagger` (60ms). The homepage hero is written exactly this way.
+
+```html
+<div class="site-motion-hero" data-fh-intro>
+  <p class="site-motion-hero__mark" data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
+  <span class="site-motion-hero__line" data-fh-enter="draw" data-fh-step="4"></span>
+  <p class="site-motion-hero__top" data-fh-enter="blur" data-fh-step="6">The design system</p>
+  <p class="site-motion-hero__turn" data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
+  <ul class="site-motion-hero__chips" data-fh-enter-children data-fh-step="9">
+    <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
+  </ul>
+</div>
+```
+
+### MOT-3 · Scroll-linked
+
+CSS only, on the page's scroll timeline: it tracks the scroll exactly and costs no script per frame. Scroll the page and watch these.
+
+```html
+<div class="site-motion-scroll">
+  <div class="site-motion-frame"><div class="site-motion-art fh-recede" style="--fh-recede-range: 60vh"></div><span>fh-recede</span></div>
+  <div class="site-motion-frame"><div class="site-motion-art site-motion-art--b fh-scroll-fade" style="--fh-recede-range: 60vh"></div><span>fh-scroll-fade</span></div>
+  <div class="site-motion-frame"><div class="site-motion-art site-motion-art--c fh-reveal"></div><span>fh-reveal</span></div>
+  <div class="site-motion-frame"><div class="site-motion-art site-motion-art--d fh-parallax" style="--fh-depth: 0.3"></div><span>fh-parallax</span></div>
+</div>
+```
+
+### MOT-4 · Choreography
+
+Script measures once and on resize; the motion itself still runs on the scroll timeline. The circle reveal, glide and lock are free in the enhancer (`firehorse.js`); dock beside is Firehorse Pro. See them together on the homepage concept.
+
+```html
+<div class="site-motion-choreo">
+  <div class="site-motion-card">
+    <b>Circle reveal</b><small>Free · <code>Firehorse.reveal(change, from)</code></small>
+    <button type="button" class="fh-button fh-button--sm" data-motion-reveal>Change the tone</button>
+  </div>
+  <div class="site-motion-card">
+    <b>Glide</b><small>Free · <code>data-fh-glide="center"</code></small>
+    <code class="site-motion-code">&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
+  </div>
+  <div class="site-motion-card">
+    <b>Lock</b><small>Free · <code>data-fh-lock</code></small>
+    <code class="site-motion-code">&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
+  </div>
+  <div class="site-motion-card">
+    <b>Dock beside <span class="site-motion-pro">Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
+    <code class="site-motion-code">&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
+  </div>
+</div>
+```
+
+### STK · Stack
+
+`.fh-stack · --2xs … --2xl`
+
+```html
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-stack fh-stack--2xs">
+    <p class="fh-label">2xs</p>
+    <p class="fh-small fh-muted" style="margin:0">Tightest sibling gap.</p>
+  </div>
+  <div class="fh-stack fh-stack--sm">
+    <p class="fh-label">sm</p>
+    <p class="fh-body" style="margin:0">One gap between siblings, set by <code>--fh-gap</code>.</p>
+    <a class="fh-action" href="#layout" data-fh="STK-1.2">Read more</a>
+  </div>
+  <div class="fh-stack fh-stack--2xl">
+    <p class="fh-label">2xl</p>
+    <p class="fh-small fh-muted" style="margin:0">Widest stack gap.</p>
+  </div>
 </div>
 ```
 
 ### CLS · Cluster
 
-`.fh-cluster`
+`.fh-cluster · --between · --end`
 
 ```html
-<div class="fh-cluster">
-  <span class="fh-badge" data-tone="sky">Agents</span>
-  <span class="fh-badge" data-tone="teal">Data</span>
-  <span class="fh-badge" data-tone="orange">Automation</span>
-  <span class="fh-badge">Managed</span>
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-cluster">
+    <span class="fh-badge" data-tone="sky" data-fh="CLS-1.1">Agents</span>
+    <span class="fh-badge" data-tone="teal" data-fh="CLS-1.1">Data</span>
+    <span class="fh-badge" data-tone="orange" data-fh="CLS-1.1">Automation</span>
+    <span class="fh-badge" data-fh="CLS-1.1">Managed</span>
+  </div>
+  <div class="fh-cluster fh-cluster--between" style="inline-size: 100%">
+    <span class="fh-label">Between</span>
+    <span class="fh-badge" data-tone="lime" data-fh="CLS-1.2">Flush ends</span>
+  </div>
+  <div class="fh-cluster fh-cluster--end" style="inline-size: 100%">
+    <span class="fh-badge" data-tone="sky" data-fh="CLS-1.3">End</span>
+    <span class="fh-badge" data-tone="teal" data-fh="CLS-1.3">aligned</span>
+  </div>
 </div>
 ```
 
@@ -197,6 +305,76 @@ The rolling word in a headline, without the usual wiring: no library, no word ar
   <div class="fh-card fh-card--solid">1</div>
   <div class="fh-card fh-card--solid">2</div>
   <div class="fh-card fh-card--solid">3</div>
+</div>
+```
+
+### COL · Columns
+
+The grid itself. `data-cols="16"` for the finer one; a child `.fh-cols[data-subgrid]` keeps nested content on the parent's lines.
+
+```html
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cols" data-fh="COL-1.1">
+  <div class="fh-card fh-card--solid" data-span="12">12</div>
+  <div class="fh-card fh-card--solid" data-span="8">8</div>
+  <div class="fh-card fh-card--solid" data-span="4">4</div>
+  <div class="fh-card fh-card--solid" data-span="3">3</div>
+  <div class="fh-card fh-card--solid" data-span="6">6</div>
+  <div class="fh-card fh-card--solid" data-span="3">3</div>
+</div>
+<div class="fh-cols" data-cols="16" data-fh="COL-1.2">
+  <div class="fh-card fh-card--solid" data-span="10">10 of 16</div>
+  <div class="fh-card fh-card--solid" data-span="6">6</div>
+  <div class="fh-card fh-card--solid" data-span="5" data-start="3">5, from 3</div>
+  <div class="fh-card fh-card--solid" data-span="7" data-start="10">7, from 10</div>
+</div>
+<div class="fh-cols" data-fh="COL-1.3">
+  <div class="fh-cols" data-subgrid data-span="8" data-start="3">
+    <div class="fh-card fh-card--solid" data-span="5">Nested 5</div>
+    <div class="fh-card fh-card--solid" data-span="3">Nested 3</div>
+  </div>
+</div>
+</div>
+```
+
+### COL-2 · Compositions
+
+Three placements to start from. Offset: copy held to the left, the image breaking right. Asymmetric: a 5 / 7 split with the image dropped. Broken: two pieces sharing rows, so one overlaps the other.
+
+```html
+<div class="fh-stack fh-stack--xl">
+<div class="fh-cols">
+  <div class="fh-stack" data-span="5" data-start="2" data-span-md="8">
+    <p class="fh-eyebrow-pill" data-tone="violet"><span class="fh-dot"></span>Offset</p>
+    <h3 class="fh-heading">Copy from column 2</h3>
+    <p class="fh-body">The text starts one column in; the picture takes the right half and runs to the edge of the grid.</p>
+  </div>
+  <div class="fh-card fh-card--solid" data-span="6" data-start="7" data-row="1" style="min-block-size: 12rem">Image · 7–12</div>
+</div>
+<div class="fh-cols">
+  <div class="fh-card fh-card--solid" data-span="5" style="min-block-size: 10rem">5</div>
+  <div class="fh-card fh-card--solid" data-span="7" data-align="end" style="min-block-size: 16rem">7 · dropped to the bottom</div>
+</div>
+<div class="fh-cols">
+  <div class="fh-card fh-card--solid" data-span="7" data-start="1" data-row="1" data-row-span="2" style="min-block-size: 16rem">Image · 1–7, two rows</div>
+  <div class="fh-card" data-span="6" data-start="6" data-row="2" data-layer="over">Card · 6–11, over the image</div>
+</div>
+</div>
+```
+
+### GDS · Guides
+
+Designer overlays over the whole page, in CSS. Put any mix of the words in `data-fh-guides` on `<html>`; on this site, turn them on from the theme panel. They never take clicks.
+
+```html
+<div class="fh-cluster" data-site-guides>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="cols-12" data-fh="GDS-1.1">12 columns</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="cols-16" data-fh="GDS-1.2">16 columns</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="golden" data-fh="GDS-1.3">Golden sections</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="thirds" data-fh="GDS-1.4">Thirds</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="baseline" data-fh="GDS-1.5">Baseline</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="modular" data-fh="GDS-1.6">Modular</button>
+  <button class="fh-chip" type="button" aria-pressed="false" data-guide="safe" data-fh="GDS-1.7">Safe areas</button>
 </div>
 ```
 
@@ -230,12 +408,12 @@ A long page that changes gear partway. A note closes the first chapter and opens
   </main>
   <footer class="fh-footer fh-footer--tall" data-fh="FND">
     <nav class="fh-footer__columns" aria-label="Sample footer">
-      <div class="fh-footer__column" data-tone="teal"><h2>Docs</h2><ul><li><a href="#fender">Patterns</a></li></ul></div>
+      <div class="fh-footer__column" data-tone="teal"><h2>Docs</h2><ul><li><a href="#fender">Design patterns</a></li></ul></div>
       <div class="fh-footer__column" data-tone="violet"><h2>Agents</h2><ul><li><a href="#fender">Index</a></li></ul></div>
       <div class="fh-footer__column" data-tone="accent"><h2>Studio</h2><ul><li><a href="#fender">Contact</a></li></ul></div>
     </nav>
   </footer>
-  <div class="fh-panel" aria-hidden="true"></div>
+  <div class="fh-panel" aria-hidden="true" data-fh="FND"></div>
 </div>
 ```
 
@@ -254,9 +432,9 @@ A page's opening argument, right under its sub-nav: the claim on the left, the s
     </div>
     <div class="fh-etched-split__pane fh-crosses">
       <div class="fh-stack">
-        <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The pattern</span></p>
-        <p class="fh-lede">Every pattern has an ID, a live demo and the rules that keep its fit, so a person or an agent can cut it again in any theme.</p>
-        <p class="fh-body fh-muted">Patterns at launch: <strong>2</strong>, plus 3 building blocks.</p>
+        <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The design pattern</span></p>
+        <p class="fh-lede">Every design pattern has an ID, a live demo and the rules that keep its fit, so a person or an agent can cut it again in any theme.</p>
+        <p class="fh-body fh-muted">Design patterns at launch: <strong>2</strong>, plus 3 building blocks.</p>
       </div>
     </div>
   </div>
@@ -438,10 +616,11 @@ The Doppler pill from the top of this page, as a full component. Combine a shape
   <div><dt>Edges<code>--bracket · --underline</code></dt><dd>
     <p class="fh-eyebrow-pill fh-eyebrow-pill--bracket" data-tone="amber" data-fh="EYE-4.1"><span class="fh-dot fh-dot--bar"></span>Bracketed</p>
     <p class="fh-eyebrow-pill fh-eyebrow-pill--underline" data-tone="orange" data-fh="EYE-4.2"><span class="fh-dot"></span>Underline</p></dd></div>
-  <div><dt>Parts<code>__index · __seg · __count</code></dt><dd>
+  <div><dt>Parts<code>__index · __seg · __count · --filled-end</code></dt><dd>
     <p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-5.1"><span class="fh-eyebrow-pill__index">02</span>Indexed section</p>
     <p class="fh-eyebrow-pill" data-tone="orange" data-fh="EYE-5.2"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose" data-fh="EYE-5.3"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p></dd></div>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose" data-fh="EYE-5.3"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p>
+    <p class="fh-eyebrow-pill fh-eyebrow-pill--filled-end" data-tone="orange" data-fh="EYE-5.4"><span class="fh-dot"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p></dd></div>
   <div><dt>Sentences<code>--sentence · __action · .fh-kbd</code></dt><dd>
     <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="live" data-fh="EYE-6.1"><span class="fh-dot fh-dot--live"></span><span>Now accepting proposals · <strong>Book a call</strong></span></p>
     <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="sky" data-fh="EYE-6.2"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/reginald.webp" alt></span><span>Reginald is online</span><a class="fh-eyebrow-pill__action" href="#c-eyebrow">Talk</a></p>
@@ -584,13 +763,26 @@ Cards led by a cube: the value is the headline, the text says what it measures.
 </dl>
 ```
 
+### LGS · Logo strip
+
+Grayscale marks that come to full colour on hover. Add `fh-logos--marquee` for an endless scroll (duplicate the list once). Only show logos you have permission to use.
+
+```html
+<ul class="fh-logos" data-fh="LGS-1.1">
+  <li><svg viewBox="0 0 120 24" width="120" height="24" aria-label="Northwind"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Northwind</text></svg></li>
+  <li><svg viewBox="0 0 100 24" width="100" height="24" aria-label="Halcyon"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Halcyon</text></svg></li>
+  <li><svg viewBox="0 0 90 24" width="90" height="24" aria-label="Voltline"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Voltline</text></svg></li>
+  <li><svg viewBox="0 0 80 24" width="80" height="24" aria-label="Lumen"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Lumen</text></svg></li>
+</ul>
+```
+
 ### CRD · Card in a ruled grid
 
 Dashed cells that share their rules, a tone-colored meta line, and a title link that covers the whole card. Narrow cards stack their footer.
 
 ```html
 <div class="fh-grid fh-grid--ruled fh-grid--etched" data-cols="3">
-  <article class="fh-card" data-tone="sky" data-fh="CRD">
+  <article class="fh-card" data-tone="sky">
     <p class="fh-card__meta">Agents</p>
     <h3 class="fh-card__title"><a href="#c-card">Lead follow-up agent</a></h3>
     <p class="fh-card__body">Answers, books and follows up on your own channels, around the clock.</p>
@@ -599,7 +791,7 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
       <span class="fh-action" data-tone>Meet Wes</span>
     </footer>
   </article>
-  <article class="fh-card" data-tone="teal" data-fh="CRD">
+  <article class="fh-card" data-tone="teal">
     <p class="fh-card__meta">Data architecture</p>
     <h3 class="fh-card__title"><a href="#c-card">Schema design</a></h3>
     <p class="fh-card__body">Data models that match how the business actually runs.</p>
@@ -608,7 +800,7 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
       <span class="fh-action" data-tone>View</span>
     </footer>
   </article>
-  <article class="fh-card" data-tone="orange" data-fh="CRD">
+  <article class="fh-card" data-tone="orange">
     <p class="fh-card__meta">Automation</p>
     <h3 class="fh-card__title"><a href="#c-card">Process automation</a></h3>
     <p class="fh-card__body">Hand-offs that happen on their own, with an audit trail.</p>
@@ -679,10 +871,10 @@ Label / value rows on etched rules: label on the left, value on the right. Two c
 
 ### STP · Steps
 
-Numbered because order matters.
+Numbered because order matters. Form steps with outline cubes live on Forms.
 
 ```html
-<ol class="fh-steps" data-fh="STP">
+<ol class="fh-steps" data-fh="STP-1.1">
   <li data-tone="sky"><span class="fh-steps__mark"></span><div><h3>Assess</h3><p>Understand the current state and its risks.</p></div></li>
   <li data-tone="teal"><span class="fh-steps__mark"></span><div><h3>Build</h3><p>Ship the foundation, then connect the systems.</p></div></li>
   <li data-tone="orange"><span class="fh-steps__mark"></span><div><h3>Operate</h3><p>Keep it healthy as you grow.</p></div></li>
@@ -1368,7 +1560,7 @@ The featured tier glows in its tone; every tier stacks or sits side by side by c
 The masthead from rascode.dev. It rides quietly under the header, then engages when it pins: the small title slides in, the cubes and chips appear in the section's tone, and the outline CTA fills. Scroll this page to watch the real one change color by section.
 
 ```html
-<div class="fh-dock fh-frame site-dock-demo" data-tone="sky" data-active="true" data-fh="DCK">
+<div class="fh-dock fh-frame site-dock-demo" data-tone="sky" data-active="true">
   <div class="fh-dock__bar">
     <div class="fh-dock__identity">
       <p class="fh-eyebrow-pill" data-tone="sky"><span class="fh-dot fh-dot--live"></span><span>Agents</span></p>
@@ -1431,6 +1623,68 @@ Pagination, a wizard stepper, search and a side nav.
       <a href="#c-nav">Agents</a>
     </section>
   </nav>
+</div>
+```
+
+### MEG · Mega panel
+
+Equal category columns with dashed rules and a footer rail. Default sits flush under the header; `--headed` puts the category titles on one row above a full-bleed etched rule with scaffold ticks, and pairs with `fh-mega__link` for rich rows.
+
+```html
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-mega fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-1.1">
+    <div class="fh-mega__grid">
+      <section data-tone="sky"><h3>Agents</h3><ul><li><a href="#c-mega">Lead follow-up</a></li><li><a href="#c-mega">Inbox triage</a></li></ul></section>
+      <section data-tone="teal"><h3>Data</h3><ul><li><a href="#c-mega">Warehouses</a></li><li><a href="#c-mega">Pipelines</a></li></ul></section>
+      <section data-tone="orange"><h3>Automation</h3><ul><li><a href="#c-mega">Workflows</a></li><li><a href="#c-mega">Webhooks</a></li></ul></section>
+    </div>
+    <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">All services</a></div>
+  </div>
+  <div class="fh-mega fh-mega--headed fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-2.1">
+    <div class="fh-mega__grid">
+      <section data-tone="sky">
+        <h3><a href="#c-mega">Agents</a></h3>
+        <ul>
+          <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><span class="fh-mega__link-title">Lead follow-up</span><span class="fh-mega__link-desc">Answers and books on your channels.</span></a></li>
+          <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--inbox" aria-hidden="true"></i></span><span class="fh-mega__link-title">Inbox triage</span><span class="fh-mega__link-desc">Sorts and tags every message.</span></a></li>
+        </ul>
+      </section>
+      <section data-tone="teal">
+        <h3><a href="#c-mega">Data</a></h3>
+        <ul>
+          <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--database" aria-hidden="true"></i></span><span class="fh-mega__link-title">Warehouses</span><span class="fh-mega__link-desc">One place for every table.</span></a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">Browse the catalog</a></div>
+  </div>
+</div>
+```
+
+### DRW · Drawer
+
+The mobile menu: a full-width popover under the header with grouped links. Open it from the hamburger below, or use the site header's drawer on a narrow viewport.
+
+```html
+<div class="fh-stack">
+  <button class="fh-burger fh-burger--boxed fh-burger--label" type="button" popovertarget="demo-drawer" aria-label="Open demo drawer" style="--fh-burger-label: 'Menu'"><span></span></button>
+  <div id="demo-drawer" popover class="fh-drawer" data-fh="DRW-1.1">
+    <div class="fh-drawer__group">
+      <p class="fh-label">Docs</p>
+      <ul>
+        <li><a href="#c-drawer">Foundations</a></li>
+        <li><a href="#c-drawer">Components</a></li>
+        <li><a href="#c-drawer">Forms</a></li>
+      </ul>
+    </div>
+    <div class="fh-drawer__group">
+      <p class="fh-label">Pro</p>
+      <ul>
+        <li><a href="#c-drawer">Overview</a></li>
+        <li><a href="#c-drawer">Key fields</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
 ```
 
@@ -1498,25 +1752,26 @@ Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
 ```html
 <div class="fh-grid" data-cols="2" style="--fh-grid-min: 18rem; --fh-gap: var(--fh-space-6)">
   <div class="fh-stack">
-    <div class="fh-alert" data-tone="sky" role="status" data-fh="FBK"><p class="fh-alert__title">Your agent goes live Monday</p><p>We'll text you when Wes answers his first lead.</p></div>
-    <div class="fh-alert" data-tone="live" role="status" data-fh="FBK"><p class="fh-alert__title">Payment received</p><p>Invoice RC-0142 is paid in full.</p></div>
-    <div class="fh-alert" data-tone="amber" role="status" data-fh="FBK"><p class="fh-alert__title">Trial ends in 2 days</p><p>Add a card to keep Maya on shift.</p><div class="fh-alert__actions"><a class="fh-button fh-button--sm" href="#c-feedback">Add card</a></div></div>
-    <div class="fh-alert" data-tone="danger" role="alert" data-fh="FBK"><p class="fh-alert__title">Messenger disconnected</p><p>Reconnect your Facebook page to resume replies.</p><button class="fh-close" type="button" aria-label="Dismiss"></button></div>
+    <div class="fh-alert" data-tone="sky" role="status"><p class="fh-alert__title">Your agent goes live Monday</p><p>We'll text you when Wes answers his first lead.</p></div>
+    <div class="fh-alert" data-tone="live" role="status"><p class="fh-alert__title">Payment received</p><p>Invoice RC-0142 is paid in full.</p></div>
+    <div class="fh-alert" data-tone="amber" role="status"><p class="fh-alert__title">Trial ends in 2 days</p><p>Add a card to keep Maya on shift.</p><div class="fh-alert__actions"><a class="fh-button fh-button--sm" href="#c-feedback">Add card</a></div></div>
+    <div class="fh-alert" data-tone="danger" role="alert"><p class="fh-alert__title">Messenger disconnected</p><p>Reconnect your Facebook page to resume replies.</p><button class="fh-close" type="button" aria-label="Dismiss"></button></div>
   </div>
   <div class="fh-stack fh-stack--lg">
-    <div class="fh-progress-field" data-tone="lime" data-fh="FBK"><span>Scope complete</span><span class="fh-progress-field__value">64%</span><progress class="fh-progress" value="64" max="100">64%</progress></div>
-    <div class="fh-progress-field" data-tone="sky" data-fh="FBK"><span>Uploading</span><span class="fh-progress-field__value">…</span><progress class="fh-progress"></progress></div>
-    <div class="fh-progress-field" data-fh="FBK"><span>Message quota</span><span class="fh-progress-field__value">820 / 1,000</span><meter class="fh-meter" min="0" max="1000" low="700" high="900" optimum="200" value="820"></meter></div>
+    <div class="fh-progress-field" data-tone="lime"><span>Scope complete</span><span class="fh-progress-field__value">64%</span><progress class="fh-progress" value="64" max="100">64%</progress></div>
+    <div class="fh-progress-field" data-tone="sky"><span>Uploading</span><span class="fh-progress-field__value">…</span><progress class="fh-progress"></progress></div>
+    <div class="fh-progress-field"><span>Message quota</span><span class="fh-progress-field__value">820 / 1,000</span><meter class="fh-meter" min="0" max="1000" low="700" high="900" optimum="200" value="820"></meter></div>
     <div class="fh-cluster" style="--fh-gap: var(--fh-space-5)">
-      <div class="fh-ring" data-tone="teal" style="--fh-value: 72" role="img" aria-label="72 percent" data-fh="FBK">72%</div>
-      <div class="fh-ring" data-tone="fuchsia" style="--fh-value: 38; --fh-ring-size: 3.5rem" role="img" aria-label="38 percent" data-fh="FBK">38</div>
-      <span class="fh-spinner" aria-label="Loading" role="status" data-fh="FBK"></span>
+      <div class="fh-ring" data-tone="teal" style="--fh-value: 72" role="img" aria-label="72 percent">72%</div>
+      <div class="fh-ring" data-tone="fuchsia" style="--fh-value: 38; --fh-ring-size: 3.5rem" role="img" aria-label="38 percent">38</div>
+      <span class="fh-spinner" aria-label="Loading" role="status"></span>
       <button class="fh-button fh-button--icon fh-button--secondary" type="button" aria-label="Copy" data-tooltip="Copy link">⧉</button>
     </div>
     <div class="fh-cluster" style="--fh-align: flex-start; --fh-gap: var(--fh-space-3)">
-      <span class="fh-skeleton fh-skeleton--circle" data-fh="FBK"></span>
-      <div class="fh-skeleton" style="--fh-lines: 3; flex: 1" data-fh="FBK"></div>
+      <span class="fh-skeleton fh-skeleton--circle"></span>
+      <div class="fh-skeleton" style="--fh-lines: 3; flex: 1"></div>
     </div>
+    <span class="fh-skeleton fh-skeleton--block" style="block-size: 6rem; inline-size: 100%" aria-hidden="true" data-fh="FBK-1.1"></span>
   </div>
 </div>
 ```
@@ -1525,8 +1780,8 @@ Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
 
 ```html
 <div class="fh-stack fh-stack--lg">
-  <div class="fh-banner" data-tone="accent" data-fh="EMP"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
-  <div class="fh-empty" data-tone="violet" data-fh="EMP">
+  <div class="fh-banner" data-tone="accent" data-fh="EMP-1.1"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
+  <div class="fh-empty" data-tone="violet" data-fh="EMP-1.2">
     <span class="fh-empty__icon">∅</span>
     <h4>No leads yet</h4>
     <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
@@ -1684,10 +1939,10 @@ A portrait, the name with a verified mark, a short bio, two counts and Follow. T
 
 ### FLD · Fields
 
-The "Required" chip comes from the input's own `required` attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted.
+The "Required" chip comes from the input's own `required` attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with `aria-invalid="true"` (for errors the server sends back).
 
 ```html
-<form class="fh-form" novalidate onsubmit="event.preventDefault()" data-fh="FLD">
+<form class="fh-form" novalidate onsubmit="event.preventDefault()" data-fh="FLD-1.1">
   <div class="fh-form__row">
     <div class="fh-field">
       <label for="f-email">Work email</label>
@@ -1738,6 +1993,129 @@ Real radios and checkboxes under the styling, so they submit with the form and w
   <label class="fh-check" data-fh="CHO"><input type="radio" name="plan"> Monthly</label>
   <label class="fh-check" data-fh="CHO"><input type="radio" name="plan" checked> Annual, two months free</label>
 </div>
+```
+
+### Dictation field
+
+Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with `data-fh-dictate` (or drive the same markup yourself).
+
+```html
+<div class="fh-field fh-field--dictate" data-fh-dictate>
+  <label for="f-dictate">Message</label>
+  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+    <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
+    <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
+  </div>
+  <textarea class="fh-textarea" id="f-dictate" placeholder="A few lines is plenty."></textarea>
+  <p class="fh-dictate__live" role="status" hidden>
+    <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+    <span class="fh-dictate__interim"></span>
+  </p>
+  <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
+```
+
+### Quiet field
+
+A barely-there lift off the canvas, no border. Default fields already use a light fill (`--fh-color-field`); quiet is fainter still. Use `fh-field--quiet` or `fh-input--quiet`.
+
+```html
+<div class="fh-field fh-field--quiet">
+  <label for="f-quiet">Notes</label>
+  <textarea class="fh-textarea" id="f-quiet" placeholder="Optional detail"></textarea>
+</div>
+```
+
+### STP-2 · Form steps
+
+Numbered form sections with outline-cube heads (CUB-1.4). Wide slots put the head sticky beside the fields.
+
+```html
+<div class="fh-form-steps">
+  <section class="fh-form-step">
+    <header class="fh-form-step__head">
+      <div class="fh-form-step__text">
+        <ul class="fh-cubes fh-form-step__cube" data-tone="sky"><li><b class="fh-cube fh-cube--outline">01</b></li></ul>
+        <h3 class="fh-form-step__title">About you</h3>
+        <p class="fh-muted" style="margin:0">Who we are talking to.</p>
+      </div>
+    </header>
+    <div class="fh-form-step__body fh-form">
+      <div class="fh-field"><label for="fs-name">Name</label><input class="fh-input" id="fs-name" value="Ada Lovelace"></div>
+      <div class="fh-field"><label for="fs-email">Email</label><input class="fh-input" id="fs-email" type="email" value="ada@analytical.engine"></div>
+    </div>
+  </section>
+  <section class="fh-form-step">
+    <header class="fh-form-step__head">
+      <div class="fh-form-step__text">
+        <ul class="fh-cubes fh-form-step__cube" data-tone="teal"><li><b class="fh-cube fh-cube--outline">02</b></li></ul>
+        <h3 class="fh-form-step__title">The job <i class="fh-icon fh-icon--check fh-form-step__done" aria-label="complete"></i></h3>
+        <p class="fh-muted" style="margin:0">What you need done.</p>
+      </div>
+    </header>
+    <div class="fh-form-step__body fh-form">
+      <div class="fh-field"><label for="fs-job">Brief</label><textarea class="fh-textarea" id="fs-job" rows="3">Connect the warehouse to the agent inbox.</textarea></div>
+    </div>
+  </section>
+</div>
+```
+
+### RVW · Review rows
+
+Label, value, an Edit action on the right. Muted and quoted values for empty or multi-line answers.
+
+```html
+<dl class="fh-review" data-fh="RVW-1.1">
+  <div class="fh-review__row">
+    <dt>Name</dt>
+    <dd>Ada Lovelace</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+  <div class="fh-review__row">
+    <dt>Company</dt>
+    <dd class="fh-review__muted">Not given</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+  <div class="fh-review__row">
+    <dt>Brief</dt>
+    <dd class="fh-review__quote">Connect the warehouse to the agent inbox.</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+</dl>
+```
+
+### Booking calendar
+
+A quiet month grid beside the chosen day's times. Open days take a faint fill; the picked day and time take the primary. Under Calendar pickers (CAL).
+
+```html
+<div class="fh-cal-book">
+  <div class="fh-cal-book__layout">
+    <div class="fh-cal-book__month">
+      <div class="fh-cal-book__head">
+        <p class="fh-cal-book__label">November 2026</p>
+        <div class="fh-cluster" style="gap: var(--fh-gap-bound)"><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Previous month">‹</button><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Next month">›</button></div>
+      </div>
+      <div class="fh-cal-book__week" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="fh-cal-book__grid" role="group" aria-label="November 2026">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <button type="button" class="fh-cal-book__day" disabled>1</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">2</button>
+        <button type="button" class="fh-cal-book__day" data-open="true" data-today="true" aria-pressed="true">3</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">4</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">5</button>
+        <button type="button" class="fh-cal-book__day" disabled>6</button>
+        <button type="button" class="fh-cal-book__day" disabled>7</button>
+      </div>
+    </div>
+    <div class="fh-cal-book__times">
+      <p class="fh-cal-book__label">Tue 3 Nov</p>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Morning</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Morning times">
+          <button type="button" class="fh-chip" data-tone="sky" aria-pressed="true">10:00</button>
+          <button type="button" class="fh-chip">11:30</button>
 ```
 
 ### UPL · Upload, range, tags, sheet
@@ -2060,10 +2438,11 @@ Choose an account, person or client by its identity: avatar, an etch line, the n
 
 ### TBL · Table
 
-With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36rem.
+With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36rem. `fh-table__head` in the caption is a title with a count chip.
 
 ```html
-<div class="fh-table-wrap" data-fh="TBL">
+<div class="fh-stack fh-stack--lg">
+<div class="fh-table-wrap" data-fh="TBL-1.1">
   <table class="fh-table fh-table--reflow">
     <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="fh-num">Amount</th></tr></thead>
     <tbody>
@@ -2072,6 +2451,17 @@ With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36
       <tr><td data-label="Invoice">RC-0144</td><td data-label="Client">Halcyon</td><td data-label="Status"><span class="fh-badge">Draft</span></td><td data-label="Amount" class="fh-num">$750.00</td></tr>
     </tbody>
   </table>
+</div>
+<div class="fh-table-wrap" data-fh="TBL-2.1">
+  <table class="fh-table">
+    <caption><div class="fh-table__head"><h3 class="fh-subheading">Schema columns</h3><span class="fh-chip" data-tone="sky">12</span></div></caption>
+    <thead><tr><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>uuid</td><td>uuid</td><td>Primary key</td></tr>
+      <tr><td>name</td><td>text</td><td>Display name</td></tr>
+    </tbody>
+  </table>
+</div>
 </div>
 ```
 
@@ -2573,6 +2963,112 @@ A day's check-offs as one section, as on Helm's Today: the title with the day's 
 </section>
 ```
 
+### SHL · App shell
+
+Sidebar beside the work area: brand, focus, sidenav and foot on the left; sticky bar and content on the right. `data-fh-env` paints the environment band; `data-fh-side="rail"` collapses the sidebar to icons.
+
+```html
+<div style="padding: 0; overflow: hidden; min-block-size: 22rem">
+<div class="fh-app" data-fh-env="local" style="min-block-size: 22rem; --fh-app-side: 12rem" data-fh="SHL-1.1">
+  <aside class="fh-app__side"><div class="fh-app__side-inner">
+    <div class="fh-app__side-head"><a class="fh-app__brand" href="#a-shell"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i><span>Helm</span></a></div>
+    <nav class="fh-sidenav" aria-label="Demo"><a href="#a-shell" aria-current="page"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i><span class="fh-sidenav__label">Business</span></a><a href="#a-shell"><i class="fh-icon fh-icon--users" aria-hidden="true"></i><span class="fh-sidenav__label">People</span></a></nav>
+  </div></aside>
+  <div class="fh-app__main">
+    <header class="fh-app__bar"><h1 class="fh-app__title">Business</h1><div class="fh-app__bar-end"><span class="fh-chip" data-tone="lime">Local</span></div></header>
+    <main class="fh-app__content" style="padding: var(--fh-inset-card)"><p class="fh-muted" style="margin:0">Work area. The shell pins the sidebar and the bar.</p></main>
+  </div>
+</div>
+</div>
+```
+
+### ENV · Environment selector
+
+Where the app is running: a mono pill with a live dot (`fh-env`), or the quieter eyebrow pill (`fh-env-pill`) that expands the host on hover. The menu reopens the same page in another environment.
+
+```html
+<div class="fh-cluster fh-cluster--between" style="flex-wrap: wrap; gap: var(--fh-gap-sectioned)">
+  <button class="fh-env" type="button" data-fh-env="local" popovertarget="demo-env-menu" data-fh="ENV-1.1">
+    <span class="fh-env__name">Local</span>
+    <span class="fh-env__host">helm.rascode.local</span>
+  </button>
+  <button class="fh-eyebrow-pill fh-env-pill" type="button" data-fh-env="local" popovertarget="demo-env-menu" data-fh="ENV-2.1">
+    <span class="fh-dot"></span>
+    <span class="fh-eyebrow-pill__seg"><strong>Local</strong></span>
+    <span class="fh-eyebrow-pill__seg fh-env-pill__host">helm.rascode.local</span>
+    <span class="fh-env-pill__chevron" aria-hidden="true"></span>
+  </button>
+</div>
+<div id="demo-env-menu" popover class="fh-menu fh-env-menu">
+  <p class="fh-menu__label">Open Helm in</p>
+  <a role="menuitemradio" aria-checked="true" data-fh-env="local" href="#a-env"><span>Local</span><small>helm.rascode.local</small></a>
+  <a role="menuitemradio" aria-checked="false" data-fh-env="staging" href="#a-env"><span>Staging</span><small>helm.rascode.dev</small></a>
+  <hr><p class="fh-env-menu__data" data-fh-env="local">Data · local Supabase</p>
+</div>
+```
+
+### WRK · Working indicator
+
+An agent is on it: a thinking mark beside who is working and what on. The pill for a top bar; `__mark` alone for a row or cell.
+
+```html
+<div class="fh-cluster" style="gap: var(--fh-gap-grouped-wide)">
+  <a class="fh-working" data-tone="violet" href="#a-working" data-fh="WRK-1.1">
+    <i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i>
+    <b>Claude</b><span class="fh-working__what">#64 · Editing Business</span>
+  </a>
+  <i class="fh-icon fh-icon--sparkles fh-working__mark" data-tone="violet" aria-label="Working"></i>
+</div>
+```
+
+### EMP-2 · Empty module
+
+A section that has not been built yet: dashed outline, title and a short note. Under Empty state & banner (EMP).
+
+```html
+<div class="fh-app-empty">
+  <h2>Finance</h2>
+  <p>This module is not wired yet. Numbers and ledgers will land here.</p>
+</div>
+```
+
+### CPS · Composer
+
+A chat-style input for quick capture. Frosted like the chrome; grows with its text. `--attach` adds a row under the text for filing chips. Pair with the admin dock to keep it in reach.
+
+```html
+<div class="fh-stack fh-stack--lg">
+<form class="fh-app-composer" onsubmit="event.preventDefault()" data-fh="CPS-1.1">
+  <textarea class="fh-textarea" rows="1" placeholder="Add a remark…" aria-label="Remark"></textarea>
+  <button class="fh-button" type="submit">Add</button>
+</form>
+<form class="fh-app-composer fh-app-composer--attach" onsubmit="event.preventDefault()" data-fh="CPS-1.2">
+  <textarea class="fh-textarea" rows="1" placeholder="Log a check-off…" aria-label="Check-off"></textarea>
+  <div class="fh-app-composer__actions"><button class="fh-button" type="submit">Log</button></div>
+  <div class="fh-app-composer__attach" aria-label="Filed under">
+    <span class="fh-chip" data-tone="orange">Fit</span>
+    <span class="fh-chip" data-tone="lime">Health</span>
+    <button class="fh-button fh-button--sm fh-button--ghost" type="button">+ Area</button>
+  </div>
+</form>
+</div>
+```
+
+### ADK · Admin dock
+
+A page's working bar that rides under the top bar. At rest it sits in the page; once it pins it engages: frosted surface edge to edge with a dashed rule under it. Force the engaged look with `data-active="true"`.
+
+```html
+<div class="fh-app-dock" data-active="true" data-fh="ADK-1.1">
+  <div class="fh-app-dock__bar">
+    <form class="fh-app-composer" onsubmit="event.preventDefault()">
+      <textarea class="fh-textarea" rows="1" placeholder="Quick capture…" aria-label="Quick capture"></textarea>
+      <button class="fh-button fh-button--sm" type="submit">Add</button>
+    </form>
+  </div>
+</div>
+```
+
 ### THB · Thumbnails & link cards
 
 A YouTube thumbnail with the host in a tone ring (the timestamp covers the bottom right), and the Open Graph card every link preview uses: X, LinkedIn, Slack, iMessage.
@@ -3015,11 +3511,48 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
 </dl>
 ```
 
+### Harmony & overlays
+
+One root colour in, a balanced family out. Set `--fh-root` on any element and Firehorse derives tints, shades and harmonies in OKLCH, so the steps look even on every hue. Overlays paint a layer built from the same family. Pick a root:
+
+```html
+          <div class="fh-stack fh-stack--lg">
+            <label class="fh-field site-harmony__pick"><span>Root colour</span><input type="color" value="#e8590c" data-harmony-root aria-label="Root colour"></label>
+            <p class="fh-label">Tints and shades</p>
+            <div class="site-harmony__row"><div class="site-harmony__sw"><span style="background:var(--fh-root-shade-3)"></span><code>--fh-root-shade-3</code><small>Shade 3</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-shade-2)"></span><code>--fh-root-shade-2</code><small>Shade 2</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-shade-1)"></span><code>--fh-root-shade-1</code><small>Shade 1</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root)"></span><code>--fh-root</code><small>Root</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-tint-1)"></span><code>--fh-root-tint-1</code><small>Tint 1</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-tint-2)"></span><code>--fh-root-tint-2</code><small>Tint 2</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-tint-3)"></span><code>--fh-root-tint-3</code><small>Tint 3</small></div></div>
+            <p class="fh-label">Harmony</p>
+            <div class="site-harmony__row"><div class="site-harmony__sw"><span style="background:var(--fh-root-analog-1)"></span><code>--fh-root-analog-1</code><small>Analogous −30°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-analog-2)"></span><code>--fh-root-analog-2</code><small>Analogous +30°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-complement)"></span><code>--fh-root-complement</code><small>Complement</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-split-1)"></span><code>--fh-root-split-1</code><small>Split 150°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-split-2)"></span><code>--fh-root-split-2</code><small>Split 210°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-triad-1)"></span><code>--fh-root-triad-1</code><small>Triad 120°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-triad-2)"></span><code>--fh-root-triad-2</code><small>Triad 240°</small></div><div class="site-harmony__sw"><span style="background:var(--fh-root-muted)"></span><code>--fh-root-muted</code><small>Muted</small></div></div>
+            <p class="fh-label">Overlays · <code>data-fh-overlay</code></p>
+            <div class="fh-grid" style="--fh-grid-min: 12rem; --fh-grid-max-cols: 4">
+              <article class="fh-card site-harmony__card" data-fh-overlay="wash"><p class="fh-card__meta">wash</p><h4 class="fh-card__title">Flat and quiet</h4></article>
+              <article class="fh-card site-harmony__card" data-fh-overlay="glow"><p class="fh-card__meta">glow</p><h4 class="fh-card__title">Radial bloom</h4></article>
+              <article class="fh-card site-harmony__card" data-fh-overlay="aurora"><p class="fh-card__meta">aurora</p><h4 class="fh-card__title">Conic sweep</h4></article>
+              <figure class="fh-card site-harmony__card site-harmony__photo" data-fh-overlay="duotone"><img src="/img/backdrop/firehorse-horse.webp" alt="" loading="lazy"><figcaption class="fh-card__meta">duotone</figcaption></figure>
+```
+
 ### THS · Theme select
 
 A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 
 ```html
 <div class="fh-field"><label for="theme-select-demo">Theme</label><select class="fh-select" id="theme-select-demo" data-fh-theme-select data-fh="THS"><option value>Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select></div>
+```
+
+### MCP server
+
+Phase 1 free guide tools over stdio: list and search the Index, fetch markup and tokens, read the agent rules, compose a page. No network. Install the package, then point Claude Code, Claude Desktop or Cursor at `npx firehorse-mcp`.
+
+```html
+<figure class="fh-window site-terminal">
+  <div class="fh-window__bar"><span>mcp.json</span><button class="fh-button fh-button--sm fh-button--ghost" type="button" data-copy="#mcp-config">Copy</button></div>
+  <div class="fh-window__body"><pre class="site-pre" id="mcp-config"><code>{
+  "mcpServers": {
+    "firehorse": {
+      "command": "npx",
+      "args": ["-y", "firehorse-mcp"]
+    }
+  }
+}</code></pre></div>
+</figure>
 ```
 

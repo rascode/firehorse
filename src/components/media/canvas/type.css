@@ -11,9 +11,9 @@
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
     font-size: calc(var(--fh-canvas-title) * var(--_u));
-    font-weight: var(--fh-weight-medium);
+    font-weight: var(--fh-display-weight, var(--fh-weight-medium));
     line-height: 0.98;
-    letter-spacing: -0.035em;
+    letter-spacing: var(--fh-heading-tracking, -0.035em);
     text-wrap: balance;
 
     & em { color: var(--fh-color-text-muted); font-style: normal; }
@@ -65,7 +65,7 @@
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
     font-size: calc(var(--fh-canvas-small) * 1.5 * var(--_u));
-    font-weight: var(--fh-weight-semibold);
+    font-weight: var(--fh-heading-weight, var(--fh-weight-semibold));
     letter-spacing: -0.02em;
     line-height: 1;
     white-space: nowrap;

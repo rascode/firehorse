@@ -1,6 +1,6 @@
 @layer fh.themes {
   [data-fh-theme="friesian"] {
-    --fh-font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --fh-font-display: var(--fh-font-sans);
     --fh-font-figure: var(--fh-font-display);
     --fh-ember-700: #161616;
     --fh-ember-500: #ece8df;
@@ -14,6 +14,13 @@
     --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
     --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
     --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    --fh-heading-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+    --fh-heading-weight: var(--fh-weight-heavy);
+    --fh-heading-tracking: var(--fh-tracking-tight);
+    --fh-display-weight: var(--fh-weight-heavy);
+    --fh-subheading-weight: var(--fh-weight-bold);
+    --fh-menu-opacity: .86;
+    --fh-color-surface-menu: color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent);
     --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
     --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
     --fh-color-field: light-dark(var(--fh-gray-50), var(--fh-gray-875));
@@ -43,44 +50,6 @@
     --fh-color-accent-hover: light-dark(#000, #fff);
     --fh-color-on-accent: light-dark(#fafaf9, #161616);
     --fh-color-bg: var(--fh-color-canvas);
-    --fh-avatar-radius: var(--fh-radius-pill);
-    --fh-avatar-ratio: 1;
-    --fh-card-border-style: solid;
-    --fh-card-border-color: var(--fh-color-border-strong);
-    --fh-card-bg: transparent;
-    --fh-card-shadow: none;
-    --fh-card-radius: var(--fh-radius-lg);
-    --fh-card-media-ratio: 3 / 4;
-    --fh-button-radius: var(--fh-radius-none);
-    --fh-button-sheen: 0;
-    --fh-button-shadow: none;
-    --fh-button-shadow-hover: none;
-    --fh-button-shadow-active: none;
-    --fh-button-lift: 0px;
-    --fh-chip-border-style: none;
-    --fh-chip-radius: 0;
-    --fh-chip-bg: transparent;
-    --fh-chip-underline: 2px;
-    --fh-radius-sm: 0;
-    --fh-radius-md: 0;
-    --fh-radius-lg: 0;
-    --fh-radius-xl: 0;
-    --fh-space-1: calc(.25rem * var(--fh-density));
-    --fh-space-1-5: calc(.375rem * var(--fh-density));
-    --fh-space-2: calc(.5rem * var(--fh-density));
-    --fh-space-2-5: calc(.625rem * var(--fh-density));
-    --fh-space-3: calc(.75rem * var(--fh-density));
-    --fh-space-3-5: calc(.875rem * var(--fh-density));
-    --fh-space-4: calc(1rem * var(--fh-density));
-    --fh-space-5: calc(1.25rem * var(--fh-density));
-    --fh-space-6: calc(1.5rem * var(--fh-density));
-    --fh-space-7: calc(1.75rem * var(--fh-density));
-    --fh-space-8: calc(2rem * var(--fh-density));
-    --fh-space-10: calc(2.5rem * var(--fh-density));
-    --fh-space-12: calc(3rem * var(--fh-density));
-    --fh-density: 1.25;
-    --fh-table-zebra: transparent;
-    --fh-table-rule: var(--fh-color-rule);
   }
 
   @supports not (color: oklch(from red l c h)) {

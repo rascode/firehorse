@@ -1,0 +1,95 @@
+/*
+ * Firehorse — Form steps (STP-2)
+ * components/forms · layer fh.components
+ */
+
+@layer fh.components {
+  /* —— Form steps (STP-2): numbered sections with outline-cube heads ——
+   *   <section class="fh-form-step" data-fh="STP-2.1">
+   *     <header class="fh-form-step__head">
+   *       <div class="fh-form-step__text">
+   *         <ul class="fh-cubes fh-form-step__cube" data-tone="sky">
+   *           <li><b class="fh-cube fh-cube--outline">01</b></li>
+   *         </ul>
+   *         <h3 class="fh-form-step__title">About you</h3>
+   *         <p class="fh-muted">Who we are talking to.</p>
+   *       </div>
+   *     </header>
+   *     <div class="fh-form-step__body fh-form">…fields…</div>
+   *   </section>
+   * Wide slots: sticky head beside the fields. Uses CUB-1.4 outline cubes. */
+  .fh-form-steps {
+    display: grid;
+    container: fh-form-steps / inline-size;
+  }
+
+  .fh-form-step {
+    display: grid;
+    gap: var(--fh-gap-grouped-wide) var(--fh-gap-separated);
+    padding-block: var(--fh-gap-sectioned);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    &:first-child { padding-block-start: 0; }
+    &:last-child { border-block-end: 0; }
+  }
+
+  .fh-form-step__head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--fh-gap-grouped);
+  }
+
+  .fh-form-step__text {
+    display: grid;
+    justify-items: start;
+    gap: var(--fh-gap-bound);
+
+    & :is(h3, p) { margin: 0; }
+  }
+
+  .fh-form-step__cube {
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li { gap: var(--fh-gap-grouped); }
+    & .fh-cube { font-variant-numeric: tabular-nums; }
+  }
+
+  .fh-form-step__title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin: 0;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-snug);
+  }
+
+  .fh-form-step__done {
+    inline-size: 0.8rem;
+    block-size: 0.8rem;
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-form-step__body {
+    max-inline-size: 44rem;
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+  }
+
+  @container fh-form-steps (inline-size >= 52rem) {
+    .fh-form-step {
+      grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+      column-gap: clamp(var(--fh-gap-separated), 6cqi, 6rem);
+    }
+    .fh-form-step__head {
+      position: sticky;
+      inset-block-start: calc(var(--fh-header-height, 3.5rem) + var(--fh-gap-grouped-wide));
+      align-self: start;
+    }
+  }
+}

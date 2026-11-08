@@ -21,6 +21,9 @@
     --fh-canvas-small: 20;
     --fh-canvas-measure: 15ch;
     --fh-canvas-art: none;
+    /* The canvas's root colour: its glow and accents are built from it (root, two split
+     * complements, a tint). Defaults to the page's harmony root, else the canvas tone. */
+    --fh-canvas-root: var(--fh-root, var(--fh-tone));
     /* one native pixel at the drawn size (cqi resolves against this canvas) */
     --_u: calc(100cqi / var(--fh-canvas-w));
     --_hair: max(1px, var(--_u));
@@ -49,7 +52,9 @@
       pointer-events: none;
       background:
         var(--_guide),
-        radial-gradient(ellipse 75% 95% at 92% 0%, color-mix(in oklab, var(--fh-tone) 30%, transparent), transparent 70%),
+        radial-gradient(ellipse 70% 80% at 78% 108%, color-mix(in oklab, var(--fh-canvas-root) 30%, transparent), transparent 70%),
+        radial-gradient(ellipse 45% 60% at 8% 100%, color-mix(in oklab, oklch(from var(--fh-canvas-root) l calc(c * 0.8) calc(h + 150)) 18%, transparent), transparent 70%),
+        radial-gradient(ellipse 40% 55% at 100% 30%, color-mix(in oklab, oklch(from var(--fh-canvas-root) l calc(c * 0.8) calc(h + 210)) 14%, transparent), transparent 70%),
         linear-gradient(var(--fh-canvas-grid-color) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid) * var(--_u)) calc(var(--fh-canvas-grid) * var(--_u)),
         linear-gradient(90deg, var(--fh-canvas-grid-color) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid) * var(--_u)) calc(var(--fh-canvas-grid) * var(--_u)),
         var(--fh-canvas-art) center / cover no-repeat;
@@ -57,13 +62,15 @@
     }
 
     /* Etched frame */
+    /* Two etched rules run edge to edge at the frame line, top and bottom, instead of a boxed
+     * frame: the same open, ruled page as the site's close. */
     &::after {
       content: "";
       position: absolute;
-      inset: calc(var(--fh-canvas-frame) * var(--_u));
+      inset: calc(var(--fh-canvas-frame) * var(--_u)) 0;
       z-index: -1;
       pointer-events: none;
-      border: var(--_hair) dashed var(--fh-color-etch);
+      border-block: var(--_hair) dashed var(--fh-color-etch);
     }
   }
 

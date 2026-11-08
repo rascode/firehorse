@@ -29,28 +29,32 @@
 | `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#SPC) |
 | `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#RAD) |
 | `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#ELV) |
-| `MOT` | Motion | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#MOT) |
-| `MTL` | The motion layer | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#MTL) |
+| `HLP` | Text align helpers | Foundations | 1 Helpers (3) | [open](https://firehorse.rascode.dev/foundations/#HLP) |
+| `MTL` | The motion layer | Foundations | 1 The motion layer (6) | [open](https://firehorse.rascode.dev/foundations/#MTL) |
 | `WRT` | Word rotator | Foundations | 1 Word rotator (6) | [open](https://firehorse.rascode.dev/foundations/#WRT) |
-| `STK` | Stack | Layout | — | [open](https://firehorse.rascode.dev/layout/#STK) |
-| `CLS` | Cluster | Layout | — | [open](https://firehorse.rascode.dev/layout/#CLS) |
+| `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/#MOT) |
+| `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/#STK) |
+| `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/#CLS) |
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/#GRD) |
-| `FND` | Fender | Page patterns | — | [open](https://firehorse.rascode.dev/patterns/#FND) |
-| `CIN` | Cinch | Page patterns | — | [open](https://firehorse.rascode.dev/patterns/#CIN) |
+| `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/#COL) |
+| `GDS` | Guides | Columns | 1 Guides (7) | [open](https://firehorse.rascode.dev/layout/#GDS) |
+| `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/#FND) |
+| `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/#CIN) |
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#PNL) |
 | `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#ESP) |
 | `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#CTB) |
 | `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.rascode.dev/components/actions/#BTN) |
 | `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/#ACT) |
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/#MRK) |
-| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (3) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/#EYE) |
+| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/#EYE) |
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CHP) |
 | `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
+| `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/#LGS) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
 | `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/#KVL) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/#CKL) |
-| `STP` | Steps | Content | — | [open](https://firehorse.rascode.dev/components/content/#STP) |
+| `STP` | Steps | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.rascode.dev/components/content/#STP) |
 | `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/#CAR) |
 | `DEK` | Stacking deck | Content | 1 Stacking deck (1) · 2 Hero handoff (1) · 3 Recede styles (4) · 4 Cards and captions (3) · 5 Direction (2) | [open](https://firehorse.rascode.dev/components/content/#DEK) |
 | `MBR` | Member card | Content | 1 Pass (3) · 2 Plates (3) | [open](https://firehorse.rascode.dev/components/content/#MBR) |
@@ -70,29 +74,32 @@
 | `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#TAB) |
 | `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#NAV) |
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#BRG) |
+| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) | [open](https://firehorse.rascode.dev/components/navigation/#MEG) |
+| `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/#DRW) |
 | `PRF` | Profile picker | Drawers & menus | 1 Profile picker (4) | [open](https://firehorse.rascode.dev/components/navigation/#PRF) |
 | `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#DRP) |
 | `TBR` | Tab bar | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#TBR) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#ACC) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#DLG) |
-| `FBK` | Feedback | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#FBK) |
-| `EMP` | Empty state & banner | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#EMP) |
+| `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/#FBK) |
+| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.rascode.dev/components/overlays/#EMP) |
 | `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/#AVT) |
 | `SCD` | Social card | Profile cards | 1 Social card (3) | [open](https://firehorse.rascode.dev/components/avatars/#SCD) |
-| `AUT` | Sign in & sign up | Forms | 1 Layouts (3) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/#AUT) |
-| `FLD` | Fields | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#FLD) |
+| `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/#AUT) |
+| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) | [open](https://firehorse.rascode.dev/forms/#FLD) |
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#CHO) |
+| `RVW` | Review rows | Fields & choices | 1 Review (1) | [open](https://firehorse.rascode.dev/forms/#RVW) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#UPL) |
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/#TAG) |
 | `ENT` | Entity picker | Fields & choices | 1 Shapes (3) · 2 Content (3) | [open](https://firehorse.rascode.dev/forms/#ENT) |
 | `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/#DTB) |
-| `TBL` | Table | Table | — | [open](https://firehorse.rascode.dev/data/#TBL) |
+| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/#TBL) |
 | `PRD` | Product grid | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PRD) |
 | `PDP` | Product page | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PDP) |
 | `CKO` | Checkout | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CKO) |
 | `EXP` | Express pay | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#EXP) |
 | `CCH` | Choice cards | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CCH) |
-| `PAY` | Payment card | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PAY) |
+| `PAY` | Payment card | Commerce | 1 Payment card (2) | [open](https://firehorse.rascode.dev/commerce/#PAY) |
 | `CRT` | Cart line items | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CRT) |
 | `SUM` | Order summary | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#SUM) |
 | `CNF` | Order confirmation | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CNF) |
@@ -110,11 +117,16 @@
 | `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/admin/#MET) |
 | `GAU` | Gauge | Admin | 1 Gauge (2) | [open](https://firehorse.rascode.dev/admin/#GAU) |
 | `TRA` | Tracker | Admin | 1 Tracker (1) | [open](https://firehorse.rascode.dev/admin/#TRA) |
+| `SHL` | App shell | Admin | 1 App shell (1) | [open](https://firehorse.rascode.dev/admin/#SHL) |
+| `ENV` | Environment selector | Admin | 1 Selector (1) · 2 Pill (1) | [open](https://firehorse.rascode.dev/admin/#ENV) |
+| `WRK` | Working indicator | Admin | 1 Working (2) | [open](https://firehorse.rascode.dev/admin/#WRK) |
+| `CPS` | Composer | Admin | 1 Composer (2) | [open](https://firehorse.rascode.dev/admin/#CPS) |
+| `ADK` | Admin dock | Admin | 1 Admin dock (1) | [open](https://firehorse.rascode.dev/admin/#ADK) |
 | `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
 | `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
 | `TRK` | Playlist | Audio | — | [open](https://firehorse.rascode.dev/audio/#TRK) |
 | `REL` | Reel | Audio | — | [open](https://firehorse.rascode.dev/audio/#REL) |
-| `MIX` | Mixer | Audio | — | [open](https://firehorse.rascode.dev/audio/#MIX) |
+| `MIX` | Mixer | Audio | 1 Mixer (1) | [open](https://firehorse.rascode.dev/audio/#MIX) |
 | `PRM` | Parameters | Audio | — | [open](https://firehorse.rascode.dev/audio/#PRM) |
 | `STG` | Render stages | Audio | — | [open](https://firehorse.rascode.dev/audio/#STG) |
 | `THB` | Thumbnails & link cards | Social | 1 Thumbnails & link cards (2) | [open](https://firehorse.rascode.dev/media/#THB) |
@@ -127,7 +139,7 @@
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
 | `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
-| `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
+| `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
 | `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
 
 ## NEU · Neutral ramp
@@ -204,21 +216,75 @@ Classes: `fh-cluster` `fh-button`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#ELV.
 
-## MOT · Motion
+## HLP · Text align helpers
 
-Two curves. Everything is opt-in under prefers-reduced-motion.
+fh-text-start, fh-text-center, fh-text-end. Also z and measure tokens: --fh-z-raised, --fh-z-drawer, --fh-measure-narrow.
 
-Classes: 
+Classes: `fh-text-start` `fh-text-center` `fh-text-end`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#MOT.
+### HLP-1 · Helpers
+
+#### HLP-1.1 · Start
+
+```html
+<p class="fh-text-start" style="margin:0">Start · flush to the start edge.</p>
+```
+
+#### HLP-1.2 · Center
+
+```html
+<p class="fh-text-center" style="margin:0">Center · middle of the measure.</p>
+```
+
+#### HLP-1.3 · End
+
+```html
+<p class="fh-text-end" style="margin:0">End · flush to the end edge.</p>
+```
 
 ## MTL · The motion layer
 
 Motion you opt into, not a library you load. It runs on the platform (transitions, @starting-style, scroll-driven animations), stays inside prefers-reduced-motion, and stops when nobody can see it.
 
-Classes: `fh-dl` `fh-cluster` `fh-button` `fh-button--plain` `fh-roll` `fh-nav__link` `fh-chip` `fh-chip--indexed` `fh-chip__index` `fh-rollover` `fh-rollover__item` `fh-button--sm` `fh-button--secondary` `fh-card` `fh-reveal` `fh-card__meta` `fh-card__title` `fh-reveal--scale` `fh-reveal--left` `fh-reveal--blur` `fh-checklist`
+Classes: `fh-card` `fh-reveal` `fh-card__meta` `fh-card__title` `fh-reveal--fade` `fh-reveal--scale` `fh-reveal--left` `fh-reveal--right` `fh-reveal--blur`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#MTL.
+### MTL-1 · The motion layer
+
+#### MTL-1.1 · Rise
+
+```html
+<article class="fh-card fh-reveal" data-tone="sky" data-fh="MTL-1.1"><p class="fh-card__meta">01</p><h4 class="fh-card__title">Fade and rise</h4></article>
+```
+
+#### MTL-1.2 · Fade
+
+```html
+<article class="fh-card fh-reveal fh-reveal--fade" data-tone="teal" data-fh="MTL-1.2"><p class="fh-card__meta">02</p><h4 class="fh-card__title">Fade only</h4></article>
+```
+
+#### MTL-1.3 · Scale
+
+```html
+<article class="fh-card fh-reveal fh-reveal--scale" data-tone="lime" data-fh="MTL-1.3"><p class="fh-card__meta">03</p><h4 class="fh-card__title">Scale in</h4></article>
+```
+
+#### MTL-1.4 · Left
+
+```html
+<article class="fh-card fh-reveal fh-reveal--left" data-tone="amber" data-fh="MTL-1.4"><p class="fh-card__meta">04</p><h4 class="fh-card__title">From the left</h4></article>
+```
+
+#### MTL-1.5 · Right
+
+```html
+<article class="fh-card fh-reveal fh-reveal--right" data-tone="orange" data-fh="MTL-1.5"><p class="fh-card__meta">05</p><h4 class="fh-card__title">From the right</h4></article>
+```
+
+#### MTL-1.6 · Blur
+
+```html
+<article class="fh-card fh-reveal fh-reveal--blur" data-tone="fuchsia" data-fh="MTL-1.6"><p class="fh-card__meta">06</p><h4 class="fh-card__title">Out of focus</h4></article>
+```
 
 ## WRT · Word rotator
 
@@ -264,21 +330,298 @@ Classes: `fh-title` `fh-rotator` `fh-lede` `fh-heading` `fh-rotator--script` `fh
 <p class="fh-heading">Looks <span class="fh-rotator fh-rotator--italic fh-rotator--underline fh-rotator--display" data-tone="amber" style="--fh-rotator-scale: 1.2" data-fh="WRT-1.6"><span>sharp</span><span aria-hidden="true">calm</span><span aria-hidden="true">bold</span></span> anywhere</p>
 ```
 
+## MOT · Motion
+
+Classes: `fh-recede` `fh-scroll-fade` `fh-reveal` `fh-parallax` `fh-scroll-progress` `fh-button` `fh-button--sm`
+
+### MOT-1 · Entrances
+
+Put data-fh-enter on an element and it enters once the page is ready. Step n starts at n × --fh-intro-beat (150ms); --fh-at sets an exact time. Press Replay.
+
+#### MOT-1.1 · Rise
+
+```html
+<div class="site-motion-tile" data-fh-enter="rise" data-fh-step="1">rise</div>
+```
+
+#### MOT-1.2 · Drop
+
+```html
+<div class="site-motion-tile" data-fh-enter="drop" data-fh-step="2">drop</div>
+```
+
+#### MOT-1.3 · Fade
+
+```html
+<div class="site-motion-tile" data-fh-enter="fade" data-fh-step="3">fade</div>
+```
+
+#### MOT-1.4 · Scale
+
+```html
+<div class="site-motion-tile" data-fh-enter="scale" data-fh-step="4">scale</div>
+```
+
+#### MOT-1.5 · Blur
+
+```html
+<div class="site-motion-tile" data-fh-enter="blur" data-fh-step="5">blur</div>
+```
+
+#### MOT-1.6 · Fold
+
+```html
+<div class="site-motion-tile" data-fh-enter="fold" data-fh-step="6">fold</div>
+```
+
+#### MOT-1.7 · Draw
+
+```html
+<div class="site-motion-tile site-motion-tile--line">draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
+```
+
+#### MOT-1.8 · Wipe
+
+```html
+<div class="site-motion-tile" data-fh-enter="wipe" data-fh-step="8">wipe</div>
+```
+
+#### MOT-1.9 · Unveil
+
+```html
+<div class="site-motion-tile site-motion-tile--art" data-fh-enter="unveil" data-fh-step="9">unveil</div>
+```
+
+#### MOT-1.10 · Lift
+
+```html
+<div class="site-motion-tile site-motion-tile--clip"><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
+```
+
+### MOT-2 · Sequences
+
+An intro's order lives on its section. data-fh-intro marks the owner; data-fh-enter-children staggers a list by --fh-stagger (60ms). The homepage hero is written exactly this way.
+
+#### MOT-2.1 · Intro
+
+```html
+<div class="site-motion-hero" data-fh-intro>
+  <p class="site-motion-hero__mark" data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
+  <span class="site-motion-hero__line" data-fh-enter="draw" data-fh-step="4"></span>
+  <p class="site-motion-hero__top" data-fh-enter="blur" data-fh-step="6">The design system</p>
+  <p class="site-motion-hero__turn" data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
+  <ul class="site-motion-hero__chips" data-fh-enter-children data-fh-step="9">
+    <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
+  </ul>
+</div>
+```
+
+#### MOT-2.2 · Staggered list
+
+```html
+<ul class="site-motion-hero__chips" data-fh-enter-children data-fh-step="9">
+  <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
+</ul>
+```
+
+### MOT-3 · Scroll-linked
+
+CSS only, on the page's scroll timeline: it tracks the scroll exactly and costs no script per frame. Scroll the page and watch these.
+
+#### MOT-3.1 · Recede
+
+```html
+<div class="site-motion-art fh-recede" style="--fh-recede-range: 60vh" data-fh="MOT-3.1"></div>
+```
+
+#### MOT-3.2 · Scroll fade
+
+```html
+<div class="site-motion-art site-motion-art--b fh-scroll-fade" style="--fh-recede-range: 60vh" data-fh="MOT-3.2"></div>
+```
+
+#### MOT-3.3 · Reveal
+
+```html
+<div class="site-motion-art site-motion-art--c fh-reveal"></div>
+```
+
+#### MOT-3.4 · Parallax
+
+```html
+<div class="site-motion-art site-motion-art--d fh-parallax" style="--fh-depth: 0.3"></div>
+```
+
+#### MOT-3.5 · Progress
+
+```html
+<p class="site-motion-note">Page progress: <code>&lt;div class="fh-scroll-progress"&gt;&lt;/div&gt;</code> draws the line at the top of this page.</p>
+```
+
+### MOT-4 · Choreography
+
+Script measures once and on resize; the motion itself still runs on the scroll timeline. The circle reveal, glide and lock are free in the enhancer (firehorse.js); dock beside is Firehorse Pro. See them together on the homepage concept.
+
+#### MOT-4.1 · Circle reveal
+
+```html
+<div class="site-motion-card">
+  <b>Circle reveal</b><small>Free · <code>Firehorse.reveal(change, from)</code></small>
+  <button type="button" class="fh-button fh-button--sm" data-motion-reveal data-fh="MOT-4.1">Change the tone</button>
+</div>
+```
+
+#### MOT-4.2 · Glide
+
+```html
+<div class="site-motion-card">
+  <b>Glide</b><small>Free · <code>data-fh-glide="center"</code></small>
+  <code class="site-motion-code">&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
+</div>
+```
+
+#### MOT-4.3 · Lock
+
+```html
+<div class="site-motion-card">
+  <b>Lock</b><small>Free · <code>data-fh-lock</code></small>
+  <code class="site-motion-code">&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
+</div>
+```
+
+#### MOT-4.4 · Dock beside
+
+```html
+<div class="site-motion-card">
+  <b>Dock beside <span class="site-motion-pro">Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
+  <code class="site-motion-code">&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
+</div>
+```
+
+### MOT-5 · Drift
+
+A photo shows a set share at a time; the rest rests under a soft veil and drifts in, so the photo's tone holds. Five styles are free, three are Pro. import { createDrift } from "/drift.js".
+
+#### MOT-5.1 · Wave
+
+```html
+<button type="button" data-drift="wave" aria-pressed="true">Wave</button>
+```
+
+#### MOT-5.2 · Silk
+
+```html
+<button type="button" data-drift="silk" aria-pressed="false">Silk</button>
+```
+
+#### MOT-5.3 · Eddy
+
+```html
+<button type="button" data-drift="eddy" aria-pressed="false">Eddy</button>
+```
+
+#### MOT-5.4 · Panels
+
+```html
+<button type="button" data-drift="panels" aria-pressed="false">Panels</button>
+```
+
+#### MOT-5.5 · Ripple
+
+```html
+<button type="button" data-drift="ripple" aria-pressed="false">Ripple</button>
+```
+
+#### MOT-5.6 · Dapple · Pro
+
+```html
+<button type="button" data-drift="dapple" aria-pressed="false">Dapple <span class="site-motion-pro">Pro</span></button>
+```
+
+#### MOT-5.7 · Tide lines · Pro
+
+```html
+<button type="button" data-drift="tides" aria-pressed="false">Tide lines <span class="site-motion-pro">Pro</span></button>
+```
+
+#### MOT-5.8 · Shutters · Pro
+
+```html
+<button type="button" data-drift="shutters" aria-pressed="false">Shutters <span class="site-motion-pro">Pro</span></button>
+```
+
 ## STK · Stack
 
-.fh-stack
+.fh-stack · --2xs … --2xl
 
-Classes: `fh-stack` `fh-stack--sm` `fh-label` `fh-body` `fh-action`
+Classes: `fh-stack` `fh-stack--2xs` `fh-label` `fh-small` `fh-muted` `fh-stack--sm` `fh-body` `fh-action` `fh-stack--2xl`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/layout/#STK.
+### STK-1 · Stack
+
+#### STK-1.1 · 2xs
+
+```html
+<div class="fh-stack fh-stack--2xs">
+  <p class="fh-label">2xs</p>
+  <p class="fh-small fh-muted" style="margin:0">Tightest sibling gap.</p>
+</div>
+```
+
+#### STK-1.2 · sm
+
+```html
+<div class="fh-stack fh-stack--sm">
+  <p class="fh-label">sm</p>
+  <p class="fh-body" style="margin:0">One gap between siblings, set by <code>--fh-gap</code>.</p>
+  <a class="fh-action" href="#layout" data-fh="STK-1.2">Read more</a>
+</div>
+```
+
+#### STK-1.3 · 2xl
+
+```html
+<div class="fh-stack fh-stack--2xl">
+  <p class="fh-label">2xl</p>
+  <p class="fh-small fh-muted" style="margin:0">Widest stack gap.</p>
+</div>
+```
 
 ## CLS · Cluster
 
-.fh-cluster
+.fh-cluster · --between · --end
 
-Classes: `fh-cluster` `fh-badge`
+Classes: `fh-cluster` `fh-badge` `fh-cluster--between` `fh-label` `fh-cluster--end`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/layout/#CLS.
+### CLS-1 · Cluster
+
+#### CLS-1.1 · Default
+
+```html
+<div class="fh-cluster">
+  <span class="fh-badge" data-tone="sky" data-fh="CLS-1.1">Agents</span>
+  <span class="fh-badge" data-tone="teal" data-fh="CLS-1.1">Data</span>
+  <span class="fh-badge" data-tone="orange" data-fh="CLS-1.1">Automation</span>
+  <span class="fh-badge" data-fh="CLS-1.1">Managed</span>
+</div>
+```
+
+#### CLS-1.2 · Between
+
+```html
+<div class="fh-cluster fh-cluster--between" style="inline-size: 100%">
+  <span class="fh-label">Between</span>
+  <span class="fh-badge" data-tone="lime" data-fh="CLS-1.2">Flush ends</span>
+</div>
+```
+
+#### CLS-1.3 · End
+
+```html
+<div class="fh-cluster fh-cluster--end" style="inline-size: 100%">
+  <span class="fh-badge" data-tone="sky" data-fh="CLS-1.3">End</span>
+  <span class="fh-badge" data-tone="teal" data-fh="CLS-1.3">aligned</span>
+</div>
+```
 
 ## GRD · Auto grid
 
@@ -287,6 +630,134 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 Classes: `fh-grid` `fh-card` `fh-card--solid`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/layout/#GRD.
+
+## COL · Columns
+
+The grid itself. data-cols="16" for the finer one; a child .fh-cols[data-subgrid] keeps nested content on the parent's lines.
+
+Classes: `fh-cols` `fh-card` `fh-card--solid` `fh-stack` `fh-eyebrow-pill` `fh-dot` `fh-heading` `fh-body`
+
+### COL-1 · Columns
+
+#### COL-1.1 · 12 columns
+
+```html
+<div class="fh-cols" data-fh="COL-1.1">
+  <div class="fh-card fh-card--solid" data-span="12">12</div>
+  <div class="fh-card fh-card--solid" data-span="8">8</div>
+  <div class="fh-card fh-card--solid" data-span="4">4</div>
+  <div class="fh-card fh-card--solid" data-span="3">3</div>
+  <div class="fh-card fh-card--solid" data-span="6">6</div>
+  <div class="fh-card fh-card--solid" data-span="3">3</div>
+</div>
+```
+
+#### COL-1.2 · 16 columns
+
+```html
+<div class="fh-cols" data-cols="16" data-fh="COL-1.2">
+  <div class="fh-card fh-card--solid" data-span="10">10 of 16</div>
+  <div class="fh-card fh-card--solid" data-span="6">6</div>
+  <div class="fh-card fh-card--solid" data-span="5" data-start="3">5, from 3</div>
+  <div class="fh-card fh-card--solid" data-span="7" data-start="10">7, from 10</div>
+</div>
+```
+
+#### COL-1.3 · Subgrid
+
+```html
+<div class="fh-cols" data-fh="COL-1.3">
+  <div class="fh-cols" data-subgrid data-span="8" data-start="3">
+    <div class="fh-card fh-card--solid" data-span="5">Nested 5</div>
+    <div class="fh-card fh-card--solid" data-span="3">Nested 3</div>
+  </div>
+</div>
+```
+
+### COL-2 · Compositions
+
+Three placements to start from. Offset: copy held to the left, the image breaking right. Asymmetric: a 5 / 7 split with the image dropped. Broken: two pieces sharing rows, so one overlaps the other.
+
+#### COL-2.1 · Offset
+
+```html
+<div class="fh-cols" data-fh="COL-2.1">
+  <div class="fh-stack" data-span="5" data-start="2" data-span-md="8">
+    <p class="fh-eyebrow-pill" data-tone="violet"><span class="fh-dot"></span>Offset</p>
+    <h3 class="fh-heading">Copy from column 2</h3>
+    <p class="fh-body">The text starts one column in; the picture takes the right half and runs to the edge of the grid.</p>
+  </div>
+  <div class="fh-card fh-card--solid" data-span="6" data-start="7" data-row="1" style="min-block-size: 12rem">Image · 7–12</div>
+</div>
+```
+
+#### COL-2.2 · Asymmetric
+
+```html
+<div class="fh-cols" data-fh="COL-2.2">
+  <div class="fh-card fh-card--solid" data-span="5" style="min-block-size: 10rem">5</div>
+  <div class="fh-card fh-card--solid" data-span="7" data-align="end" style="min-block-size: 16rem">7 · dropped to the bottom</div>
+</div>
+```
+
+#### COL-2.3 · Broken
+
+```html
+<div class="fh-cols" data-fh="COL-2.3">
+  <div class="fh-card fh-card--solid" data-span="7" data-start="1" data-row="1" data-row-span="2" style="min-block-size: 16rem">Image · 1–7, two rows</div>
+  <div class="fh-card" data-span="6" data-start="6" data-row="2" data-layer="over">Card · 6–11, over the image</div>
+</div>
+```
+
+## GDS · Guides
+
+Designer overlays over the whole page, in CSS. Put any mix of the words in data-fh-guides on <html>; on this site, turn them on from the theme panel. They never take clicks.
+
+Classes: `fh-chip`
+
+### GDS-1 · Guides
+
+#### GDS-1.1 · 12 columns
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="cols-12" data-fh="GDS-1.1">12 columns</button>
+```
+
+#### GDS-1.2 · 16 columns
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="cols-16" data-fh="GDS-1.2">16 columns</button>
+```
+
+#### GDS-1.3 · Golden sections
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="golden" data-fh="GDS-1.3">Golden sections</button>
+```
+
+#### GDS-1.4 · Thirds
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="thirds" data-fh="GDS-1.4">Thirds</button>
+```
+
+#### GDS-1.5 · Baseline
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="baseline" data-fh="GDS-1.5">Baseline</button>
+```
+
+#### GDS-1.6 · Modular
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="modular" data-fh="GDS-1.6">Modular</button>
+```
+
+#### GDS-1.7 · Safe areas
+
+```html
+<button class="fh-chip" type="button" aria-pressed="false" data-guide="safe" data-fh="GDS-1.7">Safe areas</button>
+```
 
 ## FND · Fender
 
@@ -437,7 +908,7 @@ Classes: `fh-breadcrumb` `fh-breadcrumb__back` `fh-dot` `fh-dot--live` `fh-clust
 
 The Doppler pill from the top of this page, as a full component. Combine a shape, a line and any of the parts. Every variant takes the tone from data-tone.
 
-Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh-eyebrow-pill--dotted` `fh-eyebrow-pill--double` `fh-dot--square` `fh-eyebrow-pill--rounded` `fh-eyebrow-pill--sharp` `fh-dot--diamond` `fh-eyebrow-pill--oval` `fh-eyebrow-pill--tab` `fh-eyebrow-pill--tone` `fh-eyebrow-pill--solid` `fh-dot--blink` `fh-eyebrow-pill--gradient` `fh-eyebrow-pill--glass` `fh-dot--ring` `fh-eyebrow-pill--ghost` `fh-eyebrow-pill--bracket` `fh-dot--bar` `fh-eyebrow-pill--underline` `fh-eyebrow-pill__index` `fh-eyebrow-pill__seg` `fh-eyebrow-pill__count` `fh-eyebrow-pill--sentence` `fh-avatar` `fh-avatar--circle` `fh-eyebrow-pill__action` `fh-kbd` `fh-eyebrow-pill--sm` `fh-eyebrow-pill--lg`
+Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh-eyebrow-pill--dotted` `fh-eyebrow-pill--double` `fh-dot--square` `fh-eyebrow-pill--rounded` `fh-eyebrow-pill--sharp` `fh-dot--diamond` `fh-eyebrow-pill--oval` `fh-eyebrow-pill--tab` `fh-eyebrow-pill--tone` `fh-eyebrow-pill--solid` `fh-dot--blink` `fh-eyebrow-pill--gradient` `fh-eyebrow-pill--glass` `fh-dot--ring` `fh-eyebrow-pill--ghost` `fh-eyebrow-pill--bracket` `fh-dot--bar` `fh-eyebrow-pill--underline` `fh-eyebrow-pill__index` `fh-eyebrow-pill__seg` `fh-eyebrow-pill__count` `fh-eyebrow-pill--filled-end` `fh-eyebrow-pill--sentence` `fh-avatar` `fh-avatar--circle` `fh-eyebrow-pill__action` `fh-kbd` `fh-eyebrow-pill--sm` `fh-eyebrow-pill--lg`
 
 ### EYE-1 · Lines
 
@@ -547,7 +1018,7 @@ Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh
 
 ### EYE-5 · Parts
 
-__index · __seg · __count
+__index · __seg · __count · --filled-end
 
 #### EYE-5.1 · Indexed
 
@@ -565,6 +1036,12 @@ __index · __seg · __count
 
 ```html
 <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose" data-fh="EYE-5.3"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p>
+```
+
+#### EYE-5.4 · Filled end
+
+```html
+<p class="fh-eyebrow-pill fh-eyebrow-pill--filled-end" data-tone="orange" data-fh="EYE-5.4"><span class="fh-dot"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p>
 ```
 
 ### EYE-6 · Sentences
@@ -803,6 +1280,25 @@ Cards led by a cube: the value is the headline, the text says what it measures.
 </ul>
 ```
 
+## LGS · Logo strip
+
+Grayscale marks that come to full colour on hover. Add fh-logos--marquee for an endless scroll (duplicate the list once). Only show logos you have permission to use.
+
+Classes: `fh-logos`
+
+### LGS-1 · Logo strip
+
+#### LGS-1.1 · Logo strip
+
+```html
+<ul class="fh-logos" data-fh="LGS-1.1">
+  <li><svg viewBox="0 0 120 24" width="120" height="24" aria-label="Northwind"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Northwind</text></svg></li>
+  <li><svg viewBox="0 0 100 24" width="100" height="24" aria-label="Halcyon"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Halcyon</text></svg></li>
+  <li><svg viewBox="0 0 90 24" width="90" height="24" aria-label="Voltline"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Voltline</text></svg></li>
+  <li><svg viewBox="0 0 80 24" width="80" height="24" aria-label="Lumen"><text x="0" y="18" font-size="16" font-family="system-ui,sans-serif" fill="currentColor">Lumen</text></svg></li>
+</ul>
+```
+
 ## CRD · Card in a ruled grid
 
 Dashed cells that share their rules, a tone-colored meta line, and a title link that covers the whole card. Narrow cards stack their footer.
@@ -882,11 +1378,43 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## STP · Steps
 
-Numbered because order matters.
+Numbered because order matters. Form steps with outline cubes live on Forms.
 
-Classes: `fh-steps` `fh-steps__mark`
+Classes: `fh-steps` `fh-steps__mark` `fh-form-step` `fh-form-step__head` `fh-form-step__text` `fh-cubes` `fh-form-step__cube` `fh-cube` `fh-cube--outline` `fh-form-step__title` `fh-muted` `fh-form-step__body` `fh-form` `fh-field` `fh-input`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#STP.
+### STP-1 · Steps
+
+#### STP-1.1 · Steps
+
+```html
+<ol class="fh-steps" data-fh="STP-1.1">
+  <li data-tone="sky"><span class="fh-steps__mark"></span><div><h3>Assess</h3><p>Understand the current state and its risks.</p></div></li>
+  <li data-tone="teal"><span class="fh-steps__mark"></span><div><h3>Build</h3><p>Ship the foundation, then connect the systems.</p></div></li>
+  <li data-tone="orange"><span class="fh-steps__mark"></span><div><h3>Operate</h3><p>Keep it healthy as you grow.</p></div></li>
+</ol>
+```
+
+### STP-2 · Form steps
+
+Numbered form sections with outline-cube heads (CUB-1.4). Wide slots put the head sticky beside the fields.
+
+#### STP-2.1 · Form step
+
+```html
+<section class="fh-form-step" data-fh="STP-2.1">
+  <header class="fh-form-step__head">
+    <div class="fh-form-step__text">
+      <ul class="fh-cubes fh-form-step__cube" data-tone="sky"><li><b class="fh-cube fh-cube--outline">01</b></li></ul>
+      <h3 class="fh-form-step__title">About you</h3>
+      <p class="fh-muted" style="margin:0">Who we are talking to.</p>
+    </div>
+  </header>
+  <div class="fh-form-step__body fh-form">
+    <div class="fh-field"><label for="fs-name">Name</label><input class="fh-input" id="fs-name" value="Ada Lovelace"></div>
+    <div class="fh-field"><label for="fs-email">Email</label><input class="fh-input" id="fs-email" type="email" value="ada@analytical.engine"></div>
+  </div>
+</section>
+```
 
 ## CAR · Carousel
 
@@ -1725,6 +2253,82 @@ Classes: `fh-burger` `fh-burger--boxed` `fh-burger--open` `fh-burger--label` `fh
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#BRG.
 
+## MEG · Mega panel
+
+Equal category columns with dashed rules and a footer rail. Default sits flush under the header; --headed puts the category titles on one row above a full-bleed etched rule with scaffold ticks, and pairs with fh-mega__link for rich rows.
+
+Classes: `fh-mega` `fh-frame` `fh-mega__grid` `fh-mega__rail` `fh-action` `fh-mega--headed` `fh-mega__link` `fh-mega__link-media` `fh-icon` `fh-mega__link-title` `fh-mega__link-desc`
+
+### MEG-1 · Default
+
+#### MEG-1.1 · Default
+
+```html
+<div class="fh-mega fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-1.1">
+  <div class="fh-mega__grid">
+    <section data-tone="sky"><h3>Agents</h3><ul><li><a href="#c-mega">Lead follow-up</a></li><li><a href="#c-mega">Inbox triage</a></li></ul></section>
+    <section data-tone="teal"><h3>Data</h3><ul><li><a href="#c-mega">Warehouses</a></li><li><a href="#c-mega">Pipelines</a></li></ul></section>
+    <section data-tone="orange"><h3>Automation</h3><ul><li><a href="#c-mega">Workflows</a></li><li><a href="#c-mega">Webhooks</a></li></ul></section>
+  </div>
+  <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">All services</a></div>
+</div>
+```
+
+### MEG-2 · Headed
+
+#### MEG-2.1 · Headed
+
+```html
+<div class="fh-mega fh-mega--headed fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-2.1">
+  <div class="fh-mega__grid">
+    <section data-tone="sky">
+      <h3><a href="#c-mega">Agents</a></h3>
+      <ul>
+        <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><span class="fh-mega__link-title">Lead follow-up</span><span class="fh-mega__link-desc">Answers and books on your channels.</span></a></li>
+        <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--inbox" aria-hidden="true"></i></span><span class="fh-mega__link-title">Inbox triage</span><span class="fh-mega__link-desc">Sorts and tags every message.</span></a></li>
+      </ul>
+    </section>
+    <section data-tone="teal">
+      <h3><a href="#c-mega">Data</a></h3>
+      <ul>
+        <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--database" aria-hidden="true"></i></span><span class="fh-mega__link-title">Warehouses</span><span class="fh-mega__link-desc">One place for every table.</span></a></li>
+      </ul>
+    </section>
+  </div>
+  <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">Browse the catalog</a></div>
+</div>
+```
+
+## DRW · Drawer
+
+The mobile menu: a full-width popover under the header with grouped links. Open it from the hamburger below, or use the site header's drawer on a narrow viewport.
+
+Classes: `fh-drawer` `fh-drawer__group` `fh-label`
+
+### DRW-1 · Drawer
+
+#### DRW-1.1 · Drawer
+
+```html
+<div id="demo-drawer" popover class="fh-drawer" data-fh="DRW-1.1">
+  <div class="fh-drawer__group">
+    <p class="fh-label">Docs</p>
+    <ul>
+      <li><a href="#c-drawer">Foundations</a></li>
+      <li><a href="#c-drawer">Components</a></li>
+      <li><a href="#c-drawer">Forms</a></li>
+    </ul>
+  </div>
+  <div class="fh-drawer__group">
+    <p class="fh-label">Pro</p>
+    <ul>
+      <li><a href="#c-drawer">Overview</a></li>
+      <li><a href="#c-drawer">Key fields</a></li>
+    </ul>
+  </div>
+</div>
+```
+
 ## PRF · Profile picker
 
 Who's signed in and everything about their session: an identity card, a few facts, account links, a setting row, a profile switcher and sign out. A popover anchored to an etched pill; no JavaScript.
@@ -1806,15 +2410,51 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
 
-Classes: `fh-grid` `fh-stack` `fh-alert` `fh-alert__title` `fh-alert__actions` `fh-button` `fh-button--sm` `fh-close` `fh-stack--lg` `fh-progress-field` `fh-progress-field__value` `fh-progress` `fh-meter` `fh-cluster` `fh-ring` `fh-spinner` `fh-button--icon` `fh-button--secondary` `fh-skeleton` `fh-skeleton--circle`
+Classes: `fh-skeleton` `fh-skeleton--block`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#FBK.
+### FBK-1 · Feedback
+
+#### FBK-1.1 · Skeleton block
+
+```html
+<span class="fh-skeleton fh-skeleton--block" style="block-size: 6rem; inline-size: 100%" aria-hidden="true" data-fh="FBK-1.1"></span>
+```
 
 ## EMP · Empty state & banner
 
-Classes: `fh-stack` `fh-stack--lg` `fh-banner` `fh-empty` `fh-empty__icon` `fh-button` `fh-button--sm` `fh-button--secondary`
+Classes: `fh-banner` `fh-empty` `fh-empty__icon` `fh-button` `fh-button--sm` `fh-button--secondary` `fh-app-empty`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#EMP.
+### EMP-1 · Banner & empty
+
+#### EMP-1.1 · Banner
+
+```html
+<div class="fh-banner" data-tone="accent" data-fh="EMP-1.1"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
+```
+
+#### EMP-1.2 · Empty
+
+```html
+<div class="fh-empty" data-tone="violet" data-fh="EMP-1.2">
+  <span class="fh-empty__icon">∅</span>
+  <h4>No leads yet</h4>
+  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
+  <a class="fh-button fh-button--sm fh-button--secondary" href="#c-feedback">Send a test lead</a>
+</div>
+```
+
+### EMP-2 · Empty module
+
+A section that has not been built yet: dashed outline, title and a short note. Under Empty state & banner (EMP).
+
+#### EMP-2.1 · Empty module
+
+```html
+<div class="fh-app-empty" data-fh="EMP-2.1">
+  <h2>Finance</h2>
+  <p>This module is not wired yet. Numbers and ledgers will land here.</p>
+</div>
+```
 
 ## AVT · Avatars
 
@@ -2005,9 +2645,9 @@ Classes: `fh-social` `fh-social__photo` `fh-social__body` `fh-social__name` `fh-
 
 ## AUT · Sign in & sign up
 
-Three layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Plain is the form alone.
+Four layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Glass frosts the form over the art; Plain is the form alone.
 
-Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `fh-segmented` `fh-auth__switch` `fh-sr-only` `fh-auth__head` `fh-auth__form` `fh-field` `fh-input` `fh-auth__row` `fh-check` `fh-button` `fh-divider` `fh-auth__social` `fh-button--secondary` `fh-field__hint` `fh-auth__foot` `fh-auth--card` `fh-auth--plain` `fh-segmented--sm` `fh-auth__method` `fh-auth__forgot` `fh-input-group` `fh-auth__rules`
+Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `fh-segmented` `fh-auth__switch` `fh-sr-only` `fh-auth__head` `fh-auth__form` `fh-field` `fh-input` `fh-auth__row` `fh-check` `fh-button` `fh-divider` `fh-auth__social` `fh-button--secondary` `fh-field__hint` `fh-auth__foot` `fh-auth--card` `fh-auth--plain` `fh-auth--glass` `fh-auth__corner` `fh-segmented--sm` `fh-auth__logo` `fh-auth__method` `fh-auth__forgot` `fh-input-group` `fh-auth__rules`
 
 ### AUT-1 · Layouts
 
@@ -2151,6 +2791,45 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 </section>
 ```
 
+#### AUT-1.4 · Glass · frosted over art
+
+```html
+<section class="fh-auth fh-auth--glass" data-tone="orange" aria-label="Sign in or create an account" data-fh="AUT-1.4">
+  <div class="fh-auth__art" aria-hidden="true"></div>
+  <div class="fh-auth__corner">
+    <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Colour scheme</legend><label><input type="radio" name="auth-glass-scheme" value="light" checked> Light</label><label><input type="radio" name="auth-glass-scheme" value="dark"> Dark</label></fieldset>
+  </div>
+  <div class="fh-auth__panel">
+    <p class="fh-auth__brand"><span class="fh-auth__logo" style="--fh-auth-logo: none" aria-hidden="true"></span><b>Northwind Studio</b></p>
+    <fieldset class="fh-segmented fh-auth__switch">
+      <legend class="fh-sr-only">Account</legend>
+      <label><input type="radio" name="auth-glass" id="auth-glass-in" value="in" checked> Sign in</label>
+      <label><input type="radio" name="auth-glass" id="auth-glass-up" value="up"> Sign up</label>
+    </fieldset>
+    <header class="fh-auth__head">
+      <h3 data-fh-auth="in">Welcome back</h3>
+      <h3 data-fh-auth="up">Create your account</h3>
+      <p data-fh-auth="in">Sign in to pick up where you left off.</p>
+      <p data-fh-auth="up">Two minutes. No card needed.</p>
+    </header>
+    <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
+      <div class="fh-field"><label for="auth-glass-email">Email</label><input class="fh-input" id="auth-glass-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-glass-pass">Password</label><input class="fh-input" id="auth-glass-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
+      <button class="fh-button" type="submit">Sign in</button>
+    </form>
+    <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
+      <div class="fh-field"><label for="auth-glass-name">Name</label><input class="fh-input" id="auth-glass-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
+      <div class="fh-field"><label for="auth-glass-new-email">Email</label><input class="fh-input" id="auth-glass-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+      <div class="fh-field"><label for="auth-glass-new-pass">Password</label><input class="fh-input" id="auth-glass-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"></div>
+      <button class="fh-button" type="submit">Create account</button>
+    </form>
+    <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-glass-up">Create an account</label></p>
+    <p class="fh-auth__foot" data-fh-auth="up">Already have an account? <label for="auth-glass-in">Sign in</label></p>
+  </div>
+</section>
+```
+
 ### AUT-2 · Method
 
 #### AUT-2.1 · Method · password or email link
@@ -2206,11 +2885,84 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 
 ## FLD · Fields
 
-The "Required" chip comes from the input's own required attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted.
+The "Required" chip comes from the input's own required attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with aria-invalid="true" (for errors the server sends back).
 
-Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button`
+Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#FLD.
+### FLD-1 · Fields
+
+#### FLD-1.1 · Fields
+
+```html
+<form class="fh-form" novalidate onsubmit="event.preventDefault()" data-fh="FLD-1.1">
+  <div class="fh-form__row">
+    <div class="fh-field">
+      <label for="f-email">Work email</label>
+      <input class="fh-input" id="f-email" type="email" required placeholder="you@company.com">
+      <p class="fh-field__error">Enter an email like name@company.com.</p>
+    </div>
+    <div class="fh-field fh-field--optional">
+      <label for="f-site">Website</label>
+      <div class="fh-input-group"><span>https://</span><input class="fh-input" id="f-site" placeholder="company.com"></div>
+    </div>
+  </div>
+  <div class="fh-field">
+    <label for="f-service">Service</label>
+    <div class="fh-select-wrap">
+      <select class="fh-select" id="f-service" required>
+        <option value>Choose a service</option>
+        <option>Data architecture</option>
+        <option>Automation</option>
+        <option>AI agents</option>
+      </select>
+    </div>
+  </div>
+  <div class="fh-field fh-field--optional">
+    <label for="f-msg">What's going on?</label>
+    <textarea class="fh-textarea" id="f-msg" placeholder="A few lines is plenty."></textarea>
+    <p class="fh-field__hint">We reply within one business day.</p>
+  </div>
+  <div class="fh-form__actions">
+    <button class="fh-button" type="submit">Send inquiry</button>
+  </div>
+</form>
+```
+
+### FLD-2 · Dictation
+
+Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with data-fh-dictate (or drive the same markup yourself).
+
+#### FLD-2.1 · Dictation
+
+```html
+<div class="fh-field fh-field--dictate" data-fh-dictate data-fh="FLD-2.1">
+  <label for="f-dictate">Message</label>
+  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+    <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
+    <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
+  </div>
+  <textarea class="fh-textarea" id="f-dictate" placeholder="A few lines is plenty."></textarea>
+  <p class="fh-dictate__live" role="status" hidden>
+    <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+    <span class="fh-dictate__interim"></span>
+  </p>
+  <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
+```
+
+### FLD-3 · Quiet
+
+A barely-there lift off the canvas, no border. Default fields already use a light fill (--fh-color-field); quiet is fainter still. Use fh-field--quiet or fh-input--quiet.
+
+#### FLD-3.1 · Quiet
+
+```html
+<div class="fh-field fh-field--quiet" data-fh="FLD-3.1">
+  <label for="f-quiet">Notes</label>
+  <textarea class="fh-textarea" id="f-quiet" placeholder="Optional detail"></textarea>
+</div>
+```
 
 ## CHO · Choices
 
@@ -2219,6 +2971,36 @@ Real radios and checkboxes under the styling, so they submit with the form and w
 Classes: `fh-stack` `fh-stack--lg` `fh-segmented` `fh-sr-only` `fh-check` `fh-switch`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#CHO.
+
+## RVW · Review rows
+
+Label, value, an Edit action on the right. Muted and quoted values for empty or multi-line answers.
+
+Classes: `fh-review` `fh-review__row` `fh-action` `fh-review__edit` `fh-review__muted` `fh-review__quote`
+
+### RVW-1 · Review
+
+#### RVW-1.1 · Review
+
+```html
+<dl class="fh-review" data-fh="RVW-1.1">
+  <div class="fh-review__row">
+    <dt>Name</dt>
+    <dd>Ada Lovelace</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+  <div class="fh-review__row">
+    <dt>Company</dt>
+    <dd class="fh-review__muted">Not given</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+  <div class="fh-review__row">
+    <dt>Brief</dt>
+    <dd class="fh-review__quote">Connect the warehouse to the agent inbox.</dd>
+    <button type="button" class="fh-action fh-review__edit">Edit</button>
+  </div>
+</dl>
+```
 
 ## UPL · Upload, range, tags, sheet
 
@@ -2575,11 +3357,43 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## TBL · Table
 
-With fh-table--reflow, rows turn into labelled cards when the slot is under 36rem.
+With fh-table--reflow, rows turn into labelled cards when the slot is under 36rem. fh-table__head in the caption is a title with a count chip.
 
-Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge`
+Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-table__head` `fh-subheading` `fh-chip`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/data/#TBL.
+### TBL-1 · Table
+
+#### TBL-1.1 · Table
+
+```html
+<div class="fh-table-wrap" data-fh="TBL-1.1">
+  <table class="fh-table fh-table--reflow">
+    <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="fh-num">Amount</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Invoice">RC-0142</td><td data-label="Client">Northwind</td><td data-label="Status"><span class="fh-badge" data-tone="lime">Paid</span></td><td data-label="Amount" class="fh-num">$4,800.00</td></tr>
+      <tr><td data-label="Invoice">RC-0143</td><td data-label="Client">Tastin</td><td data-label="Status"><span class="fh-badge" data-tone="amber">Sent</span></td><td data-label="Amount" class="fh-num">$1,250.00</td></tr>
+      <tr><td data-label="Invoice">RC-0144</td><td data-label="Client">Halcyon</td><td data-label="Status"><span class="fh-badge">Draft</span></td><td data-label="Amount" class="fh-num">$750.00</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+### TBL-2 · Caption head
+
+#### TBL-2.1 · Caption head
+
+```html
+<div class="fh-table-wrap" data-fh="TBL-2.1">
+  <table class="fh-table">
+    <caption><div class="fh-table__head"><h3 class="fh-subheading">Schema columns</h3><span class="fh-chip" data-tone="sky">12</span></div></caption>
+    <thead><tr><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>uuid</td><td>uuid</td><td>Primary key</td></tr>
+      <tr><td>name</td><td>text</td><td>Display name</td></tr>
+    </tbody>
+  </table>
+</div>
+```
 
 ## PRD · Product grid
 
@@ -2595,7 +3409,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## CKO · Checkout
 
-Classes: `fh-checkout` `fh-stack` `fh-stack--lg` `fh-stepper` `fh-express` `fh-or` `fh-checkout__step` `fh-field` `fh-input` `fh-field__error` `fh-check` `fh-switch` `fh-form__row` `fh-choice-cards` `fh-choice-card` `fh-paycard` `fh-paycard__front` `fh-paycard__top` `fh-paycard__chip` `fh-paycard__brand` `fh-paycard__mark` `fh-paycard__number` `fh-paycard__row` `fh-paycard__back` `fh-paycard__stripe` `fh-paycard__sig` `fh-card-field` `fh-field__hint` `fh-paycard-cvc` `fh-button` `fh-button--lg` `fh-button--plain` `fh-checkout__aside` `fh-label` `fh-line-items` `fh-line-item` `fh-qty` `fh-qty--sm` `fh-line-item__remove` `fh-input-group` `fh-button--sm` `fh-button--secondary` `fh-summary` `fh-summary__discount` `fh-summary__total`
+Classes: `fh-checkout` `fh-stack` `fh-stack--lg` `fh-stepper` `fh-express` `fh-or` `fh-checkout__step` `fh-field` `fh-input` `fh-field__error` `fh-check` `fh-switch` `fh-form__row` `fh-choice-cards` `fh-choice-card` `fh-cluster` `fh-paycard` `fh-paycard__front` `fh-paycard__top` `fh-paycard__chip` `fh-paycard__brand` `fh-paycard__mark` `fh-paycard__number` `fh-paycard__row` `fh-paycard__back` `fh-paycard__stripe` `fh-paycard__sig` `fh-paycard--flipped` `fh-card-field` `fh-field__hint` `fh-paycard-cvc` `fh-button` `fh-button--lg` `fh-button--plain` `fh-checkout__aside` `fh-label` `fh-line-items` `fh-line-item` `fh-qty` `fh-qty--sm` `fh-line-item__remove` `fh-input-group` `fh-button--sm` `fh-button--secondary` `fh-summary` `fh-summary__discount` `fh-summary__total`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#CKO.
 
@@ -2613,9 +3427,37 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## PAY · Payment card
 
-Classes: `fh-paycard` `fh-paycard__front` `fh-paycard__top` `fh-paycard__chip` `fh-paycard__brand` `fh-paycard__mark` `fh-paycard__number` `fh-paycard__row` `fh-paycard__back` `fh-paycard__stripe` `fh-paycard__sig`
+Classes: `fh-paycard` `fh-paycard__front` `fh-paycard__top` `fh-paycard__chip` `fh-paycard__brand` `fh-paycard__mark` `fh-paycard__number` `fh-paycard__row` `fh-paycard__back` `fh-paycard__stripe` `fh-paycard__sig` `fh-paycard--flipped`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#PAY.
+### PAY-1 · Payment card
+
+#### PAY-1.1 · Front
+
+```html
+<div class="fh-paycard" data-brand="visa" aria-hidden="true" data-fh="PAY-1.1">
+  <div class="fh-paycard__front">
+    <div class="fh-paycard__top"><span class="fh-paycard__chip"></span><span class="fh-paycard__brand" data-paycard-show="brand">visa</span></div>
+    <span class="fh-paycard__mark">_supply</span>
+    <span class="fh-paycard__number" data-paycard-show="number">•••• •••• •••• 4242</span>
+    <div class="fh-paycard__row"><span><small>Card holder</small><span data-paycard-show="name" data-empty="Your name">Your name</span></span><span><small>Expires</small><span data-paycard-show="expiry" data-empty="MM / YY">MM / YY</span></span></div>
+  </div>
+  <div class="fh-paycard__back"><span class="fh-paycard__stripe"></span><span class="fh-paycard__sig" data-paycard-show="cvc" data-empty="•••">•••</span></div>
+</div>
+```
+
+#### PAY-1.2 · Flipped
+
+```html
+<div class="fh-paycard fh-paycard--flipped" data-brand="visa" aria-hidden="true" data-fh="PAY-1.2">
+  <div class="fh-paycard__front">
+    <div class="fh-paycard__top"><span class="fh-paycard__chip"></span><span class="fh-paycard__brand">visa</span></div>
+    <span class="fh-paycard__mark">_supply</span>
+    <span class="fh-paycard__number">•••• •••• •••• 4242</span>
+    <div class="fh-paycard__row"><span><small>Card holder</small><span>Your name</span></span><span><small>Expires</small><span>MM / YY</span></span></div>
+  </div>
+  <div class="fh-paycard__back"><span class="fh-paycard__stripe"></span><span class="fh-paycard__sig">•••</span></div>
+</div>
+```
 
 ## CRT · Cart line items
 
@@ -3274,6 +4116,134 @@ Classes: `fh-tracker` `fh-tracker__head` `fh-h3` `fh-tracker__meter` `fh-progres
 </section>
 ```
 
+## SHL · App shell
+
+Sidebar beside the work area: brand, focus, sidenav and foot on the left; sticky bar and content on the right. data-fh-env paints the environment band; data-fh-side="rail" collapses the sidebar to icons.
+
+Classes: `fh-app` `fh-app__side` `fh-app__side-inner` `fh-app__side-head` `fh-app__brand` `fh-icon` `fh-sidenav` `fh-sidenav__label` `fh-app__main` `fh-app__bar` `fh-app__title` `fh-app__bar-end` `fh-chip` `fh-app__content` `fh-muted`
+
+### SHL-1 · App shell
+
+#### SHL-1.1 · App shell
+
+```html
+<div class="fh-app" data-fh-env="local" style="min-block-size: 22rem; --fh-app-side: 12rem" data-fh="SHL-1.1">
+  <aside class="fh-app__side"><div class="fh-app__side-inner">
+    <div class="fh-app__side-head"><a class="fh-app__brand" href="#a-shell"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i><span>Helm</span></a></div>
+    <nav class="fh-sidenav" aria-label="Demo"><a href="#a-shell" aria-current="page"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i><span class="fh-sidenav__label">Business</span></a><a href="#a-shell"><i class="fh-icon fh-icon--users" aria-hidden="true"></i><span class="fh-sidenav__label">People</span></a></nav>
+  </div></aside>
+  <div class="fh-app__main">
+    <header class="fh-app__bar"><h1 class="fh-app__title">Business</h1><div class="fh-app__bar-end"><span class="fh-chip" data-tone="lime">Local</span></div></header>
+    <main class="fh-app__content" style="padding: var(--fh-inset-card)"><p class="fh-muted" style="margin:0">Work area. The shell pins the sidebar and the bar.</p></main>
+  </div>
+</div>
+```
+
+## ENV · Environment selector
+
+Where the app is running: a mono pill with a live dot (fh-env), or the quieter eyebrow pill (fh-env-pill) that expands the host on hover. The menu reopens the same page in another environment.
+
+Classes: `fh-env` `fh-env__name` `fh-env__host` `fh-eyebrow-pill` `fh-env-pill` `fh-dot` `fh-eyebrow-pill__seg` `fh-env-pill__host` `fh-env-pill__chevron`
+
+### ENV-1 · Selector
+
+#### ENV-1.1 · Selector
+
+```html
+<button class="fh-env" type="button" data-fh-env="local" popovertarget="demo-env-menu" data-fh="ENV-1.1">
+  <span class="fh-env__name">Local</span>
+  <span class="fh-env__host">helm.rascode.local</span>
+</button>
+```
+
+### ENV-2 · Pill
+
+#### ENV-2.1 · Pill
+
+```html
+<button class="fh-eyebrow-pill fh-env-pill" type="button" data-fh-env="local" popovertarget="demo-env-menu" data-fh="ENV-2.1">
+  <span class="fh-dot"></span>
+  <span class="fh-eyebrow-pill__seg"><strong>Local</strong></span>
+  <span class="fh-eyebrow-pill__seg fh-env-pill__host">helm.rascode.local</span>
+  <span class="fh-env-pill__chevron" aria-hidden="true"></span>
+</button>
+```
+
+## WRK · Working indicator
+
+An agent is on it: a thinking mark beside who is working and what on. The pill for a top bar; __mark alone for a row or cell.
+
+Classes: `fh-working` `fh-icon` `fh-working__mark` `fh-working__what`
+
+### WRK-1 · Working
+
+#### WRK-1.1 · Working
+
+```html
+<a class="fh-working" data-tone="violet" href="#a-working" data-fh="WRK-1.1">
+  <i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i>
+  <b>Claude</b><span class="fh-working__what">#64 · Editing Business</span>
+</a>
+```
+
+#### WRK-1.2 · Mark
+
+```html
+<i class="fh-icon fh-icon--sparkles fh-working__mark" data-tone="violet" aria-label="Working"></i>
+```
+
+## CPS · Composer
+
+A chat-style input for quick capture. Frosted like the chrome; grows with its text. --attach adds a row under the text for filing chips. Pair with the admin dock to keep it in reach.
+
+Classes: `fh-app-composer` `fh-textarea` `fh-button` `fh-app-composer--attach` `fh-app-composer__actions` `fh-app-composer__attach` `fh-chip` `fh-button--sm` `fh-button--ghost`
+
+### CPS-1 · Composer
+
+#### CPS-1.1 · Composer
+
+```html
+<form class="fh-app-composer" onsubmit="event.preventDefault()" data-fh="CPS-1.1">
+  <textarea class="fh-textarea" rows="1" placeholder="Add a remark…" aria-label="Remark"></textarea>
+  <button class="fh-button" type="submit">Add</button>
+</form>
+```
+
+#### CPS-1.2 · Attach
+
+```html
+<form class="fh-app-composer fh-app-composer--attach" onsubmit="event.preventDefault()" data-fh="CPS-1.2">
+  <textarea class="fh-textarea" rows="1" placeholder="Log a check-off…" aria-label="Check-off"></textarea>
+  <div class="fh-app-composer__actions"><button class="fh-button" type="submit">Log</button></div>
+  <div class="fh-app-composer__attach" aria-label="Filed under">
+    <span class="fh-chip" data-tone="orange">Fit</span>
+    <span class="fh-chip" data-tone="lime">Health</span>
+    <button class="fh-button fh-button--sm fh-button--ghost" type="button">+ Area</button>
+  </div>
+</form>
+```
+
+## ADK · Admin dock
+
+A page's working bar that rides under the top bar. At rest it sits in the page; once it pins it engages: frosted surface edge to edge with a dashed rule under it. Force the engaged look with data-active="true".
+
+Classes: `fh-app-dock` `fh-app-dock__bar` `fh-app-composer` `fh-textarea` `fh-button` `fh-button--sm`
+
+### ADK-1 · Admin dock
+
+#### ADK-1.1 · Admin dock
+
+```html
+<div class="fh-app-dock" data-active="true" data-fh="ADK-1.1">
+  <div class="fh-app-dock__bar">
+    <form class="fh-app-composer" onsubmit="event.preventDefault()">
+      <textarea class="fh-textarea" rows="1" placeholder="Quick capture…" aria-label="Quick capture"></textarea>
+      <button class="fh-button fh-button--sm" type="submit">Add</button>
+    </form>
+  </div>
+</div>
+```
+
 ## PLY · Audio player
 
 Classes: `fh-player` `fh-player__art` `fh-icon` `fh-player__meta` `fh-player__kicker` `fh-eq` `fh-player__title` `fh-player__by` `fh-play` `fh-play--lg` `fh-wave` `fh-wave--lg` `fh-player__time` `fh-player__tools` `fh-audio-btn` `fh-segmented` `fh-segmented--sm` `fh-volume` `fh-scrub`
@@ -3300,9 +4270,15 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## MIX · Mixer
 
-Classes: `fh-mixer` `fh-mixer__bar` `fh-play` `fh-wave` `fh-player__time` `fh-channel` `fh-channel__name` `fh-channel__gain` `fh-scrub` `fh-channel__value` `fh-meter-level` `fh-channel__buttons` `fh-audio-btn`
+Classes: `fh-meter-level` `fh-meter-level--v`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#MIX.
+### MIX-1 · Mixer
+
+#### MIX-1.1 · Level meter · vertical
+
+```html
+<span class="fh-meter-level fh-meter-level--v" aria-hidden="true" style="--fh-value: 72" data-fh="MIX-1.1"></span>
+```
 
 ## PRM · Parameters
 
@@ -3973,7 +4949,7 @@ Classes: `fh-milestones` `fh-milestones__item` `fh-milestones__date` `fh-milesto
 
 ## CAL · Calendar pickers
 
-Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full`
+Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full` `fh-cal-book` `fh-cal-book__layout` `fh-cal-book__month` `fh-cal-book__head` `fh-cal-book__label` `fh-cluster` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-cal-book__week` `fh-cal-book__grid` `fh-cal-book__day` `fh-cal-book__times` `fh-cal-book__group` `fh-label` `fh-chips` `fh-cal-book__chips` `fh-chip`
 
 ### CAL-1 · Pickers
 
@@ -4013,6 +4989,53 @@ Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full`
   <div class="site-demo__head"><h3>Inline calendar</h3><p>The month grid on its own, for booking and scheduling screens. Listen for <code>fh:change</code>; set <code>data-mode="range"</code> and <code>data-months="2"</code> for ranges.</p></div>
   <div style="padding: var(--fh-space-6)">
     <div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
+  </div>
+</div>
+```
+
+### CAL-3 · Booking
+
+A quiet month grid beside the chosen day's times. Open days take a faint fill; the picked day and time take the primary. Under Calendar pickers (CAL).
+
+#### CAL-3.1 · Booking calendar
+
+```html
+<div class="fh-cal-book" data-fh="CAL-3.1">
+  <div class="fh-cal-book__layout">
+    <div class="fh-cal-book__month">
+      <div class="fh-cal-book__head">
+        <p class="fh-cal-book__label">November 2026</p>
+        <div class="fh-cluster" style="gap: var(--fh-gap-bound)"><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Previous month">‹</button><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Next month">›</button></div>
+      </div>
+      <div class="fh-cal-book__week" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="fh-cal-book__grid" role="group" aria-label="November 2026">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <button type="button" class="fh-cal-book__day" disabled>1</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">2</button>
+        <button type="button" class="fh-cal-book__day" data-open="true" data-today="true" aria-pressed="true">3</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">4</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">5</button>
+        <button type="button" class="fh-cal-book__day" disabled>6</button>
+        <button type="button" class="fh-cal-book__day" disabled>7</button>
+      </div>
+    </div>
+    <div class="fh-cal-book__times">
+      <p class="fh-cal-book__label">Tue 3 Nov</p>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Morning</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Morning times">
+          <button type="button" class="fh-chip" data-tone="sky" aria-pressed="true">10:00</button>
+          <button type="button" class="fh-chip">11:30</button>
+        </div>
+      </div>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Afternoon</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Afternoon times">
+          <button type="button" class="fh-chip">14:00</button>
+          <button type="button" class="fh-chip">16:30</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 ```

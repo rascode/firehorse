@@ -66,6 +66,7 @@
    *          --bracket  --tone  --solid  --gradient  --glass
    * Size:    --sm  --lg
    * Parts:   __seg (split segments)  __index  __count  __action  .fh-avatar  .fh-kbd
+   *          --filled-end (last __seg solid in the tone, on-tone text)
    */
   .fh-eyebrow-pill {
     --_line: var(--fh-color-rule);
@@ -215,6 +216,35 @@
     gap: var(--fh-gap-related);
     padding: 0.5rem 1rem 0.5rem 0.75rem;
     font-size: var(--fh-text-caption);
+  }
+
+  /* Filled end (EYE-5.4): the last segment is a solid block of the pill's tone, the dot's
+     colour, running to the pill's right edge, held to a legible lightness, its text flipped
+     dark or light to read on it.
+     For the segmented pill (__seg); --_pb / --_pe are the pill's block and end padding it
+     fills out to (the default shape's; shapes with other padding set their own). */
+  .fh-eyebrow-pill--filled-end {
+    --_pb: 0.35rem;
+    --_pe: var(--fh-inset-control);
+
+    & > .fh-eyebrow-pill__seg:last-child {
+      align-self: stretch;
+      margin-block: calc(-1 * var(--_pb));
+      margin-inline-end: calc(-1 * var(--_pe));
+      padding-block: var(--_pb);
+      padding-inline: var(--fh-inset-tight) var(--_pe);
+      border-inline-start: 0;
+      border-start-end-radius: inherit;
+      border-end-end-radius: inherit;
+      /* Legible in both schemes: the tone's hue with its lightness clamped (at most 0.52 on
+         light, at least 0.74 on dark, the site's rule for coloured text), and the text flipped
+         dark or light from the fill's own lightness. */
+      --_end: light-dark(oklch(from var(--fh-tone) min(l, 0.52) c h), oklch(from var(--fh-tone) max(l, 0.74) c h));
+      background-color: var(--_end);
+      color: oklch(from var(--_end) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
+
+      & :is(strong, b) { color: inherit; }
+    }
   }
 
   /* Parts */

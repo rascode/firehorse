@@ -14,7 +14,6 @@
 
 @layer fh.themes {
   [data-fh-theme="akhal-teke"] {
-    --fh-font-sans: "Avenir Next", Avenir, "Segoe UI Variable", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
     --fh-font-display: var(--fh-font-sans);
     --fh-font-figure: var(--fh-font-display);
     --fh-gray-950: #191510;
@@ -45,6 +44,13 @@
     --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
     --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
     --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    --fh-heading-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+    --fh-heading-weight: var(--fh-weight-heavy);
+    --fh-heading-tracking: var(--fh-tracking-tight);
+    --fh-display-weight: var(--fh-weight-heavy);
+    --fh-subheading-weight: var(--fh-weight-bold);
+    --fh-menu-opacity: 0.86;
+    --fh-color-surface-menu: color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent);
     --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
     --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
     --fh-color-field: light-dark(var(--fh-gray-50), var(--fh-gray-875));
@@ -74,44 +80,6 @@
     --fh-color-accent-hover: light-dark(#5e3f00, #e6bd62);
     --fh-color-on-accent: light-dark(#ffffff, #1a1306);
     --fh-color-bg: var(--fh-color-canvas);
-    --fh-avatar-radius: 32%;
-    --fh-avatar-ratio: 1;
-    --fh-avatar-corner-shape: squircle;
-    --fh-card-border-style: solid;
-    --fh-card-border-color: color-mix(in oklab, var(--fh-tone) 30%, transparent);
-    --fh-card-bg: color-mix(in oklab, var(--fh-tone) 8%, transparent);
-    --fh-card-shadow: none;
-    --fh-card-radius: var(--fh-radius-md);
-    --fh-card-media-ratio: 16 / 9;
-    --fh-button-radius: var(--fh-radius-pill);
-    --fh-button-shadow-hover: var(--fh-shadow-convex-hover);
-    --fh-button-shadow-active: var(--fh-shadow-convex-active);
-    --fh-button-lift: -1px;
-    --fh-chip-border-style: solid;
-    --fh-chip-radius: var(--fh-radius-md);
-    --fh-chip-bg: color-mix(in oklab, var(--fh-tone) 10%, transparent);
-    --fh-radius-sm: 6px;
-    --fh-radius-md: 10px;
-    --fh-radius-lg: 1rem;
-    --fh-radius-xl: 1.25rem;
-    --fh-space-1: calc(0.25rem * var(--fh-density));
-    --fh-space-1-5: calc(0.375rem * var(--fh-density));
-    --fh-space-2: calc(0.5rem * var(--fh-density));
-    --fh-space-2-5: calc(0.625rem * var(--fh-density));
-    --fh-space-3: calc(0.75rem * var(--fh-density));
-    --fh-space-3-5: calc(0.875rem * var(--fh-density));
-    --fh-space-4: calc(1rem * var(--fh-density));
-    --fh-space-5: calc(1.25rem * var(--fh-density));
-    --fh-space-6: calc(1.5rem * var(--fh-density));
-    --fh-space-7: calc(1.75rem * var(--fh-density));
-    --fh-space-8: calc(2rem * var(--fh-density));
-    --fh-space-10: calc(2.5rem * var(--fh-density));
-    --fh-space-12: calc(3rem * var(--fh-density));
-    --fh-density: 1;
-    --fh-table-zebra: transparent;
-    --fh-table-rule: transparent;
-    --fh-button-sheen: 0;
-    --fh-button-shadow: none;
   }
 
   @supports not (color: oklch(from red l c h)) {

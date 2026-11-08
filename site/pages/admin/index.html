@@ -326,6 +326,106 @@
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="a-shell" data-fh-id="SHL" data-fh-groups="App shell">
+          <div class="site-demo__head"><h3>App shell</h3><p>Sidebar beside the work area: brand, focus, sidenav and foot on the left; sticky bar and content on the right. <code>data-fh-env</code> paints the environment band; <code>data-fh-side="rail"</code> collapses the sidebar to icons.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div style="padding: 0; overflow: hidden; min-block-size: 22rem">
+<div class="fh-app" data-fh-env="local" data-fh-id="SHL-1.1" data-fh-name="App shell" style="min-block-size: 22rem; --fh-app-side: 12rem">
+  <aside class="fh-app__side"><div class="fh-app__side-inner">
+    <div class="fh-app__side-head"><a class="fh-app__brand" href="#a-shell"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i><span>Helm</span></a></div>
+    <nav class="fh-sidenav" aria-label="Demo"><a href="#a-shell" aria-current="page"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i><span class="fh-sidenav__label">Business</span></a><a href="#a-shell"><i class="fh-icon fh-icon--users" aria-hidden="true"></i><span class="fh-sidenav__label">People</span></a></nav>
+  </div></aside>
+  <div class="fh-app__main">
+    <header class="fh-app__bar"><h1 class="fh-app__title">Business</h1><div class="fh-app__bar-end"><span class="fh-chip" data-tone="lime">Local</span></div></header>
+    <main class="fh-app__content" style="padding: var(--fh-inset-card)"><p class="fh-muted" style="margin:0">Work area. The shell pins the sidebar and the bar.</p></main>
+  </div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-env" data-fh-id="ENV" data-fh-groups="Selector|Pill">
+          <div class="site-demo__head"><h3>Environment selector</h3><p>Where the app is running: a mono pill with a live dot (<code>fh-env</code>), or the quieter eyebrow pill (<code>fh-env-pill</code>) that expands the host on hover. The menu reopens the same page in another environment.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-cluster fh-cluster--between" style="flex-wrap: wrap; gap: var(--fh-gap-sectioned)">
+  <button class="fh-env" type="button" data-fh-env="local" data-fh-id="ENV-1.1" data-fh-name="Selector" popovertarget="demo-env-menu">
+    <span class="fh-env__name">Local</span>
+    <span class="fh-env__host">helm.rascode.local</span>
+  </button>
+  <button class="fh-eyebrow-pill fh-env-pill" type="button" data-fh-env="local" data-fh-id="ENV-2.1" data-fh-name="Pill" popovertarget="demo-env-menu">
+    <span class="fh-dot"></span>
+    <span class="fh-eyebrow-pill__seg"><strong>Local</strong></span>
+    <span class="fh-eyebrow-pill__seg fh-env-pill__host">helm.rascode.local</span>
+    <span class="fh-env-pill__chevron" aria-hidden="true"></span>
+  </button>
+</div>
+<div id="demo-env-menu" popover class="fh-menu fh-env-menu">
+  <p class="fh-menu__label">Open Helm in</p>
+  <a role="menuitemradio" aria-checked="true" data-fh-env="local" href="#a-env"><span>Local</span><small>helm.rascode.local</small></a>
+  <a role="menuitemradio" aria-checked="false" data-fh-env="staging" href="#a-env"><span>Staging</span><small>helm.rascode.dev</small></a>
+  <hr><p class="fh-env-menu__data" data-fh-env="local">Data · local Supabase</p>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-working" data-fh-id="WRK" data-fh-groups="Working">
+          <div class="site-demo__head"><h3>Working indicator</h3><p>An agent is on it: a thinking mark beside who is working and what on. The pill for a top bar; <code>__mark</code> alone for a row or cell.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-cluster" style="gap: var(--fh-gap-grouped-wide)">
+  <a class="fh-working" data-tone="violet" href="#a-working" data-fh-id="WRK-1.1" data-fh-name="Working">
+    <i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i>
+    <b>Claude</b><span class="fh-working__what">#64 · Editing Business</span>
+  </a>
+  <i class="fh-icon fh-icon--sparkles fh-working__mark" data-tone="violet" aria-label="Working" data-fh-id="WRK-1.2" data-fh-name="Mark"></i>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-empty-module" data-fh-id="EMP-2" data-fh-groups="Empty module" data-fh-name="Empty module">
+          <div class="site-demo__head"><h3>Empty module</h3><p>A section that has not been built yet: dashed outline, title and a short note. Under Empty state &amp; banner (EMP).</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-app-empty" data-fh-id="EMP-2.1" data-fh-name="Empty module">
+  <h2>Finance</h2>
+  <p>This module is not wired yet. Numbers and ledgers will land here.</p>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-composer" data-fh-id="CPS" data-fh-groups="Composer">
+          <div class="site-demo__head"><h3>Composer</h3><p>A chat-style input for quick capture. Frosted like the chrome; grows with its text. <code>--attach</code> adds a row under the text for filing chips. Pair with the admin dock to keep it in reach.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<form class="fh-app-composer" data-fh-id="CPS-1.1" data-fh-name="Composer" onsubmit="event.preventDefault()">
+  <textarea class="fh-textarea" rows="1" placeholder="Add a remark…" aria-label="Remark"></textarea>
+  <button class="fh-button" type="submit">Add</button>
+</form>
+<form class="fh-app-composer fh-app-composer--attach" data-fh-id="CPS-1.2" data-fh-name="Attach" onsubmit="event.preventDefault()">
+  <textarea class="fh-textarea" rows="1" placeholder="Log a check-off…" aria-label="Check-off"></textarea>
+  <div class="fh-app-composer__actions"><button class="fh-button" type="submit">Log</button></div>
+  <div class="fh-app-composer__attach" aria-label="Filed under">
+    <span class="fh-chip" data-tone="orange">Fit</span>
+    <span class="fh-chip" data-tone="lime">Health</span>
+    <button class="fh-button fh-button--sm fh-button--ghost" type="button">+ Area</button>
+  </div>
+</form>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="a-dock" data-fh-id="ADK" data-fh-groups="Admin dock">
+          <div class="site-demo__head"><h3>Admin dock</h3><p>A page's working bar that rides under the top bar. At rest it sits in the page; once it pins it engages: frosted surface edge to edge with a dashed rule under it. Force the engaged look with <code>data-active="true"</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-app-dock" data-active="true" data-fh-id="ADK-1.1" data-fh-name="Admin dock">
+  <div class="fh-app-dock__bar">
+    <form class="fh-app-composer" onsubmit="event.preventDefault()">
+      <textarea class="fh-textarea" rows="1" placeholder="Quick capture…" aria-label="Quick capture"></textarea>
+      <button class="fh-button fh-button--sm" type="submit">Add</button>
+    </form>
+  </div>
+</div>
+          </div>
+        </div>
+
         <div class="site-demo site-anchor" id="a-finance">
           <div class="site-demo__head"><h3>Finance cards</h3><p>Balance, segment switch, account cards, ledger, virtual cards and connection health live on <a class="fh-link" href="/finance/">Finance</a> and work on any admin page.</p></div>
         </div>

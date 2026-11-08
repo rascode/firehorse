@@ -84,6 +84,7 @@
     --fh-leading-heading: 1.3;
     --fh-leading-normal: 1.45;
     --fh-leading-relaxed: 1.6;
+    --fh-tracking-wordmark: -0.05em;
     --fh-tracking-tightest: -0.04em;
     --fh-tracking-tight: -0.035em;
     --fh-tracking-snug: -0.03em;
@@ -127,6 +128,19 @@
     --fh-ease-standard: ease;
     --fh-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     --fh-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --fh-duration-enter: 600ms;
+    --fh-duration-reveal: 720ms;
+    --fh-duration-intro: 900ms;
+    --fh-duration-scene: 1.1s;
+    --fh-ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --fh-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --fh-ease-glide: cubic-bezier(0.45, 0, 0.55, 1);
+    --fh-ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+    --fh-intro-beat: 150ms;
+    --fh-stagger: 60ms;
+    --fh-motion-rise: 0.6rem;
+    --fh-recede-to: 0.9;
+    --fh-recede-range: 48vh;
     --fh-z-raised: 1;
     --fh-z-sticky: 20;
     --fh-z-drawer: 25;
@@ -168,6 +182,8 @@
     --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
     --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
     --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    --fh-menu-opacity: 0.86;
+    --fh-color-surface-menu: color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent);
     --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
     --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
     --fh-color-field: light-dark(var(--fh-gray-50), var(--fh-gray-875));
@@ -230,6 +246,11 @@
     --fh-density: 1;
     --fh-table-zebra: transparent;
     --fh-table-rule: var(--fh-color-rule);
+    --fh-heading-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+    --fh-heading-weight: var(--fh-weight-heavy);
+    --fh-heading-tracking: var(--fh-tracking-tight);
+    --fh-display-weight: var(--fh-weight-heavy);
+    --fh-subheading-weight: var(--fh-weight-bold);
   }
 
   @supports not (color: oklch(from red l c h)) {

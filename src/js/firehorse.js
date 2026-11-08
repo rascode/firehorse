@@ -383,9 +383,9 @@ ready(() => {
   }
 
   /* —— 6c. In-page navigation ——
-   * Same-page links: short jumps scroll smoothly; long jumps cut to just
-   * short of the target and glide the last stretch, so travelling across
-   * a long page takes ~400ms instead of seconds and never misfires.
+   * Same-page links glide to the target in one eased motion (0.42–0.9s by
+   * distance), re-aiming each frame so it never misfires, and stop the
+   * moment the visitor scrolls themselves.
    * Updates the URL, closes the popover it came from and moves focus to
    * the target for keyboard and screen-reader users. */
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
@@ -403,7 +403,6 @@ ready(() => {
     const smooth = !reduced.matches;
     const y = targetY(el);
     const dist = y - scrollY;
-    const glide = Math.min(Math.abs(dist), innerHeight * 0.6);
     // Once a scroll settles, re-check the landing (sections that render
     // on the way can change size) and correct it, at most twice.
     let fixes = 0;
@@ -422,16 +421,30 @@ ready(() => {
       addEventListener("scrollend", once);
       setTimeout(once, 1200);
     };
-    if (!smooth || Math.abs(dist) <= glide + 1) {
-      scrollTo({ top: y, behavior: smooth ? "smooth" : "instant" });
+    if (!smooth) {
+      scrollTo({ top: y, behavior: "instant" });
       afterScroll();
     } else {
-      scrollTo({ top: y - Math.sign(dist) * glide, behavior: "instant" });
-      requestAnimationFrame(() => {
+      // One eased glide all the way, re-aiming every frame (sections that render on the way
+      // can move the target). Longer trips take a little longer, never more than ~0.9s.
+      // A wheel, touch or key from the visitor hands the page straight back to them.
+      const from = scrollY;
+      const dur = Math.min(900, Math.max(420, 300 + Math.abs(dist) * 0.12));
+      const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+      const stop = () => { navToken++; };
+      for (const ev of ["wheel", "touchstart", "keydown"]) addEventListener(ev, stop, { once: true, passive: true });
+      const t0 = performance.now();
+      const step = (now) => {
         if (token !== navToken) return;
-        scrollTo({ top: targetY(el), behavior: "smooth" });
-        afterScroll();
-      });
+        const p = Math.min(1, (now - t0) / dur);
+        scrollTo({ top: from + (targetY(el) - from) * ease(p), behavior: "instant" });
+        if (p < 1) requestAnimationFrame(step);
+        else {
+          for (const ev of ["wheel", "touchstart", "keydown"]) removeEventListener(ev, stop);
+          afterScroll();
+        }
+      };
+      requestAnimationFrame(step);
     }
     if (push && location.hash !== `#${el.id}`) history.pushState(null, "", `#${el.id}`);
     if (!el.matches("a, button, input, select, textarea, [tabindex]")) el.setAttribute("tabindex", "-1");

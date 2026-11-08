@@ -54,10 +54,15 @@ sizes["themes.css"] = allThemes.length;
 
 // —— Optional JavaScript modules (enhancer, datatable, …) ——
 for (const f of readdirSync(join(src, "js"))) {
-  if (!f.endsWith(".js")) continue;
-  const js = readFileSync(join(src, "js", f), "utf8");
-  writeFileSync(join(dist, f), js);
-  sizes[f] = js.length;
+  if (f.endsWith(".js")) {
+    const js = readFileSync(join(src, "js", f), "utf8");
+    writeFileSync(join(dist, f), js);
+    sizes[f] = js.length;
+  } else if (f.endsWith(".d.ts")) {
+    // Ship TypeScript types next to the JS (e.g. datatable.d.ts).
+    writeFileSync(join(dist, f), readFileSync(join(src, "js", f), "utf8"));
+    sizes[f] = statSync(join(src, "js", f)).size;
+  }
 }
 
 // —— Token manifest (W3C DTCG-style JSON + TypeScript names) ——

@@ -84,6 +84,7 @@
             <div class="site-demo__head"><h3>Space</h3><code>--fh-space-*</code></div>
             <div class="site-demo__stage">
               <div class="site-scale" data-tone="lime">
+                <div><span>--fh-space-px</span><span>1px</span><i style="--s: var(--fh-space-px)"></i></div>
                 <div><span>--fh-space-1</span><span>4px</span><i style="--s: var(--fh-space-1)"></i></div>
                 <div><span>--fh-space-2</span><span>8px</span><i style="--s: var(--fh-space-2)"></i></div>
                 <div><span>--fh-space-3</span><span>12px</span><i style="--s: var(--fh-space-3)"></i></div>
@@ -121,15 +122,26 @@
               </div>
             </div>
           </div>
-          <div class="site-demo" data-fh-id="MOT">
-            <div class="site-demo__head"><h3>Motion</h3><p>Two curves. Everything is opt-in under <code>prefers-reduced-motion</code>.</p></div>
+          <div class="site-demo">
+            <div class="site-demo__head"><h3>Motion</h3><p>The core curves. Everything is opt-in under <code>prefers-reduced-motion</code>. The full motion system (entrances, sequences, scroll, choreography and Drift) has its own page: <a href="/motion/">Motion</a>.</p></div>
             <div class="site-demo__stage">
               <div class="site-ease">
                 <div data-tone="sky"><span>--fh-ease-out<br>420ms</span><div class="site-ease__track"><i style="--e: var(--fh-ease-out)"></i></div></div>
                 <div data-tone="orange"><span>--fh-ease-in-out</span><div class="site-ease__track"><i style="--e: var(--fh-ease-in-out)"></i></div></div>
-                <div data-tone="neutral"><span>ease (standard)</span><div class="site-ease__track"><i style="--e: ease"></i></div></div>
+                <div data-tone="neutral"><span>--fh-duration-instant<br>80ms</span><div class="site-ease__track"><i style="--e: var(--fh-ease-out); --d: var(--fh-duration-instant)"></i></div></div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="site-demo" data-fh-id="HLP" data-fh-groups="Helpers">
+          <div class="site-demo__head"><h3>Text align helpers</h3><p><code>fh-text-start</code>, <code>fh-text-center</code>, <code>fh-text-end</code>. Also z and measure tokens: <code>--fh-z-raised</code>, <code>--fh-z-drawer</code>, <code>--fh-measure-narrow</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg" style="max-inline-size: var(--fh-measure-narrow)">
+  <p class="fh-text-start" data-fh-id="HLP-1.1" data-fh-name="Start" style="margin:0">Start · flush to the start edge.</p>
+  <p class="fh-text-center" data-fh-id="HLP-1.2" data-fh-name="Center" style="margin:0">Center · middle of the measure.</p>
+  <p class="fh-text-end" data-fh-id="HLP-1.3" data-fh-name="End" style="margin:0">End · flush to the end edge.</p>
+  <p class="fh-small fh-muted" style="margin:0">z: raised <code>1</code>, drawer <code>25</code> · measure-narrow <code>36rem</code></p>
+</div>
           </div>
         </div>
       </div>
@@ -165,12 +177,14 @@
       </div>
     </div>
     <p class="site-motion__note">Rolls up going forward, down going back. The floating bar's title uses it.</p></dd></div>
-  <div><dt>Reveal<code>.fh-reveal · --scale · --left · --blur</code></dt><dd>
+  <div><dt>Reveal<code>.fh-reveal · --fade · --scale · --left · --right · --blur</code></dt><dd>
     <div class="site-motion__scroller" tabindex="0" aria-label="Reveal demo, scrollable">
-      <article class="fh-card fh-reveal" data-tone="sky"><p class="fh-card__meta">01</p><h4 class="fh-card__title">Fade and rise</h4></article>
-      <article class="fh-card fh-reveal fh-reveal--scale" data-tone="lime"><p class="fh-card__meta">02</p><h4 class="fh-card__title">Scale in</h4></article>
-      <article class="fh-card fh-reveal fh-reveal--left" data-tone="amber"><p class="fh-card__meta">03</p><h4 class="fh-card__title">From the left</h4></article>
-      <article class="fh-card fh-reveal fh-reveal--blur" data-tone="fuchsia"><p class="fh-card__meta">04</p><h4 class="fh-card__title">Out of focus</h4></article>
+      <article class="fh-card fh-reveal" data-tone="sky" data-fh-id="MTL-1.1" data-fh-name="Rise"><p class="fh-card__meta">01</p><h4 class="fh-card__title">Fade and rise</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--fade" data-tone="teal" data-fh-id="MTL-1.2" data-fh-name="Fade"><p class="fh-card__meta">02</p><h4 class="fh-card__title">Fade only</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--scale" data-tone="lime" data-fh-id="MTL-1.3" data-fh-name="Scale"><p class="fh-card__meta">03</p><h4 class="fh-card__title">Scale in</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--left" data-tone="amber" data-fh-id="MTL-1.4" data-fh-name="Left"><p class="fh-card__meta">04</p><h4 class="fh-card__title">From the left</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--right" data-tone="orange" data-fh-id="MTL-1.5" data-fh-name="Right"><p class="fh-card__meta">05</p><h4 class="fh-card__title">From the right</h4></article>
+      <article class="fh-card fh-reveal fh-reveal--blur" data-tone="fuchsia" data-fh-id="MTL-1.6" data-fh-name="Blur"><p class="fh-card__meta">06</p><h4 class="fh-card__title">Out of focus</h4></article>
     </div>
     <p class="site-motion__note">Scroll the box. Each card runs on its own view timeline, no script.</p></dd></div>
   <div><dt>Rules<code>always on</code></dt><dd>

@@ -18,7 +18,7 @@ Firehorse is the system behind [rascode.dev](https://rascode.dev), extracted fro
 - **Tones.** Nine category colors through one attribute: `data-tone="teal"`. Dots, marks, meta lines and links inside it follow.
 - **Native HTML.** Accordions are `<details name>`, modals are `<dialog>`, menus are `[popover]`. No JavaScript.
 - **Accessible by default.** Every text role passes WCAG AA in both schemes, checked on every build. Visible focus everywhere, motion opt-in, forced-colors support.
-- **Agent-ready.** `agent/system.md`, `agent/components.md`, `llms.txt` and `tokens.json` let a coding agent build on-system the first time.
+- **Agent-ready.** `agent/system.md`, `agent/components.md`, `llms.txt` and `tokens.json` let a coding agent build on-system the first time. Run `npx firehorse-mcp` for the MCP guide tools (lookup, search, tokens, compose).
 
 About 12 KB gzipped. MIT.
 
@@ -116,6 +116,7 @@ npx firehorse-audit dist/            # a build folder, a file, or a URL
 npx firehorse-audit dist/ --fix      # write the missing tags, rewrite retired IDs
 npx firehorse-audit dist/ --strict --min 95 --json   # for CI and agents
 npx firehorse-audit https://example.com --crawl 25 --report md   # a deployed site, as an action report
+npx firehorse-mcp                    # MCP guide tools (Index, tokens, compose)
 ```
 
 Every finding becomes an action, split by who does it (the app or Firehorse)

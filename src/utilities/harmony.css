@@ -1,0 +1,111 @@
+/*
+ * Firehorse — harmony and overlays
+ * ---------------------------------------------------------------
+ * One root colour in, a balanced family out. Set --fh-root on any
+ * element (it defaults to the accent) and everything below derives
+ * from it in OKLCH, so steps are perceptually even across hues:
+ *
+ *   tints   lighten toward white by a share of the room left and
+ *           ease chroma down, so they never turn neon or chalky
+ *   shades  darken by a share of the lightness and ease chroma a
+ *           little, so they never turn muddy
+ *   harmony keep lightness, turn the hue (analogous ±30°,
+ *           complement 180°, split 150°/210°, triad 120°/240°) and
+ *           trim chroma so no turn out-shouts the root
+ *   on      black or white, whichever reads on the root
+ *
+ *   <section style="--fh-root: #3b82f6">…</section>
+ *   <article data-tone="teal" data-fh-root="tone">…</article>
+ *
+ * The same recipe is a CSS function where the browser has @function:
+ *   color: --fh-harmony(var(--fh-root), 30deg);            analogous
+ *   background: --fh-harmony(var(--fh-root), 0deg, 0.2, 0.6);  a tint
+ *
+ * Overlays: data-fh-overlay paints a colour layer over an element,
+ * built from the root and its harmonies. The element keeps its
+ * content above the layer.
+ *   wash     the root, flat and quiet
+ *   glow     a radial bloom: root into its analogous neighbours
+ *   aurora   a slow conic sweep through analogous → root → complement
+ *   duotone  tints an image or video toward the root, lighter not darker (screen + soft light)
+ */
+
+@function --fh-harmony(--color <color>, --turn <angle>: 0deg, --light <number>: 0, --chroma <number>: 1) returns <color> {
+  result: oklch(from var(--color) clamp(0, calc(l + var(--light)), 1) calc(c * var(--chroma)) calc(h + var(--turn)));
+}
+
+@layer fh.utilities {
+  :root { --fh-root: var(--fh-color-accent); }
+  /* The family is re-derived wherever a root is set (inline --fh-root: … or data-fh-root), so
+   * descendants inherit colours from their own root, not the page's. */
+  :root,
+  [style*="--fh-root:"],
+  [data-fh-root] {
+    --fh-root-tint-1: oklch(from var(--fh-root) calc(l + (1 - l) * 0.25) calc(c * 0.85) h);
+    --fh-root-tint-2: oklch(from var(--fh-root) calc(l + (1 - l) * 0.5) calc(c * 0.6) h);
+    --fh-root-tint-3: oklch(from var(--fh-root) calc(l + (1 - l) * 0.75) calc(c * 0.35) h);
+    --fh-root-shade-1: oklch(from var(--fh-root) calc(l * 0.8) calc(c * 0.95) h);
+    --fh-root-shade-2: oklch(from var(--fh-root) calc(l * 0.6) calc(c * 0.85) h);
+    --fh-root-shade-3: oklch(from var(--fh-root) calc(l * 0.4) calc(c * 0.7) h);
+    --fh-root-analog-1: oklch(from var(--fh-root) l calc(c * 0.95) calc(h - 30));
+    --fh-root-analog-2: oklch(from var(--fh-root) l calc(c * 0.95) calc(h + 30));
+    --fh-root-complement: oklch(from var(--fh-root) l calc(c * 0.85) calc(h + 180));
+    --fh-root-split-1: oklch(from var(--fh-root) l calc(c * 0.85) calc(h + 150));
+    --fh-root-split-2: oklch(from var(--fh-root) l calc(c * 0.85) calc(h + 210));
+    --fh-root-triad-1: oklch(from var(--fh-root) l calc(c * 0.9) calc(h + 120));
+    --fh-root-triad-2: oklch(from var(--fh-root) l calc(c * 0.9) calc(h + 240));
+    --fh-root-muted: oklch(from var(--fh-root) l calc(c * 0.3) h);
+    --fh-root-wash: color-mix(in oklch, var(--fh-root) 10%, transparent);
+    --fh-root-on: oklch(from var(--fh-root) clamp(0, calc((0.62 - l) * 1000), 1) 0 h);
+  }
+  /* The element's own tone becomes its root: data-tone="teal" data-fh-root="tone". */
+  [data-fh-root="tone"] { --fh-root: var(--fh-tone); }
+
+  [data-fh-overlay] {
+    position: relative;
+    isolation: isolate;
+  }
+  [data-fh-overlay]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  [data-fh-overlay] > * { position: relative; z-index: 2; }
+  [data-fh-overlay="wash"]::after { background-color: color-mix(in oklch, var(--fh-root) 16%, transparent); }
+  [data-fh-overlay="glow"]::after {
+    background:
+      radial-gradient(60% 70% at 20% 15%, color-mix(in oklch, var(--fh-root) 52%, transparent), transparent 70%),
+      radial-gradient(55% 60% at 85% 30%, color-mix(in oklch, var(--fh-root-analog-2) 38%, transparent), transparent 70%),
+      radial-gradient(70% 60% at 50% 110%, color-mix(in oklch, var(--fh-root-analog-1) 32%, transparent), transparent 70%);
+  }
+  [data-fh-overlay="aurora"]::after {
+    background: conic-gradient(from 210deg at 50% 60%,
+      color-mix(in oklch, var(--fh-root-analog-1) 42%, transparent),
+      color-mix(in oklch, var(--fh-root) 48%, transparent),
+      color-mix(in oklch, var(--fh-root-analog-2) 38%, transparent),
+      color-mix(in oklch, var(--fh-root-complement) 28%, transparent),
+      color-mix(in oklch, var(--fh-root-analog-1) 42%, transparent));
+    filter: blur(24px);
+  }
+  [data-fh-overlay="duotone"] > :is(img, video, picture) { filter: grayscale(1) contrast(1.05); }
+  /* Light duotone: shadows lift to the root, highlights go to a pale tint of it, nothing darkens. */
+  [data-fh-overlay="duotone"]::after {
+    background-color: var(--fh-root);
+    mix-blend-mode: screen;
+    opacity: 0.9;
+  }
+  [data-fh-overlay="duotone"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background-color: var(--fh-root-tint-3);
+    mix-blend-mode: soft-light;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}

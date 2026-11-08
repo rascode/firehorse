@@ -184,7 +184,8 @@
               </fieldset>
             </section>
             <section class="fh-checkout__step"><h3><span>03</span>Payment</h3>
-              <div class="fh-paycard" data-brand="visa" aria-hidden="true" data-fh-id="PAY" data-fh-name="Payment card">
+              <div class="fh-cluster" style="gap: var(--fh-gap-grouped-wide); align-items: flex-start; flex-wrap: wrap" data-fh-id="PAY" data-fh-name="Payment card" data-fh-groups="Payment card">
+              <div class="fh-paycard" data-brand="visa" aria-hidden="true" data-fh-id="PAY-1.1" data-fh-name="Front">
                 <div class="fh-paycard__front">
                   <div class="fh-paycard__top"><span class="fh-paycard__chip"></span><span class="fh-paycard__brand" data-paycard-show="brand">visa</span></div>
                   <span class="fh-paycard__mark">_supply</span>
@@ -192,6 +193,16 @@
                   <div class="fh-paycard__row"><span><small>Card holder</small><span data-paycard-show="name" data-empty="Your name">Your name</span></span><span><small>Expires</small><span data-paycard-show="expiry" data-empty="MM / YY">MM / YY</span></span></div>
                 </div>
                 <div class="fh-paycard__back"><span class="fh-paycard__stripe"></span><span class="fh-paycard__sig" data-paycard-show="cvc" data-empty="•••">•••</span></div>
+              </div>
+              <div class="fh-paycard fh-paycard--flipped" data-brand="visa" aria-hidden="true" data-fh-id="PAY-1.2" data-fh-name="Flipped">
+                <div class="fh-paycard__front">
+                  <div class="fh-paycard__top"><span class="fh-paycard__chip"></span><span class="fh-paycard__brand">visa</span></div>
+                  <span class="fh-paycard__mark">_supply</span>
+                  <span class="fh-paycard__number">•••• •••• •••• 4242</span>
+                  <div class="fh-paycard__row"><span><small>Card holder</small><span>Your name</span></span><span><small>Expires</small><span>MM / YY</span></span></div>
+                </div>
+                <div class="fh-paycard__back"><span class="fh-paycard__stripe"></span><span class="fh-paycard__sig">•••</span></div>
+              </div>
               </div>
               <div class="fh-field"><label for="co-card">Card number</label><div class="fh-card-field"><input class="fh-input" id="co-card" data-paycard="number" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" required><span data-card-brand></span></div><p class="fh-field__hint">Demo only. Don't type a real card here.</p></div>
               <div class="fh-field"><label for="co-name">Name on card</label><input class="fh-input" id="co-name" data-paycard="name" autocomplete="cc-name" required></div>

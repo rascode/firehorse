@@ -166,7 +166,8 @@
   }
 
   /* Reading / scroll progress on the bar's bottom edge, driven by the
-   * page scroll itself — no script. */
+   * page scroll itself — no script. Hidden until the dock engages;
+   * set data-fh-progress="off" (or data-mode="reader") for no animation. */
   .fh-dock__progress {
     position: absolute;
     inset-inline: 0;
@@ -175,14 +176,26 @@
     background-color: var(--fh-tone);
     transform-origin: 0 50%;
     scale: 0 1;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity var(--fh-duration-base) var(--fh-ease-standard);
+  }
+
+  .fh-dock[data-active="true"] > .fh-dock__progress,
+  .fh-dock:is(:stuck) > .fh-dock__progress {
+    opacity: 1;
   }
 
   @supports (animation-timeline: scroll()) {
-    .fh-dock__progress {
+    .fh-dock:not([data-fh-progress="off"], [data-mode="reader"]) .fh-dock__progress {
       animation: fh-progress linear both;
       animation-timeline: scroll(root block);
     }
+  }
+
+  .fh-dock[data-fh-progress="off"] .fh-dock__progress,
+  .fh-dock[data-mode="reader"] .fh-dock__progress {
+    animation: none;
   }
 
   @keyframes fh-progress {

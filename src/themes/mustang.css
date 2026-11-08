@@ -14,7 +14,7 @@
 
 @layer fh.themes {
   [data-fh-theme="mustang"] {
-    --fh-font-display: "Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", var(--fh-font-sans);
+    --fh-font-display: var(--fh-font-sans);
     --fh-font-figure: var(--fh-font-display);
     --fh-gray-950: #11171c;
     --fh-gray-925: #171d23;
@@ -44,6 +44,13 @@
     --fh-color-canvas: light-dark(var(--fh-gray-50), var(--fh-gray-950));
     --fh-color-surface: light-dark(var(--fh-gray-0), var(--fh-gray-925));
     --fh-color-surface-raised: light-dark(var(--fh-gray-0), var(--fh-gray-900));
+    --fh-heading-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+    --fh-heading-weight: var(--fh-weight-heavy);
+    --fh-heading-tracking: var(--fh-tracking-tight);
+    --fh-display-weight: var(--fh-weight-heavy);
+    --fh-subheading-weight: var(--fh-weight-bold);
+    --fh-menu-opacity: 0.86;
+    --fh-color-surface-menu: color-mix(in oklab, var(--fh-color-surface-raised) calc(var(--fh-menu-opacity) * 100%), transparent);
     --fh-color-surface-chrome: light-dark(var(--fh-gray-150), var(--fh-gray-875));
     --fh-color-surface-sunken: light-dark(var(--fh-gray-150), var(--fh-gray-1000));
     --fh-color-field: light-dark(var(--fh-gray-50), var(--fh-gray-875));
@@ -73,39 +80,6 @@
     --fh-color-accent-hover: light-dark(#1f437a, #93b8f0);
     --fh-color-on-accent: light-dark(#ffffff, #0d1626);
     --fh-color-bg: var(--fh-color-canvas);
-    --fh-avatar-radius: var(--fh-radius-sm);
-    --fh-avatar-ratio: 1;
-    --fh-card-border-style: solid;
-    --fh-card-border-color: var(--fh-color-rule);
-    --fh-card-bg: var(--fh-color-surface);
-    --fh-card-shadow: none;
-    --fh-card-radius: var(--fh-radius-md);
-    --fh-card-media-ratio: 4 / 3;
-    --fh-button-radius: var(--fh-radius-sm);
-    --fh-button-sheen: 0;
-    --fh-button-shadow: none;
-    --fh-button-shadow-hover: none;
-    --fh-button-shadow-active: none;
-    --fh-button-lift: 0px;
-    --fh-chip-border-style: solid;
-    --fh-chip-radius: var(--fh-radius-pill);
-    --fh-chip-bg: transparent;
-    --fh-space-1: calc(0.25rem * var(--fh-density));
-    --fh-space-1-5: calc(0.375rem * var(--fh-density));
-    --fh-space-2: calc(0.5rem * var(--fh-density));
-    --fh-space-2-5: calc(0.625rem * var(--fh-density));
-    --fh-space-3: calc(0.75rem * var(--fh-density));
-    --fh-space-3-5: calc(0.875rem * var(--fh-density));
-    --fh-space-4: calc(1rem * var(--fh-density));
-    --fh-space-5: calc(1.25rem * var(--fh-density));
-    --fh-space-6: calc(1.5rem * var(--fh-density));
-    --fh-space-7: calc(1.75rem * var(--fh-density));
-    --fh-space-8: calc(2rem * var(--fh-density));
-    --fh-space-10: calc(2.5rem * var(--fh-density));
-    --fh-space-12: calc(3rem * var(--fh-density));
-    --fh-density: 0.78;
-    --fh-table-zebra: color-mix(in oklab, var(--fh-color-text) 4%, transparent);
-    --fh-table-rule: transparent;
   }
 
   @supports not (color: oklch(from red l c h)) {

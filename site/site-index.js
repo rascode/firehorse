@@ -304,7 +304,7 @@ function kcAnswer(q, list) {
 function mountKC(list) {
   const face = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#fh-kc"/></svg>`;
   document.body.insertAdjacentHTML("beforeend", `
-<button class="site-kc-launch" type="button" data-kc-open aria-haspopup="dialog"><span class="site-kc-face">${face}</span><span>Ask KC</span></button>
+<button class="site-kc-launch" type="button" data-kc-open aria-haspopup="dialog" aria-label="Ask KC"><span class="site-kc-face">${face}</span><span class="site-kc-launch__label" aria-hidden="true">Ask KC</span></button>
 <dialog class="fh-dialog fh-dialog--float fh-detail site-kc" id="kc" aria-labelledby="kc-title" data-tone="sky" style="--fh-dialog-size: 25rem">
   <header class="fh-detail__header">
     <div class="fh-detail__bar"><span>The Firehorse guide</span><button class="fh-close" type="button" data-kc-close aria-label="Close KC"></button></div>
@@ -321,12 +321,23 @@ function mountKC(list) {
   </div>
   <footer class="fh-detail__footer site-kc__footer">
     <form class="site-kc__form" data-kc-form><label class="fh-sr-only" for="kc-q">Ask KC</label><input class="fh-input" id="kc-q" autocomplete="off" placeholder="Describe a component, or give an ID"><button class="fh-button fh-button--sm" type="submit">Ask</button></form>
-    <p class="site-kc__note">KC answers from the Firehorse Index.</p>
+    <p class="site-kc__note">KC answers from the Firehorse Index. KC is traced from <a href="https://commons.wikimedia.org/wiki/File:Frison_au_galop_dans_la_neige.JPG" rel="noopener">a photo by Fchosson</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="noopener">CC BY-SA 3.0</a>.</p>
   </footer>
 </dialog>`);
   const dlg = $("#kc"), log = $(".site-kc__log", dlg), input = $("#kc-q", dlg);
   const endpoint = document.querySelector('meta[name="fh-kc-endpoint"]')?.content || "";
   const history = [];
+  // Themes with horse.voice (e.g. Lipizzaner / Maestoso): rotate a line in front of each KC reply.
+  let themesManifest = [];
+  let voiceIdx = 0;
+  fetch(new URL("/themes.json", document.baseURI)).then((r) => r.json()).then((j) => { themesManifest = j.themes ?? []; }).catch(() => {});
+  const voiceLead = () => {
+    const name = document.documentElement.getAttribute("data-fh-theme") || "";
+    const lines = themesManifest.find((t) => t.name === name)?.horse?.voice;
+    if (!Array.isArray(lines) || !lines.length) return "";
+    const line = lines[voiceIdx++ % lines.length];
+    return `<p class="site-kc__voice"><em>${esc(line)}</em></p>`;
+  };
   const say = (who, html) => {
     log.insertAdjacentHTML("beforeend", who === "kc"
       ? `<div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm site-kc-face">${face}</span><div class="fh-message__bubble"><p class="fh-message__name">KC</p>${html}</div></div>`
@@ -341,11 +352,11 @@ function mountKC(list) {
     if (endpoint) {
       try {
         const r = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ agent: "kc", message: q, history, page: location.href }) });
-        const j = await r.json(); if (j.reply) { say("kc", `<p>${esc(j.reply)}</p>`); history.push({ role: "agent", text: j.reply }); return; }
+        const j = await r.json(); if (j.reply) { say("kc", `${voiceLead()}<p>${esc(j.reply)}</p>`); history.push({ role: "agent", text: j.reply }); return; }
       } catch {}
     }
     const a = kcAnswer(q, list);
-    say("kc", `<p>${a.text}</p>${a.hits ? hitsHtml(a.hits) : ""}${a.link ? `<p><a class="fh-action" href="${a.link.href}" data-kc-go>${esc(a.link.label)}</a></p>` : ""}`);
+    say("kc", `${voiceLead()}<p>${a.text}</p>${a.hits ? hitsHtml(a.hits) : ""}${a.link ? `<p><a class="fh-action" href="${a.link.href}" data-kc-go>${esc(a.link.label)}</a></p>` : ""}`);
     history.push({ role: "agent", text: a.text.replace(/<[^>]+>/g, "") });
   }
   document.addEventListener("click", (ev) => {

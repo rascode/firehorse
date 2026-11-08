@@ -149,7 +149,7 @@ ${list("admin.css")}
   /** What ships in dist/, with sizes. */
   bundles() {
     const files = [
-      ["firehorse.css", "Core: every token, base, layout, component, pattern and utility module.", "@import \"@rascode/firehorse/css\";"],
+      ["firehorse.css", "Core: every token, base, layout, component, design pattern and utility module.", "@import \"@rascode/firehorse/css\";"],
       ["firehorse.min.css", "The core, minified.", "@import \"@rascode/firehorse/min.css\";"],
       ["firehorse.compat.min.css", "The core lowered for 2022–23 browsers (no nesting, no light-dark()).", "@import \"@rascode/firehorse/compat.css\";"],
       ["admin.css", "Admin: app shell, environment selector, composer, dock. Load after the core.", "@import \"@rascode/firehorse/admin.css\";"],

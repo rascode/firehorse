@@ -18,7 +18,9 @@
  *   </div>
  *
  * Validation styling uses :user-invalid, so errors appear only after
- * the visitor has interacted with the field.
+ * the visitor has interacted with the field. aria-invalid="true" shows the
+ * same error state at once: for errors the server returns, and for pages
+ * that must show the state without interaction.
  */
 
 @layer fh.components {
@@ -60,14 +62,14 @@
     }
 
     /* Valid + required: the chip settles to a check. */
-    &:has(:is(input, textarea, select)[required]:valid:not(:placeholder-shown)) > label::after {
+    &:has(:is(input, textarea, select)[required]:valid:not(:placeholder-shown, [aria-invalid="true"])) > label::after {
       content: "Done";
       border-style: solid;
       border-color: color-mix(in oklab, var(--fh-color-success) 50%, transparent);
       color: var(--fh-color-success);
     }
 
-    &:has(:user-invalid) > label {
+    &:has(:user-invalid, [aria-invalid="true"]) > label {
       color: var(--fh-color-danger);
     }
   }
@@ -85,7 +87,7 @@
     color: var(--fh-color-danger);
   }
 
-  .fh-field:has(:user-invalid) .fh-field__error {
+  .fh-field:has(:user-invalid, [aria-invalid="true"]) .fh-field__error {
     display: block;
   }
 
