@@ -213,7 +213,14 @@ export function SideNavSection({
           <i className="fh-icon fh-icon--chevron-right" aria-hidden="true" />
         </button>
       </div>
-      <div id={panelId} role="region" aria-label={label} className="fh-sidenav__children" data-state={open ? "open" : "closed"} hidden={!open}>
+      <div
+        id={panelId}
+        role="region"
+        aria-label={label}
+        className="fh-sidenav__children"
+        data-state={open ? "open" : "closed"}
+        aria-hidden={open ? undefined : true}
+      >
         {children}
       </div>
     </div>
