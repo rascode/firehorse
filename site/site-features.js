@@ -49,6 +49,17 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
       <p class="fh-menu__label">From your terminal</p>
       <div class="site-agents__cli">${AGENTS.filter((a) => a.command).map((a, i) => `<button type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b>${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy site-agents__go" aria-hidden="true"></i></button>`).join("")}</div>
       <div class="site-agents__foot"><button type="button" class="fh-button fh-button--sm fh-button--secondary site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button></div>
+      <details class="site-agents__ask">
+        <summary><span class="site-agents__ask-q"><b>Don't see your agent?</b><small>Tell us and we'll add it to the list.</small></span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+        <form class="site-agents__ask-form" novalidate data-placement="agent-menu">
+          <label><span>Agent</span><input name="agent" required maxlength="120" placeholder="Its name" autocomplete="off"></label>
+          <label><span>Link <small>optional</small></span><input name="link" type="url" maxlength="300" placeholder="https://"></label>
+          <label><span>Your email <small>optional, to hear when it's in</small></span><input name="email" type="email" maxlength="200" placeholder="you@company.com" autocomplete="email"></label>
+          <input class="site-agents__ask-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="fh-button fh-button--sm site-agents__ask-send"><span>Send request</span></button>
+          <p class="site-agents__ask-status" role="status" aria-live="polite"></p>
+        </form>
+      </details>
     </div>`;
   // Open on whichever side of the button has more room; never scroll the page.
   // The menu fits that room and scrolls inside itself if it has to.
@@ -56,6 +67,28 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
     if (e.newState !== "open") return;
     const r = host.getBoundingClientRect();
     e.target.toggleAttribute("data-up", r.top > innerHeight - r.bottom);
+  });
+  // "Don't see your agent?": posts to /api/agent-request with the page's campaign attribution;
+  // the team adds it to AGENTS and opens a PR.
+  const askForm = host.querySelector(".site-agents__ask-form");
+  askForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const status = askForm.querySelector(".site-agents__ask-status"), send = askForm.querySelector("button[type=submit]");
+    const fd = new FormData(askForm), data = Object.fromEntries(fd);
+    if (!String(data.agent || "").trim()) { status.textContent = "Tell us which agent."; askForm.agent.focus(); return; }
+    if (data.email && !askForm.email.checkValidity()) { status.textContent = "That email doesn't look right."; askForm.email.focus(); return; }
+    send.setAttribute("aria-busy", "true"); status.textContent = "Sending…";
+    let ok = false, preview = false;
+    try {
+      const r = await fetch("/api/agent-request", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...data, page: location.href, attribution: window.fhAttribution?.fields(askForm) ?? {} }) });
+      ok = r.ok; preview = !r.ok && r.status !== 422 && location.hostname !== "firehorse.rascode.dev";
+      if (!ok && r.status === 422) { status.textContent = (await r.json().catch(() => ({}))).error || "Check the form."; send.removeAttribute("aria-busy"); return; }
+    } catch { preview = location.hostname !== "firehorse.rascode.dev"; }
+    send.removeAttribute("aria-busy");
+    if (!ok && !preview) { status.textContent = "That didn't go through. Try again in a minute."; return; }
+    askForm.reset();
+    status.textContent = preview ? "Preview: the form isn't connected here, so nothing was sent." : "Thanks. We'll look at adding it.";
+    toast(preview ? "Preview: request not sent" : "Agent request sent", preview ? "amber" : "success");
   });
   host.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-agent]");

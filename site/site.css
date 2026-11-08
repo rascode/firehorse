@@ -1591,6 +1591,26 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
    theme's button style; this only sets its place and width. */
 .site-agents__foot { padding: var(--fh-space-4) var(--fh-space-3) var(--fh-space-3); }
 .site-agents__copy { inline-size: 100%; }
+/* "Don't see your agent?": a quiet, etched callout under the menu's actions; opens into a
+   three-field request (agent, link, email) that goes to the team to add it. */
+.site-agents__ask { margin: 0 var(--fh-space-3) var(--fh-space-3); border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: var(--fh-radius-md, 10px); }
+.site-agents__ask > summary { display: flex; align-items: center; gap: var(--fh-space-3); padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-3); list-style: none; cursor: pointer; }
+.site-agents__ask > summary::-webkit-details-marker { display: none; }
+.site-agents__ask-q { display: grid; gap: 0.1rem; flex: 1; min-inline-size: 0; }
+.site-agents__ask-q b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
+.site-agents__ask-q small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption, 0.75rem); }
+.site-agents__ask > summary .fh-icon { color: var(--fh-color-text-subtle); transition: rotate var(--fh-duration-fast) var(--fh-ease-standard); }
+.site-agents__ask[open] > summary .fh-icon { rotate: 180deg; }
+.site-agents__ask > summary:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; border-radius: inherit; }
+.site-agents__ask-form { display: grid; gap: var(--fh-space-2); padding: 0 var(--fh-space-3) var(--fh-space-3); }
+.site-agents__ask-form label { display: grid; gap: 0.25rem; }
+.site-agents__ask-form label > span { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; color: var(--fh-color-text-muted); }
+.site-agents__ask-form label small { text-transform: none; letter-spacing: 0; color: var(--fh-color-text-subtle); }
+.site-agents__ask-form input { inline-size: 100%; padding: 0.45rem 0.6rem; border: var(--fh-border-thin) solid var(--fh-color-border, var(--fh-color-etch)); border-radius: var(--fh-radius-sm, 6px); background: var(--fh-color-canvas); color: var(--fh-color-text); font: inherit; font-size: var(--fh-text-small); }
+.site-agents__ask-form input:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
+.site-agents__ask-hp { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
+.site-agents__ask-send { justify-self: start; }
+.site-agents__ask-status { margin: 0; min-block-size: 1em; font-size: var(--fh-text-caption, 0.75rem); color: var(--fh-color-text-muted); }
 .site-agents__menu :is(.site-agents__grid, .site-agents__cli) > button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
 
 @media (prefers-reduced-motion: no-preference) {
