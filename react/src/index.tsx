@@ -6,10 +6,23 @@
  * behaviors (comboboxes, menus with typeahead, toasts with swipe) done for them.
  *
  *   import "@rascode/firehorse";
- *   import { Button, Dialog, DropdownMenu, EntityPicker, Select, Tabs } from "@rascode/firehorse-react";
+ *   import { Button, Dialog, DropdownMenu, EntityPicker, Select, Tabs, SideNav } from "@rascode/firehorse-react";
  */
 import * as React from "react";
 import { Dialog as D, DropdownMenu as M, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C, Toast as To } from "radix-ui";
+
+export {
+  SideNav,
+  SideNavSection,
+  SideNavItem,
+  SideNavFlyout,
+  NavBadge,
+  type SideNavProps,
+  type SideNavSectionProps,
+  type SideNavItemProps,
+  type SideNavFlyoutProps,
+  type NavBadgeProps,
+} from "./sidenav";
 
 type Tone = "sky" | "teal" | "lime" | "amber" | "orange" | "accent" | "rose" | "fuchsia" | "violet" | "neutral";
 const cx = (...c: Array<string | false | undefined | null>) => c.filter(Boolean).join(" ");

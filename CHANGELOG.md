@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Sidenav collapsible** (NAV-2 / NAV-2.1–2.3): area head with label + chevron, child list with vertical guide, parent `data-contains-active`, height expand at `--fh-duration-fast` / `--fh-ease-out` (honours `prefers-reduced-motion`), rail flyout panel (NAV-2.2), nav count badge (NAV-2.3). Demo on /components/navigation/#NAV. React: `SideNav`, `SideNavSection`, `SideNavItem`, `SideNavFlyout`, `NavBadge` in `@rascode/firehorse-react`.
 - **Site:** removed the dead `.site-config-fab` rule (theme picker lives in the header).
 - **Theme horse voice:** themes.json carries `horse.line` and `horse.voice` from each theme JSON. The header theme picker shows `line` under the name when present (Lipizzaner / Maestoso). While a theme with `voice` is active, KC's replies open with a rotating voice line.
 - **Sample data panel** (Forms › Field types): each semantic type gets a Generate action that opens a Pro panel (count 10/100/1000, copy, download CSV) against `POST /v1/firehorse/samples`. Signed out or not Pro shows the Pro gate and a link to `/pro/`. Script `site/sample-data.js`.

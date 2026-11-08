@@ -1,12 +1,19 @@
 /*
  * Firehorse — Sidenav (NAV)
  * components/navigation · layer fh.components · docs /components/navigation/#NAV
+ *
+ * Variants:
+ *   NAV       flat grouped links
+ *   NAV-2     collapsible area (SideNavSection)
+ *   NAV-2.1   child link row (no icon)
+ *   NAV-2.2   rail flyout
+ *   NAV-2.3   nav count badge (NavBadge)
  */
 
 @layer fh.components {
   /* —— Sidebar nav ——
    * Grouped app navigation (portal, admin, docs).
-   *   <nav class="fh-sidenav" aria-label="Portal">
+   *   <nav class="fh-sidenav" aria-label="Portal" data-fh="NAV">
    *     <section><p class="fh-label">Portal</p>
    *       <a href="…" aria-current="page">Overview</a>
    *       <a href="…">Invoices <span class="fh-badge">2</span></a>
@@ -27,7 +34,8 @@
       padding-inline: var(--fh-inset-control);
     }
 
-    & a {
+    & a,
+    & .fh-sidenav__row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -37,6 +45,11 @@
       color: var(--fh-color-text-muted);
       font-size: var(--fh-text-small);
       text-decoration: none;
+      background: transparent;
+      border: 0;
+      inline-size: 100%;
+      text-align: start;
+      cursor: pointer;
       transition:
         background-color var(--fh-duration-fast) var(--fh-ease-standard),
         color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -46,11 +59,166 @@
         color: var(--fh-color-text);
       }
 
-      &[aria-current]:not([aria-current="false"]) {
+      &[aria-current]:not([aria-current="false"]),
+      &[data-active="true"] {
         background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
         box-shadow: inset 2px 0 0 var(--fh-tone);
         color: var(--fh-color-text);
       }
+
+      /* Parent of the active child — lighter wash, no inset bar */
+      &[data-contains-active="true"]:not([aria-current]):not([data-active="true"]) {
+        background-color: color-mix(in oklab, var(--fh-tone) 6%, transparent);
+        color: var(--fh-color-text);
+      }
     }
+  }
+
+  /* —— Collapsible area (NAV-2) —— */
+  .fh-sidenav__area {
+    display: grid;
+    gap: 0;
+  }
+
+  .fh-sidenav__area-head {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    min-inline-size: 0;
+  }
+
+  .fh-sidenav__area-head > a,
+  .fh-sidenav__area-head > .fh-sidenav__row {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  .fh-sidenav__chevron {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    margin-inline-end: 0.15rem;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: transparent;
+    color: var(--fh-color-text-subtle);
+    cursor: pointer;
+  }
+
+  .fh-sidenav__chevron:hover {
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    color: var(--fh-color-text);
+  }
+
+  .fh-sidenav__chevron > .fh-icon {
+    transition: rotate var(--fh-duration-fast) var(--fh-ease-out);
+  }
+
+  .fh-sidenav__area[data-open="true"] .fh-sidenav__chevron > .fh-icon {
+    rotate: 90deg;
+  }
+
+  .fh-sidenav__area[data-open="false"] .fh-sidenav__chevron > .fh-icon {
+    rotate: 0deg;
+  }
+
+  /* Child list with vertical guide */
+  .fh-sidenav__children {
+    display: grid;
+    gap: 0.1rem;
+    margin-inline-start: 0.85rem;
+    padding-inline-start: 0.65rem;
+    border-inline-start: 1px solid color-mix(in oklab, var(--fh-color-etch) 70%, transparent);
+    overflow: hidden;
+  }
+
+  .fh-sidenav__children[data-state="closed"] {
+    block-size: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .fh-sidenav__children[data-state="open"] {
+    block-size: auto;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-sidenav__children {
+      transition:
+        block-size var(--fh-duration-fast) var(--fh-ease-out),
+        opacity var(--fh-duration-fast) var(--fh-ease-out);
+    }
+  }
+
+  /* Child items — smaller type, no icons (NAV-2.1) */
+  .fh-sidenav__child {
+    font-size: var(--fh-text-xs, 0.75rem);
+    padding-block: 0.28rem;
+    justify-content: flex-start;
+  }
+
+  /* —— Nav badge (NAV-2.3) —— */
+  .fh-sidenav__badge {
+    margin-inline-start: auto;
+  }
+
+  .fh-sidenav__badge[data-tone="rose"],
+  .fh-sidenav__badge[data-alert="true"] {
+    /* red when count > 0 — rose tone */
+  }
+
+  /* —— Rail flyout (NAV-2.2) —— */
+  .fh-sidenav-flyout {
+    position: fixed;
+    z-index: 40;
+    min-inline-size: 12rem;
+    max-inline-size: 18rem;
+    padding: var(--fh-inset-control);
+    border-radius: var(--fh-radius-md);
+    background: var(--fh-color-surface-menu, var(--fh-color-surface-raised));
+    box-shadow: var(--fh-shadow-elevated, 0 8px 28px color-mix(in oklab, var(--fh-color-text) 18%, transparent));
+    border: 1px solid color-mix(in oklab, var(--fh-color-etch) 60%, transparent);
+  }
+
+  .fh-sidenav-flyout__title {
+    margin: 0 0 var(--fh-gap-related);
+    padding-inline: var(--fh-inset-tight);
+    font-size: var(--fh-text-small);
+    font-weight: 600;
+    color: var(--fh-color-text);
+  }
+
+  .fh-sidenav-flyout__list {
+    display: grid;
+    gap: 0.1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fh-sidenav-flyout__list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    border-radius: var(--fh-radius-sm);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    text-decoration: none;
+  }
+
+  .fh-sidenav-flyout__list a:hover {
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+    color: var(--fh-color-text);
+  }
+
+  .fh-sidenav-flyout__list a[aria-current]:not([aria-current="false"]) {
+    background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
+    box-shadow: inset 2px 0 0 var(--fh-tone);
+    color: var(--fh-color-text);
   }
 }

@@ -102,12 +102,40 @@
   <nav class="fh-pagination" aria-label="Pages">
     <a href="#c-nav" rel="prev">Prev</a><a href="#c-nav">1</a><a href="#c-nav" aria-current="page">2</a><a href="#c-nav">3</a><span>…</span><a href="#c-nav">9</a><a href="#c-nav" rel="next">Next</a>
   </nav>
-  <nav class="fh-sidenav" aria-label="Portal" data-tone="sky">
+  <nav class="fh-sidenav" aria-label="Portal" data-tone="sky" data-fh="NAV">
     <section><p class="fh-label">Portal</p>
       <a href="#c-nav" aria-current="page">Overview</a>
       <a href="#c-nav">Invoices <span class="fh-badge" data-tone="amber">2</span></a>
       <a href="#c-nav">Agents</a>
     </section>
+  </nav>
+  <nav class="fh-sidenav" aria-label="Collapsible demo" data-tone="violet" data-fh="NAV-2">
+    <div class="fh-sidenav__area" data-open="true">
+      <div class="fh-sidenav__area-head">
+        <a href="#c-nav" class="fh-sidenav__row" data-contains-active="true">
+          <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><i class="fh-icon fh-icon--database" aria-hidden="true"></i><span class="fh-sidenav__label">Schemas</span></span>
+          <span class="fh-badge fh-sidenav__badge" data-fh="NAV-2.3" data-tone="rose" data-alert="true">3</span>
+        </a>
+        <button type="button" class="fh-sidenav__chevron" aria-expanded="true" aria-controls="demo-schemas" aria-label="Collapse Schemas"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <div id="demo-schemas" class="fh-sidenav__children" data-state="open" role="region" aria-label="Schemas">
+        <a href="#c-nav" class="fh-sidenav__child" data-fh="NAV-2.1">Overview</a>
+        <a href="#c-nav" class="fh-sidenav__child" data-fh="NAV-2.1" aria-current="page">Codex</a>
+      </div>
+    </div>
+    <div class="fh-sidenav__area" data-open="false">
+      <div class="fh-sidenav__area-head">
+        <a href="#c-nav" class="fh-sidenav__row">
+          <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><i class="fh-icon fh-icon--store" aria-hidden="true"></i><span class="fh-sidenav__label">Store</span></span>
+        </a>
+        <button type="button" class="fh-sidenav__chevron" aria-expanded="false" aria-controls="demo-store" aria-label="Expand Store"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <div id="demo-store" class="fh-sidenav__children" data-state="closed" hidden role="region" aria-label="Store">
+        <a href="#c-nav" class="fh-sidenav__child" data-fh="NAV-2.1">Overview</a>
+        <a href="#c-nav" class="fh-sidenav__child" data-fh="NAV-2.1">Studio</a>
+        <a href="#c-nav" class="fh-sidenav__child" data-fh="NAV-2.1">Products</a>
+      </div>
+    </div>
   </nav>
 </div>
             </div>
