@@ -2261,3 +2261,8 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
     .fh-lock .site-hc__fh::before { animation: hc-fade-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fh-lock, 48vh); }
   }
 }
+
+/* "From backdrop": the theme colour follows the picked backdrop (home-concept.js samples the
+   photo's most vivid colour). Its dot shows that colour, ringed with a dashed etch. */
+.site-hc__roots button > i.site-hc__roots-auto { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-text-subtle); outline: 1px dashed var(--fh-color-text-subtle); outline-offset: 3px; }
+.site-hc__roots button[aria-pressed="true"] > i.site-hc__roots-auto { outline-color: var(--_c); }

@@ -9,24 +9,43 @@ window.hcReveal = (change, from) => (window.Firehorse?.reveal ? window.Firehorse
 
 const html = document.documentElement;
 const pop = document.getElementById("site-hc-roots");
+// The theme colour: a fixed root, or "From backdrop" (the default), where the backdrop picker
+// hands over the colour of whatever is behind the page (window.hcBackdropColour). A fixed pick
+// turns "From backdrop" off; picking it again turns it back on.
+window.hcRoot = { auto: true, backdrop: null, set: null };
 if (pop) {
   const swatches = [...pop.querySelectorAll("[data-root]")];
-  const mark = (hex) => swatches.forEach((b) => b.setAttribute("aria-pressed", String(!!hex && b.dataset.root.toLowerCase() === hex.toLowerCase())));
-  // The page opens on Violet (home-concept.css), so that is the pick shown until one is chosen.
-  mark("#8b5cf6");
+  const AUTO = "fh-hc-root-auto";
+  try { window.hcRoot.auto = localStorage.getItem(AUTO) !== "0"; } catch {}
+  const setRoot = (hex) => {
+    html.style.setProperty("--site-hc-pick", hex); // this page's own pick (it opens on Violet)
+    html.style.setProperty("--site-pick", hex);
+    html.setAttribute("data-site-root", "");
+  };
+  const mark = (hex) => swatches.forEach((b) => b.setAttribute("aria-pressed", String(window.hcRoot.auto ? b.dataset.root === "auto" : !!hex && b.dataset.root.toLowerCase() === hex.toLowerCase())));
+  // the backdrop picker calls this with the backdrop's colour (inside its own reveal)
+  window.hcRoot.set = (hex) => {
+    window.hcRoot.backdrop = hex || null;
+    if (hex) html.style.setProperty("--site-hc-auto", hex);
+    if (window.hcRoot.auto && hex) setRoot(hex);
+    mark(hex);
+  };
+  mark("#8b5cf6"); // the page opens on Violet (home-concept.css)
   pop.addEventListener("click", (e) => {
     const b = e.target.closest("[data-root]");
     if (!b) return;
-    const hex = b.dataset.root;
     const dot = document.querySelector(".site-hc__root-btn");
     pop.hidePopover();
-    window.hcReveal(() => {
-      html.style.setProperty("--site-hc-pick", hex); // this page's own pick (it opens on Violet)
-      html.style.setProperty("--site-pick", hex);
-      html.setAttribute("data-site-root", "");
-      try { localStorage.setItem("fh-root", hex); } catch {}
-      mark(hex);
-    }, dot);
+    if (b.dataset.root === "auto") {
+      window.hcRoot.auto = true;
+      try { localStorage.setItem(AUTO, "1"); } catch {}
+      window.hcReveal(() => { if (window.hcRoot.backdrop) setRoot(window.hcRoot.backdrop); mark(); }, dot);
+      return;
+    }
+    const hex = b.dataset.root;
+    window.hcRoot.auto = false;
+    try { localStorage.setItem(AUTO, "0"); localStorage.setItem("fh-root", hex); } catch {}
+    window.hcReveal(() => { setRoot(hex); mark(hex); }, dot);
   });
 }
 
@@ -355,6 +374,47 @@ const HC_QS = (() => { try { return new URL(document.currentScript.src).search; 
     const w = Math.min(3840, Math.ceil(need / 200) * 200);
     return src.replace(/([?&])w=\d+/, `$1w=${w}`);
   };
+  // The backdrop's colour for "From backdrop": scenes have their own; a photo is sampled small
+  // (CORS-clean: same-origin files and Unsplash's CDN) and its most vivid hue is taken, its
+  // pixels averaged and set to a usable lightness and chroma. Near-grey photos keep the colour.
+  const SCENE_COLOUR = { firehorse: "#8b5cf6", aurora: "#2bb3a3", aura: "#e0a526", blueprint: "#3b82f6" };
+  const colours = new Map();
+  const colourOf = (src) => {
+    if (colours.has(src)) return colours.get(src);
+    const p = new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        try {
+          const N = 48, cv = document.createElement("canvas"); cv.width = cv.height = N;
+          const x = cv.getContext("2d", { willReadFrequently: true }); x.drawImage(img, 0, 0, N, N);
+          const d = x.getImageData(0, 0, N, N).data, bins = Array.from({ length: 24 }, () => ({ w: 0, r: 0, g: 0, b: 0 }));
+          let total = 0;
+          for (let i = 0; i < d.length; i += 4) {
+            const r = d[i] / 255, g = d[i + 1] / 255, b = d[i + 2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), c = mx - mn;
+            if (c < 0.08 || mx < 0.18 || mx > 0.97) continue;
+            const h = c === 0 ? 0 : mx === r ? ((g - b) / c + 6) % 6 : mx === g ? (b - r) / c + 2 : (r - g) / c + 4;
+            const w = (c / mx) * c, k = bins[Math.floor(h * 4) % 24];
+            k.w += w; k.r += r * w; k.g += g * w; k.b += b * w; total += w;
+          }
+          const best = bins.reduce((a, k) => (k.w > a.w ? k : a), bins[0]);
+          if (total < 6 || best.w < total * 0.08) { resolve(null); return; } // near grey
+          let r = best.r / best.w, g = best.g / best.w, b = best.b / best.w;
+          // to HSL, set to a lightness and saturation that reads as a theme colour, back to hex
+          const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l0 = (mx + mn) / 2, c = mx - mn;
+          const h = c === 0 ? 0 : (mx === r ? ((g - b) / c + 6) % 6 : mx === g ? (b - r) / c + 2 : (r - g) / c + 4) * 60;
+          const s = Math.min(0.85, Math.max(0.55, c / (1 - Math.abs(2 * l0 - 1) || 1))), l = Math.min(0.58, Math.max(0.46, l0));
+          const f = (n) => { const k = (n + h / 30) % 12, a = s * Math.min(l, 1 - l); return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
+          resolve("#" + [f(0), f(8), f(4)].map((v) => v.toString(16).padStart(2, "0")).join(""));
+        } catch { resolve(null); }
+      };
+      img.onerror = () => resolve(null);
+      img.src = src.includes("images.unsplash.com") ? src.replace(/([?&])w=\d+/, "$1w=96") : src;
+    });
+    colours.set(src, p);
+    return p;
+  };
+  const backdropColour = (b) => (b?.dataset.photo ? colourOf(b.dataset.photo) : Promise.resolve(SCENE_COLOUR[b?.dataset.bg] || null));
   const imgs = new Map();
   const load = (src) => {
     if (!imgs.has(src)) { const img = new Image(); img.src = src; imgs.set(src, img.decode().then(() => img).catch(() => img)); }
@@ -440,6 +500,7 @@ const HC_QS = (() => { try { return new URL(document.currentScript.src).search; 
   { const v = parseInt(read(SHOW, "74"), 10); setShow(Number.isNaN(v) ? 74 : v, false); }
   setFx(read(FX, "1") === "1", false);
   apply(read(KEY, "firehorse"), false);
+  backdropColour(pop.querySelector(`button[data-bg="${root.getAttribute("data-hc-bg")}"]`)).then((hex) => window.hcRoot?.set?.(hex));
 
   pop.addEventListener("pointerover", (e) => { const b = e.target.closest("button[data-photo]"); if (b) load(photoUrl(b.dataset.photo)); });
   pop.addEventListener("click", async (e) => {
@@ -449,7 +510,7 @@ const HC_QS = (() => { try { return new URL(document.currentScript.src).search; 
     const b = e.target.closest("button[data-bg]");
     if (!b) return;
     pop.hidePopover();
-    const img = b.dataset.photo ? await load(photoUrl(b.dataset.photo)) : null;
-    window.hcReveal(() => apply(b.dataset.bg, true, img), document.querySelector(".site-hc__bg-btn"));
+    const [img, hex] = await Promise.all([b.dataset.photo ? load(photoUrl(b.dataset.photo)) : null, Promise.race([backdropColour(b), new Promise((r) => setTimeout(() => r(null), 1200))])]);
+    window.hcReveal(() => { apply(b.dataset.bg, true, img); window.hcRoot?.set?.(hex); }, document.querySelector(".site-hc__bg-btn"));
   });
 })();
