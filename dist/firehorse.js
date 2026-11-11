@@ -491,6 +491,28 @@ ready(() => {
     control.form?.addEventListener("submit", () => requestAnimationFrame(sync));
   }
 
+  /* —— 7b. Password reveal (FLD-4) ——
+   * An .fh-input-reveal button inside an .fh-input-group shows or hides the
+   * password beside it. Delegated, so fields added later work too. The value
+   * is hidden again when its form submits, so it is never left readable and
+   * password managers still see a password field. Add data-manual to a
+   * button your own code drives (the React PasswordInput does). */
+  const setReveal = (btn, shown) => {
+    const input = btn.closest(".fh-input-group")?.querySelector("input");
+    if (!input) return;
+    input.type = shown ? "text" : "password";
+    btn.setAttribute("aria-pressed", String(shown));
+    btn.setAttribute("aria-label", shown ? (btn.dataset.labelHide ?? "Hide password") : (btn.dataset.labelShow ?? "Show password"));
+  };
+  document.addEventListener("click", (e) => {
+    const btn = e.target instanceof Element ? e.target.closest(".fh-input-reveal:not([data-manual])") : null;
+    if (btn) setReveal(btn, btn.getAttribute("aria-pressed") !== "true");
+  });
+  document.addEventListener("submit", (e) => {
+    if (!(e.target instanceof Element)) return;
+    for (const btn of e.target.querySelectorAll('.fh-input-reveal[aria-pressed="true"]:not([data-manual])')) setReveal(btn, false);
+  }, true);
+
   /* —— 8. Popover buttons report their state ——
    * Keeps aria-expanded on every [popovertarget] button in step with
    * its popover, so hamburgers morph and screen readers hear "expanded". */

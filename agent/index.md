@@ -86,7 +86,7 @@
 | `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/#AVT) |
 | `SCD` | Social card | Profile cards | 1 Social card (3) | [open](https://firehorse.rascode.dev/components/avatars/#SCD) |
 | `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/#AUT) |
-| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) | [open](https://firehorse.rascode.dev/forms/#FLD) |
+| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/#FLD) |
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#CHO) |
 | `RVW` | Review rows | Fields & choices | 1 Review (1) | [open](https://firehorse.rascode.dev/forms/#RVW) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#UPL) |
@@ -2241,7 +2241,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Pagination, a wizard stepper, search and a side nav.
 
-Classes: `fh-stack` `fh-stack--lg` `fh-search` `fh-sr-only` `fh-kbd` `fh-stepper` `fh-pagination` `fh-sidenav` `fh-label` `fh-badge`
+Classes: `fh-stack` `fh-stack--lg` `fh-search` `fh-sr-only` `fh-kbd` `fh-stepper` `fh-pagination` `fh-sidenav` `fh-label` `fh-badge` `fh-sidenav__area` `fh-sidenav__area-head` `fh-sidenav__row` `fh-cluster` `fh-icon` `fh-sidenav__label` `fh-sidenav__badge` `fh-sidenav__chevron` `fh-sidenav__children` `fh-sidenav__child`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#NAV.
 
@@ -2647,7 +2647,7 @@ Classes: `fh-social` `fh-social__photo` `fh-social__body` `fh-social__name` `fh-
 
 Four layouts, all container-sized. Split puts the art beside the form and moves it on top in narrow slots; Card floats the form over full-bleed art; Glass frosts the form over the art; Plain is the form alone.
 
-Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `fh-segmented` `fh-auth__switch` `fh-sr-only` `fh-auth__head` `fh-auth__form` `fh-field` `fh-input` `fh-auth__row` `fh-check` `fh-button` `fh-divider` `fh-auth__social` `fh-button--secondary` `fh-field__hint` `fh-auth__foot` `fh-auth--card` `fh-auth--plain` `fh-auth--glass` `fh-auth__corner` `fh-segmented--sm` `fh-auth__logo` `fh-auth__method` `fh-auth__forgot` `fh-input-group` `fh-auth__rules`
+Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `fh-segmented` `fh-auth__switch` `fh-sr-only` `fh-auth__head` `fh-auth__form` `fh-field` `fh-input` `fh-input-group` `fh-input-reveal` `fh-auth__row` `fh-check` `fh-button` `fh-divider` `fh-auth__social` `fh-button--secondary` `fh-field__hint` `fh-auth__foot` `fh-auth--card` `fh-auth--plain` `fh-auth--glass` `fh-auth__corner` `fh-segmented--sm` `fh-auth__logo` `fh-auth__method` `fh-auth__forgot` `fh-auth__rules`
 
 ### AUT-1 · Layouts
 
@@ -2671,7 +2671,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     </header>
     <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
       <div class="fh-field"><label for="auth-split-email">Email</label><input class="fh-input" id="auth-split-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-split-pass">Password</label><input class="fh-input" id="auth-split-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-field"><label for="auth-split-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-split-pass" name="password" type="password" autocomplete="current-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div></div>
       <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
       <button class="fh-button" type="submit">Sign in</button>
       <p class="fh-divider">or</p>
@@ -2683,7 +2683,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
       <div class="fh-field"><label for="auth-split-name">Name</label><input class="fh-input" id="auth-split-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
       <div class="fh-field"><label for="auth-split-new-email">Email</label><input class="fh-input" id="auth-split-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-split-new-pass">Password</label><input class="fh-input" id="auth-split-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><p class="fh-field__hint">8 characters or more.</p></div>
+      <div class="fh-field"><label for="auth-split-new-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-split-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div><p class="fh-field__hint">8 characters or more.</p></div>
       <label class="fh-check"><input type="checkbox" name="terms" required> I agree to the terms and privacy policy</label>
       <button class="fh-button" type="submit">Create account</button>
       <p class="fh-divider">or</p>
@@ -2718,7 +2718,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     </header>
     <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
       <div class="fh-field"><label for="auth-card-email">Email</label><input class="fh-input" id="auth-card-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-card-pass">Password</label><input class="fh-input" id="auth-card-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-field"><label for="auth-card-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-card-pass" name="password" type="password" autocomplete="current-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div></div>
       <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
       <button class="fh-button" type="submit">Sign in</button>
       <p class="fh-divider">or</p>
@@ -2730,7 +2730,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
       <div class="fh-field"><label for="auth-card-name">Name</label><input class="fh-input" id="auth-card-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
       <div class="fh-field"><label for="auth-card-new-email">Email</label><input class="fh-input" id="auth-card-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-card-new-pass">Password</label><input class="fh-input" id="auth-card-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><p class="fh-field__hint">8 characters or more.</p></div>
+      <div class="fh-field"><label for="auth-card-new-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-card-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div><p class="fh-field__hint">8 characters or more.</p></div>
       <label class="fh-check"><input type="checkbox" name="terms" required> I agree to the terms and privacy policy</label>
       <button class="fh-button" type="submit">Create account</button>
       <p class="fh-divider">or</p>
@@ -2764,7 +2764,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     </header>
     <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
       <div class="fh-field"><label for="auth-plain-email">Email</label><input class="fh-input" id="auth-plain-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-plain-pass">Password</label><input class="fh-input" id="auth-plain-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-field"><label for="auth-plain-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-plain-pass" name="password" type="password" autocomplete="current-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div></div>
       <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
       <button class="fh-button" type="submit">Sign in</button>
       <p class="fh-divider">or</p>
@@ -2776,7 +2776,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
       <div class="fh-field"><label for="auth-plain-name">Name</label><input class="fh-input" id="auth-plain-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
       <div class="fh-field"><label for="auth-plain-new-email">Email</label><input class="fh-input" id="auth-plain-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-plain-new-pass">Password</label><input class="fh-input" id="auth-plain-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><p class="fh-field__hint">8 characters or more.</p></div>
+      <div class="fh-field"><label for="auth-plain-new-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-plain-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div><p class="fh-field__hint">8 characters or more.</p></div>
       <label class="fh-check"><input type="checkbox" name="terms" required> I agree to the terms and privacy policy</label>
       <button class="fh-button" type="submit">Create account</button>
       <p class="fh-divider">or</p>
@@ -2814,14 +2814,14 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     </header>
     <form class="fh-auth__form" data-fh-auth="in" method="post" action="/auth/sign-in">
       <div class="fh-field"><label for="auth-glass-email">Email</label><input class="fh-input" id="auth-glass-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-glass-pass">Password</label><input class="fh-input" id="auth-glass-pass" name="password" type="password" autocomplete="current-password" required minlength="8"></div>
+      <div class="fh-field"><label for="auth-glass-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-glass-pass" name="password" type="password" autocomplete="current-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div></div>
       <div class="fh-auth__row"><label class="fh-check"><input type="checkbox" name="remember"> Remember me</label><a href="#forms">Forgot password?</a></div>
       <button class="fh-button" type="submit">Sign in</button>
     </form>
     <form class="fh-auth__form" data-fh-auth="up" method="post" action="/auth/sign-up">
       <div class="fh-field"><label for="auth-glass-name">Name</label><input class="fh-input" id="auth-glass-name" name="name" autocomplete="name" required placeholder="Ada Lovelace"></div>
       <div class="fh-field"><label for="auth-glass-new-email">Email</label><input class="fh-input" id="auth-glass-new-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
-      <div class="fh-field"><label for="auth-glass-new-pass">Password</label><input class="fh-input" id="auth-glass-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"></div>
+      <div class="fh-field"><label for="auth-glass-new-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-glass-new-pass" name="password" type="password" autocomplete="new-password" required minlength="8"><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div></div>
       <button class="fh-button" type="submit">Create account</button>
     </form>
     <p class="fh-auth__foot" data-fh-auth="in">New here? <label for="auth-glass-up">Create an account</label></p>
@@ -2857,7 +2857,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
     </fieldset>
     <form class="fh-auth__form" data-fh-auth="in" data-fh-method="password" method="post" action="/auth/sign-in">
       <div class="fh-field"><label for="auth-method-id">Username or email</label><input class="fh-input" id="auth-method-id" name="identifier" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="yourname"></div>
-      <div class="fh-field"><label for="auth-method-pass">Password</label><input class="fh-input" id="auth-method-pass" name="password" type="password" autocomplete="current-password" required></div>
+      <div class="fh-field"><label for="auth-method-pass">Password</label><div class="fh-input-group"><input class="fh-input" id="auth-method-pass" name="password" type="password" autocomplete="current-password" required><button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button></div></div>
       <button class="fh-button" type="submit">Sign in</button>
     </form>
     <details class="fh-auth__forgot" data-fh-auth="in" data-fh-method="password">
@@ -2887,7 +2887,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 
 The "Required" chip comes from the input's own required attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with aria-invalid="true" (for errors the server sends back).
 
-Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet`
+Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet` `fh-input-reveal`
 
 ### FLD-1 · Fields
 
@@ -2961,6 +2961,22 @@ A barely-there lift off the canvas, no border. Default fields already use a ligh
 <div class="fh-field fh-field--quiet" data-fh="FLD-3.1">
   <label for="f-quiet">Notes</label>
   <textarea class="fh-textarea" id="f-quiet" placeholder="Optional detail"></textarea>
+</div>
+```
+
+### FLD-4 · Password reveal
+
+A show and hide toggle inside a password field. Put the input in an fh-input-group and add an fh-input-reveal button after it. firehorse.js switches the input between hidden and plain text, keeps aria-pressed and the label in step, and hides the value again when the form submits.
+
+#### FLD-4.1 · Password reveal
+
+```html
+<div class="fh-field" data-fh="FLD-4.1">
+  <label for="f-reveal">Password</label>
+  <div class="fh-input-group">
+    <input class="fh-input" id="f-reveal" name="password" type="password" autocomplete="off" value="correct horse battery">
+    <button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button>
+  </div>
 </div>
 ```
 

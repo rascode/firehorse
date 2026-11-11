@@ -172,6 +172,8 @@ export type FirehorseToken =
   | "--fh-icon-upload"
   | "--fh-icon-chevron-left"
   | "--fh-icon-close"
+  | "--fh-icon-eye"
+  | "--fh-icon-eye-off"
   | "--fh-color-canvas"
   | "--fh-color-surface"
   | "--fh-color-surface-raised"

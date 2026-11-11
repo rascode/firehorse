@@ -116,6 +116,22 @@ export function Select({ label, options, placeholder = "Choose…", ...p }: Reac
     </div>
   );
 }
+/* —— Password field with reveal (FLD-4) ——
+ * A password input with a show / hide toggle. Takes every <input> prop except type.
+ *
+ *   <PasswordInput id="signin-password" name="password" autoComplete="current-password" required />
+ */
+export type PasswordInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & { showLabel?: string; hideLabel?: string };
+export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(({ className, showLabel = "Show password", hideLabel = "Hide password", ...p }, ref) => {
+  const [shown, setShown] = React.useState(false);
+  return (
+    <div className="fh-input-group" data-fh="FLD-4.1">
+      <input ref={ref} {...p} type={shown ? "text" : "password"} className={cx("fh-input", className)} />
+      <button type="button" data-manual="" className="fh-input-reveal" aria-label={shown ? hideLabel : showLabel} aria-pressed={shown} onClick={() => setShown((s) => !s)} />
+    </div>
+  );
+});
+PasswordInput.displayName = "PasswordInput";
 /* —— Entity picker (ENT) ——
  * Choose an account, person or client by its identity. The trigger and every option are the same
  * row: avatar, an etch line, name and a second line, a stat, then the chevron. The stat is

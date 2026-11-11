@@ -29,4 +29,63 @@
     }
   }
 
+  /* —— Password reveal (FLD-4) ——
+   * A show / hide toggle inside a password field. The button sits after the
+   * input in the group; firehorse.js (or your own handler) switches the
+   * input between type="password" and type="text" and flips aria-pressed.
+   *
+   *   <div class="fh-input-group">
+   *     <input class="fh-input" id="pw" type="password" autocomplete="current-password">
+   *     <button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button>
+   *   </div>
+   */
+  .fh-input-group > .fh-input-reveal {
+    flex: none;
+    display: grid;
+    place-items: center;
+    align-self: stretch;
+    inline-size: 2.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-subtle);
+    cursor: var(--fh-cursor-action);
+    transition: color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      inline-size: 1.125rem;
+      block-size: 1.125rem;
+      background-color: currentColor;
+      mask: var(--fh-icon-eye) center / contain no-repeat;
+    }
+
+    /* Shown: the icon becomes the way back to hidden. */
+    &[aria-pressed="true"]::before {
+      mask-image: var(--fh-icon-eye-off);
+    }
+
+    &:hover,
+    &[aria-pressed="true"] {
+      color: var(--fh-color-text);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: calc(var(--fh-focus-width) * -1);
+    }
+
+    @media (pointer: coarse) {
+      inline-size: var(--fh-tap-target);
+    }
+
+    @media (forced-colors: active) {
+      &::before {
+        background-color: ButtonText;
+        forced-color-adjust: none;
+      }
+    }
+  }
+
 }
