@@ -150,5 +150,26 @@
     .fh-metrics--four {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    /* Narrow: the mark shrinks and sits above the title, so the title and its line use the full width. */
+    .fh-record {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "eyebrow"
+        "mark"
+        "id"
+        "actions";
+      align-items: start;
+    }
+
+    .fh-record__mark { --_size: var(--fh-record-mark-narrow, 2.5rem); }
+
+    .fh-record--cover {
+      grid-template-areas:
+        "cover"
+        "mark"
+        "id"
+        "actions";
+    }
   }
 }

@@ -17742,6 +17742,334 @@
     justify-self: center;
   }
 
+  .fh-record {
+    align-items: end;
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "eyebrow eyebrow eyebrow"
+                         "mark id actions";
+    display: grid;
+    container: fh-record / inline-size;
+
+    & > .fh-eyebrow-pill {
+      grid-area: eyebrow;
+      justify-self: start;
+      margin: 0;
+    }
+  }
+
+  .fh-record__mark {
+    --_size: var(--fh-record-mark, 5rem);
+    inline-size: var(--_size);
+    aspect-ratio: 1;
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 30%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, var(--fh-color-surface));
+    color: var(--fh-tone, var(--fh-color-text));
+    font-family: var(--fh-font-figure);
+    font-size: calc(var(--_size) * .36);
+    font-weight: var(--fh-weight-medium);
+    grid-area: mark;
+    place-items: center;
+    display: grid;
+    position: relative;
+
+    & > .fh-icon {
+      block-size: 42%;
+      inline-size: 42%;
+    }
+
+    & > img {
+      border-radius: inherit;
+      object-fit: cover;
+      block-size: 100%;
+      inline-size: 100%;
+    }
+
+    &[data-state]:after {
+      content: "";
+      aspect-ratio: 1;
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-text-subtle);
+      inline-size: .8rem;
+      position: absolute;
+      inset-block-end: -.25rem;
+      inset-inline-end: -.25rem;
+    }
+
+    &[data-state="live"]:after {
+      background-color: var(--fh-color-success);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-record__mark[data-state="live"]:after {
+      animation: fh-record-live 2.4s var(--fh-ease-out) infinite;
+    }
+  }
+
+  @keyframes fh-record-live {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--fh-color-success) 45%, transparent);
+    }
+
+    70%, 100% {
+      box-shadow: 0 0 0 .45rem #0000;
+    }
+  }
+
+  .fh-record__id {
+    gap: var(--fh-gap-bound);
+    grid-area: id;
+    min-inline-size: 0;
+    display: grid;
+  }
+
+  .fh-record__title {
+    font-size: clamp(1.6rem, 1.2rem + 1.6cqi, 2.25rem);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -.02em;
+    line-height: var(--fh-leading-tight);
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .fh-record__sub {
+    max-inline-size: 64ch;
+    color: var(--fh-color-text-muted);
+    margin: 0;
+  }
+
+  .fh-record__meta {
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    margin: var(--fh-gap-bound) 0 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    flex-wrap: wrap;
+    display: flex;
+
+    & > * + :before {
+      content: "·";
+      color: var(--fh-color-text-subtle);
+      margin-inline-end: var(--fh-gap-grouped);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    & a {
+      color: inherit;
+    }
+  }
+
+  .fh-record__actions {
+    justify-content: end;
+    gap: var(--fh-gap-related);
+    flex-wrap: wrap;
+    grid-area: actions;
+    display: flex;
+  }
+
+  .fh-record--cover {
+    grid-template-areas: "cover cover cover"
+                         "mark id actions";
+
+    & > .fh-eyebrow-pill {
+      z-index: 1;
+      margin: var(--fh-gap-grouped-wide);
+      grid-area: cover;
+      align-self: start;
+    }
+
+    & > .fh-record__mark {
+      z-index: 1;
+      outline: 4px solid var(--fh-color-canvas);
+      align-self: start;
+      margin-block-start: calc(var(--fh-gap-grouped) * -1 - var(--_size) / 2);
+      margin-inline-start: var(--fh-gap-sectioned);
+    }
+
+    & > .fh-record__id {
+      align-self: end;
+    }
+  }
+
+  .fh-record__cover {
+    block-size: var(--fh-record-cover, 11rem);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-lg);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, var(--fh-color-surface));
+    background-image: repeating-linear-gradient(-45deg, color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 16%, transparent) 0 1px, transparent 1px 10px),
+      radial-gradient(120% 140% at 85% 0%, color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 28%, transparent), transparent 60%);
+    grid-area: cover;
+    position: relative;
+    overflow: hidden;
+
+    & > img {
+      object-fit: cover;
+      block-size: 100%;
+      inline-size: 100%;
+      display: block;
+    }
+
+    &:has( > img):after {
+      content: "";
+      background-image: linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-scrim) 35%, transparent), transparent 45%);
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  @container fh-record (inline-size < 44rem) {
+    .fh-record {
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: "eyebrow eyebrow"
+                           "mark id"
+                           "actions actions";
+      align-items: center;
+    }
+
+    .fh-record__mark {
+      --_size: var(--fh-record-mark, 4rem);
+    }
+
+    .fh-record__actions {
+      justify-content: start;
+    }
+
+    .fh-record--cover {
+      grid-template-areas: "cover cover"
+                           "mark id"
+                           "actions actions";
+
+      & > .fh-record__mark {
+        margin-inline-start: var(--fh-gap-grouped-wide);
+      }
+    }
+  }
+
+  .fh-section-card {
+    --_pad: var(--fh-section-card-pad, var(--fh-inset-card));
+    gap: var(--fh-section-card-gap, var(--fh-gap-sectioned));
+    min-inline-size: 0;
+    padding: var(--_pad);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    align-content: start;
+    display: grid;
+    container: fh-section-card / inline-size;
+
+    & > * {
+      min-inline-size: 0;
+      margin: 0;
+    }
+  }
+
+  .fh-section-card__head {
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
+    flex-wrap: wrap;
+    display: flex;
+  }
+
+  .fh-section-card__title {
+    align-items: center;
+    gap: var(--fh-gap-related);
+    font-size: var(--fh-text-h4);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -.01em;
+    line-height: var(--fh-leading-tight);
+    margin: 0;
+    display: flex;
+
+    & > .fh-icon {
+      color: var(--fh-tone, var(--fh-color-text-muted));
+    }
+  }
+
+  .fh-section-card__tools {
+    justify-content: end;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    flex-wrap: wrap;
+    margin-inline-start: auto;
+    display: flex;
+  }
+
+  .fh-section-card__lede {
+    max-inline-size: 72ch;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-section-card__subhead {
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text-muted);
+    margin-block-start: var(--fh-gap-related);
+    padding-block-start: var(--fh-inset-tile);
+  }
+
+  .fh-section-card__note {
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-small);
+    max-inline-size: 72ch;
+  }
+
+  .fh-section-card__foot {
+    justify-content: end;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    flex-wrap: wrap;
+    padding-block-start: var(--fh-inset-tile);
+    display: flex;
+
+    & > .fh-section-card__note {
+      margin-inline-end: auto;
+    }
+  }
+
+  .fh-section-card--inset {
+    --_pad: var(--fh-section-card-pad, var(--fh-inset-card));
+    gap: var(--fh-section-card-gap, var(--fh-gap-grouped));
+    border-color: var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-color-text) calc(3% + clamp(0, var(--fh-frost, .6), 1) * 4%), transparent);
+    -webkit-backdrop-filter: blur(calc(clamp(0, var(--fh-frost, .6), 1) * 16px));
+    backdrop-filter: blur(calc(clamp(0, var(--fh-frost, .6), 1) * 16px));
+
+    & .fh-section-card__title {
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+  }
+
+  .fh-section-card--aside {
+    column-gap: var(--fh-gap-sectioned);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+
+    & > :not(.fh-section-card__head, .fh-section-card__lede) {
+      grid-column: 1 / -1;
+    }
+
+    & > .fh-section-card__head {
+      align-self: start;
+    }
+  }
+
   .fh-tpl {
     gap: var(--fh-tpl-gap, var(--fh-gap-sectioned));
     grid-template-columns: minmax(0, 1fr);
@@ -17847,6 +18175,26 @@
   @container fh-tpl (inline-size < 36rem) {
     .fh-metrics--four {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fh-record {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "eyebrow"
+                           "mark"
+                           "id"
+                           "actions";
+      align-items: start;
+    }
+
+    .fh-record__mark {
+      --_size: var(--fh-record-mark-narrow, 2.5rem);
+    }
+
+    .fh-record--cover {
+      grid-template-areas: "cover"
+                           "mark"
+                           "id"
+                           "actions";
     }
   }
 

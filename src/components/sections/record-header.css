@@ -1,0 +1,202 @@
+/*
+ * Firehorse — Record header (ADM-REC): the page and record header used by the page templates
+ * core · layer fh.components (moved from admin/record.css, relay F2)
+ */
+
+@layer fh.components {
+  /* —— Record header (ADM-REC) ————————————————————————————————
+   * One record at the top of its page: what it is, its name, what it
+   * does, the facts that identify it, and what you can do with it.
+   *   <header class="fh-record" data-tone="orange">
+   *     <p class="fh-eyebrow-pill …">API · 07</p>
+   *     <div class="fh-record__mark" data-state="live"><i class="fh-icon fh-icon--book-open"></i></div>
+   *     <div class="fh-record__id">
+   *       <h1 class="fh-record__title">LEDES</h1>
+   *       <p class="fh-record__sub">LEDES and UTBMS vocabulary API</p>
+   *       <p class="fh-record__meta"><span>ledes</span><span>ledes.dev</span></p>
+   *     </div>
+   *     <div class="fh-record__actions">…buttons…</div>
+   *   </header>
+   * The mark takes an icon, initials or an <img>. data-state="live" puts a
+   * pulsing dot on its corner; "idle" a quiet one. Actions drop under the
+   * name when the record runs out of room. */
+  .fh-record {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "eyebrow eyebrow eyebrow"
+      "mark id actions";
+    align-items: end;
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    container: fh-record / inline-size;
+
+    & > .fh-eyebrow-pill { grid-area: eyebrow; justify-self: start; margin: 0; }
+  }
+
+  .fh-record__mark {
+    --_size: var(--fh-record-mark, 5rem);
+    position: relative;
+    grid-area: mark;
+    display: grid;
+    place-items: center;
+    inline-size: var(--_size);
+    aspect-ratio: 1;
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 30%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, var(--fh-color-surface));
+    color: var(--fh-tone, var(--fh-color-text));
+    font-family: var(--fh-font-figure);
+    font-size: calc(var(--_size) * 0.36);
+    font-weight: var(--fh-weight-medium);
+
+    & > .fh-icon { inline-size: 42%; block-size: 42%; }
+    & > img { inline-size: 100%; block-size: 100%; border-radius: inherit; object-fit: cover; }
+
+    &[data-state]::after {
+      content: "";
+      position: absolute;
+      inset-block-end: -0.25rem;
+      inset-inline-end: -0.25rem;
+      inline-size: 0.8rem;
+      aspect-ratio: 1;
+      border: 2px solid var(--fh-color-canvas);
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-color-text-subtle);
+    }
+
+    &[data-state="live"]::after { background-color: var(--fh-color-success); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-record__mark[data-state="live"]::after { animation: fh-record-live 2.4s var(--fh-ease-out) infinite; }
+  }
+
+  @keyframes fh-record-live {
+    0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--fh-color-success) 45%, transparent); }
+    70%, 100% { box-shadow: 0 0 0 0.45rem transparent; }
+  }
+
+  .fh-record__id {
+    grid-area: id;
+    display: grid;
+    gap: var(--fh-gap-bound);
+    min-inline-size: 0;
+  }
+
+  .fh-record__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 1.2rem + 1.6cqi, 2.25rem);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: -0.02em;
+    line-height: var(--fh-leading-tight);
+    text-wrap: balance;
+  }
+
+  .fh-record__sub {
+    margin: 0;
+    max-inline-size: 64ch;
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-record__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    margin: var(--fh-gap-bound) 0 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+
+    & > * + *::before { content: "·"; display: inline-block; margin-inline-end: var(--fh-gap-grouped); color: var(--fh-color-text-subtle); text-decoration: none; }
+    & a { color: inherit; }
+  }
+
+  .fh-record__actions {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: var(--fh-gap-related);
+  }
+
+  /* —— Record cover (ADM-REC) ——
+   * fh-record--cover puts a band across the top: a picture, or etched
+   * tone art when there is none. The eyebrow sits on the band and the
+   * mark overlaps its lower edge.
+   *   <header class="fh-record fh-record--cover" data-tone="teal">
+   *     <div class="fh-record__cover"><img src="…" alt=""></div>
+   *     <p class="fh-eyebrow-pill …">Business · Client</p>
+   *     <div class="fh-record__mark">AC</div>
+   *     …id, actions…
+   *   </header>
+   * Knob: --fh-record-cover (band height, 11rem). */
+  .fh-record--cover {
+    grid-template-areas:
+      "cover cover cover"
+      "mark id actions";
+
+    & > .fh-eyebrow-pill {
+      grid-area: cover;
+      z-index: 1;
+      align-self: start;
+      margin: var(--fh-gap-grouped-wide);
+    }
+
+    & > .fh-record__mark {
+      z-index: 1;
+      align-self: start;
+      margin-block-start: calc(var(--fh-gap-grouped) * -1 - var(--_size) / 2);
+      margin-inline-start: var(--fh-gap-sectioned);
+      outline: 4px solid var(--fh-color-canvas);
+    }
+
+    & > .fh-record__id { align-self: end; }
+  }
+
+  .fh-record__cover {
+    position: relative;
+    grid-area: cover;
+    block-size: var(--fh-record-cover, 11rem);
+    overflow: hidden;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-lg);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, var(--fh-color-surface));
+    background-image:
+      repeating-linear-gradient(-45deg, color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 16%, transparent) 0 1px, transparent 1px 10px),
+      radial-gradient(120% 140% at 85% 0%, color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 28%, transparent), transparent 60%);
+
+    & > img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+    &:has(> img)::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-scrim) 35%, transparent), transparent 45%);
+    }
+  }
+
+  @container fh-record (inline-size < 44rem) {
+    .fh-record {
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        "eyebrow eyebrow"
+        "mark id"
+        "actions actions";
+      align-items: center;
+    }
+
+    .fh-record__mark { --_size: var(--fh-record-mark, 4rem); }
+    .fh-record__actions { justify-content: start; }
+
+    .fh-record--cover {
+      grid-template-areas:
+        "cover cover"
+        "mark id"
+        "actions actions";
+
+      & > .fh-record__mark { margin-inline-start: var(--fh-gap-grouped-wide); }
+    }
+  }
+
+}

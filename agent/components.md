@@ -2025,7 +2025,7 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Page templates
 
-Five fixed layouts, `fh-tpl--landing`, `list`, `detail`, `form` and `empty`, placed in the page's `fh-main`. A page picks one and fills its regions with Firehorse parts; it never sets its own layout. Spacing between regions is one step on every template, and each template responds to its own width, so every one holds at 1440 and at 375. Page templates use the record header and section card from `admin.css`, loaded after `firehorse.css`.
+Five fixed layouts, `fh-tpl--landing`, `list`, `detail`, `form` and `empty`, placed in the page's `fh-main`. A page picks one and fills its regions with Firehorse parts; it never sets its own layout. Spacing between regions is one step on every template, and each template responds to its own width, so every one holds at 1440 and at 375. Page templates use the record header and section card, which ship in `firehorse.css`.
 
 ```html
 <div class="fh-stack fh-stack--xl">
