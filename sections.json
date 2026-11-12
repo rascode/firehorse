@@ -170,5 +170,19 @@
       "slots": ["icon", "name", "size", "date"],
       "chips": { "rule": "The file count and the total size.", "max": 2 }
     }
+  },
+  "fields": {
+    "note": "Form fields that need more than a native input. Docs: /forms/#FLD",
+    "money": {
+      "id": "FLD-5",
+      "class": "fh-field fh-money",
+      "input": "fh-input-group: a currency prefix (fh-money__currency) or a select (fh-money__select), a text input with inputmode=decimal, and a hidden input with data-fh-money-value",
+      "script": "money.js",
+      "import": "@rascode/firehorse/money",
+      "posts": "Whole minor units (cents) as a digit string. Without the script the visible input posts what was typed.",
+      "options": ["data-currency", "data-minor", "data-locale", "data-allow-negative"],
+      "slots": ["label", "currency", "input", "error (fh-field__error)", "hint (fh-field__hint)"],
+      "use": "Any amount of money in a form. Never type=number."
+    }
   }
 }

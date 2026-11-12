@@ -7,7 +7,7 @@
   "description": "Firehorse forms: fields and selects, entity pickers, segmented controls, switches and checks, upload, range and tags, and sign-in and sign-up layouts.",
   "headline": "Sign in and sign up, <em>ready to drop in</em>",
   "lede": "One block holds both forms. The switch flips between them with no JavaScript, and the title, lede and footer follow it. The art is an etched contour sheet with the tone palette flowing through it, the same treatment as the horse up top. Point <code>--fh-auth-art</code> at your own linework to make it yours.",
-  "scripts": ["/sample-data.js"],
+  "scripts": ["/sample-data.js", "/money.js"],
   "icon": "square-pen",
   "summary": [
     {
@@ -253,7 +253,7 @@
       <div class="fh-stack fh-stack--xl">
 
         <div class="fh-split">
-          <div class="site-demo site-anchor" id="c-form" data-fh-id="FLD" data-fh-groups="Fields|Dictation|Quiet|Password reveal">
+          <div class="site-demo site-anchor" id="c-form" data-fh-id="FLD" data-fh-groups="Fields|Dictation|Quiet|Password reveal|Money input">
             <div class="site-demo__head"><h3>Fields</h3><p>The "Required" chip comes from the input's own <code>required</code> attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with <code>aria-invalid="true"</code> (for errors the server sends back).</p></div>
             <div class="site-demo__stage" data-demo>
 <form class="fh-form" novalidate onsubmit="event.preventDefault()" data-fh-id="FLD-1.1" data-fh-name="Fields">
@@ -352,7 +352,55 @@
           </div>
         </div>
 
-        <div class="site-demo site-anchor" id="c-form-steps" data-fh-id="STP-2" data-fh-name="Form steps">
+        <div class="site-demo site-anchor" id="c-money" data-fh-id="FLD-5" data-fh-name="Money input">
+          <div class="site-demo__head"><h3>Money input</h3><p>A currency prefix, or a select when several currencies are allowed, then a text input with <code>inputmode="decimal"</code> (never <code>type="number"</code>: no spinner). <code>money.js</code> groups digits as you type and keeps a hidden input in step that posts whole minor units, so 1,250.00 posts <code>125000</code>. Without the script the field posts what was typed. Add <code>data-allow-negative</code> to allow a minus sign.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <div class="fh-field fh-money" data-fh-money data-currency="USD" data-fh-id="FLD-5.1" data-fh-name="One currency">
+    <label for="f-money-one">Amount</label>
+    <div class="fh-input-group">
+      <span class="fh-money__currency">USD</span>
+      <input class="fh-input" id="f-money-one" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="1250">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__hint">Posts whole cents.</p>
+  </div>
+  <div class="fh-field fh-money" data-fh-money data-fh-id="FLD-5.2" data-fh-name="Several currencies">
+    <label for="f-money-many">Price</label>
+    <div class="fh-input-group">
+      <select class="fh-money__select" name="price_currency" aria-label="Currency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="JPY">JPY</option>
+      </select>
+      <input class="fh-input" id="f-money-many" name="price" inputmode="decimal" autocomplete="off" placeholder="0.00">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__hint">The currency sets the decimal places: JPY has none.</p>
+  </div>
+  <div class="fh-field fh-money" data-fh-money data-currency="USD" data-fh-id="FLD-5.3" data-fh-name="Error">
+    <label for="f-money-err">Deposit</label>
+    <div class="fh-input-group">
+      <span class="fh-money__currency">USD</span>
+      <input class="fh-input" id="f-money-err" name="deposit" inputmode="decimal" autocomplete="off" value="75000" aria-invalid="true" aria-describedby="f-money-err-msg">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__error" id="f-money-err-msg">The deposit is more than the limit of 50,000.00.</p>
+  </div>
+  <div class="fh-field fh-money" data-fh-money data-currency="USD" data-allow-negative data-fh-id="FLD-5.4" data-fh-name="Negative allowed">
+    <label for="f-money-neg">Adjustment</label>
+    <div class="fh-input-group">
+      <span class="fh-money__currency">USD</span>
+      <input class="fh-input" id="f-money-neg" name="adjustment" inputmode="decimal" autocomplete="off" value="-42.5">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__hint">A credit or a charge. Type a minus sign first.</p>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-form-steps"data-fh-id="STP-2" data-fh-name="Form steps">
           <div class="site-demo__head"><h3>Form steps</h3><p>Numbered form sections with outline-cube heads (CUB-1.4). Wide slots put the head sticky beside the fields.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-form-steps">

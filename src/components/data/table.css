@@ -23,6 +23,12 @@
     container: fh-table / inline-size;
   }
 
+  /* Alias: row hover is already the default. Use plain fh-table; fh-table--hover
+   * only names it, and keeps the same hover fill. */
+  .fh-table--hover tbody tr:hover {
+    background-color: color-mix(in oklab, var(--fh-color-text) 3%, transparent);
+  }
+
   .fh-table {
     inline-size: 100%;
     border-collapse: collapse;

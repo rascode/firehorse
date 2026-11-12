@@ -627,7 +627,7 @@
     }
   }
 
-  .fh-display, .fh-title, .fh-heading, .fh-subheading {
+  .fh-display, .fh-title, .fh-heading, .fh-h, .fh-subheading, .fh-h4 {
     font-family: var(--fh-font-display);
     color: var(--fh-color-text);
     text-wrap: balance;
@@ -650,7 +650,7 @@
     letter-spacing: var(--fh-tracking-tight);
   }
 
-  .fh-heading {
+  .fh-heading, .fh-h {
     max-inline-size: var(--fh-measure-title);
     font-size: var(--fh-heading-size);
     font-weight: var(--fh-heading-weight);
@@ -658,7 +658,7 @@
     letter-spacing: var(--fh-heading-tracking);
   }
 
-  .fh-subheading {
+  .fh-subheading, .fh-h4 {
     font-size: var(--fh-text-h4);
     font-weight: var(--fh-subheading-weight);
     line-height: var(--fh-leading-heading);
@@ -722,6 +722,18 @@
     font-weight: var(--fh-weight-medium);
     line-height: var(--fh-leading-tight);
     letter-spacing: .01em;
+  }
+
+  .fh-text-small {
+    font-size: var(--fh-text-small);
+  }
+
+  .fh-text-micro {
+    font-size: var(--fh-text-micro);
+  }
+
+  .fh-font-mono {
+    font-family: var(--fh-font-mono);
   }
 
   .fh-muted {
@@ -958,6 +970,10 @@
 
   .fh-stack--sm {
     --fh-gap: var(--fh-space-3);
+  }
+
+  .fh-stack--md {
+    --fh-gap: var(--fh-space-4);
   }
 
   .fh-stack--lg {
@@ -1564,6 +1580,11 @@
     @media (forced-colors: active) {
       border-color: buttontext;
     }
+  }
+
+  .fh-button--primary {
+    --_bg: var(--fh-button-bg, var(--fh-color-primary));
+    --_fg: var(--fh-button-fg, var(--fh-color-on-primary));
   }
 
   .fh-button--secondary, .fh-button--outline, .fh-button--ghost {
@@ -3748,7 +3769,51 @@
     }
   }
 
-  .fh-check {
+  .fh-money .fh-input-group > .fh-input {
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    flex: auto;
+    min-inline-size: 0;
+  }
+
+  .fh-money__currency {
+    letter-spacing: var(--fh-tracking-wider);
+    flex: none;
+  }
+
+  .fh-money__select {
+    padding-inline: var(--fh-inset-control);
+    border-radius: var(--fh-radius-sm);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    cursor: var(--fh-cursor-action);
+    background-color: #0000;
+    border: 0;
+    flex: none;
+    align-self: stretch;
+
+    &:focus-visible {
+      outline-offset: -2px;
+      outline: 2px solid;
+    }
+
+    @media (pointer: coarse) {
+      min-block-size: var(--fh-tap-target);
+    }
+  }
+
+  .fh-money:has([aria-invalid="true"], :user-invalid) .fh-input-group {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-color-danger) 70%, transparent);
+  }
+
+  @media (forced-colors: active) {
+    .fh-money .fh-input-group {
+      outline: 1px solid fieldtext;
+    }
+  }
+
+  .fh-check, .fh-checkbox {
     align-items: flex-start;
     gap: var(--fh-gap-related);
     inline-size: fit-content;
@@ -5482,6 +5547,10 @@
     border-radius: var(--fh-radius-md);
     overflow-x: auto;
     container: fh-table / inline-size;
+  }
+
+  .fh-table--hover tbody tr:hover {
+    background-color: color-mix(in oklab, var(--fh-color-text) 3%, transparent);
   }
 
   .fh-table {

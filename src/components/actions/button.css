@@ -129,6 +129,13 @@
   /* —— Variants —— */
 
   /* Bordered variants stay flat: no depth at rest, hover or press. */
+  /* Alias: the primary look is the default. Use plain fh-button; fh-button--primary
+   * exists so pages that name the variant render the same. */
+  .fh-button--primary {
+    --_bg: var(--fh-button-bg, var(--fh-color-primary));
+    --_fg: var(--fh-button-fg, var(--fh-color-on-primary));
+  }
+
   .fh-button--secondary,
   .fh-button--outline,
   .fh-button--ghost {

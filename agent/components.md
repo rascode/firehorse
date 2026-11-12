@@ -24,7 +24,7 @@
 | Design patterns | `fh-hero` `fh-hero__actions` `fh-hero-split` `fh-section-head` `fh-etched-split` (`__pane`) `fh-cta-band` (`__main` `__title` `__aside` `__people` `__fine`) `fh-window` (`__bar` `__body`) `fh-letter` (`__portrait`) `fh-panel` `fh-panel-inset` `[data-fh-panel-start]` `fh-footer--tall` |
 | Media | `fh-canvas` (`__body` `__top` `__main` `__foot` `__title` `__sub` `__eyebrow` `__mark` `__badge` `__index` `__cubes` `__media` `__ui` (`--crop`) `--og` `--yt-thumb` `--yt-banner` `--x-header` `--li-banner` `--post` `--square` `--story` `--cover` `--card` `--center` `--split` `--row` `--plain` `--plate` `--native` `__cubes--rows`) `[data-fh-guides]` |
 | Slides | `fh-slide` (`--title` `--section` `--middle` `__list` `__stats` `__quote` `__cite` `__code`) on an `fh-canvas`; reveal.js: `dist/reveal.css` |
-| Helpers | `fh-sr-only` `fh-skip` `fh-reveal` `fh-reveal-children` `fh-hide-narrow` `fh-hide-wide` `fh-tone-text` `fh-text-start|center|end` `fh-nowrap` `fh-tabular` `fh-full` |
+| Helpers | `fh-sr-only` `fh-skip` `fh-reveal` `fh-reveal-children` `fh-hide-narrow` `fh-hide-wide` `fh-tone-text` `fh-text-start|center|end` `fh-nowrap` `fh-tabular` `fh-full` `fh-text-small` `fh-text-micro` `fh-font-mono` `fh-stack--md` |
 | Spacing (HIG) | gaps by relationship: `--fh-gap-bound` (4) `--fh-gap-related` (8) `--fh-gap-grouped` (12) `--fh-gap-grouped-wide` (16) `--fh-gap-sectioned` (24) `--fh-gap-separated` (48); padding: `--fh-inset-tight` `--fh-inset-control` `--fh-inset-tile` `--fh-inset-card` `--fh-inset-page`. Never a raw `--fh-space-*` in a component (/guidelines/). |
 
 Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
@@ -103,6 +103,17 @@ Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
   <p class="fh-text-center" style="margin:0">Center · middle of the measure.</p>
   <p class="fh-text-end" style="margin:0">End · flush to the end edge.</p>
   <p class="fh-small fh-muted" style="margin:0">z: raised <code>1</code>, drawer <code>25</code> · measure-narrow <code>36rem</code></p>
+</div>
+```
+
+### Size and alias helpers
+
+New: `fh-stack--md` (the default gap, named), `fh-text-small`, `fh-text-micro`, `fh-font-mono`. Aliases, kept so pages that use them render the same; use the class on the right: `fh-button--primary` is plain `fh-button`, `fh-h` is `fh-heading`, `fh-h4` is `fh-subheading`, `fh-checkbox` is `fh-check`, `fh-table--hover` is plain `fh-table` (row hover is the default).
+
+```html
+<div class="fh-stack fh-stack--md" style="max-inline-size: var(--fh-measure-narrow)">
+  <p class="fh-text-small" style="margin:0">Small text, <code class="fh-font-mono">fh-font-mono</code> inline.</p>
+  <p class="fh-text-micro fh-muted" style="margin:0">Micro text for a footnote or a source line.</p>
 </div>
 ```
 
@@ -2549,6 +2560,55 @@ A show and hide toggle inside a password field. Put the input in an `fh-input-gr
   <div class="fh-input-group">
     <input class="fh-input" id="f-reveal" name="password" type="password" autocomplete="off" value="correct horse battery">
     <button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button>
+  </div>
+</div>
+```
+
+### Money input
+
+A currency prefix, or a select when several currencies are allowed, then a text input with `inputmode="decimal"` (never `type="number"`: no spinner). `money.js` groups digits as you type and keeps a hidden input in step that posts whole minor units, so 1,250.00 posts `125000`. Without the script the field posts what was typed. Add `data-allow-negative` to allow a minus sign.
+
+```html
+<div class="fh-stack">
+  <div class="fh-field fh-money" data-fh-money data-currency="USD">
+    <label for="f-money-one">Amount</label>
+    <div class="fh-input-group">
+      <span class="fh-money__currency">USD</span>
+      <input class="fh-input" id="f-money-one" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="1250">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__hint">Posts whole cents.</p>
+  </div>
+  <div class="fh-field fh-money" data-fh-money>
+    <label for="f-money-many">Price</label>
+    <div class="fh-input-group">
+      <select class="fh-money__select" name="price_currency" aria-label="Currency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="JPY">JPY</option>
+      </select>
+      <input class="fh-input" id="f-money-many" name="price" inputmode="decimal" autocomplete="off" placeholder="0.00">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__hint">The currency sets the decimal places: JPY has none.</p>
+  </div>
+  <div class="fh-field fh-money" data-fh-money data-currency="USD">
+    <label for="f-money-err">Deposit</label>
+    <div class="fh-input-group">
+      <span class="fh-money__currency">USD</span>
+      <input class="fh-input" id="f-money-err" name="deposit" inputmode="decimal" autocomplete="off" value="75000" aria-invalid="true" aria-describedby="f-money-err-msg">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__error" id="f-money-err-msg">The deposit is more than the limit of 50,000.00.</p>
+  </div>
+  <div class="fh-field fh-money" data-fh-money data-currency="USD" data-allow-negative>
+    <label for="f-money-neg">Adjustment</label>
+    <div class="fh-input-group">
+      <span class="fh-money__currency">USD</span>
+      <input class="fh-input" id="f-money-neg" name="adjustment" inputmode="decimal" autocomplete="off" value="-42.5">
+      <input type="hidden" data-fh-money-value>
+    </div>
+    <p class="fh-field__hint">A credit or a charge. Type a minus sign first.</p>
   </div>
 </div>
 ```

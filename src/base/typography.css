@@ -8,7 +8,9 @@
   .fh-display,
   .fh-title,
   .fh-heading,
-  .fh-subheading {
+  .fh-h,
+  .fh-subheading,
+  .fh-h4 {
     margin: 0;
     font-family: var(--fh-font-display);
     color: var(--fh-color-text);
@@ -34,7 +36,9 @@
   }
 
   /* Section title */
-  .fh-heading {
+  /* fh-h is an alias of fh-heading: use fh-heading. */
+  .fh-heading,
+  .fh-h {
     max-inline-size: var(--fh-measure-title);
     font-size: var(--fh-heading-size);
     font-weight: var(--fh-heading-weight);
@@ -43,7 +47,9 @@
   }
 
   /* Card / block title */
-  .fh-subheading {
+  /* fh-h4 is an alias of fh-subheading: use fh-subheading. */
+  .fh-subheading,
+  .fh-h4 {
     font-size: var(--fh-text-h4);
     font-weight: var(--fh-subheading-weight);
     line-height: var(--fh-leading-heading);
@@ -110,6 +116,11 @@
     line-height: var(--fh-leading-tight);
     letter-spacing: 0.01em;
   }
+
+  /* Size and face helpers for text that is not a role of its own. */
+  .fh-text-small { font-size: var(--fh-text-small); }
+  .fh-text-micro { font-size: var(--fh-text-micro); }
+  .fh-font-mono { font-family: var(--fh-font-mono); }
 
   .fh-muted {
     color: var(--fh-color-text-muted);
