@@ -1,0 +1,33 @@
+/*
+ * Firehorse — Status chip (CHP)
+ * components/actions · layer fh.components · docs /components/sections/#SCR
+ */
+
+@layer fh.components {
+  /* —— Status chip ——
+   * The one chip for status. The tone follows the status value, so a
+   * status never needs a data-tone of its own:
+   *   <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span>
+   * Done (merged, done, passed, live, active, ok) is lime; moving (running,
+   * open, review, in-progress) sky; waiting (queued, pending, draft) amber;
+   * failed (failed, error, rejected, blocked) rose; finished without a
+   * result (archived, cancelled, skipped, idle) neutral. An unknown value
+   * stays neutral. The chip is a label, not a control.
+   *
+   * Which marker for what (the chip rules):
+   *   fh-chip    status of a record: in the record header, in a collapsed
+   *              section's summary, and once per row (status only).
+   *   fh-badge   counts only: "12", "3 new". Never a status word.
+   *   fh-status  inline status text inside a sentence or a cell of prose:
+   *              a dot and a word. Never in a header or a row.
+   */
+  .fh-chip[data-status] {
+    --fh-tone: var(--fh-tone-neutral);
+    cursor: default;
+
+    &:is([data-status="merged" i], [data-status="done" i], [data-status="passed" i], [data-status="live" i], [data-status="active" i], [data-status="ok" i], [data-status="complete" i], [data-status="approved" i]) { --fh-tone: var(--fh-tone-lime); }
+    &:is([data-status="running" i], [data-status="open" i], [data-status="review" i], [data-status="in-progress" i], [data-status="sent" i]) { --fh-tone: var(--fh-tone-sky); }
+    &:is([data-status="queued" i], [data-status="pending" i], [data-status="draft" i], [data-status="waiting" i], [data-status="warn" i]) { --fh-tone: var(--fh-tone-amber); }
+    &:is([data-status="failed" i], [data-status="error" i], [data-status="rejected" i], [data-status="blocked" i], [data-status="overdue" i]) { --fh-tone: var(--fh-tone-rose); }
+  }
+}

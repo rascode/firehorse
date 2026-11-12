@@ -1,0 +1,154 @@
+/*
+ * Firehorse — Page templates (TPL) and landing metric row (TMR)
+ * components/sections · layer fh.components · docs /components/sections/#TPL
+ */
+
+@layer fh.components {
+  /* —— Page templates ——
+   * Five fixed layouts for the content of a page, placed in the fh-main of
+   * the page shell. A template is the order and spacing of its regions;
+   * the regions hold Firehorse parts (fh-record, fh-metrics, fh-dt,
+   * fh-section-card, fh-panel-section, fh-empty). A page picks one
+   * template and fills its regions; it never sets its own layout.
+   *   <div class="fh-tpl fh-tpl--landing">
+   *     <header class="fh-tpl__header"><div class="fh-record">…</div></header>
+   *     <div class="fh-tpl__metrics"><div class="fh-metrics fh-metrics--four">…four fh-metric…</div></div>
+   *     <div class="fh-tpl__body">…fh-section-card, one per detail section…</div>
+   *   </div>
+   * Regions, in order:
+   *   landing  header · metrics (exactly four tiles) · body
+   *   list     header · filters · body (the datatable)
+   *   detail   header · facts · cols (main sections + side panel)
+   *   form     header · body (fields in section cards) · actions
+   *   empty    header · body (one fh-empty)
+   * Spacing between regions is one step (--fh-gap-sectioned) on every
+   * template. Everything responds to the template's own width: the metric
+   * row goes two by two under 36rem, the detail side panel drops under the
+   * main column under 60rem. Knobs: --fh-tpl-gap (between regions),
+   * --fh-tpl-form (form width, 44rem), --fh-tpl-side (side panel, 22rem). */
+  .fh-tpl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--fh-tpl-gap, var(--fh-gap-sectioned));
+    align-content: start;
+    min-inline-size: 0;
+    container: fh-tpl / inline-size;
+
+    & > * { margin: 0; min-inline-size: 0; }
+  }
+
+  .fh-tpl__header,
+  .fh-tpl__filters,
+  .fh-tpl__body,
+  .fh-tpl__facts,
+  .fh-tpl__main,
+  .fh-tpl__side {
+    min-inline-size: 0;
+  }
+
+  .fh-tpl__body,
+  .fh-tpl__main,
+  .fh-tpl__side {
+    display: grid;
+    gap: var(--fh-tpl-gap, var(--fh-gap-sectioned));
+    align-content: start;
+  }
+
+  /* The record's status chips, in the record header under the name (at
+   * most four). Chips sit here, in collapsed sections and once per row. */
+  .fh-record__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-related);
+    margin: var(--fh-gap-related) 0 0;
+  }
+
+  /* —— List: the filter row ——
+   * Search and filter chips on one row; wraps instead of overflowing. */
+  .fh-tpl__filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
+  }
+
+  /* —— Detail: facts, then main and side ——
+   * Facts are the few values that identify the record, as a row of
+   * key and value pairs. */
+  .fh-tpl__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    gap: var(--fh-gap-grouped) var(--fh-gap-sectioned);
+    margin: 0;
+    padding-block: var(--fh-inset-tile);
+    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+    & > div { display: grid; gap: var(--fh-gap-bound); min-inline-size: 0; }
+    & dt {
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+    }
+    & dd { margin: 0; overflow-wrap: anywhere; }
+  }
+
+  .fh-tpl__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--fh-tpl-gap, var(--fh-gap-sectioned));
+    align-items: start;
+    min-inline-size: 0;
+  }
+
+  @container fh-tpl (inline-size >= 60rem) {
+    .fh-tpl__cols {
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, var(--fh-tpl-side, 22rem));
+    }
+  }
+
+  /* —— Form: one narrow column, actions at the foot —— */
+  .fh-tpl--form > :is(.fh-tpl__body, .fh-tpl__actions) {
+    inline-size: min(100%, var(--fh-tpl-form, 44rem));
+  }
+
+  .fh-tpl__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: var(--fh-gap-related);
+    padding-block-start: var(--fh-gap-grouped);
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  }
+
+  /* —— Empty: the state centred under the header —— */
+  .fh-tpl--empty > .fh-tpl__body {
+    place-content: center;
+    min-block-size: 16rem;
+  }
+
+  /* —— Landing metric row (TMR) ——
+   * Exactly four fh-metric tiles, one row. Each tile carries a label, a
+   * value, a line and a source. Two by two when the template is under
+   * 36rem wide. The tiles share their rows (fh-metrics subgrid), so the
+   * figures line up.
+   *   <div class="fh-metrics fh-metrics--four">
+   *     <article class="fh-metric" data-tone="sky">
+   *       <p class="fh-metric__label"><i class="fh-icon fh-icon--target"></i>Open goals</p>
+   *       <p class="fh-metric__value">14</p>
+   *       <p class="fh-metric__sub">3 due this week</p>
+   *       <p class="fh-metric__source">Goals</p>
+   *     </article>
+   *     …three more…
+   *   </div> */
+  .fh-metrics--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @container fh-tpl (inline-size < 36rem) {
+    .fh-metrics--four {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

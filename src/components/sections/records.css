@@ -1,0 +1,138 @@
+/*
+ * Firehorse — Reference cell (REF) and datatable record cells (RDT)
+ * components/sections · layer fh.components · docs /components/sections/#REF
+ */
+
+@layer fh.components {
+  /* —— Reference cell ——
+   * Every mention of another record is one of these: a label, an optional
+   * key in mono, and data-sidecar so the sidecar opener (dist/sidecar.js)
+   * opens the record. The href is the record's own page, kept for a new
+   * tab and for no script.
+   *   <a class="fh-ref" href="/goals/harbor" data-sidecar="goal-harbor">
+   *     <span class="fh-ref__label">Harbor index refresh</span>
+   *     <code class="fh-ref__key">GL-014</code>
+   *   </a>
+   * A target that is gone says so, and is not a link:
+   *   <span class="fh-ref fh-ref--gone" title="This record was removed">
+   *     <span class="fh-ref__label">GL-009</span>
+   *     <span class="fh-ref__note">removed</span>
+   *   </span> */
+  .fh-ref {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--fh-gap-related);
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    color: var(--fh-color-text);
+    text-decoration: none;
+    vertical-align: baseline;
+  }
+
+  .fh-ref__label {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: var(--fh-color-etch);
+    transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+
+  a.fh-ref {
+    cursor: var(--fh-cursor-action);
+
+    &:is(:hover, :focus-visible) > .fh-ref__label { text-decoration-color: currentColor; }
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 2px;
+      border-radius: var(--fh-radius-sm);
+    }
+  }
+
+  .fh-ref__key {
+    flex: none;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wide);
+  }
+
+  .fh-ref--gone {
+    color: var(--fh-color-text-muted);
+    cursor: default;
+
+    & > .fh-ref__label { text-decoration-line: line-through; text-decoration-color: var(--fh-color-text-subtle); }
+  }
+
+  .fh-ref__note {
+    flex: none;
+    color: var(--fh-color-danger);
+    font-size: var(--fh-text-caption);
+  }
+
+  /* —— Datatable record cells ——
+   * An fh-dt whose rows are records: the first cell is the reference cell,
+   * one cell holds the row's status chip, and the whole row opens the
+   * sidecar (data-sidecar on the tr, with tabindex="0" so the keyboard can
+   * reach it). Each td carries data-label, which names it once the table
+   * reflows into stacked rows under 36rem.
+   *   <div class="fh-dt fh-dt--records">
+   *     <div class="fh-dt__scroll"><table class="fh-dt__table">
+   *       <thead><tr><th scope="col">Goal</th><th scope="col">Status</th></tr></thead>
+   *       <tbody>
+   *         <tr data-sidecar="goal-harbor" tabindex="0">
+   *           <td data-label="Goal"><a class="fh-ref" …>…</a></td>
+   *           <td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td>
+   *         </tr>
+   *       </tbody>
+   *     </table></div>
+   *   </div> */
+  .fh-dt--records .fh-dt__table td > .fh-chip { vertical-align: middle; }
+
+  @container fh-dt (inline-size < 36rem) {
+    .fh-dt--records .fh-dt__scroll { max-block-size: none; overflow: visible; }
+
+    .fh-dt--records .fh-dt__table {
+      inline-size: 100%;
+      table-layout: auto;
+
+      & :is(tbody, tr, td) { display: block; }
+      & thead { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+
+      & tbody tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--fh-gap-bound);
+        padding: var(--fh-inset-control) var(--_pad);
+        border-block-end: var(--fh-border-thin) solid var(--_rule);
+      }
+
+      & tbody td {
+        display: grid;
+        grid-template-columns: minmax(5rem, 30%) minmax(0, 1fr);
+        align-items: baseline;
+        gap: var(--fh-gap-related);
+        block-size: auto;
+        padding: 0;
+        border: 0;
+        background: none;
+        white-space: normal;
+
+        &::before {
+          content: attr(data-label);
+          color: var(--fh-color-text-subtle);
+          font-family: var(--fh-font-mono);
+          font-size: var(--fh-text-label);
+          letter-spacing: var(--fh-tracking-wider);
+          text-transform: uppercase;
+        }
+
+        &:first-child { grid-template-columns: minmax(0, 1fr); font-weight: var(--fh-weight-medium); }
+        &:first-child::before { content: none; }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
   "headline": "One sidecar, one section shell, ten kinds of data",
   "lede": "A record sidecar with a fixed header, and a library of sections picked by the kind of data they hold. Each one starts with an icon and a title, collapses, and shows summary chips only when collapsed.",
   "scripts": ["/sidecar.js"],
-  "styles": [],
+  "styles": ["admin.css"],
   "icon": "panels-top-left",
   "summary": [
     {
@@ -791,6 +791,235 @@
         </div>
       </details>
 </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="templates" class="fh-section fh-section--ruled site-anchor" data-tone="violet" data-fh-label="Templates" aria-label="Templates">
+      <div class="fh-stack fh-stack--xl">
+
+        <div class="site-demo site-anchor" id="c-tpl" data-fh-id="TPL" data-fh-groups="Page templates">
+          <div class="site-demo__head"><h3>Page templates</h3><p>Five fixed layouts, <code>fh-tpl--landing</code>, <code>list</code>, <code>detail</code>, <code>form</code> and <code>empty</code>, placed in the page's <code>fh-main</code>. A page picks one and fills its regions with Firehorse parts; it never sets its own layout. Spacing between regions is one step on every template, and each template responds to its own width, so every one holds at 1440 and at 375. Page templates use the record header and section card from <code>admin.css</code>, loaded after <code>firehorse.css</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--xl">
+
+<div class="fh-tpl fh-tpl--landing" data-fh-id="TPL-1.1" data-fh-name="Landing">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Goals</h2>
+        <p class="fh-record__sub">What the team is working toward this cycle.</p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm" type="button">New goal</button></div>
+    </div>
+  </header>
+  <div class="fh-tpl__metrics" data-fh-id="TMR" data-fh-name="Landing metric row">
+    <div class="fh-metrics fh-metrics--four" data-fh-id="TMR-1.1" data-fh-name="Four tiles">
+      <article class="fh-metric" data-tone="sky"><p class="fh-metric__label"><i class="fh-icon fh-icon--target" aria-hidden="true"></i>Open goals</p><p class="fh-metric__value">14</p><p class="fh-metric__sub">3 due this week</p><p class="fh-metric__source">Goals</p></article>
+      <article class="fh-metric" data-tone="lime"><p class="fh-metric__label"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Merged</p><p class="fh-metric__value">38</p><p class="fh-metric__sub">Since the cycle began</p><p class="fh-metric__source">Relays</p></article>
+      <article class="fh-metric" data-tone="amber"><p class="fh-metric__label"><i class="fh-icon fh-icon--clock" aria-hidden="true"></i>Waiting</p><p class="fh-metric__value">5</p><p class="fh-metric__sub">Queued for review</p><p class="fh-metric__source">Relays</p></article>
+      <article class="fh-metric" data-tone="rose"><p class="fh-metric__label"><i class="fh-icon fh-icon--circle-alert" aria-hidden="true"></i>Blocked</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">Need a decision</p><p class="fh-metric__source">Goals</p></article>
+    </div>
+  </div>
+  <div class="fh-tpl__body">
+    <section class="fh-section-card" data-tone="teal" aria-labelledby="tpl-land-recent">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-land-recent"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Recent goals</h3></header>
+      <div class="fh-table-wrap"><table class="fh-table">
+        <thead><tr><th scope="col">Goal</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></td><td><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+          <tr><td><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">GL-015</code></a></td><td><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+  </div>
+</div>
+
+<div class="fh-tpl fh-tpl--list" data-fh-id="TPL-1.2" data-fh-name="List">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="teal">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">All goals</h2>
+        <p class="fh-record__sub">Every goal, newest first.</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-tpl__filters">
+    <label class="fh-search"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
+    <div class="fh-chips fh-chips--wrap">
+      <a class="fh-chip" data-tone="sky" href="#c-tpl" aria-current="true">All</a>
+      <a class="fh-chip" data-tone="amber" href="#c-tpl">Waiting</a>
+      <a class="fh-chip" data-tone="rose" href="#c-tpl">Blocked</a>
+    </div>
+  </div>
+  <div class="fh-tpl__body">
+    <div class="fh-dt fh-dt--records" aria-label="Goals">
+      <div class="fh-dt__scroll"><table class="fh-dt__table">
+        <thead><tr><th scope="col">Goal</th><th scope="col">Owner</th><th scope="col">Updated</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr data-sidecar="goal-harbor" tabindex="0"><td data-label="Goal"><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></td><td data-label="Owner"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Updated">Nov 11</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+          <tr data-sidecar="goal-ledger" tabindex="0"><td data-label="Goal"><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">GL-015</code></a></td><td data-label="Owner"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td data-label="Updated">Nov 10</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+          <tr data-sidecar="goal-tidal" tabindex="0"><td data-label="Goal"><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-tidal"><span class="fh-ref__label">Tidal export</span><code class="fh-ref__key">GL-016</code></a></td><td data-label="Owner"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Updated">Nov 9</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="blocked">blocked</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<div class="fh-tpl fh-tpl--detail" data-fh-id="TPL-1.3" data-fh-name="Detail">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky">
+      <div class="fh-record__mark" data-state="live"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Harbor index refresh</h2>
+        <p class="fh-record__sub">Rebuild the search index from the nightly export.</p>
+        <p class="fh-record__chips"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span><span class="fh-chip fh-chip--sm" data-tone="teal">GL-014</span></p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm fh-button--secondary" type="button">Edit</button></div>
+    </div>
+  </header>
+  <dl class="fh-tpl__facts">
+    <div><dt>Owner</dt><dd><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></dd></div>
+    <div><dt>Area</dt><dd><a class="fh-ref" href="#c-sidecar" data-sidecar="area-search"><span class="fh-ref__label">Search</span></a></dd></div>
+    <div><dt>Started</dt><dd>Nov 8</dd></div>
+    <div><dt>Due</dt><dd>Nov 14</dd></div>
+  </dl>
+  <div class="fh-tpl__cols">
+    <div class="fh-tpl__main">
+      <section class="fh-section-card" data-tone="sky" aria-labelledby="tpl-det-plan">
+        <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-det-plan"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i>Plan</h3></header>
+        <p class="fh-section-card__lede">Three steps, in order. The export runs first; the index swaps last.</p>
+      </section>
+      <section class="fh-section-card" data-tone="teal" aria-labelledby="tpl-det-rel">
+        <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-det-rel"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Related goals</h3></header>
+        <ul class="fh-links">
+          <li><a href="#c-sidecar" data-sidecar="goal-ledger"><i class="fh-icon fh-icon--target" aria-hidden="true"></i><span>Ledger cleanup</span><small>Goal</small></a></li>
+          <li><a href="#c-sidecar" data-sidecar="goal-tidal"><i class="fh-icon fh-icon--target" aria-hidden="true"></i><span>Tidal export</span><small>Goal</small></a></li>
+        </ul>
+      </section>
+    </div>
+    <aside class="fh-tpl__side" aria-label="Activity">
+      <details class="fh-panel-section fh-panel-section--timeline" data-tone="violet" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--activity fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Activity</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">2 events</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+          <ol class="fh-timeline">
+            <li data-tone="lime"><time>Nov 11</time><p><b>Export finished</b> 12,400 rows</p></li>
+            <li data-tone="sky"><time>Nov 8</time><p><b>Goal opened</b> by Orchard</p></li>
+          </ol>
+        </div>
+      </details>
+    </aside>
+  </div>
+</div>
+
+<div class="fh-tpl fh-tpl--form" data-fh-id="TPL-1.4" data-fh-name="Form">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="orange">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">New goal</h2>
+        <p class="fh-record__sub">A goal needs a name and an owner.</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-tpl__body">
+    <section class="fh-section-card" data-tone="orange" aria-labelledby="tpl-form-basics">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-form-basics"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i>Basics</h3></header>
+      <div class="fh-field"><label for="tpl-form-name">Name</label><input class="fh-input" id="tpl-form-name" placeholder="Harbor index refresh"></div>
+      <div class="fh-field"><label for="tpl-form-owner">Owner</label><input class="fh-input" id="tpl-form-owner" placeholder="Orchard"></div>
+    </section>
+  </div>
+  <div class="fh-tpl__actions">
+    <button class="fh-button fh-button--secondary" type="button">Cancel</button>
+    <button class="fh-button" type="button">Create goal</button>
+  </div>
+</div>
+
+<div class="fh-tpl fh-tpl--empty" data-fh-id="TPL-1.5" data-fh-name="Empty">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="violet">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Goals</h2>
+        <p class="fh-record__sub">What the team is working toward.</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-tpl__body">
+    <div class="fh-empty" data-tone="violet">
+      <span class="fh-empty__icon">∅</span>
+      <h3>No goals yet</h3>
+      <p>Goals you create show up here, with their owner and status.</p>
+      <button class="fh-button fh-button--sm" type="button">New goal</button>
+    </div>
+  </div>
+</div>
+
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-ref" data-fh-id="REF" data-fh-groups="Reference cell">
+          <div class="site-demo__head"><h3>Reference cell</h3><p><code>fh-ref</code>. Every mention of another record in a table, list or field: a label, an optional key in mono, and <code>data-sidecar</code> so the opener opens that record's sidecar. The <code>href</code> stays, for a new tab and for no script. A target that is gone says so and is not a link.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Label<code>.fh-ref</code></dt><dd>
+    <a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard" data-fh-id="REF-1.1" data-fh-name="Label"><span class="fh-ref__label">Orchard</span></a>
+  </dd></div>
+  <div><dt>With key<code>.fh-ref__key</code></dt><dd>
+    <a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor" data-fh-id="REF-1.2" data-fh-name="With key"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a>
+  </dd></div>
+  <div><dt>Gone<code>.fh-ref--gone</code></dt><dd>
+    <span class="fh-ref fh-ref--gone" title="This record was removed" data-fh-id="REF-1.3" data-fh-name="Gone"><span class="fh-ref__label">GL-009</span><span class="fh-ref__note">removed</span></span>
+  </dd></div>
+</dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-rdt" data-fh-id="RDT" data-fh-groups="Datatable record cells">
+          <div class="site-demo__head"><h3>Datatable record cells</h3><p><code>fh-dt--records</code>. The first cell is the reference cell, one cell holds the row's status chip, and the whole row opens the sidecar. Each cell carries <code>data-label</code>; under 36rem the rows stack and the labels show.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-dt fh-dt--records" aria-label="Relays" data-fh-id="RDT-1.1" data-fh-name="Records table">
+  <div class="fh-dt__scroll"><table class="fh-dt__table">
+    <thead><tr><th scope="col">Relay</th><th scope="col">Sent by</th><th scope="col">Duration</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr data-sidecar="relay-index" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-index"><span class="fh-ref__label">Index refresh</span><code class="fh-ref__key">R-201</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Duration">38 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="passed">passed</span></td></tr>
+      <tr data-sidecar="relay-ledger" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">R-202</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td data-label="Duration">12 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="failed">failed</span></td></tr>
+      <tr data-sidecar="relay-tidal" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-tidal"><span class="fh-ref__label">Tidal export</span><code class="fh-ref__key">R-203</code></a></td><td data-label="Sent by"><span class="fh-ref fh-ref--gone" title="This record was removed"><span class="fh-ref__label">Agent 7</span><span class="fh-ref__note">removed</span></span></td><td data-label="Duration">5 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="queued">queued</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-chip-rules" data-fh-id="SCR" data-fh-groups="Chip rules">
+          <div class="site-demo__head"><h3>Chip rules</h3><p>Three markers, three jobs. <code>fh-chip</code> with <code>data-status</code> is the one chip for the status of a record, and its tone follows the status value. <code>fh-badge</code> is for counts only. <code>fh-status</code> is inline status text only. Chips live in the record header, in a collapsed section's summary and once per row (status only), and nowhere else in a body.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Status chip<code>.fh-chip[data-status]</code></dt><dd>
+    <div class="fh-chips fh-chips--wrap" data-fh-id="SCR-1.1" data-fh-name="Status chip">
+      <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span>
+      <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span>
+      <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="queued">queued</span>
+      <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="failed">failed</span>
+      <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="archived">archived</span>
+    </div>
+  </dd></div>
+  <div><dt>Count<code>.fh-badge</code></dt><dd>
+    <span class="fh-badge" data-fh-id="SCR-1.2" data-fh-name="Count">12</span>
+  </dd></div>
+  <div><dt>Inline status<code>.fh-status</code></dt><dd>
+    <p data-fh-id="SCR-1.3" data-fh-name="Inline status">Last run <span class="fh-status" data-tone="lime">passed</span> at 15:45.</p>
+  </dd></div>
+</dl>
           </div>
         </div>
 
