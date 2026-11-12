@@ -28,35 +28,44 @@
   },
   "templates": {
     "note": "A page picks one template, places it in fh-main, and fills its regions with Firehorse parts. It never sets its own layout. Templates use fh-record and fh-section-card, which are in the core bundle: firehorse.css is all a page needs. Docs: /components/sections/#TPL",
+    "nav": {
+      "id": "TPL-1.6",
+      "class": "fh-tpl__nav",
+      "markup": "one <nav class=\"fh-tabs fh-tabs--sub\" aria-label=\"...\"> of links, one per page of the area, the landing page first; the current page's link carries aria-current=\"page\"; an optional count is one fh-badge after the label (counts only); no chips, no icons",
+      "use": "optional; when an area has more than one page every page of the area carries the same tabs in the same order",
+      "place": "directly after the header, before whatever the template puts next",
+      "max": "ten tabs at most, labels of one or two words",
+      "narrow": "under 36rem the tabs stay on one line and scroll sideways inside the region, the current tab scrolled into view by CSS; the page never scrolls sideways"
+    },
     "landing": {
       "id": "TPL-1.1",
       "class": "fh-tpl fh-tpl--landing",
-      "regions": ["header (fh-record)", "metrics (fh-metrics fh-metrics--four: exactly four fh-metric, each with label, value, line and source)", "body (fh-section-card, one per detail section)"],
+      "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "metrics (fh-metrics fh-metrics--four: exactly four fh-metric, each with label, value, line and source)", "body (fh-section-card, one per detail section)"],
       "use": "The top page of an area.",
       "metricRow": { "id": "TMR", "class": "fh-metrics fh-metrics--four", "narrow": "two by two under 36rem" }
     },
     "list": {
       "id": "TPL-1.2",
       "class": "fh-tpl fh-tpl--list",
-      "regions": ["header (fh-record)", "filters (fh-search, fh-chip filters)", "body (fh-dt fh-dt--records)"],
+      "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "filters (fh-search, fh-chip filters)", "body (fh-dt fh-dt--records)"],
       "use": "A page that is one table of records."
     },
     "detail": {
       "id": "TPL-1.3",
       "class": "fh-tpl fh-tpl--detail",
-      "regions": ["header (fh-record with fh-record__chips)", "facts (fh-tpl__facts, a dl)", "cols: main (fh-section-card) and side (fh-panel-section); side drops under main below 60rem"],
+      "regions": ["header (fh-record with fh-record__chips)", "nav (fh-tpl__nav, optional)", "facts (fh-tpl__facts, a dl)", "cols: main (fh-section-card) and side (fh-panel-section); side drops under main below 60rem"],
       "use": "One record."
     },
     "form": {
       "id": "TPL-1.4",
       "class": "fh-tpl fh-tpl--form",
-      "regions": ["header (fh-record)", "body (fh-section-card with fh-field)", "actions (fh-tpl__actions)"],
+      "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "body (fh-section-card with fh-field)", "actions (fh-tpl__actions)"],
       "use": "Creating or editing a record."
     },
     "empty": {
       "id": "TPL-1.5",
       "class": "fh-tpl fh-tpl--empty",
-      "regions": ["header (fh-record)", "body (one fh-empty with an action)"],
+      "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "body (one fh-empty with an action)"],
       "use": "An area with nothing in it yet."
     }
   },

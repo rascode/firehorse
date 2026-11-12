@@ -16,11 +16,13 @@
    *     <div class="fh-tpl__body">…fh-section-card, one per detail section…</div>
    *   </div>
    * Regions, in order:
-   *   landing  header · metrics (exactly four tiles) · body
-   *   list     header · filters · body (the datatable)
-   *   detail   header · facts · cols (main sections + side panel)
-   *   form     header · body (fields in section cards) · actions
-   *   empty    header · body (one fh-empty)
+   *   landing  header · nav · metrics (exactly four tiles) · body
+   *   list     header · nav · filters · body (the datatable)
+   *   detail   header · nav · facts · cols (main sections + side panel)
+   *   form     header · nav · body (fields in section cards) · actions
+   *   empty    header · nav · body (one fh-empty)
+   * The nav region is optional and the same on all five: the pages of one
+   * area as sub tabs (see "Area navigation" below).
    * Spacing between regions is one step (--fh-gap-sectioned) on every
    * template. Everything responds to the template's own width: the metric
    * row goes two by two under 36rem, the detail side panel drops under the
@@ -38,6 +40,7 @@
   }
 
   .fh-tpl__header,
+  .fh-tpl__nav,
   .fh-tpl__filters,
   .fh-tpl__body,
   .fh-tpl__facts,
@@ -61,6 +64,38 @@
     flex-wrap: wrap;
     gap: var(--fh-gap-related);
     margin: var(--fh-gap-related) 0 0;
+  }
+
+  /* —— Area navigation (fh-tpl__nav) ——
+   * Optional region directly under the header: one sub tabs nav of links,
+   * one per page of the area, the landing page first, the current page's
+   * link marked aria-current="page" (Tabs styles that as the selected tab).
+   * When an area has more than one page every page carries the same tabs in
+   * the same order; ten tabs at most, labels of one or two words. A count is
+   * one fh-badge after the label.
+   *   <div class="fh-tpl__nav">
+   *     <nav class="fh-tabs fh-tabs--sub" aria-label="Goals pages">
+   *       <a href="…" aria-current="page">Overview</a>
+   *       <a href="…">Open <span class="fh-badge">14</span></a> …
+   *     </nav>
+   *   </div>
+   * Under 36rem the tabs stay on one line and scroll sideways inside the
+   * region; the current tab is the only snap target, so the browser brings
+   * it into view when the row is laid out. No script, no fade. */
+  .fh-tpl__nav {
+    overflow: hidden;
+  }
+
+  @container fh-tpl (inline-size < 36rem) {
+    .fh-tpl__nav > .fh-tabs {
+      flex-wrap: nowrap;
+      max-inline-size: 100%;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--fh-inset-tile);
+      scroll-snap-type: x proximity;
+
+      & > [aria-current="page"] { scroll-snap-align: center; }
+    }
   }
 
   /* —— List: the filter row ——

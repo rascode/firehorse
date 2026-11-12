@@ -18231,7 +18231,7 @@
     }
   }
 
-  .fh-tpl__header, .fh-tpl__filters, .fh-tpl__body, .fh-tpl__facts, .fh-tpl__main, .fh-tpl__side {
+  .fh-tpl__header, .fh-tpl__nav, .fh-tpl__filters, .fh-tpl__body, .fh-tpl__facts, .fh-tpl__main, .fh-tpl__side {
     min-inline-size: 0;
   }
 
@@ -18246,6 +18246,24 @@
     margin: var(--fh-gap-related) 0 0;
     flex-wrap: wrap;
     display: flex;
+  }
+
+  .fh-tpl__nav {
+    overflow: hidden;
+  }
+
+  @container fh-tpl (inline-size < 36rem) {
+    .fh-tpl__nav > .fh-tabs {
+      overscroll-behavior-x: contain;
+      max-inline-size: 100%;
+      scroll-padding-inline: var(--fh-inset-tile);
+      scroll-snap-type: x proximity;
+      flex-wrap: nowrap;
+
+      & > [aria-current="page"] {
+        scroll-snap-align: center;
+      }
+    }
   }
 
   .fh-tpl__filters {

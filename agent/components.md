@@ -2072,6 +2072,16 @@ Five fixed layouts, `fh-tpl--landing`, `list`, `detail`, `form` and `empty`, pla
       <div class="fh-record__actions"><button class="fh-button fh-button--sm" type="button">New goal</button></div>
     </div>
   </header>
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Goals pages">
+      <a href="#c-tpl" aria-current="page">Overview</a>
+      <a href="#c-tpl">All goals <span class="fh-badge">14</span></a>
+      <a href="#c-tpl">Owners</a>
+      <a href="#c-tpl">Cycles</a>
+      <a href="#c-tpl">Reviews</a>
+      <a href="#c-tpl">Settings</a>
+    </nav>
+  </div>
   <div class="fh-tpl__metrics">
     <div class="fh-metrics fh-metrics--four">
       <article class="fh-metric" data-tone="sky"><p class="fh-metric__label"><i class="fh-icon fh-icon--target" aria-hidden="true"></i>Open goals</p><p class="fh-metric__value">14</p><p class="fh-metric__sub">3 due this week</p><p class="fh-metric__source">Goals</p></article>
@@ -2104,6 +2114,16 @@ Five fixed layouts, `fh-tpl--landing`, `list`, `detail`, `form` and `empty`, pla
       </div>
     </div>
   </header>
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Goals pages">
+      <a href="#c-tpl">Overview</a>
+      <a href="#c-tpl" aria-current="page">All goals <span class="fh-badge">14</span></a>
+      <a href="#c-tpl">Owners</a>
+      <a href="#c-tpl">Cycles</a>
+      <a href="#c-tpl">Reviews</a>
+      <a href="#c-tpl">Settings</a>
+    </nav>
+  </div>
   <div class="fh-tpl__filters">
     <label class="fh-search"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
     <div class="fh-chips fh-chips--wrap">
