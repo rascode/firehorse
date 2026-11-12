@@ -2126,6 +2126,11 @@ Five fixed layouts, `fh-tpl--landing`, `list`, `detail`, `form` and `empty`, pla
   </div>
   <div class="fh-tpl__filters">
     <label class="fh-search"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
+    <div class="fh-select-wrap"><select class="fh-select" aria-label="Owner"><option>All owners</option><option>Orchard</option><option>Harbor</option></select></div>
+    <div class="fh-select-wrap"><select class="fh-select" aria-label="Area"><option>All areas</option><option>Search</option><option>Billing</option><option>Export</option></select></div>
+    <div class="fh-select-wrap"><select class="fh-select" aria-label="Cycle"><option>Any cycle</option><option>Q4</option><option>Q1</option></select></div>
+    <div class="fh-select-wrap"><select class="fh-select" aria-label="Sort"><option>Newest first</option><option>Oldest first</option><option>Due soonest</option></select></div>
+    <label class="fh-check"><input type="checkbox"> Mine only</label>
     <div class="fh-chips fh-chips--wrap">
       <a class="fh-chip" data-tone="sky" href="#c-tpl" aria-current="true">All</a>
       <a class="fh-chip" data-tone="amber" href="#c-tpl">Waiting</a>

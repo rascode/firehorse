@@ -17,7 +17,7 @@
    *   </div>
    * Regions, in order:
    *   landing  header · nav · metrics (exactly four tiles) · body
-   *   list     header · nav · filters · body (the datatable)
+   *   list     header · nav · filters (search, selects, checkbox, chips) · body (the datatable)
    *   detail   header · nav · facts · cols (main sections + side panel)
    *   form     header · nav · body (fields in section cards) · actions
    *   empty    header · nav · body (one fh-empty)
@@ -100,12 +100,71 @@
   }
 
   /* —— List: the filter row ——
-   * Search and filter chips on one row; wraps instead of overflowing. */
+   * Search, select filters, a checkbox and filter chips on one row; it
+   * wraps instead of overflowing. A select (fh-select, or fh-select-wrap
+   * around one) sizes to its content between 9rem and 16rem and takes the
+   * quiet look, so it names its filter in its first option ("All owners")
+   * and no label sits above it. The search takes the space left, at least
+   * 14rem. A fh-check with its label sits in the row at its own width.
+   *   <div class="fh-tpl__filters">
+   *     <label class="fh-search">…</label>
+   *     <div class="fh-select-wrap"><select class="fh-select" aria-label="Owner">
+   *       <option value="">All owners</option>…</select></div>
+   *     <label class="fh-check"><input type="checkbox"> Mine only</label>
+   *   </div>
+   * Under 36rem of the template's width the search takes a full row and
+   * the selects sit two per row. */
   .fh-tpl__filters {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--fh-gap-related) var(--fh-gap-grouped);
+
+    & > .fh-search {
+      flex: 1 1 14rem;
+      min-inline-size: 14rem;
+    }
+
+    & > .fh-check { flex: none; }
+
+    & > :is(.fh-select, .fh-select-wrap) {
+      flex: 0 1 auto;
+      inline-size: auto;
+      min-inline-size: 9rem;
+      max-inline-size: 16rem;
+    }
+
+    & > .fh-select-wrap > .fh-select { inline-size: 100%; }
+
+    & > .fh-select,
+    & > .fh-select-wrap > .fh-select {
+      border-color: transparent;
+      background-color: color-mix(in oklab, var(--fh-color-text) 3.5%, transparent);
+
+      &:hover:not(:disabled, :focus) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent);
+      }
+
+      &:focus {
+        background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+        box-shadow: 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+      }
+    }
+  }
+
+  @container fh-tpl (inline-size < 36rem) {
+    .fh-tpl__filters {
+      & > .fh-search {
+        flex-basis: 100%;
+        min-inline-size: 0;
+      }
+
+      & > :is(.fh-select, .fh-select-wrap) {
+        flex: 1 1 calc(50% - var(--fh-gap-grouped) / 2);
+        min-inline-size: 0;
+        max-inline-size: none;
+      }
+    }
   }
 
   /* —— Detail: facts, then main and side ——
