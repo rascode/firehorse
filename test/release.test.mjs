@@ -56,10 +56,10 @@ for (const file of ["agent/index.md", "agent/components.md", "agent/patterns.md"
   for (const id of held) if (named(text, id)) errors.push(`${file} names held family ${id}`);
 }
 const llms = readFileSync(join(dist, "llms.txt"), "utf8");
-for (const path of heldPages) if (llms.includes(`https://firehorse.dev${path}`)) errors.push(`llms.txt lists held page ${path}`);
+for (const path of heldPages) if (llms.includes(`https://firehorse.rascode.dev${path}`)) errors.push(`llms.txt lists held page ${path}`);
 for (const id of held) if (named(llms, id)) errors.push(`llms.txt names held family ${id}`);
 const sitemap = readFileSync(join(dist, "sitemap.xml"), "utf8");
-for (const path of heldPages) if (sitemap.includes(`<loc>https://firehorse.dev${path}</loc>`)) errors.push(`sitemap.xml lists held page ${path}`);
+for (const path of heldPages) if (sitemap.includes(`<loc>https://firehorse.rascode.dev${path}</loc>`)) errors.push(`sitemap.xml lists held page ${path}`);
 
 // Forms shows exactly the live field types (credential types live on the Pro Keys page, not here).
 const forms = readFileSync(join(dist, "forms/index.html"), "utf8");

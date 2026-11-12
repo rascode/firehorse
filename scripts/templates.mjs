@@ -11,7 +11,7 @@ import { pages, root } from "./pages.mjs";
 const page = pages().find((p) => p.path === "/media/");
 if (!page) { console.error("✗ templates: no /media/ page"); process.exit(1); }
 const doc = parse(page.main);
-const site = "https://firehorse.dev";
+const site = "https://firehorse.rascode.dev";
 const tidy = (el, indent) => {
   let html = el.outerHTML.replace(/ data-fh-(?:id|name)="[^"]*"/g, "").replace(/ (src|href)="(?!https?:|#|\/\/)\/?([^"]+)"/g, ` $1="${site}/$2"`);
   // Re-indent markup lines, but never lines inside a <pre> (their whitespace is content).

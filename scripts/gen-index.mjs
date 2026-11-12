@@ -15,7 +15,7 @@ import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
 import { isPublic, shownStatus, tierOf, releaseIds } from "./release.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-const base = "https://firehorse.dev";
+const base = "https://firehorse.rascode.dev";
 const doc = parse(allMain());
 const check = process.argv.includes("--check");
 const owners = ownersOf(doc);

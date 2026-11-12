@@ -1,4 +1,4 @@
-// firehorse.dev — static assets plus one route: POST /api/lead.
+// firehorse.rascode.dev — static assets plus one route: POST /api/lead.
 // The lead is forwarded to whichever destinations are configured as secrets:
 //   LEAD_WEBHOOK_URL       any JSON webhook (Slack, Discord, n8n, Zapier, your CRM)
 //   RESEND_API_KEY + LEAD_TO (+ LEAD_FROM, EMAIL_THEME)   an email via Resend,

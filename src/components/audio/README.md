@@ -2,7 +2,7 @@
 
 Players and the parts around them: player, play button, waveform, scrubber, toggles, equalizer, playlist, captions, line reel, mixer, level meter, parameters and render stages. `src/js/audio.js` drives them.
 
-Docs: https://firehorse.dev/audio/
+Docs: https://firehorse.rascode.dev/audio/
 
 ## Notes
 

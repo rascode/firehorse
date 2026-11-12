@@ -1,6 +1,6 @@
 import { gzipSync } from "node:zlib";
 import { createHash } from "node:crypto";
-// Builds the firehorse.dev static site into site/dist.
+// Builds the firehorse.rascode.dev static site into site/dist.
 // Run after `npm run build`. Deploy site/dist to any static host.
 import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -162,7 +162,7 @@ cp("schema/mappings.json", "schema.json");
 if (existsSync(join(root, "site/data/references.json")) && isLivePage("/references/")) cp("site/data/references.json", "references.json");
 
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-const base = "https://firehorse.dev";
+const base = "https://firehorse.rascode.dev";
 const themes = JSON.parse(readFileSync(join(root, "dist/themes.json"), "utf8")).themes;
 const themeList = themes.filter((t) => !t.base).map((t) => t.label).join(", ");
 const themeLinks = themes.map((t) => `- [themes/${t.name}.css](${base}/themes/${t.name}.css): ${t.label}${t.base ? " (restores the defaults inside a themed page)" : ""}. ${t.tagline}`).join("\n");

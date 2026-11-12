@@ -23,7 +23,7 @@ Today we're open-sourcing it. Firehorse is the design system that scales, adapts
 - :table-2: [Datatables](/data/) with 22 field types, filters, grouping and board views
 - :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-1.3` instead of describing a chip
 - :sparkles: <a href="/foundations/#rotator" data-fh-release-for="WRT" data-fh-release-as="text">A word rotator</a> for headlines, in plain markup: no library, no script to configure
-- :terminal: `npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz` · [firehorse.dev](/)
+- :terminal: `npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz` · [firehorse.rascode.dev](/)
 
 
 ## Don't make me think
@@ -111,7 +111,7 @@ In Firehorse it's markup. The <a href="/foundations/#rotator" data-fh-release-fo
 
 ## Also in the box
 
-[Drawers, hamburger menus and ⌘K](/components/navigation/#menus-title), a <a href="/commerce/" data-fh-release-for="/commerce/" data-fh-release-as="text">commerce kit</a> from product card to checkout, [accessible forms](/forms/#c-form) on native controls, a <a href="/foundations/#motion" data-fh-release-for="MTL" data-fh-release-as="text">motion layer</a> that respects reduced motion, the <a href="/components/navigation/#c-dock" data-fh-release-for="DCK" data-fh-release-as="text">floating bar</a>, [183 icons](/foundations/#icons), and a <a href="/playground.html" data-fh-release-for="/playground.html" data-fh-release-as="text">drag-and-drop playground</a> that sends your page to Claude, ChatGPT, Cursor and more. Every piece is live with copyable markup at [firehorse.dev](/).
+[Drawers, hamburger menus and ⌘K](/components/navigation/#menus-title), a <a href="/commerce/" data-fh-release-for="/commerce/" data-fh-release-as="text">commerce kit</a> from product card to checkout, [accessible forms](/forms/#c-form) on native controls, a <a href="/foundations/#motion" data-fh-release-for="MTL" data-fh-release-as="text">motion layer</a> that respects reduced motion, the <a href="/components/navigation/#c-dock" data-fh-release-for="DCK" data-fh-release-as="text">floating bar</a>, [183 icons](/foundations/#icons), and a <a href="/playground.html" data-fh-release-for="/playground.html" data-fh-release-as="text">drag-and-drop playground</a> that sends your page to Claude, ChatGPT, Cursor and more. Every piece is live with copyable markup at [firehorse.rascode.dev](/).
 
 
 ## From Claude on design systems
@@ -152,7 +152,7 @@ Copy any component from [the site](/components/): every demo copies its markup a
 
 `git clone https://github.com/rascode/firehorse.git`
 
-`npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz`
+`npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz`
 
 `import "@rascode/firehorse";`
 
@@ -167,7 +167,7 @@ Firehorse is design system No. 01, the base layer for every Rascode build, start
 
 Want a custom design system, site or agent? [Hire the studio that built Firehorse](/#services). You'll hear back within one business day, with a fixed scope before any work starts. Here's [the brief we wrote for Firehorse itself](/pro/#brief).
 
-🐎 [firehorse.dev](/)
+🐎 [firehorse.rascode.dev](/)
 ⭐ [github.com/rascode/firehorse](https://github.com/rascode/firehorse)
 
 If you ship something with it, tag us. We want to see it.

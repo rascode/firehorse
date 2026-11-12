@@ -2,7 +2,7 @@
 
 Page-level compositions in `fh.patterns`: hero (Cinch), section head, etched split, CTA band, window frame, letter, and the offset panel.
 
-Docs: https://firehorse.dev/patterns/
+Docs: https://firehorse.rascode.dev/patterns/
 
 ## Notes
 

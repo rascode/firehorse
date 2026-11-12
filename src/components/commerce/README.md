@@ -2,7 +2,7 @@
 
 A store from the same tokens: price, product card, swatches, quantity stepper, product gallery and page, trust row, cart, choice cards, payment card, checkout, reviews, order confirmation and invoice (sheet, pay bar and payment panel).
 
-Docs: https://firehorse.dev/commerce/
+Docs: https://firehorse.rascode.dev/commerce/
 
 ## Notes
 

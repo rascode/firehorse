@@ -2,7 +2,7 @@
 
 The record sidecar and the library of pluggable sections: the sidecar shell (`fh-sidecar`), the section shell (`fh-panel-section`) and one section per data kind (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files).
 
-Docs: https://firehorse.dev/components/sections/
+Docs: https://firehorse.rascode.dev/components/sections/
 
 ## Notes
 

@@ -307,7 +307,7 @@ export const assemble = (list = sitePages()) => {
 };
 
 /** Assemble a full page from the layout (before the build's fill/cache-bust). Same-page #links stay; others point at their page. */
-export const render = (p, ctx, base = "https://firehorse.dev") => {
+export const render = (p, ctx, base = "https://firehorse.rascode.dev") => {
   const m = p.meta;
   const scripts = (m.scripts ?? []).map((s) => `<script type="module" src="${s}"></script>`).join("\n");
   // meta.styles: page-only stylesheets (e.g. Firehorse Pro), loaded after Firehorse and before site.css.

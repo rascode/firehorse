@@ -1,7 +1,7 @@
 # Firehorse — component markup
 
 > Canonical markup for every Firehorse component, v1.1.0. Generated from the
-> live demos on https://firehorse.dev — copy these exactly, then change
+> live demos on https://firehorse.rascode.dev — copy these exactly, then change
 > the copy. Rules live in [system.md](system.md).
 
 ## Class index
@@ -785,7 +785,7 @@ Rows with a visual, text and a trailing slot. A dashed timeline for activity.
   <p class="fh-divider" data-fh="DET">or install</p>
   <figure class="fh-code" data-fh="DET">
     <figcaption>terminal <button class="fh-button fh-button--sm fh-button--ghost" type="button">Copy</button></figcaption>
-    <pre><code>npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz</code></pre>
+    <pre><code>npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz</code></pre>
   </figure>
   <p class="fh-small fh-muted">Open the command menu with <kbd class="fh-kbd">⌘</kbd> <kbd class="fh-kbd">K</kbd>.</p>
 </div>

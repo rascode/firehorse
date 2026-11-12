@@ -118,7 +118,7 @@ for (const f of files) { const r = relative(process.cwd(), f); pages.push({ name
  * Every page declares the design system it's built on, so the audit (and any agent)
  * checks it against the right Index, Firehorse or the next one:
  *   <meta name="design-system" content="firehorse@1.1.0">
- *   <link rel="design-system" href="https://firehorse.dev/index.json">
+ *   <link rel="design-system" href="https://firehorse.rascode.dev/index.json">
  * --index overrides it. A page with no declaration is audited against the installed
  * Firehorse and reported, because the reference is what keeps the audit honest.
  */

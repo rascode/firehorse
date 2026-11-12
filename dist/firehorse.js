@@ -33,7 +33,7 @@
  *      mirrored into the trigger, the list closes on a pick, and
  *      fh:entity fires. The radios submit without this.
  *
- *   <script type="module" src="https://firehorse.dev/firehorse.js"></script>
+ *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
  */
 const ready = (fn) =>

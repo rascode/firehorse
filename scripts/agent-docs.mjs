@@ -26,7 +26,7 @@ const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 let md = `# Firehorse — component markup
 
 > Canonical markup for every Firehorse component, v${pkg.version}. Generated from the
-> live demos on https://firehorse.dev — copy these exactly, then change
+> live demos on https://firehorse.rascode.dev — copy these exactly, then change
 > the copy. Rules live in [system.md](system.md).
 
 ## Class index

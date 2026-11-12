@@ -2,7 +2,7 @@
 
 Things that open over the page: accordion, dialog, sheet, detail drawer, menu and its extras, toast and command menu.
 
-Docs: https://firehorse.dev/components/overlays/
+Docs: https://firehorse.rascode.dev/components/overlays/
 
 ## Notes
 

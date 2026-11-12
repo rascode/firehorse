@@ -1,5 +1,5 @@
 // Self-hosted npm install: packs the package and serves the tarball from the
-// site, so `npm i https://firehorse.dev/npm/firehorse-<version>.tgz`
+// site, so `npm i https://firehorse.rascode.dev/npm/firehorse-<version>.tgz`
 // works without the npm registry. Versioned file names keep lockfile
 // integrity stable; firehorse-latest.tgz always points at the newest.
 // Run after site.mjs (part of `npm run site`).
@@ -18,5 +18,5 @@ const [{ filename, integrity, size }] = JSON.parse(
 const versioned = `firehorse-${pkg.version}.tgz`;
 renameSync(join(out, filename), join(out, versioned));
 copyFileSync(join(out, versioned), join(out, "firehorse-latest.tgz"));
-writeFileSync(join(out, "index.json"), JSON.stringify({ name: pkg.name, version: pkg.version, tarball: `https://firehorse.dev/npm/${versioned}`, integrity, size }, null, 2) + "\n");
+writeFileSync(join(out, "index.json"), JSON.stringify({ name: pkg.name, version: pkg.version, tarball: `https://firehorse.rascode.dev/npm/${versioned}`, integrity, size }, null, 2) + "\n");
 console.log(`npm: ${versioned} (${(size / 1024).toFixed(0)} KB) → site/dist/npm/`);

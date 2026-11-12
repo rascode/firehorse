@@ -1,4 +1,4 @@
-// firehorse.dev — progressive enhancements for the docs.
+// firehorse.rascode.dev — progressive enhancements for the docs.
 // Firehorse itself needs no JavaScript; this file only powers the
 // documentation (code samples, copy buttons, token explorer, lab).
 (() => {
@@ -358,8 +358,8 @@
       try {
         const r = await fetch(leadForm.action, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) });
         sent = r.ok;
-        preview = !r.ok && r.status !== 422 && location.hostname !== "firehorse.dev";
-      } catch { preview = location.hostname !== "firehorse.dev"; }
+        preview = !r.ok && r.status !== 422 && location.hostname !== "firehorse.rascode.dev";
+      } catch { preview = location.hostname !== "firehorse.rascode.dev"; }
       submit.removeAttribute("aria-busy");
       submit.querySelector(".fh-spinner")?.remove();
       submit.querySelector("span").textContent = submitText;
