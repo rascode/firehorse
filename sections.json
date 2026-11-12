@@ -7,7 +7,14 @@
     "class": "fh-sidecar",
     "drawer": "fh-dialog fh-dialog--float fh-sidecar",
     "slots": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"],
-    "chips": "One chip row in the header: the record's state, in at most four chips. Chips appear nowhere else in the body, except one status chip a row may carry (a log line level, a prompt state)."
+    "chips": "One chip row in the header: the record's state, in at most four chips. Chips appear nowhere else in the body, except one status chip a row may carry (a log line level, a prompt state).",
+    "events": {
+      "fh:sidecar-before-close": {
+        "cancelable": true,
+        "detail": ["id (the record being left)", "next (the record a swap goes to, else null)", "reason (close or swap)", "opener", "sidecar"],
+        "when": "The sidecar is dirty (data-dirty, set by an input or change inside a form section) and is about to close or swap to another record. preventDefault() keeps it open on its record. With no listener it closes as before. A submit the page does not cancel, or a form reset, clears data-dirty."
+      }
+    }
   },
   "shell": {
     "id": "SCT",
@@ -169,6 +176,24 @@
       "body": "fh-files",
       "slots": ["icon", "name", "size", "date"],
       "chips": { "rule": "The file count and the total size.", "max": 2 }
+    },
+    "form": {
+      "id": "SFM",
+      "class": "fh-panel-section fh-panel-section--form",
+      "icon": "square-pen",
+      "tone": "accent",
+      "body": "form > fieldset of fh-field (any Fields member, fh-money included) and fh-panel-section__slot, then fh-panel-section__actions",
+      "slots": ["note (fh-panel-section__note, locked only)", "fields; a read only value goes in the field's hint (fh-field__hint)", "slot for a host field (fh-panel-section__slot, data-slot=field)", "actions (fh-panel-section__actions: save button, optional second action, one inline fh-status)"],
+      "states": {
+        "clean": "no data-dirty",
+        "changed": "data-dirty on the section (sidecar.js sets it, and on the sidecar)",
+        "saving": "aria-busy on the form, save button disabled",
+        "saved": "one fh-status (data-tone lime) in the actions row",
+        "error": "aria-invalid and fh-field__error on the field; one fh-status (data-tone danger) in the actions row for an error that belongs to no field",
+        "locked": "fieldset disabled, one line fh-panel-section__note above the fields, save button disabled"
+      },
+      "narrow": "the actions row stacks under 36rem",
+      "chips": { "rule": "The field count, then the count that still needs a value or holds an error.", "max": 2 }
     }
   },
   "fields": {

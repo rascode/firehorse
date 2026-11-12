@@ -2034,6 +2034,26 @@ The header every section shares: an icon, a title larger than body text in the s
         </ul>
 ```
 
+### Form section
+
+`fh-panel-section--form`. A section where a person edits the record in place: one `form` with one `fieldset` of Firehorse fields (`fh-money` included, and `fh-panel-section__slot` for a field the host supplies), then the actions row. A field's read only value, such as "ends in 4f2a", goes in its hint. States are markup only: `data-dirty` on the section is changed, `aria-busy` on the form with the save button disabled is saving, one `fh-status` in the actions row is saved (or an error that belongs to no field), `fh-field__error` is a field error, and a disabled fieldset with a one line note above it is locked. `sidecar.js` sets `data-dirty` on the section and the sidecar; a dirty sidecar fires a cancelable `fh:sidecar-before-close` before it closes or swaps record. The actions stack under 36rem.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-clean-name">Display name</label>
+              <input class="fh-input" id="fs-clean-name" name="name" value="Harbor index refresh" required>
+```
+
 ### Page templates
 
 Five fixed layouts, `fh-tpl--landing`, `list`, `detail`, `form` and `empty`, placed in the page's `fh-main`. A page picks one and fills its regions with Firehorse parts; it never sets its own layout. Spacing between regions is one step on every template, and each template responds to its own width, so every one holds at 1440 and at 375. Page templates use the record header and section card, which ship in `firehorse.css`.

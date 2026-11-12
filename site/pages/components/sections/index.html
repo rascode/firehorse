@@ -5,15 +5,15 @@
   "name": "Sections",
   "tone": "sky",
   "title": "Sections · Firehorse",
-  "description": "Firehorse sections: the record sidecar, the section shell, and ten pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files).",
-  "headline": "One sidecar, one section shell, ten kinds of data",
+  "description": "Firehorse sections: the record sidecar, the section shell, and eleven pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files, form).",
+  "headline": "One sidecar, one section shell, eleven kinds of data",
   "lede": "A record sidecar with a fixed header, and a library of sections picked by the kind of data they hold. Each one starts with an icon and a title, collapses, and shows summary chips only when collapsed.",
   "scripts": ["/sidecar.js"],
   "styles": [],
   "icon": "panels-top-left",
   "summary": [
     {
-      "value": "10",
+      "value": "11",
       "label": "Section kinds",
       "blurb": "One section per data kind, mapped in sections.json."
     },
@@ -63,6 +63,41 @@
           <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
           <div><dt>Duration</dt><dd>38 min</dd></div>
         </dl>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--form" data-tone="accent">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-sc-name">Display name</label>
+              <input class="fh-input" id="fs-sc-name" name="name" value="Harbor index refresh" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-sc-note">Note</label>
+              <textarea class="fh-textarea" id="fs-sc-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-sc-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-sc-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+          </div>
+        </form>
         </div>
       </details>
     <details class="fh-panel-section fh-panel-section--prompts" data-tone="teal" open>
@@ -788,6 +823,261 @@
           <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>spec.md</span><small>9 KB</small><time>Nov 11</time></a></li>
           <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>sections-1440.png</span><small>63 KB</small><time>Nov 11</time></a></li>
         </ul>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-form" data-fh-id="SFM" data-fh-groups="Form section">
+          <div class="site-demo__head"><h3>Form section</h3><p><code>fh-panel-section--form</code>. A section where a person edits the record in place: one <code>form</code> with one <code>fieldset</code> of Firehorse fields (<code>fh-money</code> included, and <code>fh-panel-section__slot</code> for a field the host supplies), then the actions row. A field's read only value, such as "ends in 4f2a", goes in its hint. States are markup only: <code>data-dirty</code> on the section is changed, <code>aria-busy</code> on the form with the save button disabled is saving, one <code>fh-status</code> in the actions row is saved (or an error that belongs to no field), <code>fh-field__error</code> is a field error, and a disabled fieldset with a one line note above it is locked. <code>sidecar.js</code> sets <code>data-dirty</code> on the section and the sidecar; a dirty sidecar fires a cancelable <code>fh:sidecar-before-close</code> before it closes or swaps record. The actions stack under 36rem.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open data-fh-id="SFM-1.1" data-fh-name="Clean">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-clean-name">Display name</label>
+              <input class="fh-input" id="fs-clean-name" name="name" value="Harbor index refresh" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-clean-note">Note</label>
+              <textarea class="fh-textarea" id="fs-clean-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-clean-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-clean-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+          </div>
+        </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open data-dirty data-fh-id="SFM-1.2" data-fh-name="Changed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-chg-name">Display name</label>
+              <input class="fh-input" id="fs-chg-name" name="name" value="Harbor index rebuild" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-chg-note">Note</label>
+              <textarea class="fh-textarea" id="fs-chg-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-chg-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-chg-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+          </div>
+        </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open data-dirty data-fh-id="SFM-1.3" data-fh-name="Saving">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form aria-busy="true">
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-sav-name">Display name</label>
+              <input class="fh-input" id="fs-sav-name" name="name" value="Harbor index rebuild" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-sav-note">Note</label>
+              <textarea class="fh-textarea" id="fs-sav-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-sav-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-sav-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit" disabled>Saving</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset" disabled>Discard</button>
+          </div>
+        </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open data-fh-id="SFM-1.4" data-fh-name="Saved">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-ok-name">Display name</label>
+              <input class="fh-input" id="fs-ok-name" name="name" value="Harbor index rebuild" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-ok-note">Note</label>
+              <textarea class="fh-textarea" id="fs-ok-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-ok-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-ok-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button><span class="fh-status" data-tone="lime" role="status">Saved just now</span>
+          </div>
+        </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open data-dirty data-fh-id="SFM-1.5" data-fh-name="Error">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span><span class="fh-chip" data-tone="rose">1 error</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-err-name">Display name</label>
+              <input class="fh-input" id="fs-err-name" name="name" value=""  required aria-invalid="true" aria-describedby="fs-err-name-msg">
+              <p class="fh-field__error" id="fs-err-name-msg">Enter a display name.</p>
+            </div>
+            <div class="fh-field">
+              <label for="fs-err-note">Note</label>
+              <textarea class="fh-textarea" id="fs-err-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-err-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-err-limit" name="limit" inputmode="decimal" autocomplete="off" value="500" aria-invalid="true" aria-describedby="fs-err-limit-msg">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__error" id="fs-err-limit-msg">The limit is more than 50,000.00.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button><span class="fh-status" data-tone="danger" role="alert">The record could not be saved. Try again.</span>
+          </div>
+        </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open data-fh-id="SFM-1.6" data-fh-name="Locked">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <p class="fh-panel-section__note">Locked while the relay is running. It opens again when the run ends.</p>
+          <fieldset disabled>
+            <div class="fh-field">
+              <label for="fs-lock-name">Display name</label>
+              <input class="fh-input" id="fs-lock-name" name="name" value="Harbor index refresh" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-lock-note">Note</label>
+              <textarea class="fh-textarea" id="fs-lock-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-lock-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-lock-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit" disabled>Save</button>
+          </div>
+        </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" data-fh-id="SFM-1.7" data-fh-name="Collapsed with chips">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span><span class="fh-chip" data-tone="amber">1 needs a value</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-coll-name">Display name</label>
+              <input class="fh-input" id="fs-coll-name" name="name" value="Harbor index refresh" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-coll-note">Note</label>
+              <textarea class="fh-textarea" id="fs-coll-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-coll-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-coll-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+          </div>
+        </form>
         </div>
       </details>
 </div>

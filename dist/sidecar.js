@@ -24,6 +24,19 @@
  *                      record link inside the sidecar swaps its record.
  *   fh:sidecar-close   after the dialog has closed and focus has returned.
  *
+ * Unsaved changes: an input or change inside a form section
+ * (.fh-panel-section--form) sets data-dirty on that section and on the
+ * sidecar. A submit that the page does not cancel, or a form reset, clears
+ * it. While the sidecar is dirty, closing it (Escape, the close control, the
+ * backdrop, closeSidecar) or swapping it to another record first fires:
+ *   fh:sidecar-before-close  cancelable, detail { id, next, reason, opener,
+ *                      sidecar }: id is the record being left, reason is
+ *                      "close" or "swap", next is the record a swap goes to
+ *                      (null on close). preventDefault() keeps the sidecar
+ *                      on its record. With no listener it closes as before.
+ *                      A page that cancels the submit and saves itself
+ *                      removes data-dirty (section and sidecar) once it has.
+ *
  *   import "@rascode/firehorse/sidecar";
  *   import { openSidecar, closeSidecar } from "@rascode/firehorse/sidecar";
  */
@@ -37,6 +50,12 @@ let uid = 0;
 
 const emit = (target, name, detail) =>
   target.dispatchEvent(new CustomEvent(name, { bubbles: true, detail }));
+
+const FORM_SECTION = ".fh-panel-section--form";
+
+/* An event a host can cancel: true when nobody did. */
+const ask = (target, name, detail) =>
+  target.dispatchEvent(new CustomEvent(name, { bubbles: true, cancelable: true, detail }));
 
 const findSidecar = (opener, id) => {
   const sel = opener?.getAttribute("data-sidecar-target");
@@ -56,6 +75,24 @@ const label = (dlg) => {
   dlg.setAttribute("aria-labelledby", title.id);
 };
 
+const isDirty = (dlg) => dlg.hasAttribute("data-dirty");
+
+const clearDirty = (dlg) => {
+  dlg.removeAttribute("data-dirty");
+  dlg.querySelectorAll(`${FORM_SECTION}[data-dirty]`).forEach((s) => s.removeAttribute("data-dirty"));
+};
+
+/* A dirty sidecar asks the host before it leaves its record. */
+const mayLeave = (dlg, reason, next = null) =>
+  !isDirty(dlg) ||
+  ask(dlg, "fh:sidecar-before-close", {
+    id: dlg.dataset.record ?? null,
+    next,
+    reason,
+    opener: openers.get(dlg) ?? null,
+    sidecar: dlg,
+  });
+
 export function openSidecar(id, opener = null) {
   const dlg = findSidecar(opener, id);
   if (!dlg) {
@@ -63,6 +100,11 @@ export function openSidecar(id, opener = null) {
     return null;
   }
   const previous = dlg.dataset.record ?? null;
+  if (dlg.open && previous !== id) {
+    // The click was ours either way: a refused swap leaves the sidecar as it is.
+    if (!mayLeave(dlg, "swap", id)) return dlg;
+    clearDirty(dlg);
+  }
   // Opened from a record link inside the sidecar: focus still goes back to the first opener.
   if (opener && !dlg.contains(opener)) openers.set(dlg, opener);
   dlg.dataset.record = id;
@@ -74,7 +116,7 @@ export function openSidecar(id, opener = null) {
 }
 
 export function closeSidecar(dlg = document.querySelector("dialog.fh-sidecar[open]")) {
-  if (dlg?.open) dlg.close();
+  if (dlg?.open && mayLeave(dlg, "close")) dlg.close();
 }
 
 /* —— Openers ——
@@ -125,6 +167,39 @@ function init() {
     }
   });
 
+  // Unsaved changes: the form section marks itself and the sidecar around it.
+  const markDirty = (e) => {
+    const section = e.target.closest?.(FORM_SECTION);
+    if (!section) return;
+    section.dataset.dirty = "";
+    section.closest("dialog.fh-sidecar, .fh-sidecar")?.setAttribute("data-dirty", "");
+  };
+  document.addEventListener("input", markDirty);
+  document.addEventListener("change", markDirty);
+
+  const markClean = (e) => {
+    const section = e.target.closest?.(FORM_SECTION);
+    if (!section) return;
+    section.removeAttribute("data-dirty");
+    const sidecar = section.closest("dialog.fh-sidecar, .fh-sidecar");
+    if (sidecar && !sidecar.querySelector(`${FORM_SECTION}[data-dirty]`)) sidecar.removeAttribute("data-dirty");
+  };
+  // A page that cancels the submit has taken over saving: it clears data-dirty itself.
+  document.addEventListener("submit", (e) => {
+    if (!e.defaultPrevented) markClean(e);
+  });
+  document.addEventListener("reset", markClean);
+
+  // Escape: the dialog's own cancel event, before it closes.
+  document.addEventListener(
+    "cancel",
+    (e) => {
+      const dlg = e.target;
+      if (dlg instanceof HTMLDialogElement && dlg.matches(".fh-sidecar") && !mayLeave(dlg, "close")) e.preventDefault();
+    },
+    true,
+  );
+
   // Enter is a click on a link or button already; the rest need it by hand.
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
@@ -141,6 +216,7 @@ function init() {
       if (!(dlg instanceof HTMLDialogElement) || !dlg.matches(".fh-sidecar")) return;
       const opener = openers.get(dlg) ?? null;
       openers.delete(dlg);
+      clearDirty(dlg);
       opener?.setAttribute("aria-expanded", "false");
       if (opener?.isConnected) opener.focus({ preventScroll: true });
       emit(dlg, "fh:sidecar-close", { id: dlg.dataset.record ?? null, opener, sidecar: dlg, previous: null });

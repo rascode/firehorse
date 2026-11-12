@@ -1,5 +1,5 @@
 /*
- * Firehorse — Pluggable sections (SPR · SRC · STT · STL · SCH · SLG · SPM · SMT · SLK · SFL)
+ * Firehorse — Pluggable sections (SPR · SRC · STT · STL · SCH · SLG · SPM · SMT · SLK · SFL · SFM)
  * components/sections · layer fh.components · docs /components/sections/
  */
 
@@ -17,7 +17,8 @@
    *   prompts     fh-panel-section--prompts      fh-prompts
    *   metrics     fh-panel-section--metrics      fh-metrics
    *   links       fh-panel-section--links        fh-links
-   *   files       fh-panel-section--files        fh-files */
+   *   files       fh-panel-section--files        fh-files
+   *   form        fh-panel-section--form         form > fieldset of fh-field, then the actions row */
 
   /* Tables in a section: compact cells, the time column in mono. */
   :is(.fh-panel-section--records, .fh-panel-section--timetable) .fh-table :is(th, td) {
@@ -243,5 +244,110 @@
     aspect-ratio: 1;
     background-color: var(--fh-color-text-subtle);
     mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
+  }
+
+  /* —— Form ——
+   * A section where a person edits the record in place. The body is one form:
+   * an optional one line note, one fieldset of fields, then the actions row.
+   *   <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open>
+   *     <summary class="fh-panel-section__head">…</summary>
+   *     <div class="fh-panel-section__body">
+   *       <form>
+   *         <fieldset>
+   *           <div class="fh-field">…</div>
+   *           <div class="fh-panel-section__slot" data-slot="field"></div>
+   *         </fieldset>
+   *         <div class="fh-panel-section__actions">
+   *           <button class="fh-button fh-button--sm" type="submit">Save</button>
+   *           <span class="fh-status" data-tone="lime" role="status">Saved</span>
+   *         </div>
+   *       </form>
+   *     </div>
+   *   </details>
+   * States, all markup: [data-dirty] on the section (changed), aria-busy on the
+   * form with the save button disabled (saving), one fh-status in the actions
+   * row (saved, or an error that belongs to no field), aria-invalid with
+   * fh-field__error on the field (error), fieldset[disabled] with a
+   * fh-panel-section__note above it (locked). sidecar.js sets data-dirty. */
+  .fh-panel-section--form form {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+
+    &[aria-busy="true"] fieldset {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+
+  .fh-panel-section--form fieldset {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    &:disabled {
+      opacity: 0.6;
+    }
+  }
+
+  /* The host's own field (a Pro field such as the key field) goes here. */
+  .fh-panel-section__slot {
+    min-inline-size: 0;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  /* Why the fields are locked: one line, above them. */
+  .fh-panel-section__note {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-panel-section__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+
+    & > .fh-status {
+      flex: 1 1 8rem;
+      min-inline-size: 0;
+    }
+  }
+
+  /* Changed: a dot after the title, in the section's tone. */
+  .fh-panel-section--form[data-dirty] .fh-panel-section__title::after {
+    content: "";
+    display: inline-block;
+    inline-size: 0.45em;
+    aspect-ratio: 1;
+    margin-inline-start: 0.5em;
+    border-radius: var(--fh-radius-round);
+    background-color: var(--fh-tone);
+    vertical-align: middle;
+  }
+
+  /* Narrow slot: the actions stack, each button the full width. */
+  @container fh-panel-section (inline-size < 36rem) {
+    .fh-panel-section__actions {
+      flex-direction: column;
+      align-items: stretch;
+
+      & > .fh-button {
+        inline-size: 100%;
+      }
+
+      & > .fh-status {
+        flex: none;
+      }
+    }
   }
 }
