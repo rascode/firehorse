@@ -1,0 +1,158 @@
+/*
+ * Firehorse — Record sidecar (SDC)
+ * components/sections · layer fh.components · docs /components/sections/#SDC
+ */
+
+@layer fh.components {
+  /* —— Record sidecar ——
+   * One drawer for every record in every app: a fixed header (eyebrow with
+   * the record kind, mark or icon, title, one chip row, actions, one close
+   * control), then sections, then linked records. It builds on the floating
+   * dialog and the fh-detail parts: as a dialog it slides in; as an <aside>
+   * it fills its slot.
+   *   <dialog class="fh-dialog fh-dialog--float fh-sidecar" id="record">
+   *     <header class="fh-sidecar__header">
+   *       <div class="fh-sidecar__bar">
+   *         <span class="fh-sidecar__eyebrow">Relays</span>
+   *         <span class="fh-sidecar__actions">
+   *           <button class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link">…</button>
+   *           <button class="fh-close" aria-label="Close"></button>
+   *         </span>
+   *       </div>
+   *       <div class="fh-sidecar__identity">
+   *         <span class="fh-sidecar__mark" data-tone="sky"><i class="fh-icon fh-icon--git-branch"></i></span>
+   *         <div><h2 class="fh-sidecar__title">Record title</h2><p class="fh-sidecar__sub">slug</p></div>
+   *       </div>
+   *       <div class="fh-sidecar__chips"><span class="fh-chip">merged</span></div>
+   *     </header>
+   *     <div class="fh-sidecar__body"><details class="fh-sec">…</details></div>
+   *   </dialog>
+   * One type scale: inside the sidecar the text tokens step down, so every
+   * Firehorse component in a section follows. Knobs: --fh-sidecar-size
+   * (width, 30rem), --fh-sidecar-height (as an aside, auto),
+   * --fh-sidecar-text (body, 0.8125rem), --fh-sidecar-small (0.78rem),
+   * --fh-sidecar-caption (0.72rem), --fh-sidecar-title (record title,
+   * 1.375rem). */
+  .fh-sidecar {
+    --fh-text-body: var(--fh-sidecar-text, 0.8125rem);
+    --fh-text-small: var(--fh-sidecar-small, 0.78rem);
+    --fh-text-caption: var(--fh-sidecar-caption, 0.72rem);
+
+    grid-template-rows: auto minmax(0, 1fr);
+    min-inline-size: 0;
+    padding: 0;
+    overflow: hidden;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-body);
+    line-height: var(--fh-leading-normal);
+    container: fh-sidecar / inline-size;
+  }
+
+  .fh-sidecar:not(dialog),
+  .fh-sidecar[open] {
+    display: grid;
+  }
+
+  .fh-sidecar:not(dialog) {
+    inline-size: min(100%, var(--fh-sidecar-size, 30rem));
+    block-size: var(--fh-sidecar-height, auto);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface-raised);
+  }
+
+  .fh-sidecar__header {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tile) var(--fh-inset-card) var(--fh-inset-control);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+  }
+
+  .fh-sidecar__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-related);
+  }
+
+  .fh-sidecar__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .fh-sidecar__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    margin-inline-start: auto;
+  }
+
+  .fh-sidecar__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+  }
+
+  /* The mark: an icon, an avatar or a logo in a tinted square. */
+  .fh-sidecar__mark {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2.75rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text-muted)) 45%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text-muted)) 14%, transparent);
+    color: var(--fh-tone, var(--fh-color-text-muted));
+
+    & > .fh-icon {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+    }
+  }
+
+  .fh-sidecar__title {
+    margin: 0;
+    max-inline-size: var(--fh-detail-title-max, 28ch);
+    color: var(--fh-color-text-strong);
+    font-size: var(--fh-sidecar-title, 1.375rem);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-heading);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .fh-sidecar__sub {
+    margin: var(--fh-gap-bound) 0 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+    overflow-wrap: anywhere;
+  }
+
+  /* The one chip row of the record header. */
+  .fh-sidecar__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-related);
+
+    & > .fh-chip {
+      padding: 0.2rem 0.6rem;
+      font-size: var(--fh-text-caption);
+    }
+  }
+
+  .fh-sidecar__body {
+    min-block-size: 0;
+    padding: 0 var(--fh-inset-card);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}

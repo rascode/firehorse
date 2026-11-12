@@ -1,0 +1,148 @@
+/*
+ * Firehorse — Section shell (SCT)
+ * components/sections · layer fh.components · docs /components/sections/#SCT
+ */
+
+@layer fh.components {
+  /* —— Section shell ——
+   * Every section starts with an icon, then a title larger than the body
+   * text in the strongest text role, then a collapse control. Collapsed,
+   * the header shows summary chips for what the section holds; open, the
+   * chips are gone (chips live only here and in the sidecar header).
+   *   <details class="fh-sec fh-sec--timetable" data-tone="sky" open>
+   *     <summary class="fh-sec__head">
+   *       <i class="fh-icon fh-icon--clock fh-sec__icon" aria-hidden="true"></i>
+   *       <h3 class="fh-sec__title">Timetable</h3>
+   *       <span class="fh-sec__chips"><span class="fh-chip">9 steps</span></span>
+   *     </summary>
+   *     <div class="fh-sec__body">…</div>
+   *   </details>
+   * The class fh-sec--<kind> names the data kind (see sections.json).
+   * The tone colours the icon and the chip dots. Knobs: --fh-sec-title
+   * (title size, 1.3em of the section's own text), --fh-sec-icon (icon
+   * size, 1.125rem). */
+  .fh-sec {
+    display: block;
+    min-inline-size: 0;
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    container: fh-sec / inline-size;
+
+    &:last-child {
+      border-block-end: 0;
+    }
+  }
+
+  .fh-sec__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
+    min-block-size: 2.75rem;
+    padding-block: var(--fh-inset-tile);
+    list-style: none;
+    cursor: var(--fh-cursor-action);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    /* The collapse control: a chevron at the far end that turns when open. */
+    &::after {
+      content: "";
+      flex: none;
+      order: 2;
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text-muted);
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      transition: rotate var(--fh-duration-base) var(--fh-ease-standard);
+    }
+
+    &:hover::after {
+      background-color: var(--fh-color-text-strong);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-ring-width, 2px) solid var(--fh-color-focus, currentColor);
+      outline-offset: 2px;
+      border-radius: var(--fh-radius-sm);
+    }
+  }
+
+  .fh-sec[open] > .fh-sec__head::after {
+    rotate: 180deg;
+  }
+
+  .fh-sec__icon {
+    flex: none;
+    inline-size: var(--fh-sec-icon, 1.125rem);
+    block-size: var(--fh-sec-icon, 1.125rem);
+    color: var(--fh-tone, var(--fh-color-text-muted));
+  }
+
+  .fh-sec__title {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    margin: 0;
+    color: var(--fh-color-text-strong);
+    font-family: var(--fh-font-body, inherit);
+    font-size: var(--fh-sec-title, 1.3em);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-heading);
+    line-height: var(--fh-leading-snug);
+    text-transform: none;
+  }
+
+  /* Summary chips: shown only while the section is collapsed. */
+  .fh-sec__chips {
+    display: none;
+    order: 1;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+
+    & > .fh-chip {
+      padding: 0.2rem 0.6rem;
+      font-size: var(--fh-text-caption);
+    }
+  }
+
+  .fh-sec:not([open]) > .fh-sec__head > .fh-sec__chips {
+    display: flex;
+  }
+
+  .fh-sec__body {
+    display: grid;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    padding-block: 0 var(--fh-inset-card);
+  }
+
+  /* Narrow slot: the chips drop onto their own line under the title. */
+  @container fh-sec (inline-size < 26rem) {
+    .fh-sec__chips {
+      order: 3;
+      flex: 1 1 100%;
+      justify-content: flex-start;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-sec {
+      interpolate-size: allow-keywords;
+    }
+
+    .fh-sec::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size var(--fh-duration-fast) var(--fh-ease-out),
+        content-visibility var(--fh-duration-fast) allow-discrete;
+    }
+
+    .fh-sec[open]::details-content {
+      block-size: auto;
+    }
+  }
+}

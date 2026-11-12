@@ -1716,6 +1716,312 @@ The mobile menu: a full-width popover under the header with grouped links. Open 
 </div>
 ```
 
+### Record sidecar
+
+One drawer for every record. A fixed header (eyebrow with the record kind, mark, title, one chip row, actions, one close control), then the sections, then the linked records. Body text steps down through the public text tokens, so every component inside follows. Open the whole stack from the first section or collapse them all.
+
+```html
+<aside class="fh-sidecar" style="--fh-sidecar-height: 44rem" aria-label="Record">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Relays · audit</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark" data-tone="sky"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i></span>
+      <div>
+        <h2 class="fh-sidecar__title">Harbor index refresh</h2>
+        <p class="fh-sidecar__sub"><code>harbor-index-refresh</code> · dispatch 1</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">claude_cli</span><span class="fh-chip" data-tone="amber">2 rounds</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+    <details class="fh-sec fh-sec--properties" data-tone="sky" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Properties</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <dl class="fh-kv fh-kv--single">
+          <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+          <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+          <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+          <div><dt>Duration</dt><dd>38 min</dd></div>
+        </dl>
+```
+
+### Sidecar as a drawer
+
+The same sidecar in a floating dialog: it slides in from the edge, and Escape or the close control puts it away.
+
+```html
+<button type="button" class="fh-button fh-button--secondary" data-opens="sidecar-demo">Open the sidecar</button>
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" id="sidecar-demo" aria-label="Record" style="--fh-dialog-size: 32rem">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Relays · audit</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close" onclick="this.closest('dialog').close()"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark" data-tone="sky"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i></span>
+      <div>
+        <h2 class="fh-sidecar__title">Harbor index refresh</h2>
+        <p class="fh-sidecar__sub"><code>harbor-index-refresh</code> · dispatch 1</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">claude_cli</span><span class="fh-chip" data-tone="amber">2 rounds</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+    <details class="fh-sec fh-sec--properties" data-tone="sky">
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Properties</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <dl class="fh-kv fh-kv--single">
+          <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+          <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+          <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+          <div><dt>Duration</dt><dd>38 min</dd></div>
+        </dl>
+```
+
+### Section shell
+
+The header every section shares: an icon, a title larger than body text in the strongest text role, and a collapse control. Collapsed, it shows summary chips for what it holds; open, the chips are gone. Chips live only here and in the sidecar header.
+
+```html
+<div class="fh-stack" style="max-inline-size: 30rem">
+      <details class="fh-sec fh-sec--properties" data-tone="sky" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Summary</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <dl class="fh-kv fh-kv--single">
+          <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+          <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+          <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+          <div><dt>Duration</dt><dd>38 min</dd></div>
+        </dl>
+```
+
+### Properties section
+
+`fh-sec--properties`. A key value list. Collapsed, it shows the two or three values that matter most.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--properties" data-tone="sky" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Properties</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <dl class="fh-kv fh-kv--single">
+          <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+          <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+          <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+          <div><dt>Duration</dt><dd>38 min</dd></div>
+        </dl>
+```
+
+### Records section
+
+`fh-sec--records`. A table of records. Every reference in a cell is a link that opens that record's sidecar.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--records" data-tone="teal" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--table-2 fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Records</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="teal">3 records</span><span class="fh-chip" data-tone="amber">1 open</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+            <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-ledger">Ledger cleanup</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-harbor">Harbor</a></td><td>Open</td></tr>
+            <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-tidal">Tidal export</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+          </tbody>
+        </table></div>
+```
+
+### Timetable section
+
+`fh-sec--timetable`. A real table: time, step, detail. Never a list that only looks like one.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--timetable" data-tone="amber" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--clock fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Timetable</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">15:07 to 15:45</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+          <tbody>
+            <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
+            <tr><td>15:14</td><td>Built the CSS</td><td>Three files, lint clean</td></tr>
+            <tr><td>15:31</td><td>Ran the tests</td><td>All checks passed</td></tr>
+            <tr><td>15:45</td><td>Wrote the report</td><td>Committed locally</td></tr>
+          </tbody>
+        </table></div>
+```
+
+### Timeline section
+
+`fh-sec--timeline`. Events in order, each with its time and a tone for what kind of event it was.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--timeline" data-tone="violet" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--activity fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Timeline</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="violet">3 events</span><span class="fh-chip" data-tone="sky">last 15:45</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <ol class="fh-timeline">
+          <li data-tone="sky"><time>15:07</time><p><b>Dispatched</b> to the build agent</p></li>
+          <li data-tone="lime"><time>15:31</time><p><b>Checks passed</b> on the first run</p></li>
+          <li data-tone="teal"><time>15:45</time><p><b>Committed</b> on the relay branch</p></li>
+        </ol>
+```
+
+### Chat section
+
+`fh-sec--chat`. Speaker, time and message. The speaker sits above the message with the time at the far side.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--chat" data-tone="fuchsia" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--message-square fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Replies</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 15:46</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <div class="fh-chat">
+          <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Harbor</span><time class="fh-message__time">15:44</time></p><p>The sidecar and ten sections are in. Tests pass.</p></div></div>
+          <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Orchard</span><time class="fh-message__time">15:46</time></p><p>Thanks. Please add the narrow screenshots.</p></div></div>
+```
+
+### Log section
+
+`fh-sec--log`. Time, level and line, in monospace. The level takes its tone.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--log" data-tone="orange" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--terminal fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Log</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="orange">5 lines</span><span class="fh-chip" data-tone="amber">1 warning</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <ol class="fh-log">
+          <li data-tone="sky"><time>15:07:12</time><b>info</b><code>claimed 3 paths</code></li>
+          <li data-tone="sky"><time>15:14:40</time><b>info</b><code>lint: 195 files, 0 errors</code></li>
+          <li data-tone="amber"><time>15:22:03</time><b>warn</b><code>class fh-section already exists; using fh-sec for the shell</code></li>
+          <li data-tone="lime"><time>15:31:55</time><b>ok</b><code>contrast verify passed</code></li>
+          <li data-tone="rose"><time>15:33:01</time><b>error</b><code>retry 1 of 2: build step timed out</code></li>
+        </ol>
+```
+
+### Prompts section
+
+`fh-sec--prompts`. The prompts a dispatch used, each with its key and version. Each row opens the prompt.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--prompts" data-tone="teal" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--sparkles fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Prompts</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="teal">2 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <ul class="fh-prompts">
+          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-preamble"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v3</b><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-spec"><code class="fh-prompt__key">relay.spec.firehorse-sections</code><b class="fh-prompt__version">v1</b><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+        </ul>
+```
+
+### Metrics section
+
+`fh-sec--metrics`. Metric tiles (they ship in admin.css). Collapsed, it shows the headline figure.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--metrics" data-tone="lime" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--chart-bar fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Tokens</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">412k effective</span><span class="fh-chip" data-tone="amber">$3.18</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <div class="fh-metrics">
+          <article class="fh-metric" data-tone="lime"><p class="fh-metric__label">Effective</p><p class="fh-metric__value">412k</p><p class="fh-metric__sub">Tokens, all layers</p></article>
+          <article class="fh-metric" data-tone="amber"><p class="fh-metric__label">Cost</p><p class="fh-metric__value">$3.18</p><p class="fh-metric__sub">Two rounds</p></article>
+          <article class="fh-metric" data-tone="sky"><p class="fh-metric__label">Rounds</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">One follow-up</p></article>
+```
+
+### Links section
+
+`fh-sec--links`. Linked records. Each one opens in the sidecar, so none is plain text.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--links" data-tone="sky" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--link fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Linked records</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <ul class="fh-links">
+          <li><a href="#c-sidecar" data-sidecar="commit-a1b2c3d"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Sections: record sidecar and ten sections</span><small>commit</small></a></li>
+          <li><a href="#c-sidecar" data-sidecar="goal-harbor"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i><span>Harbor index refresh</span><small>goal</small></a></li>
+          <li><a href="#c-sidecar" data-sidecar="agent-harbor"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i><span>Harbor</span><small>agent</small></a></li>
+        </ul>
+```
+
+### Files section
+
+`fh-sec--files`. Files with their size and date. A name opens or downloads the file.
+
+```html
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-sec fh-sec--files" data-tone="rose" open>
+        <summary class="fh-sec__head">
+          <i class="fh-icon fh-icon--paperclip fh-sec__icon" aria-hidden="true"></i>
+          <h3 class="fh-sec__title">Files</h3>
+          <span class="fh-sec__chips"><span class="fh-chip" data-tone="rose">3 files</span><span class="fh-chip" data-tone="sky">84 KB</span></span>
+        </summary>
+        <div class="fh-sec__body">
+        <ul class="fh-files">
+          <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time>Nov 11</time></a></li>
+          <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>spec.md</span><small>9 KB</small><time>Nov 11</time></a></li>
+          <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>sections-1440.png</span><small>63 KB</small><time>Nov 11</time></a></li>
+        </ul>
+```
+
 ### ACC · Accordion
 
 Native `<details>` with a shared `name`, so only one stays open. The height animates where the browser supports it.

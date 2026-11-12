@@ -1,0 +1,119 @@
+{
+  "name": "Firehorse sections",
+  "note": "The map from a data kind to the Firehorse section that shows it. An agent looks the kind up and uses the section it names; a kind with no entry is a Firehorse gap. Every section is the shell (fh-sec) plus a kind modifier. Docs: https://firehorse.rascode.dev/components/sections/",
+  "docs": "/components/sections/",
+  "sidecar": {
+    "id": "SDC",
+    "class": "fh-sidecar",
+    "drawer": "fh-dialog fh-dialog--float fh-sidecar",
+    "slots": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"],
+    "chips": "One chip row in the header: the record's state, in at most four chips. Chips appear nowhere else in the body."
+  },
+  "shell": {
+    "id": "SCT",
+    "element": "details",
+    "class": "fh-sec",
+    "slots": ["icon", "title", "chips", "body"],
+    "icon": "Required, first. An fh-icon with class fh-sec__icon; the section's tone colours it.",
+    "title": "An h3 with class fh-sec__title. Larger than body text, in the strongest text role.",
+    "collapse": "The summary is the control. Open by default unless the kind says otherwise.",
+    "chips": "In fh-sec__chips inside the summary. Shown only while collapsed."
+  },
+  "css": {
+    "metrics": "admin.css (fh-metric ships there)",
+    "others": "firehorse.css"
+  },
+  "kinds": {
+    "properties": {
+      "id": "SPR",
+      "class": "fh-sec fh-sec--properties",
+      "icon": "list-checks",
+      "tone": "sky",
+      "body": "fh-kv fh-kv--single",
+      "slots": ["rows: label and value"],
+      "chips": { "rule": "The two or three values that matter most (status, owner, duration).", "max": 3 }
+    },
+    "records": {
+      "id": "SRC",
+      "class": "fh-sec fh-sec--records",
+      "icon": "table-2",
+      "tone": "teal",
+      "body": "fh-table-wrap > fh-table",
+      "slots": ["columns", "rows; every reference in a cell is a link that opens that record's sidecar"],
+      "chips": { "rule": "The record count, then the count that needs attention.", "max": 2 }
+    },
+    "timetable": {
+      "id": "STT",
+      "class": "fh-sec fh-sec--timetable",
+      "icon": "clock",
+      "tone": "amber",
+      "body": "fh-table-wrap > fh-table (columns: time, step, detail)",
+      "slots": ["time", "step", "detail"],
+      "chips": { "rule": "The step count and the span, first time to last.", "max": 2 }
+    },
+    "timeline": {
+      "id": "STL",
+      "class": "fh-sec fh-sec--timeline",
+      "icon": "activity",
+      "tone": "violet",
+      "body": "fh-timeline",
+      "slots": ["time", "event (bold lead, then detail)", "tone per event"],
+      "chips": { "rule": "The event count and the time of the last event.", "max": 2 }
+    },
+    "chat": {
+      "id": "SCH",
+      "class": "fh-sec fh-sec--chat",
+      "icon": "message-square",
+      "tone": "fuchsia",
+      "body": "fh-chat > fh-message (fh-message__head: fh-message__name, fh-message__time)",
+      "slots": ["speaker", "time", "message"],
+      "chips": { "rule": "The message count and the time of the last one.", "max": 2 }
+    },
+    "log": {
+      "id": "SLG",
+      "class": "fh-sec fh-sec--log",
+      "icon": "terminal",
+      "tone": "orange",
+      "body": "fh-log",
+      "slots": ["time", "level (data-tone on the row)", "line (monospace)"],
+      "chips": { "rule": "The line count and the count of warnings or errors, if any.", "max": 2 }
+    },
+    "prompts": {
+      "id": "SPM",
+      "class": "fh-sec fh-sec--prompts",
+      "icon": "sparkles",
+      "tone": "teal",
+      "body": "fh-prompts > li > a.fh-prompt (fh-prompt__key, fh-prompt__version, fh-prompt__meta)",
+      "slots": ["key", "version", "meta (dispatch and time)", "link that opens the prompt"],
+      "chips": { "rule": "The prompt count and the dispatch they belong to.", "max": 2 }
+    },
+    "metrics": {
+      "id": "SMT",
+      "class": "fh-sec fh-sec--metrics",
+      "icon": "chart-bar",
+      "tone": "lime",
+      "body": "fh-metrics > fh-metric",
+      "slots": ["label", "value", "sub", "source"],
+      "css": "admin.css",
+      "chips": { "rule": "The headline figures, as value and unit.", "max": 2 }
+    },
+    "links": {
+      "id": "SLK",
+      "class": "fh-sec fh-sec--links",
+      "icon": "link",
+      "tone": "sky",
+      "body": "fh-links",
+      "slots": ["icon", "label", "kind", "link that opens the record's sidecar"],
+      "chips": { "rule": "The linked count.", "max": 1 }
+    },
+    "files": {
+      "id": "SFL",
+      "class": "fh-sec fh-sec--files",
+      "icon": "paperclip",
+      "tone": "rose",
+      "body": "fh-files",
+      "slots": ["icon", "name", "size", "date"],
+      "chips": { "rule": "The file count and the total size.", "max": 2 }
+    }
+  }
+}
