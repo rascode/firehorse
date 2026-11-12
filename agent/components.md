@@ -1234,6 +1234,28 @@ Real radios and checkboxes under the styling, so they submit with the form and w
 </div>
 ```
 
+### Disabled choices
+
+A disabled option, a disabled segmented group, and a disabled switch. The control stays in the form and takes no pointer.
+
+```html
+<div class="fh-stack fh-stack--lg">
+  <fieldset class="fh-segmented">
+    <legend class="fh-sr-only">How should the shirt ship?</legend>
+    <label><input type="radio" name="studio-ship" value="fold" checked> Fold</label>
+    <label><input type="radio" name="studio-ship" value="hang"> Hang</label>
+    <label><input type="radio" name="studio-ship" value="mail" disabled> Mail</label>
+  </fieldset>
+  <fieldset class="fh-segmented" disabled>
+    <legend class="fh-sr-only">Pack size</legend>
+    <label><input type="radio" name="studio-pack" value="one" checked> One</label>
+    <label><input type="radio" name="studio-pack" value="six"> Six</label>
+  </fieldset>
+  <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" disabled> Hold the print</label>
+  <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked disabled> Lock the size</label>
+</div>
+```
+
 ### Dictation field
 
 Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with `data-fh-dictate` (or drive the same markup yourself).

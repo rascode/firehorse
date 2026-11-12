@@ -309,6 +309,27 @@
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-disabled-choices">
+          <div class="site-demo__head"><h3>Disabled choices</h3><p>A disabled option, a disabled segmented group, and a disabled switch. The control stays in the form and takes no pointer.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+  <fieldset class="fh-segmented">
+    <legend class="fh-sr-only">How should the shirt ship?</legend>
+    <label><input type="radio" name="studio-ship" value="fold" checked> Fold</label>
+    <label><input type="radio" name="studio-ship" value="hang"> Hang</label>
+    <label><input type="radio" name="studio-ship" value="mail" disabled> Mail</label>
+  </fieldset>
+  <fieldset class="fh-segmented" disabled>
+    <legend class="fh-sr-only">Pack size</legend>
+    <label><input type="radio" name="studio-pack" value="one" checked> One</label>
+    <label><input type="radio" name="studio-pack" value="six"> Six</label>
+  </fieldset>
+  <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" disabled> Hold the print</label>
+  <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked disabled> Lock the size</label>
+</div>
+          </div>
+        </div>
+
         <div class="site-demo site-anchor" id="c-dictate" data-fh-id="FLD-2" data-fh-name="Dictation">
           <div class="site-demo__head"><h3>Dictation field</h3><p>Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with <code>data-fh-dictate</code> (or drive the same markup yourself).</p></div>
           <div class="site-demo__stage" data-demo>
@@ -532,6 +553,53 @@
     <div class="fh-dialog__footer"><button class="fh-button" value="ok">Save</button></div>
   </form>
 </dialog>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-range-field" data-fh-id="UPL-1">
+          <div class="site-demo__head"><h3>Range field</h3><p>The label and the live value share the first line. The range sits below. The host writes the output; there is no script. A disabled field mutes the label and the value.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <div class="fh-range-field" data-tone="sky">
+    <label for="ink-coverage">Ink coverage</label>
+    <output for="ink-coverage">40</output>
+    <input class="fh-range" id="ink-coverage" type="range" min="0" max="100" value="40">
+  </div>
+  <div class="fh-range-field">
+    <label for="print-size">Print size</label>
+    <output for="print-size">12</output>
+    <input class="fh-range" id="print-size" type="range" min="8" max="16" value="12" disabled>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-dropzone-compact" data-fh-id="UPL-2">
+          <div class="site-demo__head"><h3>Compact dropzone</h3><p>One control tall, for an inspector row: icon, title, hint. While an upload runs the icon becomes the spinner and the control takes no pointer. An invalid file shows a danger border and an error line. A disabled input cannot be opened.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky">
+    <input type="file" accept="image/*">
+    <span class="fh-dropzone__title">Drop art</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+  </label>
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-busy>
+    <input type="file" accept="image/*">
+    <span class="fh-dropzone__title">Uploading art</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+  </label>
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-invalid>
+    <input type="file" accept="image/*">
+    <span class="fh-dropzone__title">Drop art</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+    <p class="fh-dropzone__error">Use a PNG or a JPG.</p>
+  </label>
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky">
+    <input type="file" accept="image/*" disabled>
+    <span class="fh-dropzone__title">Print file locked</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+  </label>
+</div>
           </div>
         </div>
 

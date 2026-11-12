@@ -4,7 +4,19 @@
  */
 
 @layer fh.components {
-  /* —— Swatches & sizes (real radios) —— */
+  /* —— Swatches & sizes (real radios) ——
+   * Large, for an inspector where the swatch is the control: fh-swatches--lg.
+   * A direct button[aria-pressed] takes the same disc and the same selected
+   * ring as a checked radio, for a host that sets the colour by script.
+   * Custom colour is last: a round well, a plus until the host sets value,
+   * and the selected ring with data-selected.
+   *   <div class="fh-swatches fh-swatches--lg">
+   *     <button type="button" aria-pressed="true" aria-label="Ink" style="--swatch: var(--fh-tone)" data-tone="neutral"></button>
+   *     <label class="fh-swatches__custom" data-selected>
+   *       <input type="color" value="#8a5a44" aria-label="Custom colour">
+   *     </label>
+   *   </div>
+   * Disabled: disabled on the radio, or disabled on the button. */
   .fh-swatches {
     display: flex;
     flex-wrap: wrap;
@@ -13,22 +25,78 @@
     padding: 0;
     border: 0;
 
-    & > label {
+    & > :is(label, button) {
       position: relative;
       display: inline-block;
       inline-size: var(--fh-swatch-size, 1.35rem);
       aspect-ratio: 1;
+      margin: 0;
+      padding: 0;
+      border: 0;
       border-radius: var(--fh-radius-pill);
       background: var(--swatch, var(--fh-color-surface-sunken));
       box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
       cursor: var(--fh-cursor-action);
 
-      & > input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: var(--fh-cursor-action); }
-      &:has(:checked) { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 18%, transparent), 0 0 0 2px var(--fh-color-bg, var(--fh-color-canvas)), 0 0 0 3.5px var(--fh-color-text); }
-      &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 4px; }
+      & > input:not([type="color"]) { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: var(--fh-cursor-action); }
+      &:is(:has(:checked), [aria-pressed="true"], [data-selected]) { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-text) 18%, transparent), 0 0 0 2px var(--fh-color-bg, var(--fh-color-canvas)), 0 0 0 3.5px var(--fh-color-text); }
+      &:is(:has(:focus-visible), :focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 4px; }
+      &:is(:has(:disabled), :disabled) { cursor: not-allowed; opacity: 0.4; }
+    }
+
+    & > button {
+      font-size: 0;
+      line-height: 0;
+      appearance: none;
     }
   }
   .fh-swatches--sm { --fh-swatch-size: 0.85rem; }
+  .fh-swatches--lg { --fh-swatch-size: 1.75rem; }
+
+  /* The native colour well brings its own padding and border. Strip them
+   * so the disc is the chosen colour in Chromium, Firefox and Safari. */
+  .fh-swatches__custom {
+    order: 1;
+    overflow: hidden;
+    background: var(--fh-color-surface-sunken);
+
+    & > input[type="color"] {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      min-inline-size: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: inherit;
+      background: transparent;
+      cursor: inherit;
+      appearance: none;
+
+      &::-webkit-color-swatch-wrapper { padding: 0; }
+      &::-webkit-color-swatch { border: 0; border-radius: inherit; }
+      &::-moz-color-swatch { border: 0; border-radius: inherit; }
+    }
+
+    &:not(:has(input[value])) > input[type="color"] { opacity: 0; }
+
+    &:not(:has(input[value]))::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      inline-size: 42%;
+      aspect-ratio: 1;
+      background: var(--fh-color-text-muted);
+      mask: var(--fh-icon-plus) center / contain no-repeat;
+      pointer-events: none;
+    }
+
+    @media (forced-colors: active) {
+      & > input[type="color"] { forced-color-adjust: none; }
+    }
+  }
 
   .fh-sizes {
     display: grid;

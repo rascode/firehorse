@@ -860,7 +860,7 @@ __index · __seg · __count · --filled-end
 
 Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from data-tone. For the status of a record use data-status instead (merged, running, queued, failed, archived): the tone follows the value. Chip rules: a chip is for status, and sits only in the record header, a collapsed section's summary and once per row; counts are an fh-badge; inline status text is an fh-status. See Chip rules.
 
-Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text`
+Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text` `fh-chip--sm`
 
 ### CHP-1 · Kinds
 
@@ -1851,7 +1851,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 A dropzone over a real file input, a styled range, a tag field, and a dialog that slides in as a side sheet.
 
-Classes: `fh-grid` `fh-dropzone` `fh-dropzone__title` `fh-dropzone__hint` `fh-stack` `fh-stack--lg` `fh-field` `fh-range` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `fh-button` `fh-button--secondary` `fh-dialog` `fh-dialog--sheet` `fh-dialog__header` `fh-subheading` `fh-close` `fh-dialog__body` `fh-check` `fh-switch` `fh-dl` `fh-dialog__footer`
+Classes: `fh-stack` `fh-range-field` `fh-range` `fh-dropzone` `fh-dropzone--compact` `fh-dropzone__title` `fh-dropzone__hint` `fh-dropzone__error`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#UPL.
 

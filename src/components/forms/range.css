@@ -5,7 +5,17 @@
 
 @layer fh.components {
   /* —— Range ——
-   *   <input class="fh-range" type="range" min="0" max="100" value="40"> */
+   *   <input class="fh-range" type="range" min="0" max="100" value="40">
+   *
+   * Range field: the label and a live output share one line (the output at
+   * the end, muted, tabular). The range sits on the next line. The host
+   * writes the output; there is no script.
+   *   <div class="fh-range-field">
+   *     <label for="ink">Ink coverage</label>
+   *     <output for="ink">40</output>
+   *     <input class="fh-range" id="ink" type="range" min="0" max="100" value="40">
+   *   </div>
+   * Disabled: disabled on the input. */
   .fh-range {
     --_track: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
 
@@ -64,6 +74,49 @@
       &::-moz-range-thumb {
         box-shadow: 0 0 0 2px var(--fh-color-focus);
       }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+  }
+
+  .fh-range-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--fh-gap-bound) var(--fh-gap-related);
+
+    & > label {
+      min-inline-size: 0;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-wider);
+      line-height: var(--fh-leading-snug);
+      text-transform: uppercase;
+    }
+
+    & > output {
+      justify-self: end;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-caption);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & > .fh-range {
+      grid-column: 1 / -1;
+    }
+
+    &:has(:disabled) > :is(label, output) {
+      color: var(--fh-color-text-subtle);
     }
   }
 

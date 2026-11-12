@@ -4,8 +4,20 @@
  */
 
 @layer fh.components {
-  /* —— Choice cards (shipping, payment method, plan) —— */
+  /* —— Choice cards (shipping, payment method, plan) ——
+   * Disabled: :has(:disabled) mutes the option, drops the hover, and sets
+   * not-allowed. The reason, when there is one, is the small line.
+   *   <label class="fh-choice-card"><input type="radio" disabled><span><b>Express</b><small>Press is booked</small></span><span>$8</span></label>
+   * Narrow inspector column: fh-choice-cards--sm (tighter inset, one text
+   * line plus the small). */
   .fh-choice-cards { display: grid; gap: var(--fh-gap-related); margin: 0; padding: 0; border: 0; }
+  .fh-choice-cards--sm > .fh-choice-card {
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    gap: var(--fh-gap-related);
+
+    & > span { min-inline-size: 0; }
+    & b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  }
   .fh-choice-card {
     position: relative;
     display: grid;
@@ -22,9 +34,13 @@
     & b { display: block; font-weight: var(--fh-weight-medium); font-size: var(--fh-text-small); }
     & small { color: var(--fh-color-text-subtle); font-size: 0.78rem; }
     & > :last-child { font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; font-size: var(--fh-text-caption); }
-    &:hover { border-color: var(--fh-color-text-muted); }
+    &:hover:not(:has(:disabled)) { border-color: var(--fh-color-text-muted); }
     &:has(:checked) { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 6%, transparent); }
     &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+    &:has(:disabled) {
+      color: var(--fh-color-text-subtle);
+      cursor: not-allowed;
+    }
   }
 
 }
