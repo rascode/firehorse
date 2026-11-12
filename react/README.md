@@ -20,7 +20,7 @@ import { Button, Dialog, DialogTrigger, DialogContent, DropdownMenu, DropdownMen
 </Dialog>
 ```
 
-Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2).
+Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2), PasswordInput, **MoneyInput**.
 
 Themes:
 
@@ -33,3 +33,15 @@ const [theme, setTheme] = useFirehorseTheme();   // build your own control
 ```
 
 Pass `themes={[{ value: "appaloosa", label: "Appaloosa" }]}` to offer your own. The choice is saved under `fh-theme`, the same key `firehorse.js` uses, so both stay in step.
+
+Money input:
+
+```tsx
+import "@rascode/firehorse";
+import { MoneyInput } from "@rascode/firehorse-react";
+
+<MoneyInput label="Amount" name="amount" currency="USD" defaultValueMinor="125000" />   // posts amount=125000
+<MoneyInput label="Price" name="price" currencies={["USD", "EUR", "JPY"]} value={minor} onValueChange={(m, cur) => setMinor(m)} />
+```
+
+`value` and `onValueChange` are whole minor units as a digit string (`"-"` first when negative, `""` when empty), never a float. The hidden input posts them under `name`; the visible input has no name. It formats with the same functions as `@rascode/firehorse/money`, so `money.js` is not needed, and the markup has no `data-fh-money`, so the script never touches it. Also: `allowNegative`, `minorDigits`, `locale`, `hint`, `error`, `currencyName`, `onCurrencyChange`.

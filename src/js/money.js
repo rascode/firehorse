@@ -35,7 +35,8 @@
 const FIELD = "[data-fh-money]";
 const doc = typeof document === "undefined" ? null : document;
 
-const digitsFor = (currency, locale) => {
+/** Decimal places for a currency in a locale (2 when unknown). */
+export const digitsFor = (currency, locale) => {
   try {
     return new Intl.NumberFormat(locale, { style: "currency", currency }).resolvedOptions().maximumFractionDigits;
   } catch {
@@ -43,7 +44,8 @@ const digitsFor = (currency, locale) => {
   }
 };
 
-const marksFor = (locale) => {
+/** Grouping and decimal marks for a locale. */
+export const marksFor = (locale) => {
   const parts = new Intl.NumberFormat(locale).formatToParts(11111.1);
   return {
     group: parts.find((p) => p.type === "group")?.value ?? ",",
@@ -51,7 +53,7 @@ const marksFor = (locale) => {
   };
 };
 
-const groupDigits = (int, group) => int.replace(/\B(?=(\d{3})+(?!\d))/g, group);
+export const groupDigits = (int, group) => int.replace(/\B(?=(\d{3})+(?!\d))/g, group);
 
 /** Typed text to minor units as a digit string ("" when there is no number). */
 export function parseMinor(text, { digits = 2, decimal = ".", negative = false } = {}) {
@@ -72,6 +74,39 @@ export function formatMinor(minor, { digits = 2, group = ",", decimal = "." } = 
   const int = raw.slice(0, raw.length - digits);
   const frac = raw.slice(raw.length - digits);
   return `${neg ? "-" : ""}${groupDigits(int, group)}${digits ? decimal + frac : ""}`;
+}
+
+/**
+ * Rebuilds typed text as money text and says where the caret goes: after the
+ * same number of digits and decimal marks it followed before. With final
+ * (blur, currency change) the decimals are padded to full width.
+ */
+export function formatTyped(text, caret = text.length, { digits = 2, group = ",", decimal = ".", negative = false, final = false } = {}) {
+  const sig = (s) => s.replace(/[^\d]/g, "").length + (s.includes(decimal) ? 1 : 0);
+  const before = sig(text.slice(0, caret));
+
+  const neg = negative && /^\s*-/.test(text);
+  const hasDecimal = digits > 0 && text.includes(decimal);
+  const [intPart = "", fracPart = ""] = text.split(decimal);
+  const int = intPart.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+  const frac = fracPart.replace(/\D/g, "").slice(0, digits);
+
+  let out = "";
+  if (int || frac || hasDecimal) {
+    out = `${neg ? "-" : ""}${groupDigits(int || "0", group)}`;
+    if (final && digits) out += decimal + frac.padEnd(digits, "0");
+    else if (hasDecimal) out += decimal + frac;
+  } else if (neg) {
+    out = "-";
+  }
+
+  let seen = 0;
+  let pos = 0;
+  while (pos < out.length && seen < before) {
+    if (/\d/.test(out[pos]) || out[pos] === decimal) seen++;
+    pos++;
+  }
+  return { text: out, caret: pos };
 }
 
 /** Wires every [data-fh-money] field under root. Safe to call twice. */
@@ -107,36 +142,11 @@ export function initMoney(root = doc) {
     // number of digits and decimal marks it was after before.
     const format = (final) => {
       const d = digits();
-      const text = input.value;
-      const caret = input.selectionStart ?? text.length;
-      const sig = (s) => s.replace(/[^\d]/g, "").length + (s.includes(decimal) ? 1 : 0);
-      const before = sig(text.slice(0, caret));
-
-      const neg = negative && /^\s*-/.test(text);
-      const hasDecimal = d > 0 && text.includes(decimal);
-      const [intPart = "", fracPart = ""] = text.split(decimal);
-      const int = intPart.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
-      const frac = fracPart.replace(/\D/g, "").slice(0, d);
-
-      let out = "";
-      if (int || frac || hasDecimal) {
-        out = `${neg ? "-" : ""}${groupDigits(int || "0", group)}`;
-        if (final && d) out += decimal + frac.padEnd(d, "0");
-        else if (hasDecimal) out += decimal + frac;
-      } else if (neg) {
-        out = "-";
-      }
+      const { text: out, caret } = formatTyped(input.value, input.selectionStart ?? input.value.length, {
+        digits: d, group, decimal, negative, final,
+      });
       input.value = out;
-
-      if (!final && doc?.activeElement === input) {
-        let seen = 0;
-        let pos = 0;
-        while (pos < out.length && seen < before) {
-          if (/\d/.test(out[pos]) || out[pos] === decimal) seen++;
-          pos++;
-        }
-        input.setSelectionRange(pos, pos);
-      }
+      if (!final && doc?.activeElement === input) input.setSelectionRange(caret, caret);
       publish(parseMinor(out, { digits: d, decimal, negative }));
     };
 

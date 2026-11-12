@@ -14,6 +14,18 @@ export interface MoneyFormat {
   decimal?: string;
 }
 
+/** Decimal places for a currency in a locale (2 when unknown). */
+export function digitsFor(currency: string, locale?: string): number;
+/** Grouping and decimal marks for a locale. */
+export function marksFor(locale?: string): { group: string; decimal: string };
+/** Inserts the grouping mark every three digits of a digit string. */
+export function groupDigits(int: string, group: string): string;
+/** Rebuilds typed text as money text; returns it with the caret position that keeps the caret after the same digits. */
+export function formatTyped(
+  text: string,
+  caret?: number,
+  options?: MoneyFormat & { negative?: boolean; final?: boolean },
+): { text: string; caret: number };
 /** Wires every [data-fh-money] field under root (default: the document). Safe to call twice. */
 export function initMoney(root?: ParentNode | Element | null): void;
 /** Typed text to minor units as a digit string ("" when there is no number). */

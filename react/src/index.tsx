@@ -9,6 +9,7 @@
  *   import { Button, Dialog, DropdownMenu, EntityPicker, Select, Tabs, SideNav } from "@rascode/firehorse-react";
  */
 import * as React from "react";
+import { digitsFor, marksFor, formatTyped, parseMinor, formatMinor } from "@rascode/firehorse/money";
 import { Dialog as D, DropdownMenu as M, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C, Toast as To } from "radix-ui";
 
 export {
@@ -132,6 +133,110 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputPro
   );
 });
 PasswordInput.displayName = "PasswordInput";
+/* —— Money input (FLD-5) ——
+ * Formats as the person types and posts whole minor units (cents) under `name` from a hidden
+ * input. Runs the same functions as money.js (formatTyped, parseMinor, formatMinor), so the
+ * script is not needed. The markup has no data-fh-money, so the script never adopts it.
+ * `value` and `defaultValueMinor` are digit strings in minor units ("125000" is 1,250.00).
+ *
+ *   <MoneyInput label="Amount" name="amount" currency="USD" defaultValueMinor="125000" />
+ *   <MoneyInput label="Price" name="price" currencies={["USD", "EUR", "JPY"]} value={minor} onValueChange={setMinor} />
+ */
+export type MoneyInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "defaultValue" | "onChange" | "inputMode"> & {
+  label?: React.ReactNode;
+  /** ISO code shown as a prefix (default "USD"). Ignored when `currencies` is given. */
+  currency?: string;
+  /** Two or more ISO codes: renders a select in place of the prefix. */
+  currencies?: string[];
+  /** Name the currency select posts under (default `${name}_currency`). */
+  currencyName?: string;
+  onCurrencyChange?: (currency: string) => void;
+  allowNegative?: boolean;
+  /** Decimal places; default from the currency. */
+  minorDigits?: number;
+  locale?: string;
+  /** Minor units as a digit string, "-" first when negative. Pass with onValueChange to control. */
+  value?: string;
+  defaultValueMinor?: string;
+  onValueChange?: (minor: string, currency: string) => void;
+  hint?: React.ReactNode;
+  error?: React.ReactNode;
+};
+export const MoneyInput = React.forwardRef<HTMLInputElement, MoneyInputProps>(({
+  label, currency: currencyProp = "USD", currencies, currencyName, onCurrencyChange, allowNegative = false, minorDigits, locale,
+  value, defaultValueMinor, onValueChange, hint, error, name, id, className, onBlur, ...p
+}, ref) => {
+  const uid = React.useId();
+  const inputId = id ?? uid;
+  const [currency, setCurrency] = React.useState(currencies?.[0] ?? currencyProp);
+  const activeCurrency = currencies ? (currencies.includes(currency) ? currency : currencies[0]!) : currencyProp;
+  const lang = locale ?? (typeof document === "undefined" ? undefined : document.documentElement.lang || undefined);
+  const { group, decimal } = React.useMemo(() => marksFor(lang), [lang]);
+  const digits = minorDigits ?? digitsFor(activeCurrency, lang);
+  const opts = { digits, group, decimal, negative: allowNegative };
+  const [text, setText] = React.useState(() => formatMinor(value ?? defaultValueMinor ?? "", opts));
+  const caret = React.useRef<number | null>(null);
+  const inner = React.useRef<HTMLInputElement | null>(null);
+  const setRefs = (node: HTMLInputElement | null) => {
+    inner.current = node;
+    if (typeof ref === "function") ref(node);
+    else if (ref) ref.current = node;
+  };
+  const minor = parseMinor(text, opts);
+
+  // A controlled value that differs from what the text parses to wins; one that matches leaves
+  // the text alone, so "1." stays "1." while the parent echoes "100" back.
+  React.useEffect(() => {
+    if (value !== undefined && value !== minor) setText(formatMinor(value, opts));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+  React.useLayoutEffect(() => {
+    if (caret.current != null && inner.current && document.activeElement === inner.current) inner.current.setSelectionRange(caret.current, caret.current);
+    caret.current = null;
+  });
+
+  const apply = (raw: string, pos: number, final: boolean, cur = activeCurrency, d = digits) => {
+    const o = { digits: d, group, decimal, negative: allowNegative };
+    const out = formatTyped(raw, pos, { ...o, final });
+    caret.current = final ? null : out.caret;
+    setText(out.text);
+    onValueChange?.(parseMinor(out.text, o), cur);
+  };
+
+  return (
+    <div className={cx("fh-field fh-money", className)} data-fh="FLD-5">
+      {label != null && <label htmlFor={inputId}>{label}</label>}
+      <div className="fh-input-group">
+        {currencies ? (
+          <select className="fh-money__select" name={currencyName ?? (name ? `${name}_currency` : undefined)} aria-label="Currency" value={activeCurrency}
+            onChange={(e) => {
+              const next = e.target.value;
+              setCurrency(next);
+              onCurrencyChange?.(next);
+              if (text) apply(text, text.length, true, next, minorDigits ?? digitsFor(next, lang));
+              else onValueChange?.("", next);
+            }}>
+            {currencies.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        ) : (
+          <span className="fh-money__currency">{activeCurrency}</span>
+        )}
+        <input
+          ref={setRefs} {...p} id={inputId} className="fh-input" inputMode="decimal" autoComplete="off" value={text}
+          aria-invalid={error ? true : p["aria-invalid"]}
+          onChange={(e) => apply(e.target.value, e.target.selectionStart ?? e.target.value.length, false)}
+          onBlur={(e) => {
+            if (text && text !== "-") apply(text, text.length, true);
+            onBlur?.(e);
+          }}
+        />
+        <input type="hidden" name={name} value={minor} />
+      </div>
+      {error ? <p className="fh-field__error">{error}</p> : hint ? <p className="fh-field__hint">{hint}</p> : null}
+    </div>
+  );
+});
+MoneyInput.displayName = "MoneyInput";
 /* —— Entity picker (ENT) ——
  * Choose an account, person or client by its identity. The trigger and every option are the same
  * row: avatar, an etch line, name and a second line, a stat, then the chevron. The stat is
