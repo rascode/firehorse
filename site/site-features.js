@@ -27,7 +27,7 @@ export const AGENTS = [
 
 export const basePrompt = () =>
   ($("#agent-prompt")?.textContent.trim()) ||
-  "Build this page with the Firehorse design system. Read https://firehorse.rascode.dev/llms.txt first and use only fh-* classes and --fh-* tokens.";
+  "Build this page with the Firehorse design system. Read https://firehorse.dev/llms.txt first and use only fh-* classes and --fh-* tokens.";
 
 async function copyText(t) { try { await navigator.clipboard.writeText(t); return true; } catch { return false; } }
 
@@ -81,9 +81,9 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
     let ok = false, preview = false;
     try {
       const r = await fetch("/api/agent-request", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...data, page: location.href, attribution: window.fhAttribution?.fields(askForm) ?? {} }) });
-      ok = r.ok; preview = !r.ok && r.status !== 422 && location.hostname !== "firehorse.rascode.dev";
+      ok = r.ok; preview = !r.ok && r.status !== 422 && location.hostname !== "firehorse.dev";
       if (!ok && r.status === 422) { status.textContent = (await r.json().catch(() => ({}))).error || "Check the form."; send.removeAttribute("aria-busy"); return; }
-    } catch { preview = location.hostname !== "firehorse.rascode.dev"; }
+    } catch { preview = location.hostname !== "firehorse.dev"; }
     send.removeAttribute("aria-busy");
     if (!ok && !preview) { status.textContent = "That didn't go through. Try again in a minute."; return; }
     askForm.reset();

@@ -1,7 +1,7 @@
 # Firehorse — component markup
 
 > Canonical markup for every Firehorse component, v1.1.0. Generated from the
-> live demos on https://firehorse.rascode.dev — copy these exactly, then change
+> live demos on https://firehorse.dev — copy these exactly, then change
 > the copy. Rules live in [system.md](system.md).
 
 ## Class index
@@ -1510,7 +1510,7 @@ Message bubbles, names in tone, a typing indicator.
   <p class="fh-divider" data-fh="DET">or install</p>
   <figure class="fh-code" data-fh="DET">
     <figcaption>terminal <button class="fh-button fh-button--sm fh-button--ghost" type="button">Copy</button></figcaption>
-    <pre><code>npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz</code></pre>
+    <pre><code>npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz</code></pre>
   </figure>
   <p class="fh-small fh-muted">Open the command menu with <kbd class="fh-kbd">⌘</kbd> <kbd class="fh-kbd">K</kbd>.</p>
 </div>
@@ -3720,7 +3720,7 @@ A YouTube thumbnail with the host in a tone ring (the timestamp covers the botto
       <div class="fh-canvas__body">
         <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Docs · Media</p></div>
         <div class="fh-canvas__main"><h2 class="fh-canvas__title">Media, <em>at the size it ships</em></h2><p class="fh-canvas__sub">Posts, headers, thumbnails, covers and slides from one set of tokens.</p></div>
-        <div class="fh-canvas__foot"><span>firehorse.rascode.dev</span><span>v1.1</span></div>
+        <div class="fh-canvas__foot"><span>firehorse.dev</span><span>v1.1</span></div>
       </div>
     </article></dd></div>
 </dl>
@@ -4133,8 +4133,8 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
         <div class="fh-canvas__main">
           <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><p class="fh-eyebrow-pill" data-tone="live"><span class="fh-dot fh-dot--live"></span>Questions welcome</p></div>
           <h2 class="fh-canvas__title">Thank you</h2>
-          <p class="fh-canvas__sub">firehorse.rascode.dev/media</p>
-          <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><div class="fh-cluster"><a class="fh-button" href="https://firehorse.rascode.dev/media/">Read the docs</a><a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse">Download from Git</a></div></div>
+          <p class="fh-canvas__sub">firehorse.dev/media</p>
+          <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><div class="fh-cluster"><a class="fh-button" href="https://firehorse.dev/media/">Read the docs</a><a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse">Download from Git</a></div></div>
         </div>
         <div class="fh-canvas__foot"><span>Rascode Studio</span><span>10 / 10</span></div>
       </div>

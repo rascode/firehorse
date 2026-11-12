@@ -8,7 +8,7 @@
  *  5. runs KC, the Firehorse guide, who turns descriptions into IDs. */
 const $ = (s, r = document) => (r ? r.querySelector(s) : null);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const BASE = "https://firehorse.rascode.dev";
+const BASE = "https://firehorse.dev";
 const toast = (m, t) => window.fhToast?.(m, t);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const words = (s) => String(s).toLowerCase().replace(/&amp;/g, "&").split(/[^a-z0-9]+/).filter((w) => w.length > 1);
@@ -275,7 +275,7 @@ function renderIndex(list, byId) {
 
 /* —— 6. KC, the Firehorse guide —— */
 const KC_LINKS = [
-  { re: /\b(install|npm|setup|set up|get started|cdn|link)\b/, a: `One line: <code>npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz</code>, or link <code>firehorse.css</code> from the CDN. No build step, no JavaScript required.`, href: "/#top", label: "Install" },
+  { re: /\b(install|npm|setup|set up|get started|cdn|link)\b/, a: `One line: <code>npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz</code>, or link <code>firehorse.css</code> from the CDN. No build step, no JavaScript required.`, href: "/#top", label: "Install" },
   { re: /\b(licen[cs]e|mit|free|open source)\b/, a: "MIT. Use it anywhere, commercial work included.", href: "https://github.com/rascode/firehorse/blob/main/LICENSE", label: "License" },
   { re: /\b(pro|price|pricing|cost|buy|purchase|paid)\b/, a: "Firehorse is free. Pro adds AI-powered fields and a skill that builds a design system from any URL.", href: "/pro/", label: "Firehorse Pro" },
   { re: /\b(stable|blog|news|updates?|subscribe|newsletter|changelog|release)\b/, a: "News, release notes and deep dives live in The Stable. Subscribe there and they come to you.", href: "/stable/", label: "The Stable" },

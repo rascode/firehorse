@@ -22,7 +22,7 @@ const tokensDoc = loadJson("dist/tokens.json");
 const themesDoc = loadJson("dist/themes.json");
 const systemMd = loadText("agent/system.md");
 
-const SITE = index.system?.site || "https://firehorse.rascode.dev";
+const SITE = index.system?.site || "https://firehorse.dev";
 const CSS = `${SITE}/firehorse.css`;
 
 const byId = new Map();
@@ -236,7 +236,7 @@ server.registerTool("get_rules", {
 }, async () => text(tools.get_rules()));
 
 server.registerTool("compose_page", {
-  description: "HTML page linking firehorse.css from firehorse.rascode.dev, with design-system meta tags, stacking snippets for the given Index IDs.",
+  description: "HTML page linking firehorse.css from firehorse.dev, with design-system meta tags, stacking snippets for the given Index IDs.",
   inputSchema: z.object({ ids: z.array(z.string()).describe("Index IDs in order") }),
 }, async ({ ids }) => text(tools.compose_page({ ids })));
 

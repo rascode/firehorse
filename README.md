@@ -3,10 +3,10 @@
 **A dark-first, container-native CSS design system.**
 Components size themselves to the box they're in, not the screen.
 
-[firehorse.rascode.dev](https://firehorse.rascode.dev) · [Agent contract](agent/system.md) · [Component markup](agent/components.md) · [Design library](https://design.rascode.dev)
+[firehorse.dev](https://firehorse.dev) · [Agent contract](agent/system.md) · [Component markup](agent/components.md) · [Design library](https://design.rascode.dev)
 
 ```
-npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz
+npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz
 # installs as @rascode/firehorse; npm registry release to follow
 ```
 
@@ -25,7 +25,7 @@ About 12 KB gzipped. MIT.
 ## Quick start
 
 ```html
-<link rel="stylesheet" href="https://firehorse.rascode.dev/firehorse.css">
+<link rel="stylesheet" href="https://firehorse.dev/firehorse.css">
 
 <div class="fh-page">
   <main class="fh-main">
@@ -74,7 +74,7 @@ import { tokens } from "@rascode/firehorse/tokens";
 | `dist/tokens.json` · `tokens.js` · `tokens.d.ts` | Every token with value, type, tier and group |
 | `src/` | Source, one file per concern, native CSS nesting |
 | `agent/` | Agent contract and canonical component markup |
-| `site/` | The firehorse.rascode.dev documentation site |
+| `site/` | The firehorse.dev documentation site |
 
 ## The Firehorse Index
 
@@ -100,7 +100,7 @@ Every page declares the design system it's built on, in `<head>`:
 
 ```html
 <meta name="design-system" content="firehorse@1.1.0">
-<link rel="design-system" href="https://firehorse.rascode.dev/index.json">
+<link rel="design-system" href="https://firehorse.dev/index.json">
 ```
 
 The audit reads it to pick the Index to check against (Firehorse, or the next
@@ -170,7 +170,7 @@ src/
   utilities/             tones, sr-only, reveal, container-aware visibility
 ```
 
-Every module opens with its name, Index ID and layer; each folder has a README. Browse them all, with their source, in the Developer Portal: https://firehorse.rascode.dev/developer/
+Every module opens with its name, Index ID and layer; each folder has a README. Browse them all, with their source, in the Developer Portal: https://firehorse.dev/developer/
 
 **Token tiers.** Primitives (`--fh-gray-950`) feed semantic roles (`--fh-color-canvas`), which feed component knobs (`--fh-button-bg`). Components may only read semantic tokens, and the lint enforces it.
 
@@ -287,7 +287,7 @@ npm install
 npm test        # lint → build → verify (contrast + artifacts)
 npm run build   # dist/
 node scripts/agent-docs.mjs   # regenerate agent/components.md from the site demos
-node scripts/site.mjs         # build site/dist for firehorse.rascode.dev
+node scripts/site.mjs         # build site/dist for firehorse.dev
 ```
 
 `npm run lint` fails on raw colors outside tokens, primitives used in components, viewport-width media queries, `!important` outside the reset, undefined custom properties, and classes without the `fh-` prefix.
@@ -298,7 +298,7 @@ The default build targets browsers with native nesting, `light-dark()`, `@starti
 
 ## The Stable
 
-News, release notes and deep dives: [firehorse.rascode.dev/stable/](https://firehorse.rascode.dev/stable/) ([RSS](https://firehorse.rascode.dev/stable/feed.xml)). Posts are Markdown in `site/stable/posts/`, built by `scripts/stable.mjs`.
+News, release notes and deep dives: [firehorse.dev/stable/](https://firehorse.dev/stable/) ([RSS](https://firehorse.dev/stable/feed.xml)). Posts are Markdown in `site/stable/posts/`, built by `scripts/stable.mjs`.
 
 ## License
 

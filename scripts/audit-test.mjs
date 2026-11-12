@@ -34,7 +34,7 @@ expect(/data-fh="EYE-1.2" class="fh-eyebrow-pill fh-eyebrow-pill--etched"/.test(
 expect(fixed.includes('data-fh="EYE-5.2"') && !fixed.includes('data-fh="EYE-18"'), "--fix rewrites EYE-18");
 // A page that declares the design system gets no Declare action.
 const declaredPage = join(dir, "declared.html");
-writeFileSync(declaredPage, readFileSync(fixture, "utf8").replace("<head>", '<head><meta name="design-system" content="firehorse@0.9.0"><link rel="design-system" href="https://firehorse.rascode.dev/index.json">'));
+writeFileSync(declaredPage, readFileSync(fixture, "utf8").replace("<head>", '<head><meta name="design-system" content="firehorse@0.9.0"><link rel="design-system" href="https://firehorse.dev/index.json">'));
 const d = JSON.parse(run(declaredPage, "--json").out);
 expect(d.system.declared?.key === "firehorse" && !d.actions.some((a) => a.verb === "Declare"), "a declared page is read and not asked to declare");
 expect(d.actions.some((a) => a.key === "version"), "an older declared version gets an Update action");

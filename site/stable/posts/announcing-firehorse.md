@@ -23,7 +23,7 @@ Today we're open-sourcing it. Firehorse is the design system that scales, adapts
 - :table-2: [Datatables](/data/) with 22 field types, filters, grouping and board views
 - :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-1.3` instead of describing a chip
 - :sparkles: [A word rotator](/foundations/#rotator) for headlines, in plain markup: no library, no script to configure
-- :terminal: `npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz` · [firehorse.rascode.dev](/)
+- :terminal: `npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz` · [firehorse.dev](/)
 
 
 ## Don't make me think
@@ -111,7 +111,7 @@ In Firehorse it's markup. The [word rotator](/foundations/#rotator), `WRT`, is a
 
 ## Also in the box
 
-[Drawers, hamburger menus and ⌘K](/components/navigation/#menus-title), a [commerce kit](/commerce/) from product card to checkout, [accessible forms](/forms/#c-form) on native controls, a [motion layer](/foundations/#motion) that respects reduced motion, the [floating bar](/components/navigation/#c-dock), [183 icons](/foundations/#icons), and a [drag-and-drop playground](/playground.html) that sends your page to Claude, ChatGPT, Cursor and more. Every piece is live with copyable markup at [firehorse.rascode.dev](/).
+[Drawers, hamburger menus and ⌘K](/components/navigation/#menus-title), a [commerce kit](/commerce/) from product card to checkout, [accessible forms](/forms/#c-form) on native controls, a [motion layer](/foundations/#motion) that respects reduced motion, the [floating bar](/components/navigation/#c-dock), [183 icons](/foundations/#icons), and a [drag-and-drop playground](/playground.html) that sends your page to Claude, ChatGPT, Cursor and more. Every piece is live with copyable markup at [firehorse.dev](/).
 
 
 ## From Claude on design systems
@@ -152,7 +152,7 @@ Copy any component from [the site](/components/): every demo copies its markup a
 
 `git clone https://github.com/rascode/firehorse.git`
 
-`npm i https://firehorse.rascode.dev/npm/firehorse-1.1.0.tgz`
+`npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz`
 
 `import "@rascode/firehorse";`
 
@@ -167,7 +167,7 @@ Firehorse is design system No. 01, the base layer for every Rascode build, start
 
 Want a custom design system, site or agent? [Hire the studio that built Firehorse](/#services). You'll hear back within one business day, with a fixed scope before any work starts. Here's [the brief we wrote for Firehorse itself](/pro/#brief).
 
-🐎 [firehorse.rascode.dev](/)
+🐎 [firehorse.dev](/)
 ⭐ [github.com/rascode/firehorse](https://github.com/rascode/firehorse)
 
 If you ship something with it, tag us. We want to see it.

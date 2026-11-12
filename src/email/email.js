@@ -112,14 +112,14 @@ export function renderEmail({ theme = "firehorse", preheader = "", eyebrow = "",
     ${action ? `<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td class="fh-btn" style="background:${c.text};border-radius:${t.buttonRadius}px;"><a class="fh-btn" href="${esc(action.href)}" style="display:inline-block;padding:12px 20px;font:600 12px/1 ${t.mono};letter-spacing:.12em;text-transform:uppercase;color:${c.canvas};text-decoration:none;border-radius:${t.buttonRadius}px;background:${c.text};">${esc(action.label)}&nbsp;&#8599;</a></td></tr></table>` : ""}
   </td></tr>
   ${meta.length ? `<tr><td style="padding:16px 4px 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0">${meta.map(metaRow).join("")}</table></td></tr>` : ""}
-  <tr><td class="fh-m" style="padding:20px 4px 0;font:400 12px/1.5 ${t.sans};color:${c.muted};">${footer ? esc(footer) : `Sent by firehorse.rascode.dev · ${t.name === "firehorse" ? "drawn with Firehorse" : `drawn with the Firehorse ${esc(t.label)} theme`}`}</td></tr>
+  <tr><td class="fh-m" style="padding:20px 4px 0;font:400 12px/1.5 ${t.sans};color:${c.muted};">${footer ? esc(footer) : `Sent by firehorse.dev · ${t.name === "firehorse" ? "drawn with Firehorse" : `drawn with the Firehorse ${esc(t.label)} theme`}`}</td></tr>
 </table>
 </td></tr>
 </table>
 </body>
 </html>`;
   // Plain-text twin for clients (and filters) that want one.
-  const text = [eyebrow && eyebrow.toUpperCase(), title, "", intro, "", ...fields.map(([k, v]) => `${k}: ${v && v.text ? v.text : v}`), quote && `\n${quote}\n`, action && `${action.label}: ${action.href}`, meta.length ? "\n" + meta.map(([k, v]) => `${k}: ${v}`).join("\n") : "", "", footer || "Sent by firehorse.rascode.dev"].filter((x) => x !== "" && x != null && x !== false).join("\n");
+  const text = [eyebrow && eyebrow.toUpperCase(), title, "", intro, "", ...fields.map(([k, v]) => `${k}: ${v && v.text ? v.text : v}`), quote && `\n${quote}\n`, action && `${action.label}: ${action.href}`, meta.length ? "\n" + meta.map(([k, v]) => `${k}: ${v}`).join("\n") : "", "", footer || "Sent by firehorse.dev"].filter((x) => x !== "" && x != null && x !== false).join("\n");
   return { html, text };
 }
 
@@ -153,7 +153,7 @@ export function leadNotification(lead, { theme = "firehorse" } = {}) {
     preheader: `${lead.name}${lead.company ? ` at ${lead.company}` : ""} · ${what}`,
     eyebrow: lead.plan ? "Firehorse Pro request" : "New project lead",
     title: `${lead.name}${lead.company ? `, ${lead.company}` : ""}`,
-    intro: lead.plan ? "Asked about a Firehorse Pro plan from firehorse.rascode.dev." : "Sent the Start a project form on firehorse.rascode.dev.",
+    intro: lead.plan ? "Asked about a Firehorse Pro plan from firehorse.dev." : "Sent the Start a project form on firehorse.dev.",
     fields,
     quote: lead.message,
     action: { label: `Reply to ${String(lead.name).split(/\s+/)[0] || "them"}`, href: `mailto:${lead.email}?subject=${encodeURIComponent("Re: your Firehorse inquiry")}` },
@@ -172,8 +172,8 @@ export function stableWelcome({ name = "", list = "highlights" } = {}, { theme =
     eyebrow: "The Stable",
     title: first ? `You're in, ${first}.` : "You're in.",
     intro: list === "pro" ? "You'll get every detailed change to Firehorse, as it ships." : "You'll get the highlights: releases and the big ideas, no more than you'd want.",
-    action: { label: "Read The Stable", href: "https://firehorse.rascode.dev/stable/" },
-    footer: "You subscribed on firehorse.rascode.dev. Every email has an unsubscribe link.",
+    action: { label: "Read The Stable", href: "https://firehorse.dev/stable/" },
+    footer: "You subscribed on firehorse.dev. Every email has an unsubscribe link.",
   });
   return { subject: "Welcome to The Stable", html, text };
 }

@@ -21,7 +21,7 @@ const dedent = (s) => {
 
 let out = `# Firehorse — design patterns
 
-> Page layouts by ID, v${pkg.version}. Generated from https://firehorse.rascode.dev/patterns/.
+> Page layouts by ID, v${pkg.version}. Generated from https://firehorse.dev/patterns/.
 > A design pattern is the saddle tree; the theme, tones and content are the leather and
 > tooling. When a person
 > names a design pattern, build it with this markup and keep every **Keep** rule. Change

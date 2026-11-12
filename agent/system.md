@@ -3,19 +3,19 @@
 > Firehorse is a dark-first, container-native CSS design system (v1.1, MIT).
 > Read this file before writing any markup or CSS with it. Component markup
 > lives in [`components.md`](components.md). Every token is in
-> [`tokens.json`](https://firehorse.rascode.dev/tokens.json).
+> [`tokens.json`](https://firehorse.dev/tokens.json).
 
 kind: system-index · version: 1.1.0 · package: `@rascode/firehorse`
-home: https://firehorse.rascode.dev · source: https://github.com/rascode/firehorse
+home: https://firehorse.dev · source: https://github.com/rascode/firehorse
 
 ## Install
 
 ```html
-<link rel="stylesheet" href="https://firehorse.rascode.dev/firehorse.css">
+<link rel="stylesheet" href="https://firehorse.dev/firehorse.css">
 <!-- optional: the built-in themes (Mustang, Friesian, Akhal-Teke), after the core -->
-<link rel="stylesheet" href="https://firehorse.rascode.dev/themes.css">
+<link rel="stylesheet" href="https://firehorse.dev/themes.css">
 <!-- optional brand layer -->
-<link rel="stylesheet" href="https://firehorse.rascode.dev/themes/rascode.css">
+<link rel="stylesheet" href="https://firehorse.dev/themes/rascode.css">
 ```
 
 ```js
@@ -67,7 +67,7 @@ Browser floor for the default build: Chrome/Edge 123, Firefox 128, Safari 17.5.
   …
   <!-- Required: the design system this page is built on (audits and agents read it). -->
   <meta name="design-system" content="firehorse@1.1.0">
-  <link rel="design-system" href="https://firehorse.rascode.dev/index.json">
+  <link rel="design-system" href="https://firehorse.dev/index.json">
 </head>
 <body>
   <a class="fh-skip" href="#main">Skip to content</a>
@@ -193,7 +193,7 @@ using the section's real number.
 
 Firehorse isn't just a site; it is a system, and motion is part of the contract. Anything a
 visitor sees move on a Firehorse site is a named piece with an Index ID (MOT, on
-https://firehorse.rascode.dev/motion/). Build motion from these pieces; never write your own
+https://firehorse.dev/motion/). Build motion from these pieces; never write your own
 keyframes, milliseconds or curves.
 - Tokens: `--fh-duration-instant|fast|base|slow|enter|reveal|intro|scene`, `--fh-ease-out`,
   `--fh-ease-in-out`, `--fh-ease-expo-out`, `--fh-ease-spring`, `--fh-ease-glide`, `--fh-ease-in`,

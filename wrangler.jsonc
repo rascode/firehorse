@@ -1,4 +1,4 @@
-// firehorse.rascode.dev — static site on Cloudflare Workers assets, plus the
+// firehorse.dev — static site on Cloudflare Workers assets, plus the
 // lead form endpoint (POST /api/lead) in worker/index.js.
 // Build first: `npm test && node scripts/site.mjs`, then `npx wrangler deploy`.
 // Lead delivery secrets: LEAD_WEBHOOK_URL and/or RESEND_API_KEY + LEAD_TO.
@@ -13,5 +13,9 @@
     // Unknown paths get site/dist/404.html with a real 404 status.
     "not_found_handling": "404-page"
   },
-  "routes": [{ "pattern": "firehorse.rascode.dev", "custom_domain": true }]
+  // firehorse.dev is canonical. firehorse.rascode.dev keeps serving the same build as the fallback host.
+  "routes": [
+    { "pattern": "firehorse.dev", "custom_domain": true },
+    { "pattern": "firehorse.rascode.dev", "custom_domain": true }
+  ]
 }

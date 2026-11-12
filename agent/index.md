@@ -3,7 +3,7 @@
 > Every Firehorse component, group and variant has a stable ID, v1.1.0. People
 > name what they want by ID instead of describing it ("use CHP-1.3", "swap the
 > pricing badge for TIR"). Look the ID up here and use the markup exactly.
-> Generated from https://firehorse.rascode.dev. Rules: [system.md](system.md). Full markup for each
+> Generated from https://firehorse.dev. Rules: [system.md](system.md). Full markup for each
 > family: [components.md](components.md). Machine-readable: [index.json](../index.json).
 
 ## How IDs work
@@ -23,124 +23,143 @@
 
 | ID | Name | Section | Groups | Demo |
 |---|---|---|---|---|
-| `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#NEU) |
-| `TON` | Tones | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#TON) |
-| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.rascode.dev/foundations/#TYP) |
-| `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#SPC) |
-| `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#RAD) |
-| `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#ELV) |
-| `HLP` | Text align helpers | Foundations | 1 Helpers (3) | [open](https://firehorse.rascode.dev/foundations/#HLP) |
-| `MTL` | The motion layer | Foundations | 1 The motion layer (6) | [open](https://firehorse.rascode.dev/foundations/#MTL) |
-| `WRT` | Word rotator | Foundations | 1 Word rotator (6) | [open](https://firehorse.rascode.dev/foundations/#WRT) |
-| `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/#MOT) |
-| `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/#STK) |
-| `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/#CLS) |
-| `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/#GRD) |
-| `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/#COL) |
-| `GDS` | Guides | Columns | 1 Guides (7) | [open](https://firehorse.rascode.dev/layout/#GDS) |
-| `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/#FND) |
-| `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/#CIN) |
-| `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#PNL) |
-| `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#ESP) |
-| `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#CTB) |
-| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.rascode.dev/components/actions/#BTN) |
-| `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/#ACT) |
-| `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/#MRK) |
-| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/#EYE) |
-| `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CHP) |
-| `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (4) | [open](https://firehorse.rascode.dev/components/actions/#CUB) |
-| `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/#LGS) |
-| `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
-| `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
-| `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/#KVL) |
-| `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/#CKL) |
-| `STP` | Steps | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.rascode.dev/components/content/#STP) |
-| `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/#CAR) |
-| `DEK` | Stacking deck | Content | 1 Stacking deck (1) · 2 Hero handoff (1) · 3 Recede styles (4) · 4 Cards and captions (3) · 5 Direction (2) | [open](https://firehorse.rascode.dev/components/content/#DEK) |
-| `MBR` | Member card | Content | 1 Pass (3) · 2 Plates (3) | [open](https://firehorse.rascode.dev/components/content/#MBR) |
-| `STY` | Story card | Content | 1 Solid (6) · 2 Picture and glare (4) · 3 In the field (4) | [open](https://firehorse.rascode.dev/components/content/#STY) |
-| `SPD` | Speed blur | Content | 1 Speed blur (3) | [open](https://firehorse.rascode.dev/components/content/#SPD) |
-| `DTH` | Dither | Content | 1 Dither (4) | [open](https://firehorse.rascode.dev/components/content/#DTH) |
-| `LQG` | Liquid glass | Content | 1 Liquid glass (4) | [open](https://firehorse.rascode.dev/components/content/#LQG) |
-| `LST` | List & timeline | Content | — | [open](https://firehorse.rascode.dev/components/content/#LST) |
-| `CHT` | Chat | Content | — | [open](https://firehorse.rascode.dev/components/content/#CHT) |
-| `DET` | Details, code, divider | Content | — | [open](https://firehorse.rascode.dev/components/content/#DET) |
-| `TIR` | Pricing tiers | Content | — | [open](https://firehorse.rascode.dev/components/content/#TIR) |
-| `FEA` | Features | Content | — | [open](https://firehorse.rascode.dev/components/content/#FEA) |
-| `TST` | Testimonial | Content | — | [open](https://firehorse.rascode.dev/components/content/#TST) |
-| `CAT` | Card catalog | Card catalog | 1 Catalog (1) · 2 People (1) · 3 Media (1) · 4 Surfaces (1) · 5 Tokens (1) · 6 Commerce (2) · 7 Data (1) | [open](https://firehorse.rascode.dev/components/content/#CAT) |
-| `DCK` | Floating bar | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#DCK) |
-| `FAB` | Floating action bar | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#FAB) |
-| `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#TAB) |
-| `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#NAV) |
-| `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#BRG) |
-| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) | [open](https://firehorse.rascode.dev/components/navigation/#MEG) |
-| `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/#DRW) |
-| `PRF` | Profile picker | Drawers & menus | 1 Profile picker (4) | [open](https://firehorse.rascode.dev/components/navigation/#PRF) |
-| `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#DRP) |
-| `TBR` | Tab bar | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#TBR) |
-| `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#ACC) |
-| `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#DLG) |
-| `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/#FBK) |
-| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.rascode.dev/components/overlays/#EMP) |
-| `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/#AVT) |
-| `SCD` | Social card | Profile cards | 1 Social card (3) | [open](https://firehorse.rascode.dev/components/avatars/#SCD) |
-| `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/#AUT) |
-| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/#FLD) |
-| `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#CHO) |
-| `RVW` | Review rows | Fields & choices | 1 Review (1) | [open](https://firehorse.rascode.dev/forms/#RVW) |
-| `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#UPL) |
-| `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/#TAG) |
-| `ENT` | Entity picker | Fields & choices | 1 Shapes (3) · 2 Content (3) | [open](https://firehorse.rascode.dev/forms/#ENT) |
-| `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/#DTB) |
-| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/#TBL) |
-| `PRD` | Product grid | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PRD) |
-| `PDP` | Product page | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#PDP) |
-| `CKO` | Checkout | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CKO) |
-| `EXP` | Express pay | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#EXP) |
-| `CCH` | Choice cards | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CCH) |
-| `PAY` | Payment card | Commerce | 1 Payment card (2) | [open](https://firehorse.rascode.dev/commerce/#PAY) |
-| `CRT` | Cart line items | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CRT) |
-| `SUM` | Order summary | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#SUM) |
-| `CNF` | Order confirmation | Commerce | — | [open](https://firehorse.rascode.dev/commerce/#CNF) |
-| `INV` | Invoice | Invoice | 1 Sheet (3) · 2 Pay (1) | [open](https://firehorse.rascode.dev/commerce/#INV) |
-| `BAL` | Balance | Finance | — | [open](https://firehorse.rascode.dev/finance/#BAL) |
-| `SEG` | Segment switch | Finance | — | [open](https://firehorse.rascode.dev/finance/#SEG) |
-| `ACN` | Account card | Finance | — | [open](https://firehorse.rascode.dev/finance/#ACN) |
-| `LDG` | Ledger | Finance | — | [open](https://firehorse.rascode.dev/finance/#LDG) |
-| `VCD` | Virtual card | Finance | — | [open](https://firehorse.rascode.dev/finance/#VCD) |
-| `CNX` | Connection status | Finance | — | [open](https://firehorse.rascode.dev/finance/#CNX) |
-| `MST` | Masthead | Admin | 1 Masthead (3) | [open](https://firehorse.rascode.dev/admin/#MST) |
-| `BKD` | Backdrop | Admin | 1 Backdrop (2) | [open](https://firehorse.rascode.dev/admin/#BKD) |
-| `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.rascode.dev/admin/#REC) |
-| `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.rascode.dev/admin/#SEC) |
-| `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/admin/#MET) |
-| `GAU` | Gauge | Admin | 1 Gauge (2) | [open](https://firehorse.rascode.dev/admin/#GAU) |
-| `TRA` | Tracker | Admin | 1 Tracker (1) | [open](https://firehorse.rascode.dev/admin/#TRA) |
-| `SHL` | App shell | Admin | 1 App shell (1) | [open](https://firehorse.rascode.dev/admin/#SHL) |
-| `ENV` | Environment selector | Admin | 1 Selector (1) · 2 Pill (1) | [open](https://firehorse.rascode.dev/admin/#ENV) |
-| `WRK` | Working indicator | Admin | 1 Working (2) | [open](https://firehorse.rascode.dev/admin/#WRK) |
-| `CPS` | Composer | Admin | 1 Composer (2) | [open](https://firehorse.rascode.dev/admin/#CPS) |
-| `ADK` | Admin dock | Admin | 1 Admin dock (1) | [open](https://firehorse.rascode.dev/admin/#ADK) |
-| `PLY` | Audio player | Audio | — | [open](https://firehorse.rascode.dev/audio/#PLY) |
-| `CAP` | Captions | Audio | — | [open](https://firehorse.rascode.dev/audio/#CAP) |
-| `TRK` | Playlist | Audio | — | [open](https://firehorse.rascode.dev/audio/#TRK) |
-| `REL` | Reel | Audio | — | [open](https://firehorse.rascode.dev/audio/#REL) |
-| `MIX` | Mixer | Audio | 1 Mixer (1) | [open](https://firehorse.rascode.dev/audio/#MIX) |
-| `PRM` | Parameters | Audio | — | [open](https://firehorse.rascode.dev/audio/#PRM) |
-| `STG` | Render stages | Audio | — | [open](https://firehorse.rascode.dev/audio/#STG) |
-| `THB` | Thumbnails & link cards | Social | 1 Thumbnails & link cards (2) | [open](https://firehorse.rascode.dev/media/#THB) |
-| `SOC` | Posts & stories | Social | 1 Posts & stories (5) | [open](https://firehorse.rascode.dev/media/#SOC) |
-| `WAL` | Home screen wallpapers | Social | 1 iPhone (4) · 2 Pixel (2) · 3 Galaxy (2) | [open](https://firehorse.rascode.dev/media/#WAL) |
-| `HDR` | Profile headers | Social | 1 Profile headers (3) | [open](https://firehorse.rascode.dev/media/#HDR) |
-| `CVR` | Cover art | Social | 1 Cover art (2) | [open](https://firehorse.rascode.dev/media/#CVR) |
-| `BIZ` | Business cards | Social | 1 Business cards (2) | [open](https://firehorse.rascode.dev/media/#BIZ) |
-| `SLD` | Slide layouts | Slides | 1 Openers (3) · 2 Content (6) · 3 Close (1) | [open](https://firehorse.rascode.dev/media/#SLD) |
-| `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
-| `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
-| `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
-| `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
-| `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
+| `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.dev/foundations/#NEU) |
+| `TON` | Tones | Foundations | — | [open](https://firehorse.dev/foundations/#TON) |
+| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.dev/foundations/#TYP) |
+| `SPC` | Space | Foundations | — | [open](https://firehorse.dev/foundations/#SPC) |
+| `RAD` | Radius | Foundations | — | [open](https://firehorse.dev/foundations/#RAD) |
+| `ELV` | Elevation | Foundations | — | [open](https://firehorse.dev/foundations/#ELV) |
+| `HLP` | Text align helpers | Foundations | 1 Helpers (3) | [open](https://firehorse.dev/foundations/#HLP) |
+| `MTL` | The motion layer | Foundations | 1 The motion layer (6) | [open](https://firehorse.dev/foundations/#MTL) |
+| `WRT` | Word rotator | Foundations | 1 Word rotator (6) | [open](https://firehorse.dev/foundations/#WRT) |
+| `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.dev/motion/#MOT) |
+| `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.dev/layout/#STK) |
+| `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.dev/layout/#CLS) |
+| `GRD` | Auto grid | Layout | — | [open](https://firehorse.dev/layout/#GRD) |
+| `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.dev/layout/#COL) |
+| `GDS` | Guides | Columns | 1 Guides (7) | [open](https://firehorse.dev/layout/#GDS) |
+| `FND` | Fender | Page design patterns | — | [open](https://firehorse.dev/patterns/#FND) |
+| `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.dev/patterns/#CIN) |
+| `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.dev/patterns/#PNL) |
+| `ESP` | Etched split | Building blocks | — | [open](https://firehorse.dev/patterns/#ESP) |
+| `CTB` | CTA band | Building blocks | — | [open](https://firehorse.dev/patterns/#CTB) |
+| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.dev/components/actions/#BTN) |
+| `ACT` | Action & link | Actions | — | [open](https://firehorse.dev/components/actions/#ACT) |
+| `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.dev/components/actions/#MRK) |
+| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.dev/components/actions/#EYE) |
+| `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.dev/components/actions/#CHP) |
+| `CUB` | Cubes | Actions | 1 Cubes (4) · 2 Cube cards (4) | [open](https://firehorse.dev/components/actions/#CUB) |
+| `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.dev/components/content/#LGS) |
+| `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.dev/components/content/#CRD) |
+| `STA` | Stats strip | Content | — | [open](https://firehorse.dev/components/content/#STA) |
+| `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.dev/components/content/#KVL) |
+| `CKL` | Checklist | Content | — | [open](https://firehorse.dev/components/content/#CKL) |
+| `STP` | Steps | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.dev/components/content/#STP) |
+| `CAR` | Carousel | Content | — | [open](https://firehorse.dev/components/content/#CAR) |
+| `DEK` | Stacking deck | Content | 1 Stacking deck (1) · 2 Hero handoff (1) · 3 Recede styles (4) · 4 Cards and captions (3) · 5 Direction (2) | [open](https://firehorse.dev/components/content/#DEK) |
+| `MBR` | Member card | Content | 1 Pass (3) · 2 Plates (3) | [open](https://firehorse.dev/components/content/#MBR) |
+| `STY` | Story card | Content | 1 Solid (6) · 2 Picture and glare (4) · 3 In the field (4) | [open](https://firehorse.dev/components/content/#STY) |
+| `SPD` | Speed blur | Content | 1 Speed blur (3) | [open](https://firehorse.dev/components/content/#SPD) |
+| `DTH` | Dither | Content | 1 Dither (4) | [open](https://firehorse.dev/components/content/#DTH) |
+| `LQG` | Liquid glass | Content | 1 Liquid glass (4) | [open](https://firehorse.dev/components/content/#LQG) |
+| `LST` | List & timeline | Content | — | [open](https://firehorse.dev/components/content/#LST) |
+| `CHT` | Chat | Content | — | [open](https://firehorse.dev/components/content/#CHT) |
+| `DET` | Details, code, divider | Content | — | [open](https://firehorse.dev/components/content/#DET) |
+| `TIR` | Pricing tiers | Content | — | [open](https://firehorse.dev/components/content/#TIR) |
+| `FEA` | Features | Content | — | [open](https://firehorse.dev/components/content/#FEA) |
+| `TST` | Testimonial | Content | — | [open](https://firehorse.dev/components/content/#TST) |
+| `CAT` | Card catalog | Card catalog | 1 Catalog (1) · 2 People (1) · 3 Media (1) · 4 Surfaces (1) · 5 Tokens (1) · 6 Commerce (2) · 7 Data (1) | [open](https://firehorse.dev/components/content/#CAT) |
+| `DCK` | Floating bar | Bars & tabs | — | [open](https://firehorse.dev/components/navigation/#DCK) |
+| `FAB` | Floating action bar | Bars & tabs | — | [open](https://firehorse.dev/components/navigation/#FAB) |
+| `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.dev/components/navigation/#TAB) |
+| `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.dev/components/navigation/#NAV) |
+| `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.dev/components/navigation/#BRG) |
+| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) | [open](https://firehorse.dev/components/navigation/#MEG) |
+| `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.dev/components/navigation/#DRW) |
+| `PRF` | Profile picker | Drawers & menus | 1 Profile picker (4) | [open](https://firehorse.dev/components/navigation/#PRF) |
+| `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.dev/components/navigation/#DRP) |
+| `TBR` | Tab bar | Drawers & menus | — | [open](https://firehorse.dev/components/navigation/#TBR) |
+| `SDC` | Record sidecar | Sections | 1 Sidecar (1) | [open](https://firehorse.dev/components/sections/#SDC) |
+| `SDD` | Sidecar as a drawer | Sections | 1 Drawer (1) | [open](https://firehorse.dev/components/sections/#SDD) |
+| `SCT` | Section shell | Sections | 1 Section shell (2) | [open](https://firehorse.dev/components/sections/#SCT) |
+| `SPR` | Properties section | Sections | 1 Properties section (2) | [open](https://firehorse.dev/components/sections/#SPR) |
+| `SRC` | Records section | Sections | 1 Records section (2) | [open](https://firehorse.dev/components/sections/#SRC) |
+| `STT` | Timetable section | Sections | 1 Timetable section (2) | [open](https://firehorse.dev/components/sections/#STT) |
+| `STL` | Timeline section | Sections | 1 Timeline section (2) | [open](https://firehorse.dev/components/sections/#STL) |
+| `SCH` | Chat section | Sections | 1 Chat section (2) | [open](https://firehorse.dev/components/sections/#SCH) |
+| `SLG` | Log section | Sections | 1 Log section (2) | [open](https://firehorse.dev/components/sections/#SLG) |
+| `SPM` | Prompts section | Sections | 1 Prompts section (2) | [open](https://firehorse.dev/components/sections/#SPM) |
+| `SMT` | Metrics section | Sections | 1 Metrics section (2) | [open](https://firehorse.dev/components/sections/#SMT) |
+| `SLK` | Links section | Sections | 1 Links section (2) | [open](https://firehorse.dev/components/sections/#SLK) |
+| `SFL` | Files section | Sections | 1 Files section (2) | [open](https://firehorse.dev/components/sections/#SFL) |
+| `SFM` | Form section | Sections | 1 Form section (8) | [open](https://firehorse.dev/components/sections/#SFM) |
+| `TPL` | Page templates | Templates | 1 Page templates (7) | [open](https://firehorse.dev/components/sections/#TPL) |
+| `TMR` | Landing metric row | Templates | 1 Landing metric row (1) | [open](https://firehorse.dev/components/sections/#TMR) |
+| `REF` | Reference cell | Templates | 1 Reference cell (3) | [open](https://firehorse.dev/components/sections/#REF) |
+| `RDT` | Datatable record cells | Templates | 1 Datatable record cells (1) | [open](https://firehorse.dev/components/sections/#RDT) |
+| `SCR` | Chip rules | Templates | 1 Chip rules (3) | [open](https://firehorse.dev/components/sections/#SCR) |
+| `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.dev/components/overlays/#ACC) |
+| `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.dev/components/overlays/#DLG) |
+| `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.dev/components/overlays/#FBK) |
+| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.dev/components/overlays/#EMP) |
+| `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.dev/components/avatars/#AVT) |
+| `SCD` | Social card | Profile cards | 1 Social card (3) | [open](https://firehorse.dev/components/avatars/#SCD) |
+| `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.dev/forms/#AUT) |
+| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) · 5 Money input (4) | [open](https://firehorse.dev/forms/#FLD) |
+| `CHO` | Choices | Fields & choices | — | [open](https://firehorse.dev/forms/#CHO) |
+| `RVW` | Review rows | Fields & choices | 1 Review (1) | [open](https://firehorse.dev/forms/#RVW) |
+| `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.dev/forms/#UPL) |
+| `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.dev/forms/#TAG) |
+| `ENT` | Entity picker | Fields & choices | 1 Shapes (3) · 2 Content (3) | [open](https://firehorse.dev/forms/#ENT) |
+| `DTB` | Datatable | Data | — | [open](https://firehorse.dev/data/#DTB) |
+| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.dev/data/#TBL) |
+| `PRD` | Product grid | Commerce | — | [open](https://firehorse.dev/commerce/#PRD) |
+| `PDP` | Product page | Commerce | — | [open](https://firehorse.dev/commerce/#PDP) |
+| `CKO` | Checkout | Commerce | — | [open](https://firehorse.dev/commerce/#CKO) |
+| `EXP` | Express pay | Commerce | — | [open](https://firehorse.dev/commerce/#EXP) |
+| `CCH` | Choice cards | Commerce | — | [open](https://firehorse.dev/commerce/#CCH) |
+| `PAY` | Payment card | Commerce | 1 Payment card (2) | [open](https://firehorse.dev/commerce/#PAY) |
+| `CRT` | Cart line items | Commerce | — | [open](https://firehorse.dev/commerce/#CRT) |
+| `SUM` | Order summary | Commerce | — | [open](https://firehorse.dev/commerce/#SUM) |
+| `CNF` | Order confirmation | Commerce | — | [open](https://firehorse.dev/commerce/#CNF) |
+| `INV` | Invoice | Invoice | 1 Sheet (3) · 2 Pay (1) | [open](https://firehorse.dev/commerce/#INV) |
+| `BAL` | Balance | Finance | — | [open](https://firehorse.dev/finance/#BAL) |
+| `SEG` | Segment switch | Finance | — | [open](https://firehorse.dev/finance/#SEG) |
+| `ACN` | Account card | Finance | — | [open](https://firehorse.dev/finance/#ACN) |
+| `LDG` | Ledger | Finance | — | [open](https://firehorse.dev/finance/#LDG) |
+| `VCD` | Virtual card | Finance | — | [open](https://firehorse.dev/finance/#VCD) |
+| `CNX` | Connection status | Finance | — | [open](https://firehorse.dev/finance/#CNX) |
+| `MST` | Masthead | Admin | 1 Masthead (3) | [open](https://firehorse.dev/admin/#MST) |
+| `BKD` | Backdrop | Admin | 1 Backdrop (2) | [open](https://firehorse.dev/admin/#BKD) |
+| `REC` | Record header | Admin | 1 Record header (2) | [open](https://firehorse.dev/admin/#REC) |
+| `SEC` | Section card | Admin | 1 Section card (3) | [open](https://firehorse.dev/admin/#SEC) |
+| `MET` | Metric tiles | Admin | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.dev/admin/#MET) |
+| `GAU` | Gauge | Admin | 1 Gauge (2) | [open](https://firehorse.dev/admin/#GAU) |
+| `TRA` | Tracker | Admin | 1 Tracker (1) | [open](https://firehorse.dev/admin/#TRA) |
+| `SHL` | App shell | Admin | 1 App shell (1) | [open](https://firehorse.dev/admin/#SHL) |
+| `ENV` | Environment selector | Admin | 1 Selector (1) · 2 Pill (1) | [open](https://firehorse.dev/admin/#ENV) |
+| `WRK` | Working indicator | Admin | 1 Working (2) | [open](https://firehorse.dev/admin/#WRK) |
+| `CPS` | Composer | Admin | 1 Composer (2) | [open](https://firehorse.dev/admin/#CPS) |
+| `ADK` | Admin dock | Admin | 1 Admin dock (1) | [open](https://firehorse.dev/admin/#ADK) |
+| `PLY` | Audio player | Audio | — | [open](https://firehorse.dev/audio/#PLY) |
+| `CAP` | Captions | Audio | — | [open](https://firehorse.dev/audio/#CAP) |
+| `TRK` | Playlist | Audio | — | [open](https://firehorse.dev/audio/#TRK) |
+| `REL` | Reel | Audio | — | [open](https://firehorse.dev/audio/#REL) |
+| `MIX` | Mixer | Audio | 1 Mixer (1) | [open](https://firehorse.dev/audio/#MIX) |
+| `PRM` | Parameters | Audio | — | [open](https://firehorse.dev/audio/#PRM) |
+| `STG` | Render stages | Audio | — | [open](https://firehorse.dev/audio/#STG) |
+| `THB` | Thumbnails & link cards | Social | 1 Thumbnails & link cards (2) | [open](https://firehorse.dev/media/#THB) |
+| `SOC` | Posts & stories | Social | 1 Posts & stories (5) | [open](https://firehorse.dev/media/#SOC) |
+| `WAL` | Home screen wallpapers | Social | 1 iPhone (4) · 2 Pixel (2) · 3 Galaxy (2) | [open](https://firehorse.dev/media/#WAL) |
+| `HDR` | Profile headers | Social | 1 Profile headers (3) | [open](https://firehorse.dev/media/#HDR) |
+| `CVR` | Cover art | Social | 1 Cover art (2) | [open](https://firehorse.dev/media/#CVR) |
+| `BIZ` | Business cards | Social | 1 Business cards (2) | [open](https://firehorse.dev/media/#BIZ) |
+| `SLD` | Slide layouts | Slides | 1 Openers (3) · 2 Content (6) · 3 Close (1) | [open](https://firehorse.dev/media/#SLD) |
+| `THM` | Brand theme file | Theming | — | [open](https://firehorse.dev/theming/#THM) |
+| `THS` | Theme select | Themes | — | [open](https://firehorse.dev/theming/#THS) |
+| `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.dev/pro/project-management/#TML) |
+| `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.dev/pro/project-management/#CAL) |
+| `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.dev/pro/keys/#KEY) |
 
 ## NEU · Neutral ramp
 
@@ -148,7 +167,7 @@
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#NEU.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/foundations/#NEU.
 
 ## TON · Tones
 
@@ -156,7 +175,7 @@ Category color. Set data-tone once; dots, marks, meta and links inside follow. R
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#TON.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/foundations/#TON.
 
 ## TYP · Type
 
@@ -198,7 +217,7 @@ Four faces as one attribute: data-fh-type sets the sans and display families and
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#SPC.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/foundations/#SPC.
 
 ## RAD · Radius
 
@@ -206,7 +225,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#RAD.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/foundations/#RAD.
 
 ## ELV · Elevation
 
@@ -214,7 +233,7 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
 
 Classes: `fh-cluster` `fh-button`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#ELV.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/foundations/#ELV.
 
 ## HLP · Text align helpers
 
@@ -629,7 +648,7 @@ Classes: `fh-cluster` `fh-badge` `fh-cluster--between` `fh-label` `fh-cluster--e
 
 Classes: `fh-grid` `fh-card` `fh-card--solid`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/layout/#GRD.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/layout/#GRD.
 
 ## COL · Columns
 
@@ -765,7 +784,7 @@ A long page that changes gear partway. A note closes the first chapter and opens
 
 Classes: `fh-page` `fh-main` `fh-section` `fh-grid` `fh-card` `fh-card--solid` `fh-label` `fh-small` `fh-muted` `fh-section--ruled` `fh-section-head` `fh-panel-inset` `fh-subheading` `fh-footer` `fh-footer--tall` `fh-footer__columns` `fh-footer__column` `fh-panel`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#FND.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/patterns/#FND.
 
 ## CIN · Cinch
 
@@ -773,7 +792,7 @@ A page's opening argument, right under its sub-nav: the claim on the left, the s
 
 Classes: `fh-section` `fh-section--flush` `fh-etched-split` `fh-etched-split--roomy` `fh-bleed` `fh-etched-split__pane` `fh-crosses` `fh-stack` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-heading` `fh-lede` `fh-body` `fh-muted`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#CIN.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/patterns/#CIN.
 
 ## PNL · Offset panel
 
@@ -781,7 +800,7 @@ A tinted column that begins where you mark it and runs to the bottom of the page
 
 Classes: `fh-page` `fh-main` `fh-section` `fh-label` `fh-small` `fh-muted` `fh-section--ruled` `fh-section-head` `fh-panel-inset` `fh-subheading` `fh-footer` `fh-footer--tall` `fh-footer__columns` `fh-footer__column` `fh-panel`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#PNL.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/patterns/#PNL.
 
 ## ESP · Etched split
 
@@ -789,7 +808,7 @@ A full-bleed pair that breaks out of the content column while its copy still lin
 
 Classes: `fh-etched-split` `fh-bleed` `fh-etched-split__pane` `fh-crosses` `fh-stack` `fh-stack--lg` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-heading` `fh-lede` `fh-checklist`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#ESP.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/patterns/#ESP.
 
 ## CTB · CTA band
 
@@ -797,7 +816,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 
 Classes: `fh-cta-band` `fh-crosses` `fh-cta-band__main` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-cta-band__title` `fh-lede` `fh-hero__actions` `fh-button` `fh-button--secondary` `fh-cta-band__aside` `fh-cubes` `fh-cube` `fh-cube--lg` `fh-cta-band__people` `fh-avatars` `fh-avatar` `fh-cta-band__fine`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#CTB.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/patterns/#CTB.
 
 ## BTN · Button
 
@@ -871,11 +890,11 @@ Section CTAs and card actions.
 
 Classes: `fh-dl` `fh-action` `fh-action--lg` `fh-link` `fh-link--quiet`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/actions/#ACT.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/actions/#ACT.
 
 ## MRK · Markers
 
-Dots, eyebrow pills, breadcrumbs and badges.
+Dots, eyebrow pills, breadcrumbs and badges. A badge is for counts only; a status is an fh-chip with data-status, or inline fh-status text.
 
 Classes: `fh-breadcrumb` `fh-breadcrumb__back` `fh-dot` `fh-dot--live` `fh-cluster` `fh-badge` `fh-badge--solid`
 
@@ -1084,7 +1103,7 @@ __index · __seg · __count · --filled-end
 
 ## CHP · Chips
 
-Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from data-tone.
+Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from data-tone. For the status of a record use data-status instead (merged, running, queued, failed, archived): the tone follows the value. Chip rules: a chip is for status, and sits only in the record header, a collapsed section's summary and once per row; counts are an fh-badge; inline status text is an fh-status. See Chip rules.
 
 Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text`
 
@@ -1305,7 +1324,7 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
 
 Classes: `fh-grid` `fh-grid--ruled` `fh-grid--etched` `fh-card` `fh-card__meta` `fh-card__title` `fh-card__body` `fh-card__footer` `fh-card__price` `fh-action`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CRD.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#CRD.
 
 ## STA · Stats strip
 
@@ -1313,7 +1332,7 @@ One column, two, or a row, depending on the slot.
 
 Classes: `fh-stats`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#STA.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#STA.
 
 ## KVL · Key value list
 
@@ -1374,7 +1393,7 @@ Classes: `fh-kv` `fh-kv--single` `fh-kv--fields` `fh-input` `fh-kv__full` `fh-te
 
 Classes: `fh-checklist`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CKL.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#CKL.
 
 ## STP · Steps
 
@@ -1422,7 +1441,7 @@ Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and 
 
 Classes: `fh-carousel` `fh-carousel__track` `fh-carousel__slide` `fh-label` `fh-stats` `fh-carousel__count`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CAR.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#CAR.
 
 ## DEK · Stacking deck
 
@@ -2103,7 +2122,7 @@ Rows with a visual, text and a trailing slot. A dashed timeline for activity.
 
 Classes: `fh-stack` `fh-stack--xl` `fh-list` `fh-avatar` `fh-list__title` `fh-list__link` `fh-list__meta` `fh-badge` `fh-avatar--generated` `fh-timeline`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#LST.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#LST.
 
 ## CHT · Chat
 
@@ -2111,13 +2130,13 @@ Message bubbles, names in tone, a typing indicator.
 
 Classes: `fh-chat` `fh-message` `fh-avatar` `fh-avatar--sm` `fh-message__bubble` `fh-message__name` `fh-typing`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CHT.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#CHT.
 
 ## DET · Details, code, divider
 
 Classes: `fh-stack` `fh-stack--lg` `fh-dl` `fh-divider` `fh-code` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-small` `fh-muted` `fh-kbd`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#DET.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#DET.
 
 ## TIR · Pricing tiers
 
@@ -2125,19 +2144,19 @@ The featured tier glows in its tone; every tier stacks or sits side by side by c
 
 Classes: `fh-tiers` `fh-tier` `fh-tier__name` `fh-tier__price` `fh-tier__pitch` `fh-checklist` `fh-button` `fh-button--secondary` `fh-button--block` `fh-tier--featured` `fh-tier__flag` `fh-badge`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#TIR.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#TIR.
 
 ## FEA · Features
 
 Classes: `fh-grid` `fh-feature` `fh-feature__icon`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#FEA.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#FEA.
 
 ## TST · Testimonial
 
 Classes: `fh-testimonial` `fh-person` `fh-avatar` `fh-avatar--circle` `fh-person__text`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#TST.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/content/#TST.
 
 ## CAT · Card catalog
 
@@ -2219,7 +2238,7 @@ The masthead from rascode.dev. It rides quietly under the header, then engages w
 
 Classes: `fh-dock` `fh-frame` `fh-dock__bar` `fh-dock__identity` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-dock__avatar` `fh-dock__text` `fh-dock__title` `fh-dock__meta` `fh-cubes` `fh-cube` `fh-dock__actions` `fh-button` `fh-button--sm` `fh-button--outline`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#DCK.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#DCK.
 
 ## FAB · Floating action bar
 
@@ -2227,7 +2246,7 @@ A pill that surfaces after the first screen, using a scroll-driven animation. Sh
 
 Classes: `fh-label` `fh-subheading` `fh-skeleton` `fh-float` `fh-avatar` `fh-avatar--sm` `fh-avatar--circle` `fh-cube` `fh-button` `fh-button--sm`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#FAB.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#FAB.
 
 ## TAB · Tabs
 
@@ -2235,7 +2254,7 @@ Underline tabs that scroll sideways when they run out of room. fh-tabs--mono for
 
 Classes: `fh-stack` `fh-stack--lg` `fh-tabs` `fh-tabs--mono`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#TAB.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#TAB.
 
 ## NAV · Navigation
 
@@ -2243,7 +2262,7 @@ Pagination, a wizard stepper, search and a side nav.
 
 Classes: `fh-stack` `fh-stack--lg` `fh-search` `fh-sr-only` `fh-kbd` `fh-stepper` `fh-pagination` `fh-sidenav` `fh-label` `fh-badge` `fh-sidenav__area` `fh-sidenav__area-head` `fh-sidenav__row` `fh-cluster` `fh-icon` `fh-sidenav__label` `fh-sidenav__badge` `fh-sidenav__chevron` `fh-sidenav__children` `fh-sidenav__child`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#NAV.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#NAV.
 
 ## BRG · Hamburger
 
@@ -2251,7 +2270,7 @@ Three bars, seven morphs, every state. Open comes from aria-expanded, a sibling 
 
 Classes: `fh-burger` `fh-burger--boxed` `fh-burger--open` `fh-burger--label` `fh-burger--arrow` `fh-burger--spin` `fh-burger--squeeze` `fh-burger--minus` `fh-burger--plus` `fh-burger--dots` `fh-burger--tone`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#BRG.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#BRG.
 
 ## MEG · Mega panel
 
@@ -2380,7 +2399,7 @@ Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS
 
 Classes: `fh-button` `fh-button--secondary` `fh-icon` `fh-menu` `fh-menu__label` `fh-menu__danger`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#DRP.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#DRP.
 
 ## TBR · Tab bar
 
@@ -2388,7 +2407,1427 @@ Phone navigation with icons, a current marker and a count badge. Respects the ho
 
 Classes: `fh-label` `fh-stack` `fh-stack--sm` `fh-chip-card` `fh-chip-card__block` `fh-icon` `fh-chip-card__text` `fh-tabbar`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#TBR.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/navigation/#TBR.
+
+## SDC · Record sidecar
+
+One drawer for every record. A fixed header (eyebrow with the record kind, mark, title, one chip row, actions, one close control), then the sections, then the linked records. Body text steps down through the public text tokens, so every component inside follows. Open the whole stack from the first section or collapse them all.
+
+Classes: `fh-sidecar` `fh-sidecar__header` `fh-sidecar__bar` `fh-sidecar__eyebrow` `fh-sidecar__actions` `fh-button` `fh-button--ghost` `fh-button--icon` `fh-button--sm` `fh-icon` `fh-close` `fh-sidecar__identity` `fh-sidecar__mark` `fh-sidecar__title` `fh-sidecar__sub` `fh-sidecar__chips` `fh-chip` `fh-sidecar__body` `fh-panel-section` `fh-panel-section--properties` `fh-panel-section__head` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-panel-section__body` `fh-kv` `fh-kv--single` `fh-panel-section--form` `fh-field` `fh-input` `fh-textarea` `fh-field__hint` `fh-money` `fh-input-group` `fh-money__currency` `fh-panel-section__slot` `fh-panel-section__actions` `fh-button--secondary` `fh-panel-section--prompts` `fh-prompts` `fh-prompt` `fh-prompt__key` `fh-prompt__version` `fh-chip--tone` `fh-chip--sm` `fh-prompt__meta` `fh-panel-section--timetable` `fh-table-wrap` `fh-table` `fh-panel-section--chat` `fh-chat` `fh-message` `fh-message__head` `fh-message__name` `fh-message__time` `fh-panel-section--metrics` `fh-metrics` `fh-metric` `fh-metric__label` `fh-metric__value` `fh-metric__sub` `fh-panel-section--log` `fh-log` `fh-panel-section--timeline` `fh-timeline` `fh-panel-section--records` `fh-link` `fh-panel-section--links` `fh-links` `fh-panel-section--files` `fh-files`
+
+### SDC-1 · Sidecar
+
+#### SDC-1.1 · Sidecar
+
+```html
+<aside class="fh-sidecar" style="--fh-sidecar-height: 44rem" aria-label="Record" data-fh="SDC-1.1">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Relays · audit</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark" data-tone="sky"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i></span>
+      <div>
+        <h2 class="fh-sidecar__title">Harbor index refresh</h2>
+        <p class="fh-sidecar__sub"><code>harbor-index-refresh</code> · dispatch 1</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">claude_cli</span><span class="fh-chip" data-tone="amber">2 rounds</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+    <details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Properties</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <dl class="fh-kv fh-kv--single">
+          <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+          <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+          <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+          <div><dt>Duration</dt><dd>38 min</dd></div>
+        </dl>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--form" data-tone="sky">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <div class="fh-field">
+              <label for="fs-sc-name">Display name</label>
+              <input class="fh-input" id="fs-sc-name" name="name" value="Harbor index refresh" required>
+            </div>
+            <div class="fh-field">
+              <label for="fs-sc-note">Note</label>
+              <textarea class="fh-textarea" id="fs-sc-note" name="note" rows="2">Reviewed each quarter.</textarea>
+              <p class="fh-field__hint">Key ends in 4f2a</p>
+            </div>
+            <div class="fh-field fh-money" data-fh-money data-currency="USD">
+              <label for="fs-sc-limit">Spend limit</label>
+              <div class="fh-input-group">
+                <span class="fh-money__currency">USD</span>
+                <input class="fh-input" id="fs-sc-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+                <input type="hidden" data-fh-money-value>
+              </div>
+              <p class="fh-field__hint">Posts whole cents.</p>
+            </div>
+            <div class="fh-panel-section__slot" data-slot="field"></div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+          </div>
+        </form>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--prompts" data-tone="teal" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--sparkles fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Prompts</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul class="fh-prompts">
+          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-preamble"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v3</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-spec"><code class="fh-prompt__key">relay.spec.firehorse-sections</code><b class="fh-prompt__version">v1</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">draft</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+        </ul>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Timetable</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">15:07 to 15:45</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+          <tbody>
+            <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
+            <tr><td>15:14</td><td>Built the CSS</td><td>Three files, lint clean</td></tr>
+            <tr><td>15:31</td><td>Ran the tests</td><td>All checks passed</td></tr>
+            <tr><td>15:45</td><td>Wrote the report</td><td>Committed locally</td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--chat" data-tone="fuchsia">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--message-square fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Replies</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 15:46</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-chat">
+          <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Harbor</span><time class="fh-message__time">15:44</time></p><p>The sidecar and ten sections are in. Tests pass.</p></div></div>
+          <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Orchard</span><time class="fh-message__time">15:46</time></p><p>Thanks. Please add the narrow screenshots.</p></div></div>
+        </div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--metrics" data-tone="lime">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--chart-bar fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Tokens</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">412k effective</span><span class="fh-chip" data-tone="amber">$3.18</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-metrics">
+          <article class="fh-metric" data-tone="lime"><p class="fh-metric__label">Effective</p><p class="fh-metric__value">412k</p><p class="fh-metric__sub">Tokens, all layers</p></article>
+          <article class="fh-metric" data-tone="amber"><p class="fh-metric__label">Cost</p><p class="fh-metric__value">$3.18</p><p class="fh-metric__sub">Two rounds</p></article>
+          <article class="fh-metric" data-tone="sky"><p class="fh-metric__label">Rounds</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">One follow-up</p></article>
+        </div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--log" data-tone="orange">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--terminal fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Log</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">5 lines</span><span class="fh-chip" data-tone="amber">1 warning</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ol class="fh-log">
+          <li data-tone="sky"><time>15:07:12</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>claimed 3 paths</code></li>
+          <li data-tone="sky"><time>15:14:40</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>lint: 195 files, 0 errors</code></li>
+          <li data-tone="amber"><time>15:22:03</time><span class="fh-chip fh-chip--tone fh-chip--sm">warn</span><code>class fh-section already exists; using fh-panel-section for the shell</code></li>
+          <li data-tone="lime"><time>15:31:55</time><span class="fh-chip fh-chip--tone fh-chip--sm">ok</span><code>contrast verify passed</code></li>
+          <li data-tone="rose"><time>15:33:01</time><span class="fh-chip fh-chip--tone fh-chip--sm">error</span><code>retry 1 of 2: build step timed out</code></li>
+        </ol>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--timeline" data-tone="violet">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--activity fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Timeline</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">3 events</span><span class="fh-chip" data-tone="sky">last 15:45</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ol class="fh-timeline">
+          <li data-tone="sky"><time>15:07</time><p><b>Dispatched</b> to the build agent</p></li>
+          <li data-tone="lime"><time>15:31</time><p><b>Checks passed</b> on the first run</p></li>
+          <li data-tone="teal"><time>15:45</time><p><b>Committed</b> on the relay branch</p></li>
+        </ol>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--records" data-tone="teal">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--table-2 fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Records</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">3 records</span><span class="fh-chip" data-tone="amber">1 open</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+            <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-ledger">Ledger cleanup</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-harbor">Harbor</a></td><td>Open</td></tr>
+            <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-tidal">Tidal export</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--links" data-tone="sky">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--link fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Linked records</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul class="fh-links">
+          <li><a href="#c-sidecar" data-sidecar="commit-a1b2c3d"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Sections: record sidecar and ten sections</span><small>commit</small></a></li>
+          <li><a href="#c-sidecar" data-sidecar="goal-harbor"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i><span>Harbor index refresh</span><small>goal</small></a></li>
+          <li><a href="#c-sidecar" data-sidecar="agent-harbor"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i><span>Harbor</span><small>agent</small></a></li>
+        </ul>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--files" data-tone="rose">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--paperclip fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Files</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="rose">3 files</span><span class="fh-chip" data-tone="sky">84 KB</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul class="fh-files">
+          <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time>Nov 11</time></a></li>
+          <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>spec.md</span><small>9 KB</small><time>Nov 11</time></a></li>
+          <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>sections-1440.png</span><small>63 KB</small><time>Nov 11</time></a></li>
+        </ul>
+        </div>
+      </details>
+  </div>
+</aside>
+```
+
+## SDD · Sidecar as a drawer
+
+The same sidecar in a floating dialog: it slides in from the edge, and Escape, the close control or a click outside puts it away. Any element with data-sidecar="record-id" opens it (sidecar.js sets data-record and fires fh:sidecar-open so the app can fill it); focus returns to the opener on close.
+
+Classes: `fh-button` `fh-button--secondary`
+
+### SDD-1 · Drawer
+
+#### SDD-1.1 · Opener
+
+```html
+<button type="button" class="fh-button fh-button--secondary" data-sidecar="goal-harbor" data-fh="SDD-1.1">Open the sidecar</button>
+```
+
+## SCT · Section shell
+
+The header every section shares: an icon, a title larger than body text in the strongest text role, and a collapse control. Collapsed, it shows summary chips for what it holds; open, the chips are gone. Chips live only here and in the sidecar header.
+
+Classes: `fh-panel-section` `fh-panel-section--properties` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-kv` `fh-kv--single`
+
+### SCT-1 · Section shell
+
+#### SCT-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open data-fh="SCT-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Summary</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <dl class="fh-kv fh-kv--single">
+    <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+    <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+    <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+    <div><dt>Duration</dt><dd>38 min</dd></div>
+  </dl>
+  </div>
+</details>
+```
+
+#### SCT-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--properties" data-tone="sky" data-fh="SCT-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Summary</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <dl class="fh-kv fh-kv--single">
+    <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+    <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+    <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+    <div><dt>Duration</dt><dd>38 min</dd></div>
+  </dl>
+  </div>
+</details>
+```
+
+## SPR · Properties section
+
+fh-panel-section--properties. A key value list. Collapsed, it shows the two or three values that matter most.
+
+Classes: `fh-panel-section` `fh-panel-section--properties` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-kv` `fh-kv--single`
+
+### SPR-1 · Properties section
+
+#### SPR-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open data-fh="SPR-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Properties</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <dl class="fh-kv fh-kv--single">
+    <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+    <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+    <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+    <div><dt>Duration</dt><dd>38 min</dd></div>
+  </dl>
+  </div>
+</details>
+```
+
+#### SPR-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--properties" data-tone="sky" data-fh="SPR-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Properties</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <dl class="fh-kv fh-kv--single">
+    <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
+    <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
+    <div><dt>Branch</dt><dd><code>relay/harbor-index</code></dd></div>
+    <div><dt>Duration</dt><dd>38 min</dd></div>
+  </dl>
+  </div>
+</details>
+```
+
+## SRC · Records section
+
+fh-panel-section--records. A table of records. Every reference in a cell is a link that opens that record's sidecar.
+
+Classes: `fh-panel-section` `fh-panel-section--records` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-table-wrap` `fh-table` `fh-link`
+
+### SRC-1 · Records section
+
+#### SRC-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open data-fh="SRC-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--table-2 fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Records</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">3 records</span><span class="fh-chip" data-tone="amber">1 open</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-table-wrap"><table class="fh-table">
+    <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+      <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-ledger">Ledger cleanup</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-harbor">Harbor</a></td><td>Open</td></tr>
+      <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-tidal">Tidal export</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+</details>
+```
+
+#### SRC-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" data-fh="SRC-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--table-2 fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Records</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">3 records</span><span class="fh-chip" data-tone="amber">1 open</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-table-wrap"><table class="fh-table">
+    <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+      <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-ledger">Ledger cleanup</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-harbor">Harbor</a></td><td>Open</td></tr>
+      <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-tidal">Tidal export</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard">Orchard</a></td><td>Merged</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+</details>
+```
+
+## STT · Timetable section
+
+fh-panel-section--timetable. A real table: time, step, detail. Never a list that only looks like one.
+
+Classes: `fh-panel-section` `fh-panel-section--timetable` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-table-wrap` `fh-table`
+
+### STT-1 · Timetable section
+
+#### STT-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open data-fh="STT-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Timetable</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">15:07 to 15:45</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-table-wrap"><table class="fh-table">
+    <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+    <tbody>
+      <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
+      <tr><td>15:14</td><td>Built the CSS</td><td>Three files, lint clean</td></tr>
+      <tr><td>15:31</td><td>Ran the tests</td><td>All checks passed</td></tr>
+      <tr><td>15:45</td><td>Wrote the report</td><td>Committed locally</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+</details>
+```
+
+#### STT-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" data-fh="STT-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Timetable</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">15:07 to 15:45</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-table-wrap"><table class="fh-table">
+    <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+    <tbody>
+      <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
+      <tr><td>15:14</td><td>Built the CSS</td><td>Three files, lint clean</td></tr>
+      <tr><td>15:31</td><td>Ran the tests</td><td>All checks passed</td></tr>
+      <tr><td>15:45</td><td>Wrote the report</td><td>Committed locally</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+</details>
+```
+
+## STL · Timeline section
+
+fh-panel-section--timeline. Events in order, each with its time and a tone for what kind of event it was.
+
+Classes: `fh-panel-section` `fh-panel-section--timeline` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-timeline`
+
+### STL-1 · Timeline section
+
+#### STL-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--timeline" data-tone="violet" open data-fh="STL-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--activity fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Timeline</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">3 events</span><span class="fh-chip" data-tone="sky">last 15:45</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ol class="fh-timeline">
+    <li data-tone="sky"><time>15:07</time><p><b>Dispatched</b> to the build agent</p></li>
+    <li data-tone="lime"><time>15:31</time><p><b>Checks passed</b> on the first run</p></li>
+    <li data-tone="teal"><time>15:45</time><p><b>Committed</b> on the relay branch</p></li>
+  </ol>
+  </div>
+</details>
+```
+
+#### STL-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--timeline" data-tone="violet" data-fh="STL-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--activity fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Timeline</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">3 events</span><span class="fh-chip" data-tone="sky">last 15:45</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ol class="fh-timeline">
+    <li data-tone="sky"><time>15:07</time><p><b>Dispatched</b> to the build agent</p></li>
+    <li data-tone="lime"><time>15:31</time><p><b>Checks passed</b> on the first run</p></li>
+    <li data-tone="teal"><time>15:45</time><p><b>Committed</b> on the relay branch</p></li>
+  </ol>
+  </div>
+</details>
+```
+
+## SCH · Chat section
+
+fh-panel-section--chat. Speaker, time and message. The speaker sits above the message with the time at the far side.
+
+Classes: `fh-panel-section` `fh-panel-section--chat` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-chat` `fh-message` `fh-message__head` `fh-message__name` `fh-message__time`
+
+### SCH-1 · Chat section
+
+#### SCH-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--chat" data-tone="fuchsia" open data-fh="SCH-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--message-square fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Replies</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 15:46</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-chat">
+    <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Harbor</span><time class="fh-message__time">15:44</time></p><p>The sidecar and ten sections are in. Tests pass.</p></div></div>
+    <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Orchard</span><time class="fh-message__time">15:46</time></p><p>Thanks. Please add the narrow screenshots.</p></div></div>
+  </div>
+  </div>
+</details>
+```
+
+#### SCH-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--chat" data-tone="fuchsia" data-fh="SCH-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--message-square fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Replies</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 15:46</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-chat">
+    <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Harbor</span><time class="fh-message__time">15:44</time></p><p>The sidecar and ten sections are in. Tests pass.</p></div></div>
+    <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Orchard</span><time class="fh-message__time">15:46</time></p><p>Thanks. Please add the narrow screenshots.</p></div></div>
+  </div>
+  </div>
+</details>
+```
+
+## SLG · Log section
+
+fh-panel-section--log. Time, level and line, in monospace. The level takes its tone.
+
+Classes: `fh-panel-section` `fh-panel-section--log` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-log` `fh-chip--tone` `fh-chip--sm`
+
+### SLG-1 · Log section
+
+#### SLG-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--log" data-tone="orange" open data-fh="SLG-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--terminal fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Log</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">5 lines</span><span class="fh-chip" data-tone="amber">1 warning</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ol class="fh-log">
+    <li data-tone="sky"><time>15:07:12</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>claimed 3 paths</code></li>
+    <li data-tone="sky"><time>15:14:40</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>lint: 195 files, 0 errors</code></li>
+    <li data-tone="amber"><time>15:22:03</time><span class="fh-chip fh-chip--tone fh-chip--sm">warn</span><code>class fh-section already exists; using fh-panel-section for the shell</code></li>
+    <li data-tone="lime"><time>15:31:55</time><span class="fh-chip fh-chip--tone fh-chip--sm">ok</span><code>contrast verify passed</code></li>
+    <li data-tone="rose"><time>15:33:01</time><span class="fh-chip fh-chip--tone fh-chip--sm">error</span><code>retry 1 of 2: build step timed out</code></li>
+  </ol>
+  </div>
+</details>
+```
+
+#### SLG-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--log" data-tone="orange" data-fh="SLG-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--terminal fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Log</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">5 lines</span><span class="fh-chip" data-tone="amber">1 warning</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ol class="fh-log">
+    <li data-tone="sky"><time>15:07:12</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>claimed 3 paths</code></li>
+    <li data-tone="sky"><time>15:14:40</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>lint: 195 files, 0 errors</code></li>
+    <li data-tone="amber"><time>15:22:03</time><span class="fh-chip fh-chip--tone fh-chip--sm">warn</span><code>class fh-section already exists; using fh-panel-section for the shell</code></li>
+    <li data-tone="lime"><time>15:31:55</time><span class="fh-chip fh-chip--tone fh-chip--sm">ok</span><code>contrast verify passed</code></li>
+    <li data-tone="rose"><time>15:33:01</time><span class="fh-chip fh-chip--tone fh-chip--sm">error</span><code>retry 1 of 2: build step timed out</code></li>
+  </ol>
+  </div>
+</details>
+```
+
+## SPM · Prompts section
+
+fh-panel-section--prompts. The prompts a dispatch used, each with its key and version. Each row opens the prompt.
+
+Classes: `fh-panel-section` `fh-panel-section--prompts` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-prompts` `fh-prompt` `fh-prompt__key` `fh-prompt__version` `fh-chip--tone` `fh-chip--sm` `fh-prompt__meta`
+
+### SPM-1 · Prompts section
+
+#### SPM-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--prompts" data-tone="teal" open data-fh="SPM-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--sparkles fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Prompts</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ul class="fh-prompts">
+    <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-preamble"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v3</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+    <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-spec"><code class="fh-prompt__key">relay.spec.firehorse-sections</code><b class="fh-prompt__version">v1</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">draft</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+  </ul>
+  </div>
+</details>
+```
+
+#### SPM-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--prompts" data-tone="teal" data-fh="SPM-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--sparkles fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Prompts</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ul class="fh-prompts">
+    <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-preamble"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v3</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+    <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-spec"><code class="fh-prompt__key">relay.spec.firehorse-sections</code><b class="fh-prompt__version">v1</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">draft</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+  </ul>
+  </div>
+</details>
+```
+
+## SMT · Metrics section
+
+fh-panel-section--metrics. Metric tiles (in the core bundle). Collapsed, it shows the headline figure.
+
+Classes: `fh-panel-section` `fh-panel-section--metrics` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-metrics` `fh-metric` `fh-metric__label` `fh-metric__value` `fh-metric__sub`
+
+### SMT-1 · Metrics section
+
+#### SMT-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--metrics" data-tone="lime" open data-fh="SMT-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--chart-bar fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Tokens</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">412k effective</span><span class="fh-chip" data-tone="amber">$3.18</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-metrics">
+    <article class="fh-metric" data-tone="lime"><p class="fh-metric__label">Effective</p><p class="fh-metric__value">412k</p><p class="fh-metric__sub">Tokens, all layers</p></article>
+    <article class="fh-metric" data-tone="amber"><p class="fh-metric__label">Cost</p><p class="fh-metric__value">$3.18</p><p class="fh-metric__sub">Two rounds</p></article>
+    <article class="fh-metric" data-tone="sky"><p class="fh-metric__label">Rounds</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">One follow-up</p></article>
+  </div>
+  </div>
+</details>
+```
+
+#### SMT-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--metrics" data-tone="lime" data-fh="SMT-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--chart-bar fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Tokens</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">412k effective</span><span class="fh-chip" data-tone="amber">$3.18</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-metrics">
+    <article class="fh-metric" data-tone="lime"><p class="fh-metric__label">Effective</p><p class="fh-metric__value">412k</p><p class="fh-metric__sub">Tokens, all layers</p></article>
+    <article class="fh-metric" data-tone="amber"><p class="fh-metric__label">Cost</p><p class="fh-metric__value">$3.18</p><p class="fh-metric__sub">Two rounds</p></article>
+    <article class="fh-metric" data-tone="sky"><p class="fh-metric__label">Rounds</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">One follow-up</p></article>
+  </div>
+  </div>
+</details>
+```
+
+## SLK · Links section
+
+fh-panel-section--links. Linked records. Each one opens in the sidecar, so none is plain text.
+
+Classes: `fh-panel-section` `fh-panel-section--links` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-links`
+
+### SLK-1 · Links section
+
+#### SLK-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--links" data-tone="sky" open data-fh="SLK-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--link fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Linked records</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ul class="fh-links">
+    <li><a href="#c-sidecar" data-sidecar="commit-a1b2c3d"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Sections: record sidecar and ten sections</span><small>commit</small></a></li>
+    <li><a href="#c-sidecar" data-sidecar="goal-harbor"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i><span>Harbor index refresh</span><small>goal</small></a></li>
+    <li><a href="#c-sidecar" data-sidecar="agent-harbor"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i><span>Harbor</span><small>agent</small></a></li>
+  </ul>
+  </div>
+</details>
+```
+
+#### SLK-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--links" data-tone="sky" data-fh="SLK-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--link fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Linked records</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ul class="fh-links">
+    <li><a href="#c-sidecar" data-sidecar="commit-a1b2c3d"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Sections: record sidecar and ten sections</span><small>commit</small></a></li>
+    <li><a href="#c-sidecar" data-sidecar="goal-harbor"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i><span>Harbor index refresh</span><small>goal</small></a></li>
+    <li><a href="#c-sidecar" data-sidecar="agent-harbor"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i><span>Harbor</span><small>agent</small></a></li>
+  </ul>
+  </div>
+</details>
+```
+
+## SFL · Files section
+
+fh-panel-section--files. Files with their size and date. A name opens or downloads the file.
+
+Classes: `fh-panel-section` `fh-panel-section--files` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-files`
+
+### SFL-1 · Files section
+
+#### SFL-1.1 · Open
+
+```html
+<details class="fh-panel-section fh-panel-section--files" data-tone="rose" open data-fh="SFL-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--paperclip fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Files</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="rose">3 files</span><span class="fh-chip" data-tone="sky">84 KB</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ul class="fh-files">
+    <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time>Nov 11</time></a></li>
+    <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>spec.md</span><small>9 KB</small><time>Nov 11</time></a></li>
+    <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>sections-1440.png</span><small>63 KB</small><time>Nov 11</time></a></li>
+  </ul>
+  </div>
+</details>
+```
+
+#### SFL-1.2 · Collapsed
+
+```html
+<details class="fh-panel-section fh-panel-section--files" data-tone="rose" data-fh="SFL-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--paperclip fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Files</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="rose">3 files</span><span class="fh-chip" data-tone="sky">84 KB</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <ul class="fh-files">
+    <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time>Nov 11</time></a></li>
+    <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>spec.md</span><small>9 KB</small><time>Nov 11</time></a></li>
+    <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>sections-1440.png</span><small>63 KB</small><time>Nov 11</time></a></li>
+  </ul>
+  </div>
+</details>
+```
+
+## SFM · Form section
+
+fh-panel-section--form. A section where a person edits the record in place: one form with one fieldset of Firehorse fields (fh-money included, and fh-panel-section__slot for a field the host supplies), then the actions row. A section whose slot holds a field that renders its own form uses <div class="fh-panel-section__form" role="group" aria-labelledby="…"> as its body instead of the form: never put a form inside a form. A field's read only value, such as "ends in 4f2a", goes in its hint. States are markup only: data-dirty on the section is changed, aria-busy on the form with the save button disabled is saving, one fh-status in the actions row is saved (or an error that belongs to no field), fh-field__error is a field error, and a disabled fieldset with a one line note above it is locked. sidecar.js sets data-dirty on the section and the sidecar; a dirty sidecar fires a cancelable fh:sidecar-before-close before it closes or swaps record. The actions stack under 36rem.
+
+Classes: `fh-panel-section` `fh-panel-section--form` `fh-panel-section__head` `fh-icon` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-chip` `fh-panel-section__body` `fh-field` `fh-input` `fh-textarea` `fh-field__hint` `fh-money` `fh-input-group` `fh-money__currency` `fh-panel-section__slot` `fh-panel-section__actions` `fh-button` `fh-button--sm` `fh-button--secondary` `fh-status` `fh-field__error` `fh-panel-section__note` `fh-panel-section__form`
+
+### SFM-1 · Form section
+
+#### SFM-1.1 · Clean
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SFM-1.1">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form>
+    <fieldset>
+      <div class="fh-field">
+        <label for="fs-clean-name">Display name</label>
+        <input class="fh-input" id="fs-clean-name" name="name" value="Harbor index refresh" required>
+      </div>
+      <div class="fh-field">
+        <label for="fs-clean-note">Note</label>
+        <textarea class="fh-textarea" id="fs-clean-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-clean-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-clean-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__hint">Posts whole cents.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.2 · Changed
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-dirty data-fh="SFM-1.2">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form>
+    <fieldset>
+      <div class="fh-field">
+        <label for="fs-chg-name">Display name</label>
+        <input class="fh-input" id="fs-chg-name" name="name" value="Harbor index rebuild" required>
+      </div>
+      <div class="fh-field">
+        <label for="fs-chg-note">Note</label>
+        <textarea class="fh-textarea" id="fs-chg-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-chg-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-chg-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__hint">Posts whole cents.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.3 · Saving
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-dirty data-fh="SFM-1.3">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form aria-busy="true">
+    <fieldset>
+      <div class="fh-field">
+        <label for="fs-sav-name">Display name</label>
+        <input class="fh-input" id="fs-sav-name" name="name" value="Harbor index rebuild" required>
+      </div>
+      <div class="fh-field">
+        <label for="fs-sav-note">Note</label>
+        <textarea class="fh-textarea" id="fs-sav-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-sav-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-sav-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__hint">Posts whole cents.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit" disabled>Saving</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset" disabled>Discard</button>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.4 · Saved
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SFM-1.4">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form>
+    <fieldset>
+      <div class="fh-field">
+        <label for="fs-ok-name">Display name</label>
+        <input class="fh-input" id="fs-ok-name" name="name" value="Harbor index rebuild" required>
+      </div>
+      <div class="fh-field">
+        <label for="fs-ok-note">Note</label>
+        <textarea class="fh-textarea" id="fs-ok-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-ok-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-ok-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__hint">Posts whole cents.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button><span class="fh-status" data-tone="lime" role="status">Saved just now</span>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.5 · Error
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-dirty data-fh="SFM-1.5">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span><span class="fh-chip" data-tone="rose">1 error</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form>
+    <fieldset>
+      <div class="fh-field">
+        <label for="fs-err-name">Display name</label>
+        <input class="fh-input" id="fs-err-name" name="name" value required aria-invalid="true" aria-describedby="fs-err-name-msg">
+        <p class="fh-field__error" id="fs-err-name-msg">Enter a display name.</p>
+      </div>
+      <div class="fh-field">
+        <label for="fs-err-note">Note</label>
+        <textarea class="fh-textarea" id="fs-err-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-err-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-err-limit" name="limit" inputmode="decimal" autocomplete="off" value="500" aria-invalid="true" aria-describedby="fs-err-limit-msg">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__error" id="fs-err-limit-msg">The limit is more than 50,000.00.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button><span class="fh-status" data-tone="danger" role="alert">The record could not be saved. Try again.</span>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.6 · Locked
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SFM-1.6">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form>
+    <p class="fh-panel-section__note">Locked while the relay is running. It opens again when the run ends.</p>
+    <fieldset disabled>
+      <div class="fh-field">
+        <label for="fs-lock-name">Display name</label>
+        <input class="fh-input" id="fs-lock-name" name="name" value="Harbor index refresh" required>
+      </div>
+      <div class="fh-field">
+        <label for="fs-lock-note">Note</label>
+        <textarea class="fh-textarea" id="fs-lock-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-lock-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-lock-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__hint">Posts whole cents.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit" disabled>Save</button>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.7 · Collapsed with chips
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" data-fh="SFM-1.7">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Settings</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span><span class="fh-chip" data-tone="amber">1 needs a value</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <form>
+    <fieldset>
+      <div class="fh-field">
+        <label for="fs-coll-name">Display name</label>
+        <input class="fh-input" id="fs-coll-name" name="name" value="Harbor index refresh" required>
+      </div>
+      <div class="fh-field">
+        <label for="fs-coll-note">Note</label>
+        <textarea class="fh-textarea" id="fs-coll-note" name="note" rows="2">Reviewed each quarter.</textarea>
+        <p class="fh-field__hint">Key ends in 4f2a</p>
+      </div>
+      <div class="fh-field fh-money" data-fh-money data-currency="USD">
+        <label for="fs-coll-limit">Spend limit</label>
+        <div class="fh-input-group">
+          <span class="fh-money__currency">USD</span>
+          <input class="fh-input" id="fs-coll-limit" name="limit" inputmode="decimal" autocomplete="off" value="500">
+          <input type="hidden" data-fh-money-value>
+        </div>
+        <p class="fh-field__hint">Posts whole cents.</p>
+      </div>
+      <div class="fh-panel-section__slot" data-slot="field"></div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
+    </div>
+  </form>
+  </div>
+</details>
+```
+
+#### SFM-1.8 · Host field
+
+```html
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SFM-1.8">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title" id="fs-host-title">Access</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">1 field</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+  <div class="fh-panel-section__form" role="group" aria-labelledby="fs-host-title">
+    <fieldset>
+      <div class="fh-panel-section__slot" data-slot="field">
+        <form class="fh-field" aria-label="Sample token">
+          <label for="fs-host-token">Sample token</label>
+          <div class="fh-input-group">
+            <input class="fh-input" id="fs-host-token" name="token" autocomplete="off">
+            <button class="fh-button fh-button--sm" type="submit">Set</button>
+          </div>
+          <p class="fh-field__hint">This field owns its form, so the section body is a div.</p>
+        </form>
+      </div>
+    </fieldset>
+    <div class="fh-panel-section__actions">
+      <button class="fh-button fh-button--secondary fh-button--sm" type="button">Close</button>
+    </div>
+  </div>
+  </div>
+</details>
+```
+
+## TPL · Page templates
+
+Five fixed layouts, fh-tpl--landing, list, detail, form and empty, placed in the page's fh-main. A page picks one and fills its regions with Firehorse parts; it never sets its own layout. Spacing between regions is one step on every template, and each template responds to its own width, so every one holds at 1440 and at 375. Page templates use the record header and section card, which ship in firehorse.css.
+
+Classes: `fh-tpl` `fh-tpl--landing` `fh-tpl__header` `fh-record` `fh-record__mark` `fh-icon` `fh-record__id` `fh-record__title` `fh-record__sub` `fh-record__actions` `fh-button` `fh-button--sm` `fh-tpl__nav` `fh-tabs` `fh-tabs--sub` `fh-badge` `fh-tpl__metrics` `fh-metrics` `fh-metrics--four` `fh-metric` `fh-metric__label` `fh-metric__value` `fh-metric__sub` `fh-metric__source` `fh-tpl__body` `fh-section-card` `fh-section-card__head` `fh-section-card__title` `fh-table-wrap` `fh-table` `fh-ref` `fh-ref__label` `fh-ref__key` `fh-chip` `fh-chip--tone` `fh-chip--sm` `fh-tpl--list` `fh-tpl__filters` `fh-search` `fh-sr-only` `fh-select-wrap` `fh-select` `fh-check` `fh-chips` `fh-chips--wrap` `fh-dt` `fh-dt--records` `fh-dt__scroll` `fh-dt__table` `fh-tpl--detail` `fh-record__chips` `fh-button--secondary` `fh-tpl__facts` `fh-tpl__cols` `fh-tpl__main` `fh-section-card__lede` `fh-links` `fh-tpl__side` `fh-panel-section` `fh-panel-section--timeline` `fh-panel-section__head` `fh-panel-section__icon` `fh-panel-section__title` `fh-panel-section__chips` `fh-panel-section__body` `fh-timeline` `fh-tpl--form` `fh-field` `fh-input` `fh-tpl__actions` `fh-tpl--empty` `fh-empty` `fh-empty__icon`
+
+### TPL-1 · Page templates
+
+#### TPL-1.1 · Landing
+
+```html
+<div class="fh-tpl fh-tpl--landing">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Goals</h2>
+        <p class="fh-record__sub">What the team is working toward this cycle.</p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm" type="button">New goal</button></div>
+    </div>
+  </header>
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Goals pages">
+      <a href="#c-tpl" aria-current="page">Overview</a>
+      <a href="#c-tpl">All goals <span class="fh-badge">14</span></a>
+      <a href="#c-tpl">Owners</a>
+      <a href="#c-tpl">Cycles</a>
+      <a href="#c-tpl">Reviews</a>
+      <a href="#c-tpl">Settings</a>
+    </nav>
+  </div>
+  <div class="fh-tpl__metrics">
+    <div class="fh-metrics fh-metrics--four" data-fh="TMR-1.1">
+      <article class="fh-metric" data-tone="sky"><p class="fh-metric__label"><i class="fh-icon fh-icon--target" aria-hidden="true"></i>Open goals</p><p class="fh-metric__value">14</p><p class="fh-metric__sub">3 due this week</p><p class="fh-metric__source">Goals</p></article>
+      <article class="fh-metric" data-tone="lime"><p class="fh-metric__label"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Merged</p><p class="fh-metric__value">38</p><p class="fh-metric__sub">Since the cycle began</p><p class="fh-metric__source">Relays</p></article>
+      <article class="fh-metric" data-tone="amber"><p class="fh-metric__label"><i class="fh-icon fh-icon--clock" aria-hidden="true"></i>Waiting</p><p class="fh-metric__value">5</p><p class="fh-metric__sub">Queued for review</p><p class="fh-metric__source">Relays</p></article>
+      <article class="fh-metric" data-tone="rose"><p class="fh-metric__label"><i class="fh-icon fh-icon--circle-alert" aria-hidden="true"></i>Blocked</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">Need a decision</p><p class="fh-metric__source">Goals</p></article>
+    </div>
+  </div>
+  <div class="fh-tpl__body">
+    <section class="fh-section-card" data-tone="teal" aria-labelledby="tpl-land-recent">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-land-recent"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Recent goals</h3></header>
+      <div class="fh-table-wrap"><table class="fh-table">
+        <thead><tr><th scope="col">Goal</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></td><td><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+          <tr><td><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">GL-015</code></a></td><td><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+  </div>
+</div>
+```
+
+#### TPL-1.2 · List
+
+```html
+<div class="fh-tpl fh-tpl--list">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="teal">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">All goals</h2>
+        <p class="fh-record__sub">Every goal, newest first.</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Goals pages">
+      <a href="#c-tpl">Overview</a>
+      <a href="#c-tpl" aria-current="page">All goals <span class="fh-badge">14</span></a>
+      <a href="#c-tpl">Owners</a>
+      <a href="#c-tpl">Cycles</a>
+      <a href="#c-tpl">Reviews</a>
+      <a href="#c-tpl">Settings</a>
+    </nav>
+  </div>
+  <div class="fh-tpl__filters">
+    <label class="fh-search" data-fh="TPL-1.7"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
+    <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Owner"><option>All owners</option><option>Orchard</option><option>Harbor</option></select></div>
+    <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Area"><option>All areas</option><option>Search</option><option>Billing</option><option>Export</option></select></div>
+    <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Cycle"><option>Any cycle</option><option>Q4</option><option>Q1</option></select></div>
+    <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Sort"><option>Newest first</option><option>Oldest first</option><option>Due soonest</option></select></div>
+    <label class="fh-check" data-fh="TPL-1.7"><input type="checkbox"> Mine only</label>
+    <div class="fh-chips fh-chips--wrap" data-fh="TPL-1.7">
+      <a class="fh-chip" data-tone="sky" href="#c-tpl" aria-current="true">All</a>
+      <a class="fh-chip" data-tone="amber" href="#c-tpl">Waiting</a>
+      <a class="fh-chip" data-tone="rose" href="#c-tpl">Blocked</a>
+    </div>
+  </div>
+  <div class="fh-tpl__body">
+    <div class="fh-dt fh-dt--records" aria-label="Goals">
+      <div class="fh-dt__scroll"><table class="fh-dt__table">
+        <thead><tr><th scope="col">Goal</th><th scope="col">Owner</th><th scope="col">Updated</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr data-sidecar="goal-harbor" tabindex="0"><td data-label="Goal"><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></td><td data-label="Owner"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Updated">Nov 11</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+          <tr data-sidecar="goal-ledger" tabindex="0"><td data-label="Goal"><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">GL-015</code></a></td><td data-label="Owner"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td data-label="Updated">Nov 10</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+          <tr data-sidecar="goal-tidal" tabindex="0"><td data-label="Goal"><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-tidal"><span class="fh-ref__label">Tidal export</span><code class="fh-ref__key">GL-016</code></a></td><td data-label="Owner"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Updated">Nov 9</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="blocked">blocked</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+```
+
+#### TPL-1.3 · Detail
+
+```html
+<div class="fh-tpl fh-tpl--detail" data-fh="TPL-1.3">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky">
+      <div class="fh-record__mark" data-state="live"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Harbor index refresh</h2>
+        <p class="fh-record__sub">Rebuild the search index from the nightly export.</p>
+        <p class="fh-record__chips"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span><span class="fh-chip fh-chip--sm" data-tone="teal">GL-014</span></p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm fh-button--secondary" type="button">Edit</button></div>
+    </div>
+  </header>
+  <dl class="fh-tpl__facts">
+    <div><dt>Owner</dt><dd><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></dd></div>
+    <div><dt>Area</dt><dd><a class="fh-ref" href="#c-sidecar" data-sidecar="area-search"><span class="fh-ref__label">Search</span></a></dd></div>
+    <div><dt>Started</dt><dd>Nov 8</dd></div>
+    <div><dt>Due</dt><dd>Nov 14</dd></div>
+  </dl>
+  <div class="fh-tpl__cols">
+    <div class="fh-tpl__main">
+      <section class="fh-section-card" data-tone="sky" aria-labelledby="tpl-det-plan">
+        <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-det-plan"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i>Plan</h3></header>
+        <p class="fh-section-card__lede">Three steps, in order. The export runs first; the index swaps last.</p>
+      </section>
+      <section class="fh-section-card" data-tone="teal" aria-labelledby="tpl-det-rel">
+        <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-det-rel"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Related goals</h3></header>
+        <ul class="fh-links">
+          <li><a href="#c-sidecar" data-sidecar="goal-ledger"><i class="fh-icon fh-icon--target" aria-hidden="true"></i><span>Ledger cleanup</span><small>Goal</small></a></li>
+          <li><a href="#c-sidecar" data-sidecar="goal-tidal"><i class="fh-icon fh-icon--target" aria-hidden="true"></i><span>Tidal export</span><small>Goal</small></a></li>
+        </ul>
+      </section>
+    </div>
+    <aside class="fh-tpl__side" aria-label="Activity">
+      <details class="fh-panel-section fh-panel-section--timeline" data-tone="violet" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--activity fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Activity</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">2 events</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+          <ol class="fh-timeline">
+            <li data-tone="lime"><time>Nov 11</time><p><b>Export finished</b> 12,400 rows</p></li>
+            <li data-tone="sky"><time>Nov 8</time><p><b>Goal opened</b> by Orchard</p></li>
+          </ol>
+        </div>
+      </details>
+    </aside>
+  </div>
+</div>
+```
+
+#### TPL-1.4 · Form
+
+```html
+<div class="fh-tpl fh-tpl--form" data-fh="TPL-1.4">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="orange">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">New goal</h2>
+        <p class="fh-record__sub">A goal needs a name and an owner.</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-tpl__body">
+    <section class="fh-section-card" data-tone="orange" aria-labelledby="tpl-form-basics">
+      <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-form-basics"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i>Basics</h3></header>
+      <div class="fh-field"><label for="tpl-form-name">Name</label><input class="fh-input" id="tpl-form-name" placeholder="Harbor index refresh"></div>
+      <div class="fh-field"><label for="tpl-form-owner">Owner</label><input class="fh-input" id="tpl-form-owner" placeholder="Orchard"></div>
+    </section>
+  </div>
+  <div class="fh-tpl__actions">
+    <button class="fh-button fh-button--secondary" type="button">Cancel</button>
+    <button class="fh-button" type="button">Create goal</button>
+  </div>
+</div>
+```
+
+#### TPL-1.5 · Empty
+
+```html
+<div class="fh-tpl fh-tpl--empty" data-fh="TPL-1.5">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="violet">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Goals</h2>
+        <p class="fh-record__sub">What the team is working toward.</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-tpl__body">
+    <div class="fh-empty" data-tone="violet">
+      <span class="fh-empty__icon">∅</span>
+      <h3>No goals yet</h3>
+      <p>Goals you create show up here, with their owner and status.</p>
+      <button class="fh-button fh-button--sm" type="button">New goal</button>
+    </div>
+  </div>
+</div>
+```
+
+#### TPL-1.6 · Area navigation
+
+```html
+<div class="fh-tpl" style="max-inline-size: 22rem" data-fh="TPL-1.6">
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Goals pages, narrow">
+      <a href="#c-tpl">Overview</a>
+      <a href="#c-tpl">All goals <span class="fh-badge">14</span></a>
+      <a href="#c-tpl">Owners</a>
+      <a href="#c-tpl">Cycles</a>
+      <a href="#c-tpl" aria-current="page">Reviews</a>
+      <a href="#c-tpl">Settings</a>
+    </nav>
+  </div>
+</div>
+```
+
+#### TPL-1.7 · Filter row
+
+```html
+<div class="fh-tpl__filters">
+  <label class="fh-search" data-fh="TPL-1.7"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
+  <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Owner"><option>All owners</option><option>Orchard</option><option>Harbor</option></select></div>
+  <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Area"><option>All areas</option><option>Search</option><option>Billing</option><option>Export</option></select></div>
+  <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Cycle"><option>Any cycle</option><option>Q4</option><option>Q1</option></select></div>
+  <div class="fh-select-wrap" data-fh="TPL-1.7"><select class="fh-select" aria-label="Sort"><option>Newest first</option><option>Oldest first</option><option>Due soonest</option></select></div>
+  <label class="fh-check" data-fh="TPL-1.7"><input type="checkbox"> Mine only</label>
+  <div class="fh-chips fh-chips--wrap" data-fh="TPL-1.7">
+    <a class="fh-chip" data-tone="sky" href="#c-tpl" aria-current="true">All</a>
+    <a class="fh-chip" data-tone="amber" href="#c-tpl">Waiting</a>
+    <a class="fh-chip" data-tone="rose" href="#c-tpl">Blocked</a>
+  </div>
+</div>
+```
+
+## TMR · Landing metric row
+
+Classes: `fh-metrics` `fh-metrics--four` `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__value` `fh-metric__sub` `fh-metric__source`
+
+### TMR-1 · Landing metric row
+
+#### TMR-1.1 · Four tiles
+
+```html
+<div class="fh-metrics fh-metrics--four" data-fh="TMR-1.1">
+  <article class="fh-metric" data-tone="sky"><p class="fh-metric__label"><i class="fh-icon fh-icon--target" aria-hidden="true"></i>Open goals</p><p class="fh-metric__value">14</p><p class="fh-metric__sub">3 due this week</p><p class="fh-metric__source">Goals</p></article>
+  <article class="fh-metric" data-tone="lime"><p class="fh-metric__label"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Merged</p><p class="fh-metric__value">38</p><p class="fh-metric__sub">Since the cycle began</p><p class="fh-metric__source">Relays</p></article>
+  <article class="fh-metric" data-tone="amber"><p class="fh-metric__label"><i class="fh-icon fh-icon--clock" aria-hidden="true"></i>Waiting</p><p class="fh-metric__value">5</p><p class="fh-metric__sub">Queued for review</p><p class="fh-metric__source">Relays</p></article>
+  <article class="fh-metric" data-tone="rose"><p class="fh-metric__label"><i class="fh-icon fh-icon--circle-alert" aria-hidden="true"></i>Blocked</p><p class="fh-metric__value">2</p><p class="fh-metric__sub">Need a decision</p><p class="fh-metric__source">Goals</p></article>
+</div>
+```
+
+## REF · Reference cell
+
+fh-ref. Every mention of another record in a table, list or field: a label, an optional key in mono, and data-sidecar so the opener opens that record's sidecar. The href stays, for a new tab and for no script. A target that is gone says so and is not a link.
+
+Classes: `fh-ref` `fh-ref__label` `fh-ref__key` `fh-ref--gone` `fh-ref__note`
+
+### REF-1 · Reference cell
+
+#### REF-1.1 · Label
+
+```html
+<a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard" data-fh="REF-1.1"><span class="fh-ref__label">Orchard</span></a>
+```
+
+#### REF-1.2 · With key
+
+```html
+<a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor" data-fh="REF-1.2"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a>
+```
+
+#### REF-1.3 · Gone
+
+```html
+<span class="fh-ref fh-ref--gone" title="This record was removed" data-fh="REF-1.3"><span class="fh-ref__label">GL-009</span><span class="fh-ref__note">removed</span></span>
+```
+
+## RDT · Datatable record cells
+
+fh-dt--records. The first cell is the reference cell, one cell holds the row's status chip, and the whole row opens the sidecar. Each cell carries data-label; under 36rem the rows stack and the labels show.
+
+Classes: `fh-dt` `fh-dt--records` `fh-dt__scroll` `fh-dt__table` `fh-ref` `fh-ref__label` `fh-ref__key` `fh-chip` `fh-chip--tone` `fh-chip--sm` `fh-ref--gone` `fh-ref__note`
+
+### RDT-1 · Datatable record cells
+
+#### RDT-1.1 · Records table
+
+```html
+<div class="fh-dt fh-dt--records" aria-label="Relays" data-fh="RDT-1.1">
+  <div class="fh-dt__scroll"><table class="fh-dt__table">
+    <thead><tr><th scope="col">Relay</th><th scope="col">Sent by</th><th scope="col">Duration</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr data-sidecar="relay-index" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-index"><span class="fh-ref__label">Index refresh</span><code class="fh-ref__key">R-201</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Duration">38 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="passed">passed</span></td></tr>
+      <tr data-sidecar="relay-ledger" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">R-202</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td data-label="Duration">12 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="failed">failed</span></td></tr>
+      <tr data-sidecar="relay-tidal" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-tidal"><span class="fh-ref__label">Tidal export</span><code class="fh-ref__key">R-203</code></a></td><td data-label="Sent by"><span class="fh-ref fh-ref--gone" title="This record was removed"><span class="fh-ref__label">Agent 7</span><span class="fh-ref__note">removed</span></span></td><td data-label="Duration">5 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="queued">queued</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
+```
+
+## SCR · Chip rules
+
+Three markers, three jobs. fh-chip with data-status is the one chip for the status of a record, and its tone follows the status value. fh-badge is for counts only. fh-status is inline status text only. Chips live in the record header, in a collapsed section's summary and once per row (status only), and nowhere else in a body.
+
+Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chip--tone` `fh-chip--sm` `fh-badge` `fh-status`
+
+### SCR-1 · Chip rules
+
+#### SCR-1.1 · Status chip
+
+```html
+<div class="fh-chips fh-chips--wrap" data-fh="SCR-1.1">
+  <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span>
+  <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span>
+  <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="queued">queued</span>
+  <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="failed">failed</span>
+  <span class="fh-chip fh-chip--tone fh-chip--sm" data-status="archived">archived</span>
+</div>
+```
+
+#### SCR-1.2 · Count
+
+```html
+<span class="fh-badge" data-fh="SCR-1.2">12</span>
+```
+
+#### SCR-1.3 · Inline status
+
+```html
+<p>Last run <span class="fh-status" data-tone="lime" data-fh="SCR-1.3">passed</span> at 15:45.</p>
+```
 
 ## ACC · Accordion
 
@@ -2396,7 +3835,7 @@ Native <details> with a shared name, so only one stays open. The height animates
 
 Classes: `fh-accordion`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#ACC.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/overlays/#ACC.
 
 ## DLG · Dialog, menu, toast
 
@@ -2404,7 +3843,7 @@ Native <dialog> and popovers, with enter and exit animations from @starting-styl
 
 Classes: `fh-cluster` `fh-button` `fh-button--secondary` `fh-button--ghost` `fh-menu` `fh-dialog` `fh-dialog__header` `fh-stack` `fh-stack--xs` `fh-label` `fh-subheading` `fh-close` `fh-dialog__body` `fh-body` `fh-dialog__footer`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#DLG.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/components/overlays/#DLG.
 
 ## FBK · Feedback
 
@@ -2887,7 +4326,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 
 The "Required" chip comes from the input's own required attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with aria-invalid="true" (for errors the server sends back).
 
-Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet` `fh-input-reveal`
+Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet` `fh-input-reveal` `fh-money` `fh-money__currency` `fh-money__select`
 
 ### FLD-1 · Fields
 
@@ -2980,13 +4419,77 @@ A show and hide toggle inside a password field. Put the input in an fh-input-gro
 </div>
 ```
 
+### FLD-5 · Money input
+
+A currency prefix, or a select when several currencies are allowed, then a text input with inputmode="decimal" (never type="number": no spinner). money.js groups digits as you type and keeps a hidden input in step that posts whole minor units, so 1,250.00 posts 125000. Without the script the field posts what was typed. Add data-allow-negative to allow a minus sign.
+
+#### FLD-5.1 · One currency
+
+```html
+<div class="fh-field fh-money" data-fh-money data-currency="USD" data-fh="FLD-5.1">
+  <label for="f-money-one">Amount</label>
+  <div class="fh-input-group">
+    <span class="fh-money__currency">USD</span>
+    <input class="fh-input" id="f-money-one" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="1250">
+    <input type="hidden" data-fh-money-value>
+  </div>
+  <p class="fh-field__hint">Posts whole cents.</p>
+</div>
+```
+
+#### FLD-5.2 · Several currencies
+
+```html
+<div class="fh-field fh-money" data-fh-money data-fh="FLD-5.2">
+  <label for="f-money-many">Price</label>
+  <div class="fh-input-group">
+    <select class="fh-money__select" name="price_currency" aria-label="Currency">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="JPY">JPY</option>
+    </select>
+    <input class="fh-input" id="f-money-many" name="price" inputmode="decimal" autocomplete="off" placeholder="0.00">
+    <input type="hidden" data-fh-money-value>
+  </div>
+  <p class="fh-field__hint">The currency sets the decimal places: JPY has none.</p>
+</div>
+```
+
+#### FLD-5.3 · Error
+
+```html
+<div class="fh-field fh-money" data-fh-money data-currency="USD" data-fh="FLD-5.3">
+  <label for="f-money-err">Deposit</label>
+  <div class="fh-input-group">
+    <span class="fh-money__currency">USD</span>
+    <input class="fh-input" id="f-money-err" name="deposit" inputmode="decimal" autocomplete="off" value="75000" aria-invalid="true" aria-describedby="f-money-err-msg">
+    <input type="hidden" data-fh-money-value>
+  </div>
+  <p class="fh-field__error" id="f-money-err-msg">The deposit is more than the limit of 50,000.00.</p>
+</div>
+```
+
+#### FLD-5.4 · Negative allowed
+
+```html
+<div class="fh-field fh-money" data-fh-money data-currency="USD" data-allow-negative data-fh="FLD-5.4">
+  <label for="f-money-neg">Adjustment</label>
+  <div class="fh-input-group">
+    <span class="fh-money__currency">USD</span>
+    <input class="fh-input" id="f-money-neg" name="adjustment" inputmode="decimal" autocomplete="off" value="-42.5">
+    <input type="hidden" data-fh-money-value>
+  </div>
+  <p class="fh-field__hint">A credit or a charge. Type a minus sign first.</p>
+</div>
+```
+
 ## CHO · Choices
 
 Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add fh-segmented--stack to stack its options.
 
 Classes: `fh-stack` `fh-stack--lg` `fh-segmented` `fh-sr-only` `fh-check` `fh-switch`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#CHO.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/forms/#CHO.
 
 ## RVW · Review rows
 
@@ -3024,7 +4527,7 @@ A dropzone over a real file input, a styled range, a tag field, and a dialog tha
 
 Classes: `fh-grid` `fh-dropzone` `fh-dropzone__title` `fh-dropzone__hint` `fh-stack` `fh-stack--lg` `fh-field` `fh-range` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `fh-button` `fh-button--secondary` `fh-dialog` `fh-dialog--sheet` `fh-dialog__header` `fh-subheading` `fh-close` `fh-dialog__body` `fh-check` `fh-switch` `fh-dl` `fh-dialog__footer`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#UPL.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/forms/#UPL.
 
 ## TAG · Tag field
 
@@ -3369,7 +4872,7 @@ Classes: `fh-field` `fh-field__label` `fh-entity-picker` `fh-entity` `fh-entity_
 
 Classes: `fh-dt`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/data/#DTB.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/data/#DTB.
 
 ## TBL · Table
 
@@ -3415,31 +4918,31 @@ Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-t
 
 Classes: `fh-product-grid` `fh-product` `fh-product__media` `fh-product__alt` `fh-product__badge` `fh-product__fav` `fh-product__meta` `fh-product__title` `fh-cluster` `fh-price` `fh-swatches` `fh-swatches--sm` `fh-product__add` `fh-button` `fh-button--sm` `fh-button--secondary` `fh-icon`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#PRD.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#PRD.
 
 ## PDP · Product page
 
 Classes: `fh-pdp` `fh-gallery` `fh-gallery__main` `fh-gallery__thumbs` `fh-pdp__info` `fh-label` `fh-cluster` `fh-price` `fh-price--lg` `fh-rating` `fh-link` `fh-muted` `fh-pdp__label` `fh-swatches` `fh-sizes` `fh-pdp__buy` `fh-qty` `fh-button` `fh-button--plain` `fh-icon` `fh-trust` `fh-accordion` `fh-review-bars`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#PDP.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#PDP.
 
 ## CKO · Checkout
 
 Classes: `fh-checkout` `fh-stack` `fh-stack--lg` `fh-stepper` `fh-express` `fh-or` `fh-checkout__step` `fh-field` `fh-input` `fh-field__error` `fh-check` `fh-switch` `fh-form__row` `fh-choice-cards` `fh-choice-card` `fh-cluster` `fh-paycard` `fh-paycard__front` `fh-paycard__top` `fh-paycard__chip` `fh-paycard__brand` `fh-paycard__mark` `fh-paycard__number` `fh-paycard__row` `fh-paycard__back` `fh-paycard__stripe` `fh-paycard__sig` `fh-paycard--flipped` `fh-card-field` `fh-field__hint` `fh-paycard-cvc` `fh-button` `fh-button--lg` `fh-button--plain` `fh-checkout__aside` `fh-label` `fh-line-items` `fh-line-item` `fh-qty` `fh-qty--sm` `fh-line-item__remove` `fh-input-group` `fh-button--sm` `fh-button--secondary` `fh-summary` `fh-summary__discount` `fh-summary__total`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#CKO.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#CKO.
 
 ## EXP · Express pay
 
 Classes: `fh-express`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#EXP.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#EXP.
 
 ## CCH · Choice cards
 
 Classes: `fh-choice-cards` `fh-choice-card`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#CCH.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#CCH.
 
 ## PAY · Payment card
 
@@ -3479,19 +4982,19 @@ Classes: `fh-paycard` `fh-paycard__front` `fh-paycard__top` `fh-paycard__chip` `
 
 Classes: `fh-line-items` `fh-line-item` `fh-qty` `fh-qty--sm` `fh-line-item__remove`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#CRT.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#CRT.
 
 ## SUM · Order summary
 
 Classes: `fh-summary` `fh-summary__discount` `fh-summary__total`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#SUM.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#SUM.
 
 ## CNF · Order confirmation
 
 Classes: `fh-confirm` `fh-icon-tile` `fh-icon-tile--solid` `fh-icon` `fh-label` `fh-muted`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/commerce/#CNF.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/commerce/#CNF.
 
 ## INV · Invoice
 
@@ -3642,7 +5145,7 @@ The total, what is available, what is pending and declined, and the split by seg
 
 Classes: `fh-balance` `fh-balance__label` `fh-balance__figure` `fh-balance__currency` `fh-balance__cents` `fh-balance__meta` `fh-balance__split` `fh-balance__legend`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#BAL.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/finance/#BAL.
 
 ## SEG · Segment switch
 
@@ -3650,7 +5153,7 @@ All, Business, Personal; entities appear under Business.
 
 Classes: `fh-stack` `fh-segment` `fh-segment--entities`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#SEG.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/finance/#SEG.
 
 ## ACN · Account card
 
@@ -3658,7 +5161,7 @@ Name, institution and last four, the entity tag, balance and sync health. Owed b
 
 Classes: `fh-accounts` `fh-account` `fh-account__head` `fh-account__mark` `fh-account__name` `fh-account__sub` `fh-account__tag` `fh-account__figure` `fh-account__meta` `fh-account__foot`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#ACN.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/finance/#ACN.
 
 ## LDG · Ledger
 
@@ -3666,7 +5169,7 @@ Pending first and labelled; declined and reversed struck through; money in reads
 
 Classes: `fh-ledger` `fh-ledger__day` `fh-ledger__mark` `fh-ledger__what` `fh-ledger__when` `fh-ledger__status` `fh-ledger__amount`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#LDG.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/finance/#LDG.
 
 ## VCD · Virtual card
 
@@ -3674,7 +5177,7 @@ A card face for issued cards: last four only, spend against its limit, lock and 
 
 Classes: `fh-vcards` `fh-vcard` `fh-vcard__name` `fh-vcard__number` `fh-vcard__limit`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#VCD.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/finance/#VCD.
 
 ## CNX · Connection status
 
@@ -3682,7 +5185,7 @@ One row per provider: health, last sync and the one action it needs.
 
 Classes: `fh-connections` `fh-btn` `fh-btn--sm`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/finance/#CNX.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/finance/#CNX.
 
 ## MST · Masthead
 
@@ -4264,25 +5767,25 @@ Classes: `fh-app-dock` `fh-app-dock__bar` `fh-app-composer` `fh-textarea` `fh-bu
 
 Classes: `fh-player` `fh-player__art` `fh-icon` `fh-player__meta` `fh-player__kicker` `fh-eq` `fh-player__title` `fh-player__by` `fh-play` `fh-play--lg` `fh-wave` `fh-wave--lg` `fh-player__time` `fh-player__tools` `fh-audio-btn` `fh-segmented` `fh-segmented--sm` `fh-volume` `fh-scrub`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#PLY.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/audio/#PLY.
 
 ## CAP · Captions
 
 Classes: `fh-captions` `fh-captions__line`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#CAP.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/audio/#CAP.
 
 ## TRK · Playlist
 
 Classes: `fh-tracks` `fh-track` `fh-eq` `fh-track__art`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#TRK.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/audio/#TRK.
 
 ## REL · Reel
 
 Classes: `fh-line-reel`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#REL.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/audio/#REL.
 
 ## MIX · Mixer
 
@@ -4300,13 +5803,13 @@ Classes: `fh-meter-level` `fh-meter-level--v`
 
 Classes: `fh-params` `fh-param` `fh-param__label` `fh-scrub` `fh-param__value` `fh-param__hint`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#PRM.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/audio/#PRM.
 
 ## STG · Render stages
 
 Classes: `fh-stages` `fh-stages__head` `fh-stages__track` `fh-stages__list` `fh-stages__meta`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/audio/#STG.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/audio/#STG.
 
 ## THB · Thumbnails & link cards
 
@@ -4336,7 +5839,7 @@ Classes: `fh-canvas` `fh-canvas--yt-thumb` `fh-canvas--split` `fh-canvas__body` 
   <div class="fh-canvas__body">
     <div class="fh-canvas__top"><span class="fh-canvas__mark"><i>_</i>firehorse</span><p class="fh-canvas__eyebrow">Docs · Media</p></div>
     <div class="fh-canvas__main"><h2 class="fh-canvas__title">Media, <em>at the size it ships</em></h2><p class="fh-canvas__sub">Posts, headers, thumbnails, covers and slides from one set of tokens.</p></div>
-    <div class="fh-canvas__foot"><span>firehorse.rascode.dev</span><span>v1.1</span></div>
+    <div class="fh-canvas__foot"><span>firehorse.dev</span><span>v1.1</span></div>
   </div>
 </article>
 ```
@@ -4867,8 +6370,8 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
     <div class="fh-canvas__main">
       <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><p class="fh-eyebrow-pill" data-tone="live"><span class="fh-dot fh-dot--live"></span>Questions welcome</p></div>
       <h2 class="fh-canvas__title">Thank you</h2>
-      <p class="fh-canvas__sub">firehorse.rascode.dev/media</p>
-      <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><div class="fh-cluster"><a class="fh-button" href="https://firehorse.rascode.dev/media/">Read the docs</a><a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse">Download from Git</a></div></div>
+      <p class="fh-canvas__sub">firehorse.dev/media</p>
+      <div class="fh-canvas__ui" style="--fh-canvas-ui-scale: 1.4"><div class="fh-cluster"><a class="fh-button" href="https://firehorse.dev/media/">Read the docs</a><a class="fh-button fh-button--secondary" href="https://github.com/rascode/firehorse">Download from Git</a></div></div>
     </div>
     <div class="fh-canvas__foot"><span>Rascode Studio</span><span>10 / 10</span></div>
   </div>
@@ -4881,7 +6384,7 @@ Reveal.initialize({ <mark>width: 1280, height: 720</mark>, center: false });</pr
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THM.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/theming/#THM.
 
 ## THS · Theme select
 
@@ -4889,7 +6392,7 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 
 Classes: `fh-field` `fh-select`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THS.
+Markup: see [components.md](components.md) or copy from https://firehorse.dev/theming/#THS.
 
 ## TML · Timelines
 

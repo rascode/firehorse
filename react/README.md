@@ -1,6 +1,6 @@
 # @rascode/firehorse-react
 
-Optional React components for [Firehorse](https://firehorse.rascode.dev). **Radix** primitives do the behavior (focus trapping, keyboard and typeahead, collision-aware positioning, ARIA); **Firehorse** classes do every pixel, so these components follow your theme, tones and adaptive color like the rest of the system.
+Optional React components for [Firehorse](https://firehorse.dev). **Radix** primitives do the behavior (focus trapping, keyboard and typeahead, collision-aware positioning, ARIA); **Firehorse** classes do every pixel, so these components follow your theme, tones and adaptive color like the rest of the system.
 
 The core Firehorse package stays zero-JavaScript and framework-agnostic. Reach for this only in React apps that want Radix's behavior for menus, selects, popovers, tooltips and toasts.
 

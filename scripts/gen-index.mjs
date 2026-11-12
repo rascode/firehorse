@@ -12,7 +12,7 @@ import { allMain, pageOf } from "./pages.mjs";
 import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-const base = "https://firehorse.rascode.dev";
+const base = "https://firehorse.dev";
 const doc = parse(allMain());
 const check = process.argv.includes("--check");
 const owners = ownersOf(doc);

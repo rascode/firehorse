@@ -12,7 +12,7 @@ import { marked } from "marked";
 import { assemble, part, absolutize } from "./pages.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "site/dist/stable");
-const BASE = "https://firehorse.rascode.dev";
+const BASE = "https://firehorse.dev";
 // Cache stamps so a deploy never serves a stale stylesheet or script.
 const stamp = (f) => createHash("sha1").update(readFileSync(join(root, "site/stable", f))).digest("hex").slice(0, 8);
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -90,7 +90,7 @@ const head = ({ title, description, path, type = "website", image, jsonld }) => 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="design-system" content="firehorse@${pkg.version}">
-<link rel="design-system" href="https://firehorse.rascode.dev/index.json">
+<link rel="design-system" href="https://firehorse.dev/index.json">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <meta name="theme-color" content="#161616">
@@ -152,7 +152,7 @@ const subscribe = (source, placement) => `
 
 const foot = () => `</main>
 <footer class="fh-footer fh-frame">
-  <div class="fh-footer__base"><p>The Stable · the Firehorse blog · <a href="/">firehorse.rascode.dev</a> · <a href="/stable/feed.xml">RSS</a></p><p>© Rascode · KC's face traced from <a href="https://commons.wikimedia.org/wiki/File:Frison_au_galop_dans_la_neige.JPG">a photo by Fchosson</a>, CC BY-SA 3.0</p></div>
+  <div class="fh-footer__base"><p>The Stable · the Firehorse blog · <a href="/">firehorse.dev</a> · <a href="/stable/feed.xml">RSS</a></p><p>© Rascode · KC's face traced from <a href="https://commons.wikimedia.org/wiki/File:Frison_au_galop_dans_la_neige.JPG">a photo by Fchosson</a>, CC BY-SA 3.0</p></div>
 </footer>
 </div>
 <div class="fh-toaster" role="region" aria-label="Notifications" id="toaster"></div>

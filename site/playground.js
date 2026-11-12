@@ -129,7 +129,7 @@ function exportHtml() {
     dt.innerHTML = `<script type="application/json">${JSON.stringify(src ?? {})}<\/script>`;
   });
   const body = [...clone.querySelectorAll(".pg-block")].map((b) => b.innerHTML.trim()).join("\n\n");
-  const base = "https://firehorse.rascode.dev";
+  const base = "https://firehorse.dev";
   return `<!doctype html>
 <html lang="en" data-fh-scheme="${scheme}"${theme ? ` data-fh-theme="${theme}"` : ""}>
 <head>
@@ -164,7 +164,7 @@ document.addEventListener("click", async (e) => {
 
 agentMenu($("#pg-agents"), () => {
   const html = exportHtml();
-  const head = `I built this page in the Firehorse playground. Rebuild it in my project with the Firehorse design system.\nRead https://firehorse.rascode.dev/llms.txt first. Use only fh-* classes and --fh-* tokens, keep the data-fh-theme and data-fh-scheme attributes on <html>, and replace the sample copy and images with mine.\n\nSections, in order:\n${outline()}\n`;
+  const head = `I built this page in the Firehorse playground. Rebuild it in my project with the Firehorse design system.\nRead https://firehorse.dev/llms.txt first. Use only fh-* classes and --fh-* tokens, keep the data-fh-theme and data-fh-scheme attributes on <html>, and replace the sample copy and images with mine.\n\nSections, in order:\n${outline()}\n`;
   const full = `${head}\nHere is the HTML:\n\n${html}`;
   // Links carry the outline when the full page is too long for a URL; the clipboard always has everything.
   return { prompt: full.length < 6000 ? full : `${head}\nThe full HTML is on my clipboard; I'll paste it next.`, clip: full };

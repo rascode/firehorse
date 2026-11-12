@@ -115,5 +115,5 @@ It won't make a weak idea strong, and it won't write your content. You can build
 
 But if you want the twentieth page an agent builds to look like it belongs next to the first, give it rules, not a reference.
 
-🐎 [firehorse.rascode.dev](/)
+🐎 [firehorse.dev](/)
 ⭐ [github.com/rascode/firehorse](https://github.com/rascode/firehorse)
