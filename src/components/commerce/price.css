@@ -4,7 +4,28 @@
  */
 
 @layer fh.components {
-  /* —— Price —— */
+  /* —— Price ——
+   * The large figure stays fh-price fh-price--lg. The host sets --low,
+   * --high and --at as unitless numbers from 0 to 100. No colours in the
+   * markup: tones come from data-tone, shares from --share.
+   *   <div class="fh-price-range" style="--low: 13; --high: 83; --at: 46">
+   *     <div class="fh-price-range__track" role="img" aria-label="Retail price within the assessed range">
+   *       <span class="fh-price-range__band"></span>
+   *       <span class="fh-price-range__pin"></span>
+   *     </div>
+   *     <div class="fh-price-range__ends"><span>$12</span><span>$60</span></div>
+   *   </div>
+   *   <div class="fh-price-split">
+   *     <div class="fh-price-split__bar" role="img" aria-label="Costs and profit">
+   *       <span style="--share: 24" data-tone="sky"></span>
+   *     </div>
+   *     <dl class="fh-price-split__legend">
+   *       <div data-tone="sky"><dt>Blank</dt><dd>$8.00</dd></div>
+   *       <div class="fh-price-split__profit"><dt>Profit</dt><dd>$11.20</dd></div>
+   *       <div class="fh-price-split__total"><dt>Retail</dt><dd>$34.00</dd></div>
+   *     </dl>
+   *   </div>
+   */
   .fh-price {
     display: inline-flex;
     flex-wrap: wrap;
@@ -27,5 +48,129 @@
     &:has(> s, > del) > :is(b, strong) { color: var(--fh-tone, var(--fh-color-danger)); }
   }
   .fh-price--lg > :is(b, strong) { font-family: var(--fh-font-figure); font-size: var(--fh-text-h3); letter-spacing: -0.02em; }
+
+  /* Band from --low to --high, pin at --at. End labels sit under the track. */
+  .fh-price-range {
+    --low: 0;
+    --high: 100;
+    --at: 0;
+
+    display: grid;
+    gap: var(--fh-gap-bound);
+    padding-inline: 0.45rem;
+  }
+
+  .fh-price-range__track {
+    position: relative;
+    block-size: 0.3rem;
+    border-radius: var(--fh-radius-pill);
+    background: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+  }
+
+  .fh-price-range__band {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(var(--low) * 1%);
+    inline-size: max(0%, calc((var(--high) - var(--low)) * 1%));
+    border-radius: inherit;
+    background: var(--fh-tone);
+  }
+
+  .fh-price-range__pin {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc(var(--at) * 1%);
+    inline-size: 0.7rem;
+    aspect-ratio: 1;
+    border: 2px solid var(--fh-color-canvas);
+    border-radius: var(--fh-radius-round);
+    background: var(--fh-color-text);
+    box-shadow: 0 0 0 1px var(--fh-color-border-strong);
+    translate: -50% -50%;
+  }
+
+  .fh-price-range__ends {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* One segment per cost. The unfilled rest of the bar is hatched profit. */
+  .fh-price-split {
+    display: grid;
+    gap: var(--fh-gap-related);
+  }
+
+  .fh-price-split__bar {
+    display: flex;
+    block-size: 0.65rem;
+    border-radius: var(--fh-radius-pill);
+    overflow: hidden;
+    background: repeating-linear-gradient(-45deg, color-mix(in oklab, var(--fh-color-text) 28%, transparent) 0 1px, transparent 1px 5px);
+
+    & > span {
+      flex: none;
+      inline-size: calc(var(--share, 0) * 1%);
+      background: var(--fh-tone);
+    }
+  }
+
+  .fh-price-split__legend {
+    display: grid;
+    margin: 0;
+
+    & > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: var(--fh-gap-related);
+      padding-block: 0.28rem;
+    }
+
+    & dt {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-gap-related);
+      min-inline-size: 0;
+      color: var(--fh-color-text);
+      font-size: var(--fh-text-small);
+      font-weight: var(--fh-weight-regular);
+
+      &::before {
+        content: "";
+        flex: none;
+        inline-size: 0.5rem;
+        aspect-ratio: 1;
+        border-radius: var(--fh-radius-round);
+        background: var(--fh-tone);
+      }
+    }
+
+    & dd {
+      margin: 0;
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-caption);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .fh-price-split__profit dt::before {
+    border-radius: var(--fh-radius-sm);
+    background: repeating-linear-gradient(-45deg, color-mix(in oklab, var(--fh-color-text) 55%, transparent) 0 1px, transparent 1px 3px);
+  }
+
+  .fh-price-split__total {
+    border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    margin-block-start: 0.15rem;
+    padding-block-start: 0.4rem;
+
+    & dt::before { content: none; }
+    & :is(dt, dd) { font-weight: var(--fh-weight-semibold); }
+  }
 
 }

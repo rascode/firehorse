@@ -711,6 +711,19 @@ Compact cards led by a tone block: categories, people, files.
 </dl>
 ```
 
+### Toggle chip set
+
+Several can be on at once. Each one is a `button` with `aria-pressed`, in a `role="group"` that has a label. `fh-chips--wrap` lets them wrap. A pressed `fh-chip--sm` uses the same on state as any other chip, in dark and in light.
+
+```html
+<div class="fh-chips fh-chips--wrap" role="group" aria-label="Finishes">
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="sky" aria-pressed="true">Soft hand</button>
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="amber" aria-pressed="true">Discharge</button>
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="violet" aria-pressed="false">Puff</button>
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="rose" aria-pressed="false">Foil</button>
+</div>
+```
+
 ### CUB · Cubes
 
 Tone blocks that carry one value. In a row they walk the hue wheel by 28°, so three facts read as one family.
@@ -2563,6 +2576,28 @@ Real radios and checkboxes under the styling, so they submit with the form and w
 </div>
 ```
 
+### Disabled choices
+
+A disabled option, a disabled segmented group, and a disabled switch. The control stays in the form and takes no pointer.
+
+```html
+<div class="fh-stack fh-stack--lg">
+  <fieldset class="fh-segmented">
+    <legend class="fh-sr-only">How should the shirt ship?</legend>
+    <label><input type="radio" name="studio-ship" value="fold" checked> Fold</label>
+    <label><input type="radio" name="studio-ship" value="hang"> Hang</label>
+    <label><input type="radio" name="studio-ship" value="mail" disabled> Mail</label>
+  </fieldset>
+  <fieldset class="fh-segmented" disabled>
+    <legend class="fh-sr-only">Pack size</legend>
+    <label><input type="radio" name="studio-pack" value="one" checked> One</label>
+    <label><input type="radio" name="studio-pack" value="six"> Six</label>
+  </fieldset>
+  <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" disabled> Hold the print</label>
+  <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked disabled> Lock the size</label>
+</div>
+```
+
 ### Dictation field
 
 Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with `data-fh-dictate` (or drive the same markup yourself).
@@ -2783,6 +2818,55 @@ A dropzone over a real file input, a styled range, a tag field, and a dialog tha
     <div class="fh-dialog__footer"><button class="fh-button" value="ok">Save</button></div>
   </form>
 </dialog>
+```
+
+### Range field
+
+The label and the live value share the first line. The range sits below. The host writes the output; there is no script. A disabled field mutes the label and the value.
+
+```html
+<div class="fh-stack">
+  <div class="fh-range-field" data-tone="sky">
+    <label for="ink-coverage">Ink coverage</label>
+    <output for="ink-coverage">40</output>
+    <input class="fh-range" id="ink-coverage" type="range" min="0" max="100" value="40">
+  </div>
+  <div class="fh-range-field">
+    <label for="print-size">Print size</label>
+    <output for="print-size">12</output>
+    <input class="fh-range" id="print-size" type="range" min="8" max="16" value="12" disabled>
+  </div>
+</div>
+```
+
+### Compact dropzone
+
+One control tall, for an inspector row: icon, title, hint. While an upload runs the icon becomes the spinner and the control takes no pointer. An invalid file shows a danger border and an error line. A disabled input cannot be opened.
+
+```html
+<div class="fh-stack">
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky">
+    <input type="file" accept="image/*">
+    <span class="fh-dropzone__title">Drop art</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+  </label>
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-busy>
+    <input type="file" accept="image/*">
+    <span class="fh-dropzone__title">Uploading art</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+  </label>
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-invalid>
+    <input type="file" accept="image/*">
+    <span class="fh-dropzone__title">Drop art</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+    <p class="fh-dropzone__error">Use a PNG or a JPG.</p>
+  </label>
+  <label class="fh-dropzone fh-dropzone--compact" data-tone="sky">
+    <input type="file" accept="image/*" disabled>
+    <span class="fh-dropzone__title">Print file locked</span>
+    <span class="fh-dropzone__hint">PNG or JPG</span>
+  </label>
+</div>
 ```
 
 ### TAG · Tag field
@@ -3093,6 +3177,101 @@ With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36
     </tbody>
   </table>
 </div>
+</div>
+```
+
+### Custom colour swatch
+
+Large swatches for an inspector. A button with `aria-pressed` takes the same disc and the same ring as a checked radio. The custom colour is a round well: a plus until the host sets the value attribute, and the selected ring with `data-selected`. A disabled swatch fades and takes no pointer.
+
+```html
+<div class="fh-stack">
+  <div class="fh-swatches fh-swatches--lg" role="group" aria-label="Shirt colour">
+    <button type="button" aria-pressed="true" aria-label="Ink" data-tone="neutral" style="--swatch: var(--fh-tone)"></button>
+    <button type="button" aria-pressed="false" aria-label="Clay" data-tone="amber" style="--swatch: var(--fh-tone)"></button>
+    <button type="button" aria-pressed="false" aria-label="Sand" data-tone="lime" style="--swatch: var(--fh-tone)" disabled></button>
+    <label class="fh-swatches__custom" data-selected>
+      <input type="color" value="#8a5a44" aria-label="Custom colour">
+    </label>
+  </div>
+  <div class="fh-swatches fh-swatches--lg" role="group" aria-label="Ink colour">
+    <label data-tone="sky" style="--swatch: var(--fh-tone)"><input type="radio" name="studio-ink" aria-label="Navy" checked></label>
+    <label data-tone="violet" style="--swatch: var(--fh-tone)"><input type="radio" name="studio-ink" aria-label="Violet"></label>
+    <label class="fh-swatches__custom">
+      <input type="color" aria-label="Custom colour">
+    </label>
+  </div>
+</div>
+```
+
+### Inspector choice cards
+
+A narrow column. The small size keeps one text line plus the small line. A disabled option is muted, with the reason in that small line, and it does not hover.
+
+```html
+<div style="max-inline-size: 18rem">
+  <fieldset class="fh-choice-cards fh-choice-cards--sm" aria-label="Print method">
+    <label class="fh-choice-card"><input type="radio" name="print-method" checked><span><b>Screen</b><small>Plastisol, soft hand</small></span><span>$8</span></label>
+    <label class="fh-choice-card"><input type="radio" name="print-method" disabled><span><b>Discharge</b><small>Press is booked</small></span><span>$12</span></label>
+  </fieldset>
+</div>
+```
+
+### Record product card
+
+No image keeps the media ratio and shows a quiet mark. The media and the title are one link to the record. The status chip sits beside the price.
+
+```html
+<div class="fh-product-grid">
+  <article class="fh-product" id="shirt-navy" data-tone="sky">
+    <a href="#shirt-navy">
+      <span class="fh-product__media"></span>
+      <h3 class="fh-product__title">Navy tee</h3>
+    </a>
+    <p class="fh-product__meta"><span class="fh-price"><b>$34.00</b></span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="draft">Draft</span></p>
+  </article>
+  <article class="fh-product" id="shirt-ink" data-tone="neutral">
+    <a href="#shirt-ink">
+      <span class="fh-product__media"><img src="img/supply/keycaps.svg" alt="Ink tee, folded"></span>
+      <h3 class="fh-product__title">Ink tee</h3>
+    </a>
+    <p class="fh-product__meta"><span class="fh-price"><b>$34.00</b></span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="live">Live</span></p>
+  </article>
+</div>
+```
+
+### Price
+
+An assessed retail price. The large figure is `fh-price fh-price--lg`. The range marks a low to high band and a pin at the price. The split stacks each cost by its share and hatches the rest as profit.
+
+```html
+<div class="fh-stack">
+  <p class="fh-price fh-price--lg"><b>$34.00</b></p>
+  <div class="fh-price-range" data-tone="sky" style="--low: 13; --high: 83; --at: 46">
+    <div class="fh-price-range__track" role="img" aria-label="Retail price of $34.00, between $18.00 and $52.00, on a scale from $12.00 to $60.00">
+      <span class="fh-price-range__band"></span>
+      <span class="fh-price-range__pin"></span>
+    </div>
+    <div class="fh-price-range__ends"><span>$12</span><span>$60</span></div>
+  </div>
+  <div class="fh-price-split">
+    <div class="fh-price-split__bar" role="img" aria-label="Blank $8.00, print $6.50, ink $2.40, labour $4.10, pack $1.80, profit $11.20, retail $34.00">
+      <span style="--share: 24" data-tone="sky"></span>
+      <span style="--share: 19" data-tone="amber"></span>
+      <span style="--share: 7" data-tone="teal"></span>
+      <span style="--share: 12" data-tone="violet"></span>
+      <span style="--share: 5" data-tone="rose"></span>
+    </div>
+    <dl class="fh-price-split__legend">
+      <div data-tone="sky"><dt>Blank</dt><dd>$8.00</dd></div>
+      <div data-tone="amber"><dt>Print</dt><dd>$6.50</dd></div>
+      <div data-tone="teal"><dt>Ink</dt><dd>$2.40</dd></div>
+      <div data-tone="violet"><dt>Labour</dt><dd>$4.10</dd></div>
+      <div data-tone="rose"><dt>Pack</dt><dd>$1.80</dd></div>
+      <div class="fh-price-split__profit"><dt>Profit</dt><dd>$11.20</dd></div>
+      <div class="fh-price-split__total"><dt>Retail</dt><dd>$34.00</dd></div>
+    </dl>
+  </div>
 </div>
 ```
 

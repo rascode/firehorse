@@ -4,7 +4,8 @@
  */
 
 @layer fh.components {
-  /* —— Switch: <input type="checkbox" class="fh-switch" role="switch"> —— */
+  /* —— Switch: <input type="checkbox" class="fh-switch" role="switch"> ——
+   * Disabled: disabled on the input. */
   .fh-switch {
     --_track: var(--fh-color-field);
     --_thumb: var(--fh-color-text-muted);
@@ -44,6 +45,11 @@
 
     &:dir(rtl):checked::before {
       translate: -0.95rem 0;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
     }
 
     @media (forced-colors: active) {

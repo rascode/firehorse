@@ -10,7 +10,17 @@
    *     <span class="fh-dropzone__title">Drop files or browse</span>
    *     <span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span>
    *   </label>
-   * The enhancer adds data-dragging while files hover over it. */
+   * The enhancer adds data-dragging while files hover over it.
+   *
+   * Compact, one control tall, for an inspector row: icon, title, hint.
+   *   <label class="fh-dropzone fh-dropzone--compact">
+   *     <input type="file" accept="image/*">
+   *     <span class="fh-dropzone__title">Drop art</span>
+   *     <span class="fh-dropzone__hint">PNG or JPG</span>
+   *   </label>
+   * data-busy: the icon gives way to the spinner and the control takes no
+   * pointer. data-invalid: a danger border and an fh-dropzone__error line.
+   * Disabled: disabled on the file input. */
   .fh-dropzone {
     position: relative;
     display: grid;
@@ -52,6 +62,72 @@
       outline: var(--fh-focus-width) solid var(--fh-color-focus);
       outline-offset: var(--fh-focus-offset);
     }
+
+    &[data-busy] {
+      cursor: default;
+
+      &::before {
+        border: 2px solid color-mix(in oklab, currentColor 25%, transparent);
+        border-block-start-color: currentColor;
+        border-radius: var(--fh-radius-round);
+        background: none;
+        mask: none;
+        animation: fh-spin 0.7s linear infinite;
+      }
+
+      &,
+      & > input { pointer-events: none; }
+
+      &:hover,
+      &[data-dragging] {
+        border-color: var(--fh-color-etch);
+        background-color: color-mix(in oklab, var(--fh-color-field) 35%, transparent);
+      }
+    }
+
+    &[data-invalid],
+    &[data-invalid]:hover {
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-color-danger) 70%, transparent);
+    }
+
+    &:has(:disabled) {
+      cursor: not-allowed;
+      opacity: 0.55;
+
+      & > input { cursor: not-allowed; }
+
+      &:hover,
+      &[data-dragging] {
+        border-color: var(--fh-color-etch);
+        background-color: color-mix(in oklab, var(--fh-color-field) 35%, transparent);
+      }
+    }
+  }
+
+  .fh-dropzone--compact {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    justify-items: start;
+    align-items: center;
+    column-gap: var(--fh-gap-related);
+    row-gap: var(--fh-gap-bound);
+    padding: 0.35rem var(--fh-inset-control);
+    min-block-size: 2.5rem;
+    text-align: start;
+
+    &::before { inline-size: 1.05rem; }
+
+    & > .fh-dropzone__title { white-space: nowrap; }
+
+    & > .fh-dropzone__hint {
+      justify-self: end;
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > .fh-dropzone__error { grid-column: 1 / -1; }
   }
 
   .fh-dropzone__title {
@@ -66,5 +142,15 @@
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
   }
+
+  .fh-dropzone__error {
+    display: none;
+    margin: 0;
+    color: var(--fh-color-danger);
+    font-size: var(--fh-text-caption);
+    line-height: var(--fh-leading-snug);
+  }
+
+  .fh-dropzone[data-invalid] > .fh-dropzone__error { display: block; }
 
 }

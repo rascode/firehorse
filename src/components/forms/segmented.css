@@ -12,7 +12,9 @@
    *     <label><input type="radio" name="c" value="email" checked> Email</label>
    *     <label><input type="radio" name="c" value="call"> Call</label>
    *   </fieldset>
-   * --stack stacks the options vertically; --sm is the compact size.  */
+   * --stack stacks the options vertically; --sm is the compact size.
+   * Disabled: disabled on an option, or disabled on the fieldset.
+   *   <label><input type="radio" name="c" value="mail" disabled> Mail</label> */
   .fh-segmented {
     display: flex;
     inline-size: fit-content;
@@ -45,13 +47,23 @@
         background-color var(--fh-duration-base) var(--fh-ease-standard),
         color var(--fh-duration-base) var(--fh-ease-standard);
 
-      &:hover {
+      &:hover:not(:has(:disabled)) {
         color: var(--fh-color-text);
       }
 
       &:has(:checked) {
         background-color: var(--fh-color-primary);
         color: var(--fh-color-on-primary);
+      }
+
+      &:has(:disabled) {
+        color: var(--fh-color-text-subtle);
+        cursor: not-allowed;
+
+        &:has(:checked) {
+          background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+          color: var(--fh-color-text-muted);
+        }
       }
 
       &:has(:focus-visible) {

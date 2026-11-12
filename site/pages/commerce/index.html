@@ -228,6 +228,97 @@
           <p class="fh-muted" style="margin:0">Sample confirmation. No payment was taken. A receipt would go to your email, with tracking once your parcel ships.</p>
         </div>
       </div>
+
+      <div class="site-demo site-anchor" id="c-swatches" data-fh-id="PDP-1">
+        <div class="site-demo__head"><h3>Custom colour swatch</h3><p>Large swatches for an inspector. A button with <code>aria-pressed</code> takes the same disc and the same ring as a checked radio. The custom colour is a round well: a plus until the host sets the value attribute, and the selected ring with <code>data-selected</code>. A disabled swatch fades and takes no pointer.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <div class="fh-swatches fh-swatches--lg" role="group" aria-label="Shirt colour">
+    <button type="button" aria-pressed="true" aria-label="Ink" data-tone="neutral" style="--swatch: var(--fh-tone)"></button>
+    <button type="button" aria-pressed="false" aria-label="Clay" data-tone="amber" style="--swatch: var(--fh-tone)"></button>
+    <button type="button" aria-pressed="false" aria-label="Sand" data-tone="lime" style="--swatch: var(--fh-tone)" disabled></button>
+    <label class="fh-swatches__custom" data-selected>
+      <input type="color" value="#8a5a44" aria-label="Custom colour">
+    </label>
+  </div>
+  <div class="fh-swatches fh-swatches--lg" role="group" aria-label="Ink colour">
+    <label data-tone="sky" style="--swatch: var(--fh-tone)"><input type="radio" name="studio-ink" aria-label="Navy" checked></label>
+    <label data-tone="violet" style="--swatch: var(--fh-tone)"><input type="radio" name="studio-ink" aria-label="Violet"></label>
+    <label class="fh-swatches__custom">
+      <input type="color" aria-label="Custom colour">
+    </label>
+  </div>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="c-choice-sm">
+        <div class="site-demo__head"><h3>Inspector choice cards</h3><p>A narrow column. The small size keeps one text line plus the small line. A disabled option is muted, with the reason in that small line, and it does not hover.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div style="max-inline-size: 18rem">
+  <fieldset class="fh-choice-cards fh-choice-cards--sm" aria-label="Print method">
+    <label class="fh-choice-card"><input type="radio" name="print-method" checked><span><b>Screen</b><small>Plastisol, soft hand</small></span><span>$8</span></label>
+    <label class="fh-choice-card"><input type="radio" name="print-method" disabled><span><b>Discharge</b><small>Press is booked</small></span><span>$12</span></label>
+  </fieldset>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="c-record-card">
+        <div class="site-demo__head"><h3>Record product card</h3><p>No image keeps the media ratio and shows a quiet mark. The media and the title are one link to the record. The status chip sits beside the price.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div class="fh-product-grid">
+  <article class="fh-product" id="shirt-navy" data-tone="sky">
+    <a href="#shirt-navy">
+      <span class="fh-product__media"></span>
+      <h3 class="fh-product__title">Navy tee</h3>
+    </a>
+    <p class="fh-product__meta"><span class="fh-price"><b>$34.00</b></span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="draft">Draft</span></p>
+  </article>
+  <article class="fh-product" id="shirt-ink" data-tone="neutral">
+    <a href="#shirt-ink">
+      <span class="fh-product__media"><img src="img/supply/keycaps.svg" alt="Ink tee, folded"></span>
+      <h3 class="fh-product__title">Ink tee</h3>
+    </a>
+    <p class="fh-product__meta"><span class="fh-price"><b>$34.00</b></span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="live">Live</span></p>
+  </article>
+</div>
+        </div>
+      </div>
+
+      <div class="site-demo site-anchor" id="c-price" data-fh-id="PRC" data-fh-groups="Price range|Price split">
+        <div class="site-demo__head"><h3>Price</h3><p>An assessed retail price. The large figure is <code>fh-price fh-price--lg</code>. The range marks a low to high band and a pin at the price. The split stacks each cost by its share and hatches the rest as profit.</p></div>
+        <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <p class="fh-price fh-price--lg"><b>$34.00</b></p>
+  <div class="fh-price-range" data-tone="sky" data-fh-id="PRC-1" style="--low: 13; --high: 83; --at: 46">
+    <div class="fh-price-range__track" role="img" aria-label="Retail price of $34.00, between $18.00 and $52.00, on a scale from $12.00 to $60.00">
+      <span class="fh-price-range__band"></span>
+      <span class="fh-price-range__pin"></span>
+    </div>
+    <div class="fh-price-range__ends"><span>$12</span><span>$60</span></div>
+  </div>
+  <div class="fh-price-split" data-fh-id="PRC-2">
+    <div class="fh-price-split__bar" role="img" aria-label="Blank $8.00, print $6.50, ink $2.40, labour $4.10, pack $1.80, profit $11.20, retail $34.00">
+      <span style="--share: 24" data-tone="sky"></span>
+      <span style="--share: 19" data-tone="amber"></span>
+      <span style="--share: 7" data-tone="teal"></span>
+      <span style="--share: 12" data-tone="violet"></span>
+      <span style="--share: 5" data-tone="rose"></span>
+    </div>
+    <dl class="fh-price-split__legend">
+      <div data-tone="sky"><dt>Blank</dt><dd>$8.00</dd></div>
+      <div data-tone="amber"><dt>Print</dt><dd>$6.50</dd></div>
+      <div data-tone="teal"><dt>Ink</dt><dd>$2.40</dd></div>
+      <div data-tone="violet"><dt>Labour</dt><dd>$4.10</dd></div>
+      <div data-tone="rose"><dt>Pack</dt><dd>$1.80</dd></div>
+      <div class="fh-price-split__profit"><dt>Profit</dt><dd>$11.20</dd></div>
+      <div class="fh-price-split__total"><dt>Retail</dt><dd>$34.00</dd></div>
+    </dl>
+  </div>
+</div>
+        </div>
+      </div>
     </section>
     <section id="invoice" class="fh-section fh-section--ruled site-anchor" data-tone="amber" aria-labelledby="invoice-title" data-fh-label="Invoice">
       <header class="fh-section-head">

@@ -13,6 +13,17 @@
    *     <p class="fh-price"><b>$48</b></p>
    *     <div class="fh-swatches">…</div>
    *     <button class="fh-product__add fh-button">Add to bag</button>
+   *   </article>
+   *
+   * Empty media keeps the ratio and draws a quiet mark when there is no
+   * image. An admin record uses one link around the media and the title,
+   * and a status chip in the meta beside the price:
+   *   <article class="fh-product">
+   *     <a href="#shirt-navy">
+   *       <span class="fh-product__media"></span>
+   *       <h3 class="fh-product__title">Navy tee</h3>
+   *     </a>
+   *     <p class="fh-product__meta"><span class="fh-price"><b>$34.00</b></span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="draft">Draft</span></p>
    *   </article> */
   .fh-product {
     position: relative;
@@ -69,6 +80,33 @@
       transition: opacity var(--fh-duration-slow, 380ms) var(--fh-ease-standard), scale 900ms var(--fh-ease-out);
     }
     & > .fh-product__alt { opacity: 0; }
+
+    /* No image: the ratio stays, and a quiet picture mark sits in the tile. */
+    &:not(:has(img, svg))::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      inline-size: 1.75rem;
+      aspect-ratio: 1;
+      background-color: color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-5-5L6 21'/%3E%3C/svg%3E") center / contain no-repeat;
+      pointer-events: none;
+    }
+  }
+
+  /* One link around the media and the title. The media stays full width. */
+  .fh-product > a:has(> .fh-product__media) {
+    display: grid;
+    gap: var(--fh-gap-related);
+    margin-inline: 0;
+    color: inherit;
+    text-decoration: none;
+
+    & > .fh-product__title {
+      margin-block: 0;
+      margin-inline: var(--fh-gap-related);
+    }
   }
   .fh-product:hover .fh-product__media > :first-child { scale: 1.03; }
   .fh-product:hover .fh-product__media:has(> .fh-product__alt) > :first-child { opacity: 0; }
@@ -131,6 +169,18 @@
     & a::after { content: ""; position: absolute; inset: 0; }
   }
   .fh-product__meta { margin: 0; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro, 0.62rem); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+
+  /* Price and a status chip on one line. The chip keeps its own type. */
+  .fh-product__meta:has(> .fh-price) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-bound) var(--fh-gap-related);
+    font-family: var(--fh-font-sans);
+    letter-spacing: normal;
+    text-transform: none;
+  }
 
   /* Quick add: fades in on hover on pointer devices; always visible on touch. */
   .fh-product__add {

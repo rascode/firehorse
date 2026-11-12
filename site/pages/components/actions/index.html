@@ -128,7 +128,7 @@
           </div>
         </div>
 
-        <div class="site-demo site-anchor" id="c-chips" data-fh-id="CHP" data-fh-groups="Kinds|Parts|Chip cards">
+        <div class="site-demo site-anchor" id="c-chips" data-fh-id="CHP" data-fh-groups="Kinds|Parts|Chip cards|Toggle chip set">
           <div class="site-demo__head"><h3>Chips</h3><p>Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from <code>data-tone</code>. For the status of a record use <code>data-status</code> instead (merged, running, queued, failed, archived): the tone follows the value. Chip rules: a chip is for status, and sits only in the record header, a collapsed section's summary and once per row; counts are an <code>fh-badge</code>; inline status text is an <code>fh-status</code>. See <a class="fh-link" href="/components/sections/#c-chip-rules">Chip rules</a>.</p></div>
           <div class="site-demo__stage" data-demo>
 <dl class="fh-dl site-variants">
@@ -191,6 +191,18 @@
   <div><dt>File<code>__text small</code></dt><dd>
     <a class="fh-chip-card" data-tone="rose" href="#c-chip-cards" data-fh-id="CHP-3.4" data-fh-name="Scope-of-work.pdf"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a></dd></div>
 </dl>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-toggle-chips" data-fh-id="CHP-4">
+          <div class="site-demo__head"><h3>Toggle chip set</h3><p>Several can be on at once. Each one is a <code>button</code> with <code>aria-pressed</code>, in a <code>role="group"</code> that has a label. <code>fh-chips--wrap</code> lets them wrap. A pressed <code>fh-chip--sm</code> uses the same on state as any other chip, in dark and in light.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-chips fh-chips--wrap" role="group" aria-label="Finishes">
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="sky" aria-pressed="true">Soft hand</button>
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="amber" aria-pressed="true">Discharge</button>
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="violet" aria-pressed="false">Puff</button>
+  <button type="button" class="fh-chip fh-chip--sm" data-tone="rose" aria-pressed="false">Foil</button>
+</div>
           </div>
         </div>
 
