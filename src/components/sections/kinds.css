@@ -18,7 +18,7 @@
    *   metrics     fh-panel-section--metrics      fh-metrics
    *   links       fh-panel-section--links        fh-links
    *   files       fh-panel-section--files        fh-files
-   *   form        fh-panel-section--form         form > fieldset of fh-field, then the actions row */
+   *   form        fh-panel-section--form         form (or div.fh-panel-section__form) > fieldset of fh-field, then the actions row */
 
   /* Tables in a section: compact cells, the time column in mono. */
   :is(.fh-panel-section--records, .fh-panel-section--timetable) .fh-table :is(th, td) {
@@ -268,8 +268,15 @@
    * form with the save button disabled (saving), one fh-status in the actions
    * row (saved, or an error that belongs to no field), aria-invalid with
    * fh-field__error on the field (error), fieldset[disabled] with a
-   * fh-panel-section__note above it (locked). sidecar.js sets data-dirty. */
-  .fh-panel-section--form form {
+   * fh-panel-section__note above it (locked). sidecar.js sets data-dirty.
+   *
+   * Two allowed bodies, the same parts in both. Use <form> when the section
+   * submits its own fields. Use <div class="fh-panel-section__form"
+   * role="group" aria-labelledby="<the title id>"> when a field in the slot
+   * renders its own <form> (a Pro key field): never put a form inside a form.
+   * The layout rules reach the direct child of the body only, so a form deeper
+   * inside (a host field's own editor) is not restyled. */
+  .fh-panel-section--form .fh-panel-section__body > :is(form, .fh-panel-section__form) {
     display: grid;
     gap: var(--fh-gap-grouped);
     min-inline-size: 0;

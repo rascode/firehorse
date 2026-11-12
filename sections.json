@@ -193,12 +193,13 @@
       "class": "fh-panel-section fh-panel-section--form",
       "icon": "square-pen",
       "tone": "sky",
-      "body": "form > fieldset of fh-field (any Fields member, fh-money included) and fh-panel-section__slot, then fh-panel-section__actions",
+      "body": "form > fieldset of fh-field (any Fields member, fh-money included) and fh-panel-section__slot, then fh-panel-section__actions; or, when a field in the slot renders its own form, div.fh-panel-section__form (role=group, aria-labelledby the title id) in place of the form, holding the same parts",
+      "hostForms": "Use form when the section submits its own fields. Use div.fh-panel-section__form when a field in the slot renders its own form (a Pro key field). Never put a form inside a form. The layout rules reach the direct child of fh-panel-section__body only, so a host field's own editor is not restyled. sidecar.js marks dirty on input or change inside the section either way, and a submit from a nested host form clears data-dirty unless the page cancels it.",
       "slots": ["note (fh-panel-section__note, locked only)", "fields; a read only value goes in the field's hint (fh-field__hint)", "slot for a host field (fh-panel-section__slot, data-slot=field)", "actions (fh-panel-section__actions: save button, optional second action, one inline fh-status)"],
       "states": {
         "clean": "no data-dirty",
         "changed": "data-dirty on the section (sidecar.js sets it, and on the sidecar)",
-        "saving": "aria-busy on the form, save button disabled",
+        "saving": "aria-busy on the form (or the div body), save button disabled",
         "saved": "one fh-status (data-tone lime) in the actions row",
         "error": "aria-invalid and fh-field__error on the field; one fh-status (data-tone danger) in the actions row for an error that belongs to no field",
         "locked": "fieldset disabled, one line fh-panel-section__note above the fields, save button disabled"

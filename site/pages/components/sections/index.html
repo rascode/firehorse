@@ -830,7 +830,7 @@
         </div>
 
         <div class="site-demo site-anchor" id="c-sec-form" data-fh-id="SFM" data-fh-groups="Form section">
-          <div class="site-demo__head"><h3>Form section</h3><p><code>fh-panel-section--form</code>. A section where a person edits the record in place: one <code>form</code> with one <code>fieldset</code> of Firehorse fields (<code>fh-money</code> included, and <code>fh-panel-section__slot</code> for a field the host supplies), then the actions row. A field's read only value, such as "ends in 4f2a", goes in its hint. States are markup only: <code>data-dirty</code> on the section is changed, <code>aria-busy</code> on the form with the save button disabled is saving, one <code>fh-status</code> in the actions row is saved (or an error that belongs to no field), <code>fh-field__error</code> is a field error, and a disabled fieldset with a one line note above it is locked. <code>sidecar.js</code> sets <code>data-dirty</code> on the section and the sidecar; a dirty sidecar fires a cancelable <code>fh:sidecar-before-close</code> before it closes or swaps record. The actions stack under 36rem.</p></div>
+          <div class="site-demo__head"><h3>Form section</h3><p><code>fh-panel-section--form</code>. A section where a person edits the record in place: one <code>form</code> with one <code>fieldset</code> of Firehorse fields (<code>fh-money</code> included, and <code>fh-panel-section__slot</code> for a field the host supplies), then the actions row. A section whose slot holds a field that renders its own <code>form</code> uses <code>&lt;div class="fh-panel-section__form" role="group" aria-labelledby="…"&gt;</code> as its body instead of the <code>form</code>: never put a form inside a form. A field's read only value, such as "ends in 4f2a", goes in its hint. States are markup only: <code>data-dirty</code> on the section is changed, <code>aria-busy</code> on the form with the save button disabled is saving, one <code>fh-status</code> in the actions row is saved (or an error that belongs to no field), <code>fh-field__error</code> is a field error, and a disabled fieldset with a one line note above it is locked. <code>sidecar.js</code> sets <code>data-dirty</code> on the section and the sidecar; a dirty sidecar fires a cancelable <code>fh:sidecar-before-close</code> before it closes or swaps record. The actions stack under 36rem.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-stack" style="max-inline-size: 34rem">
       <details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh-id="SFM-1.1" data-fh-name="Clean">
@@ -1078,6 +1078,32 @@
             <button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button>
           </div>
         </form>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh-id="SFM-1.8" data-fh-name="Host field">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title" id="fs-host-title">Access</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">1 field</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-panel-section__form" role="group" aria-labelledby="fs-host-title">
+          <fieldset>
+            <div class="fh-panel-section__slot" data-slot="field">
+              <form class="fh-field" aria-label="Sample token">
+                <label for="fs-host-token">Sample token</label>
+                <div class="fh-input-group">
+                  <input class="fh-input" id="fs-host-token" name="token" autocomplete="off">
+                  <button class="fh-button fh-button--sm" type="submit">Set</button>
+                </div>
+                <p class="fh-field__hint">This field owns its form, so the section body is a div.</p>
+              </form>
+            </div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--secondary fh-button--sm" type="button">Close</button>
+          </div>
+        </div>
         </div>
       </details>
 </div>
