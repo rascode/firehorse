@@ -2040,11 +2040,11 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-panel-section fh-panel-section--form" data-tone="accent" open>
+      <details class="fh-panel-section fh-panel-section--form" data-tone="sky" open>
         <summary class="fh-panel-section__head">
           <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
           <h3 class="fh-panel-section__title">Settings</h3>
-          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="accent">3 fields</span></span>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
         </summary>
         <div class="fh-panel-section__body">
         <form>
