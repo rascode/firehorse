@@ -14,7 +14,8 @@
 | Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
-| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
+| Metrics | `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) |
+| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
 | People | `fh-social` (`__photo` `__body` `__name` `__check` `__bio` `__foot` `__stats` `--fade` `--dark`) |
 | Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
@@ -1740,13 +1741,13 @@ One drawer for every record. A fixed header (eyebrow with the record kind, mark,
     <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">claude_cli</span><span class="fh-chip" data-tone="amber">2 rounds</span></div>
   </header>
   <div class="fh-sidecar__body">
-    <details class="fh-sec fh-sec--properties" data-tone="sky" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Properties</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+    <details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Properties</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <dl class="fh-kv fh-kv--single">
           <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
           <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
@@ -1757,17 +1758,17 @@ One drawer for every record. A fixed header (eyebrow with the record kind, mark,
 
 ### Sidecar as a drawer
 
-The same sidecar in a floating dialog: it slides in from the edge, and Escape or the close control puts it away.
+The same sidecar in a floating dialog: it slides in from the edge, and Escape, the close control or a click outside puts it away. Any element with data-sidecar="record-id" opens it (sidecar.js sets data-record and fires fh:sidecar-open so the app can fill it); focus returns to the opener on close.
 
 ```html
-<button type="button" class="fh-button fh-button--secondary" data-opens="sidecar-demo">Open the sidecar</button>
+<button type="button" class="fh-button fh-button--secondary" data-sidecar="goal-harbor">Open the sidecar</button>
 <dialog class="fh-dialog fh-dialog--float fh-sidecar" id="sidecar-demo" aria-label="Record" style="--fh-dialog-size: 32rem">
   <header class="fh-sidecar__header">
     <div class="fh-sidecar__bar">
       <span class="fh-sidecar__eyebrow">Relays · audit</span>
       <span class="fh-sidecar__actions">
         <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
-        <button type="button" class="fh-close" aria-label="Close" onclick="this.closest('dialog').close()"></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
       </span>
     </div>
     <div class="fh-sidecar__identity">
@@ -1780,13 +1781,13 @@ The same sidecar in a floating dialog: it slides in from the edge, and Escape or
     <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">claude_cli</span><span class="fh-chip" data-tone="amber">2 rounds</span></div>
   </header>
   <div class="fh-sidecar__body">
-    <details class="fh-sec fh-sec--properties" data-tone="sky">
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Properties</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+    <details class="fh-panel-section fh-panel-section--properties" data-tone="sky">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Properties</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <dl class="fh-kv fh-kv--single">
           <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
           <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
@@ -1801,13 +1802,13 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ```html
 <div class="fh-stack" style="max-inline-size: 30rem">
-      <details class="fh-sec fh-sec--properties" data-tone="sky" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Summary</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+      <details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Summary</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <dl class="fh-kv fh-kv--single">
           <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
           <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
@@ -1818,17 +1819,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Properties section
 
-`fh-sec--properties`. A key value list. Collapsed, it shows the two or three values that matter most.
+`fh-panel-section--properties`. A key value list. Collapsed, it shows the two or three values that matter most.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--properties" data-tone="sky" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--list-checks fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Properties</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
+      <details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Properties</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">38 min</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <dl class="fh-kv fh-kv--single">
           <div><dt>Sent by</dt><dd>Orchard · claude-opus-5-5</dd></div>
           <div><dt>Done by</dt><dd>Harbor · claude-sonnet-5-5</dd></div>
@@ -1839,17 +1840,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Records section
 
-`fh-sec--records`. A table of records. Every reference in a cell is a link that opens that record's sidecar.
+`fh-panel-section--records`. A table of records. Every reference in a cell is a link that opens that record's sidecar.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--records" data-tone="teal" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--table-2 fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Records</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="teal">3 records</span><span class="fh-chip" data-tone="amber">1 open</span></span>
+      <details class="fh-panel-section fh-panel-section--records" data-tone="teal" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--table-2 fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Records</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">3 records</span><span class="fh-chip" data-tone="amber">1 open</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <div class="fh-table-wrap"><table class="fh-table">
           <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
           <tbody>
@@ -1862,17 +1863,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Timetable section
 
-`fh-sec--timetable`. A real table: time, step, detail. Never a list that only looks like one.
+`fh-panel-section--timetable`. A real table: time, step, detail. Never a list that only looks like one.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--timetable" data-tone="amber" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--clock fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Timetable</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">15:07 to 15:45</span></span>
+      <details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Timetable</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">15:07 to 15:45</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <div class="fh-table-wrap"><table class="fh-table">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
@@ -1886,17 +1887,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Timeline section
 
-`fh-sec--timeline`. Events in order, each with its time and a tone for what kind of event it was.
+`fh-panel-section--timeline`. Events in order, each with its time and a tone for what kind of event it was.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--timeline" data-tone="violet" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--activity fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Timeline</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="violet">3 events</span><span class="fh-chip" data-tone="sky">last 15:45</span></span>
+      <details class="fh-panel-section fh-panel-section--timeline" data-tone="violet" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--activity fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Timeline</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">3 events</span><span class="fh-chip" data-tone="sky">last 15:45</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <ol class="fh-timeline">
           <li data-tone="sky"><time>15:07</time><p><b>Dispatched</b> to the build agent</p></li>
           <li data-tone="lime"><time>15:31</time><p><b>Checks passed</b> on the first run</p></li>
@@ -1906,17 +1907,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Chat section
 
-`fh-sec--chat`. Speaker, time and message. The speaker sits above the message with the time at the far side.
+`fh-panel-section--chat`. Speaker, time and message. The speaker sits above the message with the time at the far side.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--chat" data-tone="fuchsia" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--message-square fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Replies</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 15:46</span></span>
+      <details class="fh-panel-section fh-panel-section--chat" data-tone="fuchsia" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--message-square fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Replies</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 15:46</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <div class="fh-chat">
           <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Harbor</span><time class="fh-message__time">15:44</time></p><p>The sidecar and ten sections are in. Tests pass.</p></div></div>
           <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Orchard</span><time class="fh-message__time">15:46</time></p><p>Thanks. Please add the narrow screenshots.</p></div></div>
@@ -1924,58 +1925,58 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Log section
 
-`fh-sec--log`. Time, level and line, in monospace. The level takes its tone.
+`fh-panel-section--log`. Time, level and line, in monospace. The level takes its tone.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--log" data-tone="orange" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--terminal fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Log</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="orange">5 lines</span><span class="fh-chip" data-tone="amber">1 warning</span></span>
+      <details class="fh-panel-section fh-panel-section--log" data-tone="orange" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--terminal fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Log</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">5 lines</span><span class="fh-chip" data-tone="amber">1 warning</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <ol class="fh-log">
-          <li data-tone="sky"><time>15:07:12</time><b>info</b><code>claimed 3 paths</code></li>
-          <li data-tone="sky"><time>15:14:40</time><b>info</b><code>lint: 195 files, 0 errors</code></li>
-          <li data-tone="amber"><time>15:22:03</time><b>warn</b><code>class fh-section already exists; using fh-sec for the shell</code></li>
-          <li data-tone="lime"><time>15:31:55</time><b>ok</b><code>contrast verify passed</code></li>
-          <li data-tone="rose"><time>15:33:01</time><b>error</b><code>retry 1 of 2: build step timed out</code></li>
+          <li data-tone="sky"><time>15:07:12</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>claimed 3 paths</code></li>
+          <li data-tone="sky"><time>15:14:40</time><span class="fh-chip fh-chip--tone fh-chip--sm">info</span><code>lint: 195 files, 0 errors</code></li>
+          <li data-tone="amber"><time>15:22:03</time><span class="fh-chip fh-chip--tone fh-chip--sm">warn</span><code>class fh-section already exists; using fh-panel-section for the shell</code></li>
+          <li data-tone="lime"><time>15:31:55</time><span class="fh-chip fh-chip--tone fh-chip--sm">ok</span><code>contrast verify passed</code></li>
+          <li data-tone="rose"><time>15:33:01</time><span class="fh-chip fh-chip--tone fh-chip--sm">error</span><code>retry 1 of 2: build step timed out</code></li>
         </ol>
 ```
 
 ### Prompts section
 
-`fh-sec--prompts`. The prompts a dispatch used, each with its key and version. Each row opens the prompt.
+`fh-panel-section--prompts`. The prompts a dispatch used, each with its key and version. Each row opens the prompt.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--prompts" data-tone="teal" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--sparkles fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Prompts</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="teal">2 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
+      <details class="fh-panel-section fh-panel-section--prompts" data-tone="teal" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--sparkles fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Prompts</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <ul class="fh-prompts">
-          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-preamble"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v3</b><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
-          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-spec"><code class="fh-prompt__key">relay.spec.firehorse-sections</code><b class="fh-prompt__version">v1</b><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-preamble"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v3</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
+          <li><a class="fh-prompt" href="#c-sidecar" data-sidecar="prompt-spec"><code class="fh-prompt__key">relay.spec.firehorse-sections</code><b class="fh-prompt__version">v1</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">draft</span><span class="fh-prompt__meta">Dispatch 1 · Nov 11, 15:07</span></a></li>
         </ul>
 ```
 
 ### Metrics section
 
-`fh-sec--metrics`. Metric tiles (they ship in admin.css). Collapsed, it shows the headline figure.
+`fh-panel-section--metrics`. Metric tiles (they ship in admin.css). Collapsed, it shows the headline figure.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--metrics" data-tone="lime" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--chart-bar fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Tokens</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="lime">412k effective</span><span class="fh-chip" data-tone="amber">$3.18</span></span>
+      <details class="fh-panel-section fh-panel-section--metrics" data-tone="lime" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--chart-bar fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Tokens</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">412k effective</span><span class="fh-chip" data-tone="amber">$3.18</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <div class="fh-metrics">
           <article class="fh-metric" data-tone="lime"><p class="fh-metric__label">Effective</p><p class="fh-metric__value">412k</p><p class="fh-metric__sub">Tokens, all layers</p></article>
           <article class="fh-metric" data-tone="amber"><p class="fh-metric__label">Cost</p><p class="fh-metric__value">$3.18</p><p class="fh-metric__sub">Two rounds</p></article>
@@ -1984,17 +1985,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Links section
 
-`fh-sec--links`. Linked records. Each one opens in the sidecar, so none is plain text.
+`fh-panel-section--links`. Linked records. Each one opens in the sidecar, so none is plain text.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--links" data-tone="sky" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--link fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Linked records</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
+      <details class="fh-panel-section fh-panel-section--links" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--link fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Linked records</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <ul class="fh-links">
           <li><a href="#c-sidecar" data-sidecar="commit-a1b2c3d"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Sections: record sidecar and ten sections</span><small>commit</small></a></li>
           <li><a href="#c-sidecar" data-sidecar="goal-harbor"><i class="fh-icon fh-icon--list-checks" aria-hidden="true"></i><span>Harbor index refresh</span><small>goal</small></a></li>
@@ -2004,17 +2005,17 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Files section
 
-`fh-sec--files`. Files with their size and date. A name opens or downloads the file.
+`fh-panel-section--files`. Files with their size and date. A name opens or downloads the file.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
-      <details class="fh-sec fh-sec--files" data-tone="rose" open>
-        <summary class="fh-sec__head">
-          <i class="fh-icon fh-icon--paperclip fh-sec__icon" aria-hidden="true"></i>
-          <h3 class="fh-sec__title">Files</h3>
-          <span class="fh-sec__chips"><span class="fh-chip" data-tone="rose">3 files</span><span class="fh-chip" data-tone="sky">84 KB</span></span>
+      <details class="fh-panel-section fh-panel-section--files" data-tone="rose" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--paperclip fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Files</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="rose">3 files</span><span class="fh-chip" data-tone="sky">84 KB</span></span>
         </summary>
-        <div class="fh-sec__body">
+        <div class="fh-panel-section__body">
         <ul class="fh-files">
           <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time>Nov 11</time></a></li>
           <li><a href="#c-sec-files"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>spec.md</span><small>9 KB</small><time>Nov 11</time></a></li>

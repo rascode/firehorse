@@ -9,30 +9,30 @@
    * text in the strongest text role, then a collapse control. Collapsed,
    * the header shows summary chips for what the section holds; open, the
    * chips are gone (chips live only here and in the sidecar header).
-   *   <details class="fh-sec fh-sec--timetable" data-tone="sky" open>
-   *     <summary class="fh-sec__head">
-   *       <i class="fh-icon fh-icon--clock fh-sec__icon" aria-hidden="true"></i>
-   *       <h3 class="fh-sec__title">Timetable</h3>
-   *       <span class="fh-sec__chips"><span class="fh-chip">9 steps</span></span>
+   *   <details class="fh-panel-section fh-panel-section--timetable" data-tone="sky" open>
+   *     <summary class="fh-panel-section__head">
+   *       <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+   *       <h3 class="fh-panel-section__title">Timetable</h3>
+   *       <span class="fh-panel-section__chips"><span class="fh-chip">9 steps</span></span>
    *     </summary>
-   *     <div class="fh-sec__body">…</div>
+   *     <div class="fh-panel-section__body">…</div>
    *   </details>
-   * The class fh-sec--<kind> names the data kind (see sections.json).
-   * The tone colours the icon and the chip dots. Knobs: --fh-sec-title
-   * (title size, 1.3em of the section's own text), --fh-sec-icon (icon
+   * The class fh-panel-section--<kind> names the data kind (see sections.json).
+   * The tone colours the icon and the chip dots. Knobs: --fh-panel-section-title
+   * (title size, 1.3em of the section's own text), --fh-panel-section-icon (icon
    * size, 1.125rem). */
-  .fh-sec {
+  .fh-panel-section {
     display: block;
     min-inline-size: 0;
     border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    container: fh-sec / inline-size;
+    container: fh-panel-section / inline-size;
 
     &:last-child {
       border-block-end: 0;
     }
   }
 
-  .fh-sec__head {
+  .fh-panel-section__head {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -69,24 +69,24 @@
     }
   }
 
-  .fh-sec[open] > .fh-sec__head::after {
+  .fh-panel-section[open] > .fh-panel-section__head::after {
     rotate: 180deg;
   }
 
-  .fh-sec__icon {
+  .fh-panel-section__icon {
     flex: none;
-    inline-size: var(--fh-sec-icon, 1.125rem);
-    block-size: var(--fh-sec-icon, 1.125rem);
+    inline-size: var(--fh-panel-section-icon, 1.125rem);
+    block-size: var(--fh-panel-section-icon, 1.125rem);
     color: var(--fh-tone, var(--fh-color-text-muted));
   }
 
-  .fh-sec__title {
+  .fh-panel-section__title {
     flex: 1 1 auto;
     min-inline-size: 0;
     margin: 0;
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-body, inherit);
-    font-size: var(--fh-sec-title, 1.3em);
+    font-size: var(--fh-panel-section-title, 1.3em);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-heading);
     line-height: var(--fh-leading-snug);
@@ -94,7 +94,7 @@
   }
 
   /* Summary chips: shown only while the section is collapsed. */
-  .fh-sec__chips {
+  .fh-panel-section__chips {
     display: none;
     order: 1;
     flex-wrap: wrap;
@@ -108,11 +108,11 @@
     }
   }
 
-  .fh-sec:not([open]) > .fh-sec__head > .fh-sec__chips {
+  .fh-panel-section:not([open]) > .fh-panel-section__head > .fh-panel-section__chips {
     display: flex;
   }
 
-  .fh-sec__body {
+  .fh-panel-section__body {
     display: grid;
     gap: var(--fh-gap-grouped);
     min-inline-size: 0;
@@ -120,8 +120,8 @@
   }
 
   /* Narrow slot: the chips drop onto their own line under the title. */
-  @container fh-sec (inline-size < 26rem) {
-    .fh-sec__chips {
+  @container fh-panel-section (inline-size < 26rem) {
+    .fh-panel-section__chips {
       order: 3;
       flex: 1 1 100%;
       justify-content: flex-start;
@@ -129,11 +129,11 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .fh-sec {
+    .fh-panel-section {
       interpolate-size: allow-keywords;
     }
 
-    .fh-sec::details-content {
+    .fh-panel-section::details-content {
       block-size: 0;
       overflow: clip;
       transition:
@@ -141,7 +141,7 @@
         content-visibility var(--fh-duration-fast) allow-discrete;
     }
 
-    .fh-sec[open]::details-content {
+    .fh-panel-section[open]::details-content {
       block-size: auto;
     }
   }

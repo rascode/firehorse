@@ -1,23 +1,23 @@
 {
   "name": "Firehorse sections",
-  "note": "The map from a data kind to the Firehorse section that shows it. An agent looks the kind up and uses the section it names; a kind with no entry is a Firehorse gap. Every section is the shell (fh-sec) plus a kind modifier. Docs: https://firehorse.rascode.dev/components/sections/",
+  "note": "The map from a data kind to the Firehorse section that shows it. An agent looks the kind up and uses the section it names; a kind with no entry is a Firehorse gap. Every section is the shell (fh-panel-section) plus a kind modifier. Docs: https://firehorse.rascode.dev/components/sections/",
   "docs": "/components/sections/",
   "sidecar": {
     "id": "SDC",
     "class": "fh-sidecar",
     "drawer": "fh-dialog fh-dialog--float fh-sidecar",
     "slots": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"],
-    "chips": "One chip row in the header: the record's state, in at most four chips. Chips appear nowhere else in the body."
+    "chips": "One chip row in the header: the record's state, in at most four chips. Chips appear nowhere else in the body, except one status chip a row may carry (a log line level, a prompt state)."
   },
   "shell": {
     "id": "SCT",
     "element": "details",
-    "class": "fh-sec",
+    "class": "fh-panel-section",
     "slots": ["icon", "title", "chips", "body"],
-    "icon": "Required, first. An fh-icon with class fh-sec__icon; the section's tone colours it.",
-    "title": "An h3 with class fh-sec__title. Larger than body text, in the strongest text role.",
+    "icon": "Required, first. An fh-icon with class fh-panel-section__icon; the section's tone colours it.",
+    "title": "An h3 with class fh-panel-section__title. Larger than body text, in the strongest text role.",
     "collapse": "The summary is the control. Open by default unless the kind says otherwise.",
-    "chips": "In fh-sec__chips inside the summary. Shown only while collapsed."
+    "chips": "In fh-panel-section__chips inside the summary. Shown only while collapsed. A row in the body may carry one status chip (fh-chip fh-chip--tone fh-chip--sm with a status tone), for status only: a log line level, a prompt state. No other chips in rows."
   },
   "css": {
     "metrics": "admin.css (fh-metric ships there)",
@@ -26,7 +26,7 @@
   "kinds": {
     "properties": {
       "id": "SPR",
-      "class": "fh-sec fh-sec--properties",
+      "class": "fh-panel-section fh-panel-section--properties",
       "icon": "list-checks",
       "tone": "sky",
       "body": "fh-kv fh-kv--single",
@@ -35,7 +35,7 @@
     },
     "records": {
       "id": "SRC",
-      "class": "fh-sec fh-sec--records",
+      "class": "fh-panel-section fh-panel-section--records",
       "icon": "table-2",
       "tone": "teal",
       "body": "fh-table-wrap > fh-table",
@@ -44,7 +44,7 @@
     },
     "timetable": {
       "id": "STT",
-      "class": "fh-sec fh-sec--timetable",
+      "class": "fh-panel-section fh-panel-section--timetable",
       "icon": "clock",
       "tone": "amber",
       "body": "fh-table-wrap > fh-table (columns: time, step, detail)",
@@ -53,7 +53,7 @@
     },
     "timeline": {
       "id": "STL",
-      "class": "fh-sec fh-sec--timeline",
+      "class": "fh-panel-section fh-panel-section--timeline",
       "icon": "activity",
       "tone": "violet",
       "body": "fh-timeline",
@@ -62,7 +62,7 @@
     },
     "chat": {
       "id": "SCH",
-      "class": "fh-sec fh-sec--chat",
+      "class": "fh-panel-section fh-panel-section--chat",
       "icon": "message-square",
       "tone": "fuchsia",
       "body": "fh-chat > fh-message (fh-message__head: fh-message__name, fh-message__time)",
@@ -71,25 +71,25 @@
     },
     "log": {
       "id": "SLG",
-      "class": "fh-sec fh-sec--log",
+      "class": "fh-panel-section fh-panel-section--log",
       "icon": "terminal",
       "tone": "orange",
       "body": "fh-log",
-      "slots": ["time", "level (data-tone on the row)", "line (monospace)"],
+      "slots": ["time", "level (the row status chip, toned by data-tone on the row)", "line (monospace)"],
       "chips": { "rule": "The line count and the count of warnings or errors, if any.", "max": 2 }
     },
     "prompts": {
       "id": "SPM",
-      "class": "fh-sec fh-sec--prompts",
+      "class": "fh-panel-section fh-panel-section--prompts",
       "icon": "sparkles",
       "tone": "teal",
-      "body": "fh-prompts > li > a.fh-prompt (fh-prompt__key, fh-prompt__version, fh-prompt__meta)",
-      "slots": ["key", "version", "meta (dispatch and time)", "link that opens the prompt"],
+      "body": "fh-prompts > li > a.fh-prompt (fh-prompt__key, fh-prompt__version, status chip, fh-prompt__meta)",
+      "slots": ["key", "version", "state (the row status chip)", "meta (dispatch and time)", "link that opens the prompt"],
       "chips": { "rule": "The prompt count and the dispatch they belong to.", "max": 2 }
     },
     "metrics": {
       "id": "SMT",
-      "class": "fh-sec fh-sec--metrics",
+      "class": "fh-panel-section fh-panel-section--metrics",
       "icon": "chart-bar",
       "tone": "lime",
       "body": "fh-metrics > fh-metric",
@@ -99,7 +99,7 @@
     },
     "links": {
       "id": "SLK",
-      "class": "fh-sec fh-sec--links",
+      "class": "fh-panel-section fh-panel-section--links",
       "icon": "link",
       "tone": "sky",
       "body": "fh-links",
@@ -108,7 +108,7 @@
     },
     "files": {
       "id": "SFL",
-      "class": "fh-sec fh-sec--files",
+      "class": "fh-panel-section fh-panel-section--files",
       "icon": "paperclip",
       "tone": "rose",
       "body": "fh-files",

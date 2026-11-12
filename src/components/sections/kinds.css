@@ -5,37 +5,37 @@
 
 @layer fh.components {
   /* —— One section per data kind ——
-   * Each kind is an fh-sec with a modifier, and fills fh-sec__body with a
+   * Each kind is an fh-panel-section with a modifier, and fills fh-panel-section__body with a
    * Firehorse component (or the small parts below). sections.json maps
    * the kind to this class, its slots and its chip rule.
-   *   properties  fh-sec--properties   fh-kv
-   *   records     fh-sec--records      fh-table
-   *   timetable   fh-sec--timetable    fh-table (time, step, detail)
-   *   timeline    fh-sec--timeline     fh-timeline
-   *   chat        fh-sec--chat         fh-chat + fh-message__time
-   *   log         fh-sec--log          fh-log
-   *   prompts     fh-sec--prompts      fh-prompts
-   *   metrics     fh-sec--metrics      fh-metrics
-   *   links       fh-sec--links        fh-links
-   *   files       fh-sec--files        fh-files */
+   *   properties  fh-panel-section--properties   fh-kv
+   *   records     fh-panel-section--records      fh-table
+   *   timetable   fh-panel-section--timetable    fh-table (time, step, detail)
+   *   timeline    fh-panel-section--timeline     fh-timeline
+   *   chat        fh-panel-section--chat         fh-chat + fh-message__time
+   *   log         fh-panel-section--log          fh-log
+   *   prompts     fh-panel-section--prompts      fh-prompts
+   *   metrics     fh-panel-section--metrics      fh-metrics
+   *   links       fh-panel-section--links        fh-links
+   *   files       fh-panel-section--files        fh-files */
 
   /* Tables in a section: compact cells, the time column in mono. */
-  :is(.fh-sec--records, .fh-sec--timetable) .fh-table :is(th, td) {
+  :is(.fh-panel-section--records, .fh-panel-section--timetable) .fh-table :is(th, td) {
     padding: var(--fh-inset-tight) var(--fh-inset-control);
   }
 
-  .fh-sec--timetable .fh-table :is(th, td):first-child {
+  .fh-panel-section--timetable .fh-table :is(th, td):first-child {
     inline-size: 1%;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     white-space: nowrap;
   }
 
-  .fh-sec--properties .fh-kv {
+  .fh-panel-section--properties .fh-kv {
     --fh-row-pad: var(--fh-inset-tight);
   }
 
-  .fh-sec--metrics .fh-metrics {
+  .fh-panel-section--metrics .fh-metrics {
     --fh-metrics-min: 9rem;
   }
 
@@ -57,10 +57,10 @@
 
   /* —— Log ——
    *   <ol class="fh-log">
-   *     <li data-tone="amber"><time>15:07:12</time><b>warn</b><code>line</code></li>
+   *     <li data-tone="amber"><time>15:07:12</time><span class="fh-chip fh-chip--tone fh-chip--sm">warn</span><code>line</code></li>
    *   </ol>
-   * Time, level, line; the line is monospace and wraps. The tone colours
-   * the level. */
+   * Time, level, line; the line is monospace and wraps. The level is the
+   * row's one status chip; the row's tone colours it. */
   .fh-log {
     display: grid;
     margin: 0;
@@ -75,7 +75,7 @@
 
     & > li {
       display: grid;
-      grid-template-columns: 4.5rem 3.25rem minmax(0, 1fr);
+      grid-template-columns: 4.5rem 4.75rem minmax(0, 1fr);
       gap: var(--fh-gap-related) var(--fh-gap-grouped);
       align-items: baseline;
       padding: var(--fh-inset-tight) var(--fh-inset-control);
@@ -91,9 +91,8 @@
       font-variant-numeric: tabular-nums;
     }
 
-    & b {
-      color: var(--fh-tone, var(--fh-color-text-muted));
-      font-weight: var(--fh-weight-semibold);
+    & .fh-chip {
+      cursor: default;
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
     }
@@ -107,7 +106,7 @@
     }
   }
 
-  @container fh-sec (inline-size < 24rem) {
+  @container fh-panel-section (inline-size < 24rem) {
     .fh-log > li {
       grid-template-columns: auto minmax(0, 1fr);
     }
@@ -118,11 +117,13 @@
   }
 
   /* —— Prompts ——
-   * The prompts a dispatch used, each with its key and version.
+   * The prompts a dispatch used, each with its key, version and state. The
+   * state is the row's one status chip.
    *   <ul class="fh-prompts">
    *     <li><a class="fh-prompt" href="…">
    *       <code class="fh-prompt__key">relay.preamble.claude-cli</code>
    *       <b class="fh-prompt__version">v3</b>
+   *       <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span>
    *       <span class="fh-prompt__meta">Dispatch 1 · 15:07</span>
    *     </a></li>
    *   </ul> */
@@ -135,7 +136,7 @@
 
   .fh-prompt {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: var(--fh-gap-bound) var(--fh-gap-grouped);
     align-items: baseline;
     padding: var(--fh-inset-control) 0;
@@ -165,6 +166,11 @@
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-small);
     font-variant-numeric: tabular-nums;
+  }
+
+  .fh-prompt .fh-chip {
+    align-self: center;
+    cursor: inherit;
   }
 
   .fh-prompt__meta {
