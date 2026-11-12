@@ -140,6 +140,9 @@
     & > .fh-select-wrap > .fh-select {
       border-color: transparent;
       background-color: color-mix(in oklab, var(--fh-color-text) 3.5%, transparent);
+      /* The chosen option stays on one line at any width. */
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       &:hover:not(:disabled, :focus) {
         background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent);
