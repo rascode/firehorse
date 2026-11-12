@@ -1966,7 +1966,7 @@ The header every section shares: an icon, a title larger than body text in the s
 
 ### Metrics section
 
-`fh-panel-section--metrics`. Metric tiles (they ship in admin.css). Collapsed, it shows the headline figure.
+`fh-panel-section--metrics`. Metric tiles (in the core bundle). Collapsed, it shows the headline figure.
 
 ```html
 <div class="fh-stack" style="max-inline-size: 34rem">
