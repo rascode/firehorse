@@ -120,9 +120,9 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "lint": "node scripts/lint.mjs",
-    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/gen-index.mjs --check && node scripts/audit-test.mjs && node test/mcp.test.mjs",
+    "test": "npm run lint && npm run build && node scripts/verify.mjs && node scripts/verify-adaptive.mjs && node scripts/schema-test.mjs && node scripts/release.mjs --check && node scripts/gen-index.mjs --check && node scripts/audit-test.mjs && node test/mcp.test.mjs && node test/release.test.mjs",
     "prepublishOnly": "npm test && node scripts/gen-index.mjs",
-    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/pack-site.mjs && node scripts/not-found.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write",
+    "site": "node scripts/gen-horse.mjs && node scripts/gen-index.mjs && node scripts/agent-docs.mjs && node scripts/patterns-docs.mjs && node scripts/templates.mjs && node scripts/site.mjs --check && node scripts/stable.mjs && node scripts/email-previews.mjs && node scripts/pack-site.mjs && node scripts/not-found.mjs && node scripts/schema.mjs $(node scripts/pages.mjs --dist) --write && node scripts/release.mjs --links",
     "deploy:site": "npm test && npm run site && npx wrangler@4 deploy",
     "schema": "node scripts/schema.mjs $(node scripts/pages.mjs --dist)",
     "audit": "node scripts/audit.mjs",

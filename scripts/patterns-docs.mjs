@@ -5,9 +5,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "node-html-parser";
 import { pages, root } from "./pages.mjs";
+import { releasePages } from "./release.mjs";
 
-const page = pages().find((p) => p.path === "/patterns/");
-if (!page) { console.error("✗ patterns-docs: no /patterns/ page"); process.exit(1); }
+// Public families only (release.json): a held design pattern is not in the agent file.
+const page = releasePages(pages(), { public: true }).find((p) => p.path === "/patterns/");
+if (!page) { console.error("✗ patterns-docs: no public /patterns/ page"); process.exit(1); }
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const doc = parse(page.main);
 const md = (el) => (el ? el.innerHTML : "")

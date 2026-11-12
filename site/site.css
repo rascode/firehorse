@@ -4019,3 +4019,26 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 
 .site-kc__voice { margin: 0 0 var(--fh-space-2); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
 .site-kc__voice em { font-style: italic; }
+
+/* Release preview (node scripts/site.mjs --all): a held, draft or Pro demo, hub card or field group carries
+   data-fh-release and this chip in its head. The public build has neither (release.json). */
+.site-release-chip {
+  --_c: var(--fh-color-warning);
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: var(--fh-space-2);
+  padding: 0.1rem 0.45rem;
+  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 60%, transparent);
+  border-radius: var(--fh-radius-sm);
+  background: color-mix(in oklab, var(--_c) 12%, var(--fh-color-canvas));
+  color: var(--_c);
+  font: var(--fh-weight-medium) var(--fh-text-micro) / 1.4 var(--fh-font-mono);
+  letter-spacing: var(--fh-tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.site-release-chip[data-fh-release="draft"] { --_c: var(--fh-color-text-muted); }
+.site-release-chip[data-fh-release="pro"] { --_c: var(--fh-color-accent); border-style: solid; }
+.site-demo__head > .site-release-chip { justify-self: start; margin-inline-start: 0; }
+[data-fh-release="hold"]:not(.site-release-chip), [data-fh-release="draft"]:not(.site-release-chip) { outline: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-warning) 45%, transparent); outline-offset: 2px; }

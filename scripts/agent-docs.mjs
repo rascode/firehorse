@@ -1,11 +1,13 @@
 // Generates agent/components.md from the live demos on every docs page (site/pages/**),
 // so the markup agents copy is exactly the markup the docs render.
-import { allMain } from "./pages.mjs";
+// Public families only (release.json): held pages and held demos are not in the agent files.
+import { allMain, pages } from "./pages.mjs";
+import { releasePages } from "./release.mjs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const html = allMain();
+const html = allMain(releasePages(pages(), { public: true }));
 const strip = (s = "") => s.replace(/<code>(.*?)<\/code>/g, "`$1`").replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').trim();
 const re = /<div class="site-demo__head"><h3>(.*?)<\/h3>(?:<p>(.*?)<\/p>|<code>(.*?)<\/code>)?(?:(?!site-demo__head)[\s\S])*?<div class="site-demo__stage[^"]*" data-demo>\n([\s\S]*?)\n {8,}<\/div>/g;
 const blocks = [];

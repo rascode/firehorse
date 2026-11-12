@@ -10,6 +10,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expandGenerated, summaryCells } from "./developer.mjs";
+import { releasePages, dropHeldLinks, chip } from "./release.mjs";
 
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pagesDir = join(root, "site/pages");
@@ -37,13 +38,19 @@ const parse = (file) => {
 export const pages = () => walk(pagesDir).map(parse)
   .sort((a, b) => (a.meta.order ?? 0) - (b.meta.order ?? 0) || a.path.localeCompare(b.path));
 
-/** All pages' <main> content in one document, each wrapped in <div data-fh-page="/path/">, for the generators. */
-export const allMain = () => pages().map((p) => `<div data-fh-page="${p.path}">\n${p.main}\n</div>`).join("\n");
+/** The pages this build shows (release.json): public, held pages out and held demos removed; with --all
+ *  (or FH_RELEASE=all) every page, held and draft demos marked. Each page carries .release (its status). */
+export const sitePages = () => releasePages(pages());
+
+/** All pages' <main> content in one document, each wrapped in <div data-fh-page="/path/">, for the generators.
+ *  Pass sitePages() for the public set (the agent files); the Index reads every page. */
+export const allMain = (list = pages()) => list.map((p) => `<div data-fh-page="${p.path}">\n${p.main}\n</div>`).join("\n");
 
 /** The page an element sits on (walks up to its data-fh-page wrapper). */
 export const pageOf = (el) => { for (let e = el; e; e = e.parentNode) if (e.getAttribute?.("data-fh-page")) return e.getAttribute("data-fh-page"); return "/"; };
 
-export const part = (name) => readFileSync(join(partsDir, `${name}.html`), "utf8").replace(/\n$/, "");
+/** A site part. Hand-written links marked data-fh-release-for="/page/" or ="ID" drop out when their target is held. */
+export const part = (name) => dropHeldLinks(readFileSync(join(partsDir, `${name}.html`), "utf8").replace(/\n$/, ""));
 
 const escHtml = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const stripTags = (h) => h.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
@@ -194,8 +201,9 @@ ${list.map((x) => {
     const c = counts(x.main);
     const ids = c.families.slice(0, 10).map((id) => `<li><b class="fh-cube fh-cube--sm">${id}</b></li>`).join("");
     const meta = [c.families.length ? `${c.families.length} families` : "", c.variants ? `${c.variants} variants` : ""].filter(Boolean).join(" · ") || "Guide";
-    return `        <article class="fh-card" data-tone="${x.meta.tone ?? "accent"}">
-          <p class="fh-card__meta">${meta}</p>
+    const held = x.release && x.release !== "live" ? ` data-fh-release="${x.release}"` : "";
+    return `        <article class="fh-card" data-tone="${x.meta.tone ?? "accent"}"${held}>
+          <p class="fh-card__meta">${meta}${held ? chip(x.release) : ""}</p>
           <h3 class="fh-card__title"><a href="${x.path}">${escHtml(x.meta.name)}</a></h3>
           <p class="fh-card__body">${escHtml(x.meta.description)}</p>
           ${ids ? `<footer class="fh-card__footer"><ul class="fh-cubes">${ids}</ul></footer>` : ""}
@@ -212,7 +220,8 @@ const exploreTiles = (list) => {
   const tiles = list.map((x, i) => {
     const c = counts(x.main);
     const meta = c.families.length ? `${c.families.length} families` : "Guide";
-    return `        <li style="--_w: var(--site-walk-${walk[i % walk.length]})"><a href="${x.path}"><span class="site-open__cube" aria-hidden="true"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}"></i></span><small>${String(i + 1).padStart(2, "0")} · ${meta}</small><b>${escHtml(x.meta.name)}</b><span>${escHtml(short(x.meta.description ?? ""))}</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a></li>`;
+    const held = x.release && x.release !== "live";
+    return `        <li style="--_w: var(--site-walk-${walk[i % walk.length]})"${held ? ` data-fh-release="${x.release}"` : ""}><a href="${x.path}"><span class="site-open__cube" aria-hidden="true"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}"></i></span><small>${String(i + 1).padStart(2, "0")} · ${meta}${held ? ` ${chip(x.release)}` : ""}</small><b>${escHtml(x.meta.name)}</b><span>${escHtml(short(x.meta.description ?? ""))}</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a></li>`;
   }).join("\n");
   return `    <section id="explore" class="fh-section site-anchor site-open site-explore" data-tone="accent" aria-labelledby="explore-title" data-fh-label="Explore" data-fh-index="02">
       <hr class="site-open__rule" aria-hidden="true">
@@ -249,24 +258,26 @@ const navParts = (all) => {
   const item = (x, pre) => `${pre}<li><a class="site-nav-item" href="${x.path}"><span class="site-nav-ico"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span><span class="fh-roll">${escHtml(x.meta.name)}</span>${x.meta.description ? `<small>${escHtml(blurb(x.meta.description))}</small>` : ""}</a></li>`;
   const mega = `    <div class="fh-mega__grid">
 ${MEGA.map((col, i) => {
-    const items = col.parent ? [by(col.parent), ...list.filter((x) => x.meta.parent === col.parent)] : col.paths.map((p) => (typeof p === "string" ? by(p) : { path: p.path, meta: { name: p.name, icon: p.icon, description: p.description } }));
+    const items = (col.parent ? [by(col.parent), ...list.filter((x) => x.meta.parent === col.parent)] : col.paths.map((p) => (typeof p === "string" ? by(p) : by(p.path.split("#")[0]) && { path: p.path, meta: { name: p.name, icon: p.icon, description: p.description } }))).filter(Boolean);
+    // A column whose pages are all held (release.json) is left out.
+    if (!items.length) return "";
     return `      <section data-tone="${col.tone}" style="--_w: var(--site-walk-${walk[i % walk.length]})">
         <h3>${col.title}</h3>
         <ul>
-${items.filter(Boolean).map((x) => item(x, "          ")).join("\n")}
+${items.map((x) => item(x, "          ")).join("\n")}
         </ul>
       </section>`;
-  }).join("\n")}
+  }).filter(Boolean).join("\n")}
     </div>`;
   const docsList = top.flatMap((x) => [x, ...list.filter((k) => k.meta.parent === x.path)]).map((x) => li(x, x.meta.parent ? "        " : "        ").replace("<li>", x.meta.parent ? '<li class="site-drawer__sub">' : "<li>")).join("\n");
   const footer = top.map((x) => `<li><a href="${x.path}">${escHtml(x.meta.name)}</a></li>`).join("");
-  const cmdk = [...list.filter((x) => x.path !== "/"), ...MEGA.flatMap((c) => (c.paths ?? []).filter((p) => typeof p !== "string" && p.path.includes("#")).map((p) => ({ path: p.path, meta: { name: p.name, tone: by(p.path.split("#")[0])?.meta.tone, icon: "monitor", parent: p.path.split("#")[0] } })))].map((x) => `    <a href="${x.path}" data-tone="${x.meta.tone ?? "accent"}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span>${escHtml(x.meta.parent ? `${by(x.meta.parent).meta.name} › ${x.meta.name}` : x.meta.name)}</a>`).join("\n");
+  const cmdk = [...list.filter((x) => x.path !== "/"), ...MEGA.flatMap((c) => (c.paths ?? []).filter((p) => typeof p !== "string" && p.path.includes("#") && by(p.path.split("#")[0])).map((p) => ({ path: p.path, meta: { name: p.name, tone: by(p.path.split("#")[0])?.meta.tone, icon: "monitor", parent: p.path.split("#")[0] } })))].map((x) => `    <a href="${x.path}" data-tone="${x.meta.tone ?? "accent"}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span>${escHtml(x.meta.parent ? `${by(x.meta.parent).meta.name} › ${x.meta.name}` : x.meta.name)}</a>`).join("\n");
   const chips = top.map((x, i) => `          <a class="fh-chip fh-chip--indexed" data-tone="${x.meta.tone ?? "accent"}" href="${x.path}"><b class="fh-chip__index">${pad(i + 1)}</b><span class="fh-roll">${escHtml(x.meta.name)}</span></a>`).join("\n");
   return { "{{DOCS_MEGA}}": mega, "{{DOCS_LIST}}": docsList, "{{FOOTER_DOCS}}": footer, "{{CMDK_PAGES}}": cmdk, "{{CATEGORY_CHIPS}}": chips };
 };
 
 /** Build every page's <main> (head, anchors, labels, cards) once, so links can resolve across pages. */
-export const assemble = (list = pages()) => {
+export const assemble = (list = sitePages()) => {
   for (const p of list) {
     let main = p.main;
     if (p.path !== "/") {
@@ -343,6 +354,7 @@ ${JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", 
 export const absolutize = (html) =>
   html.replace(/\b(href|src|poster|action)="(?![a-z][\w+.-]*:|\/|#|\{|\?)([^"]*)"/gi, '$1="/$2"');
 
-// `node scripts/pages.mjs --dist` prints each built page's path (for the schema step).
+// `node scripts/pages.mjs --dist` prints each built page's path (for the schema step): the pages this build
+// writes (release.json; FH_RELEASE=all for every page).
 if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv.includes("--dist"))
-  console.log(pages().map((p) => "site/dist/" + p.out).join(" "));
+  console.log(sitePages().map((p) => "site/dist/" + p.out).join(" "));

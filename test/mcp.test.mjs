@@ -31,15 +31,17 @@ for (const n of [
 
 const families = parse(await client.callTool({ name: "list_families", arguments: {} }));
 expect(Array.isArray(families) && families.length > 50, `list_families got ${families?.length}`);
-expect(families.some((f) => f.id === "CUB"), "list_families includes CUB");
+// dist/index.json is the public Index (release.json): only public families, so the checks use live ones.
+expect(families.some((f) => f.id === "BTN"), "list_families includes BTN");
+expect(!families.some((f) => f.id === "CUB"), "list_families leaves out CUB (held in release.json)");
 
-const cube = parse(await client.callTool({ name: "get_component", arguments: { id: "CUB-04" } }));
-expect(cube.id === "CUB-1.4", `CUB-04 resolves to CUB-1.4 (got ${cube.id})`);
-expect(cube.retired === true, "CUB-04 marked retired");
-expect(/fh-cube--outline/.test(cube.markup || ""), "CUB-1.4 markup has outline cube");
+const button = parse(await client.callTool({ name: "get_component", arguments: { id: "BTN-01" } }));
+expect(button.id === "BTN-1.1", `BTN-01 resolves to BTN-1.1 (got ${button.id})`);
+expect(button.retired === true, "BTN-01 marked retired");
+expect(/fh-button/.test(button.markup || ""), "BTN-1.1 markup has a button");
 
 const search = parse(await client.callTool({ name: "search_components", arguments: { query: "outline" } }));
-expect(Array.isArray(search) && search.some((h) => h.id === "CUB-1.4" || (h.classes || []).includes("fh-cube--outline")), "search finds outline cube");
+expect(Array.isArray(search) && search.some((h) => h.id === "BTN-2.1" || (h.classes || []).includes("fh-button--outline")), "search finds the outline button");
 
 const tokens = parse(await client.callTool({ name: "get_tokens", arguments: { prefix: "--fh-color-text" } }));
 expect(Array.isArray(tokens) && tokens.length > 0, "get_tokens returns colour text tokens");
@@ -53,8 +55,8 @@ expect(theme.name === "lipizzaner", "get_theme lipizzaner");
 const rules = parse(await client.callTool({ name: "get_rules", arguments: {} }));
 expect(typeof rules === "string" && /agent contract/i.test(rules), "get_rules returns system.md");
 
-const page = parse(await client.callTool({ name: "compose_page", arguments: { ids: ["CUB-1.4", "BTN-1.1"] } }));
-expect(typeof page === "string" && page.includes("firehorse.css") && page.includes('name="design-system"') && page.includes("fh-cube"), "compose_page stacks snippets");
+const page = parse(await client.callTool({ name: "compose_page", arguments: { ids: ["CHP-1.1", "BTN-1.1"] } }));
+expect(typeof page === "string" && page.includes("firehorse.css") && page.includes('name="design-system"') && page.includes("fh-chip") && page.includes("fh-button"), "compose_page stacks snippets");
 
 await client.close();
 await transport.close();
@@ -63,4 +65,4 @@ if (errors.length) {
   console.error("✗ mcp:\n  " + errors.join("\n  "));
   process.exit(1);
 }
-console.log(`✓ mcp: ${names.size} tools, CUB-04 → CUB-1.4, all calls returned data`);
+console.log(`✓ mcp: ${names.size} tools, BTN-01 → BTN-1.1, public Index only, all calls returned data`);

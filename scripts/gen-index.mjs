@@ -1,15 +1,18 @@
 // Firehorse Index: every component family and variant on the docs site
 // carries a stable ID: family "CHP", group "CHP-2", variant "CHP-2.3". This script reads them
 // from every docs page (site/pages/**), validates them and writes:
-//   dist/index.json   — the registry (shipped in the package)
-//   agent/index.md    — the lookup table agents read when a person names an ID
-// Run: node scripts/gen-index.mjs [--check]   (--check only validates)
+//   dist/full/index.json: every family and variant, each with its release status and tier (release.json)
+//   dist/index.json: the public registry, public families and variants only (shipped in the package, read by the MCP server)
+//   agent/index.md: the lookup table agents read when a person names an ID (public set)
+// Validation and the ledger always read every family, held or not.
+// Run: node scripts/gen-index.mjs [--check]   (--check only validates, both sets)
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "node-html-parser";
 import { allMain, pageOf } from "./pages.mjs";
 import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
+import { isPublic, shownStatus, tierOf, releaseIds } from "./release.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.dev";
@@ -124,7 +127,29 @@ for (const [old, to] of Object.entries(ledger.moved)) { if (!ledger.retired[old]
 if (errors.length) { console.error("✗ index:\n  " + errors.join("\n  ")); process.exit(1); }
 const nV = list.reduce((n, f) => n + f.variants.length, 0);
 const nG = list.reduce((n, f) => n + f.groups.length, 0);
-if (check) { console.log(`✓ index: ${list.length} families, ${nG} groups, ${nV} variants, IDs unique and in order`); process.exit(0); }
+// Release manifest (release.json): the full Index carries each family's and variant's status and tier;
+// the public Index (dist/index.json, agent/index.md) keeps public families and variants only.
+for (const f of list) {
+  Object.assign(f, { status: shownStatus(f.id), tier: tierOf(f.id) });
+  for (const v of f.variants) Object.assign(v, { status: shownStatus(v.id), tier: tierOf(v.id) });
+}
+const publicList = list.filter((f) => isPublic(f.id)).map((f) => {
+  const variants = f.variants.filter((v) => isPublic(v.id)).map(({ status, ...v }) => v);
+  const kept = new Set(variants.map((v) => v.id));
+  const groups = f.groups.filter((g) => isPublic(g.id) && (!g.variants.length || g.variants.some((id) => kept.has(id)))).map((g) => ({ ...g, variants: g.variants.filter((id) => kept.has(id)) }));
+  const { status, ...rest } = f;
+  return { ...rest, groups, variants };
+});
+const pV = publicList.reduce((n, f) => n + f.variants.length, 0);
+const pG = publicList.reduce((n, f) => n + f.groups.length, 0);
+const ids = new Set(list.flatMap((f) => [f.id, ...f.groups.map((g) => g.id), ...f.variants.map((v) => v.id)]));
+for (const id of releaseIds()) if (!ids.has(id)) errors.push(`release.json lists ${id}, which the Index doesn't have`);
+if (errors.length) { console.error("✗ index:\n  " + errors.join("\n  ")); process.exit(1); }
+if (check) {
+  console.log(`✓ index: ${list.length} families, ${nG} groups, ${nV} variants, IDs unique and in order`);
+  console.log(`✓ index (public): ${publicList.length} families, ${pG} groups, ${pV} variants`);
+  process.exit(0);
+}
 
 for (const [id, name] of live) ledger.issued[id] ??= name;
 const sortIds = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.slice(0, 3).localeCompare(b.slice(0, 3)) || byNum(a, b)));
@@ -138,8 +163,17 @@ const components = [...new Set(["src/components", "src/patterns"].flatMap((d) =>
 const system = { key: "firehorse", name: "Firehorse", version: pkg.version, prefix: "fh-", attribute: "data-fh", site: base, index: `${base}/index.json`,
   reference: `<meta name="design-system" content="firehorse@${pkg.version}">\n<link rel="design-system" href="${base}/index.json">` };
 const registry = { name: "Firehorse Index", version: pkg.version, url: `${base}/agent/index.md`, system, families: list, moved: sortIds(ledger.moved), nonRoot: [...NON_ROOT].sort(), owners, components };
-mkdirSync(join(root, "dist"), { recursive: true });
-writeFileSync(join(root, "dist/index.json"), JSON.stringify(registry, null, 2) + "\n");
+mkdirSync(join(root, "dist/full"), { recursive: true });
+writeFileSync(join(root, "dist/full/index.json"), JSON.stringify(registry, null, 2) + "\n");
+// The public registry: classes that only held families use leave owners, components and nonRoot with them,
+// and a forward survives only when its replacement is public.
+const publicClasses = new Set(publicList.flatMap((f) => f.classes ?? []));
+const heldOnly = new Set(list.filter((f) => !isPublic(f.id)).flatMap((f) => f.classes ?? []).filter((c) => !publicClasses.has(c)));
+const keep = (c) => !heldOnly.has(c) && (!owners[c] || isPublic(owners[c]));
+const publicIds = new Set(publicList.flatMap((f) => [f.id, ...f.groups.map((g) => g.id), ...f.variants.map((v) => v.id)]));
+const movedPublic = Object.fromEntries(Object.entries(registry.moved).filter(([, to]) => publicIds.has(to)));
+const publicRegistry = { ...registry, families: publicList, moved: movedPublic, nonRoot: registry.nonRoot.filter(keep), owners: Object.fromEntries(Object.entries(owners).filter(([c]) => keep(c))), components: components.filter(keep) };
+writeFileSync(join(root, "dist/index.json"), JSON.stringify(publicRegistry, null, 2) + "\n");
 
 const esc = (s) => s.replace(/\|/g, "\\|");
 let md = `# Firehorse Index
@@ -167,10 +201,10 @@ let md = `# Firehorse Index
 
 | ID | Name | Section | Groups | Demo |
 |---|---|---|---|---|
-${list.map((f) => `| \`${f.id}\` | ${esc(f.name)} | ${esc(f.section)} | ${f.groups.length ? f.groups.map((g) => `${g.id.slice(4)} ${esc(g.name)}${g.variants.length ? ` (${g.variants.length})` : ""}`).join(" · ") : "—"} | [open](${f.url}) |`).join("\n")}
+${publicList.map((f) => `| \`${f.id}\` | ${esc(f.name)} | ${esc(f.section)} | ${f.groups.length ? f.groups.map((g) => `${g.id.slice(4)} ${esc(g.name)}${g.variants.length ? ` (${g.variants.length})` : ""}`).join(" · ") : "—"} | [open](${f.url}) |`).join("\n")}
 
 `;
-for (const f of list) {
+for (const f of publicList) {
   md += `## ${f.id} · ${f.name}\n\n`;
   if (f.summary) md += `${f.summary}\n\n`;
   md += `Classes: ${f.classes.map((c) => `\`${c}\``).join(" ")}\n\n`;
@@ -188,7 +222,7 @@ for (const f of list) {
     }
   }
 }
-const moved = Object.entries(ledger.moved);
+const moved = Object.entries(movedPublic);
 if (moved.length) md += `## Former IDs\n\nIDs retired before or since release, and what replaced them. Use the new ID.\n\n| Was | Now |\n|---|---|\n${moved.map(([a, b]) => `| \`${a}\` | \`${b}\` |`).join("\n")}\n`;
 writeFileSync(join(root, "agent/index.md"), md);
-console.log(`index: ${list.length} families, ${nG} groups, ${nV} variants → dist/index.json, agent/index.md`);
+console.log(`index: ${list.length} families, ${nG} groups, ${nV} variants → dist/full/index.json; public ${publicList.length} families, ${pG} groups, ${pV} variants → dist/index.json, agent/index.md`);

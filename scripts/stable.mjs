@@ -10,6 +10,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import { assemble, part, absolutize } from "./pages.mjs";
+import { dropHeldLinks } from "./release.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "site/dist/stable");
 const BASE = "https://firehorse.dev";
@@ -66,7 +67,9 @@ function render(md) {
     return `<h${depth} id="${id}">${html}</h${depth}>\n`;
   };
   r.image = ({ href, text }) => `</p><figure class="stable-figure"><img src="${href}" alt="${esc(text)}" loading="lazy" decoding="async"></figure><p>`;
-  let html = marked.parse(md, { renderer: r }).replace(/<p><\/p>/g, "").replace(/<p>\s*<\/p>/g, "");
+  // Links to held pages or families (release.json) are written as <a data-fh-release-for="…"> in the post; the
+  // public build drops them (data-fh-release-as="text" keeps the words).
+  let html = dropHeldLinks(marked.parse(md, { renderer: r }).replace(/<p><\/p>/g, "").replace(/<p>\s*<\/p>/g, ""));
   // TL;DR → "In short": a ruled table of numbered rows. Each item may lead
   // with an icon name in colons (`- :palette: Themes …`).
   html = html.replace(/<p><strong>TL;DR<\/strong><\/p>\s*<ul>([\s\S]*?)<\/ul>/, (_, list) => {

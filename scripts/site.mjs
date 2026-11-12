@@ -5,8 +5,11 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { pages, assemble, render, absolutize } from "./pages.mjs";
+import { sitePages, assemble, render, absolutize } from "./pages.mjs";
 import { sourceFiles } from "./developer.mjs";
+// release.json decides what is built: the public build (default) leaves held pages, demos, links and field types
+// out; --all (or FH_RELEASE=all) builds everything with a Held / Draft / Pro chip, for a local preview.
+import { showAll, fieldGroups, fieldTypeStatus, chip, isLivePage, heldLinks } from "./release.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = process.env.FH_SITE_OUT ?? join(root, "site/dist"); // FH_SITE_OUT: build elsewhere (e.g. where site/dist can't be cleared)
 rmSync(out, { recursive: true, force: true });
@@ -28,11 +31,14 @@ const at = (k, v) => (v == null || v === "" ? "" : ` ${k}="${esc(v)}"`);
 const slug = (k) => `st-${k.replace(/[^a-z0-9]+/gi, "-").replace(/-+$/, "")}`;
 const fieldOf = (t) => {
   const id = slug(t.key);
-  const gen = `<button type="button" class="fh-action fh-field__sample" data-fh-sample data-type="${esc(t.key)}" data-label="${esc(t.label)}">Generate</button>`;
-  const hint = `<p class="fh-field__hint">${esc(t.help ?? "")} <code>${esc(t.key)}</code> ${gen}</p>`;
+  // A held type (--all preview only) is marked and gets no Generate panel.
+  const status = fieldTypeStatus(t.key);
+  const gen = status === "live" ? ` <button type="button" class="fh-action fh-field__sample" data-fh-sample data-type="${esc(t.key)}" data-label="${esc(t.label)}">Generate</button>` : "";
+  const hint = `<p class="fh-field__hint">${esc(t.help ?? "")} <code>${esc(t.key)}</code>${gen}</p>`;
   const opts = t.options?.options;
+  const field = `<div class="fh-field" data-fh-sample-type="${esc(t.key)}"${status === "live" ? "" : ` data-fh-release="${status}"`}>`;
   if (t.htmlInputType === "checkbox") {
-    return `<div class="fh-field" data-fh-sample-type="${esc(t.key)}"><label class="fh-check"><input type="checkbox" id="${id}"${t.example === "true" ? " checked" : ""}> ${esc(t.label)}</label>${hint}</div>`;
+    return `${field}<label class="fh-check"><input type="checkbox" id="${id}"${t.example === "true" ? " checked" : ""}> ${esc(t.label)}</label>${hint}</div>`;
   }
   let control;
   if (Array.isArray(opts) && opts.length) {
@@ -44,26 +50,24 @@ const fieldOf = (t) => {
   } else {
     control = `<input class="fh-input" id="${id}" type="${esc(t.htmlInputType)}"${at("inputmode", t.inputMode)}${at("autocomplete", t.autocomplete)}${at("placeholder", t.placeholder ?? (["number", "checkbox", "date", "time", "datetime-local"].includes(t.htmlInputType) ? null : t.example))}${["number", "date", "time", "datetime-local"].includes(t.htmlInputType) ? at("value", t.example) : ""}>`;
   }
-  return `<div class="fh-field" data-fh-sample-type="${esc(t.key)}"><label for="${id}">${esc(t.label)}</label>${control}${hint}</div>`;
+  return `${field}<label for="${id}">${esc(t.label)}</label>${control}${hint}</div>`;
 };
 const standardTypes = semanticTypes.filter((t) => !isKeyType(t));
 const keyTypes = semanticTypes.filter(isKeyType);
-const groupsOf = [
-  ["Text and numbers", (t) => !t.options?.options && t.htmlInputType != null && !["date", "time", "datetime-local"].includes(t.htmlInputType)],
-  ["Choices", (t) => Array.isArray(t.options?.options)],
-  ["Dates and times", (t) => !t.options?.options && ["date", "time", "datetime-local"].includes(t.htmlInputType)],
-  ["Computed and system", (t) => !t.options?.options && t.htmlInputType == null],
-];
+// Field groups come from release.json (fieldGroups, in order; each type names its group). The public build shows
+// live groups and live types only; --all shows every group, held ones marked. Types keep their schema order.
+const groupsOf = fieldGroups().map((g) => ({ ...g, list: standardTypes.filter((t) => g.types.includes(t.key)) })).filter((g) => g.list.length);
+const shownTypes = groupsOf.reduce((n, g) => n + g.list.length, 0);
 const semanticFields = `        <div class="site-demo site-anchor" id="c-field-types">
-          <div class="site-demo__head"><h3>Field types</h3><p>Every semantic type the Rascode platform publishes, ${standardTypes.length} in all, as the field it renders: label, input type, input mode, autocomplete, placeholder and example from <code>schema/semantic-types.json</code>. Computed and system types are read-only. Each type's <strong>Generate</strong> opens a Firehorse Pro panel (count, copy, CSV) against the platform API. The ${keyTypes.length} credential types are <a href="/pro/keys/">Pro key fields</a>.</p></div>
+          <div class="site-demo__head"><h3>Field types</h3><p>Every semantic type the Rascode platform publishes, ${shownTypes} in all, as the field it renders: label, input type, input mode, autocomplete, placeholder and example from <code>schema/semantic-types.json</code>. Computed and system types are read-only. Each type's <strong>Generate</strong> opens a Firehorse Pro panel (count, copy, CSV) against the platform API. The ${keyTypes.length} credential types are <a href="/pro/keys/">Pro key fields</a>.</p></div>
           <div class="site-demo__stage" data-demo>
 <form class="fh-stack fh-stack--lg" novalidate onsubmit="event.preventDefault()">
-${groupsOf.map(([title, test]) => {
-    const list = standardTypes.filter(test);
-    return list.length ? `  <fieldset class="fh-stack" style="border:0;padding:0;margin:0"><legend class="fh-subheading" style="margin-block-end: var(--fh-space-4)">${esc(title)} <span class="fh-muted">${list.length}</span></legend>
+${groupsOf.map((g) => {
+    const held = g.status !== "live" ? ` data-fh-release="${g.status}"` : "";
+    return `  <fieldset class="fh-stack"${held} style="border:0;padding:0;margin:0"><legend class="fh-subheading" style="margin-block-end: var(--fh-space-4)">${esc(g.name)} <span class="fh-muted">${g.list.length}</span>${held ? ` ${chip(g.status)}` : ""}</legend>
   <div class="fh-grid" style="--fh-grid-min: 15rem; --fh-grid-max-cols: 3; --fh-gap: var(--fh-space-5)">
-${list.map((t) => `    ${fieldOf(t)}`).join("\n")}
-  </div></fieldset>` : "";
+${g.list.map((t) => `    ${fieldOf(t)}`).join("\n")}
+  </div></fieldset>`;
   }).join("\n")}
 </form>
           </div>
@@ -104,7 +108,7 @@ const bustJs = (s) => s.replace(/src="(\/?)([\w-]+\.js)"/g, (m, slash, f) => (js
 const fill = (s) => bustJs(bust(s)).replaceAll('src="site.js"', `src="site.js?v=${siteJs}"`).replaceAll('src="/site.js"', `src="/site.js?v=${siteJs}"`).replaceAll("{{HORSE}}", horse).replaceAll("{{TOKENS}}", String(tokenCount)).replaceAll("{{GZIP}}", gzipKb).replaceAll("{{SCHEMA_ROWS}}", schemaRows).replaceAll("{{SEMANTIC_FIELDS}}", semanticFields).replaceAll("{{SEMANTIC_KEY_FIELDS}}", semanticKeyFields).replaceAll("{{DS_VERSION}}", JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version);
 // Docs pages: site/pages/**/*.html wrapped in site/parts/layout.html (see scripts/pages.mjs).
 await import("./gen-references.mjs");
-const docPages = pages();
+const docPages = sitePages();
 const ctx = assemble(docPages);
 for (const p of docPages) {
   mkdirSync(dirname(join(out, p.out)), { recursive: true });
@@ -129,7 +133,7 @@ for (const dir of ["img/supply", "img/backdrop", "img/og", "img/brand", "img/the
   mkdirSync(join(out, dir), { recursive: true });
   for (const f of readdirSync(join(root, `site/${dir}`))) cp(`site/${dir}/${f}`, `${dir}/${f}`);
 }
-for (const f of readdirSync(join(root, "site"))) if (f.endsWith(".html") && f !== "index.html") writeFileSync(join(out, f), fill(readFileSync(join(root, "site", f), "utf8")));
+for (const f of readdirSync(join(root, "site"))) if (f.endsWith(".html") && f !== "index.html" && isLivePage(`/${f}`)) writeFileSync(join(out, f), fill(readFileSync(join(root, "site", f), "utf8")));
 // Developer portal: the CSS source and folder READMEs, served raw at /src/… for the viewer.
 for (const f of sourceFiles()) { mkdirSync(join(out, "src", dirname(f)), { recursive: true }); cp(`src/${f}`, `src/${f}`); }
 cp("dist/firehorse.css", "firehorse.css");
@@ -152,9 +156,10 @@ cp("agent/schema.md", "agent/schema.md");
 cp("agent/index.md", "agent/index.md");
 cp("agent/kc.md", "agent/kc.md");
 cp("agent/patterns.md", "agent/patterns.md");
-cp("dist/index.json", "index.json");
+// The Index the site's search and KC read: public, or (--all) every family with its status.
+cp(showAll && existsSync(join(root, "dist/full/index.json")) ? "dist/full/index.json" : "dist/index.json", "index.json");
 cp("schema/mappings.json", "schema.json");
-if (existsSync(join(root, "site/data/references.json"))) cp("site/data/references.json", "references.json");
+if (existsSync(join(root, "site/data/references.json")) && isLivePage("/references/")) cp("site/data/references.json", "references.json");
 
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.dev";
@@ -211,7 +216,7 @@ writeFileSync(join(out, "llms.txt"), llms);
 writeFileSync(join(out, "llms-full.txt"),
   readFileSync(join(root, "agent/system.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/patterns.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/index.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/schema.md"), "utf8") + "\n\n---\n\n" + readFileSync(join(root, "agent/components.md"), "utf8"));
 writeFileSync(join(out, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`);
-writeFileSync(join(out, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...docPages.map((p) => p.path), "/playground.html", "/stable/"].map((u) => `  <url><loc>${base}${u}</loc></url>`).concat(stablePosts.map((p) => `  <url><loc>${base}/stable/${p.slug}/</loc><lastmod>${p.date}</lastmod></url>`)).join("\n")}\n</urlset>\n`);
+writeFileSync(join(out, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...docPages.map((p) => p.path), "/playground.html", "/stable/"].filter((u) => docPages.some((p) => p.path === u) || isLivePage(u)).map((u) => `  <url><loc>${base}${u}</loc></url>`).concat(stablePosts.map((p) => `  <url><loc>${base}/stable/${p.slug}/</loc><lastmod>${p.date}</lastmod></url>`)).join("\n")}\n</urlset>\n`);
 // Cloudflare Pages / Workers static assets headers
 writeFileSync(join(out, "_headers"), `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n/*.css\n  Access-Control-Allow-Origin: *\n  Cache-Control: public, max-age=3600\n/tokens.json\n  Access-Control-Allow-Origin: *\n/themes.json\n  Access-Control-Allow-Origin: *\n/schema.json\n  Access-Control-Allow-Origin: *\n/index.json\n  Access-Control-Allow-Origin: *\n/llms*.txt\n  Access-Control-Allow-Origin: *\n  Content-Type: text/plain; charset=utf-8\n/agent/*\n  Access-Control-Allow-Origin: *\n  Content-Type: text/markdown; charset=utf-8\n`);
 
@@ -221,4 +226,9 @@ const head = html.match(/<head>([\s\S]*?)<\/head>/)[1];
 const keep = head.split("\n").filter((l) => /<title>|fonts\.g|stylesheet/.test(l)).join("\n");
 const body = html.match(/<body>([\s\S]*?)<\/body>/)[1];
 writeFileSync(join(out, "artifact.html"), keep + "\n" + body);
-console.log("site/dist ready:", readdirSync(out).join(" "));
+// Public build: no link may point at a held page or a held family (mark hand-written ones data-fh-release-for).
+if (!showAll) {
+  const bad = await heldLinks(out);
+  if (bad.length) { console.error(`✗ site: ${bad.length} link(s) point at held content (release.json):\n  ` + bad.join("\n  ")); process.exit(1); }
+}
+console.log(`site/dist ready (${showAll ? "--all: everything, held marked" : "public"}):`, readdirSync(out).join(" "));

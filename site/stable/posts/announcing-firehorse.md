@@ -22,7 +22,7 @@ Today we're open-sourcing it. Firehorse is the design system that scales, adapts
 - :sliders-horizontal: [Themes](/theming/): every design decision in one file, switchable from a dropdown
 - :table-2: [Datatables](/data/) with 22 field types, filters, grouping and board views
 - :hash: [The Firehorse Index](/components/#c-index): every component has an ID, so you say `CHP-1.3` instead of describing a chip
-- :sparkles: [A word rotator](/foundations/#rotator) for headlines, in plain markup: no library, no script to configure
+- :sparkles: <a href="/foundations/#rotator" data-fh-release-for="WRT" data-fh-release-as="text">A word rotator</a> for headlines, in plain markup: no library, no script to configure
 - :terminal: `npm i https://firehorse.dev/npm/firehorse-1.1.0.tgz` · [firehorse.dev](/)
 
 
@@ -41,7 +41,7 @@ In 2026 there's a second reader. AI agents build pages and read them, and anythi
 
 We audited our own site first. The old [rascode.dev](https://rascode.dev) stylesheet was 425 KB, with 481 hard-coded colors, 83 font sizes and 30+ breakpoints. Nothing was broken, but every new page was a negotiation with the last one.
 
-So we pulled out what the site actually uses (the [tokens](/foundations/), [cards](/components/content/#c-card), [etched grids](/layout/) and [floating bar](/components/navigation/#c-dock)) and rebuilt it as a system with rules. Rules don't flatten your style; they're the floor, not the ceiling.
+So we pulled out what the site actually uses (the [tokens](/foundations/), [cards](/components/content/#c-card), [etched grids](/layout/) and <a href="/components/navigation/#c-dock" data-fh-release-for="DCK" data-fh-release-as="text">floating bar</a>) and rebuilt it as a system with rules. Rules don't flatten your style; they're the floor, not the ceiling.
 
 ![Why we built it](../img/card-01.webp)
 
@@ -107,11 +107,11 @@ Point your agent at one URL and tell it to use only `fh-*` classes and `--fh-*` 
 
 The rolling word in a headline (the design system that scales, then adapts, then grows) usually takes a JavaScript library, a timer and a fix so screen readers don't announce every word.
 
-In Firehorse it's markup. The [word rotator](/foundations/#rotator), `WRT`, is a `fh-rotator` span with one `<span>` per word. The roll is pure CSS; screen readers and reduced motion get the first word. Give each word its own [tone](/foundations/#c-tones), and load `firehorse.js` if you want the slot to ease to each word's width. The headline on [our homepage](/) is one.
+In Firehorse it's markup. The <a href="/foundations/#rotator" data-fh-release-for="WRT" data-fh-release-as="text">word rotator</a>, `WRT`, is a `fh-rotator` span with one `<span>` per word. The roll is pure CSS; screen readers and reduced motion get the first word. Give each word its own [tone](/foundations/#c-tones), and load `firehorse.js` if you want the slot to ease to each word's width. The headline on [our homepage](/) is one.
 
 ## Also in the box
 
-[Drawers, hamburger menus and ⌘K](/components/navigation/#menus-title), a [commerce kit](/commerce/) from product card to checkout, [accessible forms](/forms/#c-form) on native controls, a [motion layer](/foundations/#motion) that respects reduced motion, the [floating bar](/components/navigation/#c-dock), [183 icons](/foundations/#icons), and a [drag-and-drop playground](/playground.html) that sends your page to Claude, ChatGPT, Cursor and more. Every piece is live with copyable markup at [firehorse.dev](/).
+[Drawers, hamburger menus and ⌘K](/components/navigation/#menus-title), a <a href="/commerce/" data-fh-release-for="/commerce/" data-fh-release-as="text">commerce kit</a> from product card to checkout, [accessible forms](/forms/#c-form) on native controls, a <a href="/foundations/#motion" data-fh-release-for="MTL" data-fh-release-as="text">motion layer</a> that respects reduced motion, the <a href="/components/navigation/#c-dock" data-fh-release-for="DCK" data-fh-release-as="text">floating bar</a>, [183 icons](/foundations/#icons), and a <a href="/playground.html" data-fh-release-for="/playground.html" data-fh-release-as="text">drag-and-drop playground</a> that sends your page to Claude, ChatGPT, Cursor and more. Every piece is live with copyable markup at [firehorse.dev](/).
 
 
 ## From Claude on design systems
