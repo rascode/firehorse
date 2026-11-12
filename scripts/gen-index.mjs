@@ -5,7 +5,8 @@
 //   dist/index.json: the public registry, public families and variants only (shipped in the package, read by the MCP server)
 //   agent/index.md: the lookup table agents read when a person names an ID (public set)
 // Validation and the ledger always read every family, held or not.
-// Run: node scripts/gen-index.mjs [--check]   (--check only validates, both sets)
+// Run: node scripts/gen-index.mjs [--check|--dist]   (--check only validates, both sets; --dist writes the two
+//      index.json files only, no ledger and no agent/index.md: the first step of npm run build)
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,6 +20,7 @@ const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
 const doc = parse(allMain());
 const check = process.argv.includes("--check");
+const distOnly = process.argv.includes("--dist");
 const owners = ownersOf(doc);
 const snippet = (el, part) => snip(el, part, owners);
 
@@ -133,6 +135,9 @@ for (const f of families.values()) {
   // group order; with none, the family's own stage with its site-* wrappers unwrapped.
   const entries = f.groups.flatMap((g) => (g.variants.length ? g.variants.map((vid) => f.variants.find((v) => v.id === vid)) : g.markup ? [{ id: g.id, markup: g.markup }] : []));
   const first = entries.find((e) => isPublic(e.id)) ?? entries[0];
+  // stageClasses: every fh- class the family's whole docs stage uses, kept so the public CSS build (builds.mjs)
+  // still counts parts of a demo that are no variant of their own (a spinner beside the meters).
+  if (f.markup) f.stageClasses = classesOf(f.markup);
   if (first) f.markup = first.markup;
   else if (f.markup) { f.markup = clean(unwrapSite(f.markup)); f.classes = classesOf(f.markup); }
   delete f.el; delete f.groupNames; delete f.groupEls;
@@ -176,7 +181,7 @@ if (check) {
 
 for (const [id, name] of live) ledger.issued[id] ??= name;
 const sortIds = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.slice(0, 3).localeCompare(b.slice(0, 3)) || byNum(a, b)));
-writeFileSync(ledgerPath, JSON.stringify({ note: "Every Firehorse Index ID ever issued. Never delete an entry; move retired IDs to \"retired\" with the date, and to \"moved\" when they have a replacement.", issued: sortIds(ledger.issued), retired: sortIds(ledger.retired), moved: sortIds(ledger.moved) }, null, 2) + "\n");
+if (!distOnly) writeFileSync(ledgerPath, JSON.stringify({ note: "Every Firehorse Index ID ever issued. Never delete an entry; move retired IDs to \"retired\" with the date, and to \"moved\" when they have a replacement.", issued: sortIds(ledger.issued), retired: sortIds(ledger.retired), moved: sortIds(ledger.moved) }, null, 2) + "\n");
 // Component classes the stylesheet defines: the audit flags any of them that the Index has no ID for.
 const cssIn = (d) => readdirSync(d).flatMap((n) => { const p = join(d, n); return statSync(p).isDirectory() ? cssIn(p) : n.endsWith(".css") ? [readFileSync(p, "utf8")] : []; });
 const components = [...new Set(["src/components", "src/patterns"].flatMap((d) => cssIn(join(root, d))).join("\n").replace(/\/\*[\s\S]*?\*\//g, "").match(/\.fh-[a-z0-9-]+(?![\w-])/g).map((c) => c.slice(1)).filter((c) => !c.includes("--") && !/^fh-icon/.test(c) && !NON_ROOT.has(c)))].sort();
@@ -197,6 +202,7 @@ const publicIds = new Set(publicList.flatMap((f) => [f.id, ...f.groups.map((g) =
 const movedPublic = Object.fromEntries(Object.entries(registry.moved).filter(([, to]) => publicIds.has(to)));
 const publicRegistry = { ...registry, families: publicList, moved: movedPublic, nonRoot: registry.nonRoot.filter(keep), owners: Object.fromEntries(Object.entries(owners).filter(([c]) => keep(c))), components: components.filter(keep) };
 writeFileSync(join(root, "dist/index.json"), JSON.stringify(publicRegistry, null, 2) + "\n");
+if (distOnly) { console.log(`index: ${list.length} families → dist/full/index.json; public ${publicList.length} → dist/index.json`); process.exit(0); }
 
 const esc = (s) => s.replace(/\|/g, "\\|");
 let md = `# Firehorse Index

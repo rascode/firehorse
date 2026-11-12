@@ -1,6 +1,6 @@
 // Firehorse verify: WCAG contrast for every text role, in both schemes,
 // resolved straight from the token source. Exits 1 on any failure.
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -47,8 +47,16 @@ for (const scheme of ["dark", "light"]) {
     if (r < min) { console.error(`✗ ${scheme.padEnd(5)} ${fg} ${a} on ${bg} ${b} = ${r.toFixed(2)} (< ${min})`); fail++; }
   }
 }
-for (const f of ["dist/firehorse.css", "dist/firehorse.min.css", "dist/firehorse.compat.min.css", "dist/tokens.json", "dist/tokens.d.ts", "agent/system.md", "agent/components.md"]) {
+// Both builds (scripts/builds.mjs): public at dist/, full (admin included) under dist/full/.
+const publicBuild = ["dist/firehorse.css", "dist/firehorse.min.css", "dist/firehorse.compat.min.css", "dist/index.json"];
+const fullBuild = ["firehorse.css", "firehorse.min.css", "firehorse.compat.min.css", "admin.css", "admin.min.css", "index.json"].map((f) => `dist/full/${f}`);
+for (const f of [...publicBuild, ...fullBuild, "dist/tokens.json", "dist/tokens.d.ts", "agent/system.md", "agent/components.md"]) {
   if (!existsSync(join(root, f))) { console.error(`✗ missing ${f}`); fail++; }
 }
+// The public sheet is the full one with held families taken out: never empty, never bigger.
+for (const f of ["firehorse.css", "firehorse.min.css", "firehorse.compat.min.css"]) {
+  const [pub, full] = [`dist/${f}`, `dist/full/${f}`].map((p) => (existsSync(join(root, p)) ? statSync(join(root, p)).size : 0));
+  if (pub && full && !(pub > 0 && pub < full)) { console.error(`✗ dist/${f} (${pub} B) should be smaller than dist/full/${f} (${full} B)`); fail++; }
+}
 if (fail) { console.error(`\n✗ verify: ${fail} problem(s)`); process.exit(1); }
-console.log(`✓ verify: ${checks.length * 2} contrast pairs pass AA in dark and light; build artifacts present`);
+console.log(`✓ verify: ${checks.length * 2} contrast pairs pass AA in dark and light; public and full build artifacts present`);

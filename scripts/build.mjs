@@ -27,13 +27,36 @@ function build(entry, out, targets, minify) {
 }
 
 const sizes = {};
+// —— Two builds (scripts/builds.mjs) ——
+// Full, under dist/full/: everything in src, admin included (Helm, rascode.dev and the UI audit import it).
+// Public, at dist/: the CSS of public families only (release.json). Which classes are held comes from the full
+// Index, so the Index is written first, straight from the docs pages (gen-index --dist: the two index.json files,
+// no ledger, no agent docs). That keeps `npm run build` working on a clean dist.
+execFileSync(process.execPath, [join(root, "scripts/gen-index.mjs"), "--dist"], { stdio: "inherit" });
+const { plan, publicEntry, stripHeld, bundleFrom, PUBLIC_ENTRY } = await import("./builds.mjs");
+const full = join(dist, "full");
+mkdirSync(full, { recursive: true });
 const entry = join(src, "firehorse.css");
-sizes["firehorse.css"] = build(entry, join(dist, "firehorse.css"), modern, false);
-sizes["firehorse.min.css"] = build(entry, join(dist, "firehorse.min.css"), modern, true);
-sizes["firehorse.compat.min.css"] = build(entry, join(dist, "firehorse.compat.min.css"), compat, true);
-// Admin category: operator UI, shipped as its own stylesheet (load after firehorse.css).
-sizes["admin.css"] = build(join(src, "admin/admin.css"), join(dist, "admin.css"), modern, false);
-sizes["admin.min.css"] = build(join(src, "admin/admin.css"), join(dist, "admin.min.css"), modern, true);
+sizes["full/firehorse.css"] = build(entry, join(full, "firehorse.css"), modern, false);
+sizes["full/firehorse.min.css"] = build(entry, join(full, "firehorse.min.css"), modern, true);
+sizes["full/firehorse.compat.min.css"] = build(entry, join(full, "firehorse.compat.min.css"), compat, true);
+// Admin category: operator UI, its own stylesheet (load after firehorse.css), in the full build only.
+sizes["full/admin.css"] = build(join(src, "admin/admin.css"), join(full, "admin.css"), modern, false);
+sizes["full/admin.min.css"] = build(join(src, "admin/admin.css"), join(full, "admin.min.css"), modern, true);
+// Public: the generated entry (left-out files commented out), held rules stripped as it bundles.
+const p = plan();
+const pubCss = publicEntry(p);
+async function buildPublic(out, targets, minify) {
+  const stats = { rules: 0, selectors: 0 };
+  const { code, warnings } = await bundleFrom(PUBLIC_ENTRY, pubCss, { targets, minify, visitor: stripHeld(p.heldClasses, stats) });
+  for (const w of warnings) if (!/scroll-(marker|button)/.test(w.message)) console.warn(`warn firehorse.css (public): ${w.message}`);
+  writeFileSync(out, code);
+  return { size: code.length, stats };
+}
+let stripped;
+sizes["firehorse.css"] = (stripped = await buildPublic(join(dist, "firehorse.css"), modern, false)).size;
+sizes["firehorse.min.css"] = (await buildPublic(join(dist, "firehorse.min.css"), modern, true)).size;
+sizes["firehorse.compat.min.css"] = (await buildPublic(join(dist, "firehorse.compat.min.css"), compat, true)).size;
 // Optional icon set, shipped as its own stylesheet.
 sizes["icons.css"] = build(join(src, "icons/icons.css"), join(dist, "icons.css"), modern, true);
 writeFileSync(join(dist, "icons.json"), readFileSync(join(src, "icons/icons.json")));
@@ -96,5 +119,7 @@ writeFileSync(join(dist, "tokens.d.ts"),
 writeFileSync(join(dist, "tokens.js"), `export const tokens = ${JSON.stringify(tokens, null, 2)};\n`);
 
 console.log(`Firehorse ${pkg.version}`);
+console.log(`  public build: ${p.kept.length}/${p.files.length} source files, ${p.heldClasses.size} held classes, ${stripped.stats.rules} rules and ${stripped.stats.selectors} selectors stripped`);
+for (const f of p.left) console.log(`    left out ${f.path} (${f.out})`);
 for (const [k, v] of Object.entries(sizes)) console.log(`  dist/${k.padEnd(28)} ${(v / 1024).toFixed(1)} KB`);
 console.log(`  dist/tokens.json                ${Object.keys(tokens).length} tokens`);

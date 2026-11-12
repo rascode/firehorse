@@ -95,8 +95,14 @@ ${keyTypes.map((t, i) => `<div class="fh-keyfield" data-fh-keyfield data-kind="c
 const horse = readFileSync(join(root, "site/parts/horse.svg"), "utf8").trim();
 // Cache-bust local stylesheets and site.js (CSS is served with max-age=3600) so edits show on the next load.
 const stamp = (f) => createHash("sha1").update(readFileSync(join(root, f))).digest("hex").slice(0, 8);
+// The stylesheet the site loads: the public build, or (--all) the full one. In the public build the site's own
+// chrome (header, dock, search, command menu) needs a few held families; it gets them from site-chrome.css,
+// cut from the full build (scripts/builds.mjs), never from the package.
+const cssDir = showAll ? "dist/full" : "dist";
+const { siteChrome } = await import("./builds.mjs");
+const chromeCss = showAll ? "/* --all build: firehorse.css is the full build, nothing to add. */\n" : (await siteChrome()).code;
 const busted = {
-  "firehorse.css": stamp("dist/firehorse.css"), "themes.css": stamp("dist/themes.css"), "icons.css": stamp("dist/icons.css"),
+  "firehorse.css": stamp(`${cssDir}/firehorse.css`), "site-chrome.css": createHash("sha1").update(chromeCss).digest("hex").slice(0, 8), "themes.css": stamp("dist/themes.css"), "icons.css": stamp("dist/icons.css"),
   "themes/rascode.css": stamp("dist/themes/rascode.css"), "site.css": stamp("site/site.css"), "playground.css": stamp("site/playground.css"),
 };
 const siteJs = stamp("site/site.js");
@@ -121,7 +127,8 @@ writeFileSync(join(out, "anchors.json"), JSON.stringify(Object.fromEntries([...c
 cp("site/site.css", "site.css");
 cp("site/site.js", "site.js");
 for (const f of readdirSync(join(root, "site"))) if (/\.(js|css)$/.test(f) && !["site.js", "site.css"].includes(f)) cp(`site/${f}`, f);
-for (const f of ["datatable.js", "audio.js", "sidecar.js", "money.js", "tabs-nav.js", "icons.css", "icons.json", "reveal.css", "admin.css"]) cp(`dist/${f}`, f);
+for (const f of ["datatable.js", "audio.js", "sidecar.js", "money.js", "tabs-nav.js", "icons.css", "icons.json", "reveal.css"]) cp(`dist/${f}`, f);
+cp("dist/full/admin.css", "admin.css");
 // Firehorse Pro (private, git-ignored): its demo pages need the built CSS, calendar.js and keyfield.js.
 if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
   cp("pro/dist/firehorse-pro.min.css", "firehorse-pro.css");
@@ -136,8 +143,9 @@ for (const dir of ["img/supply", "img/backdrop", "img/og", "img/brand", "img/the
 for (const f of readdirSync(join(root, "site"))) if (f.endsWith(".html") && f !== "index.html" && isLivePage(`/${f}`)) writeFileSync(join(out, f), fill(readFileSync(join(root, "site", f), "utf8")));
 // Developer portal: the CSS source and folder READMEs, served raw at /src/… for the viewer.
 for (const f of sourceFiles()) { mkdirSync(join(out, "src", dirname(f)), { recursive: true }); cp(`src/${f}`, `src/${f}`); }
-cp("dist/firehorse.css", "firehorse.css");
-cp("dist/firehorse.min.css", "firehorse.min.css");
+cp(`${cssDir}/firehorse.css`, "firehorse.css");
+cp(`${cssDir}/firehorse.min.css`, "firehorse.min.css");
+writeFileSync(join(out, "site-chrome.css"), chromeCss);
 cp("dist/firehorse.js", "firehorse.js");
 mkdirSync(join(out, "fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "site/fonts"))) cp(`site/fonts/${f}`, `fonts/${f}`);

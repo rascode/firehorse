@@ -114,6 +114,26 @@ is not listed is live when it shows at least one public family.
   `data-fh-release-for="/commerce/"` or `="CUB"`; the public build drops it
   (with `data-fh-release-as="text"` it keeps the words and drops the link).
 
+### Two builds
+
+`npm run build` writes two builds of the CSS (`scripts/builds.mjs`):
+
+- **Public** (`dist/firehorse.css`, `.min.css`, `.compat.min.css`; the default
+  exports and the tarball the site serves): the CSS of public families only. A
+  class is held when every family that owns or uses it in the full Index is held;
+  a component file no family in the Index claims is left out (default deny). The
+  public entry is generated from `src/firehorse.css` at build time; `src` stays
+  whole. `node scripts/builds.mjs` prints what is left out.
+- **Full** (`dist/full/`: `firehorse.css`, `.min.css`, `.compat.min.css`,
+  `admin.css`, `admin.min.css`, `index.json`): everything, admin included, for
+  Helm and other tools that install from git. Import it as
+  `@rascode/firehorse/full.css` (`full.min.css`, `full.compat.css`,
+  `full/admin.css`); `admin.css` and `admin.min.css` point here too.
+
+Themes, tokens, icons, reveal and the JS modules are built once and ship in both.
+The docs site loads the public CSS, plus `site-chrome.css` (site only) for the
+held families its header, dock and search are built from.
+
 ### data-fh and the audit
 
 Every page declares the design system it's built on, in `<head>`:
