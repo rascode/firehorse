@@ -99,7 +99,7 @@ const siteJs = stamp("site/site.js");
 const bust = (s) => Object.entries(busted).reduce((acc, [f, v]) => acc.replaceAll(`href="${f}"`, `href="${f}?v=${v}"`).replaceAll(`href="/${f}"`, `href="/${f}?v=${v}"`), s);
 // Every local script gets a content stamp too (module scripts are cached hard by browsers).
 const jsStamp = Object.fromEntries([...readdirSync(join(root, "site")).filter((f) => f.endsWith(".js")).map((f) => [f, stamp(`site/${f}`)]),
-  ...["firehorse.js", "audio.js", "datatable.js", "sidecar.js", "money.js"].map((f) => [f, stamp(`dist/${f}`)])]);
+  ...["firehorse.js", "audio.js", "datatable.js", "sidecar.js", "money.js", "tabs-nav.js"].map((f) => [f, stamp(`dist/${f}`)])]);
 const bustJs = (s) => s.replace(/src="(\/?)([\w-]+\.js)"/g, (m, slash, f) => (jsStamp[f] ? `src="${slash}${f}?v=${jsStamp[f]}"` : m));
 const fill = (s) => bustJs(bust(s)).replaceAll('src="site.js"', `src="site.js?v=${siteJs}"`).replaceAll('src="/site.js"', `src="/site.js?v=${siteJs}"`).replaceAll("{{HORSE}}", horse).replaceAll("{{TOKENS}}", String(tokenCount)).replaceAll("{{GZIP}}", gzipKb).replaceAll("{{SCHEMA_ROWS}}", schemaRows).replaceAll("{{SEMANTIC_FIELDS}}", semanticFields).replaceAll("{{SEMANTIC_KEY_FIELDS}}", semanticKeyFields).replaceAll("{{DS_VERSION}}", JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version);
 // Docs pages: site/pages/**/*.html wrapped in site/parts/layout.html (see scripts/pages.mjs).
@@ -117,7 +117,7 @@ writeFileSync(join(out, "anchors.json"), JSON.stringify(Object.fromEntries([...c
 cp("site/site.css", "site.css");
 cp("site/site.js", "site.js");
 for (const f of readdirSync(join(root, "site"))) if (/\.(js|css)$/.test(f) && !["site.js", "site.css"].includes(f)) cp(`site/${f}`, f);
-for (const f of ["datatable.js", "audio.js", "sidecar.js", "money.js", "icons.css", "icons.json", "reveal.css", "admin.css"]) cp(`dist/${f}`, f);
+for (const f of ["datatable.js", "audio.js", "sidecar.js", "money.js", "tabs-nav.js", "icons.css", "icons.json", "reveal.css", "admin.css"]) cp(`dist/${f}`, f);
 // Firehorse Pro (private, git-ignored): its demo pages need the built CSS, calendar.js and keyfield.js.
 if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
   cp("pro/dist/firehorse-pro.min.css", "firehorse-pro.css");
