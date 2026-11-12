@@ -182,20 +182,9 @@ Script measures once and on resize; the motion itself still runs on the scroll t
 `.fh-stack · --2xs … --2xl`
 
 ```html
-<div class="fh-stack fh-stack--lg">
-  <div class="fh-stack fh-stack--2xs">
-    <p class="fh-label">2xs</p>
-    <p class="fh-small fh-muted" style="margin:0">Tightest sibling gap.</p>
-  </div>
-  <div class="fh-stack fh-stack--sm">
-    <p class="fh-label">sm</p>
-    <p class="fh-body" style="margin:0">One gap between siblings, set by <code>--fh-gap</code>.</p>
-    <a class="fh-action" href="#layout" data-fh="STK-1.2">Read more</a>
-  </div>
-  <div class="fh-stack fh-stack--2xl">
-    <p class="fh-label">2xl</p>
-    <p class="fh-small fh-muted" style="margin:0">Widest stack gap.</p>
-  </div>
+<div class="fh-stack fh-stack--2xs">
+  <p class="fh-label">2xs</p>
+  <p class="fh-small fh-muted" style="margin:0">Tightest sibling gap.</p>
 </div>
 ```
 
@@ -204,21 +193,11 @@ Script measures once and on resize; the motion itself still runs on the scroll t
 `.fh-cluster · --between · --end`
 
 ```html
-<div class="fh-stack fh-stack--lg">
-  <div class="fh-cluster">
-    <span class="fh-badge" data-tone="sky" data-fh="CLS-1.1">Agents</span>
-    <span class="fh-badge" data-tone="teal" data-fh="CLS-1.1">Data</span>
-    <span class="fh-badge" data-tone="orange" data-fh="CLS-1.1">Automation</span>
-    <span class="fh-badge" data-fh="CLS-1.1">Managed</span>
-  </div>
-  <div class="fh-cluster fh-cluster--between" style="inline-size: 100%">
-    <span class="fh-label">Between</span>
-    <span class="fh-badge" data-tone="lime" data-fh="CLS-1.2">Flush ends</span>
-  </div>
-  <div class="fh-cluster fh-cluster--end" style="inline-size: 100%">
-    <span class="fh-badge" data-tone="sky" data-fh="CLS-1.3">End</span>
-    <span class="fh-badge" data-tone="teal" data-fh="CLS-1.3">aligned</span>
-  </div>
+<div class="fh-cluster">
+  <span class="fh-badge" data-tone="sky" data-fh="CLS-1.1">Agents</span>
+  <span class="fh-badge" data-tone="teal" data-fh="CLS-1.1">Data</span>
+  <span class="fh-badge" data-tone="orange" data-fh="CLS-1.1">Automation</span>
+  <span class="fh-badge" data-fh="CLS-1.1">Managed</span>
 </div>
 ```
 
@@ -239,7 +218,6 @@ Script measures once and on resize; the motion itself still runs on the scroll t
 The grid itself. `data-cols="16"` for the finer one; a child `.fh-cols[data-subgrid]` keeps nested content on the parent's lines.
 
 ```html
-<div class="fh-stack fh-stack--lg">
 <div class="fh-cols" data-fh="COL-1.1">
   <div class="fh-card fh-card--solid" data-span="12">12</div>
   <div class="fh-card fh-card--solid" data-span="8">8</div>
@@ -247,19 +225,6 @@ The grid itself. `data-cols="16"` for the finer one; a child `.fh-cols[data-subg
   <div class="fh-card fh-card--solid" data-span="3">3</div>
   <div class="fh-card fh-card--solid" data-span="6">6</div>
   <div class="fh-card fh-card--solid" data-span="3">3</div>
-</div>
-<div class="fh-cols" data-cols="16" data-fh="COL-1.2">
-  <div class="fh-card fh-card--solid" data-span="10">10 of 16</div>
-  <div class="fh-card fh-card--solid" data-span="6">6</div>
-  <div class="fh-card fh-card--solid" data-span="5" data-start="3">5, from 3</div>
-  <div class="fh-card fh-card--solid" data-span="7" data-start="10">7, from 10</div>
-</div>
-<div class="fh-cols" data-fh="COL-1.3">
-  <div class="fh-cols" data-subgrid data-span="8" data-start="3">
-    <div class="fh-card fh-card--solid" data-span="5">Nested 5</div>
-    <div class="fh-card fh-card--solid" data-span="3">Nested 3</div>
-  </div>
-</div>
 </div>
 ```
 
@@ -293,7 +258,7 @@ Three placements to start from. Offset: copy held to the left, the image breakin
 A long page that changes gear partway. A note closes the first chapter and opens a tinted band that hangs down the rest of the page, the way a fender hangs down the side of a saddle: through the next section, under its full-width content and through a tall footer to the bottom.
 
 ```html
-<div class="fh-page site-panel-demo">
+<div class="fh-page">
   <main class="fh-main" data-fh="FND">
     <section class="fh-section">
       <div class="fh-grid" data-cols="3" style="--fh-grid-min: 6rem">
@@ -301,14 +266,14 @@ A long page that changes gear partway. A note closes the first chapter and opens
         <div class="fh-card fh-card--solid">Example</div>
         <div class="fh-card fh-card--solid">Example</div>
       </div>
-      <aside class="site-panel-demo__start" data-fh-panel-start>
+      
         <p class="fh-label">Closing note</p>
         <p class="fh-small fh-muted">Ends the first chapter and opens the panel.</p>
-      </aside>
+      
     </section>
     <section class="fh-section fh-section--ruled">
       <header class="fh-section-head fh-panel-inset">
-        <div><p class="site-chapter" data-tone="violet"><b>02</b> Next chapter</p><h3 class="fh-subheading">Stepped onto the panel</h3></div>
+        <div><b>02</b> Next chapter<h3 class="fh-subheading">Stepped onto the panel</h3></div>
       </header>
       <div class="fh-grid" data-cols="2" style="--fh-grid-min: 8rem">
         <div class="fh-card">Wide content runs across both tones</div>
@@ -356,14 +321,14 @@ A page's opening argument, right under its sub-nav: the claim on the left, the s
 A tinted column that begins where you mark it and runs to the bottom of the page, through every section below and the footer. Its fill against the open canvas splits the page in two tones; its dashed edges run the full height. Content stepping onto it takes `.fh-panel-inset`. Fender is built on it.
 
 ```html
-<div class="fh-page site-panel-demo">
+<div class="fh-page">
   <main class="fh-main" data-fh="PNL">
     <section class="fh-section">
       <p class="fh-label">Section</p>
-      <aside class="site-panel-demo__start" data-fh-panel-start>
+      
         <p class="fh-label">The panel starts here</p>
         <p class="fh-small fh-muted">data-fh-panel-start on any element.</p>
-      </aside>
+      
     </section>
     <section class="fh-section fh-section--ruled">
       <header class="fh-section-head fh-panel-inset">
@@ -442,26 +407,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge. `--flat` is solid black with white text in every scheme.
 
 ```html
-<dl class="fh-dl site-variants">
-  <div><dt>Primary<code>.fh-button</code></dt><dd>
-    <a class="fh-button" href="#c-button" data-fh="BTN-1.1"><span class="fh-roll">Discuss a project</span></a></dd></div>
-  <div><dt>Tone edge<code>.fh-button · data-tone</code></dt><dd>
-    <a class="fh-button" href="#c-button" data-tone="sky" data-fh="BTN-1.2">Tone edge</a></dd></div>
-  <div><dt>Secondary<code>--secondary</code></dt><dd>
-    <button class="fh-button fh-button--secondary" type="button" data-fh="BTN-1.3">Secondary</button></dd></div>
-  <div><dt>Accent<code>--accent</code></dt><dd>
-    <button class="fh-button fh-button--accent" type="button" data-fh="BTN-1.4">Accent</button></dd></div>
-  <div><dt>Flat<code>--flat</code></dt><dd>
-    <button class="fh-button fh-button--flat" type="button" data-fh="BTN-1.5">Flat</button></dd></div>
-  <div><dt>Outline<code>--outline</code></dt><dd>
-    <button class="fh-button fh-button--outline" type="button" data-fh="BTN-2.1">Outline</button></dd></div>
-  <div><dt>Ghost<code>--ghost</code></dt><dd>
-    <button class="fh-button fh-button--ghost" type="button" data-fh="BTN-2.2">Ghost</button></dd></div>
-  <div><dt>Busy<code>aria-busy="true"</code></dt><dd>
-    <button class="fh-button" type="button" aria-busy="true" data-fh="BTN-3.1">Saving</button></dd></div>
-  <div><dt>Small, disabled<code>--sm · disabled</code></dt><dd>
-    <button class="fh-button fh-button--sm" type="button" disabled data-fh="BTN-3.2">Disabled</button></dd></div>
-</dl>
+<a class="fh-button" href="#c-button" data-fh="BTN-1.1"><span class="fh-roll">Discuss a project</span></a>
 ```
 
 ### ACT · Action & link
@@ -469,12 +415,10 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 Section CTAs and card actions.
 
 ```html
-<dl class="fh-dl site-rows">
-  <div><dt>Large</dt><dd><a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT">View all services</a></dd></div>
-  <div><dt>Toned</dt><dd><a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT">Explore data architecture</a></dd></div>
-  <div><dt>Text link</dt><dd><a class="fh-link" href="#c-action" data-fh="ACT">Read the case study</a></dd></div>
-  <div><dt>Quiet link</dt><dd><a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT">Privacy policy</a></dd></div>
-</dl>
+<a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT">View all services</a>
+<a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT">Explore data architecture</a>
+<a class="fh-link" href="#c-action" data-fh="ACT">Read the case study</a>
+<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT">Privacy policy</a>
 ```
 
 ### MRK · Markers
@@ -482,23 +426,14 @@ Section CTAs and card actions.
 Dots, eyebrow pills, breadcrumbs and badges. A badge is for counts only; a status is an `fh-chip` with `data-status`, or inline `fh-status` text.
 
 ```html
-<dl class="fh-dl site-rows">
-  <div><dt>Breadcrumb</dt><dd>
-    <nav class="fh-breadcrumb" aria-label="Breadcrumb" data-tone="teal" data-fh="MRK-1.1">
-      <a class="fh-breadcrumb__back" href="#c-markers" aria-label="Back"><span class="fh-dot fh-dot--live"></span></a>
-      <ol>
-        <li><a href="#c-markers">Services</a></li>
-        <li><a href="#c-markers">Data</a></li>
-        <li><span aria-current="page">Schema design</span></li>
-      </ol>
-    </nav></dd></div>
-  <div><dt>Badges</dt><dd>
-    <div class="fh-cluster">
-      <span class="fh-badge" data-fh="MRK-1.2">Required</span>
-      <span class="fh-badge" data-tone="lime" data-fh="MRK-1.2">Live</span>
-      <span class="fh-badge fh-badge--solid" data-tone="amber" data-fh="MRK-1.2">Beta</span>
-    </div></dd></div>
-</dl>
+<nav class="fh-breadcrumb" aria-label="Breadcrumb" data-tone="teal" data-fh="MRK-1.1">
+  <a class="fh-breadcrumb__back" href="#c-markers" aria-label="Back"><span class="fh-dot fh-dot--live"></span></a>
+  <ol>
+    <li><a href="#c-markers">Services</a></li>
+    <li><a href="#c-markers">Data</a></li>
+    <li><span aria-current="page">Schema design</span></li>
+  </ol>
+</nav>
 ```
 
 ### EYE · Eyebrow pill
@@ -506,39 +441,7 @@ Dots, eyebrow pills, breadcrumbs and badges. A badge is for counts only; a statu
 The Doppler pill from the top of this page, as a full component. Combine a shape, a line and any of the parts. Every variant takes the tone from `data-tone`.
 
 ```html
-<dl class="fh-dl site-variants site-variants--grouped">
-  <div><dt>Lines<code>.fh-eyebrow-pill · --etched · --dotted · --double</code></dt><dd>
-    <p class="fh-eyebrow-pill" data-tone="sky" data-fh="EYE-1.1"><span class="fh-dot fh-dot--live"></span>Solid line</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-1.2"><span class="fh-dot fh-dot--live"></span>Etched line</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh="EYE-1.3"><span class="fh-dot"></span>Dotted line</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh="EYE-1.4"><span class="fh-dot fh-dot--square"></span>Double line</p></dd></div>
-  <div><dt>Shapes<code>--rounded · --sharp · --oval · --tab</code></dt><dd>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="orange" data-fh="EYE-2.1"><span class="fh-dot"></span>Rounded</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--sharp fh-eyebrow-pill--etched" data-tone="rose" data-fh="EYE-2.2"><span class="fh-dot fh-dot--diamond"></span>Sharp</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--oval fh-eyebrow-pill--etched" data-tone="fuchsia" data-fh="EYE-2.3"><span class="fh-dot fh-dot--live"></span>Oval</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--tab fh-eyebrow-pill--etched" data-tone="sky" data-fh="EYE-2.4"><span class="fh-dot"></span>Tab</p></dd></div>
-  <div><dt>Fills<code>--tone · --solid · --gradient · --glass · --ghost</code></dt><dd>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh="EYE-3.1"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh="EYE-3.2"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh="EYE-3.3"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh="EYE-3.4"><span class="fh-dot fh-dot--ring"></span>Glass</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh="EYE-3.5"><span class="fh-dot fh-dot--live"></span>Ghost</p></dd></div>
-  <div><dt>Edges<code>--bracket · --underline</code></dt><dd>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--bracket" data-tone="amber" data-fh="EYE-4.1"><span class="fh-dot fh-dot--bar"></span>Bracketed</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--underline" data-tone="orange" data-fh="EYE-4.2"><span class="fh-dot"></span>Underline</p></dd></div>
-  <div><dt>Parts<code>__index · __seg · __count · --filled-end</code></dt><dd>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-5.1"><span class="fh-eyebrow-pill__index">02</span>Indexed section</p>
-    <p class="fh-eyebrow-pill" data-tone="orange" data-fh="EYE-5.2"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="rose" data-fh="EYE-5.3"><span class="fh-dot fh-dot--live"></span>Open roles <span class="fh-eyebrow-pill__count">3</span></p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--filled-end" data-tone="orange" data-fh="EYE-5.4"><span class="fh-dot"></span><span class="fh-eyebrow-pill__seg">Automation</span><span class="fh-eyebrow-pill__seg"><strong>4 services</strong></span></p></dd></div>
-  <div><dt>Sentences<code>--sentence · __action · .fh-kbd</code></dt><dd>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="live" data-fh="EYE-6.1"><span class="fh-dot fh-dot--live"></span><span>Now accepting proposals · <strong>Book a call</strong></span></p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--sentence" data-tone="sky" data-fh="EYE-6.2"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/reginald.webp" alt></span><span>Reginald is online</span><a class="fh-eyebrow-pill__action" href="#c-eyebrow">Talk</a></p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sentence" data-tone="neutral" data-fh="EYE-6.3"><span>Search the docs</span><kbd class="fh-kbd">⌘K</kbd></p></dd></div>
-  <div><dt>Sizes<code>--sm · --lg</code></dt><dd>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--sm" data-tone="lime" data-fh="EYE-7.1"><span class="fh-dot"></span>Small</p>
-    <p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--etched" data-tone="accent" data-fh="EYE-7.2"><span class="fh-dot fh-dot--live"></span>Large</p></dd></div>
-</dl>
+<p class="fh-eyebrow-pill" data-tone="sky" data-fh="EYE-1.1"><span class="fh-dot fh-dot--live"></span>Solid line</p>
 ```
 
 ### CHP · Chips
@@ -546,50 +449,12 @@ The Doppler pill from the top of this page, as a full component. Combine a shape
 Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from `data-tone`. For the status of a record use `data-status` instead (merged, running, queued, failed, archived): the tone follows the value. Chip rules: a chip is for status, and sits only in the record header, a collapsed section's summary and once per row; counts are an `fh-badge`; inline status text is an `fh-status`.
 
 ```html
-<dl class="fh-dl site-variants">
-  <div><dt>Filter<code>.fh-chip · aria-current</code></dt><dd>
-    <div class="fh-chips fh-chips--wrap" data-fh="CHP-1.1">
-      <a class="fh-chip" data-tone="sky" href="#c-chips" aria-current="true">Agents</a>
-      <a class="fh-chip" data-tone="teal" href="#c-chips">Data</a>
-      <a class="fh-chip" data-tone="orange" href="#c-chips">Automation</a>
-      <a class="fh-chip" data-tone="fuchsia" href="#c-chips">AI</a>
-    </div></dd></div>
-  <div><dt>Choice<code>.fh-chips--track · radio</code></dt><dd>
-    <div class="fh-chips fh-chips--track" role="group" aria-label="Contact task" data-fh="CHP-1.2">
-      <label class="fh-chip" data-tone="lime"><input type="radio" name="task" checked> Start a project</label>
-      <label class="fh-chip" data-tone="sky"><input type="radio" name="task"> Book a call</label>
-      <label class="fh-chip" data-tone="rose"><input type="radio" name="task"> Support</label>
-    </div></dd></div>
-  <div><dt>Fill<code>--solid · --tone · --plain</code></dt><dd>
-    <div class="fh-chips fh-chips--wrap" data-fh="CHP-1.3">
-      <span class="fh-chip fh-chip--solid" data-tone="sky"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i>Solid tone</span>
-      <span class="fh-chip fh-chip--tone" data-tone="orange"><i class="fh-icon fh-icon--workflow" aria-hidden="true"></i>Soft tone</span>
-      <span class="fh-chip fh-chip--plain">Plain</span>
-    </div></dd></div>
-  <div><dt>Tabs<code>.fh-chip--underline</code></dt><dd>
-    <div class="fh-chips fh-chips--wrap" data-fh="CHP-1.4">
-      <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips" aria-current="true">Overview</a>
-      <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips">Pricing</a>
-      <a class="fh-chip fh-chip--underline" data-tone="lime" href="#c-chips">FAQ</a>
-    </div></dd></div>
-  <div><dt>Indexed<code>.fh-chip--indexed · __index</code></dt><dd>
-    <div class="fh-chips fh-chips--wrap" data-fh="CHP-2.1">
-      <span class="fh-chip fh-chip--indexed" data-tone="violet"><b class="fh-chip__index">01</b>Foundations</span>
-      <span class="fh-chip fh-chip--indexed" data-tone="amber"><b class="fh-chip__index">03</b>Components</span>
-      <span class="fh-chip fh-chip--indexed" data-tone="sky"><b class="fh-chip__index">04</b>Data</span>
-    </div></dd></div>
-  <div><dt>Counted<code>.fh-chips--indexed</code></dt><dd>
-    <div class="fh-chips fh-chips--indexed fh-chips--wrap" aria-label="Open roles" data-fh="CHP-2.2">
-      <a class="fh-chip fh-chip--tone" data-tone="fuchsia" href="#services">Design engineer</a>
-      <a class="fh-chip fh-chip--tone" data-tone="sky" href="#services">AI agent builder</a>
-      <a class="fh-chip fh-chip--tone" data-tone="orange" href="#services">Automation lead</a>
-    </div></dd></div>
-  <div><dt>Removable<code>.fh-chip__remove</code></dt><dd>
-    <div class="fh-chips fh-chips--wrap" data-fh="CHP-2.3">
-      <span class="fh-chip fh-chip--plain">Website <button class="fh-chip__remove" type="button" aria-label="Remove Website"></button></span>
-      <span class="fh-chip fh-chip--plain">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span>
-    </div></dd></div>
-</dl>
+<div class="fh-chips fh-chips--wrap" data-fh="CHP-1.1">
+  <a class="fh-chip" data-tone="sky" href="#c-chips" aria-current="true">Agents</a>
+  <a class="fh-chip" data-tone="teal" href="#c-chips">Data</a>
+  <a class="fh-chip" data-tone="orange" href="#c-chips">Automation</a>
+  <a class="fh-chip" data-tone="fuchsia" href="#c-chips">AI</a>
+</div>
 ```
 
 ### CHP-3 · Chip cards
@@ -676,33 +541,12 @@ One column, two, or a row, depending on the slot.
 Label / value rows on etched rules: label on the left, value on the right. Two columns of rows from 38rem; `__full` spans both. `--fields` puts a field beside each label; `--single` keeps one column. Row spacing is set once for the page with `data-fh-rows` (sm · md · lg · xl) and applies to every table and key value list; `data-fh-rows-select` on a segmented switch changes it live.
 
 ```html
-<div class="fh-stack">
-<fieldset class="fh-segmented fh-segmented--sm" data-fh="KVL-2.1">
-  <legend class="fh-sr-only">Row spacing</legend>
-  <label><input type="radio" name="kv-rows" value="sm" data-fh-rows-select> S</label>
-  <label><input type="radio" name="kv-rows" value="md" data-fh-rows-select checked> M</label>
-  <label><input type="radio" name="kv-rows" value="lg" data-fh-rows-select> L</label>
-  <label><input type="radio" name="kv-rows" value="xl" data-fh-rows-select> XL</label>
-</fieldset>
 <dl class="fh-kv fh-kv--single" style="max-inline-size: 24rem" data-fh="KVL-1.1">
   <div><dt>County</dt><dd>Travis</dd></div>
   <div><dt>Parcel</dt><dd>0219-0402-11</dd></div>
   <div><dt>Year built</dt><dd>1987</dd></div>
   <div><dt>Lot</dt><dd>0.21 ac</dd></div>
 </dl>
-<dl class="fh-kv fh-kv--fields" data-fh="KVL-1.2">
-  <div><dt><label for="kv-legal">Legal name</label></dt><dd><input class="fh-input" id="kv-legal" value="Acme Supply Co. LLC"></dd></div>
-  <div><dt><label for="kv-dba">DBA</label></dt><dd><input class="fh-input" id="kv-dba" value="Acme"></dd></div>
-  <div class="fh-kv__full"><dt><label for="kv-about">About</label></dt><dd><textarea class="fh-textarea" id="kv-about" rows="2">Tools and parts for small builders.</textarea></dd></div>
-</dl>
-<dl class="fh-kv" data-fh="KVL-1.3">
-  <div><dt>Owner</dt><dd>Maple Row Holdings LLC</dd></div>
-  <div><dt>Since</dt><dd>2016</dd></div>
-  <div><dt>Mortgage</dt><dd>$212,400</dd></div>
-  <div><dt>Liens</dt><dd>None found</dd></div>
-  <div class="fh-kv__full"><dt>Legal description</dt><dd>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</dd></div>
-</dl>
-</div>
 ```
 
 ### CKL · Checklist
@@ -734,18 +578,18 @@ Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and 
 ```html
 <section class="fh-carousel" aria-roledescription="carousel" aria-label="Firehorse in four panels" data-fh="CAR">
   <div class="fh-carousel__track" tabindex="0">
-    <figure class="fh-carousel__slide site-slide site-slide--faces" aria-label="1 of 4">
+    <figure class="fh-carousel__slide" aria-label="1 of 4">
       <img src="img/avatars/ava.webp" alt="Ava"><img src="img/avatars/cole.webp" alt="Cole"><img src="img/avatars/maya.webp" alt="Maya"><img src="img/avatars/mateo.webp" alt="Mateo"><img src="img/avatars/isla.webp" alt="Isla"><img src="img/avatars/ray.webp" alt="Ray">
       <figcaption>Ten agents, one system. Every portrait sits in the same plate.</figcaption>
     </figure>
-    <figure class="fh-carousel__slide site-slide site-slide--poster" data-tone="accent" aria-label="2 of 4">
+    <figure class="fh-carousel__slide" data-tone="accent" aria-label="2 of 4">
       <p class="fh-label">Firehorse · 01</p>
-      <p class="site-slide__big">Ink, etch<br>&amp; ember.</p>
+      Ink, etch<br>&amp; ember.
     </figure>
-    <figure class="fh-carousel__slide site-slide site-slide--ui" data-tone="teal" aria-label="3 of 4">
+    <figure class="fh-carousel__slide" data-tone="teal" aria-label="3 of 4">
       <dl class="fh-stats"><div><dt>Tokens</dt><dd>{{TOKENS}}</dd></div><div><dt>Layers</dt><dd>9</dd></div><div><dt>Breakpoints</dt><dd>0</dd></div></dl>
     </figure>
-    <figure class="fh-carousel__slide site-slide site-slide--tones" aria-label="4 of 4">
+    <figure class="fh-carousel__slide" aria-label="4 of 4">
       <i data-tone="sky"></i><i data-tone="teal"></i><i data-tone="lime"></i><i data-tone="amber"></i><i data-tone="orange"></i><i data-tone="accent"></i><i data-tone="rose"></i><i data-tone="fuchsia"></i><i data-tone="violet"></i>
       <figcaption>Nine tones. One attribute.</figcaption>
     </figure>
@@ -921,33 +765,13 @@ Pagination, a wizard stepper, search and a side nav.
 Equal category columns with dashed rules and a footer rail. Default sits flush under the header; `--headed` puts the category titles on one row above a full-bleed etched rule with scaffold ticks, and pairs with `fh-mega__link` for rich rows.
 
 ```html
-<div class="fh-stack fh-stack--lg">
-  <div class="fh-mega fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-1.1">
-    <div class="fh-mega__grid">
-      <section data-tone="sky"><h3>Agents</h3><ul><li><a href="#c-mega">Lead follow-up</a></li><li><a href="#c-mega">Inbox triage</a></li></ul></section>
-      <section data-tone="teal"><h3>Data</h3><ul><li><a href="#c-mega">Warehouses</a></li><li><a href="#c-mega">Pipelines</a></li></ul></section>
-      <section data-tone="orange"><h3>Automation</h3><ul><li><a href="#c-mega">Workflows</a></li><li><a href="#c-mega">Webhooks</a></li></ul></section>
-    </div>
-    <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">All services</a></div>
+<div class="fh-mega fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-1.1">
+  <div class="fh-mega__grid">
+    <section data-tone="sky"><h3>Agents</h3><ul><li><a href="#c-mega">Lead follow-up</a></li><li><a href="#c-mega">Inbox triage</a></li></ul></section>
+    <section data-tone="teal"><h3>Data</h3><ul><li><a href="#c-mega">Warehouses</a></li><li><a href="#c-mega">Pipelines</a></li></ul></section>
+    <section data-tone="orange"><h3>Automation</h3><ul><li><a href="#c-mega">Workflows</a></li><li><a href="#c-mega">Webhooks</a></li></ul></section>
   </div>
-  <div class="fh-mega fh-mega--headed fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-2.1">
-    <div class="fh-mega__grid">
-      <section data-tone="sky">
-        <h3><a href="#c-mega">Agents</a></h3>
-        <ul>
-          <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><span class="fh-mega__link-title">Lead follow-up</span><span class="fh-mega__link-desc">Answers and books on your channels.</span></a></li>
-          <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--inbox" aria-hidden="true"></i></span><span class="fh-mega__link-title">Inbox triage</span><span class="fh-mega__link-desc">Sorts and tags every message.</span></a></li>
-        </ul>
-      </section>
-      <section data-tone="teal">
-        <h3><a href="#c-mega">Data</a></h3>
-        <ul>
-          <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--database" aria-hidden="true"></i></span><span class="fh-mega__link-title">Warehouses</span><span class="fh-mega__link-desc">One place for every table.</span></a></li>
-        </ul>
-      </section>
-    </div>
-    <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">Browse the catalog</a></div>
-  </div>
+  <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">All services</a></div>
 </div>
 ```
 
@@ -956,24 +780,21 @@ Equal category columns with dashed rules and a footer rail. Default sits flush u
 The mobile menu: a full-width popover under the header with grouped links. Open it from the hamburger below, or use the site header's drawer on a narrow viewport.
 
 ```html
-<div class="fh-stack">
-  <button class="fh-burger fh-burger--boxed fh-burger--label" type="button" popovertarget="demo-drawer" aria-label="Open demo drawer" style="--fh-burger-label: 'Menu'"><span></span></button>
-  <div id="demo-drawer" popover class="fh-drawer" data-fh="DRW-1.1">
-    <div class="fh-drawer__group">
-      <p class="fh-label">Docs</p>
-      <ul>
-        <li><a href="#c-drawer">Foundations</a></li>
-        <li><a href="#c-drawer">Components</a></li>
-        <li><a href="#c-drawer">Forms</a></li>
-      </ul>
-    </div>
-    <div class="fh-drawer__group">
-      <p class="fh-label">Pro</p>
-      <ul>
-        <li><a href="#c-drawer">Overview</a></li>
-        <li><a href="#c-drawer">Key fields</a></li>
-      </ul>
-    </div>
+<div id="demo-drawer" popover class="fh-drawer" data-fh="DRW-1.1">
+  <div class="fh-drawer__group">
+    <p class="fh-label">Docs</p>
+    <ul>
+      <li><a href="#c-drawer">Foundations</a></li>
+      <li><a href="#c-drawer">Components</a></li>
+      <li><a href="#c-drawer">Forms</a></li>
+    </ul>
+  </div>
+  <div class="fh-drawer__group">
+    <p class="fh-label">Pro</p>
+    <ul>
+      <li><a href="#c-drawer">Overview</a></li>
+      <li><a href="#c-drawer">Key fields</a></li>
+    </ul>
   </div>
 </div>
 ```
@@ -1040,44 +861,13 @@ Native `<dialog>` and popovers, with enter and exit animations from `@starting-s
 Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
 
 ```html
-<div class="fh-grid" data-cols="2" style="--fh-grid-min: 18rem; --fh-gap: var(--fh-space-6)">
-  <div class="fh-stack">
-    <div class="fh-alert" data-tone="sky" role="status"><p class="fh-alert__title">Your agent goes live Monday</p><p>We'll text you when Wes answers his first lead.</p></div>
-    <div class="fh-alert" data-tone="live" role="status"><p class="fh-alert__title">Payment received</p><p>Invoice RC-0142 is paid in full.</p></div>
-    <div class="fh-alert" data-tone="amber" role="status"><p class="fh-alert__title">Trial ends in 2 days</p><p>Add a card to keep Maya on shift.</p><div class="fh-alert__actions"><a class="fh-button fh-button--sm" href="#c-feedback">Add card</a></div></div>
-    <div class="fh-alert" data-tone="danger" role="alert"><p class="fh-alert__title">Messenger disconnected</p><p>Reconnect your Facebook page to resume replies.</p><button class="fh-close" type="button" aria-label="Dismiss"></button></div>
-  </div>
-  <div class="fh-stack fh-stack--lg">
-    <div class="fh-progress-field" data-tone="lime"><span>Scope complete</span><span class="fh-progress-field__value">64%</span><progress class="fh-progress" value="64" max="100">64%</progress></div>
-    <div class="fh-progress-field" data-tone="sky"><span>Uploading</span><span class="fh-progress-field__value">…</span><progress class="fh-progress"></progress></div>
-    <div class="fh-progress-field"><span>Message quota</span><span class="fh-progress-field__value">820 / 1,000</span><meter class="fh-meter" min="0" max="1000" low="700" high="900" optimum="200" value="820"></meter></div>
-    <div class="fh-cluster" style="--fh-gap: var(--fh-space-5)">
-      <div class="fh-ring" data-tone="teal" style="--fh-value: 72" role="img" aria-label="72 percent">72%</div>
-      <div class="fh-ring" data-tone="fuchsia" style="--fh-value: 38; --fh-ring-size: 3.5rem" role="img" aria-label="38 percent">38</div>
-      <span class="fh-spinner" aria-label="Loading" role="status"></span>
-      <button class="fh-button fh-button--icon fh-button--secondary" type="button" aria-label="Copy" data-tooltip="Copy link">⧉</button>
-    </div>
-    <div class="fh-cluster" style="--fh-align: flex-start; --fh-gap: var(--fh-space-3)">
-      <span class="fh-skeleton fh-skeleton--circle"></span>
-      <div class="fh-skeleton" style="--fh-lines: 3; flex: 1"></div>
-    </div>
-    <span class="fh-skeleton fh-skeleton--block" style="block-size: 6rem; inline-size: 100%" aria-hidden="true" data-fh="FBK-1.1"></span>
-  </div>
-</div>
+<span class="fh-skeleton fh-skeleton--block" style="block-size: 6rem; inline-size: 100%" aria-hidden="true" data-fh="FBK-1.1"></span>
 ```
 
 ### EMP · Empty state & banner
 
 ```html
-<div class="fh-stack fh-stack--lg">
-  <div class="fh-banner" data-tone="accent" data-fh="EMP-1.1"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
-  <div class="fh-empty" data-tone="violet" data-fh="EMP-1.2">
-    <span class="fh-empty__icon">∅</span>
-    <h4>No leads yet</h4>
-    <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
-    <a class="fh-button fh-button--sm fh-button--secondary" href="#c-feedback">Send a test lead</a>
-  </div>
-</div>
+<div class="fh-banner" data-tone="accent" data-fh="EMP-1.1"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
 ```
 
 ### AVT-1 · Shapes
@@ -1423,35 +1213,18 @@ A quiet month grid beside the chosen day's times. Open days take a faint fill; t
 A dropzone over a real file input, a styled range, a tag field, and a dialog that slides in as a side sheet.
 
 ```html
-<div class="fh-grid" data-cols="2" style="--fh-grid-min: 17rem; --fh-gap: var(--fh-space-6)">
-  <label class="fh-dropzone" data-tone="sky" data-fh="UPL">
-    <input type="file" multiple>
-    <span class="fh-dropzone__title">Drop files or browse</span>
-    <span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span>
-  </label>
-  <div class="fh-stack fh-stack--lg">
-    <div class="fh-field" data-tone="lime"><label for="fx-budget">Monthly budget</label><input class="fh-range" id="fx-budget" type="range" min="500" max="5000" step="100" value="1700" data-fh="UPL"></div>
-    <div class="fh-field fh-field--optional"><label for="fx-tags">Channels</label>
-      <div class="fh-tags">
-        <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
-        <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
-        <input id="fx-tags" placeholder="Add a channel">
-      </div>
-    </div>
-    <button class="fh-button fh-button--secondary" type="button" data-open-dialog="demo-sheet">Open side sheet</button>
+<div class="fh-stack">
+  <div class="fh-range-field" data-tone="sky" data-fh="UPL-1">
+    <label for="ink-coverage">Ink coverage</label>
+    <output for="ink-coverage">40</output>
+    <input class="fh-range" id="ink-coverage" type="range" min="0" max="100" value="40">
+  </div>
+  <div class="fh-range-field" data-fh="UPL-1">
+    <label for="print-size">Print size</label>
+    <output for="print-size">12</output>
+    <input class="fh-range" id="print-size" type="range" min="8" max="16" value="12" disabled>
   </div>
 </div>
-<dialog class="fh-dialog fh-dialog--sheet" id="demo-sheet" aria-labelledby="demo-sheet-title">
-  <form method="dialog">
-    <div class="fh-dialog__header"><h3 class="fh-subheading" id="demo-sheet-title">Agent settings</h3><button class="fh-close" value="cancel" aria-label="Close"></button></div>
-    <div class="fh-dialog__body fh-stack">
-      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked> Answer after hours</label>
-      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch"> Voice replies</label>
-      <dl class="fh-dl"><div><dt>Agent</dt><dd>Wes</dd></div><div><dt>Plan</dt><dd>Monthly</dd></div></dl>
-    </div>
-    <div class="fh-dialog__footer"><button class="fh-button" value="ok">Save</button></div>
-  </form>
-</dialog>
 ```
 
 ### TAG · Tag field
@@ -1459,28 +1232,11 @@ A dropzone over a real file input, a styled range, a tag field, and a dialog tha
 Toned chips with a remove button and an input in one field. The inline variant adds no chrome until it is used: a text link with no tags, then a small round plus that opens room for one more.
 
 ```html
-<div class="fh-stack fh-stack--lg">
-  <div class="fh-field fh-field--optional" data-fh="TAG-1.1"><label for="tg-channels">Channels</label>
-    <div class="fh-tags">
-      <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
-      <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
-      <input id="tg-channels" placeholder="Add a channel">
-    </div>
-  </div>
-  <div class="fh-cluster">
-    <button type="button" class="fh-button fh-button--sm fh-button--ghost" data-fh="TAG-2.1"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i>Tag</button>
-  </div>
-  <div class="fh-tags fh-tags--inline" data-fh="TAG-2.2">
-    <input aria-label="Add a tag" placeholder="Add a tag">
-  </div>
-  <div class="fh-tags fh-tags--inline" data-fh="TAG-2.3">
-    <span class="fh-chip" data-tone="orange">applications <button class="fh-chip__remove" type="button" aria-label="Remove applications"></button></span>
-    <span class="fh-chip" data-tone="lime">health <button class="fh-chip__remove" type="button" aria-label="Remove health"></button></span>
-    <button class="fh-tags__add" type="button" aria-label="Add a tag"></button>
-  </div>
-  <div class="fh-tags fh-tags--inline" data-fh="TAG-2.4">
-    <span class="fh-chip" data-tone="sky">utbms.com <button class="fh-chip__remove" type="button" aria-label="Remove utbms.com"></button></span>
-    <span class="fh-tags__entry"><button class="fh-tags__prefix" type="button" aria-label="Protocol: https, click for http">https://</button><input aria-label="Link" placeholder="example.com/page"></span>
+<div class="fh-field fh-field--optional" data-fh="TAG-1.1"><label for="tg-channels">Channels</label>
+  <div class="fh-tags">
+    <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
+    <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
+    <input id="tg-channels" placeholder="Add a channel">
   </div>
 </div>
 ```
@@ -1490,7 +1246,6 @@ Toned chips with a remove button and an input in one field. The inline variant a
 With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36rem. `fh-table__head` in the caption is a title with a count chip.
 
 ```html
-<div class="fh-stack fh-stack--lg">
 <div class="fh-table-wrap" data-fh="TBL-1.1">
   <table class="fh-table fh-table--reflow">
     <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="fh-num">Amount</th></tr></thead>
@@ -1500,17 +1255,6 @@ With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36
       <tr><td data-label="Invoice">RC-0144</td><td data-label="Client">Halcyon</td><td data-label="Status"><span class="fh-badge">Draft</span></td><td data-label="Amount" class="fh-num">$750.00</td></tr>
     </tbody>
   </table>
-</div>
-<div class="fh-table-wrap" data-fh="TBL-2.1">
-  <table class="fh-table">
-    <caption><div class="fh-table__head"><h3 class="fh-subheading">Schema columns</h3><span class="fh-chip" data-tone="sky">12</span></div></caption>
-    <thead><tr><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
-    <tbody>
-      <tr><td>uuid</td><td>uuid</td><td>Primary key</td></tr>
-      <tr><td>name</td><td>text</td><td>Display name</td></tr>
-    </tbody>
-  </table>
-</div>
 </div>
 ```
 

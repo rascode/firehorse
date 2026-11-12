@@ -13,6 +13,7 @@ import { parse } from "node-html-parser";
 import { allMain, pageOf } from "./pages.mjs";
 import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
 import { isPublic, shownStatus, tierOf, releaseIds } from "./release.mjs";
+import { hasSpecimen, specimenPath } from "./specimen.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
@@ -29,6 +30,21 @@ const clean = (html) => {
   return [lines[0].trimStart(), ...lines.slice(1).map((l) => (Number.isFinite(ind) ? l.slice(ind) : l))].join("\n").trim();
 };
 const classesOf = (html) => [...new Set([...html.matchAll(/class="([^"]*)"/g)].flatMap((m) => m[1].split(/\s+/)).filter((c) => /^fh-/.test(c) && !/^fh-icon--/.test(c)))];
+// A demo stage without its site helpers: a site-* list of rows (site-variants, site-rows) keeps only what its
+// rows show (the dd content; the dt labels are docs), an element that is also a component keeps the component's
+// classes, and any other site-* element gives way to its children. The family markup the specimens stage.
+const unwrapSite = (html) => {
+  const doc = parse(html, { comment: true });
+  const site = (n) => (n.getAttribute?.("class") || "").split(/\s+/).filter((c) => /^site-/.test(c));
+  for (const n of doc.querySelectorAll("*").reverse()) {
+    if (!site(n).length) continue;
+    const rest = n.getAttribute("class").split(/\s+/).filter((c) => c && !/^site-/.test(c));
+    if (n.rawTagName === "dl") n.replaceWith(n.querySelectorAll(":scope > div > dd, :scope > dd").map((dd) => dd.innerHTML).join("\n"));
+    else if (rest.some((c) => /^fh-/.test(c))) n.setAttribute("class", rest.join(" "));
+    else n.replaceWith(n.innerHTML);
+  }
+  return doc.toString();
+};
 const anchorOf = (el) => { for (let e = el; e; e = e.parentNode) if (e.getAttribute?.("id")) return e.getAttribute("id"); return ""; };
 const sectionOf = (el) => { for (let e = el; e; e = e.parentNode) if (e.tagName === "SECTION" && e.getAttribute("data-fh-label")) return e.getAttribute("data-fh-label"); return ""; };
 
@@ -59,7 +75,8 @@ for (const el of all) {
   const summary = el.getAttribute("data-fh-summary") || text(head?.querySelector("p")) || text(head?.querySelector("code"));
   const markup = el.tagName === "SECTION" ? "" : clean(snippet(el, stage ? "stage" : "outer"));
   const groupNames = (el.getAttribute("data-fh-groups") || "").split("|").map((s) => s.trim()).filter(Boolean);
-  families.set(id, { id, name, section: sectionOf(el), anchor: anchorOf(el), page: pageOf(el), url: `${base}${pageOf(el)}#${id}`, summary, classes: classesOf(markup), markup, groups: [], variants: [], el, groupNames, groupEls: new Map() });
+  const page = pageOf(el);
+  families.set(id, { id, name, section: sectionOf(el), anchor: anchorOf(el), page, url: hasSpecimen(id) ? base + specimenPath({ id, page }) : `${base}${page}#${id}`, summary, classes: classesOf(markup), markup, groups: [], variants: [], el, groupNames, groupEls: new Map() });
 }
 const inside = (el, host) => { for (let e = el.parentNode; e; e = e.parentNode) if (e === host) return true; return false; };
 // Group elements: a demo (has its own head and stage) or a row that names a set of variants.
@@ -112,6 +129,12 @@ for (const f of families.values()) {
   }
   const leafClasses = f.groups.flatMap((g) => g.classes ?? []);
   if (f.variants.length || leafClasses.length) f.classes = [...new Set([...f.variants.flatMap((v) => v.classes), ...leafClasses])];
+  // Clean family markup (stage and chrome split): the first public variant (or group with its own markup), in
+  // group order; with none, the family's own stage with its site-* wrappers unwrapped.
+  const entries = f.groups.flatMap((g) => (g.variants.length ? g.variants.map((vid) => f.variants.find((v) => v.id === vid)) : g.markup ? [{ id: g.id, markup: g.markup }] : []));
+  const first = entries.find((e) => isPublic(e.id)) ?? entries[0];
+  if (first) f.markup = first.markup;
+  else if (f.markup) { f.markup = clean(unwrapSite(f.markup)); f.classes = classesOf(f.markup); }
   delete f.el; delete f.groupNames; delete f.groupEls;
 }
 // Ledger: every ID ever issued. An ID may be retired, never removed or reused.

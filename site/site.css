@@ -4042,3 +4042,49 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-release-chip[data-fh-release="pro"] { --_c: var(--fh-color-accent); border-style: solid; }
 .site-demo__head > .site-release-chip { justify-self: start; margin-inline-start: 0; }
 [data-fh-release="hold"]:not(.site-release-chip), [data-fh-release="draft"]:not(.site-release-chip) { outline: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-warning) 45%, transparent); outline-offset: 2px; }
+
+/* —— Specimen pages (scripts/specimen.mjs) ——————————————————————
+ * One generated page per family: head, stage, variant switcher, three panels, foot. The stage is a plain box
+ * that holds only the component's markup (scripts/lint-site.mjs fails on any site-* class inside it), so
+ * nothing here reaches into it: components show as they are. Category grid previews sit in .fh-card__media. */
+.site-specimen { --_gap: var(--fh-space-8); }
+.site-specimen [hidden] { display: none; }
+.site-specimen__head { display: grid; justify-items: start; gap: var(--fh-space-4); padding-block: clamp(3rem, 2rem + 3vw, 5rem) var(--fh-space-6); }
+.site-specimen__head .fh-display { font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.6rem); text-wrap: balance; }
+.site-specimen__head .fh-lede { max-inline-size: 46rem; }
+.site-specimen__id, .site-specimen__tier { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-2); margin: 0; }
+.site-specimen__body { display: grid; gap: var(--_gap); padding-block-start: 0; }
+.site-specimen__stages { display: grid; gap: var(--fh-space-6); }
+.site-specimen__variant { display: grid; gap: var(--fh-space-2); margin: 0; scroll-margin-block-start: var(--fh-space-24); }
+.site-specimen__caption { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+.site-specimen__caption code { margin-inline-end: var(--fh-space-2); color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
+.site-specimen__stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fh-space-4);
+  min-block-size: 12rem;
+  padding: clamp(var(--fh-space-6), 5cqi, var(--fh-space-12));
+  border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+  border-radius: var(--fh-radius-md);
+  container: fh-slot / inline-size;
+  min-inline-size: 0;
+}
+.site-specimen__switcher { display: grid; gap: var(--fh-space-4); }
+.site-specimen__row { display: grid; gap: var(--fh-space-2); scroll-margin-block-start: var(--fh-space-24); }
+@container (inline-size >= 40rem) { .site-specimen__row { grid-template-columns: 12rem minmax(0, 1fr); align-items: start; gap: var(--fh-space-6); } }
+.site-specimen__group { margin: 0; font-size: var(--fh-text-small); font-weight: var(--fh-weight-semibold); }
+.site-specimen__group code { margin-inline-end: var(--fh-space-2); color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); font-weight: var(--fh-weight-regular, 400); }
+.site-specimen__panels { display: grid; gap: var(--_gap); }
+.site-specimen__panel { display: grid; gap: var(--fh-space-3); padding-block-start: var(--fh-space-6); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); min-inline-size: 0; }
+.site-specimen__source { display: grid; gap: var(--fh-space-2); min-inline-size: 0; }
+.site-specimen__source-head { display: flex; align-items: center; justify-content: space-between; gap: var(--fh-space-3); }
+.site-specimen__source .site-pre, .site-specimen__notes .site-pre { border-radius: var(--fh-radius-md); }
+.site-specimen__codes { display: flex; flex-wrap: wrap; gap: var(--fh-space-2); margin: 0; padding: 0; list-style: none; }
+.site-specimen__codes code { font-size: var(--fh-text-caption); }
+.site-specimen__notes { max-inline-size: none; }
+.site-specimen__ask { margin: 0; }
+.site-specimen__ask code { display: block; padding: var(--fh-space-3) var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-md); font-size: var(--fh-text-caption); white-space: normal; }
+.site-specimen__foot { padding-block: var(--fh-space-6) var(--fh-space-12); }
+.site-specimen__preview { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--fh-space-2); padding: var(--fh-space-4); container: fh-slot / inline-size; pointer-events: none; }
