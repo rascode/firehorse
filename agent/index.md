@@ -65,7 +65,7 @@
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
 | `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
-| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/) |
+| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) | [open](https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/) |
 | `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/avatars/) |
 | `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/sign-in-and-sign-up/) |
 | `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/fields/) |
@@ -1301,19 +1301,6 @@ Classes: `fh-banner` `fh-empty` `fh-empty__icon` `fh-button` `fh-button--sm` `fh
   <h4>No leads yet</h4>
   <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
   <a class="fh-button fh-button--sm fh-button--secondary" href="#c-feedback">Send a test lead</a>
-</div>
-```
-
-### EMP-2 · Empty module
-
-A section that has not been built yet: dashed outline, title and a short note. Under Empty state & banner (EMP).
-
-#### EMP-2.1 · Empty module
-
-```html
-<div class="fh-app-empty" data-fh="EMP-2.1">
-  <h2>Finance</h2>
-  <p>This module is not wired yet. Numbers and ledgers will land here.</p>
 </div>
 ```
 
