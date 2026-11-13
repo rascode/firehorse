@@ -92,9 +92,6 @@ Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
 --fh-gray-*
 
 ```html
-<h3>Neutral ramp</h3><code>--fh-gray-*</code>
-
-
 <div style="--sw: var(--fh-gray-1000)"><b>1000</b>#000000</div>
 <div style="--sw: var(--fh-gray-950)"><b>950</b>canvas</div>
 <div style="--sw: var(--fh-gray-900)"><b>900</b>raised</div>
@@ -114,9 +111,6 @@ Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
 Category color. Set data-tone once; dots, marks, meta and links inside follow. Ratios are against the current canvas.
 
 ```html
-<h3>Tones</h3><p>Category color. Set <code>data-tone</code> once; dots, marks, meta and links inside follow. Ratios are against the current canvas.</p>
-
-
 sky <span data-contrast></span>
 teal <span data-contrast></span>
 lime <span data-contrast></span>
@@ -151,9 +145,6 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 --fh-space-*
 
 ```html
-<h3>Space</h3><code>--fh-space-*</code>
-
-
 <div><span>--fh-space-px</span><span>1px</span><i style="--s: var(--fh-space-px)"></i></div>
 <div><span>--fh-space-1</span><span>4px</span><i style="--s: var(--fh-space-1)"></i></div>
 <div><span>--fh-space-2</span><span>8px</span><i style="--s: var(--fh-space-2)"></i></div>
@@ -172,9 +163,6 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 --fh-radius-*
 
 ```html
-<h3>Radius</h3><code>--fh-radius-*</code>
-
-
 <div style="--r: var(--fh-radius-sm)">sm · 3px<br>CTA</div>
 <div style="--r: var(--fh-radius-md)">md · 7px<br>groups</div>
 <div style="--r: var(--fh-radius-lg)">lg · .85rem<br>shells</div>
@@ -186,8 +174,6 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 The convex button style (data-fh-button="convex"): bends out at rest, the shadow inverts on hover, it sinks on press.
 
 ```html
-<h3>Elevation</h3><p>The convex button style (<code>data-fh-button="convex"</code>): bends out at rest, the shadow inverts on hover, it sinks on press.</p>
-
 <div class="fh-cluster" style="--fh-gap: var(--fh-space-6)">
   <a class="fh-button" href="#foundations">Rest</a>
   <span class="fh-button" style="box-shadow: var(--fh-shadow-convex-hover)">Hover</span>
@@ -1120,9 +1106,6 @@ Pagination, a wizard stepper, search and a side nav.
 Three bars, seven morphs, every state. Open comes from aria-expanded, a sibling :popover-open, or fh-burger--open. Click any of them.
 
 ```html
-<h3>Hamburger</h3><p>Three bars, seven morphs, every state. Open comes from <code>aria-expanded</code>, a sibling <code>:popover-open</code>, or <code>fh-burger--open</code>. Click any of them.</p>
-
-
 States
   <figure><button class="fh-burger fh-burger--boxed" type="button" aria-label="Menu" data-fh="BRG"><span></span></button><figcaption>Closed</figcaption></figure>
   <figure><button class="fh-burger fh-burger--boxed" type="button" aria-label="Menu" data-fh="BRG"><span></span></button><figcaption>Hover</figcaption></figure>
@@ -1212,8 +1195,6 @@ The mobile menu: a full-width popover under the header with grouped links. Open 
 Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning.
 
 ```html
-<h3>Dropdown menu</h3><p>Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning.</p>
-
 <button class="fh-button fh-button--secondary" type="button" popovertarget="actions-menu-2" style="anchor-name: --actions-menu-2"><i class="fh-icon fh-icon--settings" aria-hidden="true"></i>View options</button>
 <div class="fh-menu" role="menu" aria-label="Sample menu (static)" data-fh="DRP">
   <p class="fh-menu__label">View</p>
@@ -1810,8 +1791,7 @@ With `fh-table--reflow`, rows turn into labelled cards when the slot is under 36
 @layer fh.themes
 
 ```html
-<h3>themes/brand.css</h3><code>@layer fh.themes</code>
-          <code><span class="c">/* Load after firehorse.css */</span>
+<code><span class="c">/* Load after firehorse.css */</span>
 <span class="t">@layer</span> fh.themes {
   [data-fh-theme=<span class="v">"brand"</span>] {
     <span class="a">--fh-font-sans</span>: <span class="v">"Your Sans"</span>, system-ui;

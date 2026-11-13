@@ -40,6 +40,8 @@ const unwrapSite = (html) => {
   const site = (n) => (n.getAttribute?.("class") || "").split(/\s+/).filter((c) => /^site-/.test(c));
   for (const n of doc.querySelectorAll("*").reverse()) {
     if (!site(n).length) continue;
+    // A demo head (title and description) is docs, not the component: it leaves the clean markup whole.
+    if (site(n).some((c) => /^site-[a-z-]+__head$/.test(c))) { n.remove(); continue; }
     const rest = n.getAttribute("class").split(/\s+/).filter((c) => c && !/^site-/.test(c));
     if (n.rawTagName === "dl") n.replaceWith(n.querySelectorAll(":scope > div > dd, :scope > dd").map((dd) => dd.innerHTML).join("\n"));
     else if (rest.some((c) => /^fh-/.test(c))) n.setAttribute("class", rest.join(" "));

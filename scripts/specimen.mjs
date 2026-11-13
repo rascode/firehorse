@@ -19,8 +19,10 @@ import { LAYOUT, isBlock } from "./fh-tag.mjs";
 
 /** release.json category keys whose families get specimen pages. Two live categories are not here yet:
  *  motion (its variants are data-fh-enter and scroll classes on site helper tiles, art and cards: the helper is the
- *  element that moves) and pro (TML-1.3, TML-1.4, CAL-2.1 and KEY-2.1 are whole site demos, on private pages). */
-export const SPECIMEN_CATEGORIES = ["actions", "foundations", "layout", "forms", "navigation", "overlays", "content", "data", "design-patterns", "theming"];
+ *  element that moves) and pro (TML-1.3, TML-1.4, CAL-2.1 and KEY-2.1 are whole site demos, on private pages).
+ *  foundations and theming are held back too: NEU, TON, SPC, RAD and THM are token displays drawn by site helpers,
+ *  so their clean markup has no fh- class and an unstyled stage. They need Firehorse-owned token specimens first. */
+export const SPECIMEN_CATEGORIES = ["actions", "layout", "forms", "navigation", "overlays", "content", "data", "design-patterns"];
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://firehorse.rascode.dev";
