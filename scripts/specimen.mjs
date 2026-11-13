@@ -21,7 +21,7 @@ import { LAYOUT, isBlock } from "./fh-tag.mjs";
 /** release.json category keys whose families get specimen pages. Two live categories are not here yet:
  *  motion (its variants are data-fh-enter and scroll classes on site helper tiles, art and cards: the helper is the
  *  element that moves) and pro (TML-1.3, TML-1.4, CAL-2.1 and KEY-2.1 are whole site demos, on private pages). */
-export const SPECIMEN_CATEGORIES = ["actions", "layout", "forms", "navigation", "overlays", "content", "data", "design-patterns", "foundations", "theming"];
+export const SPECIMEN_CATEGORIES = ["actions", "layout", "forms", "navigation", "overlays", "content", "data", "design-patterns", "foundations", "theming", "motion"];
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://firehorse.rascode.dev";
@@ -109,8 +109,11 @@ export const rootTags = (markup) => {
 };
 
 /** "inline" when every root is an inline tag, otherwise "fill". Written as data-stage. */
+// Block roots that are a fixed-size object, not a layout: shown at their own size, centred (Motion's entrance tile).
+const INLINE_CLASSES = /^\s*<[a-z][\w-]*\b[^>]*\bclass="[^"]*\bfh-motion-tile\b/i;
 export const stageMode = (markup) => {
   const tags = rootTags(markup);
+  if (INLINE_CLASSES.test(String(markup))) return "inline";
   return tags.length > 0 && tags.every((tag) => INLINE_ROOTS.has(tag)) ? "inline" : "fill";
 };
 // The same highlighter the demo Markup panels use (site/site.js), run at build time.

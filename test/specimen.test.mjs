@@ -130,7 +130,9 @@ for (const page of gridPages) {
   const fams = want.filter((f) => f.page === page);
   expect(attrs(html, "data-specimen-card").join(" ") === fams.map((f) => f.id).join(" "), `${page} grid cards: ${attrs(html, "data-specimen-card").join(" ")}, want ${fams.map((f) => f.id).join(" ")}`);
   for (const f of fams) expect(main.includes(`<a href="${specimenPath(f)}">`), `${page} grid: no link to ${specimenPath(f)}`);
-  for (const f of fams) expect(!main.includes(`data-fh-id="${f.id}`), `${page}: grid page still shows the ${f.id} demo`);
+  // A page with keepSections (Motion) keeps its live demos beside the card; every other grid page drops them.
+  const keeps = /"keepSections":\s*true/.test(readFileSync(join(root, "site/pages", page, "index.html"), "utf8"));
+  for (const f of fams) expect(keeps || !main.includes(`data-fh-id="${f.id}`), `${page}: grid page still shows the ${f.id} demo`);
   expect(new RegExp(`<noscript>[\\s\\S]*href="${specimenPath(fams[0])}"`).test(html), `${page}: grid page has no noscript link list`);
   expect((main.match(/class="site-stage site-stage--card" data-stage="(?:fill|inline)"/g) ?? []).length === fams.length, `${page}: a card has no preview`);
   for (const f of fams) expect(main.includes(`class="site-stage site-stage--card" data-stage="${stageMode(f.markup)}"`), `${page}: ${f.id} preview is not ${stageMode(f.markup)}`);
@@ -198,6 +200,11 @@ for (const f of want) expect(pubIndex.families.find((x) => x.id === f.id)?.url =
 for (const f of want) expect(!/class="[^"]*\bsite-/.test(f.markup), `${f.id}: Index markup still has a site-* class`);
 // Every group of every live family carries markup (its own stage, or its first variant's).
 for (const f of full.families) if (f.status === "live") for (const g of f.groups) expect(typeof g.markup === "string" && g.markup.trim() !== "", `${g.id}: live group has no markup`);
+// A variant marked on a demo box takes the stage only. No live or Pro variant still carries the site demo chrome.
+for (const f of full.families) for (const v of f.variants) {
+  if (v.status !== "live" && v.tier !== "pro") continue;
+  expect(!v.markup.includes("site-demo") && !v.markup.includes("site-demo__head"), `${v.id}: variant markup still has the site demo chrome`);
+}
 
 // Nav: the header, drawer, ⌘K and footer (everything outside <main>) name no held category and link to none of
 // its pages. They are the same on every page; the home page is read.

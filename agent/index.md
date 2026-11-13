@@ -29,7 +29,7 @@
 | `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/space/) |
 | `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/radius/) |
 | `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/elevation/) |
-| `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/#MOT) |
+| `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/motion/) |
 | `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/stack/) |
 | `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/cluster/) |
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/auto-grid/) |
@@ -157,7 +157,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## MOT · Motion
 
-Classes: `fh-recede` `fh-scroll-fade` `fh-reveal` `fh-parallax` `fh-scroll-progress` `fh-button` `fh-button--sm`
+Classes: `fh-motion-tile` `fh-motion-tile--line` `fh-motion-tile--art` `fh-motion-tile--clip` `fh-motion-hero` `fh-motion-hero__mark` `fh-motion-hero__line` `fh-motion-hero__top` `fh-motion-hero__turn` `fh-motion-hero__chips` `fh-motion-art` `fh-recede` `fh-motion-art--b` `fh-scroll-fade` `fh-motion-art--c` `fh-reveal` `fh-motion-art--d` `fh-parallax` `fh-motion-note` `fh-scroll-progress` `fh-motion-card` `fh-button` `fh-button--sm` `fh-motion-code` `fh-motion-pro`
 
 ### MOT-1 · Entrances
 
@@ -166,61 +166,61 @@ Put data-fh-enter on an element and it enters once the page is ready. Step n sta
 #### MOT-1.1 · Rise
 
 ```html
-<div class="site-motion-tile" data-fh-enter="rise" data-fh-step="1">rise</div>
+<div class="fh-motion-tile" data-fh-enter="rise" data-fh-step="1" data-fh="MOT-1.1">rise</div>
 ```
 
 #### MOT-1.2 · Drop
 
 ```html
-<div class="site-motion-tile" data-fh-enter="drop" data-fh-step="2">drop</div>
+<div class="fh-motion-tile" data-fh-enter="drop" data-fh-step="2" data-fh="MOT-1.2">drop</div>
 ```
 
 #### MOT-1.3 · Fade
 
 ```html
-<div class="site-motion-tile" data-fh-enter="fade" data-fh-step="3">fade</div>
+<div class="fh-motion-tile" data-fh-enter="fade" data-fh-step="3" data-fh="MOT-1.3">fade</div>
 ```
 
 #### MOT-1.4 · Scale
 
 ```html
-<div class="site-motion-tile" data-fh-enter="scale" data-fh-step="4">scale</div>
+<div class="fh-motion-tile" data-fh-enter="scale" data-fh-step="4" data-fh="MOT-1.4">scale</div>
 ```
 
 #### MOT-1.5 · Blur
 
 ```html
-<div class="site-motion-tile" data-fh-enter="blur" data-fh-step="5">blur</div>
+<div class="fh-motion-tile" data-fh-enter="blur" data-fh-step="5" data-fh="MOT-1.5">blur</div>
 ```
 
 #### MOT-1.6 · Fold
 
 ```html
-<div class="site-motion-tile" data-fh-enter="fold" data-fh-step="6">fold</div>
+<div class="fh-motion-tile" data-fh-enter="fold" data-fh-step="6" data-fh="MOT-1.6">fold</div>
 ```
 
 #### MOT-1.7 · Draw
 
 ```html
-<div class="site-motion-tile site-motion-tile--line">draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
+<div class="fh-motion-tile fh-motion-tile--line" data-fh="MOT-1.7">draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
 ```
 
 #### MOT-1.8 · Wipe
 
 ```html
-<div class="site-motion-tile" data-fh-enter="wipe" data-fh-step="8">wipe</div>
+<div class="fh-motion-tile" data-fh-enter="wipe" data-fh-step="8" data-fh="MOT-1.8">wipe</div>
 ```
 
 #### MOT-1.9 · Unveil
 
 ```html
-<div class="site-motion-tile site-motion-tile--art" data-fh-enter="unveil" data-fh-step="9">unveil</div>
+<div class="fh-motion-tile fh-motion-tile--art" data-fh-enter="unveil" data-fh-step="9" data-fh="MOT-1.9">unveil</div>
 ```
 
 #### MOT-1.10 · Lift
 
 ```html
-<div class="site-motion-tile site-motion-tile--clip"><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
+<div class="fh-motion-tile fh-motion-tile--clip" data-fh="MOT-1.10"><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
 ```
 
 ### MOT-2 · Sequences
@@ -230,12 +230,12 @@ An intro's order lives on its section. data-fh-intro marks the owner; data-fh-en
 #### MOT-2.1 · Intro
 
 ```html
-<div class="site-motion-hero" data-fh-intro>
-  <p class="site-motion-hero__mark" data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
-  <span class="site-motion-hero__line" data-fh-enter="draw" data-fh-step="4"></span>
-  <p class="site-motion-hero__top" data-fh-enter="blur" data-fh-step="6">The design system</p>
-  <p class="site-motion-hero__turn" data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
-  <ul class="site-motion-hero__chips" data-fh-enter-children data-fh-step="9">
+<div class="fh-motion-hero" data-fh-intro>
+  <p class="fh-motion-hero__mark" data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
+  <span class="fh-motion-hero__line" data-fh-enter="draw" data-fh-step="4"></span>
+  <p class="fh-motion-hero__top" data-fh-enter="blur" data-fh-step="6">The design system</p>
+  <p class="fh-motion-hero__turn" data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
+  <ul class="fh-motion-hero__chips" data-fh-enter-children data-fh-step="9">
     <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
   </ul>
 </div>
@@ -244,7 +244,7 @@ An intro's order lives on its section. data-fh-intro marks the owner; data-fh-en
 #### MOT-2.2 · Staggered list
 
 ```html
-<ul class="site-motion-hero__chips" data-fh-enter-children data-fh-step="9">
+<ul class="fh-motion-hero__chips" data-fh-enter-children data-fh-step="9">
   <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
 </ul>
 ```
@@ -256,31 +256,31 @@ CSS only, on the page's scroll timeline: it tracks the scroll exactly and costs 
 #### MOT-3.1 · Recede
 
 ```html
-<div class="site-motion-art fh-recede" style="--fh-recede-range: 60vh" data-fh="MOT-3.1"></div>
+<div class="fh-motion-art fh-recede" style="--fh-recede-range: 60vh" data-fh="MOT-3.1"></div>
 ```
 
 #### MOT-3.2 · Scroll fade
 
 ```html
-<div class="site-motion-art site-motion-art--b fh-scroll-fade" style="--fh-recede-range: 60vh" data-fh="MOT-3.2"></div>
+<div class="fh-motion-art fh-motion-art--b fh-scroll-fade" style="--fh-recede-range: 60vh" data-fh="MOT-3.2"></div>
 ```
 
 #### MOT-3.3 · Reveal
 
 ```html
-<div class="site-motion-art site-motion-art--c fh-reveal"></div>
+<div class="fh-motion-art fh-motion-art--c fh-reveal" data-fh="MOT-3.3"></div>
 ```
 
 #### MOT-3.4 · Parallax
 
 ```html
-<div class="site-motion-art site-motion-art--d fh-parallax" style="--fh-depth: 0.3"></div>
+<div class="fh-motion-art fh-motion-art--d fh-parallax" style="--fh-depth: 0.3" data-fh="MOT-3.4"></div>
 ```
 
 #### MOT-3.5 · Progress
 
 ```html
-<p class="site-motion-note">Page progress: <code>&lt;div class="fh-scroll-progress"&gt;&lt;/div&gt;</code> draws the line at the top of this page.</p>
+<p class="fh-motion-note" data-fh="MOT-3.5">Page progress: <code>&lt;div class="fh-scroll-progress"&gt;&lt;/div&gt;</code> draws the line at the top of this page.</p>
 ```
 
 ### MOT-4 · Choreography
@@ -290,36 +290,36 @@ Script measures once and on resize; the motion itself still runs on the scroll t
 #### MOT-4.1 · Circle reveal
 
 ```html
-<div class="site-motion-card">
+<div class="fh-motion-card" data-fh="MOT-4.1">
   <b>Circle reveal</b><small>Free · <code>Firehorse.reveal(change, from)</code></small>
-  <button type="button" class="fh-button fh-button--sm" data-motion-reveal data-fh="MOT-4.1">Change the tone</button>
+  <button type="button" class="fh-button fh-button--sm" data-motion-reveal>Change the tone</button>
 </div>
 ```
 
 #### MOT-4.2 · Glide
 
 ```html
-<div class="site-motion-card">
+<div class="fh-motion-card" data-fh="MOT-4.2">
   <b>Glide</b><small>Free · <code>data-fh-glide="center"</code></small>
-  <code class="site-motion-code">&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
+  <code class="fh-motion-code">&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
 </div>
 ```
 
 #### MOT-4.3 · Lock
 
 ```html
-<div class="site-motion-card">
+<div class="fh-motion-card" data-fh="MOT-4.3">
   <b>Lock</b><small>Free · <code>data-fh-lock</code></small>
-  <code class="site-motion-code">&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
+  <code class="fh-motion-code">&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
 </div>
 ```
 
 #### MOT-4.4 · Dock beside
 
 ```html
-<div class="site-motion-card">
-  <b>Dock beside <span class="site-motion-pro">Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
-  <code class="site-motion-code">&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
+<div class="fh-motion-card" data-fh="MOT-4.4">
+  <b>Dock beside <span class="fh-motion-pro">Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
+  <code class="fh-motion-code">&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
 </div>
 ```
 
@@ -360,19 +360,19 @@ A photo shows a set share at a time; the rest rests under a soft veil and drifts
 #### MOT-5.6 · Dapple · Pro
 
 ```html
-<button type="button" data-drift="dapple" aria-pressed="false">Dapple <span class="site-motion-pro">Pro</span></button>
+<button type="button" data-drift="dapple" aria-pressed="false">Dapple <span class="fh-motion-pro" data-fh="MOT-5.6">Pro</span></button>
 ```
 
 #### MOT-5.7 · Tide lines · Pro
 
 ```html
-<button type="button" data-drift="tides" aria-pressed="false">Tide lines <span class="site-motion-pro">Pro</span></button>
+<button type="button" data-drift="tides" aria-pressed="false">Tide lines <span class="fh-motion-pro" data-fh="MOT-5.7">Pro</span></button>
 ```
 
 #### MOT-5.8 · Shutters · Pro
 
 ```html
-<button type="button" data-drift="shutters" aria-pressed="false">Shutters <span class="site-motion-pro">Pro</span></button>
+<button type="button" data-drift="shutters" aria-pressed="false">Shutters <span class="fh-motion-pro" data-fh="MOT-5.8">Pro</span></button>
 ```
 
 ## STK · Stack
@@ -2177,9 +2177,6 @@ Classes: `fh-milestones` `fh-milestones__item` `fh-milestones__date` `fh-milesto
 #### TML-1.3 · Schedule
 
 ```html
-<div class="site-demo">
-          <div class="site-demo__head"><h3>Schedule</h3><p>Bars across months with a today line. Set <code>--start</code> and <code>--span</code> in columns; <code>--fh-schedule-now</code> places today. Scrolls sideways when narrow, with the labels pinned.</p></div>
-          <div style="padding: var(--fh-space-6)">
 <div class="fh-schedule" data-fh="TML-1.3">
   <div class="fh-schedule__grid" style="--fh-schedule-cols: 6; --fh-schedule-now: 1.03" data-now="Today">
     <div class="fh-schedule__head"><span></span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
@@ -2191,16 +2188,11 @@ Classes: `fh-milestones` `fh-milestones__item` `fh-milestones__date` `fh-milesto
     <div class="fh-schedule__row" data-tone="teal"><span class="fh-schedule__label">Settings</span><span class="fh-schedule__bar" data-state="next" style="--start: 6; --span: 1">Preferences</span></div>
   </div>
 </div>
-          </div>
-        </div>
 ```
 
 #### TML-1.4 · Activity feed
 
 ```html
-<div class="site-demo">
-          <div class="site-demo__head"><h3>Activity feed</h3><p>Who did what, when: an avatar on a rail, the action in one line, a relative time, and anything else (a remark, a progress bar) stacked under it. Day labels split the feed.</p></div>
-          <div style="padding: var(--fh-space-6); max-inline-size: 40rem">
 <ol class="fh-activity" data-fh="TML-1.4">
   <li class="fh-activity__day">Today</li>
   <li class="fh-activity__item"><span class="fh-avatar" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Ava</b> moved <a href="#timelines">Northwind Labs</a> to <span class="fh-status" data-tone="lime">Won</span></p><time class="fh-activity__time" datetime="2026-11-01T14:10">2h ago</time></div></li>
@@ -2209,8 +2201,6 @@ Classes: `fh-milestones` `fh-milestones__item` `fh-milestones__date` `fh-milesto
   <li class="fh-activity__day">Yesterday</li>
   <li class="fh-activity__item"><span class="fh-avatar" data-tone="teal">SL</span><div class="fh-activity__body"><p class="fh-activity__line"><b>Sam</b> created the project <a href="#timelines">Halcyon Health site</a></p><time class="fh-activity__time" datetime="2026-10-31T16:20">Oct 31, 4:20 PM</time></div></li>
 </ol>
-          </div>
-        </div>
 ```
 
 ## CAL · Calendar pickers
@@ -2251,12 +2241,7 @@ Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full` `fh-cal-book` `f
 #### CAL-2.1 · Inline calendar
 
 ```html
-<div class="site-demo">
-  <div class="site-demo__head"><h3>Inline calendar</h3><p>The month grid on its own, for booking and scheduling screens. Listen for <code>fh:change</code>; set <code>data-mode="range"</code> and <code>data-months="2"</code> for ranges.</p></div>
-  <div style="padding: var(--fh-space-6)">
-    <div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
-  </div>
-</div>
+<div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
 ```
 
 ### CAL-3 · Booking
@@ -2384,9 +2369,6 @@ Classes: `fh-keyfield` `fh-keyfield__head` `fh-keyfield__label` `fh-keyfield__ty
 #### KEY-2.1 · Service keys
 
 ```html
-<div class="site-demo">
-          <div class="site-demo__head"><h3>Service keys</h3><p>One service's keys together, with how many are set. Adding a service to an application creates its fields from the service's slots.</p></div>
-          <div style="padding: var(--fh-inset-card)">
 <section class="fh-keyset" aria-labelledby="ks-1" data-fh="KEY-2.1">
   <header class="fh-keyset__head"><i class="fh-icon fh-icon--video" aria-hidden="true"></i><span class="fh-keyset__name" id="ks-1">Zoom</span><span class="fh-keyset__count">1 of 2 set</span></header>
   <div class="fh-keyfield" data-fh-keyfield data-kind="identifier" data-state="set" data-revealable data-key-id="demo-zoom-id">
@@ -2404,8 +2386,6 @@ Classes: `fh-keyfield` `fh-keyfield__head` `fh-keyfield__label` `fh-keyfield__ty
     <div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="kf-6">Not set</output></div>
   </div>
 </section>
-          </div>
-        </div>
 ```
 
 ## Former IDs

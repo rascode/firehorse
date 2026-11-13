@@ -108,6 +108,17 @@ for (const el of all) {
     markup = clean(snippet(el, ".site-cat__stage"));
     name = name || text(el.querySelector("figcaption span:last-child"));
     for (const [k, val] of Object.entries(el.attributes)) if (/^data-fh-(card|avatar|button|chip|radius|density|table|card-media|card-content)$/.test(k)) config[k] = val;
+  } else if (el.classList.contains("site-demo") && stageOf(el)) {
+    // A variant marked on the demo box takes the stage, not the box and head.
+    markup = clean(snippet(el, "stage"));
+    name = name || text(el) || id;
+  } else if (el.classList.contains("site-demo")) {
+    // TML-1.3, TML-1.4, CAL-2.1 and KEY-2.1 mark the variant on the box. Their stage is the
+    // sibling after the head, and it carries no data-demo, so stageOf does not see it.
+    const stage = [...el.childNodes].find((n) => n.nodeType === 1 && !(n.getAttribute("class") || "").split(/\s+/).includes("site-demo__head"));
+    if (stage) stage.setAttribute("data-demo", "");
+    markup = stage ? clean(snippet(el, "stage")) : clean(snippet(el));
+    name = name || text(el) || id;
   } else {
     markup = clean(snippet(el));
     name = name || text(el) || id;

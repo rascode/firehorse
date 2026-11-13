@@ -361,7 +361,10 @@ export const assemble = (list = sitePages()) => {
           if (to && !redirects.has(c.id)) redirects.set(c.id, to.split("#")[0]);
         }
         for (const [id, to] of redirects) moved.set(id, to);
-        main = gridMain(p, main, redirects, moved, specOf);
+        // keepSections (Motion): the page keeps its live demos; the specimen cards go under its head.
+        main = p.meta.keepSections
+          ? "{{PAGE_HEAD}}\n" + categoryGrid(p, redirects) + "\n" + main.replace("{{PAGE_HEAD}}", "")
+          : gridMain(p, main, redirects, moved, specOf);
       }
       main = (main.includes("{{PAGE_HEAD}}") ? main : "{{PAGE_HEAD}}\n" + main).replace("{{PAGE_HEAD}}", () => pageHead(p, chips, list));
     }

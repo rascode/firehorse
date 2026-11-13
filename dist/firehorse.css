@@ -8883,6 +8883,147 @@
     }
   }
 
+  .fh-motion-tile {
+    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border-radius: var(--fh-radius-md, 10px);
+    background: color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-surface, var(--fh-color-canvas)));
+    block-size: 5.5rem;
+    min-inline-size: min(8rem, 100%);
+    font: 600 var(--fh-text-label) / 1 var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text);
+    place-items: center;
+    display: grid;
+    position: relative;
+    overflow: clip;
+  }
+
+  .fh-motion-tile--line > span {
+    background: var(--fh-tone);
+    block-size: 2px;
+    position: absolute;
+    inset: auto 1rem 1.1rem;
+  }
+
+  .fh-motion-tile--art {
+    background: radial-gradient(circle at 70% 30%, color-mix(in oklab, var(--fh-tone) 55%, transparent), transparent 70%), color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-canvas));
+  }
+
+  .fh-motion-tile--clip > span {
+    background: color-mix(in oklab, var(--fh-tone) 30%, transparent);
+    place-items: center;
+    block-size: 100%;
+    inline-size: 100%;
+    display: grid;
+  }
+
+  .fh-motion-hero {
+    gap: var(--fh-gap-related);
+    perspective: 40em;
+    display: grid;
+  }
+
+  .fh-motion-hero__mark {
+    font: 800 2rem / 1 var(--fh-font-sans);
+    letter-spacing: var(--fh-tracking-wordmark, -.05em);
+    transform-origin: 50% 100%;
+    margin: 0;
+  }
+
+  .fh-motion-hero__mark > span {
+    color: var(--fh-color-accent);
+  }
+
+  .fh-motion-hero__line {
+    border-block-end: 2px dashed var(--fh-tone);
+    block-size: 2px;
+    display: block;
+  }
+
+  .fh-motion-hero__top, .fh-motion-hero__turn {
+    font: 700 clamp(1.4rem, 1rem + 2cqi, 2.4rem) / 1.05 var(--fh-font-display);
+    letter-spacing: var(--fh-tracking-tight);
+    margin: 0;
+  }
+
+  .fh-motion-hero__turn {
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-motion-hero__chips {
+    gap: var(--fh-gap-related);
+    margin: var(--fh-gap-related) 0 0;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+
+  .fh-motion-hero__chips > li {
+    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    font: 600 var(--fh-text-label) / 1 var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: .35rem .7rem;
+  }
+
+  .fh-motion-art {
+    background: var(--fh-motion-art, color-mix(in oklab, var(--fh-tone) 55%, var(--fh-color-canvas))) center 35% / cover;
+  }
+
+  .fh-motion-art--c {
+    background: color-mix(in oklab, var(--fh-tone) 40%, var(--fh-color-canvas));
+  }
+
+  .fh-motion-art--d {
+    background: color-mix(in oklab, var(--fh-tone) 25%, var(--fh-color-canvas));
+  }
+
+  .fh-motion-note {
+    padding: 0 var(--fh-inset-tile) var(--fh-inset-tile);
+    font-size: var(--fh-text-small);
+    color: var(--fh-color-text-muted);
+    margin: 0;
+  }
+
+  .fh-motion-card {
+    align-content: start;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tile);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border-radius: var(--fh-radius-md, 10px);
+    display: grid;
+  }
+
+  .fh-motion-card small {
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-motion-card .fh-button {
+    justify-self: start;
+  }
+
+  .fh-motion-code {
+    font: var(--fh-text-caption, .75rem) / 1.4 var(--fh-font-mono);
+    color: var(--fh-color-text-muted);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    display: block;
+  }
+
+  .fh-motion-pro {
+    background: var(--fh-color-text);
+    color: var(--fh-color-canvas);
+    font: 800 .55rem / 1.3 var(--fh-font-mono);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+    border-radius: 999px;
+    padding: .05rem .3rem;
+  }
+
   .fh-dialog--float {
     --_gap: var(--fh-float-gap, var(--fh-gap-grouped));
     inline-size: min(100% - 2 * var(--_gap), var(--fh-dialog-size, 30rem));

@@ -1,0 +1,48 @@
+/*
+ * Firehorse — Motion demo parts (MOT)
+ * components/content · layer fh.components
+ *
+ * The elements the Motion variants move, so a variant's markup (and its specimen stage) holds
+ * Firehorse classes only: fh-motion-tile (an entrance tile, with --line, --art, --clip),
+ * fh-motion-hero and its parts (the intro sequence), fh-motion-art (scroll-linked art; its image
+ * comes from --fh-motion-art), fh-motion-note, fh-motion-card, fh-motion-code and fh-motion-pro.
+ * Moved from the site's motion-page.css for 1.1.1 (relay G4, rewritten by Claude, 2026-11-13).
+ */
+
+@layer fh.components {
+  .fh-motion-tile {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-inline-size: min(8rem, 100%); /* on its own (a specimen stage) a tile keeps a tile's width */
+    block-size: 5.5rem;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border-radius: var(--fh-radius-md, 10px);
+    background: color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-surface, var(--fh-color-canvas)));
+    font: 600 var(--fh-text-label) / 1 var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-wider);
+    text-transform: uppercase;
+    color: var(--fh-color-text);
+    overflow: clip;
+  }
+  .fh-motion-tile--line > span { position: absolute; inset: auto 1rem 1.1rem; block-size: 2px; background: var(--fh-tone); }
+  .fh-motion-tile--art { background: radial-gradient(circle at 70% 30%, color-mix(in oklab, var(--fh-tone) 55%, transparent), transparent 70%), color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-canvas)); }
+  .fh-motion-tile--clip > span { display: grid; place-items: center; inline-size: 100%; block-size: 100%; background: color-mix(in oklab, var(--fh-tone) 30%, transparent); }
+  .fh-motion-hero { display: grid; gap: var(--fh-gap-related); perspective: 40em; }
+  .fh-motion-hero__mark { margin: 0; font: 800 2rem / 1 var(--fh-font-sans); letter-spacing: var(--fh-tracking-wordmark, -0.05em); transform-origin: 50% 100%; }
+  .fh-motion-hero__mark > span { color: var(--fh-color-accent); }
+  .fh-motion-hero__line { display: block; block-size: 2px; border-block-end: 2px dashed var(--fh-tone); }
+  .fh-motion-hero__top, .fh-motion-hero__turn { margin: 0; font: 700 clamp(1.4rem, 1rem + 2cqi, 2.4rem) / 1.05 var(--fh-font-display); letter-spacing: var(--fh-tracking-tight); }
+  .fh-motion-hero__turn { color: var(--fh-color-text-muted); }
+  .fh-motion-hero__chips { display: flex; flex-wrap: wrap; gap: var(--fh-gap-related); margin: var(--fh-gap-related) 0 0; padding: 0; list-style: none; }
+  .fh-motion-hero__chips > li { padding: 0.35rem 0.7rem; border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: 999px; font: 600 var(--fh-text-label) / 1 var(--fh-font-mono); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
+  .fh-motion-art { background: var(--fh-motion-art, color-mix(in oklab, var(--fh-tone) 55%, var(--fh-color-canvas))) center 35% / cover; }
+  .fh-motion-art--c { background: color-mix(in oklab, var(--fh-tone) 40%, var(--fh-color-canvas)); }
+  .fh-motion-art--d { background: color-mix(in oklab, var(--fh-tone) 25%, var(--fh-color-canvas)); }
+  .fh-motion-note { margin: 0; padding: 0 var(--fh-inset-tile) var(--fh-inset-tile); font-size: var(--fh-text-small); color: var(--fh-color-text-muted); }
+  .fh-motion-card { display: grid; align-content: start; gap: var(--fh-gap-related); padding: var(--fh-inset-tile); border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: var(--fh-radius-md, 10px); }
+  .fh-motion-card small { color: var(--fh-color-text-muted); }
+  .fh-motion-card .fh-button { justify-self: start; }
+  .fh-motion-code { display: block; font: var(--fh-text-caption, 0.75rem) / 1.4 var(--fh-font-mono); color: var(--fh-color-text-muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .fh-motion-pro { padding: 0.05rem 0.3rem; border-radius: 999px; background: var(--fh-color-text); color: var(--fh-color-canvas); font: 800 0.55rem / 1.3 var(--fh-font-mono); letter-spacing: 0.04em; text-transform: uppercase; vertical-align: middle; }
+}

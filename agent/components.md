@@ -195,88 +195,88 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
 
 ```html
 <!-- MOT-1.1 · Entrances › Rise -->
-<div data-fh-enter="rise" data-fh-step="1">rise</div>
+<div class="fh-motion-tile" data-fh-enter="rise" data-fh-step="1" data-fh="MOT-1.1">rise</div>
 
 <!-- MOT-1.2 · Entrances › Drop -->
-<div data-fh-enter="drop" data-fh-step="2">drop</div>
+<div class="fh-motion-tile" data-fh-enter="drop" data-fh-step="2" data-fh="MOT-1.2">drop</div>
 
 <!-- MOT-1.3 · Entrances › Fade -->
-<div data-fh-enter="fade" data-fh-step="3">fade</div>
+<div class="fh-motion-tile" data-fh-enter="fade" data-fh-step="3" data-fh="MOT-1.3">fade</div>
 
 <!-- MOT-1.4 · Entrances › Scale -->
-<div data-fh-enter="scale" data-fh-step="4">scale</div>
+<div class="fh-motion-tile" data-fh-enter="scale" data-fh-step="4" data-fh="MOT-1.4">scale</div>
 
 <!-- MOT-1.5 · Entrances › Blur -->
-<div data-fh-enter="blur" data-fh-step="5">blur</div>
+<div class="fh-motion-tile" data-fh-enter="blur" data-fh-step="5" data-fh="MOT-1.5">blur</div>
 
 <!-- MOT-1.6 · Entrances › Fold -->
-<div data-fh-enter="fold" data-fh-step="6">fold</div>
+<div class="fh-motion-tile" data-fh-enter="fold" data-fh-step="6" data-fh="MOT-1.6">fold</div>
 
 <!-- MOT-1.7 · Entrances › Draw -->
-<div>draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
+<div class="fh-motion-tile fh-motion-tile--line" data-fh="MOT-1.7">draw<span data-fh-enter="draw" data-fh-step="7"></span></div>
 
 <!-- MOT-1.8 · Entrances › Wipe -->
-<div data-fh-enter="wipe" data-fh-step="8">wipe</div>
+<div class="fh-motion-tile" data-fh-enter="wipe" data-fh-step="8" data-fh="MOT-1.8">wipe</div>
 
 <!-- MOT-1.9 · Entrances › Unveil -->
-<div data-fh-enter="unveil" data-fh-step="9">unveil</div>
+<div class="fh-motion-tile fh-motion-tile--art" data-fh-enter="unveil" data-fh-step="9" data-fh="MOT-1.9">unveil</div>
 
 <!-- MOT-1.10 · Entrances › Lift -->
-<div><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
+<div class="fh-motion-tile fh-motion-tile--clip" data-fh="MOT-1.10"><span data-fh-enter="lift" data-fh-step="10">lift</span></div>
 
 <!-- MOT-2.1 · Sequences › Intro -->
-<div data-fh-intro>
-  <p data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
-  <span data-fh-enter="draw" data-fh-step="4"></span>
-  <p data-fh-enter="blur" data-fh-step="6">The design system</p>
-  <p data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
-  <ul data-fh-enter-children data-fh-step="9">
+<div class="fh-motion-hero" data-fh-intro>
+  <p class="fh-motion-hero__mark" data-fh-enter="fold" data-fh-step="2"><span>_</span>firehorse</p>
+  <span class="fh-motion-hero__line" data-fh-enter="draw" data-fh-step="4"></span>
+  <p class="fh-motion-hero__top" data-fh-enter="blur" data-fh-step="6">The design system</p>
+  <p class="fh-motion-hero__turn" data-fh-enter="drop" data-fh-step="7">that moves the same everywhere.</p>
+  <ul class="fh-motion-hero__chips" data-fh-enter-children data-fh-step="9">
     <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
   </ul>
 </div>
 
 <!-- MOT-2.2 · Sequences › Staggered list -->
-<ul data-fh-enter-children data-fh-step="9">
+<ul class="fh-motion-hero__chips" data-fh-enter-children data-fh-step="9">
   <li>Tokens</li><li>Entrances</li><li>Sequences</li><li>Scroll</li><li>Choreography</li><li>Drift</li>
 </ul>
 
 <!-- MOT-3.1 · Scroll-linked › Recede -->
-<div class="fh-recede" style="--fh-recede-range: 60vh" data-fh="MOT-3.1"></div>
+<div class="fh-motion-art fh-recede" style="--fh-recede-range: 60vh" data-fh="MOT-3.1"></div>
 
 <!-- MOT-3.2 · Scroll-linked › Scroll fade -->
-<div class="fh-scroll-fade" style="--fh-recede-range: 60vh" data-fh="MOT-3.2"></div>
+<div class="fh-motion-art fh-motion-art--b fh-scroll-fade" style="--fh-recede-range: 60vh" data-fh="MOT-3.2"></div>
 
 <!-- MOT-3.3 · Scroll-linked › Reveal -->
-<div class="fh-reveal"></div>
+<div class="fh-motion-art fh-motion-art--c fh-reveal" data-fh="MOT-3.3"></div>
 
 <!-- MOT-3.4 · Scroll-linked › Parallax -->
-<div class="fh-parallax" style="--fh-depth: 0.3"></div>
+<div class="fh-motion-art fh-motion-art--d fh-parallax" style="--fh-depth: 0.3" data-fh="MOT-3.4"></div>
 
 <!-- MOT-3.5 · Scroll-linked › Progress -->
-<p>Page progress: <code>&lt;div class="fh-scroll-progress"&gt;&lt;/div&gt;</code> draws the line at the top of this page.</p>
+<p class="fh-motion-note" data-fh="MOT-3.5">Page progress: <code>&lt;div class="fh-scroll-progress"&gt;&lt;/div&gt;</code> draws the line at the top of this page.</p>
 
 <!-- MOT-4.1 · Choreography › Circle reveal -->
-<div>
+<div class="fh-motion-card" data-fh="MOT-4.1">
   <b>Circle reveal</b><small>Free · <code>Firehorse.reveal(change, from)</code></small>
-  <button type="button" class="fh-button fh-button--sm" data-motion-reveal data-fh="MOT-4.1">Change the tone</button>
+  <button type="button" class="fh-button fh-button--sm" data-motion-reveal>Change the tone</button>
 </div>
 
 <!-- MOT-4.2 · Choreography › Glide -->
-<div>
+<div class="fh-motion-card" data-fh="MOT-4.2">
   <b>Glide</b><small>Free · <code>data-fh-glide="center"</code></small>
-  <code>&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
+  <code class="fh-motion-code">&lt;nav&gt;&lt;div data-fh-glide="center"&gt;…links…&lt;/div&gt;&lt;/nav&gt;</code>
 </div>
 
 <!-- MOT-4.3 · Choreography › Lock -->
-<div>
+<div class="fh-motion-card" data-fh="MOT-4.3">
   <b>Lock</b><small>Free · <code>data-fh-lock</code></small>
-  <code>&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
+  <code class="fh-motion-code">&lt;h1 data-fh-lock="clone" data-fh-lock-to=".nav a" data-fh-lock-scale="0.78" data-fh-lock-href="#top"&gt;</code>
 </div>
 
 <!-- MOT-4.4 · Choreography › Dock beside -->
-<div>
-  <b>Dock beside <span>Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
-  <code>&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
+<div class="fh-motion-card" data-fh="MOT-4.4">
+  <b>Dock beside <span class="fh-motion-pro">Pro</span></b><small><code>data-fh-dock-beside="#cta"</code></small>
+  <code class="fh-motion-code">&lt;div class="tools" data-fh-dock-beside=".cta"&gt;</code>
 </div>
 
 <!-- MOT-5.1 · Drift › Wave -->
@@ -295,13 +295,13 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
 <button type="button" data-drift="ripple" aria-pressed="false">Ripple</button>
 
 <!-- MOT-5.6 · Drift › Dapple · Pro -->
-<button type="button" data-drift="dapple" aria-pressed="false">Dapple <span>Pro</span></button>
+<button type="button" data-drift="dapple" aria-pressed="false">Dapple <span class="fh-motion-pro" data-fh="MOT-5.6">Pro</span></button>
 
 <!-- MOT-5.7 · Drift › Tide lines · Pro -->
-<button type="button" data-drift="tides" aria-pressed="false">Tide lines <span>Pro</span></button>
+<button type="button" data-drift="tides" aria-pressed="false">Tide lines <span class="fh-motion-pro" data-fh="MOT-5.7">Pro</span></button>
 
 <!-- MOT-5.8 · Drift › Shutters · Pro -->
-<button type="button" data-drift="shutters" aria-pressed="false">Shutters <span>Pro</span></button>
+<button type="button" data-drift="shutters" aria-pressed="false">Shutters <span class="fh-motion-pro" data-fh="MOT-5.8">Pro</span></button>
 ```
 
 ### STK · Stack
@@ -1962,9 +1962,6 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 </div>
 
 <!-- TML-1.3 · Timelines › Schedule -->
-<div>
-          <div><h3>Schedule</h3><p>Bars across months with a today line. Set <code>--start</code> and <code>--span</code> in columns; <code>--fh-schedule-now</code> places today. Scrolls sideways when narrow, with the labels pinned.</p></div>
-          <div style="padding: var(--fh-space-6)">
 <div class="fh-schedule" data-fh="TML-1.3">
   <div class="fh-schedule__grid" style="--fh-schedule-cols: 6; --fh-schedule-now: 1.03" data-now="Today">
     <div class="fh-schedule__head"><span></span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
@@ -1976,13 +1973,8 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
     <div class="fh-schedule__row" data-tone="teal"><span class="fh-schedule__label">Settings</span><span class="fh-schedule__bar" data-state="next" style="--start: 6; --span: 1">Preferences</span></div>
   </div>
 </div>
-          </div>
-        </div>
 
 <!-- TML-1.4 · Timelines › Activity feed -->
-<div>
-          <div><h3>Activity feed</h3><p>Who did what, when: an avatar on a rail, the action in one line, a relative time, and anything else (a remark, a progress bar) stacked under it. Day labels split the feed.</p></div>
-          <div style="padding: var(--fh-space-6); max-inline-size: 40rem">
 <ol class="fh-activity" data-fh="TML-1.4">
   <li class="fh-activity__day">Today</li>
   <li class="fh-activity__item"><span class="fh-avatar" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Ava</b> moved <a href="#timelines">Northwind Labs</a> to <span class="fh-status" data-tone="lime">Won</span></p><time class="fh-activity__time" datetime="2026-11-01T14:10">2h ago</time></div></li>
@@ -1991,8 +1983,6 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
   <li class="fh-activity__day">Yesterday</li>
   <li class="fh-activity__item"><span class="fh-avatar" data-tone="teal">SL</span><div class="fh-activity__body"><p class="fh-activity__line"><b>Sam</b> created the project <a href="#timelines">Halcyon Health site</a></p><time class="fh-activity__time" datetime="2026-10-31T16:20">Oct 31, 4:20 PM</time></div></li>
 </ol>
-          </div>
-        </div>
 ```
 
 ### CAL · Calendar pickers
@@ -2017,12 +2007,7 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 </div>
 
 <!-- CAL-2.1 · Inline › Inline calendar -->
-<div>
-  <div><h3>Inline calendar</h3><p>The month grid on its own, for booking and scheduling screens. Listen for <code>fh:change</code>; set <code>data-mode="range"</code> and <code>data-months="2"</code> for ranges.</p></div>
-  <div style="padding: var(--fh-space-6)">
-    <div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
-  </div>
-</div>
+<div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
 
 <!-- CAL-3.1 · Booking › Booking calendar -->
 <div class="fh-cal-book" data-fh="CAL-3.1">
@@ -2124,9 +2109,6 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 </div>
 
 <!-- KEY-2.1 · Groups › Service keys -->
-<div>
-          <div><h3>Service keys</h3><p>One service's keys together, with how many are set. Adding a service to an application creates its fields from the service's slots.</p></div>
-          <div style="padding: var(--fh-inset-card)">
 <section class="fh-keyset" aria-labelledby="ks-1" data-fh="KEY-2.1">
   <header class="fh-keyset__head"><i class="fh-icon fh-icon--video" aria-hidden="true"></i><span class="fh-keyset__name" id="ks-1">Zoom</span><span class="fh-keyset__count">1 of 2 set</span></header>
   <div class="fh-keyfield" data-fh-keyfield data-kind="identifier" data-state="set" data-revealable data-key-id="demo-zoom-id">
@@ -2144,8 +2126,6 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
     <div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="kf-6">Not set</output></div>
   </div>
 </section>
-          </div>
-        </div>
 ```
 
 ## More markup
