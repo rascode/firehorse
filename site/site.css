@@ -1843,6 +1843,9 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
 @media (width < 48rem) {
   .site-backdrop { --_art-w: calc(71vh * 1.579); --_art-xn: 0.92; --_art-pos: calc(var(--_art-xn) * 100%) 50%; }
 }
+/* The horses and their measures belong to the home page (the only page with the hero grid). Every
+   other page keeps the plain ground and its blueprint grid, so specimens never sit on the art. */
+.fh-page:not(:has(.site-hero__grid)) > .site-backdrop :is(.site-backdrop__art, .site-backdrop__frost) { display: none; }
 
 /* Each theme can bring its own horse: the backdrop swaps its art with the theme.
    Lipizzaner uses the default Firehorse horse until its own art is generated
@@ -2324,6 +2327,18 @@ figcaption .site-id--end { margin-inline-start: auto; }
   background: none;
   backdrop-filter: none;
 }
+/* Once the page scrolls the header is stuck: the page ground fills in behind it, full bleed and up
+   through the gap above the bar, so nothing scrolls under the mark or the pills. border-image paints
+   the band without changing layout; the scroll timeline fades it in over the first few rem.
+   Without scroll timelines the animation ends at once, so the ground is simply always there. */
+@property --site-head-ground { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+.site-header-oval {
+  border-image: linear-gradient(color-mix(in oklab, var(--fh-color-canvas) var(--site-head-ground), transparent) 0 0) fill 0 / / var(--site-chrome-top) 100vw 0;
+  animation: site-head-ground linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 calc(var(--site-chrome-top) + var(--fh-header-height));
+}
+@keyframes site-head-ground { from { --site-head-ground: 0%; } to { --site-head-ground: 100%; } }
 .site-header-oval > .fh-header__bar { min-block-size: var(--fh-header-height); gap: var(--fh-space-4); }
 .site-header-oval .fh-nav {
   justify-self: center;
@@ -3201,6 +3216,13 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 }
 .site-kc-launch:is(:hover, :focus-visible) { border-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
 .site-kc-launch:is(:hover, :focus-visible) .site-kc-launch__label { max-inline-size: 5rem; opacity: 1; padding-inline: var(--fh-space-2) var(--fh-space-2); }
+/* Phones: KC tucks into the corner at a smaller size, and the page keeps room for him below the
+   footer, so at the end of a scroll no chip or code block sits under the button. */
+@media (width < 48rem) {
+  .site-kc-launch { inset-block-end: calc(var(--fh-space-2) + env(safe-area-inset-bottom, 0px)); inset-inline-end: calc(var(--fh-space-2) + env(safe-area-inset-right, 0px)); padding: 0.15rem; }
+  .site-kc-launch .site-kc-face { inline-size: 1.6rem; }
+  .fh-page { padding-block-end: calc(1.9rem + var(--fh-space-2) * 2 + env(safe-area-inset-bottom, 0px)); }
+}
 
 /* The menu drawer, opened from the sticky bar (or the header on phones). It no longer brings the
  * header back over the bar. On wider screens it is a floating etched panel like the other menus,
@@ -3252,6 +3274,8 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
  * palette blooms behind it (root, both split complements, a tint), so the page ends in colour.
  * Scroll-driven, no script; reduced motion just shows it clear. The footer stands on it. */
 .site-footer.fh-footer--panel { background-color: transparent; }
+/* "Design library · coming soon": the links' size and tracking, a step quieter than them. */
+.site-footer .fh-footer__column [aria-disabled="true"] { color: var(--fh-color-text-subtle); font-size: 0.84rem; font-weight: var(--fh-weight-book); letter-spacing: var(--fh-tracking-body); cursor: default; }
 .site-backdrop::after {
   content: "";
   position: absolute;
@@ -4058,6 +4082,11 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-specimen__head .fh-display { font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.6rem); line-height: var(--fh-leading-tight); text-wrap: balance; max-inline-size: 100%; }
 .site-specimen__head .fh-lede { max-inline-size: 46rem; }
 .site-specimen__head .fh-breadcrumb { justify-self: start; }
+/* The pill stays whole at every width: it takes its content's width (on phones the component
+   already drops to the last two crumbs), and nothing inside it shrinks, so the round end and the
+   label never squash or spill out. */
+.site-specimen__head .fh-breadcrumb { inline-size: max-content; max-inline-size: none; }
+.site-specimen__head .fh-breadcrumb :is(.fh-breadcrumb__back, ol, li) { flex: none; min-inline-size: auto; }
 .site-specimen__title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-2); max-inline-size: 100%; }
 .site-specimen__title .fh-display { flex: 0 0 auto; min-inline-size: 0; }
 .site-specimen__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-2); margin: 0; }
