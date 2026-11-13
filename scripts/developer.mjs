@@ -5,6 +5,8 @@ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
+import { showAll } from "./release.mjs";
+import { plan, heldPackagePath } from "./builds.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = join(root, "src");
@@ -15,18 +17,25 @@ const kb = (n) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(n < 10240 ? 1 : 0
 const manifest = (file) => [...read(file).matchAll(/@import "\.\/([^"]+)";/g)].map((m) => join(dirname(file), m[1]).replace(/^\.\//, ""));
 const layerOrder = (/@layer ([^;{]+);/.exec(read("firehorse.css"))?.[1] ?? "").split(",").map((s) => s.trim());
 
+// The public build serves and lists only the source the public package keeps (builds.mjs heldPackagePath: no
+// left-out component source, no admin source, no held integration sheet). --all serves everything.
+let buildPlan = null;
+/** Does this build serve the file (a path relative to the repo root, e.g. src/components/x.css or dist/reveal.css)? */
+export const served = (path) => showAll || !heldPackagePath(path, (buildPlan ??= plan()));
+
 let cache = null;
-/** Every source module, in the order the bundles import them. */
+/** Every source module this build serves, in the order the bundles import them. */
 export function modules() {
   if (cache) return cache;
   const families = existsSync(join(root, "dist/index.json")) ? JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families : [];
   const pageOf = new Map(families.map((f) => [f.id, f.page]));
+  const integrations = existsSync(join(src, "integrations")) ? readdirSync(join(src, "integrations")).filter((f) => f.endsWith(".css")).sort() : [];
   const list = [
     ...manifest("firehorse.css").map((path) => ({ path, bundle: "firehorse.css" })),
     ...manifest("admin/admin.css").map((path) => ({ path, bundle: "admin.css" })),
     { path: "icons/icons.css", bundle: "icons.css" },
-    { path: "integrations/reveal.css", bundle: "reveal.css" },
-  ].filter((m) => existsSync(join(src, m.path)));
+    ...integrations.map((f) => ({ path: `integrations/${f}`, bundle: f })),
+  ].filter((m) => existsSync(join(src, m.path)) && served(`src/${m.path}`));
   cache = list.map((m, i) => {
     const text = read(m.path);
     const code = text.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -132,37 +141,32 @@ ${rows.join("\n")}
   cascade() {
     const ms = modules();
     const list = (bundle) => ms.filter((m) => m.bundle === bundle).map((m) => `      <li><button class="site-dev__open" type="button" data-dev-src="${esc(m.path)}" data-dev-name="${esc(m.name)}" data-dev-id="${esc(m.id ?? "")}" data-dev-layer="${esc(m.layers.join(", "))}" data-dev-bundle="${esc(m.bundle)}"><code>${esc(m.path)}</code></button></li>`).join("\n");
-    return `<details class="fh-accordion" data-schema="none">
-  <summary>src/firehorse.css · ${ms.filter((m) => m.bundle === "firehorse.css").length} modules</summary>
+    // A manifest none of whose modules this build serves (admin, in the public build) is not listed.
+    return [["src/firehorse.css", "firehorse.css"], ["src/admin/admin.css", "admin.css"]].filter(([, b]) => ms.some((m) => m.bundle === b)).map(([file, b]) => `<details class="fh-accordion" data-schema="none">
+  <summary>${file} · ${ms.filter((m) => m.bundle === b).length} modules</summary>
   <div><ol class="site-dev__cascade">
-${list("firehorse.css")}
+${list(b)}
   </ol></div>
-</details>
-<details class="fh-accordion" data-schema="none">
-  <summary>src/admin/admin.css · ${ms.filter((m) => m.bundle === "admin.css").length} modules</summary>
-  <div><ol class="site-dev__cascade">
-${list("admin.css")}
-  </ol></div>
-</details>`;
+</details>`).join("\n");
   },
 
-  /** What ships in dist/, with sizes. */
+  /** What ships in dist/, with sizes. The full build's sheets (admin, reveal) are listed in the --all build only. */
   bundles() {
     const files = [
-      ["firehorse.css", "Core: every token, base, layout, component, design pattern and utility module.", "@import \"@rascode/firehorse/css\";"],
-      ["firehorse.min.css", "The core, minified.", "@import \"@rascode/firehorse/min.css\";"],
-      ["firehorse.compat.min.css", "The core lowered for 2022–23 browsers (no nesting, no light-dark()).", "@import \"@rascode/firehorse/compat.css\";"],
-      ["admin.css", "Admin: app shell, environment selector, composer, dock. Load after the core.", "@import \"@rascode/firehorse/admin.css\";"],
-      ["themes.css", "Every built-in theme in one sheet, for a theme select.", "@import \"@rascode/firehorse/themes.css\";"],
-      ["icons.css", "The optional icon set.", "@import \"@rascode/firehorse/icons.css\";"],
-      ["reveal.css", "reveal.js adapter for slide decks.", ""],
-    ].filter(([f]) => existsSync(join(root, "dist", f)));
+      ["dist/firehorse.css", "Core: every token, base, layout, component, design pattern and utility module.", "@import \"@rascode/firehorse/css\";"],
+      ["dist/firehorse.min.css", "The core, minified.", "@import \"@rascode/firehorse/min.css\";"],
+      ["dist/firehorse.compat.min.css", "The core lowered for 2022–23 browsers (no nesting, no light-dark()).", "@import \"@rascode/firehorse/compat.css\";"],
+      ["dist/full/admin.css", "Admin: app shell, environment selector, composer, dock. Load after the core. Full build.", "@import \"@rascode/firehorse/admin.css\";"],
+      ["dist/themes.css", "Every built-in theme in one sheet, for a theme select.", "@import \"@rascode/firehorse/themes.css\";"],
+      ["dist/icons.css", "The optional icon set.", "@import \"@rascode/firehorse/icons.css\";"],
+      ["dist/full/reveal.css", "reveal.js adapter for slide decks. Full build.", "@import \"@rascode/firehorse/full/reveal.css\";"],
+    ].filter(([f]) => existsSync(join(root, f)) && served(f));
     return `<div class="fh-table-wrap"><table class="fh-table">
   <thead><tr><th scope="col">File</th><th scope="col">What it is</th><th scope="col" class="fh-num">Size</th><th scope="col" class="fh-num">Gzipped</th></tr></thead>
   <tbody>
 ${files.map(([f, what, imp]) => {
-      const buf = readFileSync(join(root, "dist", f));
-      return `    <tr><th scope="row"><code>dist/${esc(f)}</code></th><td>${esc(what)}${imp ? `<br><code>${esc(imp)}</code>` : ""}</td><td class="fh-num">${kb(buf.length)}</td><td class="fh-num">${kb(gzipSync(buf).length)}</td></tr>`;
+      const buf = readFileSync(join(root, f));
+      return `    <tr><th scope="row"><code>${esc(f)}</code></th><td>${esc(what)}${imp ? `<br><code>${esc(imp)}</code>` : ""}</td><td class="fh-num">${kb(buf.length)}</td><td class="fh-num">${kb(gzipSync(buf).length)}</td></tr>`;
     }).join("\n")}
   </tbody>
 </table></div>`;
@@ -186,12 +190,12 @@ export function expandGenerated(html) {
   return html.replace(/<!-- gen:([a-z]+) -->/g, (m, name) => (BLOCKS[name] ? BLOCKS[name]() : m));
 }
 
-/** Every file the developer area serves raw (src CSS and folder READMEs), relative to src/. */
+/** Every file the developer area serves raw (src CSS and folder READMEs) in this build, relative to src/. */
 export function sourceFiles(dir = src, out = []) {
   for (const f of readdirSync(dir)) {
     const p = join(dir, f);
     if (statSync(p).isDirectory()) sourceFiles(p, out);
-    else if (/\.(css|md)$/.test(f)) out.push(p.slice(src.length + 1));
+    else if (/\.(css|md)$/.test(f) && served(`src/${p.slice(src.length + 1)}`)) out.push(p.slice(src.length + 1));
   }
   return out;
 }

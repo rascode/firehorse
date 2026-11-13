@@ -60,8 +60,13 @@ sizes["firehorse.compat.min.css"] = (await buildPublic(join(dist, "firehorse.com
 // Optional icon set, shipped as its own stylesheet.
 sizes["icons.css"] = build(join(src, "icons/icons.css"), join(dist, "icons.css"), modern, true);
 writeFileSync(join(dist, "icons.json"), readFileSync(join(src, "icons/icons.json")));
-// reveal.js adapter: load after firehorse.css in a reveal deck.
-sizes["reveal.css"] = build(join(src, "integrations/reveal.css"), join(dist, "reveal.css"), modern, true);
+// Integration sheets (src/integrations, e.g. the reveal.js adapter, loaded after firehorse.css): every one in the
+// full build; at dist/ only when a live family uses the classes it styles (builds.mjs). reveal.css styles fh-canvas
+// slides (Media, held), so it is dist/full/reveal.css only.
+for (const i of p.integrations) {
+  sizes[`full/${i.name}`] = build(i.file, join(full, i.name), modern, true);
+  if (!i.out) sizes[i.name] = build(i.file, join(dist, i.name), modern, true);
+}
 // Art the components point at by default (e.g. the auth panel's etched contours).
 mkdirSync(join(dist, "art"), { recursive: true });
 // The full build's sheets point at the same art by a relative url(), so it sits beside them too.
@@ -123,5 +128,6 @@ writeFileSync(join(dist, "tokens.js"), `export const tokens = ${JSON.stringify(t
 console.log(`Firehorse ${pkg.version}`);
 console.log(`  public build: ${p.kept.length}/${p.files.length} source files, ${p.heldClasses.size} held classes, ${stripped.stats.rules} rules and ${stripped.stats.selectors} selectors stripped`);
 for (const f of p.left) console.log(`    left out ${f.path} (${f.out})`);
+for (const i of p.integrations.filter((i) => i.out)) console.log(`    full build only: ${i.path} (${i.out})`);
 for (const [k, v] of Object.entries(sizes)) console.log(`  dist/${k.padEnd(28)} ${(v / 1024).toFixed(1)} KB`);
 console.log(`  dist/tokens.json                ${Object.keys(tokens).length} tokens`);

@@ -680,7 +680,7 @@ Classes: `fh-breadcrumb` `fh-breadcrumb__back` `fh-dot` `fh-dot--live` `fh-clust
 
 ## EYE · Eyebrow pill
 
-The Doppler pill from the top of this page, as a full component. Combine a shape, a line and any of the parts. Every variant takes the tone from data-tone.
+The Doppler pill as a full component: a dot and a short label that sit above a heading. Combine a shape, a line and any of the parts. Every variant takes the tone from data-tone.
 
 Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh-eyebrow-pill--dotted` `fh-eyebrow-pill--double` `fh-dot--square` `fh-eyebrow-pill--rounded` `fh-eyebrow-pill--sharp` `fh-dot--diamond` `fh-eyebrow-pill--oval` `fh-eyebrow-pill--tab` `fh-eyebrow-pill--tone` `fh-eyebrow-pill--solid` `fh-dot--blink` `fh-eyebrow-pill--gradient` `fh-eyebrow-pill--glass` `fh-dot--ring` `fh-eyebrow-pill--ghost` `fh-eyebrow-pill--bracket` `fh-dot--bar` `fh-eyebrow-pill--underline` `fh-eyebrow-pill__index` `fh-eyebrow-pill__seg` `fh-eyebrow-pill__count` `fh-eyebrow-pill--filled-end` `fh-eyebrow-pill--sentence` `fh-avatar` `fh-avatar--circle` `fh-eyebrow-pill__action` `fh-kbd` `fh-eyebrow-pill--sm` `fh-eyebrow-pill--lg`
 
@@ -858,7 +858,7 @@ __index · __seg · __count · --filled-end
 
 ## CHP · Chips
 
-Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from data-tone. For the status of a record use data-status instead (merged, running, queued, failed, archived): the tone follows the value. Chip rules: a chip is for status, and sits only in the record header, a collapsed section's summary and once per row; counts are an fh-badge; inline status text is an fh-status. See Chip rules.
+Chips filter or jump; the selected one fills with its tone. Icons replace the dot. Every variant takes the tone from data-tone. For the status of a record use data-status instead (merged, running, queued, failed, archived): the tone follows the value. A chip is for status, and sits only in a record's head, a collapsed section's summary and once per row; counts are an fh-badge; inline status text is an fh-status.
 
 Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text` `fh-chip--sm`
 
@@ -1062,7 +1062,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## STP · Steps
 
-Numbered because order matters. Form steps with outline cubes live on Forms.
+Numbered because order matters. Form steps live on Forms.
 
 Classes: `fh-steps` `fh-steps__mark` `fh-form-step` `fh-form-step__head` `fh-form-step__text` `fh-cubes` `fh-form-step__cube` `fh-cube` `fh-cube--outline` `fh-form-step__title` `fh-muted` `fh-form-step__body` `fh-form` `fh-field` `fh-input`
 

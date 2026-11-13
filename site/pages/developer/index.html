@@ -30,7 +30,7 @@
             <h3 class="fh-subheading">How a stylesheet is made</h3>
             <ol class="fh-steps">
               <li><b>Modules</b><p>One file per component under <code>src/</code>, native nesting, tokens only. Each opens with its name, Index ID and layer.</p></li>
-              <li><b>Manifests</b><p><code>src/firehorse.css</code> and <code>src/admin/admin.css</code> import every module in cascade order.</p></li>
+              <li><b>Manifests</b><p><code>src/firehorse.css</code> imports every module in cascade order.</p></li>
               <li><b>Bundle</b><p><code>scripts/build.mjs</code> bundles each manifest with Lightning CSS into <code>dist/</code>: readable, minified and a compat build.</p></li>
               <li><b>Checks</b><p><code>scripts/lint.mjs</code> holds the rules (tokens only, no viewport queries, fh- prefix); the Index check keeps every ID on the docs.</p></li>
             </ol>

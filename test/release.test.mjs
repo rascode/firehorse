@@ -55,6 +55,38 @@ for (const file of ["agent/index.md", "agent/components.md", "agent/patterns.md"
   const text = readFileSync(join(root, file), "utf8");
   for (const id of held) if (named(text, id)) errors.push(`${file} names held family ${id}`);
 }
+// agent/components.md lists every public variant of the Index exactly once, as "<!-- BTN-1.2 · Solid › Tone edge -->",
+// no held ID, and no docs-site (site-*) class.
+const components = readFileSync(join(root, "agent/components.md"), "utf8");
+const commented = [...components.matchAll(/<!-- ([A-Z]{3}-\d+\.\d+) · [^\n]*? -->/g)].map((m) => m[1]);
+for (const f of index.families) for (const v of f.variants) {
+  const n = commented.filter((id) => id === v.id).length;
+  if (n !== 1) errors.push(`agent/components.md has ${v.id} ${n} times as a variant comment (want 1)`);
+}
+for (const id of commented) if (!isPublic(id)) errors.push(`agent/components.md lists held variant ${id}`);
+for (const m of components.matchAll(/\sclass="([^"]*)"/g)) for (const c of m[1].split(/\s+/)) if (c.startsWith("site-")) errors.push(`agent/components.md has the site class ${c}`);
+
+// The description and lede of a live page in site/dist name no held family (names from the full Index and
+// release.json). ALLOW: held family names that are also plain words in a sentence.
+const ALLOW = new Set(["Guides", "Captions"]);
+const heldNames = new Map([...full.families.filter((f) => !isPublic(f.id)).map((f) => [f.name, f.id]),
+  ...JSON.parse(readFileSync(join(root, "release.json"), "utf8")).components.filter((c) => c.name && !isPublic(c.id)).map((c) => [c.name, c.id])]);
+const wordRe = (name) => { const l = name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); return new RegExp(`\\b(?:${l}|${l.endsWith("s") ? l.slice(0, -1) : l + "s"})\\b`, "i"); };
+const plain = (s = "") => s.replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+let copyChecked = 0;
+for (const f of files) {
+  const html = readFileSync(f, "utf8"), rel = f.slice(root.length + 1);
+  const description = html.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  if (description == null) continue;
+  const lede = html.match(/<p class="fh-lede">([\s\S]*?)<\/p>/)?.[1] ?? "";
+  copyChecked++;
+  for (const [name, id] of heldNames) {
+    if (ALLOW.has(name)) continue;
+    for (const [what, text] of [["description", description], ["lede", lede]]) if (wordRe(name).test(plain(text))) errors.push(`${rel}: ${what} names held family ${name} (${id})`);
+  }
+}
+expect(copyChecked > 0, "no page in site/dist has a meta description");
+
 const llms = readFileSync(join(dist, "llms.txt"), "utf8");
 for (const path of heldPages) if (llms.includes(`https://firehorse.rascode.dev${path}`)) errors.push(`llms.txt lists held page ${path}`);
 for (const id of held) if (named(llms, id)) errors.push(`llms.txt names held family ${id}`);
@@ -71,4 +103,4 @@ expect(forms.includes(`publishes, ${live.length} in all`), `Forms field types te
 expect(!/data-fh-release=/.test(forms), "Forms (public) carries a release marker");
 
 if (errors.length) { console.error(`✗ release: ${errors.length} problem(s)\n  ` + errors.slice(0, 60).join("\n  ")); process.exit(1); }
-console.log(`✓ release: ${publicFams.length} public families, ${list.filter((p) => pageStatus(p.path, familiesIn(p.main)) === "live").length} live docs pages, ${live.length} live field types; ${held.length} held families and ${heldPages.length} held pages kept out of site/dist; --all builds all ${list.length} pages`);
+console.log(`✓ release: ${publicFams.length} public families, ${list.filter((p) => pageStatus(p.path, familiesIn(p.main)) === "live").length} live docs pages, ${live.length} live field types; ${held.length} held families and ${heldPages.length} held pages kept out of site/dist; --all builds all ${list.length} pages; agent/components.md lists all ${commented.length} public variants once; ${copyChecked} pages' description and lede name no held family (allowed as plain words: ${[...ALLOW].join(", ")})`);

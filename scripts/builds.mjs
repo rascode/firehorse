@@ -16,7 +16,7 @@
 // The docs site loads the public CSS. Its own chrome (header, dock, search, command menu) is built from a few held
 // families; siteChrome() cuts those rules out of the full build into a site-only sheet (site/dist/site-chrome.css).
 // Run: node scripts/builds.mjs   prints the plan (files left out and why, rules stripped, the site chrome families)
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { bundleAsync } from "lightningcss";
@@ -27,6 +27,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const ENTRY = join(root, "src/firehorse.css");
 /** The public entry's file name: next to the real one so its relative @imports resolve. Never written. */
 export const PUBLIC_ENTRY = join(root, "src/firehorse.public.css");
+/** Integration sheets: each file is its own stylesheet (dist/<name>, dist/full/<name>), not part of the entry. */
+export const INTEGRATIONS = join(root, "src/integrations");
 /** Public JS modules and the family that mounts each one. */
 export const RUNTIME = { "src/js/datatable.js": "DTB" };
 /** The site's own chrome: the parts and scripts every docs page carries. */
@@ -77,7 +79,14 @@ export const plan = (index = JSON.parse(readFileSync(join(root, "dist/full/index
     return { ...f, held, out };
   });
   const heldClasses = new Set(files.flatMap((f) => f.classes).filter(isHeld));
-  return { files, famsOf, isHeld, heldClasses, left: files.filter((f) => f.out), kept: files.filter((f) => !f.out) };
+  // Integration sheets (src/integrations, built one per file beside the core): public only when a live family uses
+  // a class the sheet styles. reveal.css styles fh-canvas slides (Media, held), so it is in the full build only.
+  const integrations = (existsSync(INTEGRATIONS) ? readdirSync(INTEGRATIONS) : []).filter((f) => f.endsWith(".css")).sort().map((name) => {
+    const file = join(INTEGRATIONS, name), classes = classesIn(readFileSync(file, "utf8"));
+    const live = classes.some((c) => [...(famsOf(c) ?? [])].some((id) => isPublic(id)));
+    return { name, file, path: relative(root, file), classes, out: live ? "" : "no live family uses its classes" };
+  });
+  return { files, famsOf, isHeld, heldClasses, integrations, left: files.filter((f) => f.out), kept: files.filter((f) => !f.out) };
 };
 
 /** The public entry: src/firehorse.css with the left-out @import lines turned into comments. */
@@ -144,18 +153,23 @@ export const bundleFrom = async (filename, code, opts) => {
 };
 
 // —— The public package (the tarball the site serves; pack-site.mjs) ——
-/** Package-relative paths the public package leaves out: the full build, admin CSS and its source, and the
- *  component source the public build leaves out. */
+/** Package-relative paths the public package leaves out: the full build, admin CSS and its source, the component
+ *  source the public build leaves out, and each held integration sheet (its source and any dist/<name> copy). */
 export const heldPackagePath = (path, p = plan()) => {
-  const held = new Set(p.left.map((f) => f.path));
+  const heldInt = p.integrations.filter((i) => i.out);
+  const held = new Set([...p.left.map((f) => f.path), ...heldInt.flatMap((i) => [i.path, `dist/${i.name}`])]);
   // A folder's README goes with it when every stylesheet under the folder is left out (src/components/finance).
   const readme = /^(src\/.+)\/README\.md$/.exec(path)?.[1];
-  const css = readme ? p.files.filter((f) => f.path.startsWith(readme + "/")) : [];
+  const css = readme ? [...p.files, ...p.integrations].filter((f) => f.path.startsWith(readme + "/")) : [];
   return path === "dist/full" || path.startsWith("dist/full/") || /^dist\/admin(\.min)?\.css$/.test(path)
     || path === "src/admin" || path.startsWith("src/admin/") || held.has(path) || (css.length > 0 && css.every((f) => held.has(f.path)));
 };
-/** The exports map without the full build and admin entries. */
-export const publicExports = (exports) => Object.fromEntries(Object.entries(exports).filter(([k]) => !/^\.\/(full|admin)/.test(k)));
+/** The exports map without the full build and admin entries, and without an entry whose every target is held. */
+export const publicExports = (exports, p = plan()) => Object.fromEntries(Object.entries(exports).filter(([k, v]) => {
+  if (/^\.\/(full|admin)/.test(k)) return false;
+  const targets = (typeof v === "string" ? [v] : Object.values(v)).filter((t) => !t.includes("*"));
+  return !targets.length || !targets.every((t) => heldPackagePath(t.replace(/^\.\//, ""), p));
+}));
 
 // —— The docs site's chrome sheet ——
 /** Held classes the site chrome uses (a held block the chrome uses brings its modifiers and elements). */
@@ -215,6 +229,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   console.log(`public entry: ${p.kept.length}/${p.files.length} files kept, ${p.left.length} left out, ${p.heldClasses.size} held classes`);
   for (const f of p.left) console.log(`  left out ${f.path} (${f.out})`);
   for (const f of p.kept.filter((f) => f.held.length)) console.log(`  stripped in ${f.path}: ${f.held.join(" ")}`);
+  for (const i of p.integrations) console.log(`  integration ${i.path}: ${i.out ? `full build only (${i.out})` : "public"}`);
   const chrome = chromeClasses(p);
   console.log(`site chrome: ${chrome.size} held classes from ${[...new Set([...chrome].flatMap((c) => [...p.famsOf(c)]))].sort().join(" ")}`);
 }

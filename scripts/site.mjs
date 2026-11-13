@@ -58,8 +58,10 @@ const keyTypes = semanticTypes.filter(isKeyType);
 // live groups and live types only; --all shows every group, held ones marked. Types keep their schema order.
 const groupsOf = fieldGroups().map((g) => ({ ...g, list: standardTypes.filter((t) => g.types.includes(t.key)) })).filter((g) => g.list.length);
 const shownTypes = groupsOf.reduce((n, g) => n + g.list.length, 0);
+// The groups the text names: the ones shown (live only in the public build), from release.json.
+const groupNames = groupsOf.map((g) => esc(g.name)).reduce((s, n, i, a) => (i === 0 ? n : `${s}${i === a.length - 1 ? " and " : ", "}${n}`), "");
 const semanticFields = `        <div class="site-demo site-anchor" id="c-field-types">
-          <div class="site-demo__head"><h3>Field types</h3><p>Every semantic type the Rascode platform publishes, ${shownTypes} in all, as the field it renders: label, input type, input mode, autocomplete, placeholder and example from <code>schema/semantic-types.json</code>. Computed and system types are read-only. Each type's <strong>Generate</strong> opens a Firehorse Pro panel (count, copy, CSV) against the platform API. The ${keyTypes.length} credential types are <a href="/pro/keys/">Pro key fields</a>.</p></div>
+          <div class="site-demo__head"><h3>Field types</h3><p>Every semantic type the Rascode platform publishes, ${shownTypes} in all, as the field it renders: label, input type, input mode, autocomplete, placeholder and example from <code>schema/semantic-types.json</code>, in ${groupsOf.length} groups: ${groupNames}. Each type's <strong>Generate</strong> opens a Firehorse Pro panel (count, copy, CSV) against the platform API. The ${keyTypes.length} credential types are <a href="/pro/keys/">Pro key fields</a>.</p></div>
           <div class="site-demo__stage" data-demo>
 <form class="fh-stack fh-stack--lg" novalidate onsubmit="event.preventDefault()">
 ${groupsOf.map((g) => {
@@ -99,8 +101,9 @@ const stamp = (f) => createHash("sha1").update(readFileSync(join(root, f))).dige
 // chrome (header, dock, search, command menu) needs a few held families; it gets them from site-chrome.css,
 // cut from the full build (scripts/builds.mjs), never from the package.
 const cssDir = showAll ? "dist/full" : "dist";
-const { siteChrome } = await import("./builds.mjs");
-const chromeCss = showAll ? "/* --all build: firehorse.css is the full build, nothing to add. */\n" : (await siteChrome()).code;
+const { siteChrome, plan } = await import("./builds.mjs");
+const buildPlan = plan();
+const chromeCss = showAll ? "/* --all build: firehorse.css is the full build, nothing to add. */\n" : (await siteChrome({}, buildPlan)).code;
 const busted = {
   "firehorse.css": stamp(`${cssDir}/firehorse.css`), "site-chrome.css": createHash("sha1").update(chromeCss).digest("hex").slice(0, 8), "themes.css": stamp("dist/themes.css"), "icons.css": stamp("dist/icons.css"),
   "themes/rascode.css": stamp("dist/themes/rascode.css"), "site.css": stamp("site/site.css"), "playground.css": stamp("site/playground.css"),
@@ -127,7 +130,9 @@ writeFileSync(join(out, "anchors.json"), JSON.stringify(Object.fromEntries([...c
 cp("site/site.css", "site.css");
 cp("site/site.js", "site.js");
 for (const f of readdirSync(join(root, "site"))) if (/\.(js|css)$/.test(f) && !["site.js", "site.css"].includes(f)) cp(`site/${f}`, f);
-for (const f of ["datatable.js", "audio.js", "sidecar.js", "money.js", "tabs-nav.js", "icons.css", "icons.json", "reveal.css"]) cp(`dist/${f}`, f);
+for (const f of ["datatable.js", "audio.js", "sidecar.js", "money.js", "tabs-nav.js", "icons.css", "icons.json"]) cp(`dist/${f}`, f);
+// Integration sheets (reveal.css): the public site serves the ones the public build ships; --all serves every one.
+for (const i of buildPlan.integrations) if (showAll || !i.out) cp(i.out ? `dist/full/${i.name}` : `dist/${i.name}`, i.name);
 cp("dist/full/admin.css", "admin.css");
 // Firehorse Pro (private, git-ignored): its demo pages need the built CSS, calendar.js and keyfield.js.
 if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
@@ -141,7 +146,8 @@ for (const dir of ["img/supply", "img/backdrop", "img/og", "img/brand", "img/the
   for (const f of readdirSync(join(root, `site/${dir}`))) cp(`site/${dir}/${f}`, `${dir}/${f}`);
 }
 for (const f of readdirSync(join(root, "site"))) if (f.endsWith(".html") && f !== "index.html" && isLivePage(`/${f}`)) writeFileSync(join(out, f), fill(readFileSync(join(root, "site", f), "utf8")));
-// Developer portal: the CSS source and folder READMEs, served raw at /src/… for the viewer.
+// Developer portal: the CSS source and folder READMEs, served raw at /src/… for the viewer. sourceFiles() is the
+// source this build serves: in the public build only what the public package keeps (developer.mjs served).
 for (const f of sourceFiles()) { mkdirSync(join(out, "src", dirname(f)), { recursive: true }); cp(`src/${f}`, `src/${f}`); }
 cp(`${cssDir}/firehorse.css`, "firehorse.css");
 cp(`${cssDir}/firehorse.min.css`, "firehorse.min.css");

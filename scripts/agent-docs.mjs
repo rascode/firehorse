@@ -1,8 +1,9 @@
-// Generates agent/components.md from the live demos on every docs page (site/pages/**),
-// so the markup agents copy is exactly the markup the docs render.
-// Public families only (release.json): held pages and held demos are not in the agent files.
+// Generates agent/components.md from the public Index (dist/index.json, built from the live demos on every docs
+// page), so the markup agents copy is exactly the markup the docs render: one block per public family with every
+// public variant. Public families only (release.json): held pages, families and variants are not in the agent files.
 import { allMain, pages } from "./pages.mjs";
 import { releasePages } from "./release.mjs";
+import { plan } from "./builds.mjs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,16 +13,32 @@ const strip = (s = "") => s.replace(/<code>(.*?)<\/code>/g, "`$1`").replace(/<[^
 const re = /<div class="site-demo__head"><h3>(.*?)<\/h3>(?:<p>(.*?)<\/p>|<code>(.*?)<\/code>)?(?:(?!site-demo__head)[\s\S])*?<div class="site-demo__stage[^"]*" data-demo>\n([\s\S]*?)\n {8,}<\/div>/g;
 const blocks = [];
 for (const m of html.matchAll(re)) blocks.push({ title: strip(m[1]), note: strip(m[2] || (m[3] ? "`" + m[3] + "`" : "")), code: m[4].replace(/ data-fh-(?:id|name)="[^"]*"/g, "").replace(/\s+$/, "") });
-// Firehorse Index IDs, so a heading reads "CHP · Chips".
-let ids = {}, tagged = {};
-try {
-  const fams = JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families;
-  for (const f of fams) ids[f.name] = f.id;
-  // Groups that are demos of their own (AVT-1 Shapes, CUB-2 Cube cards) head their own block.
-  for (const f of fams) for (const g of f.groups ?? []) if (g.demo) ids[g.name] ??= g.id;
-  // The Index's markup carries data-fh on every component root; prefer it over the raw demo.
-  for (const f of fams) { if (f.markup) tagged[f.id] = f.markup; for (const g of f.groups ?? []) if (g.markup) tagged[g.id] = g.markup; }
-} catch {}
+// The public Index (dist/index.json) gives one block per public family, in Index order: every public variant,
+// each under a comment "<!-- BTN-1.2 · Solid › Tone edge -->", with the Index's markup (it carries data-fh on every
+// component root). A family with no variants is its own markup. Held families and variants are not in this Index.
+// A demo that is no family or group of the Index (a helper, a state) follows under "More markup".
+const fams = JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8")).families;
+const ids = {};
+for (const f of fams) ids[f.name] = f.id;
+for (const f of fams) for (const g of f.groups ?? []) if (g.demo) ids[g.name] ??= g.id;
+// Clean markup: no docs-site class (site-*) in what agents copy.
+const clean = (html = "") => html.replace(/\sclass="([^"]*)"/g, (m, c) => {
+  const kept = c.split(/\s+/).filter((x) => x && !x.startsWith("site-"));
+  return kept.length ? ` class="${kept.join(" ")}"` : "";
+});
+const familyBlock = (f) => {
+  const note = blocks.find((b) => ids[b.title] === f.id)?.note || strip(f.summary);
+  const groupName = new Map((f.groups ?? []).map((g) => [g.id, g.name]));
+  const code = f.variants?.length
+    ? f.variants.map((v) => `<!-- ${v.id} · ${groupName.has(v.group) ? `${groupName.get(v.group)} › ` : ""}${v.name} -->\n${clean(v.markup)}`).join("\n\n")
+    : clean(f.markup ?? blocks.find((b) => ids[b.title] === f.id)?.code ?? "");
+  return { title: f.name, id: f.id, note, code };
+};
+const familyBlocks = fams.map(familyBlock);
+const extra = blocks.filter((b) => !ids[b.title]).map((b) => ({ ...b, code: clean(b.code) }));
+// Class index rows: a row every class of which is held (release.json, through the build plan) is not listed.
+const buildPlan = plan();
+const heldRow = (row) => { const cls = [...row.matchAll(/`(fh-[\w-]+)/g)].map((m) => m[1]); return cls.length > 0 && cls.every((c) => buildPlan.isHeld(c)); };
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 let md = `# Firehorse — component markup
 
@@ -48,7 +65,7 @@ let md = `# Firehorse — component markup
 | Chrome | \`fh-header\` (\`__bar\` \`__brand\` \`__actions\` \`__toggle\`) \`fh-nav\` \`fh-nav__link\` \`fh-drawer\` (\`__group\`) \`fh-mega\` (\`__grid\` \`__rail\`) \`fh-footer\` (\`__columns\` \`__column\` \`__base\`) |
 | Design patterns | \`fh-hero\` \`fh-hero__actions\` \`fh-hero-split\` \`fh-section-head\` \`fh-etched-split\` (\`__pane\`) \`fh-cta-band\` (\`__main\` \`__title\` \`__aside\` \`__people\` \`__fine\`) \`fh-window\` (\`__bar\` \`__body\`) \`fh-letter\` (\`__portrait\`) \`fh-panel\` \`fh-panel-inset\` \`[data-fh-panel-start]\` \`fh-footer--tall\` |
 | Media | \`fh-canvas\` (\`__body\` \`__top\` \`__main\` \`__foot\` \`__title\` \`__sub\` \`__eyebrow\` \`__mark\` \`__badge\` \`__index\` \`__cubes\` \`__media\` \`__ui\` (\`--crop\`) \`--og\` \`--yt-thumb\` \`--yt-banner\` \`--x-header\` \`--li-banner\` \`--post\` \`--square\` \`--story\` \`--cover\` \`--card\` \`--center\` \`--split\` \`--row\` \`--plain\` \`--plate\` \`--native\` \`__cubes--rows\`) \`[data-fh-guides]\` |
-| Slides | \`fh-slide\` (\`--title\` \`--section\` \`--middle\` \`__list\` \`__stats\` \`__quote\` \`__cite\` \`__code\`) on an \`fh-canvas\`; reveal.js: \`dist/reveal.css\` |
+| Slides | \`fh-slide\` (\`--title\` \`--section\` \`--middle\` \`__list\` \`__stats\` \`__quote\` \`__cite\` \`__code\`) on an \`fh-canvas\` |
 | Helpers | \`fh-sr-only\` \`fh-skip\` \`fh-reveal\` \`fh-reveal-children\` \`fh-hide-narrow\` \`fh-hide-wide\` \`fh-tone-text\` \`fh-text-start|center|end\` \`fh-nowrap\` \`fh-tabular\` \`fh-full\` \`fh-text-small\` \`fh-text-micro\` \`fh-font-mono\` \`fh-stack--md\` |
 | Spacing (HIG) | gaps by relationship: \`--fh-gap-bound\` (4) \`--fh-gap-related\` (8) \`--fh-gap-grouped\` (12) \`--fh-gap-grouped-wide\` (16) \`--fh-gap-sectioned\` (24) \`--fh-gap-separated\` (48); padding: \`--fh-inset-tight\` \`--fh-inset-control\` \`--fh-inset-tile\` \`--fh-inset-card\` \`--fh-inset-page\`. Never a raw \`--fh-space-*\` in a component (/guidelines/). |
 
@@ -119,10 +136,12 @@ Attributes: \`data-tone\` (tone), \`data-fh-scheme\` (light | dark | auto),
 ## Components
 
 `;
-for (const b of blocks) if (tagged[ids[b.title]]) b.code = tagged[ids[b.title]];
-for (const b of blocks) md += `### ${ids[b.title] ? ids[b.title] + " · " : ""}${b.title}\n\n${b.note ? b.note + "\n\n" : ""}\`\`\`html\n${b.code}\n\`\`\`\n\n`;
+md = md.split("\n").filter((l) => !(l.startsWith("| ") && !l.startsWith("| Group") && heldRow(l))).join("\n");
+const write = (b) => `### ${b.id ? b.id + " · " : ""}${b.title}\n\n${b.note ? b.note + "\n\n" : ""}\`\`\`html\n${b.code}\n\`\`\`\n\n`;
+for (const b of familyBlocks) md += write(b);
+if (extra.length) md += `## More markup\n\nDemos on the docs pages that are no Index family or group of their own.\n\n` + extra.map(write).join("");
 writeFileSync(join(root, "agent/components.md"), md);
-console.log(`agent/components.md: ${blocks.length} components`);
+console.log(`agent/components.md: ${familyBlocks.length} families, ${fams.reduce((n, f) => n + (f.variants?.length ?? 0), 0)} variants, ${extra.length} more demos`);
 
 // agent/schema.md: the Schema.org contract, generated from schema/mappings.json.
 const map = JSON.parse(readFileSync(join(root, "schema/mappings.json"), "utf8"));

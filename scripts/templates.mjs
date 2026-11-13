@@ -32,7 +32,8 @@ const head = (title, extra = "") => `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <!-- Paths point into the package (node_modules/@rascode/firehorse/templates/).
-     Moved the file? Use ${site}/firehorse.css (and /reveal.css) instead. -->
+     Moved the file? Use ${site}/firehorse.css instead. The deck's reveal.css is in the full build
+     (dist/full/reveal.css, from a git install). -->
 ${fonts}${extra}
 <link rel="stylesheet" href="../dist/firehorse.css">
 <link rel="stylesheet" href="../dist/themes/rascode.css">`;
@@ -92,7 +93,7 @@ const slides = canvases(["SLD"]).map((el) => `    <!-- ${el.getAttribute("data-f
 writeFileSync(join(root, "templates/slides.html"), `${head("Firehorse deck", `
 <!-- reveal.js core only: Firehorse styles the deck, so no reveal theme. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6/dist/reveal.css">`)}
-<link rel="stylesheet" href="../dist/reveal.css">
+<link rel="stylesheet" href="../dist/full/reveal.css">
 </head>
 <body>
 <div class="reveal">

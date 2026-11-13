@@ -4,7 +4,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { plan, classesIn, markupClasses, heldPackagePath } from "../scripts/builds.mjs";
 import { stage } from "../scripts/pack-site.mjs";
@@ -20,17 +20,20 @@ const BASE_FULL = "763812280da7bfd920ec5bab357091eb61e97f61299a9ebb83b665cfcf8bc
 expect(sha("dist/full/firehorse.css") === BASE_FULL, "dist/full/firehorse.css differs from the base build (633c585 dist/firehorse.css)");
 for (const f of ["firehorse.min.css", "firehorse.compat.min.css", "admin.css", "admin.min.css", "index.json"]) expect(existsSync(join(root, "dist/full", f)), `missing dist/full/${f}`);
 
-// No held class is a selector in any public dist/*.css. dist/admin.css and dist/admin.min.css are the old
-// admin files, no longer written (admin is in dist/full only); they stay in git until they are removed.
+// No held class is a selector in any public sheet: every dist/*.css the public package ships (staged below) and
+// every dist/*.css the build writes that the package does not leave out. No exception.
 const p = plan();
-// reveal.css is built once, as before the split, and is for fh-canvas slides (Media, held): only that class may appear.
-const STALE = new Set(["admin.css", "admin.min.css"]);
-const SHARED = { "reveal.css": new Set(["fh-canvas"]) };
-const publicCss = readdirSync(join(root, "dist")).filter((f) => f.endsWith(".css") && !STALE.has(f));
-for (const f of publicCss) {
-  const leaked = classesIn(read(`dist/${f}`)).filter((c) => p.heldClasses.has(c) && !SHARED[f]?.has(c));
-  expect(!leaked.length, `dist/${f}: ${leaked.length} held class(es) as selectors: ${leaked.slice(0, 8).join(" ")}`);
+const leaks = (where, css) => {
+  const leaked = classesIn(css).filter((c) => p.heldClasses.has(c));
+  expect(!leaked.length, `${where}: ${leaked.length} held class(es) as selectors: ${leaked.slice(0, 8).join(" ")}`);
+};
+for (const f of readdirSync(join(root, "dist")).filter((f) => f.endsWith(".css") && !heldPackagePath(`dist/${f}`, p))) leaks(`dist/${f}`, read(`dist/${f}`));
+// Integration sheets: each one in the full build; a held one (reveal.css: fh-canvas, Media) nowhere public.
+for (const i of p.integrations) {
+  expect(existsSync(join(root, "dist/full", i.name)), `missing dist/full/${i.name}`);
+  if (i.out) expect(heldPackagePath(`dist/${i.name}`, p) && heldPackagePath(i.path, p), `${i.name} is held but the public package keeps it`);
 }
+expect(p.integrations.some((i) => i.name === "reveal.css" && i.out), "reveal.css should be in the full build only (Media is held)");
 
 // Every class in the markup of a public family, group or variant that the full CSS defines, the public CSS defines.
 const fullClasses = new Set(classesIn(read("dist/full/firehorse.css")));
@@ -56,6 +59,9 @@ for (const f of listed) {
   expect(!heldPackagePath(f, p), `tarball has held source ${f}`);
 }
 for (const f of p.left) expect(!listed.includes(f.path), `tarball has held source ${f.path}`);
+// The built sheets the tarball ships (src/ is source: a kept file can still name a class stripped at bundle time).
+for (const f of listed.filter((f) => /^dist\/.+\.css$/.test(f))) leaks(`tarball ${f}`, readFileSync(join(dir, f), "utf8"));
+for (const i of p.integrations.filter((i) => i.out)) expect(!listed.includes(`dist/${i.name}`) && !listed.includes(i.path), `tarball has held integration ${i.name}`);
 expect(listed.includes("dist/firehorse.css") && listed.includes("dist/index.json"), "tarball has no dist/firehorse.css or dist/index.json");
 expect(sha("dist/firehorse.css") === createHash("sha256").update(readFileSync(join(dir, "dist/firehorse.css"))).digest("hex"), "tarball dist/firehorse.css is not the public build");
 const keys = Object.keys(pkg.exports);
@@ -73,11 +79,26 @@ rmSync(dir, { recursive: true, force: true });
 
 // The public site (release.test.mjs builds it into site/dist) serves the public CSS and the chrome sheet.
 const site = join(root, "site/dist");
+let served = 0;
 if (existsSync(join(site, "firehorse.css"))) {
   expect(readFileSync(join(site, "firehorse.css"), "utf8") === read("dist/firehorse.css"), "site/dist/firehorse.css is not the public build");
   expect(existsSync(join(site, "site-chrome.css")), "site/dist has no site-chrome.css");
+  for (const i of p.integrations.filter((i) => i.out)) expect(!existsSync(join(site, i.name)), `site/dist serves held integration ${i.name}`);
+  // The developer portal serves (site/dist/src) and links only the source the public package keeps.
+  const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
+  const srcDir = join(site, "src");
+  const servedFiles = existsSync(srcDir) ? walk(srcDir).map((f) => relative(site, f)) : [];
+  served = servedFiles.length;
+  for (const f of servedFiles) expect(!heldPackagePath(f, p), `site/dist serves left-out source ${f}`);
+  for (const f of [...p.left, ...p.integrations.filter((i) => i.out)]) expect(!existsSync(join(site, f.path)), `site/dist serves left-out source ${f.path}`);
+  for (const f of walk(site).filter((f) => f.endsWith(".html"))) {
+    for (const m of readFileSync(f, "utf8").matchAll(/\s(href|src|data-dev-src)="([^"#?]+)/g)) {
+      const path = m[1] === "data-dev-src" ? `src/${m[2].replace(/^\/+/, "")}` : m[2].replace(/^(https:\/\/firehorse\.rascode\.dev)?\//, "");
+      if (path.startsWith("src/") && heldPackagePath(path, p)) errors.push(`${relative(root, f)}: ${m[1]}="${m[2]}" points at left-out source`);
+    }
+  }
 }
 
 if (errors.length) { console.error(`✗ builds: ${errors.length} problem(s)\n  ` + errors.slice(0, 60).join("\n  ")); process.exit(1); }
 const kb = (f) => (readFileSync(join(root, f)).length / 1024).toFixed(1);
-console.log(`✓ builds: full build matches the base; public CSS ${kb("dist/firehorse.min.css")} KB min (full ${kb("dist/full/firehorse.min.css")} KB), ${p.heldClasses.size} held classes in no public sheet, ${checked} public markup classes defined, ${p.left.length} source files left out; tarball ${listed.length} files, no full build, admin or held source; every export exists`);
+console.log(`✓ builds: full build matches the base; public CSS ${kb("dist/firehorse.min.css")} KB min (full ${kb("dist/full/firehorse.min.css")} KB), ${p.heldClasses.size} held classes in no public sheet, ${checked} public markup classes defined, ${p.left.length} source files left out, full build only: ${p.integrations.filter((i) => i.out).map((i) => i.name).join(" ") || "none"}; tarball ${listed.length} files, no full build, admin, held integration or held source; every export exists; the portal serves ${served} source files, none left out`);
