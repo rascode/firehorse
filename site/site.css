@@ -1843,9 +1843,9 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
 @media (width < 48rem) {
   .site-backdrop { --_art-w: calc(71vh * 1.579); --_art-xn: 0.92; --_art-pos: calc(var(--_art-xn) * 100%) 50%; }
 }
-/* The horses and their measures belong to the home page (the only page with the hero grid). Every
-   other page keeps the plain ground and its blueprint grid, so specimens never sit on the art. */
-.fh-page:not(:has(.site-hero__grid)) > .site-backdrop :is(.site-backdrop__art, .site-backdrop__frost) { display: none; }
+/* The horses and their measures belong to landing pages (home, sections, categories, The Stable).
+   Detail pages (a specimen) keep the plain ground and its blueprint grid, so a component never sits on the art. */
+.fh-page:has(.site-specimen__head) > .site-backdrop :is(.site-backdrop__art, .site-backdrop__frost) { display: none; }
 
 /* Each theme can bring its own horse: the backdrop swaps its art with the theme.
    Lipizzaner uses the default Firehorse horse until its own art is generated
