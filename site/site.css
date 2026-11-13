@@ -4085,7 +4085,10 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 /* The pill stays whole at every width: it takes its content's width (on phones the component
    already drops to the last two crumbs), and nothing inside it shrinks, so the round end and the
    label never squash or spill out. */
-.site-specimen__head .fh-breadcrumb { inline-size: max-content; max-inline-size: none; }
+.site-specimen__head .fh-breadcrumb { inline-size: max-content; max-inline-size: none; container-type: normal; }
+/* The nav was its own size container, so it sized to nothing and its own narrow-slot rule cut the trail to the
+   dot. As a plain box it takes the trail's width, and the trail answers the page's width: the whole path on wide
+   screens, parent and current on phones, every crumb a link back up the tree. */
 .site-specimen__head .fh-breadcrumb :is(.fh-breadcrumb__back, ol, li) { flex: none; min-inline-size: auto; }
 .site-specimen__title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-2); max-inline-size: 100%; }
 .site-specimen__title .fh-display { flex: 0 0 auto; min-inline-size: 0; }
