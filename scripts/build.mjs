@@ -64,7 +64,9 @@ writeFileSync(join(dist, "icons.json"), readFileSync(join(src, "icons/icons.json
 sizes["reveal.css"] = build(join(src, "integrations/reveal.css"), join(dist, "reveal.css"), modern, true);
 // Art the components point at by default (e.g. the auth panel's etched contours).
 mkdirSync(join(dist, "art"), { recursive: true });
-for (const f of readdirSync(join(src, "art"))) writeFileSync(join(dist, "art", f), readFileSync(join(src, "art", f)));
+// The full build's sheets point at the same art by a relative url(), so it sits beside them too.
+mkdirSync(join(dist, "full", "art"), { recursive: true });
+for (const f of readdirSync(join(src, "art"))) for (const d of ["art", "full/art"]) writeFileSync(join(dist, d, f), readFileSync(join(src, "art", f)));
 for (const f of readdirSync(join(src, "themes"))) {
   if (!f.endsWith(".css") || f.startsWith("_")) continue;
   sizes[`themes/${f}`] = build(join(src, "themes", f), join(dist, "themes", f), modern, false);

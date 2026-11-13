@@ -65,6 +65,9 @@ expect(!keys.some((k) => /^\.\/(full|admin)/.test(k)), `tarball package.json exp
 const targets = (exports) => Object.entries(exports).flatMap(([k, v]) => (typeof v === "string" ? [[k, v]] : Object.values(v).map((t) => [k, t])));
 const exists = (base, t) => existsSync(join(base, t.includes("*") ? dirname(t) : t));
 for (const [k, t] of targets(JSON.parse(read("package.json")).exports)) expect(exists(root, t), `export ${k}: ${t} does not exist`);
+// Every relative url() in a built sheet points at a file beside it (Helm failed to compile when the full
+// build's sheets named art/etch-contours.svg and dist/full/art did not exist).
+for (const sheet of ["dist/firehorse.css", "dist/full/firehorse.css", "dist/full/admin.css"]) for (const m of read(sheet).matchAll(/url\(["']?(?!data:|https?:|#)([^"')]+)["']?\)/g)) expect(exists(root, sheet.replace(/[^/]+$/, "") + m[1]), `${sheet}: url(${m[1]}) does not exist`);
 for (const [k, t] of targets(pkg.exports)) expect(t.includes("*") ? exists(dir, t) : listed.includes(t.replace(/^\.\//, "")), `tarball export ${k}: ${t} is not in the tarball`);
 rmSync(dir, { recursive: true, force: true });
 
