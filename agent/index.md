@@ -23,59 +23,59 @@
 
 | ID | Name | Section | Groups | Demo |
 |---|---|---|---|---|
-| `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#NEU) |
-| `TON` | Tones | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#TON) |
-| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.rascode.dev/foundations/#TYP) |
-| `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#SPC) |
-| `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#RAD) |
-| `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#ELV) |
+| `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.rascode.dev/foundations/neutral-ramp/) |
+| `TON` | Tones | Foundations | — | [open](https://firehorse.rascode.dev/foundations/tones/) |
+| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.rascode.dev/foundations/type/) |
+| `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/space/) |
+| `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/radius/) |
+| `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/elevation/) |
 | `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/#MOT) |
-| `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/#STK) |
-| `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/#CLS) |
-| `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/#GRD) |
-| `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/#COL) |
-| `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/#FND) |
-| `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/#CIN) |
-| `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#PNL) |
-| `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#ESP) |
-| `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#CTB) |
+| `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/stack/) |
+| `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/cluster/) |
+| `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/auto-grid/) |
+| `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/columns/) |
+| `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/fender/) |
+| `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/cinch/) |
+| `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/offset-panel/) |
+| `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/etched-split/) |
+| `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/cta-band/) |
 | `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.rascode.dev/components/actions/button/) |
 | `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
 | `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
-| `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/#LGS) |
-| `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
-| `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
-| `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/#KVL) |
-| `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/#CKL) |
-| `STP` | Steps | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.rascode.dev/components/content/#STP) |
-| `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/#CAR) |
-| `LST` | List & timeline | Content | — | [open](https://firehorse.rascode.dev/components/content/#LST) |
-| `DET` | Details, code, divider | Content | — | [open](https://firehorse.rascode.dev/components/content/#DET) |
-| `TIR` | Pricing tiers | Content | — | [open](https://firehorse.rascode.dev/components/content/#TIR) |
-| `FEA` | Features | Content | — | [open](https://firehorse.rascode.dev/components/content/#FEA) |
-| `TST` | Testimonial | Content | — | [open](https://firehorse.rascode.dev/components/content/#TST) |
-| `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#TAB) |
-| `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/#NAV) |
-| `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#BRG) |
-| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) | [open](https://firehorse.rascode.dev/components/navigation/#MEG) |
-| `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/#DRW) |
-| `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/#DRP) |
-| `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#ACC) |
-| `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/#DLG) |
-| `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/#FBK) |
-| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.rascode.dev/components/overlays/#EMP) |
-| `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/#AVT) |
-| `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/#AUT) |
-| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) · 5 Money input (4) | [open](https://firehorse.rascode.dev/forms/#FLD) |
-| `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#CHO) |
-| `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/#UPL) |
-| `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/#TAG) |
-| `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/#DTB) |
-| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/#TBL) |
-| `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
-| `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
+| `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/logo-strip/) |
+| `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/) |
+| `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/stats-strip/) |
+| `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/key-value-list/) |
+| `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/checklist/) |
+| `STP` | Steps | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.rascode.dev/components/content/steps/) |
+| `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/carousel/) |
+| `LST` | List & timeline | Content | — | [open](https://firehorse.rascode.dev/components/content/list-and-timeline/) |
+| `DET` | Details, code, divider | Content | — | [open](https://firehorse.rascode.dev/components/content/details-code-divider/) |
+| `TIR` | Pricing tiers | Content | — | [open](https://firehorse.rascode.dev/components/content/pricing-tiers/) |
+| `FEA` | Features | Content | — | [open](https://firehorse.rascode.dev/components/content/features/) |
+| `TST` | Testimonial | Content | — | [open](https://firehorse.rascode.dev/components/content/testimonial/) |
+| `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/tabs/) |
+| `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/navigation/) |
+| `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/hamburger/) |
+| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
+| `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/drawer/) |
+| `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
+| `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
+| `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
+| `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
+| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/) |
+| `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/avatars/) |
+| `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/sign-in-and-sign-up/) |
+| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) · 5 Money input (4) | [open](https://firehorse.rascode.dev/forms/fields/) |
+| `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/choices/) |
+| `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/upload-range-tags-sheet/) |
+| `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
+| `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/datatable/) |
+| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/table/) |
+| `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
+| `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/theme-select/) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
 | `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
 | `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
@@ -86,7 +86,7 @@
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#NEU.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/neutral-ramp/.
 
 ## TON · Tones
 
@@ -94,13 +94,13 @@ Category color. Set data-tone once; dots, marks, meta and links inside follow. R
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#TON.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/tones/.
 
 ## TYP · Type
 
 Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid roles scale with their container.
 
-Classes: `fh-label` `fh-title` `fh-body`
+Classes: `fh-title` `fh-body`
 
 ### TYP-1 · Type presets
 
@@ -109,25 +109,25 @@ Four faces as one attribute: data-fh-type sets the sans and display families and
 #### TYP-1.1 · Geist
 
 ```html
-<div class="site-type-row" data-fh-type="geist"><div class="site-type-row__meta"><span class="fh-label">Geist</span><code>data-fh-type="geist" · −4% display</code></div><div><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="geist"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 #### TYP-1.2 · Inter
 
 ```html
-<div class="site-type-row" data-fh-type="inter"><div class="site-type-row__meta"><span class="fh-label">Inter</span><code>data-fh-type="inter" · −3.5% display</code></div><div><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="inter"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 #### TYP-1.3 · Hanken Grotesk
 
 ```html
-<div class="site-type-row" data-fh-type="hanken"><div class="site-type-row__meta"><span class="fh-label">Hanken Grotesk</span><code>data-fh-type="hanken" · −5% display</code></div><div><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="hanken"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 #### TYP-1.4 · Archivo
 
 ```html
-<div class="site-type-row" data-fh-type="archivo"><div class="site-type-row__meta"><span class="fh-label">Archivo</span><code>data-fh-type="archivo" · −3% display</code></div><div><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="archivo"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 ## SPC · Space
@@ -136,7 +136,7 @@ Four faces as one attribute: data-fh-type sets the sans and display families and
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#SPC.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/space/.
 
 ## RAD · Radius
 
@@ -144,7 +144,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#RAD.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/radius/.
 
 ## ELV · Elevation
 
@@ -152,7 +152,7 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
 
 Classes: `fh-cluster` `fh-button`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#ELV.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/elevation/.
 
 ## MOT · Motion
 
@@ -453,7 +453,7 @@ Classes: `fh-cluster` `fh-badge` `fh-cluster--between` `fh-label` `fh-cluster--e
 
 Classes: `fh-grid` `fh-card` `fh-card--solid`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/layout/#GRD.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/layout/auto-grid/.
 
 ## COL · Columns
 
@@ -539,7 +539,7 @@ A long page that changes gear partway. A note closes the first chapter and opens
 
 Classes: `fh-page` `fh-main` `fh-section` `fh-grid` `fh-card` `fh-card--solid` `fh-label` `fh-small` `fh-muted` `fh-section--ruled` `fh-section-head` `fh-panel-inset` `fh-subheading` `fh-footer` `fh-footer--tall` `fh-footer__columns` `fh-footer__column` `fh-panel`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#FND.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/fender/.
 
 ## CIN · Cinch
 
@@ -547,7 +547,7 @@ A page's opening argument, right under its sub-nav: the claim on the left, the s
 
 Classes: `fh-section` `fh-section--flush` `fh-etched-split` `fh-etched-split--roomy` `fh-bleed` `fh-etched-split__pane` `fh-crosses` `fh-stack` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-heading` `fh-lede` `fh-body` `fh-muted`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#CIN.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/cinch/.
 
 ## PNL · Offset panel
 
@@ -555,7 +555,7 @@ A tinted column that begins where you mark it and runs to the bottom of the page
 
 Classes: `fh-page` `fh-main` `fh-section` `fh-label` `fh-small` `fh-muted` `fh-section--ruled` `fh-section-head` `fh-panel-inset` `fh-subheading` `fh-footer` `fh-footer--tall` `fh-footer__columns` `fh-footer__column` `fh-panel`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#PNL.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/offset-panel/.
 
 ## ESP · Etched split
 
@@ -563,7 +563,7 @@ A full-bleed pair that breaks out of the content column while its copy still lin
 
 Classes: `fh-etched-split` `fh-bleed` `fh-etched-split__pane` `fh-crosses` `fh-stack` `fh-stack--lg` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-heading` `fh-lede` `fh-checklist`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#ESP.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/etched-split/.
 
 ## CTB · CTA band
 
@@ -571,7 +571,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 
 Classes: `fh-cta-band` `fh-crosses` `fh-cta-band__main` `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-cta-band__title` `fh-lede` `fh-hero__actions` `fh-button` `fh-button--secondary` `fh-cta-band__aside` `fh-cubes` `fh-cube` `fh-cube--lg` `fh-cta-band__people` `fh-avatars` `fh-avatar` `fh-cta-band__fine`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/#CTB.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/patterns/cta-band/.
 
 ## BTN · Button
 
@@ -989,7 +989,7 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
 
 Classes: `fh-grid` `fh-grid--ruled` `fh-grid--etched` `fh-card` `fh-card__meta` `fh-card__title` `fh-card__body` `fh-card__footer` `fh-card__price` `fh-action`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CRD.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/.
 
 ## STA · Stats strip
 
@@ -997,7 +997,7 @@ One column, two, or a row, depending on the slot.
 
 Classes: `fh-stats`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#STA.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/stats-strip/.
 
 ## KVL · Key value list
 
@@ -1058,7 +1058,7 @@ Classes: `fh-kv` `fh-kv--single` `fh-kv--fields` `fh-input` `fh-kv__full` `fh-te
 
 Classes: `fh-checklist`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CKL.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/checklist/.
 
 ## STP · Steps
 
@@ -1106,7 +1106,7 @@ Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and 
 
 Classes: `fh-carousel` `fh-carousel__track` `fh-carousel__slide` `fh-label` `fh-stats` `fh-carousel__count`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#CAR.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/carousel/.
 
 ## LST · List & timeline
 
@@ -1114,13 +1114,13 @@ Rows with a visual, text and a trailing slot. A dashed timeline for activity.
 
 Classes: `fh-stack` `fh-stack--xl` `fh-list` `fh-avatar` `fh-list__title` `fh-list__link` `fh-list__meta` `fh-badge` `fh-avatar--generated` `fh-timeline`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#LST.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/list-and-timeline/.
 
 ## DET · Details, code, divider
 
 Classes: `fh-stack` `fh-stack--lg` `fh-dl` `fh-divider` `fh-code` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-small` `fh-muted` `fh-kbd`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#DET.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/details-code-divider/.
 
 ## TIR · Pricing tiers
 
@@ -1128,19 +1128,19 @@ The featured tier glows in its tone; every tier stacks or sits side by side by c
 
 Classes: `fh-tiers` `fh-tier` `fh-tier__name` `fh-tier__price` `fh-tier__pitch` `fh-checklist` `fh-button` `fh-button--secondary` `fh-button--block` `fh-tier--featured` `fh-tier__flag` `fh-badge`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#TIR.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/pricing-tiers/.
 
 ## FEA · Features
 
 Classes: `fh-grid` `fh-feature` `fh-feature__icon`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#FEA.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/features/.
 
 ## TST · Testimonial
 
 Classes: `fh-testimonial` `fh-person` `fh-avatar` `fh-avatar--circle` `fh-person__text`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/#TST.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/testimonial/.
 
 ## TAB · Tabs
 
@@ -1148,7 +1148,7 @@ Underline tabs that scroll sideways when they run out of room. fh-tabs--mono for
 
 Classes: `fh-stack` `fh-stack--lg` `fh-tabs` `fh-tabs--mono`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#TAB.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/tabs/.
 
 ## NAV · Navigation
 
@@ -1156,7 +1156,7 @@ Pagination, a wizard stepper, search and a side nav.
 
 Classes: `fh-stack` `fh-stack--lg` `fh-search` `fh-sr-only` `fh-kbd` `fh-stepper` `fh-pagination` `fh-sidenav` `fh-label` `fh-badge` `fh-sidenav__area` `fh-sidenav__area-head` `fh-sidenav__row` `fh-cluster` `fh-icon` `fh-sidenav__label` `fh-sidenav__badge` `fh-sidenav__chevron` `fh-sidenav__children` `fh-sidenav__child`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#NAV.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/navigation/.
 
 ## BRG · Hamburger
 
@@ -1164,7 +1164,7 @@ Three bars, seven morphs, every state. Open comes from aria-expanded, a sibling 
 
 Classes: `fh-burger` `fh-burger--boxed` `fh-burger--open` `fh-burger--label` `fh-burger--arrow` `fh-burger--spin` `fh-burger--squeeze` `fh-burger--minus` `fh-burger--plus` `fh-burger--dots` `fh-burger--tone`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#BRG.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/hamburger/.
 
 ## MEG · Mega panel
 
@@ -1248,7 +1248,7 @@ Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS
 
 Classes: `fh-button` `fh-button--secondary` `fh-icon` `fh-menu` `fh-menu__label` `fh-menu__danger`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/#DRP.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/dropdown-menu/.
 
 ## ACC · Accordion
 
@@ -1256,7 +1256,7 @@ Native <details> with a shared name, so only one stays open. The height animates
 
 Classes: `fh-accordion`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#ACC.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/accordion/.
 
 ## DLG · Dialog, menu, toast
 
@@ -1264,7 +1264,7 @@ Native <dialog> and popovers, with enter and exit animations from @starting-styl
 
 Classes: `fh-cluster` `fh-button` `fh-button--secondary` `fh-button--ghost` `fh-menu` `fh-dialog` `fh-dialog__header` `fh-stack` `fh-stack--xs` `fh-label` `fh-subheading` `fh-close` `fh-dialog__body` `fh-body` `fh-dialog__footer`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/#DLG.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/.
 
 ## FBK · Feedback
 
@@ -1406,7 +1406,7 @@ No photo? A tone mesh behind initials. Each tone walks its own neighbours on the
 Overlapping stack with a counter, a stack that fans out on hover, a packed cluster, a plain row, and a person with name and role.
 
 ```html
-<div class="site-avatar-groups">
+<div class="fh-cluster" style="--fh-gap: var(--fh-space-8) var(--fh-space-10)">
   <div class="fh-avatars" role="group" aria-label="Team" data-fh="AVT-5">
     <span class="fh-avatar" data-face><img src="img/avatars/ava.webp" alt="Ava"></span>
     <span class="fh-avatar" data-face><img src="img/avatars/cole.webp" alt="Cole"></span>
@@ -1845,15 +1845,15 @@ Real radios and checkboxes under the styling, so they submit with the form and w
 
 Classes: `fh-stack` `fh-stack--lg` `fh-segmented` `fh-sr-only` `fh-check` `fh-switch`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#CHO.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/choices/.
 
 ## UPL · Upload, range, tags, sheet
 
 A dropzone over a real file input, a styled range, a tag field, and a dialog that slides in as a side sheet.
 
-Classes: `fh-stack` `fh-range-field` `fh-range` `fh-dropzone` `fh-dropzone--compact` `fh-dropzone__title` `fh-dropzone__hint` `fh-dropzone__error`
+Classes: `fh-grid` `fh-dropzone` `fh-dropzone__title` `fh-dropzone__hint` `fh-stack` `fh-stack--lg` `fh-field` `fh-range` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `fh-button` `fh-button--secondary` `fh-dialog` `fh-dialog--sheet` `fh-dialog__header` `fh-subheading` `fh-close` `fh-dialog__body` `fh-check` `fh-switch` `fh-dl` `fh-dialog__footer`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/#UPL.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/upload-range-tags-sheet/.
 
 ## TAG · Tag field
 
@@ -1916,7 +1916,7 @@ Classes: `fh-field` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `
 
 Classes: `fh-dt`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/data/#DTB.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/data/datatable/.
 
 ## TBL · Table
 
@@ -1964,7 +1964,7 @@ Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-t
 
 Classes: 
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THM.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/brand-theme-file/.
 
 ## THS · Theme select
 
@@ -1972,7 +1972,7 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 
 Classes: `fh-field` `fh-select`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THS.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/theme-select/.
 
 ## TML · Timelines
 

@@ -17,8 +17,10 @@ import { fileURLToPath } from "node:url";
 import { showAll, isPublic, shownStatus, tierOf, categoryOf, chip } from "./release.mjs";
 import { LAYOUT, isBlock } from "./fh-tag.mjs";
 
-/** release.json category keys whose families get specimen pages. Relay L6 adds the rest here. */
-export const SPECIMEN_CATEGORIES = ["actions"];
+/** release.json category keys whose families get specimen pages. Two live categories are not here yet:
+ *  motion (its variants are data-fh-enter and scroll classes on site helper tiles, art and cards: the helper is the
+ *  element that moves) and pro (TML-1.3, TML-1.4, CAL-2.1 and KEY-2.1 are whole site demos, on private pages). */
+export const SPECIMEN_CATEGORIES = ["actions", "foundations", "layout", "forms", "navigation", "overlays", "content", "data", "design-patterns", "theming"];
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://firehorse.rascode.dev";
@@ -194,12 +196,16 @@ export const withSpecimens = (list) => {
   const index = readIndex();
   if (!index) return list;
   const out = [];
+  // An address belongs to one family (and to no docs page): two families whose names slug alike fail the build.
+  const taken = new Map(list.map((p) => [p.path, `the page ${p.path}`]));
   for (const p of list) {
     out.push(p);
     const fams = familiesFor(index, p.path);
     if (!fams.length) continue;
     const specs = fams.map((f) => {
       const path = specimenPath(f);
+      if (taken.has(path)) throw new Error(`specimen: ${f.id} (${f.name}) and ${taken.get(path)} share the address ${path}`);
+      taken.set(path, `${f.id} (${f.name})`);
       return {
         file: null, rel: null, path, out: path.slice(1) + "index.html",
         meta: { path, name: f.name, parent: p.path, tone: p.meta.tone, icon: p.meta.icon, order: p.meta.order,

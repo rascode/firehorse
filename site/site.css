@@ -4089,3 +4089,6 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-specimen__ask code { display: block; padding: var(--fh-space-3) var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-md); font-size: var(--fh-text-caption); white-space: normal; }
 .site-specimen__foot { padding-block: var(--fh-space-6) var(--fh-space-12); }
 .site-specimen__preview { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--fh-space-2); padding: var(--fh-space-4); container: fh-slot / inline-size; pointer-events: none; }
+/* A large family (a datatable, a mega panel, a page pattern) stays inside its card: the preview is capped and
+   clips, and contain makes it the box for anything positioned inside. Category grid only; stages are untouched. */
+.site-specimen__preview { max-block-size: 16rem; overflow: clip; contain: layout paint; }

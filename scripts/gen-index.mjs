@@ -132,9 +132,10 @@ for (const f of families.values()) {
   const leafClasses = f.groups.flatMap((g) => g.classes ?? []);
   if (f.variants.length || leafClasses.length) f.classes = [...new Set([...f.variants.flatMap((v) => v.classes), ...leafClasses])];
   // Clean family markup (stage and chrome split): the first public variant (or group with its own markup), in
-  // group order; with none, the family's own stage with its site-* wrappers unwrapped.
+  // group order; with none, the family's own stage with its site-* wrappers unwrapped. A public family whose
+  // groups are all held (UPL) takes its own stage, never a held group's markup.
   const entries = f.groups.flatMap((g) => (g.variants.length ? g.variants.map((vid) => f.variants.find((v) => v.id === vid)) : g.markup ? [{ id: g.id, markup: g.markup }] : []));
-  const first = entries.find((e) => isPublic(e.id)) ?? entries[0];
+  const first = entries.find((e) => isPublic(e.id)) ?? (isPublic(f.id) && f.markup ? null : entries[0]);
   // stageClasses: every fh- class the family's whole docs stage uses, kept so the public CSS build (builds.mjs)
   // still counts parts of a demo that are no variant of their own (a spinner beside the meters).
   if (f.markup) f.stageClasses = classesOf(f.markup);

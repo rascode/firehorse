@@ -78,9 +78,11 @@ export const fieldTypeStatus = (key) => {
 /** Live field types, in group order. */
 export const liveFieldTypes = () => fieldGroups({ live: true }).flatMap((g) => g.types);
 
-/** A release-for target (a page path like "/commerce/" or a family ID like "CUB") is held. */
+/** A release-for target is held: a page path ("/commerce/"), a category key ("motion") or a family ID ("CUB").
+ *  Several targets: held when any one is. Hand-written nav links (site/parts) name their category, so a category
+ *  Helm holds leaves the header, drawer and footer on the next build. */
 export const isHeldTarget = (v) => String(v).split(/\s+/).filter(Boolean)
-  .some((t) => (t.startsWith("/") ? pageStatus(t.split("#")[0]) !== "live" : !isPublic(t)));
+  .some((t) => (t.startsWith("/") ? pageStatus(t.split("#")[0]) !== "live" : categories.has(t) ? categories.get(t).status !== "live" : !isPublic(t)));
 
 /** The small chip the --all preview puts in a held, draft or Pro head. */
 export const chip = (status, tier = "free") => {

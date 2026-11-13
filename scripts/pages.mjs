@@ -10,7 +10,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expandGenerated, summaryCells } from "./developer.mjs";
-import { releasePages, dropHeldLinks, chip } from "./release.mjs";
+import { releasePages, dropHeldLinks, chip, elements, cut } from "./release.mjs";
 import { withSpecimens, categoryGrid, redirectsFor } from "./specimen.mjs";
 
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -249,8 +249,9 @@ const MEGA = [
   { title: "Media", tone: "fuchsia", paths: [{ path: "/media/", name: "Social & print", icon: "image", description: "Posts, stories and print sizes" }, { path: "/media/#slide-layouts", name: "Slides", icon: "panels-top-left", description: "Slide layouts for decks" }] },
 ];
 const navParts = (all) => {
-  // Unlisted pages ("unlisted": true, e.g. prototypes) build and link fine but stay out of the menus.
-  const list = all.filter((x) => !x.meta.unlisted);
+  // Unlisted pages ("unlisted": true, e.g. prototypes) build and link fine but stay out of the menus. Specimen
+  // pages stay out of the menus too (their category's grid lists them); ⌘K finds them.
+  const list = all.filter((x) => !x.meta.unlisted && !x.specimen);
   const by = (path) => list.find((x) => x.path === path);
   const top = list.filter((x) => x.path !== "/" && !x.meta.parent);
   const li = (x, pre = "") => `${pre}<li><a href="${x.path}"><span class="fh-roll">${escHtml(x.meta.name)}</span></a></li>`;
@@ -274,15 +275,45 @@ ${items.map((x) => item(x, "          ")).join("\n")}
     </div>`;
   const docsList = top.flatMap((x) => [x, ...list.filter((k) => k.meta.parent === x.path)]).map((x) => li(x, x.meta.parent ? "        " : "        ").replace("<li>", x.meta.parent ? '<li class="site-drawer__sub">' : "<li>")).join("\n");
   const footer = top.map((x) => `<li><a href="${x.path}">${escHtml(x.meta.name)}</a></li>`).join("");
-  const cmdk = [...list.filter((x) => x.path !== "/"), ...MEGA.flatMap((c) => (c.paths ?? []).filter((p) => typeof p !== "string" && p.path.includes("#") && by(p.path.split("#")[0])).map((p) => ({ path: p.path, meta: { name: p.name, tone: by(p.path.split("#")[0])?.meta.tone, icon: "monitor", parent: p.path.split("#")[0] } })))].map((x) => `    <a href="${x.path}" data-tone="${x.meta.tone ?? "accent"}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span>${escHtml(x.meta.parent ? `${by(x.meta.parent).meta.name} › ${x.meta.name}` : x.meta.name)}</a>`).join("\n");
+  const cmdk = [...all.filter((x) => x.path !== "/" && !x.meta.unlisted), ...MEGA.flatMap((c) => (c.paths ?? []).filter((p) => typeof p !== "string" && p.path.includes("#") && by(p.path.split("#")[0])).map((p) => ({ path: p.path, meta: { name: p.name, tone: by(p.path.split("#")[0])?.meta.tone, icon: "monitor", parent: p.path.split("#")[0] } })))].map((x) => `    <a href="${x.path}" data-tone="${x.meta.tone ?? "accent"}"><span class="fh-icon-tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span>${escHtml(x.meta.parent ? `${by(x.meta.parent).meta.name} › ${x.meta.name}` : x.meta.name)}</a>`).join("\n");
   const chips = top.map((x, i) => `          <a class="fh-chip fh-chip--indexed" data-tone="${x.meta.tone ?? "accent"}" href="${x.path}"><b class="fh-chip__index">${pad(i + 1)}</b><span class="fh-roll">${escHtml(x.meta.name)}</span></a>`).join("\n");
   return { "{{DOCS_MEGA}}": mega, "{{DOCS_LIST}}": docsList, "{{FOOTER_DOCS}}": footer, "{{CMDK_PAGES}}": cmdk, "{{CATEGORY_CHIPS}}": chips };
+};
+
+/** A category grid page's <main>: the top-level sections that show families give way to the grid (in place of
+ *  the first one); sections with no family (Foundations' icons and tokens) stay as they are. A demo no specimen
+ *  shows (CAL-3 on Forms while Pro has none, or a demo with no ID like Theming's harmony) keeps its section, with
+ *  the demos that have a specimen cut from it. A dropped section's anchor (#menus, or its data-fh-was) opens the
+ *  category page, so links to it land. specOf: family ID → its specimen path in this build. */
+const gridMain = (p, main, redirects, moved, specOf) => {
+  const secs = elements(main, /^<section\b/);
+  const top = secs.filter((s) => !secs.some((o) => o !== s && o.start < s.start && o.end >= s.end));
+  const fams = top.filter((s) => /\sdata-fh-id="[A-Z]{3}"/.test(main.slice(s.start, s.end)));
+  if (!fams.length) return "{{PAGE_HEAD}}\n" + categoryGrid(p, redirects);
+  const left = (s) => {
+    const html = main.slice(s.start, s.end);
+    const demos = elements(html, /\sdata-fh-id="[A-Z]{3}(?:-\d+(?:\.\d+)?)?"/).map((e) => ({ ...e, fam: e.open.match(/data-fh-id="([A-Z]{3})/)[1] }));
+    const moves = demos.filter((e) => specOf.has(e.fam));
+    const untagged = elements(html, /class="site-demo\b/).filter((d) => !/\sdata-fh-id=/.test(d.open) && !demos.some((e) => e.start <= d.start && e.end >= d.end));
+    // A layout wrapper (fh-split, fh-grid) the cut left empty goes too.
+    return moves.length < demos.length || untagged.length ? cut(html, moves).replace(/\n[ \t]*<div class="fh-[\w-]+(?: [\w-]+)*">\s*<\/div>/g, "") : "";
+  };
+  let out = "", last = 0, grid = false;
+  for (const s of fams) {
+    const kept = left(s);
+    if (!kept) for (const id of [s.open.match(/\sid="([^"]+)"/)?.[1], s.open.match(/\sdata-fh-was="([^"]+)"/)?.[1]]) if (id && !moved.has(id)) moved.set(id, p.path);
+    out += main.slice(last, s.start) + (grid ? "" : categoryGrid(p, redirects)) + (kept ? "\n\n" + kept : "");
+    grid = true; last = s.end;
+  }
+  out += main.slice(last);
+  return out.includes("{{PAGE_HEAD}}") ? out : "{{PAGE_HEAD}}\n" + out.replace(/^\s*\n/, "");
 };
 
 /** Build every page's <main> (head, anchors, labels, cards) once, so links can resolve across pages. */
 export const assemble = (list = sitePages()) => {
   // Old addresses on a category grid page (#c-button, #BTN-1.2) that now live on a specimen page.
   const moved = new Map();
+  const specOf = new Map(list.filter((x) => x.specimen).map((x) => [x.specimen.id, x.path]));
   for (const p of list) {
     let main = p.main;
     // A specimen page brings its own head (scripts/specimen.mjs); it gets no category masthead or dock.
@@ -295,9 +326,15 @@ export const assemble = (list = sitePages()) => {
       // the Index). The dock keeps one chip per family; their #anchors resolve to the specimens below.
       if (p.specimenGrid) {
         const redirects = redirectsFor(p);
-        for (const c of chips) { const to = c.fid && redirects.get(c.fid); if (to && !redirects.has(c.id)) redirects.set(c.id, to.split("#")[0]); }
+        // A demo of another family's group (STP-2 on Forms) opens that family's specimen, when it has one.
+        for (const c of chips) {
+          const own = c.fid && specOf.get(c.fid.slice(0, 3));
+          if (c.fid && !redirects.has(c.fid) && own) redirects.set(c.fid, c.fid.includes("-") ? `${own}#${c.fid}` : own);
+          const to = c.fid && redirects.get(c.fid);
+          if (to && !redirects.has(c.id)) redirects.set(c.id, to.split("#")[0]);
+        }
         for (const [id, to] of redirects) moved.set(id, to);
-        main = "{{PAGE_HEAD}}\n" + categoryGrid(p, redirects);
+        main = gridMain(p, main, redirects, moved, specOf);
       }
       main = (main.includes("{{PAGE_HEAD}}") ? main : "{{PAGE_HEAD}}\n" + main).replace("{{PAGE_HEAD}}", () => pageHead(p, chips, list));
     }

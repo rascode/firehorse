@@ -5,8 +5,8 @@
 
       <nav class="fh-nav" aria-label="Site">
         <button class="fh-nav__link" type="button" popovertarget="mega-docs"><span class="fh-roll">Docs</span></button>
-        <button class="fh-nav__link site-nav-menu" type="button" popovertarget="nav-pro"><span class="fh-roll">Pro</span></button>
-        <a class="fh-nav__link" href="/stable/"><span class="fh-roll">The Stable</span></a>
+        <button class="fh-nav__link site-nav-menu" type="button" popovertarget="nav-pro" data-fh-release-for="/pro/"><span class="fh-roll">Pro</span></button>
+        <a class="fh-nav__link" data-fh-release-for="/stable/" href="/stable/"><span class="fh-roll">The Stable</span></a>
         <button class="fh-nav__link site-nav-menu" type="button" popovertarget="nav-rascode"><span class="fh-roll">Rascode</span></button>
       </nav>
 
@@ -65,14 +65,14 @@
   </div>
 
   <!-- Header dropdowns (native popovers, anchored to their buttons). -->
-  <div id="nav-pro" popover class="fh-menu site-nav-panel">
+  <div id="nav-pro" popover class="fh-menu site-nav-panel" data-fh-release-for="/pro/">
     <p class="fh-menu__label">Firehorse Pro</p>
-    <a class="site-nav-item" href="/pro/" style="--_w: var(--site-walk-0)"><span class="site-nav-ico"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds on top of the free core</small></a>
-    <a class="site-nav-item" href="/pro/keys/" style="--_w: var(--site-walk-3)"><span class="site-nav-ico"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Copy-only secrets, reveal, rotation</small></a>
-    <a class="site-nav-item" href="/pro/project-management/" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones, schedules, date pickers</small></a>
-    <a class="site-nav-item" href="/forms/#c-field-types" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><span class="fh-roll">Sample data</span><small>Generate values from any field type</small></a>
+    <a class="site-nav-item" data-fh-release-for="/pro/" href="/pro/" style="--_w: var(--site-walk-0)"><span class="site-nav-ico"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds on top of the free core</small></a>
+    <a class="site-nav-item" data-fh-release-for="pro KEY" href="/pro/keys/" style="--_w: var(--site-walk-3)"><span class="site-nav-ico"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Copy-only secrets, reveal, rotation</small></a>
+    <a class="site-nav-item" data-fh-release-for="pro TML" href="/pro/project-management/" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones, schedules, date pickers</small></a>
+    <a class="site-nav-item" data-fh-release-for="forms" href="/forms/#c-field-types" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><span class="fh-roll">Sample data</span><small>Generate values from any field type</small></a>
     <hr>
-    <a class="site-nav-item" href="/pro/#pricing" style="--_w: var(--site-walk-8)"><span class="site-nav-ico"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing &amp; early access</span></a>
+    <a class="site-nav-item" data-fh-release-for="/pro/" href="/pro/#pricing" style="--_w: var(--site-walk-8)"><span class="site-nav-ico"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing &amp; early access</span></a>
   </div>
   <div id="nav-rascode" popover class="fh-menu site-nav-panel">
     <p class="fh-menu__label site-nav-panel__brand"><span class="site-rascode-wordmark" role="img" aria-label="Rascode"></span></p>
@@ -86,19 +86,19 @@
   <div id="mega-docs" popover class="fh-mega site-docs-mega">
 {{DOCS_MEGA}}
     <div class="fh-mega__rail">
-      <a class="site-nav-item" href="/components/#index" style="--_w: var(--site-walk-4)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><span class="fh-roll">The Firehorse Index</span><small>Every component, by ID</small></a>
+      <a class="site-nav-item" data-fh-release-for="/components/" href="/components/#index" style="--_w: var(--site-walk-4)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><span class="fh-roll">The Firehorse Index</span><small>Every component, by ID</small></a>
       <a class="site-nav-item" data-fh-release-for="/playground.html" href="/playground.html" style="--_w: var(--site-walk-6)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-roll">Open the playground</span><small>Build a page from the library</small></a>
       <section class="site-mega-new" style="--_w: var(--site-walk-5)">
         <h3><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i>New</h3>
         <ul>
           <li data-fh-release-for="/media/"><a href="/media/"><span class="fh-roll">Media &amp; slides</span></a></li>
-          <li><a href="#motion"><span class="fh-roll">Motion layer</span></a></li>
-          <li><a href="#data"><span class="fh-roll">Datatables</span></a></li>
-          <li><a href="#menus"><span class="fh-roll">Drawers, hamburgers &amp; menus</span></a></li>
-          <li><a href="#forms"><span class="fh-roll">Sign-in forms</span></a></li>
+          <li data-fh-release-for="motion"><a href="#motion"><span class="fh-roll">Motion layer</span></a></li>
+          <li data-fh-release-for="data"><a href="#data"><span class="fh-roll">Datatables</span></a></li>
+          <li data-fh-release-for="navigation"><a href="#menus"><span class="fh-roll">Drawers, hamburgers &amp; menus</span></a></li>
+          <li data-fh-release-for="forms"><a href="#forms"><span class="fh-roll">Sign-in forms</span></a></li>
           <li data-fh-release-for="CAT"><a href="#catalog"><span class="fh-roll">Card catalog</span></a></li>
-          <li><a href="#icons"><span class="fh-roll">Icons</span></a></li>
-          <li><a href="#themes"><span class="fh-roll">Themes</span></a></li>
+          <li data-fh-release-for="foundations"><a href="#icons"><span class="fh-roll">Icons</span></a></li>
+          <li data-fh-release-for="theming"><a href="#themes"><span class="fh-roll">Themes</span></a></li>
         </ul>
       </section>
     </div>
@@ -113,13 +113,13 @@
 {{DOCS_MEGA}}
       </section>
       <div class="site-drawer-rich__rail">
-      <section aria-label="Firehorse Pro">
+      <section aria-label="Firehorse Pro" data-fh-release-for="/pro/">
         <h3 class="site-drawer-rich__label">Pro</h3>
-        <a class="site-nav-item" href="/pro/" style="--_w: var(--site-walk-0)"><span class="site-nav-ico"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds to the core</small></a>
-        <a class="site-nav-item" href="/pro/keys/" style="--_w: var(--site-walk-3)"><span class="site-nav-ico"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Secrets, reveal, rotation</small></a>
-        <a class="site-nav-item" href="/pro/project-management/" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones and schedules</small></a>
-        <a class="site-nav-item" href="/forms/#c-field-types" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><span class="fh-roll">Sample data</span><small>Values from any field type</small></a>
-        <a class="site-nav-item" href="/pro/#pricing" style="--_w: var(--site-walk-8)"><span class="site-nav-ico"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing</span><small>Early access</small></a>
+        <a class="site-nav-item" data-fh-release-for="/pro/" href="/pro/" style="--_w: var(--site-walk-0)"><span class="site-nav-ico"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds to the core</small></a>
+        <a class="site-nav-item" data-fh-release-for="pro KEY" href="/pro/keys/" style="--_w: var(--site-walk-3)"><span class="site-nav-ico"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Secrets, reveal, rotation</small></a>
+        <a class="site-nav-item" data-fh-release-for="pro TML" href="/pro/project-management/" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones and schedules</small></a>
+        <a class="site-nav-item" data-fh-release-for="forms" href="/forms/#c-field-types" style="--_w: var(--site-walk-5)"><span class="site-nav-ico"><i class="fh-icon fh-icon--wand-sparkles" aria-hidden="true"></i></span><span class="fh-roll">Sample data</span><small>Values from any field type</small></a>
+        <a class="site-nav-item" data-fh-release-for="/pro/" href="/pro/#pricing" style="--_w: var(--site-walk-8)"><span class="site-nav-ico"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing</span><small>Early access</small></a>
       </section>
       </div>
       <div class="site-drawer-rich__mid">
@@ -127,16 +127,16 @@
         <h3 class="site-drawer-rich__label"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i> New</h3>
         <div class="site-drawer-new__chips">
           <a class="site-drawer-new__chip" data-fh-release-for="/media/" href="/media/" style="--_w: var(--site-walk-0)"><i aria-hidden="true"></i><span class="fh-roll">Media &amp; slides</span></a>
-          <a class="site-drawer-new__chip" href="#motion" style="--_w: var(--site-walk-3)"><i aria-hidden="true"></i><span class="fh-roll">Motion layer</span></a>
-          <a class="site-drawer-new__chip" href="#data" style="--_w: var(--site-walk-1)"><i aria-hidden="true"></i><span class="fh-roll">Datatables</span></a>
-          <a class="site-drawer-new__chip" href="#menus" style="--_w: var(--site-walk-5)"><i aria-hidden="true"></i><span class="fh-roll">Drawers &amp; menus</span></a>
-          <a class="site-drawer-new__chip" href="#forms" style="--_w: var(--site-walk-6)"><i aria-hidden="true"></i><span class="fh-roll">Sign-in forms</span></a>
+          <a class="site-drawer-new__chip" data-fh-release-for="motion" href="#motion" style="--_w: var(--site-walk-3)"><i aria-hidden="true"></i><span class="fh-roll">Motion layer</span></a>
+          <a class="site-drawer-new__chip" data-fh-release-for="data" href="#data" style="--_w: var(--site-walk-1)"><i aria-hidden="true"></i><span class="fh-roll">Datatables</span></a>
+          <a class="site-drawer-new__chip" data-fh-release-for="navigation" href="#menus" style="--_w: var(--site-walk-5)"><i aria-hidden="true"></i><span class="fh-roll">Drawers &amp; menus</span></a>
+          <a class="site-drawer-new__chip" data-fh-release-for="forms" href="#forms" style="--_w: var(--site-walk-6)"><i aria-hidden="true"></i><span class="fh-roll">Sign-in forms</span></a>
           <a class="site-drawer-new__chip" data-fh-release-for="CAT" href="#catalog" style="--_w: var(--site-walk-2)"><i aria-hidden="true"></i><span class="fh-roll">Card catalog</span></a>
-          <a class="site-drawer-new__chip" href="#icons" style="--_w: var(--site-walk-7)"><i aria-hidden="true"></i><span class="fh-roll">Icons</span></a>
-          <a class="site-drawer-new__chip" href="#themes" style="--_w: var(--site-walk-4)"><i aria-hidden="true"></i><span class="fh-roll">Themes</span></a>
+          <a class="site-drawer-new__chip" data-fh-release-for="foundations" href="#icons" style="--_w: var(--site-walk-7)"><i aria-hidden="true"></i><span class="fh-roll">Icons</span></a>
+          <a class="site-drawer-new__chip" data-fh-release-for="theming" href="#themes" style="--_w: var(--site-walk-4)"><i aria-hidden="true"></i><span class="fh-roll">Themes</span></a>
         </div>
       </section>
-      <a class="site-drawer-feature" href="/theming/#c-harmony">
+      <a class="site-drawer-feature" data-fh-release-for="theming" href="/theming/#c-harmony">
         <span class="site-drawer-rich__label">Featured</span>
         <span class="site-drawer-feature__body"><b>Colour harmony</b><small>One root colour in, a balanced palette out: analogous steps, tone steps and two split complements, as a CSS function and overlays.</small></span>
         <span class="site-drawer-feature__band" aria-hidden="true"><i style="--_w: var(--site-walk-5)"></i><i style="--_w: var(--site-walk-6)"></i><i style="--_w: var(--site-walk-7)"></i><i style="--_w: var(--site-walk-8)"></i><i style="--_w: var(--site-walk-0)"></i><i style="--_w: var(--site-walk-4)"></i><i style="--_w: var(--site-walk-1)"></i><i style="--_w: var(--site-walk-2)"></i><i style="--_w: var(--site-walk-3)"></i></span>
@@ -147,7 +147,7 @@
       <section aria-label="Rascode">
         <h3 class="site-drawer-rich__label">Rascode</h3>
         <a class="site-nav-item" href="#services" style="--_w: var(--site-walk-0)"><span class="site-nav-ico site-nav-ico--rascode" aria-hidden="true"></span><span class="fh-roll">Work with us</span><small>Design, AI and data</small></a>
-        <a class="site-nav-item" href="/stable/" style="--_w: var(--site-walk-6)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><span class="fh-roll">The Stable</span><small>Systems built on Firehorse</small></a>
+        <a class="site-nav-item" data-fh-release-for="/stable/" href="/stable/" style="--_w: var(--site-walk-6)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><span class="fh-roll">The Stable</span><small>Systems built on Firehorse</small></a>
         <a class="site-nav-item" data-fh-release-for="/playground.html" href="/playground.html" style="--_w: var(--site-walk-2)"><span class="site-nav-ico"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-roll">Playground</span><small>Build a page from the library</small></a>
       </section>
       <section aria-label="Get Firehorse">
@@ -164,13 +164,13 @@
 {{DOCS_LIST}}
       </ul>
     </div>
-    <div class="fh-drawer__group">
+    <div class="fh-drawer__group" data-fh-release-for="/pro/">
       <p class="fh-label">Pro</p>
       <ul>
         <li><a href="/pro/"><span class="fh-roll">Pro overview</span></a></li>
-        <li><a href="/pro/keys/"><span class="fh-roll">Key fields</span></a></li>
-        <li><a href="/pro/project-management/"><span class="fh-roll">Project management</span></a></li>
-        <li><a href="/forms/#c-field-types"><span class="fh-roll">Sample data</span></a></li>
+        <li data-fh-release-for="pro KEY"><a href="/pro/keys/"><span class="fh-roll">Key fields</span></a></li>
+        <li data-fh-release-for="pro TML"><a href="/pro/project-management/"><span class="fh-roll">Project management</span></a></li>
+        <li data-fh-release-for="forms"><a href="/forms/#c-field-types"><span class="fh-roll">Sample data</span></a></li>
         <li><a href="/pro/#pricing"><span class="fh-roll">Pricing &amp; early access</span></a></li>
       </ul>
     </div>
@@ -178,7 +178,7 @@
       <p class="fh-label">Rascode</p>
       <ul>
         <li><a href="#services"><span class="fh-roll">Work with us</span></a></li>
-        <li><a href="/stable/"><span class="fh-roll">The Stable</span></a></li>
+        <li data-fh-release-for="/stable/"><a href="/stable/"><span class="fh-roll">The Stable</span></a></li>
         <li data-fh-release-for="/playground.html"><a href="/playground.html"><span class="fh-roll">Playground</span></a></li>
         <li><a href="https://github.com/rascode/firehorse"><span class="fh-roll">Download from Git</span></a></li>
         <li><a href="https://github.com/rascode/firehorse/archive/refs/heads/main.zip"><span class="fh-roll">Download ZIP</span></a></li>

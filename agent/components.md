@@ -134,16 +134,16 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 
 ```html
 <!-- TYP-1.1 · Type presets › Geist -->
-<div data-fh-type="geist"><div><span class="fh-label">Geist</span><code>data-fh-type="geist" · −4% display</code></div><div><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="geist"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 
 <!-- TYP-1.2 · Type presets › Inter -->
-<div data-fh-type="inter"><div><span class="fh-label">Inter</span><code>data-fh-type="inter" · −3.5% display</code></div><div><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="inter"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 
 <!-- TYP-1.3 · Type presets › Hanken Grotesk -->
-<div data-fh-type="hanken"><div><span class="fh-label">Hanken Grotesk</span><code>data-fh-type="hanken" · −5% display</code></div><div><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="hanken"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 
 <!-- TYP-1.4 · Type presets › Archivo -->
-<div data-fh-type="archivo"><div><span class="fh-label">Archivo</span><code>data-fh-type="archivo" · −3% display</code></div><div><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+<div data-fh-type="archivo"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 ### SPC · Space
@@ -1700,18 +1700,35 @@ Real radios and checkboxes under the styling, so they submit with the form and w
 A dropzone over a real file input, a styled range, a tag field, and a dialog that slides in as a side sheet.
 
 ```html
-<div class="fh-stack">
-  <div class="fh-range-field" data-tone="sky" data-fh="UPL-1">
-    <label for="ink-coverage">Ink coverage</label>
-    <output for="ink-coverage">40</output>
-    <input class="fh-range" id="ink-coverage" type="range" min="0" max="100" value="40">
-  </div>
-  <div class="fh-range-field" data-fh="UPL-1">
-    <label for="print-size">Print size</label>
-    <output for="print-size">12</output>
-    <input class="fh-range" id="print-size" type="range" min="8" max="16" value="12" disabled>
+<div class="fh-grid" data-cols="2" style="--fh-grid-min: 17rem; --fh-gap: var(--fh-space-6)">
+  <label class="fh-dropzone" data-tone="sky" data-fh="UPL">
+    <input type="file" multiple>
+    <span class="fh-dropzone__title">Drop files or browse</span>
+    <span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span>
+  </label>
+  <div class="fh-stack fh-stack--lg">
+    <div class="fh-field" data-tone="lime"><label for="fx-budget">Monthly budget</label><input class="fh-range" id="fx-budget" type="range" min="500" max="5000" step="100" value="1700" data-fh="UPL"></div>
+    <div class="fh-field fh-field--optional"><label for="fx-tags">Channels</label>
+      <div class="fh-tags">
+        <span class="fh-chip" data-tone="sky">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span>
+        <span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span>
+        <input id="fx-tags" placeholder="Add a channel">
+      </div>
+    </div>
+    <button class="fh-button fh-button--secondary" type="button" data-open-dialog="demo-sheet">Open side sheet</button>
   </div>
 </div>
+<dialog class="fh-dialog fh-dialog--sheet" id="demo-sheet" aria-labelledby="demo-sheet-title">
+  <form method="dialog">
+    <div class="fh-dialog__header"><h3 class="fh-subheading" id="demo-sheet-title">Agent settings</h3><button class="fh-close" value="cancel" aria-label="Close"></button></div>
+    <div class="fh-dialog__body fh-stack">
+      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch" checked> Answer after hours</label>
+      <label class="fh-check"><input class="fh-switch" type="checkbox" role="switch"> Voice replies</label>
+      <dl class="fh-dl"><div><dt>Agent</dt><dd>Wes</dd></div><div><dt>Plan</dt><dd>Monthly</dd></div></dl>
+    </div>
+    <div class="fh-dialog__footer"><button class="fh-button" value="ok">Save</button></div>
+  </form>
+</dialog>
 ```
 
 ### TAG · Tag field
