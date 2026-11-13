@@ -26,7 +26,7 @@ const RULES = [
   { n: 11, title: "How space relates", check: false },
   { n: 12, title: "Radius from the radius scale", check: true },
   { n: 13, title: "Border width from the border scale", check: true },
-  { n: 14, title: "Etched rules and a solid focus ring", check: false },
+  { n: 14, title: "Border style from the card preset", check: true },
   { n: 15, title: "Category color from data-tone", check: true },
   { n: 16, title: "Text uses the text roles", check: false },
   { n: 17, title: "One accent per view", check: false },
@@ -211,6 +211,12 @@ function isSpaceProp(prop) {
     && prop !== "margin-trim";
 }
 
+// Rule 14 (Rascode, 2026-11-13, T1113-02): a border's style always comes through the card preset,
+// var(--fh-card-border-style, <today's style>). Focus rings (outline) are rule 27. Inputs stay solid:
+// a block whose selector names a form control, a select picker, a range thumb, or forced colors is exempt.
+const BORDER_STYLE_PROP = /^border(-(top|right|bottom|left|block|inline)(-(start|end))?)?(-style)?$/;
+const INPUT_CHAIN = /(?<![\w-])(input|textarea|select)(?![\w-])|\.fh-(input|select|textarea)(?![\w-])|::picker|slider-thumb|range-thumb|forced-colors/;
+
 function isBorderProp(prop) {
   if (prop === "border" || prop === "outline" || prop === "outline-width" || prop === "border-width") return true;
   if (/^border-(block|inline)(-start|-end)?$/.test(prop)) return true;
@@ -286,7 +292,7 @@ function parseSheet(lines) {
     if (!raw || !stack.length) return;
     const block = stack[stack.length - 1];
     block.lines.push({ n, text: raw });
-    decls.push({ n, text: raw, gated: block.gated });
+    decls.push({ n, text: raw, gated: block.gated, chain: block.chain });
   }
 
   for (let i = 0; i < lines.length; i++) {
@@ -559,6 +565,10 @@ function auditFile(rel, raw, ledger, tokens, breaches, forks, titles) {
         const bare = stripFn(value, "var");
         if (/\bdashed\b/.test(bare)) touch(forks.dashed);
         if (/\bsolid\b/.test(bare)) touch(forks.solid);
+      }
+      if (BORDER_STYLE_PROP.test(prop) && !INPUT_CHAIN.test(decl.chain || "")) {
+        const style = stripFn(value, "var").match(/\b(dashed|solid|dotted|double)\b/);
+        if (style) flag(14, n, prop + " " + style[0] + ", not the preset");
       }
       if (prop === "z-index") {
         const v = value.trim();

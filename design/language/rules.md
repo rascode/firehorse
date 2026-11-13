@@ -176,7 +176,9 @@ Structure is an etched dashed rule. Focus is a solid ring, at least 2px, and it 
 
 Source: `site/pages/guidelines/index.html:139-140`. `agent/system.md:108-109`. `src/tokens/config.css:51-54` (the etched preset is dashed, radius none). `src/base/document.css:91-93` (the `hr` is a dashed etch).
 
-Check: not a separate score. Rule 27 scores the focus ring. Hard-coded `dashed` versus hard-coded `solid` is counted under "For Rascode to decide", because a theme preset may be either (`src/tokens/config.css:51-78`) and a component that hard-codes one of them is not reading the preset. The script does not say which hard-coded style is right.
+Decided by Rascode (2026-11-13, T1113-02): a border style always comes through the preset, `var(--fh-card-border-style, <the style it has today>)`. Focus rings and inputs stay solid.
+
+Check: a `border`, `border-*` or `border-*-style` declaration whose value, with every `var()` removed, still names `dashed`, `solid`, `dotted` or `double`. Outlines are rule 27. Exempt: a block whose selector names `input`, `textarea` or `select`, `.fh-input`, `.fh-select` or `.fh-textarea`, `::picker`, a range thumb, or `forced-colors`.
 
 Right: `src/components/content/card.css:34` `var(--fh-card-border-style, dashed)` and `var(--fh-card-border-color, var(--fh-color-etch-soft))`.
 
