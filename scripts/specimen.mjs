@@ -276,6 +276,14 @@ ${markupPanel}
 /** The families of one docs page that get specimens in this build, in Index order. */
 const familiesFor = (index, path) => index.families.filter((f) => f.page === path && hasSpecimen(f.id) && shown(f.id));
 
+/** A category asset path, root-relative. A path with no leading slash gets one (`data-demo.js` → `/data-demo.js`). */
+const rootRel = (href) => {
+  const s = String(href);
+  return s.startsWith("/") ? s : `/${s}`;
+};
+/** Category styles or scripts for a specimen: root-relative, order kept, no duplicates. */
+const categoryAssets = (list) => [...new Set((list ?? []).map(rootRel))];
+
 /** The page list with specimen pages after their category page. A category page whose every family has a
  *  specimen gets .specimenGrid (its specimens, in order); pages.mjs then shows the grid in place of its demos. */
 export const withSpecimens = (list) => {
@@ -288,6 +296,9 @@ export const withSpecimens = (list) => {
     out.push(p);
     const fams = familiesFor(index, p.path);
     if (!fams.length) continue;
+    // Category assets, read before this page's meta gains /specimen.js below.
+    const styles = categoryAssets(p.meta.styles);
+    const scripts = [...categoryAssets(p.meta.scripts).filter((s) => s !== "/specimen.js"), "/specimen.js"];
     const specs = fams.map((f) => {
       const path = specimenPath(f);
       if (taken.has(path)) throw new Error(`specimen: ${f.id} (${f.name}) and ${taken.get(path)} share the address ${path}`);
@@ -297,7 +308,8 @@ export const withSpecimens = (list) => {
         meta: { path, name: f.name, parent: p.path, tone: p.meta.tone, icon: p.meta.icon, order: p.meta.order,
           title: `${f.name} (${f.id}) · ${p.meta.name} · Firehorse`,
           description: firstSentence(f.summary) || `${f.name}, a Firehorse ${p.meta.name.toLowerCase()} component (${f.id}).`,
-          scripts: ["/specimen.js"] },
+          styles: [...styles],
+          scripts: [...scripts] },
         jsonld: "", after: "", release: shownStatus(f.id), specimen: f,
       };
     });
