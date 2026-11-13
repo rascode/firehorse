@@ -188,7 +188,7 @@
         </div>
 
         <div class="site-demo site-anchor" id="a-shell" data-fh-id="SHL" data-fh-groups="App shell">
-          <div class="site-demo__head"><h3>App shell</h3><p>Sidebar beside the work area: brand, focus, sidenav and foot on the left; sticky bar and content on the right. <code>data-fh-env</code> paints the environment band; <code>data-fh-side="rail"</code> collapses the sidebar to icons.</p></div>
+          <div class="site-demo__head"><h3>App shell</h3><p>Sidebar beside the work area: brand, focus, sidenav and foot on the left; sticky bar and content on the right. <code>data-fh-env</code> paints the environment band; <code>data-fh-side="rail"</code> collapses the sidebar to icons. <code>fh-app--rail</code> (SHL-1.2) is the collapsible sidebar: open at 15rem, rail at 3.5rem, and a sheet when the shell is under 49rem. Shown open, then in the rail. Each frame is 56rem wide so those two states sit beside the work area.</p></div>
           <div class="site-demo__stage" data-demo>
 <div style="padding: 0; overflow: hidden; min-block-size: 22rem">
 <div class="fh-app" data-fh-env="local" data-fh-id="SHL-1.1" data-fh-name="App shell" style="min-block-size: 22rem; --fh-app-side: 12rem">
@@ -200,6 +200,104 @@
     <header class="fh-app__bar"><h1 class="fh-app__title">Business</h1><div class="fh-app__bar-end"><span class="fh-chip" data-tone="lime">Local</span></div></header>
     <main class="fh-app__content" style="padding: var(--fh-inset-card)"><p class="fh-muted" style="margin:0">Work area. The shell pins the sidebar and the bar.</p></main>
   </div>
+</div>
+</div>
+<div class="fh-stack" data-fh-id="SHL-1.2" data-fh-name="Collapsible sidebar">
+<div style="overflow: auto; max-inline-size: 100%">
+<div class="fh-app fh-app--rail" data-fh-env="local" data-fh-side="open" style="inline-size: 56rem; min-block-size: 22rem">
+  <aside class="fh-app__side" id="shl-12-open-side" popover><div class="fh-app__side-inner" style="min-block-size: 22rem">
+    <div class="fh-app__side-head">
+      <a class="fh-app__brand" href="#a-shell"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
+      <div class="fh-app__side-switch">
+        <button class="fh-app__side-toggle" id="shl-12-open-toggle" type="button" tabindex="-1" aria-expanded="true" aria-controls="shl-12-open-nav">
+          <span class="fh-app__side-toggle-label" data-when="open">Collapse sidebar</span>
+          <span class="fh-app__side-toggle-label" data-when="rail">Expand sidebar</span>
+          <i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i>
+        </button>
+        <input class="fh-app__side-state" id="shl-12-open-state" type="checkbox" aria-labelledby="shl-12-open-toggle">
+      </div>
+    </div>
+    <nav class="fh-sidenav" id="shl-12-open-nav" aria-label="Helm">
+      <section class="fh-app__group"><details open>
+        <summary><span class="fh-app__group-label">Work</span></summary>
+        <a class="fh-sidenav__item" href="#a-shell" aria-current="page" data-tone="amber"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i><span class="fh-sidenav__label">Overview</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--users" aria-hidden="true"></i><span class="fh-sidenav__label">Clients</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--briefcase" aria-hidden="true"></i><span class="fh-sidenav__label">Projects</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span class="fh-sidenav__label">Invoices</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span class="fh-sidenav__label">Files</span></a>
+      </details></section>
+      <section class="fh-app__group"><details open>
+        <summary><span class="fh-app__group-label">Account</span></summary>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i><span class="fh-sidenav__label">Agents</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--settings" aria-hidden="true"></i><span class="fh-sidenav__label">Settings</span></a>
+      </details></section>
+    </nav>
+    <div class="fh-app__side-foot">
+      <span class="fh-avatar fh-avatar--xs fh-avatar--circle" aria-hidden="true">R</span>
+      <span class="fh-app__side-who"><span class="fh-app__side-person">Rascode</span><span class="fh-app__side-env"><span class="fh-dot" data-tone="lime"></span> Local</span></span>
+    </div>
+  </div></aside>
+  <div class="fh-app__main" style="min-block-size: 22rem">
+    <header class="fh-app__bar">
+      <button class="fh-app__menu" type="button" popovertarget="shl-12-open-side" aria-expanded="false" aria-controls="shl-12-open-side">
+        <span class="fh-app__menu-label" data-when="closed">Open menu</span>
+        <span class="fh-app__menu-label" data-when="open">Close menu</span>
+        <i class="fh-icon fh-icon--menu" aria-hidden="true"></i>
+      </button>
+      <h1 class="fh-app__title">Overview</h1>
+      <div class="fh-app__bar-end"><span class="fh-chip" data-tone="lime">Local</span></div>
+    </header>
+    <main class="fh-app__content" style="padding: var(--fh-inset-card)"><p class="fh-muted" style="margin:0">Open. The toggle collapses the sidebar to the rail. Under 49rem the menu opens it as a sheet.</p></main>
+  </div>
+</div>
+</div>
+<div style="overflow: auto; max-inline-size: 100%">
+<div class="fh-app fh-app--rail" data-fh-env="local" data-fh-side="rail" style="inline-size: 56rem; min-block-size: 22rem">
+  <aside class="fh-app__side" id="shl-12-rail-side" popover><div class="fh-app__side-inner" style="min-block-size: 22rem">
+    <div class="fh-app__side-head">
+      <a class="fh-app__brand" href="#a-shell"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
+      <div class="fh-app__side-switch">
+        <button class="fh-app__side-toggle" id="shl-12-rail-toggle" type="button" tabindex="-1" aria-expanded="false" aria-controls="shl-12-rail-nav">
+          <span class="fh-app__side-toggle-label" data-when="open">Collapse sidebar</span>
+          <span class="fh-app__side-toggle-label" data-when="rail">Expand sidebar</span>
+          <i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i>
+        </button>
+        <input class="fh-app__side-state" id="shl-12-rail-state" type="checkbox" checked aria-labelledby="shl-12-rail-toggle">
+      </div>
+    </div>
+    <nav class="fh-sidenav" id="shl-12-rail-nav" aria-label="Helm">
+      <section class="fh-app__group"><details open>
+        <summary><span class="fh-app__group-label">Work</span></summary>
+        <a class="fh-sidenav__item" href="#a-shell" aria-current="page" data-tone="amber"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i><span class="fh-sidenav__label">Overview</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--users" aria-hidden="true"></i><span class="fh-sidenav__label">Clients</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--briefcase" aria-hidden="true"></i><span class="fh-sidenav__label">Projects</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span class="fh-sidenav__label">Invoices</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span class="fh-sidenav__label">Files</span></a>
+      </details></section>
+      <section class="fh-app__group"><details open>
+        <summary><span class="fh-app__group-label">Account</span></summary>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i><span class="fh-sidenav__label">Agents</span></a>
+        <a class="fh-sidenav__item" href="#a-shell"><i class="fh-icon fh-icon--settings" aria-hidden="true"></i><span class="fh-sidenav__label">Settings</span></a>
+      </details></section>
+    </nav>
+    <div class="fh-app__side-foot">
+      <span class="fh-avatar fh-avatar--xs fh-avatar--circle" aria-hidden="true">R</span>
+      <span class="fh-app__side-who"><span class="fh-app__side-person">Rascode</span><span class="fh-app__side-env"><span class="fh-dot" data-tone="lime"></span> Local</span></span>
+    </div>
+  </div></aside>
+  <div class="fh-app__main" style="min-block-size: 22rem">
+    <header class="fh-app__bar">
+      <button class="fh-app__menu" type="button" popovertarget="shl-12-rail-side" aria-expanded="false" aria-controls="shl-12-rail-side">
+        <span class="fh-app__menu-label" data-when="closed">Open menu</span>
+        <span class="fh-app__menu-label" data-when="open">Close menu</span>
+        <i class="fh-icon fh-icon--menu" aria-hidden="true"></i>
+      </button>
+      <h1 class="fh-app__title">Overview</h1>
+      <div class="fh-app__bar-end"><span class="fh-chip" data-tone="lime">Local</span></div>
+    </header>
+    <main class="fh-app__content" style="padding: var(--fh-inset-card)"><p class="fh-muted" style="margin:0">Rail. Labels stay the names of the links and show beside the icon. Groups are etched dividers.</p></main>
+  </div>
+</div>
 </div>
 </div>
           </div>

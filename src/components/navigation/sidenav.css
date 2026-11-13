@@ -8,6 +8,7 @@
  *   NAV-2.1   child link row (no icon)
  *   NAV-2.2   rail flyout
  *   NAV-2.3   nav count badge (NavBadge)
+ *   item      icon plus fh-sidenav__label (fh-sidenav__item), used by SHL-1.2
  */
 
 @layer fh.components {
@@ -71,6 +72,13 @@
         background-color: color-mix(in oklab, var(--fh-tone) 6%, transparent);
         color: var(--fh-color-text);
       }
+    }
+
+    /* Icon and label sit together. The plain link above uses space-between
+       so a trailing badge can hang at the end. fh-sidenav__label was already
+       named by the app shell; this is the missing item class. */
+    & a.fh-sidenav__item {
+      justify-content: flex-start;
     }
   }
 
