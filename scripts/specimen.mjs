@@ -359,7 +359,7 @@ export const categoryGrid = (p, redirects) => {
     const meta = [n.length ? `${n.length} group${n.length > 1 ? "s" : ""}` : "", vs ? `${vs} variant${vs > 1 ? "s" : ""}` : ""].filter(Boolean).join(" · ") || "One component";
     const preview = CARD_PREVIEW[f.id] ? CARD_PREVIEW[f.id](f.markup) : f.markup;
     return `        <article class="fh-card" data-tone="${tone}"${st !== "live" ? ` data-fh-release="${st}"` : ""} data-specimen-card="${f.id}">
-          <div class="site-stage site-stage--card" data-stage="${stageMode(f.markup)}" inert aria-hidden="true">
+          <div class="site-stage site-stage--card" data-stage="${stageMode(preview)}" inert aria-hidden="true">
 ${preview}
           </div>
           <p class="fh-card__meta">${meta}${chip(st, tierOf(f.id))}</p>
