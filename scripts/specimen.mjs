@@ -1,6 +1,6 @@
 // Specimen pages: one generated page per public component family, all with one anatomy, nothing written by hand.
-//   1. Head      breadcrumb, the ID as a mono chip, the name as h1, the tier, the summary   (head)
-//   2. Stage     one plain box per variant, holding only the component's markup         (stages)
+//   1. Head      breadcrumb, then the name with the ID and tier beside it, then the summary (head)
+//   2. Stage     one .site-stage per variant, holding only the component's markup       (stages)
 //   3. Switcher  the family's groups as labelled rows of its public variants              (switcher)
 //   4. Panels    Markup, Classes & tokens, Agent notes                                     (panels)
 //   5. Foot      previous and next family in the category, back to the category grid    (foot)
@@ -9,7 +9,8 @@
 // release.json key is in SPECIMEN_CATEGORIES; its category page then shows a grid of cards instead of its demos
 // (pages.mjs, categoryGrid). Without script the switcher is a list of anchors to every variant's section;
 // site/specimen.js shows one variant at a time and keeps the address (#BTN-1.2) in step.
-// Specimen chrome is the site-specimen block in site/site.css. Nothing with a site-* class goes inside a stage
+// Specimen chrome is the site-specimen block in site/site.css. The component sits in .site-stage
+// (an opaque frame, fill or inline). Nothing with a site-* class goes inside a stage
 // (scripts/lint-site.mjs fails the build if it does).
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
@@ -37,6 +38,83 @@ export const specimenPath = (f) => `${f.page}${nameSlug(f.name)}/`;
 const shown = (id) => showAll || isPublic(id);
 
 const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+// A root is inline only when it is one of these. Anything else (a div, a form, a list) fills the stage.
+const INLINE_ROOTS = new Set(["a", "button", "span", "code", "kbd", "img", "svg", "label", "small", "strong", "b", "em", "time", "output"]);
+const VOID_TAGS = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+// One narrow column by nature: form fields, choices, upload, tag field, key value list, checklist.
+// The stage is then at most 40rem. The component still fills that stage.
+export const NARROW_STAGE = new Set(["FLD", "CHO", "UPL", "TAG", "KVL", "CKL"]);
+
+/** The next tag, comment or null. Quotes are respected, so a ">" inside an attribute does not end the tag. */
+const readTag = (s, i) => {
+  if (i < 0 || i >= s.length || s[i] !== "<") return null;
+  if (s.startsWith("<!--", i)) {
+    const end = s.indexOf("-->", i + 4);
+    return { kind: "comment", end: end < 0 ? s.length : end + 3 };
+  }
+  if (s.startsWith("</", i)) {
+    const m = /^<\/([a-zA-Z][\w:-]*)\s*>/.exec(s.slice(i));
+    return m ? { kind: "close", name: m[1].toLowerCase(), end: i + m[0].length } : null;
+  }
+  const name = /^<([a-zA-Z][\w:-]*)/.exec(s.slice(i));
+  if (!name) return null;
+  let j = i + name[0].length, quote = "";
+  while (j < s.length) {
+    const c = s[j];
+    if (quote) { if (c === quote) quote = ""; j++; continue; }
+    if (c === "\"" || c === "'") { quote = c; j++; continue; }
+    if (c === ">") {
+      let k = j - 1;
+      while (k > i && /\s/.test(s[k])) k--;
+      const tag = name[1].toLowerCase();
+      return { kind: "open", name: tag, self: s[k] === "/" || VOID_TAGS.has(tag), end: j + 1 };
+    }
+    j++;
+  }
+  return null;
+};
+
+/** Tag names of the markup's root elements. A non-element root is "#text". */
+export const rootTags = (markup) => {
+  const tags = [];
+  const s = String(markup ?? "");
+  let i = 0;
+  while (i < s.length) {
+    while (i < s.length && /\s/.test(s[i])) i++;
+    if (s.startsWith("<!--", i)) { const end = s.indexOf("-->", i + 4); i = end < 0 ? s.length : end + 3; continue; }
+    if (i >= s.length) break;
+    if (s[i] !== "<") {
+      tags.push("#text");
+      const next = s.indexOf("<", i);
+      i = next < 0 ? s.length : next;
+      continue;
+    }
+    const t = readTag(s, i);
+    if (!t || t.kind === "close") break;
+    if (t.kind !== "open") { i = t.end; continue; }
+    tags.push(t.name);
+    i = t.end;
+    if (t.self) continue;
+    let depth = 1;
+    while (depth > 0 && i < s.length) {
+      const lt = s.indexOf("<", i);
+      if (lt < 0) { i = s.length; break; }
+      const n = readTag(s, lt);
+      if (!n) { i = lt + 1; continue; }
+      if (n.kind === "open" && n.name === t.name && !n.self) depth++;
+      else if (n.kind === "close" && n.name === t.name) depth--;
+      i = n.end;
+    }
+  }
+  return tags;
+};
+
+/** "inline" when every root is an inline tag, otherwise "fill". Written as data-stage. */
+export const stageMode = (markup) => {
+  const tags = rootTags(markup);
+  return tags.length > 0 && tags.every((tag) => INLINE_ROOTS.has(tag)) ? "inline" : "fill";
+};
 // The same highlighter the demo Markup panels use (site/site.js), run at build time.
 const highlight = (html) => esc(html).replace(/&quot;/g, '"')
   .replace(/([a-z][a-z0-9-:]*)="([^"]*)"/g, '<span class="a">$1</span>=<span class="v">"$2"</span>')
@@ -106,11 +184,15 @@ export const specimenMain = (f, { list, prev, next, category }) => {
   const label = (e) => e.id === f.id ? f.name : `${f.name} › ${groups.find((g) => g.items.includes(e))?.name ?? ""} › ${e.name}`.replace(/ › $/, "");
   const forAttr = (e) => items.length ? ` data-specimen-for="${e.id}"` : "";
   const releaseOf = (id) => (shownStatus(id) !== "live" ? ` data-fh-release="${shownStatus(id)}"` : "");
+  const openStage = (markup) => {
+    const narrow = NARROW_STAGE.has(f.id) ? ` data-stage-width="narrow"` : "";
+    return `<div class="site-stage" data-stage="${stageMode(markup)}"${narrow} data-specimen-stage>`;
+  };
 
-  // 2. Stage: a figure per variant; the box inside holds the component's markup and nothing else.
+  // 2. Stage: a figure per variant. The frame holds the component's markup and nothing else.
   const stages = entries.map((e) => `        <figure class="site-specimen__variant"${items.length ? ` id="${e.id}"` : ""}${forAttr(e)}${releaseOf(e.id)}>
           ${items.length ? `<figcaption class="site-specimen__caption"><code>${e.id}</code> ${esc(e.name)}</figcaption>` : `<figcaption class="fh-sr-only">${esc(f.name)}</figcaption>`}
-          <div class="site-specimen__stage" data-specimen-stage>
+          ${openStage(e.markup)}
 ${e.markup}
           </div>
         </figure>`).join("\n");
@@ -149,9 +231,10 @@ ${g.items.map((e) => `            <a class="fh-chip fh-chip--indexed" data-tone=
         <a class="fh-breadcrumb__back" href="${category.path}" aria-label="Back to ${esc(category.meta.name)}"><span class="fh-dot fh-dot--live"></span></a>
         <ol>${crumbs}</ol>
       </nav>
-      <p class="site-specimen__id"><code class="fh-chip fh-chip--plain fh-mono" id="${f.id}">${f.id}</code></p>
-      <h1 class="fh-display" id="specimen-title">${esc(f.name)}</h1>
-      <p class="site-specimen__tier"><span class="fh-chip fh-chip--tone" data-tone="${tier === "pro" ? "fuchsia" : tone}" data-specimen-tier>${tier === "pro" ? "Pro" : "Free"}</span>${held}</p>
+      <div class="site-specimen__title">
+        <h1 class="fh-display" id="specimen-title">${esc(f.name)}</h1>
+        <p class="site-specimen__meta"><code class="fh-chip fh-chip--plain fh-mono" id="${f.id}">${f.id}</code> <span class="fh-chip fh-chip--tone" data-tone="${tier === "pro" ? "fuchsia" : tone}" data-specimen-tier>${tier === "pro" ? "Pro" : "Free"}</span>${held}</p>
+      </div>
       ${f.summary ? `<p class="fh-lede">${esc(f.summary)}</p>` : ""}
     </section>
 
@@ -239,7 +322,7 @@ export const categoryGrid = (p, redirects) => {
     const n = entriesOf(f), vs = n.reduce((t, g) => t + g.items.length, 0);
     const meta = [n.length ? `${n.length} group${n.length > 1 ? "s" : ""}` : "", vs ? `${vs} variant${vs > 1 ? "s" : ""}` : ""].filter(Boolean).join(" · ") || "One component";
     return `        <article class="fh-card" data-tone="${tone}"${st !== "live" ? ` data-fh-release="${st}"` : ""} data-specimen-card="${f.id}">
-          <div class="fh-card__media site-specimen__preview" inert aria-hidden="true">
+          <div class="site-stage site-stage--card" data-stage="${stageMode(f.markup)}" inert aria-hidden="true">
 ${f.markup}
           </div>
           <p class="fh-card__meta">${meta}${chip(st, tierOf(f.id))}</p>
