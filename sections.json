@@ -4,6 +4,7 @@
   "docs": "/components/sections/",
   "sidecar": {
     "id": "SDC",
+    "members": ["BTN", "CHP", "SCT", "SPR", "KVL", "SFM", "FLD", "FLD-5", "SPM", "STT", "TBL", "SCH", "CHT", "SMT", "TMR", "MET", "SLG", "STL", "TML", "SRC", "ACT", "SLK", "SFL"],
     "class": "fh-sidecar",
     "drawer": "fh-dialog fh-dialog--float fh-sidecar",
     "slots": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"],
@@ -18,6 +19,7 @@
   },
   "shell": {
     "id": "SCT",
+    "members": ["CHP", "KVL"],
     "element": "details",
     "class": "fh-panel-section",
     "slots": ["icon", "title", "chips", "body"],
@@ -30,6 +32,7 @@
     "note": "A page picks one template, places it in fh-main, and fills its regions with Firehorse parts. It never sets its own layout. Templates use fh-record and fh-section-card, which are in the core bundle: firehorse.css is all a page needs. Docs: /components/sections/#TPL",
     "nav": {
       "id": "TPL-1.6",
+      "members": ["TAB", "CLS"],
       "class": "fh-tpl__nav",
       "markup": "one <nav class=\"fh-tabs fh-tabs--sub\" aria-label=\"...\"> of links, one per page of the area, the landing page first; the current page's link carries aria-current=\"page\"; an optional count is one fh-badge after the label (counts only); no chips, no icons",
       "use": "optional; when an area has more than one page every page of the area carries the same tabs in the same order",
@@ -41,31 +44,36 @@
     },
     "landing": {
       "id": "TPL-1.1",
+      "members": ["REC", "BTN", "TPL-1.6", "TAB", "CLS", "TMR", "MET", "SEC", "TBL", "REF", "SCR-1.1"],
       "class": "fh-tpl fh-tpl--landing",
       "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "metrics (fh-metrics fh-metrics--four: exactly four fh-metric, each with label, value, line and source)", "body (fh-section-card, one per detail section)"],
       "use": "The top page of an area.",
-      "metricRow": { "id": "TMR", "class": "fh-metrics fh-metrics--four", "narrow": "two by two under 36rem" }
+      "metricRow": { "id": "TMR", "members": ["MET"], "class": "fh-metrics fh-metrics--four", "narrow": "two by two under 36rem" }
     },
     "list": {
       "id": "TPL-1.2",
+      "members": ["REC", "TPL-1.6", "TAB", "CLS", "TPL-1.7", "THS", "CHO", "CHP", "RDT", "REF", "SCR-1.1"],
       "class": "fh-tpl fh-tpl--list",
       "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "filters (fh-search, fh-select filters (a select names its filter in its first option), fh-chip filters)", "body (fh-dt fh-dt--records)"],
       "use": "A page that is one table of records."
     },
     "detail": {
       "id": "TPL-1.3",
+      "members": ["REC", "SCR-1.1", "CHP", "BTN", "REF", "SEC", "SCT", "STL", "TML"],
       "class": "fh-tpl fh-tpl--detail",
       "regions": ["header (fh-record with fh-record__chips)", "nav (fh-tpl__nav, optional)", "facts (fh-tpl__facts, a dl)", "cols: main (fh-section-card) and side (fh-panel-section); side drops under main below 60rem"],
       "use": "One record."
     },
     "form": {
       "id": "TPL-1.4",
+      "members": ["REC", "SEC", "FLD", "BTN"],
       "class": "fh-tpl fh-tpl--form",
       "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "body (fh-section-card with fh-field)", "actions (fh-tpl__actions)"],
       "use": "Creating or editing a record."
     },
     "empty": {
       "id": "TPL-1.5",
+      "members": ["REC", "EMP", "BTN"],
       "class": "fh-tpl fh-tpl--empty",
       "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "body (one fh-empty with an action)"],
       "use": "An area with nothing in it yet."
@@ -74,6 +82,7 @@
   "cells": {
     "reference": {
       "id": "REF",
+      "members": [],
       "class": "fh-ref",
       "slots": ["fh-ref__label", "fh-ref__key (optional, mono)"],
       "attributes": "href (the record page) and data-sidecar (the record id, opened by the sidecar opener)",
@@ -81,13 +90,29 @@
     },
     "datatable": {
       "id": "RDT",
+      "members": ["REF", "SCR-1.1", "SSG"],
       "class": "fh-dt fh-dt--records",
-      "row": "tr with data-sidecar and tabindex=0; every td has data-label; first cell is fh-ref; one status chip per row",
-      "narrow": "rows stack under 36rem"
+      "row": "tr with data-sidecar and tabindex=0; every td has data-label; first cell is fh-ref (second, after the toggle cell, in an expandable row); one status chip per row",
+      "expand": {
+        "toggle": "first cell of the row: <td><button class=\"fh-dt__expand\" type=\"button\" aria-expanded=\"false\" aria-controls=\"<detail row id>\" aria-label=\"<what it shows>\"></button></td>, no data-label; the header cell above it is <th scope=\"col\"><span class=\"fh-sr-only\">Open</span></th>. The chevron turns when aria-expanded is true.",
+        "detail": "<tr class=\"fh-dt__detail\" id=\"<detail row id>\" hidden><td colspan=\"<every column>\">…</td></tr>, directly after its record row. It holds any content: a stage (div.fh-panel-section__stage, then an optional p.fh-panel-section__caption with the code) or a nested fh-dt fh-dt--records (a list of variants), which indents once, under the reference cell.",
+        "state": "aria-expanded on the toggle and hidden on the detail row. A server renders either state; nothing needs datatable.js.",
+        "script": "records.js (optional): a click on the toggle flips aria-expanded and hidden (the row named in aria-controls, else the detail row right after) and fires fh:record-toggle { open, toggle, detail } on the toggle. sidecar.js never opens the row's sidecar from a click or key on the toggle.",
+        "import": "@rascode/firehorse/records"
+      },
+      "states": {
+        "attribute": "data-state on a record row (tr)",
+        "values": {
+          "warning": "A quiet warning edge on the inline start and a tint, both from --fh-color-warning. It stays through hover, aria-selected=\"true\" and the stacked rows. Pair it with the row's status chip (data-status=\"warn\" or the value that says why)."
+        },
+        "none": "No data-state is the plain row."
+      },
+      "narrow": "rows stack under 36rem; an expandable row keeps the toggle and the reference cell on its first line with the other cells under the reference, and its detail row stacks under it as one block"
     }
   },
   "chips": {
     "id": "SCR",
+    "members": ["CHP", "CLS"],
     "status": "fh-chip fh-chip--tone fh-chip--sm with data-status; the tone follows the value. In the record header, a collapsed section summary, and once per row.",
     "count": "fh-badge: counts only",
     "inline": "fh-status: inline status text only, never in a header or a row"
@@ -99,6 +124,7 @@
   "kinds": {
     "properties": {
       "id": "SPR",
+      "members": ["SCT", "CHP", "KVL"],
       "class": "fh-panel-section fh-panel-section--properties",
       "icon": "list-checks",
       "tone": "sky",
@@ -108,6 +134,7 @@
     },
     "records": {
       "id": "SRC",
+      "members": ["SCT", "CHP", "TBL", "ACT"],
       "class": "fh-panel-section fh-panel-section--records",
       "icon": "table-2",
       "tone": "teal",
@@ -117,6 +144,7 @@
     },
     "timetable": {
       "id": "STT",
+      "members": ["SCT", "CHP", "TBL"],
       "class": "fh-panel-section fh-panel-section--timetable",
       "icon": "clock",
       "tone": "amber",
@@ -126,6 +154,7 @@
     },
     "timeline": {
       "id": "STL",
+      "members": ["SCT", "CHP", "TML"],
       "class": "fh-panel-section fh-panel-section--timeline",
       "icon": "activity",
       "tone": "violet",
@@ -135,6 +164,7 @@
     },
     "chat": {
       "id": "SCH",
+      "members": ["SCT", "CHP", "CHT"],
       "class": "fh-panel-section fh-panel-section--chat",
       "icon": "message-square",
       "tone": "fuchsia",
@@ -144,6 +174,7 @@
     },
     "log": {
       "id": "SLG",
+      "members": ["SCT", "CHP"],
       "class": "fh-panel-section fh-panel-section--log",
       "icon": "terminal",
       "tone": "orange",
@@ -153,6 +184,7 @@
     },
     "prompts": {
       "id": "SPM",
+      "members": ["SCT", "CHP"],
       "class": "fh-panel-section fh-panel-section--prompts",
       "icon": "sparkles",
       "tone": "teal",
@@ -162,6 +194,7 @@
     },
     "metrics": {
       "id": "SMT",
+      "members": ["SCT", "CHP", "TMR", "MET"],
       "class": "fh-panel-section fh-panel-section--metrics",
       "icon": "chart-bar",
       "tone": "lime",
@@ -172,6 +205,7 @@
     },
     "links": {
       "id": "SLK",
+      "members": ["SCT", "CHP"],
       "class": "fh-panel-section fh-panel-section--links",
       "icon": "link",
       "tone": "sky",
@@ -181,6 +215,7 @@
     },
     "files": {
       "id": "SFL",
+      "members": ["SCT", "CHP"],
       "class": "fh-panel-section fh-panel-section--files",
       "icon": "paperclip",
       "tone": "rose",
@@ -190,6 +225,7 @@
     },
     "form": {
       "id": "SFM",
+      "members": ["SCT", "CHP", "FLD", "FLD-5", "BTN"],
       "class": "fh-panel-section fh-panel-section--form",
       "icon": "square-pen",
       "tone": "sky",
@@ -206,12 +242,30 @@
       },
       "narrow": "the actions row stacks under 36rem",
       "chips": { "rule": "The field count, then the count that still needs a value or holds an error.", "max": 2 }
+    },
+    "stage": {
+      "id": "SSG",
+      "members": ["SCT", "CHP"],
+      "class": "fh-panel-section fh-panel-section--stage",
+      "icon": "box",
+      "tone": "violet",
+      "body": "div.fh-panel-section__stage holding one component's markup, rendered live, then an optional p.fh-panel-section__caption with the component's code in a code element",
+      "slots": ["stage (fh-panel-section__stage): the component's markup and nothing else", "caption (fh-panel-section__caption, optional): the code, e.g. BTN-1.2"],
+      "rules": [
+        "One component per stage.",
+        "No site or app chrome inside the stage: no site-* helper, no host wrapper, no second component around the first.",
+        "The stage is a container (container-type: inline-size) and its own stacking context (isolation: isolate), so the component answers the stage's width and its z-index stays inside; it scrolls (overflow: auto) when the component is larger.",
+        "It works in a dialog sidecar and in an aside. The stage box alone may fill a records detail row (cells.datatable.expand)."
+      ],
+      "knobs": { "--fh-panel-section-stage-min": "minimum height of the stage, 8rem" },
+      "chips": { "rule": "The code shown, then its status.", "max": 2 }
     }
   },
   "fields": {
     "note": "Form fields that need more than a native input. Docs: /forms/#FLD",
     "money": {
       "id": "FLD-5",
+      "members": ["FLD-1"],
       "class": "fh-field fh-money",
       "input": "fh-input-group: a currency prefix (fh-money__currency) or a select (fh-money__select), a text input with inputmode=decimal, and a hidden input with data-fh-money-value",
       "script": "money.js",

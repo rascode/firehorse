@@ -1,5 +1,5 @@
 /*
- * Firehorse — Pluggable sections (SPR · SRC · STT · STL · SCH · SLG · SPM · SMT · SLK · SFL · SFM)
+ * Firehorse — Pluggable sections (SPR · SRC · STT · STL · SCH · SLG · SPM · SMT · SLK · SFL · SFM · SSG)
  * components/sections · layer fh.components · docs /components/sections/
  */
 
@@ -18,7 +18,8 @@
    *   metrics     fh-panel-section--metrics      fh-metrics
    *   links       fh-panel-section--links        fh-links
    *   files       fh-panel-section--files        fh-files
-   *   form        fh-panel-section--form         form (or div.fh-panel-section__form) > fieldset of fh-field, then the actions row */
+   *   form        fh-panel-section--form         form (or div.fh-panel-section__form) > fieldset of fh-field, then the actions row
+   *   stage       fh-panel-section--stage        fh-panel-section__stage (one component, live), then an optional caption */
 
   /* Tables in a section: compact cells, the time column in mono. */
   :is(.fh-panel-section--records, .fh-panel-section--timetable) .fh-table :is(th, td) {
@@ -356,5 +357,56 @@
         flex: none;
       }
     }
+  }
+
+  /* —— Stage ——
+   * The record itself, rendered live: one plain box that holds only one
+   * component's markup, then an optional caption with its code.
+   *   <details class="fh-panel-section fh-panel-section--stage" data-tone="violet" open>
+   *     <summary class="fh-panel-section__head">…</summary>
+   *     <div class="fh-panel-section__body">
+   *       <div class="fh-panel-section__stage"><button class="fh-button" type="button">Save</button></div>
+   *       <p class="fh-panel-section__caption"><code>BTN-1.2</code></p>
+   *     </div>
+   *   </details>
+   * The stage is a container of its own, so the component answers the
+   * stage's width, not the sidecar's or the page's. It is its own stacking
+   * context (a component's z-index stays inside) and scrolls when the
+   * component is wider or taller than the slot. Nothing from the site or
+   * the app goes inside. The box can also stand alone, in a detail row of a
+   * records table. Knob: --fh-panel-section-stage-min (minimum height, 8rem). */
+  .fh-panel-section__stage {
+    display: flow-root;
+    min-inline-size: 0;
+    min-block-size: var(--fh-panel-section-stage-min, 8rem);
+    padding: var(--fh-inset-card);
+    overflow: auto;
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-color-text);
+    container-type: inline-size;
+    isolation: isolate;
+  }
+
+  .fh-panel-section__caption {
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+
+    & > code {
+      font-family: var(--fh-font-mono);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+  }
+
+  /* The caption sits close under its box: in a section body, closer than the
+   * body's gap; anywhere else (a detail row), one related gap below. */
+  .fh-panel-section__stage + .fh-panel-section__caption {
+    margin-block-start: var(--fh-gap-related);
+  }
+
+  .fh-panel-section__body > .fh-panel-section__stage + .fh-panel-section__caption {
+    margin-block-start: calc(var(--fh-gap-related) - var(--fh-gap-grouped));
   }
 }

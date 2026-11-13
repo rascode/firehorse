@@ -5,15 +5,15 @@
   "name": "Sections",
   "tone": "sky",
   "title": "Sections · Firehorse",
-  "description": "Firehorse sections: the record sidecar, the section shell, and eleven pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files, form).",
-  "headline": "One sidecar, one section shell, eleven kinds of data",
+  "description": "Firehorse sections: the record sidecar, the section shell, and twelve pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files, form, stage).",
+  "headline": "One sidecar, one section shell, twelve kinds of data",
   "lede": "A record sidecar with a fixed header, and a library of sections picked by the kind of data they hold. Each one starts with an icon and a title, collapses, and shows summary chips only when collapsed.",
-  "scripts": ["/sidecar.js", "/tabs-nav.js"],
+  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js"],
   "styles": [],
   "icon": "panels-top-left",
   "summary": [
     {
-      "value": "11",
+      "value": "12",
       "label": "Section kinds",
       "blurb": "One section per data kind, mapped in sections.json."
     },
@@ -262,6 +262,17 @@
     <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">merged</span><span class="fh-chip" data-tone="sky">claude_cli</span><span class="fh-chip" data-tone="amber">2 rounds</span></div>
   </header>
   <div class="fh-sidecar__body">
+    <details class="fh-panel-section fh-panel-section--stage" data-tone="violet" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--box fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Preview</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">BTN-1.3</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+          <div class="fh-panel-section__stage"><button class="fh-button fh-button--secondary" type="button">Secondary</button></div>
+          <p class="fh-panel-section__caption"><code>BTN-1.3</code></p>
+        </div>
+      </details>
     <details class="fh-panel-section fh-panel-section--properties" data-tone="sky">
         <summary class="fh-panel-section__head">
           <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
@@ -1110,6 +1121,70 @@
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-sec-stage" data-fh-id="SSG" data-fh-groups="Stage section">
+          <div class="site-demo__head"><h3>Stage section</h3><p><code>fh-panel-section--stage</code>. The record itself, rendered live: one plain box, <code>fh-panel-section__stage</code>, that holds only one component's markup, then an optional caption with its code (<code>fh-panel-section__caption</code>). The box is a container of its own, so the component answers the stage's width, and its own stacking context; it scrolls when the component is larger than the slot. One component per stage, and nothing from the site or the app inside. It works in a dialog sidecar (open the drawer above) and in an aside, and the box alone fills a records detail row. Knob: <code>--fh-panel-section-stage-min</code> (8rem).</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--stage" data-tone="violet" open data-fh-id="SSG-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--box fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Preview</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">BTN-1.3</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+          <div class="fh-panel-section__stage"><button class="fh-button fh-button--secondary" type="button">Secondary</button></div>
+          <p class="fh-panel-section__caption"><code>BTN-1.3</code></p>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--stage" data-tone="violet" data-fh-id="SSG-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--box fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Preview</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">BTN-1.3</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+          <div class="fh-panel-section__stage"><button class="fh-button fh-button--secondary" type="button">Secondary</button></div>
+          <p class="fh-panel-section__caption"><code>BTN-1.3</code></p>
+        </div>
+      </details>
+</div>
+<aside class="fh-sidecar" style="max-inline-size: 26rem" aria-label="Record" data-fh-id="SSG-1.3" data-fh-name="In an aside">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Components · chips</span>
+      <span class="fh-sidecar__actions"><button type="button" class="fh-close" aria-label="Close"></button></span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark" data-tone="sky"><i class="fh-icon fh-icon--tag" aria-hidden="true"></i></span>
+      <div>
+        <h2 class="fh-sidecar__title">Filter</h2>
+        <p class="fh-sidecar__sub"><code>CHP-1.1</code> · Chips</p>
+      </div>
+    </div>
+  </header>
+  <div class="fh-sidecar__body">
+    <details class="fh-panel-section fh-panel-section--stage" data-tone="violet" open>
+      <summary class="fh-panel-section__head">
+        <i class="fh-icon fh-icon--box fh-panel-section__icon" aria-hidden="true"></i>
+        <h3 class="fh-panel-section__title">Preview</h3>
+        <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">CHP-1.1</span></span>
+      </summary>
+      <div class="fh-panel-section__body">
+        <div class="fh-panel-section__stage">
+          <div class="fh-chips fh-chips--wrap">
+            <a class="fh-chip" data-tone="sky" href="#c-sec-stage" aria-current="true">Agents</a>
+            <a class="fh-chip" data-tone="lime" href="#c-sec-stage">Relays</a>
+            <a class="fh-chip" data-tone="amber" href="#c-sec-stage">Prompts</a>
+          </div>
+        </div>
+        <p class="fh-panel-section__caption"><code>CHP-1.1</code></p>
+      </div>
+    </details>
+  </div>
+</aside>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1339,8 +1414,9 @@
         </div>
 
         <div class="site-demo site-anchor" id="c-rdt" data-fh-id="RDT" data-fh-groups="Datatable record cells">
-          <div class="site-demo__head"><h3>Datatable record cells</h3><p><code>fh-dt--records</code>. The first cell is the reference cell, one cell holds the row's status chip, and the whole row opens the sidecar. Each cell carries <code>data-label</code>; under 36rem the rows stack and the labels show.</p></div>
+          <div class="site-demo__head"><h3>Datatable record cells</h3><p><code>fh-dt--records</code>. The first cell is the reference cell, one cell holds the row's status chip, and the whole row opens the sidecar. Each cell carries <code>data-label</code>; under 36rem the rows stack and the labels show. An expandable row puts a toggle first, <code>&lt;button class="fh-dt__expand" aria-expanded aria-controls&gt;</code>, and its detail row, <code>&lt;tr class="fh-dt__detail" hidden&gt;</code> with one cell spanning every column, directly after it: a stage, or a nested records table that indents once. <code>records.js</code> flips <code>aria-expanded</code> and <code>hidden</code>; a click on the toggle never opens the row's sidecar. <code>data-state="warning"</code> on a row gives it a quiet warning edge and tint that stay through hover, selection and the stacked rows.</p></div>
           <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
 <div class="fh-dt fh-dt--records" aria-label="Relays" data-fh-id="RDT-1.1" data-fh-name="Records table">
   <div class="fh-dt__scroll"><table class="fh-dt__table">
     <thead><tr><th scope="col">Relay</th><th scope="col">Sent by</th><th scope="col">Duration</th><th scope="col">Status</th></tr></thead>
@@ -1350,6 +1426,51 @@
       <tr data-sidecar="relay-tidal" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-tidal"><span class="fh-ref__label">Tidal export</span><code class="fh-ref__key">R-203</code></a></td><td data-label="Sent by"><span class="fh-ref fh-ref--gone" title="This record was removed"><span class="fh-ref__label">Agent 7</span><span class="fh-ref__note">removed</span></span></td><td data-label="Duration">5 min</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="queued">queued</span></td></tr>
     </tbody>
   </table></div>
+</div>
+<div class="fh-dt fh-dt--records" aria-label="Components" data-fh-id="RDT-1.2" data-fh-name="Expandable, closed">
+  <div class="fh-dt__scroll"><table class="fh-dt__table">
+    <thead><tr><th scope="col"><span class="fh-sr-only">Open</span></th><th scope="col">Component</th><th scope="col">Variants</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr data-sidecar="cmp-button" tabindex="0"><td><button class="fh-dt__expand" type="button" aria-expanded="false" aria-controls="rdt-closed-button" aria-label="Variants of Button"></button></td><td data-label="Component"><a class="fh-ref" href="#c-sidecar" data-sidecar="cmp-button"><span class="fh-ref__label">Button</span><code class="fh-ref__key">BTN</code></a></td><td data-label="Variants">3</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="live">live</span></td></tr>
+      <tr class="fh-dt__detail" id="rdt-closed-button" hidden><td colspan="4"><div class="fh-panel-section__stage"><button class="fh-button fh-button--secondary" type="button">Secondary</button></div><p class="fh-panel-section__caption"><code>BTN-1.3</code></p></td></tr>
+      <tr data-sidecar="cmp-chips" tabindex="0"><td><button class="fh-dt__expand" type="button" aria-expanded="false" aria-controls="rdt-closed-chips" aria-label="Variants of Chips"></button></td><td data-label="Component"><a class="fh-ref" href="#c-sidecar" data-sidecar="cmp-chips"><span class="fh-ref__label">Chips</span><code class="fh-ref__key">CHP</code></a></td><td data-label="Variants">4</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="pending">held</span></td></tr>
+      <tr class="fh-dt__detail" id="rdt-closed-chips" hidden><td colspan="4"><div class="fh-panel-section__stage"><div class="fh-chips fh-chips--wrap"><span class="fh-chip" data-tone="sky">Agents</span><span class="fh-chip" data-tone="lime">Relays</span></div></div><p class="fh-panel-section__caption"><code>CHP-1.1</code></p></td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="fh-dt fh-dt--records" aria-label="Components, one open" data-fh-id="RDT-1.3" data-fh-name="Expandable, open">
+  <div class="fh-dt__scroll"><table class="fh-dt__table">
+    <thead><tr><th scope="col"><span class="fh-sr-only">Open</span></th><th scope="col">Component</th><th scope="col">Variants</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr data-sidecar="cmp-button" tabindex="0"><td><button class="fh-dt__expand" type="button" aria-expanded="true" aria-controls="rdt-open-button" aria-label="Variants of Button"></button></td><td data-label="Component"><a class="fh-ref" href="#c-sidecar" data-sidecar="cmp-button"><span class="fh-ref__label">Button</span><code class="fh-ref__key">BTN</code></a></td><td data-label="Variants">2</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="live">live</span></td></tr>
+      <tr class="fh-dt__detail" id="rdt-open-button"><td colspan="4">
+        <div class="fh-dt fh-dt--records" aria-label="Variants of Button">
+          <div class="fh-dt__scroll"><table class="fh-dt__table">
+            <thead><tr><th scope="col"><span class="fh-sr-only">Open</span></th><th scope="col">Variant</th><th scope="col">Status</th></tr></thead>
+            <tbody>
+              <tr data-sidecar="var-btn-secondary" tabindex="0"><td><button class="fh-dt__expand" type="button" aria-expanded="true" aria-controls="rdt-open-btn-secondary" aria-label="Preview of Secondary"></button></td><td data-label="Variant"><a class="fh-ref" href="#c-sidecar" data-sidecar="var-btn-secondary"><span class="fh-ref__label">Secondary</span><code class="fh-ref__key">BTN-1.3</code></a></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="live">live</span></td></tr>
+              <tr class="fh-dt__detail" id="rdt-open-btn-secondary"><td colspan="3"><div class="fh-panel-section__stage"><button class="fh-button fh-button--secondary" type="button">Secondary</button></div><p class="fh-panel-section__caption"><code>BTN-1.3</code></p></td></tr>
+              <tr data-sidecar="var-btn-accent" tabindex="0"><td><button class="fh-dt__expand" type="button" aria-expanded="false" aria-controls="rdt-open-btn-accent" aria-label="Preview of Accent"></button></td><td data-label="Variant"><a class="fh-ref" href="#c-sidecar" data-sidecar="var-btn-accent"><span class="fh-ref__label">Accent</span><code class="fh-ref__key">BTN-1.4</code></a></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="pending">held</span></td></tr>
+              <tr class="fh-dt__detail" id="rdt-open-btn-accent" hidden><td colspan="3"><div class="fh-panel-section__stage"><button class="fh-button fh-button--accent" type="button">Accent</button></div><p class="fh-panel-section__caption"><code>BTN-1.4</code></p></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </td></tr>
+      <tr data-sidecar="cmp-chips" tabindex="0"><td><button class="fh-dt__expand" type="button" aria-expanded="false" aria-controls="rdt-open-chips" aria-label="Variants of Chips"></button></td><td data-label="Component"><a class="fh-ref" href="#c-sidecar" data-sidecar="cmp-chips"><span class="fh-ref__label">Chips</span><code class="fh-ref__key">CHP</code></a></td><td data-label="Variants">4</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="pending">held</span></td></tr>
+      <tr class="fh-dt__detail" id="rdt-open-chips" hidden><td colspan="4"><div class="fh-panel-section__stage"><div class="fh-chips fh-chips--wrap"><span class="fh-chip" data-tone="sky">Agents</span><span class="fh-chip" data-tone="lime">Relays</span></div></div><p class="fh-panel-section__caption"><code>CHP-1.1</code></p></td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="fh-dt fh-dt--records" aria-label="Relays, one stale" data-fh-id="RDT-1.4" data-fh-name="Warning row">
+  <div class="fh-dt__scroll"><table class="fh-dt__table">
+    <thead><tr><th scope="col">Relay</th><th scope="col">Sent by</th><th scope="col">Updated</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr data-sidecar="relay-index" tabindex="0"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-index"><span class="fh-ref__label">Index refresh</span><code class="fh-ref__key">R-201</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Updated">Nov 11</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="passed">passed</span></td></tr>
+      <tr data-sidecar="relay-ledger" tabindex="0" data-state="warning"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-ledger"><span class="fh-ref__label">Ledger cleanup</span><code class="fh-ref__key">R-202</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-harbor"><span class="fh-ref__label">Harbor</span></a></td><td data-label="Updated">Nov 2</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="warn">stale</span></td></tr>
+      <tr data-sidecar="relay-tidal" tabindex="0" data-state="warning" aria-selected="true"><td data-label="Relay"><a class="fh-ref" href="#c-sidecar" data-sidecar="relay-tidal"><span class="fh-ref__label">Tidal export</span><code class="fh-ref__key">R-203</code></a></td><td data-label="Sent by"><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard"><span class="fh-ref__label">Orchard</span></a></td><td data-label="Updated">Oct 30</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="warn">stale</span></td></tr>
+    </tbody>
+  </table></div>
+</div>
 </div>
           </div>
         </div>

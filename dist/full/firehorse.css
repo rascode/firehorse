@@ -17950,6 +17950,39 @@
     }
   }
 
+  .fh-panel-section__stage {
+    min-inline-size: 0;
+    min-block-size: var(--fh-panel-section-stage-min, 8rem);
+    padding: var(--fh-inset-card);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--fh-color-canvas);
+    color: var(--fh-color-text);
+    isolation: isolate;
+    display: flow-root;
+    overflow: auto;
+    container-type: inline-size;
+  }
+
+  .fh-panel-section__caption {
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+    margin: 0;
+
+    & > code {
+      font-family: var(--fh-font-mono);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+  }
+
+  .fh-panel-section__stage + .fh-panel-section__caption {
+    margin-block-start: var(--fh-gap-related);
+  }
+
+  .fh-panel-section__body > .fh-panel-section__stage + .fh-panel-section__caption {
+    margin-block-start: calc(var(--fh-gap-related) - var(--fh-gap-grouped));
+  }
+
   .fh-metrics {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-metrics-min, 12rem)), 1fr));
     gap: var(--fh-gap-grouped);
@@ -18936,6 +18969,190 @@
 
         &:first-child:before {
           content: none;
+        }
+      }
+    }
+  }
+
+  .fh-dt--records:has(.fh-ref) {
+    --_expand: calc(var(--_ctl) + var(--fh-gap-bound) * 2);
+    --_warn: var(--fh-color-warning);
+    --_warn-tint: color-mix(in oklab, var(--_warn) 3%, var(--fh-color-surface));
+    --_warn-hover: color-mix(in oklab, var(--_warn) 5%, var(--fh-color-surface));
+
+    & .fh-dt__expand {
+      inline-size: var(--_ctl);
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-sm);
+      color: var(--fh-color-text-muted);
+      vertical-align: middle;
+      cursor: var(--fh-cursor-action);
+      background: none;
+      border: 0;
+      place-items: center;
+      padding: 0;
+      display: inline-grid;
+
+      &:before {
+        content: "";
+        aspect-ratio: 1;
+        inline-size: .875rem;
+        mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+        transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+        background-color: currentColor;
+        rotate: -90deg;
+      }
+
+      &:dir(rtl):before {
+        rotate: 90deg;
+      }
+
+      &[aria-expanded="true"]:before {
+        rotate: 0deg;
+      }
+
+      &:hover {
+        background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+        color: var(--fh-color-text-strong);
+      }
+
+      &:focus-visible {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: -2px;
+      }
+
+      &:disabled {
+        opacity: .4;
+        cursor: default;
+      }
+    }
+
+    & .fh-dt__table {
+      &:has(.fh-dt__expand) > thead > tr > th:first-child, & > tbody > tr > td:has( > .fh-dt__expand) {
+        inline-size: var(--_expand);
+        padding-inline: var(--fh-gap-bound);
+        text-align: center;
+      }
+
+      & > tbody > tr:has( > td > .fh-dt__expand[aria-expanded="true"]) > td {
+        border-block-end-color: #0000;
+      }
+
+      & tr.fh-dt__detail {
+        cursor: default;
+
+        &[hidden] {
+          display: none;
+        }
+
+        & > td {
+          block-size: auto;
+          padding: var(--fh-gap-bound) var(--_pad) var(--fh-inset-control) calc(var(--_expand) + var(--_pad));
+          background-color: var(--fh-color-canvas);
+          white-space: normal;
+          text-overflow: clip;
+          overflow: visible;
+        }
+      }
+
+      & tr.fh-dt__detail > td > .fh-dt--records {
+        border-color: var(--fh-color-border);
+        border-radius: var(--fh-radius-md);
+      }
+
+      & tbody tr[data-state="warning"] {
+        & > td {
+          background-color: var(--_warn-tint);
+        }
+
+        & > td:first-child {
+          box-shadow: inset 3px 0 0 var(--_warn);
+        }
+
+        &:dir(rtl) > td:first-child {
+          box-shadow: inset -3px 0 0 var(--_warn);
+        }
+
+        &:hover > td {
+          background-color: var(--_warn-hover);
+        }
+
+        &[aria-selected="true"] > td {
+          background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--_warn-tint));
+        }
+      }
+    }
+
+    @container fh-dt (inline-size < 36rem) {
+      & .fh-dt__table {
+        & tbody tr:has( > td > .fh-dt__expand) {
+          grid-template-columns: auto minmax(0, 1fr);
+          align-items: baseline;
+
+          & > td:has( > .fh-dt__expand) {
+            align-self: center;
+            inline-size: auto;
+            padding: 0;
+          }
+
+          & > td:has( > .fh-dt__expand) + td {
+            font-weight: var(--fh-weight-medium);
+            grid-template-columns: minmax(0, 1fr);
+          }
+
+          & > td:has( > .fh-dt__expand) + td:before {
+            content: none;
+          }
+
+          & > td:nth-child(n+3) {
+            grid-column: 2;
+          }
+        }
+
+        & tbody tr:has( > td > .fh-dt__expand[aria-expanded="true"]) {
+          border-block-end-color: #0000;
+        }
+
+        & tbody tr.fh-dt__detail {
+          padding: 0 var(--_pad) var(--fh-inset-control);
+          background-color: var(--fh-color-canvas);
+          display: block;
+
+          &[hidden] {
+            display: none;
+          }
+
+          & > td {
+            background: none;
+            padding: 0;
+            display: block;
+
+            &:before {
+              content: none;
+            }
+          }
+        }
+
+        & tbody tr[data-state="warning"] {
+          background-color: var(--_warn-tint);
+          box-shadow: inset 3px 0 0 var(--_warn);
+
+          &:dir(rtl) {
+            box-shadow: inset -3px 0 0 var(--_warn);
+          }
+
+          &:hover {
+            background-color: var(--_warn-hover);
+          }
+
+          &[aria-selected="true"] {
+            background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--_warn-tint));
+          }
+
+          & > td, &:is(:hover, [aria-selected="true"]) > td {
+            box-shadow: none;
+            background: none;
+          }
         }
       }
     }

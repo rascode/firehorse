@@ -135,4 +135,158 @@
       }
     }
   }
+
+  /* —— Expandable rows and row states ——
+   * Plain markup a server renders; nothing here needs datatable.js. Every
+   * rule below is scoped to a records table that holds a reference cell
+   * (every records table does). fh-ref belongs to Sections, which is held,
+   * so the public build drops these rules with the category; fh-dt__* alone
+   * would count as Datatable, which is public.
+   *
+   * Expandable row: the first cell holds the toggle, the detail row follows
+   * its record row directly, with one cell spanning every column. The
+   * toggle's aria-expanded and the detail's hidden are the state;
+   * records.js flips both on a click, and sidecar.js leaves that click
+   * alone, so the row's sidecar does not open.
+   *   <thead><tr><th scope="col"><span class="fh-sr-only">Open</span></th><th scope="col">Component</th>…</tr></thead>
+   *   <tr data-sidecar="cmp-button" tabindex="0">
+   *     <td><button class="fh-dt__expand" type="button" aria-expanded="false" aria-controls="cmp-button-detail" aria-label="Variants of Button"></button></td>
+   *     <td data-label="Component"><a class="fh-ref" …>…</a></td>
+   *     …
+   *   </tr>
+   *   <tr class="fh-dt__detail" id="cmp-button-detail" hidden>
+   *     <td colspan="4">a stage, a nested records table, any content</td>
+   *   </tr>
+   * A records table inside a detail indents once, under the reference cell.
+   *
+   * Row state: data-state on a record row. "warning" gives the row a quiet
+   * edge and tint from the warning role; it stays through hover, selection
+   * and the stacked reflow. No data-state is the plain row. */
+  .fh-dt--records:has(.fh-ref) {
+    --_expand: calc(var(--_ctl) + var(--fh-gap-bound) * 2);
+    --_warn: var(--fh-color-warning);
+    /* Quiet on purpose: past 5% the subtle text (fh-ref__key) drops under 4.5:1 on dark. The edge carries the signal. */
+    --_warn-tint: color-mix(in oklab, var(--_warn) 3%, var(--fh-color-surface));
+    --_warn-hover: color-mix(in oklab, var(--_warn) 5%, var(--fh-color-surface));
+
+    & .fh-dt__expand {
+      display: inline-grid;
+      place-items: center;
+      inline-size: var(--_ctl);
+      aspect-ratio: 1;
+      padding: 0;
+      border: 0;
+      border-radius: var(--fh-radius-sm);
+      background: none;
+      color: var(--fh-color-text-muted);
+      vertical-align: middle;
+      cursor: var(--fh-cursor-action);
+
+      /* The chevron points at the content while closed and down once open. */
+      &::before {
+        content: "";
+        inline-size: 0.875rem;
+        aspect-ratio: 1;
+        background-color: currentColor;
+        mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+        rotate: -90deg;
+        transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+      }
+      &:dir(rtl)::before { rotate: 90deg; }
+      &[aria-expanded="true"]::before { rotate: 0deg; }
+
+      &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); color: var(--fh-color-text-strong); }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+      &:disabled { opacity: 0.4; cursor: default; }
+    }
+
+    & .fh-dt__table {
+      /* The toggle column: as wide as the toggle. */
+      &:has(.fh-dt__expand) > thead > tr > th:first-child,
+      & > tbody > tr > td:has(> .fh-dt__expand) {
+        inline-size: var(--_expand);
+        padding-inline: var(--fh-gap-bound);
+        text-align: center;
+      }
+
+      /* An open record row runs into its detail: no rule between them. */
+      & > tbody > tr:has(> td > .fh-dt__expand[aria-expanded="true"]) > td { border-block-end-color: transparent; }
+
+      & tr.fh-dt__detail {
+        cursor: default;
+
+        &[hidden] { display: none; }
+
+        & > td {
+          block-size: auto;
+          padding: var(--fh-gap-bound) var(--_pad) var(--fh-inset-control) calc(var(--_expand) + var(--_pad));
+          background-color: var(--fh-color-canvas);
+          white-space: normal;
+          overflow: visible;
+          text-overflow: clip;
+        }
+      }
+
+      /* A records table in a detail: a nested list under the reference cell, in a softer frame. */
+      & tr.fh-dt__detail > td > .fh-dt--records {
+        border-color: var(--fh-color-border);
+        border-radius: var(--fh-radius-md);
+      }
+
+      & tbody tr[data-state="warning"] {
+        & > td { background-color: var(--_warn-tint); }
+        & > td:first-child { box-shadow: inset 3px 0 0 var(--_warn); }
+        &:dir(rtl) > td:first-child { box-shadow: inset -3px 0 0 var(--_warn); }
+        &:hover > td { background-color: var(--_warn-hover); }
+        &[aria-selected="true"] > td { background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--_warn-tint)); }
+      }
+    }
+
+    /* Nested here, not a top level query, so the public build drops it whole. */
+    @container fh-dt (inline-size < 36rem) {
+      & .fh-dt__table {
+        /* Toggle and reference share the first line; the other cells follow under the reference. */
+        & tbody tr:has(> td > .fh-dt__expand) {
+          grid-template-columns: auto minmax(0, 1fr);
+          align-items: baseline;
+
+          & > td:has(> .fh-dt__expand) { align-self: center; inline-size: auto; padding: 0; }
+          & > td:has(> .fh-dt__expand) + td { grid-template-columns: minmax(0, 1fr); font-weight: var(--fh-weight-medium); }
+          & > td:has(> .fh-dt__expand) + td::before { content: none; }
+          & > td:nth-child(n + 3) { grid-column: 2; }
+        }
+
+        & tbody tr:has(> td > .fh-dt__expand[aria-expanded="true"]) { border-block-end-color: transparent; }
+
+        & tbody tr.fh-dt__detail {
+          display: block;
+          padding: 0 var(--_pad) var(--fh-inset-control);
+          background-color: var(--fh-color-canvas);
+
+          &[hidden] { display: none; }
+
+          & > td {
+            display: block;
+            padding: 0;
+            background: none;
+
+            &::before { content: none; }
+          }
+        }
+
+        /* The tint and the edge move from the cells to the stacked row. */
+        & tbody tr[data-state="warning"] {
+          background-color: var(--_warn-tint);
+          box-shadow: inset 3px 0 0 var(--_warn);
+
+          &:dir(rtl) { box-shadow: inset -3px 0 0 var(--_warn); }
+          &:hover { background-color: var(--_warn-hover); }
+          &[aria-selected="true"] { background-color: color-mix(in oklab, var(--fh-tone) 10%, var(--_warn-tint)); }
+
+          & > td,
+          &:is(:hover, [aria-selected="true"]) > td { background: none; box-shadow: none; }
+        }
+      }
+    }
+  }
 }

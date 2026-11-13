@@ -13,6 +13,10 @@
  * element that opened it. A link keeps its href, so with no script, or on
  * a modified click (new tab), it still goes to the record.
  *
+ * A records row's expand toggle (.fh-dt__expand, see records.js) sits
+ * inside the row's opener: a click or a key on it opens and closes the
+ * detail row and never the sidecar.
+ *
  * Which sidecar: the opener's data-sidecar-target="#selector", else the
  * dialog.fh-sidecar whose data-record matches, else the first
  * dialog.fh-sidecar on the page.
@@ -44,6 +48,8 @@
 const ATTR = "data-sidecar";
 const SELECTOR = `[${ATTR}]`;
 const NATIVE = "a[href], button, input, select, textarea, summary";
+/* Controls inside an opener that do their own job (records.js). */
+const OWN = ".fh-dt__expand";
 
 const openers = new WeakMap(); // sidecar dialog → the element that opened it
 let uid = 0;
@@ -155,6 +161,7 @@ function init() {
   }).observe(document.documentElement, { childList: true, subtree: true });
 
   document.addEventListener("click", (e) => {
+    if (e.target.closest?.(OWN)) return;
     const opener = e.target.closest?.(SELECTOR);
     if (opener && !modified(e)) return activate(e, opener);
     const dlg = e.target.closest?.("dialog.fh-sidecar");
@@ -203,6 +210,7 @@ function init() {
   // Enter is a click on a link or button already; the rest need it by hand.
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest?.(OWN)) return;
     const opener = e.target.closest?.(SELECTOR);
     if (opener && !opener.matches(NATIVE)) activate(e, opener);
   });
