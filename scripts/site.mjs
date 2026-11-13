@@ -141,7 +141,8 @@ if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
   cp("pro/dist/keyfield.js", "keyfield.js");
   if (existsSync(join(root, "pro/dist/motion.js"))) cp("pro/dist/motion.js", "motion-pro.js");
 }
-for (const dir of ["img/supply", "img/backdrop", "img/og", "img/brand", "img/theme-horses", "audio"]) {
+// site/audio (the Audio demo tracks) goes with Audio: held, so only --all copies it.
+for (const dir of ["img/supply", "img/backdrop", "img/og", "img/brand", "img/theme-horses", ...(showAll || isLivePage("/audio/") ? ["audio"] : [])]) {
   mkdirSync(join(out, dir), { recursive: true });
   for (const f of readdirSync(join(root, `site/${dir}`))) cp(`site/${dir}/${f}`, `${dir}/${f}`);
 }

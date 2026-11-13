@@ -30,8 +30,12 @@ for (const p of list) expect(existsSync(fileOf(allOut, p.path)), `--all: ${p.pat
 for (const path of heldPages.filter((x) => x.endsWith(".html"))) expect(existsSync(fileOf(allOut, path)), `--all: ${path} was not built`);
 expect(held.length === 0 || /data-fh-release="(hold|draft)"/.test(readFileSync(fileOf(allOut, "/components/actions/"), "utf8")), "--all: held demos carry data-fh-release");
 
+expect(existsSync(join(allOut, "audio")) && readdirSync(join(allOut, "audio")).some((f) => f.endsWith(".mp3")), "--all: site/audio/*.mp3 not copied");
+
 // The public build.
 run("scripts/site.mjs", ["--check"]);
+// Audio is held: its demo tracks stay out of the public site (unless Helm sets /audio/ live).
+if (pageStatus("/audio/", []) !== "live") expect(!existsSync(join(dist, "audio")), "public site serves site/audio (Audio is held)");
 const files = walk(dist).filter((f) => f.endsWith(".html"));
 const heldSet = new Set(held);
 for (const f of files) {
