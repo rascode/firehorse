@@ -152,6 +152,8 @@ const pubIndex = JSON.parse(readFileSync(join(root, "dist/index.json"), "utf8"))
 for (const f of want) expect(pubIndex.families.find((x) => x.id === f.id)?.url === base + specimenPath(f), `dist/index.json: ${f.id} does not point at its specimen`);
 // The clean family markup carries no site helper.
 for (const f of want) expect(!/class="[^"]*\bsite-/.test(f.markup), `${f.id}: Index markup still has a site-* class`);
+// Every group of every live family carries markup (its own stage, or its first variant's).
+for (const f of full.families) if (f.status === "live") for (const g of f.groups) expect(typeof g.markup === "string" && g.markup.trim() !== "", `${g.id}: live group has no markup`);
 
 // Nav: the header, drawer, ⌘K and footer (everything outside <main>) name no held category and link to none of
 // its pages. They are the same on every page; the home page is read.

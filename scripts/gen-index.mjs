@@ -126,8 +126,13 @@ for (const f of families.values()) {
     vs.forEach((v, i) => { if (v.id !== `${gid}.${i + 1}`) errors.push(`${gid}: variants must run .1, .2, … without gaps (found ${v.id})`); });
     const name = gel?.name || f.groupNames[g - 1] || (n === 1 ? f.name : "");
     if (!name) errors.push(`${gid} has no name: add data-fh-groups to ${f.id} or data-fh-name to the group`);
-    const group = { id: gid, name, summary: gel?.summary || "", variants: vs.map((v) => v.id) };
-    if (!vs.length) { group.markup = gel.markup; group.classes = classesOf(gel.markup); }
+    // A group's own markup is its stage (or outer) markup. With none, the first variant's. markupFrom says which.
+    const ownMarkup = gel?.markup && gel.markup.trim() ? gel.markup : "";
+    const variantMarkup = vs[0]?.markup && vs[0].markup.trim() ? vs[0].markup : "";
+    const markup = ownMarkup || variantMarkup || "";
+    const markupFrom = ownMarkup ? "group" : variantMarkup ? "variant" : "none";
+    const group = { id: gid, name, summary: gel?.summary || "", variants: vs.map((v) => v.id), markup, markupFrom };
+    if (!vs.length) group.classes = classesOf(gel.markup);
     if (gel) { group.anchor = anchorOf(gel.el) || gid; if (gel.demo) group.demo = true; }
     f.groups.push(group);
   }
@@ -177,6 +182,8 @@ const ids = new Set(list.flatMap((f) => [f.id, ...f.groups.map((g) => g.id), ...
 for (const id of releaseIds()) if (!ids.has(id)) errors.push(`release.json lists ${id}, which the Index doesn't have`);
 if (errors.length) { console.error("✗ index:\n  " + errors.join("\n  ")); process.exit(1); }
 if (check) {
+  // A group with no markup of its own and no variant markup is a warning, not an error.
+  for (const id of list.flatMap((f) => f.groups.filter((g) => g.markupFrom === "none").map((g) => g.id))) console.warn(`warning: ${id} has no markup`);
   console.log(`✓ index: ${list.length} families, ${nG} groups, ${nV} variants, IDs unique and in order`);
   console.log(`✓ index (public): ${publicList.length} families, ${pG} groups, ${pV} variants`);
   process.exit(0);
@@ -244,7 +251,9 @@ for (const f of publicList) {
   for (const g of f.groups) {
     md += `### ${g.id} · ${g.name}\n\n`;
     if (g.summary) md += `${g.summary}\n\n`;
-    if (g.markup) { md += "```html\n" + g.markup + "\n```\n\n"; continue; }
+    // markup used to mean "this group has no variants". Groups with variants now carry markup too
+    // (their stage, or their first variant's), and each variant is still listed below.
+    if (g.markup && !g.variants.length) { md += "```html\n" + g.markup + "\n```\n\n"; continue; }
     for (const id of g.variants) {
       const v = f.variants.find((x) => x.id === id);
       md += `#### ${v.id} · ${v.name}\n\n`;
