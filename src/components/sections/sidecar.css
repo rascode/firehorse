@@ -32,7 +32,12 @@
    * (width, 30rem), --fh-sidecar-height (as an aside, auto),
    * --fh-sidecar-text (body, 0.8125rem), --fh-sidecar-small (0.78rem),
    * --fh-sidecar-caption (0.72rem), --fh-sidecar-title (record title,
-   * 1.375rem). */
+   * 1.375rem). A dialog opts in to a width handle with data-sidecar-resize
+   * (see sidecar.js): .fh-sidecar__resize on the inline start edge. The
+   * attribute's value is the localStorage key. ArrowLeft widens, ArrowRight
+   * narrows, and Home or a double-click returns to the default. The dialog
+   * fires fh:sidecar-resize with detail { width }. The handle hides when
+   * the sidecar is under 22rem. */
   .fh-sidecar {
     --fh-text-body: var(--fh-sidecar-text, 0.8125rem);
     --fh-text-small: var(--fh-sidecar-small, 0.78rem);
@@ -154,5 +159,44 @@
     padding: 0 var(--fh-inset-card);
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+
+  /* Drag handle for data-sidecar-resize. The dialog is already positioned,
+   * so this sits on its inline start edge, above the body. */
+  .fh-sidecar__resize {
+    position: absolute;
+    z-index: var(--fh-z-raised);
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 0.75rem;
+    margin: 0;
+    padding: 0;
+    cursor: ew-resize;
+    touch-action: none;
+    user-select: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline-start: 50%;
+      inset-block-start: 50%;
+      inline-size: 0.1875rem;
+      block-size: 3rem;
+      border-radius: var(--fh-radius-pill);
+      background-color: var(--fh-color-etch);
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover::after,
+    &:active::after,
+    &:focus-visible::after {
+      background-color: var(--fh-color-text-strong);
+    }
+  }
+
+  @container fh-sidecar (max-inline-size: 22rem) {
+    .fh-sidecar__resize {
+      display: none;
+    }
   }
 }

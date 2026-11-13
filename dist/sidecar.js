@@ -28,6 +28,17 @@
  *                      record link inside the sidecar swaps its record.
  *   fh:sidecar-close   after the dialog has closed and focus has returned.
  *
+ * Width, opt in with data-sidecar-resize on the dialog. When the attribute
+ * has a value, that value is the localStorage key (for example
+ * helm.sidecar.width). The saved width is read when the dialog opens, and
+ * storage is wrapped in try/catch. A handle, .fh-sidecar__resize, is
+ * inserted once as the dialog's first child. Dragging sets --fh-dialog-size
+ * to the pointer's distance from the dialog's right edge, in px, clamped
+ * between 352px and the window width minus 32px. ArrowLeft widens by 32px,
+ * ArrowRight narrows by 32px, and Home or a double-click removes the
+ * property so the dialog returns to its default. After a change:
+ *   fh:sidecar-resize  detail { width } in pixels.
+ *
  * Unsaved changes: an input or change inside a form section
  * (.fh-panel-section--form) sets data-dirty on that section and on the
  * sidecar. A submit that the page does not cancel, or a form reset, clears
@@ -138,9 +149,127 @@ const enhance = (el) => {
   }
 };
 
+const RESIZE_ATTR = "data-sidecar-resize";
+const RESIZE_SEL = `dialog.fh-sidecar[${RESIZE_ATTR}]`;
+const MIN_WIDTH = 352;
+const WIDTH_STEP = 32;
+const VIEW_GUTTER = 32;
+
+/* Empty attribute: the handle works, and nothing is stored. */
+const resizeKey = (dlg) => dlg.getAttribute(RESIZE_ATTR) || "";
+
+const clampWidth = (px) => Math.min(window.innerWidth - VIEW_GUTTER, Math.max(MIN_WIDTH, Math.round(px)));
+
+const rememberWidth = (dlg, width) => {
+  const key = resizeKey(dlg);
+  if (!key) return;
+  try {
+    if (width == null) localStorage.removeItem(key);
+    else localStorage.setItem(key, String(width));
+  } catch {
+    /* Storage can throw in private mode. The width still applies for this view. */
+  }
+};
+
+const storedWidth = (dlg) => {
+  const key = resizeKey(dlg);
+  if (!key) return null;
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw == null || raw === "") return null;
+    const n = Number.parseFloat(raw);
+    return Number.isFinite(n) ? n : null;
+  } catch {
+    return null;
+  }
+};
+
+/* Sets --fh-dialog-size. Stores when asked. Fires only when the value changes. */
+const applyWidth = (dlg, px, store) => {
+  const width = clampWidth(px);
+  const next = `${width}px`;
+  const prev = dlg.style.getPropertyValue("--fh-dialog-size").trim();
+  dlg.style.setProperty("--fh-dialog-size", next);
+  if (store) rememberWidth(dlg, width);
+  if (prev !== next) emit(dlg, "fh:sidecar-resize", { width });
+  return width;
+};
+
+/* Home and double-click: back to the stylesheet default. */
+const resetWidth = (dlg) => {
+  const prev = dlg.style.getPropertyValue("--fh-dialog-size").trim();
+  dlg.style.removeProperty("--fh-dialog-size");
+  rememberWidth(dlg, null);
+  if (prev) emit(dlg, "fh:sidecar-resize", { width: Math.round(dlg.getBoundingClientRect().width) });
+};
+
+const restoreWidth = (dlg) => {
+  const saved = storedWidth(dlg);
+  if (saved == null) return;
+  applyWidth(dlg, saved, false);
+};
+
+const mountResize = (dlg) => {
+  if (dlg.querySelector(":scope > .fh-sidecar__resize")) return;
+  const handle = document.createElement("div");
+  handle.className = "fh-sidecar__resize";
+  handle.setAttribute("role", "separator");
+  handle.setAttribute("aria-orientation", "vertical");
+  handle.tabIndex = 0;
+  handle.setAttribute("aria-label", "Drag to change the panel width");
+  dlg.insertBefore(handle, dlg.firstChild);
+
+  handle.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    const right = dlg.getBoundingClientRect().right;
+    let moved = false;
+    let done = false;
+    const move = (ev) => {
+      moved = true;
+      applyWidth(dlg, right - ev.clientX, false);
+    };
+    const up = () => {
+      if (done) return;
+      done = true;
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", up);
+      handle.removeEventListener("pointercancel", up);
+      if (!moved) return;
+      const n = Number.parseFloat(dlg.style.getPropertyValue("--fh-dialog-size"));
+      if (Number.isFinite(n)) rememberWidth(dlg, n);
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", up);
+    handle.addEventListener("pointercancel", up);
+    handle.setPointerCapture(e.pointerId);
+  });
+
+  handle.addEventListener("keydown", (e) => {
+    if (e.key === "Home") {
+      e.preventDefault();
+      resetWidth(dlg);
+      return;
+    }
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    const current = dlg.getBoundingClientRect().width;
+    applyWidth(dlg, e.key === "ArrowLeft" ? current + WIDTH_STEP : current - WIDTH_STEP, true);
+  });
+
+  handle.addEventListener("dblclick", (e) => {
+    e.preventDefault();
+    resetWidth(dlg);
+  });
+
+  if (dlg.open) restoreWidth(dlg);
+};
+
 const scan = (root) => {
   if (root.matches?.(SELECTOR)) enhance(root);
   root.querySelectorAll?.(SELECTOR).forEach(enhance);
+  if (root.matches?.(RESIZE_SEL)) mountResize(root);
+  root.querySelectorAll?.(RESIZE_SEL).forEach(mountResize);
 };
 
 const modified = (e) => e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
@@ -203,6 +332,17 @@ function init() {
     (e) => {
       const dlg = e.target;
       if (dlg instanceof HTMLDialogElement && dlg.matches(".fh-sidecar") && !mayLeave(dlg, "close")) e.preventDefault();
+    },
+    true,
+  );
+
+  // A saved width applies when the dialog opens (showModal, show, or the open attribute).
+  document.addEventListener(
+    "toggle",
+    (e) => {
+      const dlg = e.target;
+      if (!(dlg instanceof HTMLDialogElement) || !dlg.matches(RESIZE_SEL) || !dlg.open) return;
+      restoreWidth(dlg);
     },
     true,
   );

@@ -6,8 +6,8 @@
  * drive it, and the narrow sheet is a popover.
  *
  * This adds what CSS cannot:
- *   - keeps data-fh-side ("open" or "rail") and the toggle's aria-expanded
- *     in step with the checkbox
+ *   - keeps data-fh-side ("open" or "rail") in step with the checkbox
+ *   - sets the toggle's aria-expanded (the markup leaves it off)
  *   - remembers the choice in localStorage under the one key "fh-app-side"
  *   - toggles on Cmd+B or Ctrl+B (not while typing in a field)
  *
