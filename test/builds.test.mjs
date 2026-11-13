@@ -60,6 +60,8 @@ for (const f of listed) {
   expect(!heldPackagePath(f, p), `tarball has held source ${f}`);
 }
 for (const f of p.left) expect(!listed.includes(f.path), `tarball has held source ${f.path}`);
+expect(!listed.some((f) => f.startsWith("templates/")), `tarball has templates/: ${listed.filter((f) => f.startsWith("templates/")).join(" ")}`);
+expect(JSON.parse(read("package.json")).files.includes("templates") && existsSync(join(root, "templates/media.html")), "the full package (git installs) should keep templates/");
 // The built sheets the tarball ships (src/ is source: a kept file can still name a class stripped at bundle time).
 for (const f of listed.filter((f) => /^dist\/.+\.css$/.test(f))) leaks(`tarball ${f}`, readFileSync(join(dir, f), "utf8"));
 for (const i of p.integrations.filter((i) => i.out)) expect(!listed.includes(`dist/${i.name}`) && !listed.includes(i.path), `tarball has held integration ${i.name}`);
@@ -85,6 +87,7 @@ if (existsSync(join(site, "firehorse.css"))) {
   expect(readFileSync(join(site, "firehorse.css"), "utf8") === read("dist/firehorse.css"), "site/dist/firehorse.css is not the public build");
   expect(existsSync(join(site, "site-chrome.css")), "site/dist has no site-chrome.css");
   for (const i of p.integrations.filter((i) => i.out)) expect(!existsSync(join(site, i.name)), `site/dist serves held integration ${i.name}`);
+  expect(!existsSync(join(site, "templates")), "site/dist serves templates/ (full build only)");
   // The developer portal serves (site/dist/src) and links only the source the public package keeps.
   const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
   const srcDir = join(site, "src");

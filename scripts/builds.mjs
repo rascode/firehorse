@@ -161,7 +161,9 @@ export const heldPackagePath = (path, p = plan()) => {
   // A folder's README goes with it when every stylesheet under the folder is left out (src/components/finance).
   const readme = /^(src\/.+)\/README\.md$/.exec(path)?.[1];
   const css = readme ? [...p.files, ...p.integrations].filter((f) => f.path.startsWith(readme + "/")) : [];
+  // templates/ (the Media starters: media, slides, wallpapers) is full build only: Media is held.
   return path === "dist/full" || path.startsWith("dist/full/") || /^dist\/admin(\.min)?\.css$/.test(path)
+    || path === "templates" || path.startsWith("templates/")
     || path === "src/admin" || path.startsWith("src/admin/") || held.has(path) || (css.length > 0 && css.every((f) => held.has(f.path)));
 };
 /** The exports map without the full build and admin entries, and without an entry whose every target is held. */
