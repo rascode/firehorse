@@ -16,8 +16,8 @@ const read = (f) => readFileSync(join(root, f), "utf8");
 const sha = (f) => createHash("sha256").update(readFileSync(join(root, f))).digest("hex");
 
 // The full build is what dist/firehorse.css was before the split (base 633c585).
-const BASE_FULL = "763812280da7bfd920ec5bab357091eb61e97f61299a9ebb83b665cfcf8bc5b6";
-expect(sha("dist/full/firehorse.css") === BASE_FULL, "dist/full/firehorse.css differs from the base build (633c585 dist/firehorse.css)");
+const BASE_FULL = "11c9a4dd2fddb4ab5163e1b4b5c4be6d095b4255a21ebe4a04f1df08d8f6d8f6";
+expect(sha("dist/full/firehorse.css") === BASE_FULL, "dist/full/firehorse.css differs from the recorded full build (633c585 dist/firehorse.css plus the fh-tpl dialog fix); a source change to a held or live family means recording the new hash here");
 for (const f of ["firehorse.min.css", "firehorse.compat.min.css", "admin.css", "admin.min.css", "index.json"]) expect(existsSync(join(root, "dist/full", f)), `missing dist/full/${f}`);
 
 // No held class is a selector in any public sheet: every dist/*.css the public package ships (staged below) and
