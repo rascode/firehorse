@@ -135,6 +135,29 @@ for (const page of gridPages) {
   for (const f of fams) expect(main.includes(`class="site-stage site-stage--card" data-stage="${stageMode(f.markup)}"`), `${page}: ${f.id} preview is not ${stageMode(f.markup)}`);
   expect(!/class="[^"]*site-specimen__(?:stage|preview)"/.test(main), `${page}: retired preview class`);
 }
+// Card previews (navigation): Drawer is open in the card only. Hamburger and Dropdown keep the closed
+// control and carry no state-label text. Family pages keep the original markup.
+const cardStage = (page, id) => {
+  const at = page.indexOf(`data-specimen-card="${id}"`);
+  const open = page.indexOf('<div class="site-stage site-stage--card"', at);
+  const inner = page.indexOf(">", open) + 1;
+  const end = page.indexOf('<p class="fh-card__meta">', open);
+  return page.slice(inner, end).replace(/\s*<\/div>\s*$/, "");
+};
+const stageText = (html) => html.replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+const stateLabelText = /\b(?:States|Morphs|Opens|Open|Closed|Hover|Focus|Disabled|Cross|Arrow|Spin|Squeeze|Minus|Plus|Dots)\b|With label|Full-screen menu|Side drawer/;
+const navCards = readFileSync(fileOf("/components/navigation/"), "utf8");
+const drwStage = cardStage(navCards, "DRW");
+const drwTag = (drwStage.match(/<div\b[^>]*\bfh-drawer\b[^>]*>/) ?? [""])[0];
+expect(/\sopen(?:[\s>]|$)/.test(drwTag) && /display:\s*block/.test(drwTag) && /opacity:\s*1/.test(drwTag), `DRW card: drawer is not open: ${drwTag}`);
+expect(stageText(drwStage).includes("Foundations"), "DRW card: open drawer has no links");
+const drawerPage = readFileSync(fileOf("/components/navigation/drawer/"), "utf8");
+expect(!/\bfh-drawer\b[^>]*\sopen[\s>]/.test(drawerPage), "DRW specimen page carries the card-only open attribute");
+const brgStage = cardStage(navCards, "BRG");
+expect(brgStage.includes("fh-burger") && !/fh-burger--open|aria-expanded="true"|<figcaption\b|data-state-label/.test(brgStage) && !stateLabelText.test(stageText(brgStage)), `BRG card: closed control still has a state label: ${stageText(brgStage) || brgStage.slice(0, 180)}`);
+expect(readFileSync(fileOf("/components/navigation/hamburger/"), "utf8").includes("<figcaption>Closed</figcaption>"), "BRG specimen page lost the Closed label");
+const drpStage = cardStage(navCards, "DRP");
+expect(drpStage.includes("fh-button") && !/\bfh-menu\b|<figcaption\b|data-state-label/.test(drpStage) && !stateLabelText.test(stageText(drpStage)) && stageText(drpStage).includes("View options"), `DRP card: closed control still has a state label: ${stageText(drpStage) || drpStage.slice(0, 180)}`);
 const grid = readFileSync(fileOf("/components/actions/"), "utf8");
 const map = JSON.parse(grid.match(/<script type="application\/json" id="site-specimen-map">([\s\S]*?)<\/script>/)?.[1] ?? "{}");
 expect(map.BTN === "/components/actions/button/" && map["c-button"] === "/components/actions/button/" && map["BTN-1.2"] === "/components/actions/button/#BTN-1.2", "grid: old addresses (#BTN, #c-button, #BTN-1.2) do not map to the specimen");

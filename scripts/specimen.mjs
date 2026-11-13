@@ -312,18 +312,55 @@ export const withSpecimens = (list) => {
   return out;
 };
 
+// Words that only name a state. They are dropped from a card preview, never from a family page.
+const STATE_LABEL_TEXT = /^(?:states|morphs|opens|open|closed|hover|focus|disabled|with label|cross|arrow|spin|squeeze|minus|plus|dots|full-screen menu|side drawer|dropdown)$/i;
+
+/** Remove elements whose only job is to name a state: a caption, a data-state-label, an fh-sr-only
+ *  state name (it shows as plain text when it is not really a screen-reader label), or a text node
+ *  sitting outside the control. */
+const dropStateLabels = (markup) => String(markup)
+  .replace(/<figcaption\b[^>]*>[\s\S]*?<\/figcaption>/gi, "")
+  .replace(/<([a-z][\w:-]*)\b[^>]*\bdata-state-label\b[^>]*>[\s\S]*?<\/\1>/gi, "")
+  .replace(/<([a-z][\w:-]*)\b[^>]*\bfh-sr-only\b[^>]*>([\s\S]*?)<\/\1>/gi, (all, _tag, text) => STATE_LABEL_TEXT.test(text.replace(/<[^>]+>/g, "").trim()) ? "" : all)
+  .replace(/(^|>)([^<]+)(?=<|$)/g, (all, edge, text) => STATE_LABEL_TEXT.test(text.trim()) ? edge : all);
+
+/** The closed control: the first button that is not an open state, after state labels are gone.
+ *  Later buttons in these families are other states or items inside an open menu. */
+const closedControl = (markup) => {
+  const cleaned = dropStateLabels(markup);
+  const buttons = [...cleaned.matchAll(/<button\b[^>]*>[\s\S]*?<\/button>/gi)];
+  const closed = buttons.find((m) => !/\bfh-[\w-]*--open\b/.test(m[0]) && !/\baria-expanded="true"/.test(m[0]));
+  return (closed ? closed[0] : cleaned).trim();
+};
+
+/** DRW opens on :popover-open (src/components/navigation/drawer.css). A card cannot show that
+ *  pseudo-class, and there is no open class. Mark the popover open and set the same open look,
+ *  in the card instead of the viewport. The user agent hides a closed popover. */
+const openDrawer = (markup) => markup.replace(/<(div|dialog)(\s[^>]*\bpopover\b[^>]*)>/, (full, tag, attrs) => {
+  if (!/\bfh-drawer\b/.test(attrs)) return full;
+  let next = /\sopen(?:[\s=]|$)/.test(attrs) ? attrs : `${attrs} open`;
+  const shown = "position: relative; inset: auto; display: block; opacity: 1; translate: 0 0;";
+  next = /\sstyle="/.test(next) ? next.replace(/\sstyle="/, ` style="${shown} `) : `${next} style="${shown}"`;
+  return `<${tag}${next}>`;
+});
+
+/** Family code to card-preview markup. Absent codes use the family markup unchanged. */
+const CARD_PREVIEW = { DRW: openDrawer, BRG: closedControl, DRP: closedControl };
+
 /** The category grid: the page's hero stays; one Explore card per specimen (the Components hub card) with ID,
- *  name, summary, a small live preview from the family's clean markup, and the link. Old addresses
- *  (#BTN, #c-button, #BTN-1.2) go to the specimen: site/specimen.js reads the map, noscript lists the links. */
+ *  name, summary, a small live preview from the family's clean markup (CARD_PREVIEW when the card
+ *  must differ), and the link. Old addresses (#BTN, #c-button, #BTN-1.2) go to the specimen:
+ *  site/specimen.js reads the map, noscript lists the links. */
 export const categoryGrid = (p, redirects) => {
   const tone = p.meta.tone ?? "accent";
   const cards = p.specimenGrid.map((s) => {
     const f = s.specimen, st = shownStatus(f.id);
     const n = entriesOf(f), vs = n.reduce((t, g) => t + g.items.length, 0);
     const meta = [n.length ? `${n.length} group${n.length > 1 ? "s" : ""}` : "", vs ? `${vs} variant${vs > 1 ? "s" : ""}` : ""].filter(Boolean).join(" · ") || "One component";
+    const preview = CARD_PREVIEW[f.id] ? CARD_PREVIEW[f.id](f.markup) : f.markup;
     return `        <article class="fh-card" data-tone="${tone}"${st !== "live" ? ` data-fh-release="${st}"` : ""} data-specimen-card="${f.id}">
           <div class="site-stage site-stage--card" data-stage="${stageMode(f.markup)}" inert aria-hidden="true">
-${f.markup}
+${preview}
           </div>
           <p class="fh-card__meta">${meta}${chip(st, tierOf(f.id))}</p>
           <h3 class="fh-card__title"><a href="${s.path}">${esc(f.name)}</a></h3>
