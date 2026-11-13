@@ -115,6 +115,7 @@ const head = ({ title, description, path, type = "website", image, jsonld }) => 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300..700&display=swap">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/firehorse.css">
+<link rel="stylesheet" href="/site-chrome.css?v=${createHash("sha1").update(readFileSync(join(root, "site/dist/site-chrome.css"))).digest("hex").slice(0, 8)}">
 <link rel="stylesheet" href="/themes/rascode.css">
 <link rel="stylesheet" href="/themes.css">
 <script>try{var t=localStorage.getItem("fh-theme");if(t!==null)t?document.documentElement.setAttribute("data-fh-theme",t):document.documentElement.removeAttribute("data-fh-theme")}catch(e){}</script>
