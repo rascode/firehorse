@@ -1,7 +1,7 @@
 # Maestoso (Lipizzaner theme backdrop)
 
-`source.png` is the photo Rascode supplied for the Lipizzaner theme.
-`cut.png` is the horse cut out of it (rembg, isnet-general-use).
+The supplied photo was removed (2026-11-13, rights unconfirmed). Point `etch.py` at a generated image instead.
+The horse is cut out first (rembg, isnet-general-use) as `cut.png`.
 `etch.py` turns the cut-out into the hero linework: pencil strands along
 the form (denser in the highlights), anatomy lines, a double contour, joint
 circles, dash-dot construction and dimensions, on the same 1453 × 920 canvas
