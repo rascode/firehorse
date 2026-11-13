@@ -374,14 +374,14 @@ export const categoryGrid = (p, redirects) => {
     const n = entriesOf(f), vs = n.reduce((t, g) => t + g.items.length, 0);
     const meta = [n.length ? `${n.length} group${n.length > 1 ? "s" : ""}` : "", vs ? `${vs} variant${vs > 1 ? "s" : ""}` : ""].filter(Boolean).join(" · ") || "One component";
     const preview = CARD_PREVIEW[f.id] ? CARD_PREVIEW[f.id](f.markup) : f.markup;
-    return `        <article class="fh-card" data-tone="${tone}"${st !== "live" ? ` data-fh-release="${st}"` : ""} data-specimen-card="${f.id}">
-          <div class="site-stage site-stage--card" data-stage="${stageMode(preview)}" inert aria-hidden="true">
+    return `        <article class="site-family"${st !== "live" ? ` data-fh-release="${st}"` : ""} data-specimen-card="${f.id}">
+          <div class="site-family__preview site-stage site-stage--card" data-stage="${stageMode(preview)}" inert aria-hidden="true">
 ${preview}
           </div>
-          <p class="fh-card__meta">${meta}${chip(st, tierOf(f.id))}</p>
-          <h3 class="fh-card__title"><a href="${s.path}">${esc(f.name)}</a></h3>
-          <p class="fh-card__body">${esc(firstSentence(f.summary))}</p>
-          <footer class="fh-card__footer"><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">${f.id}</b></li></ul></footer>
+          <p class="site-family__meta">${meta}${chip(st, tierOf(f.id))}</p>
+          <h3 class="site-family__name"><a href="${s.path}">${esc(f.name)}</a></h3>
+          <p class="site-family__summary">${esc(firstSentence(f.summary))}</p>
+          <p class="site-family__id">${f.id}</p>
         </article>`;
   }).join("\n");
   const map = JSON.stringify(Object.fromEntries([...redirects].sort()));

@@ -176,7 +176,7 @@ body::before {
   .site-page-summary > li:nth-child(3) { --_intro-at: 0.65s; }
   .site-page-summary > li:nth-child(4) { --_intro-at: 0.75s; }
 
-  :root.fh-js .site-page-cards > .fh-card {
+  :root.fh-js .site-page-cards > :is(.fh-card, .site-family) {
     transition: opacity 0.9s var(--fh-ease-out), translate 0.9s var(--fh-ease-out);
     transition-delay: calc(var(--_i, 0) * 90ms);
   }
@@ -2423,7 +2423,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   .fh-dock[data-active="true"] .site-dock-home { grid-area: home; }
   .fh-dock[data-active="true"] .site-dock-menu { grid-area: menu; }
   .fh-dock[data-active="true"] .fh-dock__actions { display: none; }
-  .fh-dock[data-active="true"] .fh-dock__bar > .fh-chips { margin-inline: 0; padding-inline: 0; }
+  .fh-dock[data-active="true"] .fh-dock__bar > :is(.fh-chips, .site-jump) { margin-inline: 0; padding-inline: 0; }
 }
 
 /* Hero summary: the cube-card strip (fh-cube-cards--strip) under the page head; one tone across it. */
@@ -2917,11 +2917,11 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
     column-gap: var(--fh-space-2);
   }
   .fh-dock[data-active="true"] .site-dock-home, .site-hero ~ .fh-dock .site-dock-home { grid-area: 1 / 1; justify-self: start; }
-  .fh-dock[data-active="true"] .fh-dock__bar > .fh-chips, .site-hero ~ .fh-dock .fh-dock__bar > .fh-chips { grid-area: 1 / 2; justify-content: start; margin: 0; }
+  .fh-dock[data-active="true"] .fh-dock__bar > :is(.fh-chips, .site-jump), .site-hero ~ .fh-dock .fh-dock__bar > :is(.fh-chips, .site-jump) { grid-area: 1 / 2; justify-content: start; margin: 0; }
   .fh-dock[data-active="true"] .fh-dock__bar > .site-dock-menu, .site-hero ~ .fh-dock .fh-dock__bar > .site-dock-menu { grid-area: 1 / 3; }
   .fh-dock[data-active="true"] .fh-dock__bar > .fh-dock__actions, .site-hero ~ .fh-dock .fh-dock__bar > .fh-dock__actions { grid-area: 1 / 4; }
 }
-.fh-dock[data-active="true"] .fh-dock__bar > .fh-chips {
+.fh-dock[data-active="true"] .fh-dock__bar > :is(.fh-chips, .site-jump) {
   min-inline-size: 0;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -2929,7 +2929,41 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
   -webkit-mask-image: none;
   mask-image: none;
 }
-.fh-dock[data-active="true"] .fh-dock__bar > .fh-chips::-webkit-scrollbar { display: none; }
+.fh-dock[data-active="true"] .fh-dock__bar > :is(.fh-chips, .site-jump)::-webkit-scrollbar { display: none; }
+
+/* Category page dock: plain text jump links, not component chips. */
+.site-jump {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--fh-space-3);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.site-jump__link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--fh-space-1-5);
+  padding: var(--fh-space-1) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--fh-color-text-muted);
+  font-size: var(--fh-text-caption);
+  font-weight: var(--fh-weight-medium);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-jump__link .site-jump__id {
+  font-family: var(--fh-font-mono);
+  font-size: 0.92em;
+  font-weight: var(--fh-weight-regular);
+  color: var(--fh-color-text-subtle);
+}
+.site-jump__link:is(:hover, :focus-visible) { color: var(--fh-color-text); }
+.site-jump__link[aria-current="true"] { color: var(--fh-color-text); }
 
 /* Home dock, before it locks: no section pill at all, the same height and layout as the locked
  * pill (the mark's slot held open, chips a third across), and it rides up to the header's own
@@ -4166,6 +4200,39 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
   max-inline-size: 40rem;
   justify-self: center;
 }
+.site-page-cards > .site-family { min-inline-size: 0; display: grid; gap: var(--fh-space-3); }
+.site-page-cards > .site-family > .site-family__preview {
+  border: var(--fh-border-thin) solid var(--fh-color-border);
+  border-radius: var(--fh-radius-sm);
+  background: var(--fh-color-surface);
+}
+.site-page-cards > .site-family .site-family__meta {
+  margin: 0;
+  font-size: var(--fh-text-caption);
+  color: var(--fh-color-text-subtle);
+}
+.site-page-cards > .site-family .site-family__name {
+  margin: 0;
+  font-size: var(--fh-text-body);
+  font-weight: var(--fh-weight-semibold);
+  line-height: var(--fh-leading-snug);
+}
+.site-page-cards > .site-family .site-family__name a { color: inherit; text-decoration: none; }
+.site-page-cards > .site-family .site-family__name a:is(:hover, :focus-visible) { color: var(--fh-color-accent); text-decoration: underline; }
+.site-page-cards > .site-family .site-family__summary {
+  margin: 0;
+  font-size: var(--fh-text-small);
+  color: var(--fh-color-text-muted);
+  line-height: var(--fh-leading-relaxed);
+}
+.site-page-cards > .site-family .site-family__id {
+  margin: 0;
+  font-family: var(--fh-font-mono);
+  font-size: var(--fh-text-caption);
+  color: var(--fh-color-text-subtle);
+  letter-spacing: 0.04em;
+}
+.site-page-cards > .site-family:has(> .site-stage--card) { overflow: clip; }
 .site-page-cards > .fh-card:has(> .site-stage--card) { min-inline-size: 0; overflow: clip; }
 .site-stage--card {
   --_card-block: 16rem;
