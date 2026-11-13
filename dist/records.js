@@ -1,5 +1,5 @@
 /*!
- * Firehorse record rows — dist/records.js · MIT
+ * Firehorse record rows: dist/records.js · MIT
  * ---------------------------------------------------------------
  * Optional. Opens and closes the detail row of an expandable records row
  * (fh-dt--records, RDT). The markup is the state, so a server renders it
