@@ -31,8 +31,8 @@ export const PUBLIC_ENTRY = join(root, "src/firehorse.public.css");
 export const INTEGRATIONS = join(root, "src/integrations");
 /** Public JS modules and the family that mounts each one. */
 export const RUNTIME = { "src/js/datatable.js": "DTB" };
-/** The site's own chrome: the parts and scripts every docs page carries. */
-export const CHROME = ["site/parts/layout.html", "site/parts/header.html", "site/parts/dock.html", "site/parts/bar.html", "site/parts/cmdk.html", "site/parts/footer.html", "site/site.js", "site/site-index.js", "scripts/pages.mjs"];
+/** The site's own chrome: the parts and scripts every docs page carries. The site-only sheet also covers held parts the home page and The Stable use. */
+export const CHROME = ["site/parts/layout.html", "site/parts/header.html", "site/parts/dock.html", "site/parts/bar.html", "site/parts/cmdk.html", "site/parts/footer.html", "site/site.js", "site/site-index.js", "scripts/pages.mjs", "site/pages/index.html", "scripts/stable.mjs"];
 
 export const blockOf = (c) => c.replace(/(__|--).*$/, "");
 const uncomment = (css) => css.replace(/\/\*[\s\S]*?\*\//g, "");

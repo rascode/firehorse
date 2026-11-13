@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Site:** the site-only sheet carries the held Word rotator and Choice cards the home page and The Stable use; EMP-2 is held so the public empty state page leaves out EMP-2.1 (relay R1).
 - **Motion specimens** (MOT, `src/components/content/motion-demo.css`, relay G4 with Claude): the parts the Motion variants move are Firehorse classes now (`fh-motion-tile`, `fh-motion-hero`, `fh-motion-art` with its image from `--fh-motion-art`, `fh-motion-note`, `fh-motion-card`, `fh-motion-code`, `fh-motion-pro`), so MOT has a specimen page. `/motion/` keeps its live demos (`keepSections` in the page meta) with the specimen card under its head.
 - **Index markup for Pro variants marked on a demo box** (relay G5): TML-1.3, TML-1.4, CAL-2.1 and KEY-2.1 carry their stage only, not the site demo box.
 - **Quieter sidecar section heads** (SDC, `--fh-sidecar-section-title`, `--fh-sidecar-section-icon`, `src/components/sections/sidecar.css`): inside any sidecar the section title defaults to 1.08em and the section icon to 1rem, through `--fh-panel-section-title` and `--fh-panel-section-icon`. The section's own defaults stay 1.3em and 1.125rem.
