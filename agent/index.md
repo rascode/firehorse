@@ -68,12 +68,13 @@
 | `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (2) · 2 Empty module (1) | [open](https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/) |
 | `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/avatars/) |
 | `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/sign-in-and-sign-up/) |
-| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) · 5 Money input (4) | [open](https://firehorse.rascode.dev/forms/fields/) |
+| `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/fields/) |
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/choices/) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/upload-range-tags-sheet/) |
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
 | `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/datatable/) |
 | `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/table/) |
+| `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
 | `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
@@ -1775,70 +1776,6 @@ A show and hide toggle inside a password field. Put the input in an fh-input-gro
 </div>
 ```
 
-### FLD-5 · Money input
-
-A currency prefix, or a select when several currencies are allowed, then a text input with inputmode="decimal" (never type="number": no spinner). money.js groups digits as you type and keeps a hidden input in step that posts whole minor units, so 1,250.00 posts 125000. Without the script the field posts what was typed. Add data-allow-negative to allow a minus sign.
-
-#### FLD-5.1 · One currency
-
-```html
-<div class="fh-field fh-money" data-fh-money data-currency="USD" data-fh="FLD-5.1">
-  <label for="f-money-one">Amount</label>
-  <div class="fh-input-group">
-    <span class="fh-money__currency">USD</span>
-    <input class="fh-input" id="f-money-one" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="1250">
-    <input type="hidden" data-fh-money-value>
-  </div>
-  <p class="fh-field__hint">Posts whole cents.</p>
-</div>
-```
-
-#### FLD-5.2 · Several currencies
-
-```html
-<div class="fh-field fh-money" data-fh-money data-fh="FLD-5.2">
-  <label for="f-money-many">Price</label>
-  <div class="fh-input-group">
-    <select class="fh-money__select" name="price_currency" aria-label="Currency">
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="JPY">JPY</option>
-    </select>
-    <input class="fh-input" id="f-money-many" name="price" inputmode="decimal" autocomplete="off" placeholder="0.00">
-    <input type="hidden" data-fh-money-value>
-  </div>
-  <p class="fh-field__hint">The currency sets the decimal places: JPY has none.</p>
-</div>
-```
-
-#### FLD-5.3 · Error
-
-```html
-<div class="fh-field fh-money" data-fh-money data-currency="USD" data-fh="FLD-5.3">
-  <label for="f-money-err">Deposit</label>
-  <div class="fh-input-group">
-    <span class="fh-money__currency">USD</span>
-    <input class="fh-input" id="f-money-err" name="deposit" inputmode="decimal" autocomplete="off" value="75000" aria-invalid="true" aria-describedby="f-money-err-msg">
-    <input type="hidden" data-fh-money-value>
-  </div>
-  <p class="fh-field__error" id="f-money-err-msg">The deposit is more than the limit of 50,000.00.</p>
-</div>
-```
-
-#### FLD-5.4 · Negative allowed
-
-```html
-<div class="fh-field fh-money" data-fh-money data-currency="USD" data-allow-negative data-fh="FLD-5.4">
-  <label for="f-money-neg">Adjustment</label>
-  <div class="fh-input-group">
-    <span class="fh-money__currency">USD</span>
-    <input class="fh-input" id="f-money-neg" name="adjustment" inputmode="decimal" autocomplete="off" value="-42.5">
-    <input type="hidden" data-fh-money-value>
-  </div>
-  <p class="fh-field__hint">A credit or a charge. Type a minus sign first.</p>
-</div>
-```
-
 ## CHO · Choices
 
 Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add fh-segmented--stack to stack its options.
@@ -1956,6 +1893,236 @@ Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-t
     </tbody>
   </table>
 </div>
+```
+
+## MET · Metric tiles
+
+One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, counts and chips. __more is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use --full when the detail needs room. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or meter drops in as it is.
+
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__value` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__figure` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-metric__more` `fh-kv` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--full` `fh-metric--wide` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-chip`
+
+### MET-1 · Metric tile
+
+#### MET-1.1 · Metric
+
+```html
+<article class="fh-metric" data-tone="teal" data-fh="MET-1.1">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
+  <p class="fh-metric__sub">Formed 2019 · Delaware</p>
+  <p class="fh-metric__value">LLC</p>
+  <p class="fh-metric__source">State records</p>
+</article>
+```
+
+#### MET-1.2 · Progress
+
+```html
+<article class="fh-metric" data-tone="lime" data-fh="MET-1.2">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+  <p class="fh-metric__sub">Next: bank account</p>
+  <p class="fh-metric__value">82%</p>
+  <progress class="fh-progress" value="82" max="100">82%</progress>
+</article>
+```
+
+#### MET-1.3 · Needed
+
+```html
+<article class="fh-metric fh-metric--needed" data-fh="MET-1.3">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
+  <p class="fh-metric__sub">For Stripe and PayPal</p>
+  <p class="fh-metric__value">Needed</p>
+</article>
+```
+
+#### MET-1.4 · Link
+
+```html
+<a class="fh-metric" data-tone="sky" href="#a-metric" data-fh="MET-1.4">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
+  <p class="fh-metric__sub">2 public</p>
+  <p class="fh-metric__value">4</p>
+</a>
+```
+
+#### MET-1.5 · Spread
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="fuchsia" data-fh="MET-1.5">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i>Payment readiness</p>
+  <p class="fh-metric__sub">What Stripe still needs before payouts</p>
+  <p class="fh-metric__value">3 of 11</p>
+  <progress class="fh-progress" value="27" max="100">27%</progress>
+</article>
+```
+
+#### MET-1.6 · People
+
+```html
+<article class="fh-metric" data-tone="violet" data-fh="MET-1.6">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">4</p><div class="fh-avatars" role="group" aria-label="Team">
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span>
+      <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
+    </div></div>
+  <p class="fh-metric__source">People</p>
+</article>
+```
+
+#### MET-1.7 · Expand
+
+```html
+<article class="fh-metric" data-tone="sky" data-fh="MET-1.7">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+  <p class="fh-metric__sub">5 invoices · 1 overdue</p>
+  <p class="fh-metric__value">$6,940</p>
+  <details class="fh-metric__more">
+    <summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+    <dl class="fh-kv">
+      <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>
+      <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>
+      <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>
+      <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>
+    </dl>
+  </details>
+</article>
+```
+
+#### MET-1.8 · Trend
+
+```html
+<article class="fh-metric" data-tone="lime" data-fh="MET-1.8">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+  <p class="fh-metric__sub">vs September</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+</article>
+```
+
+#### MET-1.9 · Trend · down is good
+
+```html
+<article class="fh-metric" data-tone="sky" data-good="down" data-fh="MET-1.9">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
+  <p class="fh-metric__sub">Down is good here</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
+</article>
+```
+
+#### MET-1.10 · Sparkline
+
+```html
+<article class="fh-metric" data-tone="teal" data-fh="MET-1.10">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders · 12 wk</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></div>
+</article>
+```
+
+#### MET-1.11 · Gauge
+
+```html
+<article class="fh-metric" data-tone="amber" data-fh="MET-1.11">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
+  <div class="fh-gauge" style="--fh-value: 31; --fh-gauge-size: 8rem" role="img" aria-label="31% of the credit line used"><b>31%</b><small>of $40,000</small></div>
+</article>
+```
+
+### MET-2 · Spread tiles
+
+The flagship tile: a bold title and its line at the top, a wide gap, the figure at the bottom, so a row of tiles lines up at both ends. Anything below the figure (delta, sparkline, avatars, progress, source, detail) keeps its order. --tinted leads a row; --wide takes two columns; --full takes the full width, and a table in it fills the tile.
+
+#### MET-2.1 · Progress
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="lime" data-fh="MET-2.1">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+  <p class="fh-metric__sub">Next: confirm the payout bank account</p>
+  <p class="fh-metric__value">82%</p>
+  <progress class="fh-progress" value="82" max="100">82%</progress>
+  <p class="fh-metric__source">9 of 11 facts</p>
+</article>
+```
+
+#### MET-2.2 · Trend
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="teal" data-fh="MET-2.2">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+  <p class="fh-metric__sub">All brands, after refunds</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+  <p class="fh-metric__source">vs September</p>
+</article>
+```
+
+#### MET-2.3 · Sparkline
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="sky" data-fh="MET-2.3">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders</p>
+  <p class="fh-metric__sub">Last 12 weeks</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></div>
+  <p class="fh-metric__source">All channels</p>
+</article>
+```
+
+#### MET-2.4 · People
+
+```html
+<article class="fh-metric fh-metric--spread" data-tone="violet" data-fh="MET-2.4">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team</p>
+  <p class="fh-metric__sub">Who can sign in and act for the business</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">4</p><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span></div></div>
+  <p class="fh-metric__source">People</p>
+</article>
+```
+
+#### MET-2.5 · Tinted
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--tinted" data-tone="orange" data-fh="MET-2.5">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--globe" aria-hidden="true"></i>Google profile</p>
+  <p class="fh-metric__sub">Next: opening hours for each location</p>
+  <p class="fh-metric__value">45%</p>
+  <progress class="fh-progress" value="45" max="100">45%</progress>
+  <p class="fh-metric__source">5 of 11 facts</p>
+</article>
+```
+
+#### MET-2.6 · Expand
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.6">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+  <p class="fh-metric__sub">5 invoices, 1 overdue</p>
+  <p class="fh-metric__value">$6,940</p>
+  <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+    <dl class="fh-kv"><div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div><div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div><div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div><div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div></dl>
+  </details>
+</article>
+```
+
+#### MET-2.7 · Wide
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--wide" data-tone="teal" data-fh="MET-2.7">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit line</p>
+  <p class="fh-metric__sub">Drawn against $40,000 at Cedar Valley Bank</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$12,500</p><span class="fh-metric__delta" data-trend="flat">0</span></div>
+  <progress class="fh-progress" value="31" max="100">31%</progress>
+  <p class="fh-metric__source">31% drawn · 9.4% rate</p>
+</article>
+```
+
+#### MET-2.8 · Full
+
+```html
+<article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.8">
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
+  <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>
+  <div class="fh-table-wrap"><table class="fh-table fh-table--reflow"><thead><tr><th>Invoice</th><th>Customer</th><th>Sent</th><th class="fh-num">Amount</th><th>Status</th></tr></thead><tbody><tr><td data-label="Invoice">INV-1042</td><td data-label="Customer">Brightline Builders</td><td data-label="Sent">Oct 30</td><td class="fh-num" data-label="Amount">$2,180.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1041</td><td data-label="Customer">Harbor &amp; Pine</td><td data-label="Sent">Oct 26</td><td class="fh-num" data-label="Amount">$940.00</td><td data-label="Status"><span class="fh-chip" data-tone="lime">Paid</span></td></tr><tr><td data-label="Invoice">INV-1040</td><td data-label="Customer">Mesa Homes</td><td data-label="Sent">Oct 21</td><td class="fh-num" data-label="Amount">$3,420.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1038</td><td data-label="Customer">Cobalt Roofing</td><td data-label="Sent">Oct 9</td><td class="fh-num" data-label="Amount">$400.00</td><td data-label="Status"><span class="fh-chip" data-tone="danger">Overdue</span></td></tr></tbody></table></div>
+</article>
 ```
 
 ## THM · Brand theme file
