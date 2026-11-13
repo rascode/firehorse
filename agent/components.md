@@ -1298,12 +1298,6 @@ Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
   <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
   <a class="fh-button fh-button--sm fh-button--secondary" href="#c-feedback">Send a test lead</a>
 </div>
-
-<!-- EMP-2.1 · Empty module › Empty module -->
-<div class="fh-app-empty" data-fh="EMP-2.1">
-  <h2>Finance</h2>
-  <p>This module is not wired yet. Numbers and ledgers will land here.</p>
-</div>
 ```
 
 ### AVT · Avatars
