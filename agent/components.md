@@ -94,18 +94,20 @@ Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
 --fh-gray-*
 
 ```html
-<div style="--sw: var(--fh-gray-1000)"><b>1000</b>#000000</div>
-<div style="--sw: var(--fh-gray-950)"><b>950</b>canvas</div>
-<div style="--sw: var(--fh-gray-900)"><b>900</b>raised</div>
-<div style="--sw: var(--fh-gray-850)"><b>850</b>#2e2e2e</div>
-<div style="--sw: var(--fh-gray-800)"><b>800</b>rule</div>
-<div style="--sw: var(--fh-gray-750)"><b>750</b>field</div>
-<div style="--sw: var(--fh-gray-600)"><b>600</b>#5c5c5c</div>
-<div style="--sw: var(--fh-gray-500); --ink: var(--fh-gray-1000)"><b>500</b>subtle</div>
-<div style="--sw: var(--fh-gray-400); --ink: var(--fh-gray-1000)"><b>400</b>muted</div>
-<div style="--sw: var(--fh-gray-200); --ink: var(--fh-gray-1000)"><b>200</b>#e4e4e4</div>
-<div style="--sw: var(--fh-gray-100); --ink: var(--fh-gray-1000)"><b>100</b>text</div>
-<div style="--sw: var(--fh-gray-0); --ink: var(--fh-gray-1000)"><b>0</b>#ffffff</div>
+<div class="fh-swatches-ramp" data-fh="NEU">
+  <div style="--sw: var(--fh-gray-1000)"><b>1000</b>#000000</div>
+  <div style="--sw: var(--fh-gray-950)"><b>950</b>canvas</div>
+  <div style="--sw: var(--fh-gray-900)"><b>900</b>raised</div>
+  <div style="--sw: var(--fh-gray-850)"><b>850</b>#2e2e2e</div>
+  <div style="--sw: var(--fh-gray-800)"><b>800</b>rule</div>
+  <div style="--sw: var(--fh-gray-750)"><b>750</b>field</div>
+  <div style="--sw: var(--fh-gray-600)"><b>600</b>#5c5c5c</div>
+  <div style="--sw: var(--fh-gray-500); --ink: var(--fh-gray-1000)"><b>500</b>subtle</div>
+  <div style="--sw: var(--fh-gray-400); --ink: var(--fh-gray-1000)"><b>400</b>muted</div>
+  <div style="--sw: var(--fh-gray-200); --ink: var(--fh-gray-1000)"><b>200</b>#e4e4e4</div>
+  <div style="--sw: var(--fh-gray-100); --ink: var(--fh-gray-1000)"><b>100</b>text</div>
+  <div style="--sw: var(--fh-gray-0); --ink: var(--fh-gray-1000)"><b>0</b>#ffffff</div>
+</div>
 ```
 
 ### TON · Tones
@@ -113,15 +115,17 @@ Attributes: `data-tone` (tone), `data-fh-scheme` (light | dark | auto),
 Category color. Set data-tone once; dots, marks, meta and links inside follow. Ratios are against the current canvas.
 
 ```html
-sky <span data-contrast></span>
-teal <span data-contrast></span>
-lime <span data-contrast></span>
-amber <span data-contrast></span>
-orange <span data-contrast></span>
-rose <span data-contrast></span>
-fuchsia <span data-contrast></span>
-violet <span data-contrast></span>
-ember <span data-contrast></span>
+<div class="fh-tone-swatches" data-fh="TON">
+  <div data-tone="sky"><span></span><p>sky <span data-contrast></span></p></div>
+  <div data-tone="teal"><span></span><p>teal <span data-contrast></span></p></div>
+  <div data-tone="lime"><span></span><p>lime <span data-contrast></span></p></div>
+  <div data-tone="amber"><span></span><p>amber <span data-contrast></span></p></div>
+  <div data-tone="orange"><span></span><p>orange <span data-contrast></span></p></div>
+  <div data-tone="rose"><span></span><p>rose <span data-contrast></span></p></div>
+  <div data-tone="fuchsia"><span></span><p>fuchsia <span data-contrast></span></p></div>
+  <div data-tone="violet"><span></span><p>violet <span data-contrast></span></p></div>
+  <div data-tone="accent"><span></span><p>ember <span data-contrast></span></p></div>
+</div>
 ```
 
 ### TYP · Type
@@ -130,16 +134,16 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 
 ```html
 <!-- TYP-1.1 · Type presets › Geist -->
-<div data-fh-type="geist"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="geist" data-fh="TYP-1.1"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 
 <!-- TYP-1.2 · Type presets › Inter -->
-<div data-fh-type="inter"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="inter" data-fh="TYP-1.2"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 
 <!-- TYP-1.3 · Type presets › Hanken Grotesk -->
-<div data-fh-type="hanken"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="hanken" data-fh="TYP-1.3"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 
 <!-- TYP-1.4 · Type presets › Archivo -->
-<div data-fh-type="archivo"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="archivo" data-fh="TYP-1.4"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 ### SPC · Space
@@ -147,17 +151,19 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 --fh-space-*
 
 ```html
-<div><span>--fh-space-px</span><span>1px</span><i style="--s: var(--fh-space-px)"></i></div>
-<div><span>--fh-space-1</span><span>4px</span><i style="--s: var(--fh-space-1)"></i></div>
-<div><span>--fh-space-2</span><span>8px</span><i style="--s: var(--fh-space-2)"></i></div>
-<div><span>--fh-space-3</span><span>12px</span><i style="--s: var(--fh-space-3)"></i></div>
-<div><span>--fh-space-4</span><span>16px</span><i style="--s: var(--fh-space-4)"></i></div>
-<div><span>--fh-space-6</span><span>24px</span><i style="--s: var(--fh-space-6)"></i></div>
-<div><span>--fh-space-8</span><span>32px</span><i style="--s: var(--fh-space-8)"></i></div>
-<div><span>--fh-space-12</span><span>48px</span><i style="--s: var(--fh-space-12)"></i></div>
-<div><span>--fh-space-16</span><span>64px</span><i style="--s: var(--fh-space-16)"></i></div>
-<div><span>--fh-space-24</span><span>96px</span><i style="--s: var(--fh-space-24)"></i></div>
-<div><span>--fh-section-space</span><span>fluid</span><i style="--s: var(--fh-section-space)"></i></div>
+<div class="fh-space-scale" data-tone="lime" data-fh="SPC">
+  <div><span>--fh-space-px</span><span>1px</span><i style="--s: var(--fh-space-px)"></i></div>
+  <div><span>--fh-space-1</span><span>4px</span><i style="--s: var(--fh-space-1)"></i></div>
+  <div><span>--fh-space-2</span><span>8px</span><i style="--s: var(--fh-space-2)"></i></div>
+  <div><span>--fh-space-3</span><span>12px</span><i style="--s: var(--fh-space-3)"></i></div>
+  <div><span>--fh-space-4</span><span>16px</span><i style="--s: var(--fh-space-4)"></i></div>
+  <div><span>--fh-space-6</span><span>24px</span><i style="--s: var(--fh-space-6)"></i></div>
+  <div><span>--fh-space-8</span><span>32px</span><i style="--s: var(--fh-space-8)"></i></div>
+  <div><span>--fh-space-12</span><span>48px</span><i style="--s: var(--fh-space-12)"></i></div>
+  <div><span>--fh-space-16</span><span>64px</span><i style="--s: var(--fh-space-16)"></i></div>
+  <div><span>--fh-space-24</span><span>96px</span><i style="--s: var(--fh-space-24)"></i></div>
+  <div><span>--fh-section-space</span><span>fluid</span><i style="--s: var(--fh-section-space)"></i></div>
+</div>
 ```
 
 ### RAD · Radius
@@ -165,10 +171,12 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 --fh-radius-*
 
 ```html
-<div style="--r: var(--fh-radius-sm)">sm · 3px<br>CTA</div>
-<div style="--r: var(--fh-radius-md)">md · 7px<br>groups</div>
-<div style="--r: var(--fh-radius-lg)">lg · .85rem<br>shells</div>
-<div style="--r: var(--fh-radius-pill)">pill<br>markers</div>
+<div class="fh-radius-scale" data-fh="RAD">
+  <div style="--r: var(--fh-radius-sm)">sm · 3px<br>CTA</div>
+  <div style="--r: var(--fh-radius-md)">md · 7px<br>groups</div>
+  <div style="--r: var(--fh-radius-lg)">lg · .85rem<br>shells</div>
+  <div style="--r: var(--fh-radius-pill)">pill<br>markers</div>
+</div>
 ```
 
 ### ELV · Elevation
@@ -1912,19 +1920,13 @@ One fact per tile: label with an icon, the value, a line under it and where it c
 @layer fh.themes
 
 ```html
-<code><span class="c">/* Load after firehorse.css */</span>
-<span class="t">@layer</span> fh.themes {
-  [data-fh-theme=<span class="v">"brand"</span>] {
-    <span class="a">--fh-font-sans</span>: <span class="v">"Your Sans"</span>, system-ui;
-    <span class="a">--fh-font-mono</span>: <span class="v">"Your Mono"</span>, ui-monospace;
-
-    <span class="c">/* light canvas, dark canvas */</span>
-    <span class="a">--fh-color-accent</span>: light-dark(#1d4ed8, #60a5fa);
-
-    <span class="a">--fh-button-radius</span>: var(--fh-radius-md);
-    <span class="a">--fh-card-radius</span>: var(--fh-radius-md);
-  }
-}</code>
+<div class="fh-swatches-ramp" data-fh="THM">
+  <div style="--sw: var(--fh-color-surface); --ink: var(--fh-color-text)"><b>sans</b>--fh-font-sans</div>
+  <div style="--sw: var(--fh-color-surface-raised); --ink: var(--fh-color-text)"><b>mono</b>--fh-font-mono</div>
+  <div style="--sw: var(--fh-color-accent); --ink: var(--fh-color-on-accent)"><b>accent</b>--fh-color-accent</div>
+  <div style="--sw: var(--fh-color-field); --ink: var(--fh-color-text)"><b>button</b>--fh-button-radius</div>
+  <div style="--sw: var(--fh-color-surface-chrome); --ink: var(--fh-color-text)"><b>card</b>--fh-card-radius</div>
+</div>
 ```
 
 ### THS · Theme select

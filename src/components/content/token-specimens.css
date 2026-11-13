@@ -1,0 +1,201 @@
+/*
+ * Firehorse — Token specimens (NEU, TON, TYP, SPC, RAD, THM)
+ * components/content · layer fh.components · docs /foundations/ and /theming/
+ *
+ * Colour, type, space and radius drawn from tokens. Schemes come from the
+ * semantic tokens (light-dark), so the same markup works on a light or dark
+ * canvas. Each block is container-sized: the columns follow the component,
+ * not the viewport.
+ *
+ * The ramp is fh-swatches-ramp, not fh-swatches: that name is the held commerce
+ * colour picker, and reusing it would publish commerce/swatches.css.
+ */
+
+@layer fh.components {
+  /* —— Neutral ramp (NEU) and a theme's tokens (THM) ——
+   * One step: the colour is --sw, the ink is --ink on a light step.
+   *   <div class="fh-swatches-ramp">
+   *     <div style="--sw: var(--fh-color-surface)"><b>950</b>canvas</div>
+   *   </div>  */
+  .fh-swatches-ramp {
+    container-type: inline-size;
+    display: grid;
+    /* Three steps a row on a phone; from 40rem as many as fit at 5.5rem each (twelve across at 1440). */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-md);
+    overflow: hidden;
+
+    & > div {
+      display: grid;
+      align-content: end;
+      gap: var(--fh-gap-bound);
+      aspect-ratio: 3 / 4;
+      padding: var(--fh-inset-tight);
+      background-color: var(--sw, var(--fh-color-surface));
+      color: var(--ink, var(--fh-color-on-ink));
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      letter-spacing: var(--fh-tracking-wide);
+    }
+
+    & b {
+      font-weight: var(--fh-weight-medium);
+      font-size: var(--fh-text-micro);
+    }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-swatches-ramp {
+      grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+    }
+  }
+
+  /* —— Tones (TON) ——
+   * One swatch per tone: chip, name, and a contrast ratio the page fills.
+   *   <div class="fh-tone-swatches"><div data-tone="teal"><span></span><p>teal <span data-contrast></span></p></div></div>  */
+  .fh-tone-swatches {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--fh-gap-grouped);
+
+    & > div {
+      display: grid;
+      gap: var(--fh-gap-related);
+      padding: var(--fh-inset-tile);
+      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+      border-radius: var(--fh-radius-md);
+      background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
+    }
+
+    & > div > span {
+      display: block;
+      aspect-ratio: 2.4;
+      border-radius: var(--fh-radius-sm);
+      background-color: var(--fh-tone);
+    }
+
+    & > div > p {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--fh-gap-related);
+      margin: 0;
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-wider);
+      text-transform: uppercase;
+      color: var(--fh-tone);
+    }
+
+    & [data-contrast] {
+      color: var(--fh-color-text-subtle);
+    }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-tone-swatches {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-measure-title)), 1fr));
+    }
+  }
+
+  /* —— Type scale (TYP) ——
+   * One row per role. A row is a plain div (meta, then the sample). A nested
+   * .fh-type-scale is a sample of its own, not another row.
+   *   <div class="fh-type-scale"><div><div><span class="fh-label">Heading</span><code>.fh-heading</code></div><p class="fh-heading">Connect the systems</p></div></div>  */
+  .fh-type-scale {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--fh-gap-related);
+
+    & > div:not(.fh-type-scale) {
+      display: grid;
+      gap: var(--fh-gap-related) var(--fh-gap-sectioned);
+      align-items: baseline;
+      padding-block: var(--fh-inset-card);
+      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+
+      &:first-child {
+        border-block-start: 0;
+        padding-block-start: 0;
+      }
+
+      &:last-child {
+        padding-block-end: 0;
+      }
+    }
+
+    & code {
+      font-size: var(--fh-text-micro);
+      color: var(--fh-color-text-subtle);
+    }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-type-scale > div:not(.fh-type-scale) {
+      grid-template-columns: var(--fh-measure-title) minmax(0, 1fr);
+    }
+  }
+
+  /* —— Space (SPC) ——
+   * One bar per step. The bar's inline size is --s, set to a space token.
+   *   <div class="fh-space-scale" data-tone="lime"><div><span>--fh-space-4</span><span>16px</span><i style="--s: var(--fh-space-4)"></i></div></div>  */
+  .fh-space-scale {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--fh-gap-related);
+
+    & > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: center;
+      gap: var(--fh-gap-grouped);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      color: var(--fh-color-text-muted);
+    }
+
+    & i {
+      display: block;
+      block-size: var(--fh-gap-bound);
+      inline-size: var(--s, var(--fh-gap-related));
+      max-inline-size: 100%;
+      background-color: var(--fh-tone, var(--fh-color-text));
+      border-radius: var(--fh-radius-sm);
+    }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-space-scale > div {
+      grid-template-columns: var(--fh-measure-title) auto minmax(0, 1fr);
+    }
+  }
+
+  /* —— Radius (RAD) ——
+   * One box per step. The corner is --r, set to a radius token.
+   *   <div class="fh-radius-scale"><div style="--r: var(--fh-radius-sm)">sm · 3px<br>CTA</div></div>  */
+  .fh-radius-scale {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--fh-gap-grouped-wide);
+
+    & > div {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1.3;
+      padding: var(--fh-inset-tight);
+      border: var(--fh-border-thick) solid var(--fh-color-text-muted);
+      border-radius: var(--r, var(--fh-radius-md));
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      color: var(--fh-color-text-muted);
+      text-align: center;
+    }
+  }
+
+  @container (inline-size >= 40rem) {
+    .fh-radius-scale {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-measure-title)), 1fr));
+    }
+  }
+}

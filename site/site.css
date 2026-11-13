@@ -2950,8 +2950,8 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
  * that fixed hue: each name is a step of the root's harmonious walk, clamped for text contrast
  * (light: L ≤ 0.5, dark: L ≥ 0.74). Section eyebrows, numerals, card meta, the dock's outline and
  * progress line all stay in the root's family, whatever the theme or colour of the day.
- * Live demos keep the real palette (the tone docs must show true sky, teal…). Status colours
- * (success, danger, warning, live) are untouched. */
+ * Live demos keep the real palette (the tone docs must show true sky, teal…): the older demo box and
+ * the one component frame (.site-stage) alike. Status colours (success, danger, warning, live) are untouched. */
 :root {
   --fh-tone-sky: light-dark(oklch(from var(--site-walk-1) min(l, 0.5) c h), oklch(from var(--site-walk-1) max(l, 0.74) c h));
   --fh-tone-teal: light-dark(oklch(from var(--site-walk-2) min(l, 0.5) c h), oklch(from var(--site-walk-2) max(l, 0.74) c h));
@@ -2962,7 +2962,8 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
   --fh-tone-amber: light-dark(oklch(from var(--site-walk-7) min(l, 0.5) c h), oklch(from var(--site-walk-7) max(l, 0.74) c h));
   --fh-tone-violet: light-dark(oklch(from var(--site-walk-8) min(l, 0.5) c h), oklch(from var(--site-walk-8) max(l, 0.74) c h));
 }
-.site-demo {
+.site-demo,
+.site-stage {
   --fh-tone-sky: light-dark(var(--fh-sky-700), var(--fh-sky-400));
   --fh-tone-teal: light-dark(var(--fh-teal-700), var(--fh-teal-400));
   --fh-tone-lime: light-dark(var(--fh-lime-700), var(--fh-lime-400));

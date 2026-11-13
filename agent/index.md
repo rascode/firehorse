@@ -23,12 +23,12 @@
 
 | ID | Name | Section | Groups | Demo |
 |---|---|---|---|---|
-| `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#NEU) |
-| `TON` | Tones | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#TON) |
-| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.rascode.dev/foundations/#TYP) |
-| `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#SPC) |
-| `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#RAD) |
-| `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/#ELV) |
+| `NEU` | Neutral ramp | Foundations | — | [open](https://firehorse.rascode.dev/foundations/neutral-ramp/) |
+| `TON` | Tones | Foundations | — | [open](https://firehorse.rascode.dev/foundations/tones/) |
+| `TYP` | Type | Foundations | 1 Type presets (4) | [open](https://firehorse.rascode.dev/foundations/type/) |
+| `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/space/) |
+| `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/radius/) |
+| `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/elevation/) |
 | `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/#MOT) |
 | `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/stack/) |
 | `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/cluster/) |
@@ -75,8 +75,8 @@
 | `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/datatable/) |
 | `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/table/) |
 | `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
-| `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/#THM) |
-| `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/#THS) |
+| `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
+| `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/theme-select/) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
 | `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
 | `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
@@ -85,23 +85,23 @@
 
 --fh-gray-*
 
-Classes: 
+Classes: `fh-swatches-ramp`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#NEU.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/neutral-ramp/.
 
 ## TON · Tones
 
 Category color. Set data-tone once; dots, marks, meta and links inside follow. Ratios are against the current canvas.
 
-Classes: 
+Classes: `fh-tone-swatches`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#TON.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/tones/.
 
 ## TYP · Type
 
 Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid roles scale with their container.
 
-Classes: `fh-title` `fh-body`
+Classes: `fh-type-scale` `fh-title` `fh-body`
 
 ### TYP-1 · Type presets
 
@@ -110,42 +110,42 @@ Four faces as one attribute: data-fh-type sets the sans and display families and
 #### TYP-1.1 · Geist
 
 ```html
-<div data-fh-type="geist"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="geist" data-fh="TYP-1.1"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 #### TYP-1.2 · Inter
 
 ```html
-<div data-fh-type="inter"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="inter" data-fh="TYP-1.2"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 #### TYP-1.3 · Hanken Grotesk
 
 ```html
-<div data-fh-type="hanken"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="hanken" data-fh="TYP-1.3"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 #### TYP-1.4 · Archivo
 
 ```html
-<div data-fh-type="archivo"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
+<div class="fh-type-scale" data-fh-type="archivo" data-fh="TYP-1.4"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div>
 ```
 
 ## SPC · Space
 
 --fh-space-*
 
-Classes: 
+Classes: `fh-space-scale`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#SPC.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/space/.
 
 ## RAD · Radius
 
 --fh-radius-*
 
-Classes: 
+Classes: `fh-radius-scale`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#RAD.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/radius/.
 
 ## ELV · Elevation
 
@@ -153,7 +153,7 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
 
 Classes: `fh-cluster` `fh-button`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/#ELV.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/elevation/.
 
 ## MOT · Motion
 
@@ -2129,9 +2129,9 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 
 @layer fh.themes
 
-Classes: 
+Classes: `fh-swatches-ramp`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THM.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/brand-theme-file/.
 
 ## THS · Theme select
 
@@ -2139,7 +2139,7 @@ A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
 
 Classes: `fh-field` `fh-select`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/#THS.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/theme-select/.
 
 ## TML · Timelines
 

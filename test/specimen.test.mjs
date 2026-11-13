@@ -3,6 +3,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { parse } from "node-html-parser";
 import { isPublic, categoryOf, release, pageStatus, heldLinks } from "../scripts/release.mjs";
 import { SPECIMEN_CATEGORIES, specimenPath, hasSpecimen, stageMode, NARROW_STAGE, entriesOf } from "../scripts/specimen.mjs";
 import { stageViolations, lintSite, stageFrameViolations, demoStageFrameViolations, retiredSpecimenClasses } from "../scripts/lint-site.mjs";
@@ -161,6 +162,26 @@ expect(drpStage.includes("fh-button") && !/\bfh-menu\b|<figcaption\b|data-state-
 const grid = readFileSync(fileOf("/components/actions/"), "utf8");
 const map = JSON.parse(grid.match(/<script type="application\/json" id="site-specimen-map">([\s\S]*?)<\/script>/)?.[1] ?? "{}");
 expect(map.BTN === "/components/actions/button/" && map["c-button"] === "/components/actions/button/" && map["BTN-1.2"] === "/components/actions/button/#BTN-1.2", "grid: old addresses (#BTN, #c-button, #BTN-1.2) do not map to the specimen");
+
+// Foundations and Theming: every stage root carries an fh- class the public CSS defines, and no site- class.
+const pubCss = readFileSync(join(root, "dist/firehorse.css"), "utf8");
+const definedFh = new Set([...pubCss.matchAll(/\.fh-[\w-]+/g)].map((m) => m[0].slice(1)));
+for (const f of want.filter((f) => f.page === "/foundations/" || f.page === "/theming/")) {
+  const html = readFileSync(fileOf(specimenPath(f)), "utf8");
+  const stages = parse(html).querySelectorAll("[data-specimen-stage]");
+  expect(stages.length > 0, `${specimenPath(f)}: no specimen stage`);
+  for (const stage of stages) {
+    const roots = stage.childNodes.filter((n) => n.nodeType === 1);
+    expect(roots.length > 0, `${f.id}: empty stage`);
+    for (const el of roots) {
+      const classes = (el.getAttribute("class") || "").split(/\s+/).filter(Boolean);
+      expect(!classes.some((c) => c.startsWith("site-")), `${f.id}: stage root has a site- class (${classes.join(" ")})`);
+      const fh = classes.filter((c) => /^fh-[\w-]+$/.test(c));
+      expect(fh.some((c) => definedFh.has(c)), `${f.id}: stage root fh- class is not in the public CSS (${classes.join(" ") || "none"})`);
+    }
+    expect(!/class="[^"]*\bsite-/.test(stage.innerHTML), `${f.id}: site- class inside the stage`);
+  }
+}
 
 // Both Index files point each specimen family's url at its page.
 for (const file of ["dist/index.json", "dist/full/index.json"]) {

@@ -171,8 +171,10 @@
   }
   function paintContrast() {
     const bg = toRgb(getComputedStyle(document.body).backgroundColor);
-    $$(".site-tone").forEach((el) => {
-      const c = toRgb(getComputedStyle(el).getPropertyValue("--fh-tone") || getComputedStyle(el.querySelector(".site-tone__chip")).backgroundColor);
+    // .site-tone: the older demo; .fh-tone-swatches > [data-tone]: the Tones specimen (TON, 1.1.1).
+    $$(".site-tone, .fh-tone-swatches > [data-tone]").forEach((el) => {
+      const chip = el.querySelector(".site-tone__chip") || el.firstElementChild;
+      const c = toRgb(getComputedStyle(el).getPropertyValue("--fh-tone") || getComputedStyle(chip).backgroundColor);
       const [a, b] = [luminance(c), luminance(bg)].sort((x, y) => y - x);
       const ratio = (a + 0.05) / (b + 0.05);
       const span = el.querySelector("[data-contrast]");
