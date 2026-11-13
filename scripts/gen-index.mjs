@@ -76,7 +76,7 @@ for (const el of all) {
   const markup = el.tagName === "SECTION" ? "" : clean(snippet(el, stage ? "stage" : "outer"));
   const groupNames = (el.getAttribute("data-fh-groups") || "").split("|").map((s) => s.trim()).filter(Boolean);
   const page = pageOf(el);
-  families.set(id, { id, name, section: sectionOf(el), anchor: anchorOf(el), page, url: hasSpecimen(id) ? base + specimenPath({ id, page }) : `${base}${page}#${id}`, summary, classes: classesOf(markup), markup, groups: [], variants: [], el, groupNames, groupEls: new Map() });
+  families.set(id, { id, name, section: sectionOf(el), anchor: anchorOf(el), page, url: hasSpecimen(id) ? base + specimenPath({ id, name, page }) : `${base}${page}#${id}`, summary, classes: classesOf(markup), markup, groups: [], variants: [], el, groupNames, groupEls: new Map() });
 }
 const inside = (el, host) => { for (let e = el.parentNode; e; e = e.parentNode) if (e === host) return true; return false; };
 // Group elements: a demo (has its own head and stage) or a row that names a set of variants.

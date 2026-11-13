@@ -5,7 +5,7 @@
 //   4. Panels    Markup, Classes & tokens, Agent notes                                     (panels)
 //   5. Foot      previous and next family in the category, back to the category grid    (foot)
 // Built from dist/full/index.json (gen-index.mjs) and release.json (release.mjs). The address is the family's
-// category page plus its ID in lower case: /components/actions/btn/. A category gets specimens when its
+// category page plus its name as a slug: /components/actions/button/. A category gets specimens when its
 // release.json key is in SPECIMEN_CATEGORIES; its category page then shows a grid of cards instead of its demos
 // (pages.mjs, categoryGrid). Without script the switcher is a list of anchors to every variant's section;
 // site/specimen.js shows one variant at a time and keeps the address (#BTN-1.2) in step.
@@ -26,7 +26,9 @@ const base = "https://firehorse.rascode.dev";
 /** Does this family (or any ID in it) get a specimen page in some build? */
 export const hasSpecimen = (id) => SPECIMEN_CATEGORIES.includes(categoryOf(String(id).slice(0, 3)));
 /** A family's specimen address: its docs page plus its ID in lower case. f: { id, page }. */
-export const specimenPath = (f) => `${f.page}${f.id.toLowerCase()}/`;
+// The address is the family's name, not its ID: names are unambiguous to people, search and answer engines.
+export const nameSlug = (t) => t.toLowerCase().replace(/&amp;|&/g, "and").replace(/<[^>]+>/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+export const specimenPath = (f) => `${f.page}${nameSlug(f.name)}/`;
 /** Is this ID shown in this build (public, or everything with --all)? */
 const shown = (id) => showAll || isPublic(id);
 

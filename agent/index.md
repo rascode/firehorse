@@ -39,11 +39,11 @@
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#PNL) |
 | `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#ESP) |
 | `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/#CTB) |
-| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.rascode.dev/components/actions/btn/) |
-| `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/act/) |
-| `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/mrk/) |
-| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eye/) |
-| `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chp/) |
+| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) | [open](https://firehorse.rascode.dev/components/actions/button/) |
+| `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
+| `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
+| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
+| `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
 | `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/#LGS) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/#CRD) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/#STA) |
@@ -645,7 +645,7 @@ Section CTAs and card actions.
 
 Classes: `fh-action` `fh-action--lg` `fh-link` `fh-link--quiet`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/actions/act/.
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/actions/action-and-link/.
 
 ## MRK · Markers
 

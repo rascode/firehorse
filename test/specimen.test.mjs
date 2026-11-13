@@ -67,11 +67,12 @@ expect(!lint.errors.length && lint.stages > 0, `lint-site: ${lint.errors.join(";
 // The category grid lists exactly the public Actions families, each linked to its specimen.
 const grid = readFileSync(fileOf("/components/actions/"), "utf8");
 expect(attrs(grid, "data-specimen-card").join(" ") === want.map((f) => f.id).join(" "), `grid cards: ${attrs(grid, "data-specimen-card").join(" ")}`);
+expect(new Set(want.map(specimenPath)).size === want.length, "two families share a specimen address");
 for (const f of want) expect(grid.includes(`<a href="${specimenPath(f)}">`), `grid: no link to ${specimenPath(f)}`);
 expect(!/class="site-demo\b/.test(grid.match(/<main[\s\S]*<\/main>/)?.[0] ?? ""), "grid page still shows demos");
-expect(/<noscript>[\s\S]*href="\/components\/actions\/btn\/"/.test(grid), "grid page has no noscript link list");
+expect(/<noscript>[\s\S]*href="\/components\/actions\/button\/"/.test(grid), "grid page has no noscript link list");
 const map = JSON.parse(grid.match(/<script type="application\/json" id="site-specimen-map">([\s\S]*?)<\/script>/)?.[1] ?? "{}");
-expect(map.BTN === "/components/actions/btn/" && map["c-button"] === "/components/actions/btn/" && map["BTN-1.2"] === "/components/actions/btn/#BTN-1.2", "grid: old addresses (#BTN, #c-button, #BTN-1.2) do not map to the specimen");
+expect(map.BTN === "/components/actions/button/" && map["c-button"] === "/components/actions/button/" && map["BTN-1.2"] === "/components/actions/button/#BTN-1.2", "grid: old addresses (#BTN, #c-button, #BTN-1.2) do not map to the specimen");
 
 // Both Index files point each specimen family's url at its page.
 for (const file of ["dist/index.json", "dist/full/index.json"]) {
