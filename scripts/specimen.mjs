@@ -185,25 +185,28 @@ export const specimenMain = (f, { list, prev, next, category }) => {
   const label = (e) => e.id === f.id ? f.name : `${f.name} › ${groups.find((g) => g.items.includes(e))?.name ?? ""} › ${e.name}`.replace(/ › $/, "");
   const forAttr = (e) => items.length ? ` data-specimen-for="${e.id}"` : "";
   const releaseOf = (id) => (shownStatus(id) !== "live" ? ` data-fh-release="${shownStatus(id)}"` : "");
-  const openStage = (markup) => {
+  const openFrame = (e) => {
     const narrow = NARROW_STAGE.has(f.id) ? ` data-stage-width="narrow"` : "";
-    return `<div class="site-stage" data-stage="${stageMode(markup)}"${narrow} data-specimen-stage>`;
+    return `        <div class="site-specimen__frame">
+          <p class="site-specimen__preview-bar"><span class="site-specimen__preview-label">Preview</span> <code class="site-specimen__preview-id">${e.id}</code></p>
+          <div class="site-stage" data-stage="${stageMode(e.markup)}"${narrow} data-specimen-stage>`;
   };
 
-  // 2. Stage: a figure per variant. The frame holds the component's markup and nothing else.
+  // 2. Stage: a figure per variant. The preview bar and frame are site chrome; the stage holds only the component markup.
   const stages = entries.map((e) => `        <figure class="site-specimen__variant"${items.length ? ` id="${e.id}"` : ""}${forAttr(e)}${releaseOf(e.id)}>
           ${items.length ? `<figcaption class="site-specimen__caption"><code>${e.id}</code> ${esc(e.name)}</figcaption>` : `<figcaption class="fh-sr-only">${esc(f.name)}</figcaption>`}
-          ${openStage(e.markup)}
+${openFrame(e)}
 ${e.markup}
           </div>
+        </div>
         </figure>`).join("\n");
 
-  // 3. Switcher: one labelled row per group, a chip per variant.
+  // 3. Switcher: one labelled row per group, site-variant links per variant.
   const switcher = items.length ? `      <nav class="site-specimen__switcher" aria-label="Variants of ${esc(f.name)}" data-specimen-switcher>
 ${groups.map((g) => `        <div class="site-specimen__row" id="${g.id}">
           <p class="site-specimen__group"><code>${g.id}</code> ${esc(g.name)}</p>
-          <div class="fh-chips fh-chips--wrap">
-${g.items.map((e) => `            <a class="fh-chip fh-chip--indexed" data-tone="${tone}" href="#${e.id}" data-specimen-pick="${e.id}"${releaseOf(e.id)}><b class="fh-chip__index">${e.id}</b>${esc(e.name)}</a>`).join("\n")}
+          <div class="site-specimen__variants">
+${g.items.map((e) => `            <a class="site-variant" href="#${e.id}" data-specimen-pick="${e.id}"${releaseOf(e.id)}><span class="site-variant__id">${e.id}</span><span class="site-variant__name">${esc(e.name)}</span></a>`).join("\n")}
           </div>
         </div>`).join("\n")}
       </nav>
