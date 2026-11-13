@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { sitePages, assemble, render, absolutize } from "./pages.mjs";
+import { sitePages, assemble, render, absolutize, frameDemoStages } from "./pages.mjs";
 import { sourceFiles } from "./developer.mjs";
 // release.json decides what is built: the public build (default) leaves held pages, demos, links and field types
 // out; --all (or FH_RELEASE=all) builds everything with a Held / Draft / Pro chip, for a local preview.
@@ -121,7 +121,7 @@ const docPages = sitePages();
 const ctx = assemble(docPages);
 for (const p of docPages) {
   mkdirSync(dirname(join(out, p.out)), { recursive: true });
-  writeFileSync(join(out, p.out), fill(absolutize(render(p, ctx))));
+  writeFileSync(join(out, p.out), frameDemoStages(fill(absolutize(render(p, ctx)))));
   for (const id of new Set(p.missing)) console.warn(`  ! ${p.path}: link to #${id} has no target on any page`);
 }
 if (process.argv.includes("--check") && docPages.some((p) => p.missing?.length)) { console.error("✗ site: dead links (above)"); process.exit(1); }

@@ -2,6 +2,8 @@
 //   Stage rule: a specimen stage ([data-specimen-stage], scripts/specimen.mjs) holds only the component's
 //   markup. Any element inside it with a site-* class is an error, named with its page and class.
 //   Frame rule: that stage carries class site-stage and data-stage="fill" or data-stage="inline".
+//   Demo frame rule: a site-demo__stage carries the same frame (site-stage, data-stage fill or inline).
+//   The "no site-* class inside a stage" rule stays on [data-specimen-stage] only.
 //   Retired rule: a built page has no site-specimen__stage or site-specimen__preview class.
 // node scripts/lint-site.mjs [dir]   (default site/dist; exits 1 on any error)
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -23,6 +25,18 @@ const RETIRED_STAGE = ["site-specimen__stage", "site-specimen__preview"];
 
 /** Frame rule: [{ kind: "class" | "mode", tag }] for a specimen stage missing site-stage or data-stage="fill|inline". */
 export const stageFrameViolations = (html) => elements(html, STAGE_OPEN).flatMap((s) => {
+  const out = [];
+  const cls = (s.open.match(/\sclass="([^"]*)"/) ?? [, ""])[1].split(/\s+/).filter(Boolean);
+  if (!cls.includes("site-stage")) out.push({ kind: "class", tag: s.tag });
+  const mode = s.open.match(/\sdata-stage="([^"]*)"/);
+  if (!mode || (mode[1] !== "fill" && mode[1] !== "inline")) out.push({ kind: "mode", tag: s.tag });
+  return out;
+});
+
+const DEMO_STAGE_OPEN = /class="[^"]*\bsite-demo__stage\b/;
+
+/** Demo frame rule: [{ kind: "class" | "mode", tag }] for a site-demo__stage missing site-stage or data-stage="fill|inline". */
+export const demoStageFrameViolations = (html) => elements(html, DEMO_STAGE_OPEN).flatMap((s) => {
   const out = [];
   const cls = (s.open.match(/\sclass="([^"]*)"/) ?? [, ""])[1].split(/\s+/).filter(Boolean);
   if (!cls.includes("site-stage")) out.push({ kind: "class", tag: s.tag });
@@ -53,6 +67,9 @@ export const lintSite = (dir = join(root, "site/dist")) => {
     for (const v of stageFrameViolations(html)) errors.push(v.kind === "class"
       ? `${rel}: a specimen stage has no site-stage class`
       : `${rel}: a specimen stage has no data-stage="fill" or data-stage="inline"`);
+    for (const v of demoStageFrameViolations(html)) errors.push(v.kind === "class"
+      ? `${rel}: a demo stage has no site-stage class`
+      : `${rel}: a demo stage has no data-stage="fill" or data-stage="inline"`);
     for (const name of retiredSpecimenClasses(html)) errors.push(`${rel}: class ${name} is retired (use site-stage)`);
   }
   return { errors, stages };
@@ -63,5 +80,5 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (!existsSync(dir)) { console.error(`✗ lint-site: no ${relative(root, dir)} (run npm run site)`); process.exit(1); }
   const { errors, stages } = lintSite(dir);
   if (errors.length) { console.error(errors.join("\n") + `\n\n✗ lint-site: ${errors.length} error(s)`); process.exit(1); }
-  console.log(`✓ lint-site: ${stages} specimen stages, no site-* class inside one, every stage is site-stage fill or inline, no retired preview class`);
+  console.log(`✓ lint-site: ${stages} specimen stages, no site-* class inside one, every stage is site-stage fill or inline, no retired preview class, every demo stage carries the frame`);
 }

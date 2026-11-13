@@ -5,7 +5,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isPublic, categoryOf, release, pageStatus, heldLinks } from "../scripts/release.mjs";
 import { SPECIMEN_CATEGORIES, specimenPath, hasSpecimen, stageMode, NARROW_STAGE, entriesOf } from "../scripts/specimen.mjs";
-import { stageViolations, lintSite, stageFrameViolations, retiredSpecimenClasses } from "../scripts/lint-site.mjs";
+import { stageViolations, lintSite, stageFrameViolations, demoStageFrameViolations, retiredSpecimenClasses } from "../scripts/lint-site.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = join(root, "site/dist");
@@ -36,6 +36,16 @@ expect(
   && stageFrameViolations(wrongMode).map((v) => v.kind).join(" ") === "mode"
   && stageFrameViolations(framed).length === 0,
   `frame rule: got class ${JSON.stringify(stageFrameViolations(missingClass))} mode ${JSON.stringify(stageFrameViolations(missingMode))} wide ${JSON.stringify(stageFrameViolations(wrongMode))}`);
+
+// Demo frame rule: a landing demo stage carries site-stage and data-stage="fill" or "inline".
+const bareDemo = `<div class="site-demo"><div class="site-demo__stage"><span>x</span></div></div>`;
+const wideDemo = `<div class="site-demo__stage site-stage" data-stage="wide"><span>x</span></div>`;
+const framedDemo = `<div class="site-demo__stage site-stage" data-stage="inline"><a href="#">Go</a></div>`;
+expect(
+  demoStageFrameViolations(bareDemo).map((v) => v.kind).sort().join(" ") === "class mode"
+  && demoStageFrameViolations(wideDemo).map((v) => v.kind).join(" ") === "mode"
+  && demoStageFrameViolations(framedDemo).length === 0,
+  `demo frame rule: bare ${JSON.stringify(demoStageFrameViolations(bareDemo))} wide ${JSON.stringify(demoStageFrameViolations(wideDemo))}`);
 
 // Retired rule: the old stage and preview classes are an error. A longer name (site-specimen__stages) is not.
 const retired = `<div class="fh-card__media site-specimen__preview"></div><div class="site-specimen__stage"></div>`;
@@ -106,6 +116,13 @@ expect(!lint.errors.length && lint.stages > 0, `lint-site: ${lint.errors.join(";
 // Each category page shows a grid listing exactly its public families, in Index order, each linked to its
 // specimen; none of their demos is left on the page.
 expect(new Set(want.map(specimenPath)).size === want.length, "two families share a specimen address");
+
+// A built landing page: every demo stage carries the frame (class site-stage, data-stage fill or inline).
+const guidelines = readFileSync(fileOf("/guidelines/"), "utf8");
+const demoOpens = [...guidelines.matchAll(/<div\b[^>]*\bclass="[^"]*\bsite-demo__stage\b[^"]*"[^>]*>/g)];
+expect(
+  demoOpens.length >= 9 && demoOpens.every((m) => /\bsite-stage\b/.test(m[0]) && /\sdata-stage="(?:fill|inline)"/.test(m[0])),
+  `guidelines: ${demoOpens.length} demo stages, one is missing the frame`);
 const gridPages = [...new Set(want.map((f) => f.page))];
 for (const page of gridPages) {
   const html = readFileSync(fileOf(page), "utf8"), main = html.match(/<main[\s\S]*<\/main>/)?.[0] ?? "";

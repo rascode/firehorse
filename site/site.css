@@ -365,12 +365,14 @@ body::before {
   margin-inline-start: 0.15em;
 }
 
-/* —— Demo blocks —— */
+/* —— Demo blocks ——
+ * A demo is a caption plus the one frame (.site-stage on .site-demo__stage).
+ * The box itself has no border and no fill. The head matches the family
+ * caption: the ID and the name at the start, the note at the end. */
 .site-demo {
-  border: 1px dashed var(--fh-color-etch-soft);
-  border-radius: var(--fh-radius-md);
   container: site-demo / inline-size;
   min-inline-size: 0;
+  max-inline-size: 100%;
 }
 .site-demo__head {
   display: flex;
@@ -378,21 +380,15 @@ body::before {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--fh-space-2) var(--fh-space-5);
-  padding: var(--fh-space-4) var(--fh-space-5);
-  border-block-end: 1px dashed var(--fh-color-etch-soft);
+  padding: 0;
 }
 .site-demo__head h3 {
-  font-size: var(--fh-text-body);
-  font-weight: var(--fh-weight-semibold);
-  letter-spacing: var(--fh-tracking-heading);
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
 }
-.site-demo__head p { color: var(--fh-color-text-muted); font-size: var(--fh-text-small); max-inline-size: 46ch; }
-.site-demo__head code { font-size: var(--fh-text-caption); color: var(--fh-color-text-subtle); }
-.site-demo__stage {
-  padding: clamp(var(--fh-space-5), 4cqi, var(--fh-space-8));
-  container: fh-slot / inline-size;
-  min-inline-size: 0;
-}
+.site-demo__head p { margin: 0; max-inline-size: 46ch; }
 .site-demo__stage--grid {
   background-image:
     linear-gradient(var(--fh-color-border) 1px, transparent 1px),
@@ -2220,13 +2216,8 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .fh-section > :is(.site-tokens-tools, .site-icons-bar, .site-cat-filters, .site-cat-tools, .fh-chips) + *,
 .fh-section > * + .site-note { margin-block-start: var(--site-tight); }
 
-/* Inside a demo: roomier head, stage, variant rows and markup bar. */
-.site-demo__head {
-  gap: var(--fh-space-3) var(--fh-space-8);
-  padding: var(--fh-space-5) var(--fh-space-6);
-}
+/* Inside a demo: the caption's note, then the frame. */
 .site-demo__head p { line-height: var(--fh-leading-relaxed, 1.6); }
-.site-demo__stage { padding: clamp(var(--fh-space-6), 5cqi, var(--fh-space-12)); }
 .site-code > summary { padding: var(--fh-space-4) var(--fh-space-6); }
 .site-variants > div { padding-block: var(--fh-space-6); }
 @container fh-dl (inline-size >= 28rem) {
@@ -2246,7 +2237,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
  * Markup bar sits on the shared bottom edge. Stacked on narrow
  * screens, nothing changes. */
 .fh-split:has(> :is(.site-demo, .fh-window, .site-adaptive__live, .site-schema-col, .site-theme-panel)) { align-items: stretch; }
-.site-demo { display: flex; flex-direction: column; }
+.site-demo { display: flex; flex-direction: column; gap: var(--fh-space-2); }
 .site-demo > .site-demo__stage { flex: 1 1 auto; }
 .site-demo > .site-code { margin-block-start: auto; }
 .fh-split > :is(.fh-window, .site-adaptive__live, .site-schema-col, .site-theme-panel) { display: flex; flex-direction: column; }
@@ -2284,6 +2275,20 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-page-hero .fh-display { font-size: clamp(2.4rem, 1.6rem + 3vw, 4.25rem); text-wrap: balance; }
 .site-page-hero .fh-display em { font-style: normal; color: var(--fh-color-text-muted); }
 .site-page-hero .fh-lede { max-inline-size: 46rem; }
+/* Component pages: less block padding and a tighter gap under the lede, so a lede of
+ * three lines or fewer puts the first card or demo at or above 640px (1440 wide) and
+ * 860px (375 wide). Home, /developer/, /agents/, /components/ and the posts stay tall.
+ * The ruled section after this head was adding its own block of space on top of the
+ * hero; it now shares the hero's trailing space, the same way a section after .fh-hero does. */
+.site-page-hero--short {
+  padding-block: clamp(1.5rem, 1rem + 1.5vw, 2.5rem) var(--fh-space-4);
+}
+.site-page-hero--short .fh-hero { gap: var(--fh-space-4); }
+.site-page-hero--short .site-page-summary { margin-block-start: var(--fh-space-5); }
+.site-page-hero--short + .site-page-dock + .fh-section,
+.site-page-hero--short + .fh-section { padding-block-start: var(--fh-space-8); }
+.site-page-hero--short + .site-page-dock + .fh-section--ruled,
+.site-page-hero--short + .fh-section--ruled { margin-block-start: 0; }
 /* The page dock stays out of the way until the hero has scrolled off (data-engage="#top"),
  * then fades in pinned under the header. It takes no room in the flow, so nothing
  * shifts when it appears. Without the enhancer (no .fh-js) it simply stays visible. */
@@ -2499,7 +2504,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   --site-frost: color-mix(in oklab, var(--fh-color-canvas) 62%, transparent);
   --site-frost-blur: 8px;
 }
-main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+main :is(.site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   -webkit-backdrop-filter: blur(var(--site-frost-blur));
   backdrop-filter: blur(var(--site-frost-blur));
 }
@@ -2508,7 +2513,7 @@ main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-ser
   --fh-chip-bg: var(--site-frost);
 }
 :root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
-main :is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-chip-card, .fh-cube-card):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
+main :is(.site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-chip-card, .fh-cube-card):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .fh-card, .fh-chip-card, .fh-cube-card, .fh-chip, .fh-dock) *) {
   background-color: var(--site-frost);
 }
 .site-page-summary > .fh-cube-card { background: none; }
@@ -4059,8 +4064,10 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-specimen__body { display: grid; row-gap: var(--_gap); padding-block-start: 0; }
 .site-specimen__stages { display: grid; gap: var(--fh-space-6); }
 .site-specimen__variant { display: grid; gap: var(--fh-space-2); margin: 0; scroll-margin-block-start: var(--fh-space-24); }
-.site-specimen__caption { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
-.site-specimen__caption code { margin-inline-end: var(--fh-space-2); color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
+.site-specimen__caption,
+.site-demo__head { margin: 0; color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
+.site-specimen__caption code,
+.site-demo__head code { margin-inline-end: var(--fh-space-2); color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
 
 /* .site-stage: the one frame a component is shown in, on a family page and in a category card.
  * Contract: an opaque canvas (--fh-color-canvas, dark and light), the etched dashed border and
@@ -4082,6 +4089,28 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
   min-inline-size: 0;
   min-block-size: 12rem;
 }
+/* A flush demo stage drops the frame's padding. It has to follow .site-stage or the frame wins. */
+.site-demo__stage--flush { padding: 0; }
+/* A demo stage stays inside the page. Category-card stages are a different frame (they scale). */
+.site-demo__stage.site-stage { max-inline-size: 100%; }
+/* Steps on a landing stage (the nine lists on /guidelines/). The list's own box, its marker
+ * column and the first grid track, ran 38 to 76px past the stage at 375. Inside a stage the
+ * list fills the frame, the marker is gone, and both tracks can shrink so the text wraps. */
+.site-stage .fh-steps {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-stage .fh-steps > li {
+  min-inline-size: 0;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+}
+.site-stage .fh-steps > li::marker { content: none; }
+.site-stage .fh-steps > li > * { min-inline-size: 0; }
 .site-stage[data-stage="inline"] {
   display: flex;
   flex-wrap: wrap;
