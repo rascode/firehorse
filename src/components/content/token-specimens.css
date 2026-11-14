@@ -22,7 +22,7 @@
     display: grid;
     /* Three steps a row on a phone; from 40rem as many as fit at 5.5rem each (twelve across at 1440). */
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-md);
     overflow: hidden;
 
@@ -64,7 +64,7 @@
       display: grid;
       gap: var(--fh-gap-related);
       padding: var(--fh-inset-tile);
-      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 45%, transparent);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
     }
@@ -113,7 +113,7 @@
       gap: var(--fh-gap-related) var(--fh-gap-sectioned);
       align-items: baseline;
       padding-block: var(--fh-inset-card);
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
 
       &:first-child {
         border-block-start: 0;
@@ -184,7 +184,7 @@
       place-items: center;
       aspect-ratio: 1.3;
       padding: var(--fh-inset-tight);
-      border: var(--fh-border-thick) solid var(--fh-color-text-muted);
+      border: var(--fh-border-thick) var(--fh-card-border-style, solid) var(--fh-color-text-muted);
       border-radius: var(--r, var(--fh-radius-md));
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-micro);

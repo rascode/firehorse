@@ -21,24 +21,24 @@
       position: relative;
       display: grid;
       grid-template-columns: var(--_when) minmax(0, 1fr);
-      column-gap: calc(var(--fh-gap-grouped) * 2 + 1rem);
+      column-gap: calc(var(--fh-gap-grouped) * 2 + var(--fh-gap-grouped-wide));
       padding-block-end: var(--fh-inset-card);
 
       /* rail */
       &:not(:last-child)::before {
         content: "";
         position: absolute;
-        inset-block: 1rem 0;
-        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + 0.5rem);
-        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+        inset-block: var(--fh-inset-tile) 0;
+        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + var(--fh-inset-tight));
+        border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       }
 
       /* node */
       &::after {
         content: "";
         position: absolute;
-        inset-block-start: 0.4rem;
-        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + 0.5rem - 0.3rem);
+        inset-block-start: var(--fh-inset-tight);
+        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + var(--fh-inset-tight) - var(--fh-gap-bound));
         inline-size: 0.6rem;
         aspect-ratio: 1;
         border-radius: var(--fh-radius-round);
@@ -49,7 +49,7 @@
       & > time,
       & > .fh-timeline__when {
         grid-column: 1;
-        padding-block-start: 0.15rem;
+        padding-block-start: var(--fh-gap-bound);
         color: var(--fh-color-text-subtle);
         font-family: var(--fh-font-mono);
         font-size: var(--fh-text-micro);
