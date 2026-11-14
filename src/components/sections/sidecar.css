@@ -74,7 +74,7 @@
     display: grid;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-tile) var(--fh-inset-card) var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
   }
 
   .fh-sidecar__bar {
@@ -117,7 +117,7 @@
     inline-size: 2.75rem;
     aspect-ratio: 1;
     overflow: hidden;
-    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text-muted)) 45%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-tone, var(--fh-color-text-muted)) 45%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text-muted)) 14%, transparent);
     color: var(--fh-tone, var(--fh-color-text-muted));
@@ -153,7 +153,7 @@
     gap: var(--fh-gap-related);
 
     & > .fh-chip {
-      padding: 0.2rem 0.6rem;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight);
       font-size: var(--fh-text-caption);
     }
   }
