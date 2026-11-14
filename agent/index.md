@@ -46,7 +46,7 @@
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
 | `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/logo-strip/) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/) |
-| `TIL` | Tiles | Content | 1 Index tiles (2) · 2 Launch tiles (3) | [open](https://firehorse.rascode.dev/components/content/tiles/) |
+| `TIL` | Tiles | Content | 1 Index tiles (2) · 2 Launch tiles (3) · 3 Option tiles (1) | [open](https://firehorse.rascode.dev/components/content/tiles/) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/stats-strip/) |
 | `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/key-value-list/) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/checklist/) |
@@ -995,9 +995,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## TIL · Tiles
 
-Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something.
+Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview and the picked tile marked.
 
-Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command`
+Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command` `fh-tiles--options` `fh-tile--option` `fh-tile__media`
 
 ### TIL-1 · Index tiles
 
@@ -1053,6 +1053,19 @@ Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-t
   <button class="fh-tile fh-tile--command" type="button" data-tone="teal"><b class="fh-tile__title">Codex CLI</b><code>codex "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>
   <button class="fh-tile fh-tile--command" type="button" data-tone="sky"><b class="fh-tile__title">Gemini CLI</b><code>gemini -p "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>
 </div>
+```
+
+### TIL-3 · Option tiles
+
+#### TIL-3.1 · Option tile, media
+
+```html
+<ul class="fh-tiles fh-tiles--options" aria-label="Backdrop" data-fh="TIL-3.1">
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="true"><span class="fh-tile__media"><img src="/img/backdrop/hv-hat-thumb.webp" alt loading="lazy"></span><b class="fh-tile__title">Straw hat</b><span class="fh-tile__note">Warm · still</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__media"><img src="/img/backdrop/hv-rider-thumb.webp" alt loading="lazy"></span><b class="fh-tile__title">Rider</b><span class="fh-tile__note">Open · bright</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__media" style="background-image: radial-gradient(60% 70% at 30% 35%, var(--fh-color-accent), transparent 70%), radial-gradient(55% 60% at 75% 70%, oklch(from var(--fh-color-accent) l c calc(h + 120)), transparent 70%)"></span><b class="fh-tile__title">Glow</b><span class="fh-tile__note">Soft · radiating</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__media" style="background-image: linear-gradient(var(--fh-color-etch) 1px, transparent 1px), linear-gradient(90deg, var(--fh-color-etch) 1px, transparent 1px); background-size: 12px 12px; background-repeat: repeat"></span><b class="fh-tile__title">Grid</b><span class="fh-tile__note">The grid alone</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+</ul>
 ```
 
 ## STA · Stats strip

@@ -2866,8 +2866,97 @@
     }
   }
 
+  .fh-tiles--options {
+    --fh-tiles-min: 10rem;
+    --fh-tile-min-height: 0;
+    --fh-tile-title: var(--fh-text-lede);
+  }
+
+  .fh-tile--option {
+    justify-items: stretch;
+    gap: var(--fh-gap-bound);
+    inline-size: 100%;
+    padding: var(--fh-inset-tile);
+
+    & .fh-tile__title {
+      margin-block-start: var(--fh-gap-bound);
+      line-height: 1.1;
+    }
+
+    & .fh-tile__note {
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+    }
+
+    & .fh-tile__go {
+      block-size: 1.6rem;
+      inline-size: 1.6rem;
+      z-index: 1;
+      background: var(--_c);
+      color: oklch(from var(--_c) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+      opacity: 0;
+      transition: opacity var(--fh-duration-fast), scale var(--fh-duration-fast) var(--fh-ease-out);
+      border-radius: 50%;
+      place-items: center;
+      font-size: .85rem;
+      display: grid;
+      inset-block-start: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
+      inset-inline-end: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
+      scale: .6;
+    }
+
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go {
+      color: oklch(from var(--_c) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+      translate: none;
+    }
+
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__media {
+      scale: 1.02;
+    }
+  }
+
+  .fh-tile__media {
+    inline-size: 100%;
+    aspect-ratio: var(--fh-tile-media-ratio, 4 / 3);
+    isolation: isolate;
+    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background: var(--fh-color-canvas) center / cover no-repeat;
+    transition: box-shadow var(--fh-duration-fast) var(--fh-ease-standard), scale var(--fh-duration-fast) var(--fh-ease-out);
+    display: block;
+    position: relative;
+    overflow: hidden;
+
+    & > :is(img, video, svg, canvas) {
+      object-fit: cover;
+      block-size: 100%;
+      inline-size: 100%;
+      display: block;
+    }
+  }
+
+  .fh-tile--option:is([aria-pressed="true"], [aria-checked="true"], [aria-current]:not([aria-current="false"]), :has(input:checked)) {
+    background-color: color-mix(in oklab, var(--_c) 10%, transparent);
+
+    & .fh-tile__media {
+      box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 4px var(--_c);
+    }
+
+    & .fh-tile__title {
+      color: var(--_ink);
+    }
+
+    & .fh-tile__go {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .fh-tile, .fh-tile__cube, .fh-tile__go {
+    .fh-tile, .fh-tile__cube, .fh-tile__go, .fh-tile__media {
       transition: none;
     }
   }

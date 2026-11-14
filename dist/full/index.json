@@ -3240,7 +3240,7 @@
       "anchor": "c-tiles",
       "page": "/components/content/",
       "url": "https://firehorse.rascode.dev/components/content/tiles/",
-      "summary": "Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something.",
+      "summary": "Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview and the picked tile marked.",
       "classes": [
         "fh-tiles",
         "fh-tile",
@@ -3253,7 +3253,10 @@
         "fh-tile--row",
         "fh-tiles--launch",
         "fh-tile--compact",
-        "fh-tile--command"
+        "fh-tile--command",
+        "fh-tiles--options",
+        "fh-tile--option",
+        "fh-tile__media"
       ],
       "markup": "<ul class=\"fh-tiles\" data-fh=\"TIL-1.1\">\n  <li><a class=\"fh-tile\" href=\"#c-tiles\" data-tone=\"teal\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--book-open\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">01 · Guide</small><b class=\"fh-tile__title\">Guidelines</b><span class=\"fh-tile__note\">The rules every Rascode design system follows.</span><i class=\"fh-icon fh-icon--arrow-right fh-tile__go\" aria-hidden=\"true\"></i></a></li>\n  <li><a class=\"fh-tile\" href=\"#c-tiles\" data-tone=\"violet\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--layers\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">02 · 6 families</small><b class=\"fh-tile__title\">Foundations</b><span class=\"fh-tile__note\">Tones, type, space, radius and every token.</span><i class=\"fh-icon fh-icon--arrow-right fh-tile__go\" aria-hidden=\"true\"></i></a></li>\n  <li><a class=\"fh-tile\" href=\"#c-tiles\" data-tone=\"rose\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--layout-grid\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">03 · 4 families</small><b class=\"fh-tile__title\">Layout</b><span class=\"fh-tile__note\">The frame, container queries and the auto grid.</span><i class=\"fh-icon fh-icon--arrow-right fh-tile__go\" aria-hidden=\"true\"></i></a></li>\n</ul>",
       "groups": [
@@ -3278,6 +3281,16 @@
             "TIL-2.3"
           ],
           "markup": "<div class=\"fh-tiles fh-tiles--launch\" data-fh=\"TIL-2.1\">\n  <button class=\"fh-tile\" type=\"button\" data-tone=\"violet\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--sparkles\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">01</small><b class=\"fh-tile__title\">Claude</b><span class=\"fh-tile__note\">Anthropic</span><i class=\"fh-icon fh-icon--arrow-up-right fh-tile__go\" aria-hidden=\"true\"></i></button>\n  <button class=\"fh-tile\" type=\"button\" data-tone=\"fuchsia\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--bot\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">02</small><b class=\"fh-tile__title\">ChatGPT</b><span class=\"fh-tile__note\">OpenAI</span><i class=\"fh-icon fh-icon--arrow-up-right fh-tile__go\" aria-hidden=\"true\"></i></button>\n  <button class=\"fh-tile\" type=\"button\" data-tone=\"neutral\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--terminal\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">03</small><b class=\"fh-tile__title\">Cursor</b><span class=\"fh-tile__note\">Agent in your editor</span><i class=\"fh-icon fh-icon--arrow-up-right fh-tile__go\" aria-hidden=\"true\"></i></button>\n  <button class=\"fh-tile\" type=\"button\" data-tone=\"lime\"><span class=\"fh-tile__cube\"><i class=\"fh-icon fh-icon--heart\" aria-hidden=\"true\"></i></span><small class=\"fh-tile__eyebrow\">04</small><b class=\"fh-tile__title\">Lovable</b><span class=\"fh-tile__note\">Builds the app</span><i class=\"fh-icon fh-icon--arrow-up-right fh-tile__go\" aria-hidden=\"true\"></i></button>\n</div>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "TIL-3",
+          "name": "Option tiles",
+          "summary": "",
+          "variants": [
+            "TIL-3.1"
+          ],
+          "markup": "<ul class=\"fh-tiles fh-tiles--options\" aria-label=\"Backdrop\" data-fh=\"TIL-3.1\">\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"true\"><span class=\"fh-tile__media\"><img src=\"/img/backdrop/hv-hat-thumb.webp\" alt loading=\"lazy\"></span><b class=\"fh-tile__title\">Straw hat</b><span class=\"fh-tile__note\">Warm · still</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"false\"><span class=\"fh-tile__media\"><img src=\"/img/backdrop/hv-rider-thumb.webp\" alt loading=\"lazy\"></span><b class=\"fh-tile__title\">Rider</b><span class=\"fh-tile__note\">Open · bright</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"false\"><span class=\"fh-tile__media\" style=\"background-image: radial-gradient(60% 70% at 30% 35%, var(--fh-color-accent), transparent 70%), radial-gradient(55% 60% at 75% 70%, oklch(from var(--fh-color-accent) l c calc(h + 120)), transparent 70%)\"></span><b class=\"fh-tile__title\">Glow</b><span class=\"fh-tile__note\">Soft · radiating</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"false\"><span class=\"fh-tile__media\" style=\"background-image: linear-gradient(var(--fh-color-etch) 1px, transparent 1px), linear-gradient(90deg, var(--fh-color-etch) 1px, transparent 1px); background-size: 12px 12px; background-repeat: repeat\"></span><b class=\"fh-tile__title\">Grid</b><span class=\"fh-tile__note\">The grid alone</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n</ul>",
           "markupFrom": "variant"
         }
       ],
@@ -3378,6 +3391,26 @@
           "markup": "<div class=\"fh-tiles fh-tiles--launch\" style=\"--fh-tiles-min: 12rem\" data-fh=\"TIL-2.3\">\n  <button class=\"fh-tile fh-tile--command\" type=\"button\" data-tone=\"violet\"><b class=\"fh-tile__title\">Claude Code</b><code>claude \"…\"</code><i class=\"fh-icon fh-icon--copy fh-tile__go\" aria-hidden=\"true\"></i></button>\n  <button class=\"fh-tile fh-tile--command\" type=\"button\" data-tone=\"teal\"><b class=\"fh-tile__title\">Codex CLI</b><code>codex \"…\"</code><i class=\"fh-icon fh-icon--copy fh-tile__go\" aria-hidden=\"true\"></i></button>\n  <button class=\"fh-tile fh-tile--command\" type=\"button\" data-tone=\"sky\"><b class=\"fh-tile__title\">Gemini CLI</b><code>gemini -p \"…\"</code><i class=\"fh-icon fh-icon--copy fh-tile__go\" aria-hidden=\"true\"></i></button>\n</div>",
           "status": "live",
           "tier": "free"
+        },
+        {
+          "id": "TIL-3.1",
+          "group": "TIL-3",
+          "name": "Option tile, media",
+          "classes": [
+            "fh-tiles",
+            "fh-tiles--options",
+            "fh-tile",
+            "fh-tile--option",
+            "fh-tile__media",
+            "fh-tile__title",
+            "fh-tile__note",
+            "fh-icon",
+            "fh-tile__go"
+          ],
+          "config": {},
+          "markup": "<ul class=\"fh-tiles fh-tiles--options\" aria-label=\"Backdrop\" data-fh=\"TIL-3.1\">\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"true\"><span class=\"fh-tile__media\"><img src=\"/img/backdrop/hv-hat-thumb.webp\" alt loading=\"lazy\"></span><b class=\"fh-tile__title\">Straw hat</b><span class=\"fh-tile__note\">Warm · still</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"false\"><span class=\"fh-tile__media\"><img src=\"/img/backdrop/hv-rider-thumb.webp\" alt loading=\"lazy\"></span><b class=\"fh-tile__title\">Rider</b><span class=\"fh-tile__note\">Open · bright</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"false\"><span class=\"fh-tile__media\" style=\"background-image: radial-gradient(60% 70% at 30% 35%, var(--fh-color-accent), transparent 70%), radial-gradient(55% 60% at 75% 70%, oklch(from var(--fh-color-accent) l c calc(h + 120)), transparent 70%)\"></span><b class=\"fh-tile__title\">Glow</b><span class=\"fh-tile__note\">Soft · radiating</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n  <li><button class=\"fh-tile fh-tile--option\" type=\"button\" aria-pressed=\"false\"><span class=\"fh-tile__media\" style=\"background-image: linear-gradient(var(--fh-color-etch) 1px, transparent 1px), linear-gradient(90deg, var(--fh-color-etch) 1px, transparent 1px); background-size: 12px 12px; background-repeat: repeat\"></span><b class=\"fh-tile__title\">Grid</b><span class=\"fh-tile__note\">The grid alone</span><i class=\"fh-icon fh-icon--check fh-tile__go\" aria-hidden=\"true\"></i></button></li>\n</ul>",
+          "status": "live",
+          "tier": "free"
         }
       ],
       "stageClasses": [
@@ -3393,7 +3426,10 @@
         "fh-tile--row",
         "fh-tiles--launch",
         "fh-tile--compact",
-        "fh-tile--command"
+        "fh-tile--command",
+        "fh-tiles--options",
+        "fh-tile--option",
+        "fh-tile__media"
       ],
       "status": "live",
       "tier": "free"

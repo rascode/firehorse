@@ -27,8 +27,11 @@
    *   Compact: .fh-tile--compact (a small cube, the title and note inline, the arrow on hover).
    *   Command: .fh-tile--command (a name and a mono command line, "$ " in the tone).
    *
+   * Option tiles (TIL-3) pick one: a preview, a name and a mono caps note; the picked
+   * tile is marked. .fh-tiles--options with .fh-tile--option (see TIL-3 below).
+   *
    * Knobs: --fh-tiles-min (the column floor), --fh-tile-cube (the cube's size),
-   * --fh-tile-tone (a tile's colour, else its data-tone). */
+   * --fh-tile-tone (a tile's colour, else its data-tone), --fh-tile-media-ratio. */
   .fh-tiles {
     --_rule: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
 
@@ -202,7 +205,81 @@
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: none; }
   }
 
+  /* —— TIL-3 Option tiles: pick one ———————————————————————————————————————————
+   * A choice in a picker or a setting. The preview leads, then the name and a mono caps note.
+   * The picked tile (aria-pressed, aria-checked or aria-current, or a checked input inside a
+   * label) takes the tone: a wash, a ring round the preview and a check on its corner.
+   *   <ul class="fh-tiles fh-tiles--options" aria-label="Backdrop">
+   *     <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="true" data-tone="violet">
+   *       <span class="fh-tile__media"><img src="aurora.webp" alt=""></span>
+   *       <b class="fh-tile__title">Aurora</b>
+   *       <span class="fh-tile__note">Bright · airy · flowing</span>
+   *       <i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+   *   </ul>
+   * TIL-3.1 Media: .fh-tile__media holds an <img>, a <video>, a background image or a drawn
+   * preview; --fh-tile-media-ratio sets its shape (4 / 3). */
+  .fh-tiles--options {
+    --fh-tiles-min: 10rem;
+    --fh-tile-min-height: 0;
+    --fh-tile-title: var(--fh-text-lede);
+  }
+  .fh-tile--option {
+    justify-items: stretch;
+    inline-size: 100%;
+    gap: var(--fh-gap-bound);
+    padding: var(--fh-inset-tile);
+
+    & .fh-tile__title { margin-block-start: var(--fh-gap-bound); line-height: 1.1; }
+    & .fh-tile__note {
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      letter-spacing: var(--fh-tracking-caps);
+      text-transform: uppercase;
+    }
+    /* The check: a disc in the tone on the preview's corner, shown when picked. */
+    & .fh-tile__go {
+      display: grid;
+      place-items: center;
+      inline-size: 1.6rem;
+      block-size: 1.6rem;
+      inset-block-start: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
+      inset-inline-end: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
+      z-index: 1;
+      border-radius: 50%;
+      background: var(--_c);
+      color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+      font-size: 0.85rem;
+      opacity: 0;
+      scale: 0.6;
+      transition: opacity var(--fh-duration-fast), scale var(--fh-duration-fast) var(--fh-ease-out);
+    }
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: none; color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); }
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__media { scale: 1.02; }
+  }
+  .fh-tile__media {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: var(--fh-tile-media-ratio, 4 / 3);
+    overflow: hidden;
+    isolation: isolate;
+    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border-radius: var(--fh-radius-md);
+    background: var(--fh-color-canvas) center / cover no-repeat;
+    transition: box-shadow var(--fh-duration-fast) var(--fh-ease-standard), scale var(--fh-duration-fast) var(--fh-ease-out);
+
+    & > :is(img, video, svg, canvas) { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+  }
+  .fh-tile--option:is([aria-pressed="true"], [aria-checked="true"], [aria-current]:not([aria-current="false"]), :has(input:checked)) {
+    background-color: color-mix(in oklab, var(--_c) 10%, transparent);
+
+    & .fh-tile__media { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 4px var(--_c); }
+    & .fh-tile__title { color: var(--_ink); }
+    & .fh-tile__go { opacity: 1; scale: 1; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .fh-tile, .fh-tile__cube, .fh-tile__go { transition: none; }
+    .fh-tile, .fh-tile__cube, .fh-tile__go, .fh-tile__media { transition: none; }
   }
 }
