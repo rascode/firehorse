@@ -875,79 +875,15 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   :root.fh-js:not(.fh-ready) .site-hc .site-hc-nav__links > * { animation-play-state: paused; }
 }
 
-/* The Docs menu */
-.site-hc-docs {
-  --_etch: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch, var(--fh-color-border)));
-  position: fixed;
-  position-anchor: --hc-docs;
-  inset: auto;
-  margin: var(--fh-space-2) 0 0;
-  inline-size: min(56rem, calc(100vw - 2rem));
-  padding: 0;
-  overflow: visible;
-  border: var(--_etch);
-  border-radius: var(--site-nav-radius, 3px);
-  background: light-dark(oklch(1 0 0 / 0.86), oklch(0.19 0 0 / 0.86));
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  color: var(--fh-color-text);
-  text-align: start;
-}
+/* The Docs menu: a Firehorse tile panel (MEG-3.1) of row tiles (TIL-1.2); placed below. */
+.site-hc-docs .fh-tiles { --fh-tiles-min: 100%; }
 @supports (position-area: bottom) {
   .site-hc-docs { position-area: block-end span-inline-end; position-try-fallbacks: flip-inline; }
 }
-.site-hc-docs:popover-open { display: grid; }
 @media (prefers-reduced-motion: no-preference) {
   .site-hc-docs:popover-open { animation: hc-docs-in 220ms cubic-bezier(0.16, 1, 0.3, 1); }
 }
 @keyframes hc-docs-in { from { opacity: 0; translate: 0 -6px; } }
-.site-hc-docs :is(.site-hc-docs__title, .site-hc-docs__count, .site-hc-docs__label, .site-hc-docs__num) {
-  font-family: var(--fh-font-mono);
-  font-size: var(--fh-text-label);
-  letter-spacing: var(--fh-tracking-caps);
-  text-transform: uppercase;
-  color: var(--fh-color-text-subtle);
-}
-.site-hc-docs__head { display: flex; justify-content: space-between; align-items: center; padding: var(--fh-space-3) var(--fh-space-4); border-block-end: var(--_etch); }
-.site-hc-docs__title { color: var(--fh-color-text) !important; font-weight: var(--fh-weight-bold, 700); }
-.site-hc-docs__groups { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.site-hc-docs__group + .site-hc-docs__group { border-inline-start: var(--_etch-soft); }
-.site-hc-docs__label { margin: 0; padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-2); }
-.site-hc-docs__grid { display: grid; }
-.site-hc-docs__tile {
-  --_t: light-dark(oklch(from var(--fh-tone, var(--fh-color-accent)) min(l, 0.52) c h), oklch(from var(--fh-tone, var(--fh-color-accent)) max(l, 0.74) c h));
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  column-gap: var(--fh-space-3);
-  align-items: center;
-  padding: var(--fh-space-3) var(--fh-space-4);
-  border-block-start: var(--_etch-soft);
-  color: inherit;
-  text-decoration: none;
-  transition: background-color 160ms ease;
-}
-.site-hc-docs__cube { grid-row: 1 / 3; display: grid; place-items: center; inline-size: 1.875rem; aspect-ratio: 1; border-radius: var(--fh-radius-md); background: var(--_t); color: oklch(from var(--_t) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); font-size: 0.85rem; }
-.site-hc-docs__tile b { font-size: var(--fh-text-body, 0.9375rem); font-weight: var(--fh-heading-weight); letter-spacing: var(--fh-tracking-tight); line-height: 1.15; padding-inline-end: 2.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.site-hc-docs__tile small { font-size: var(--fh-text-caption, 0.75rem); color: var(--fh-color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.site-hc-docs__num { position: absolute; inset-block-start: var(--fh-space-3); inset-inline-end: 2.1rem; line-height: 1.2; }
-.site-hc-docs__go { position: absolute; inset-block-start: var(--fh-space-3); inset-inline-end: var(--fh-space-3); color: var(--fh-color-text-subtle); transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1), color 160ms ease; }
-.site-hc-docs__tile:hover { background: color-mix(in oklab, var(--_t) 8%, transparent); }
-.site-hc-docs__tile:hover .site-hc-docs__go { translate: 2px -2px; color: var(--_t); }
-.site-hc-docs__tile:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
-.site-hc-docs__foot { display: grid; grid-template-columns: repeat(3, 1fr); border-block-start: var(--_etch); }
-.site-hc-docs__foot a {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--fh-space-2);
-  min-block-size: 2.75rem; padding: 0 var(--fh-space-4);
-  font-family: var(--fh-font-mono); font-size: var(--fh-text-label); font-weight: var(--fh-weight-bold, 700);
-  letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; text-decoration: none; color: var(--fh-color-text);
-}
-.site-hc-docs__foot a + a { border-inline-start: var(--_etch-soft); }
-.site-hc-docs__foot a .fh-icon { color: var(--fh-color-accent); }
-.site-hc-docs__foot a:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
-@media (width < 52rem) { .site-hc-docs__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } .site-hc-docs__group:nth-child(3) { border-inline-start: 0; } }
 
 /* The docked copy: top centre, a frosted etched pill, shown once the page has scrolled */
 .site-hc-nav--dock {
@@ -972,8 +908,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 @supports (position-area: bottom) { .site-hc-nav--dock .site-hc-docs { position-area: block-end; position-try-fallbacks: none; } }
 .site-hc[data-nav-docked] :is(.site-hc__sections, .site-hc__spine) { opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
 .site-hc-next { min-block-size: 1px; scroll-margin-block-start: 5rem; }
-.site-hc-docs { inline-size: min(62rem, calc(100vw - 2rem)); }
-.site-hc-docs__tile b { padding-inline-end: 2.5rem; }
 /* "modern workflows" on its own line, heavier */
 .site-hc__arrowline { font-weight: var(--fh-weight-heavy, 800); }
 .site-hc__lede { line-height: 1.5; }
@@ -1044,21 +978,23 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__start-go { --fh-icon-size: 1.05em; color: var(--fh-tone); transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
 .site-hc__vivid:hover .site-hc__start-go { translate: 2px 0; }
 
-/* Docs menu: the full width of the page's content column (page margin to page margin), just
-   under its button, on a light frost. */
-.site-hc-docs,
-.site-hc-nav--dock .site-hc-docs {
+/* The three menus (Docs, Typeface, Backdrop): just under the site's header bar and exactly its
+   width (anchored to --site-dock-bar; the content column if the bar isn't there). */
+/* (.fh-mega in the selector: it outranks site.css's .fh-mega placement under the site header) */
+.fh-mega:is(.site-hc-docs, .site-hc__types, .site-hc__bgs) {
+  --_col: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+  position-anchor: --site-dock-bar;
   position-area: none;
   position-try-fallbacks: none;
-  inset-block-start: anchor(bottom);
+  inset-block-start: anchor(bottom, 5rem);
   inset-block-end: auto;
-  inset-inline: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
+  inset-inline-start: anchor(left, var(--_col));
+  inset-inline-end: anchor(right, var(--_col));
   inline-size: auto;
   max-inline-size: none;
   margin: var(--fh-space-2) 0 0;
-  background: light-dark(oklch(1 0 0 / 0.5), oklch(0.18 0 0 / 0.5));
-  -webkit-backdrop-filter: blur(12px) saturate(1.15);
-  backdrop-filter: blur(12px) saturate(1.15);
+  max-block-size: calc(100dvh - 6rem);
+  overflow-y: auto;
 }
 
 /* Docs menu: slides down from under the nav, quick off the mark with a soft settle; closing
@@ -1611,32 +1547,17 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 }
 .site-hc__type-btn:hover { scale: 1.06; }
 .site-hc__type-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
-.site-hc__types {
-  position-anchor: --hc-type;
-  position: fixed;
-  inset: auto;
-  top: anchor(bottom);
-  right: anchor(right);
-  margin: var(--fh-space-2) 0 0;
-  min-inline-size: 15rem;
-  padding: 0;
-  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  border-radius: var(--site-nav-radius, 3px);
-  background: light-dark(oklch(1 0 0 / 0.86), oklch(0.19 0 0 / 0.86));
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  color: var(--fh-color-text);
-}
-.site-hc__types-head {
+/* The typeface picker: a tile panel (MEG-3.1), placed with the Docs menu. */
+.site-hc__types-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
   margin: 0;
-  padding: var(--fh-space-3) var(--fh-space-4);
-  border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  font: 800 var(--fh-text-label) / 1.2 var(--fh-font-mono);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  padding: 0;
+  overflow: hidden;
+  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+  list-style: none;
 }
-.site-hc__types ul { display: grid; margin: 0; padding: 0; list-style: none; }
-.site-hc__types li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-hc__types-list > li { margin: 0 0 -1px -1px; border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
 .site-hc__types button {
   display: grid;
   grid-template-columns: 2.25rem minmax(0, 1fr);
@@ -1757,7 +1678,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   backdrop-filter: none !important;
   background: light-dark(oklch(0.985 0.002 90 / 0.8), oklch(0.17 0 0 / 0.8)) !important;
 }
-.site-hc-float::before, .site-hc__agents > .fh-button, .site-hc__meta--dock, .site-hc__types, .site-hc-docs,
+.site-hc-float::before, .site-hc__agents > .fh-button, .site-hc__meta--dock, .site-hc__types, .site-hc-docs, .site-hc__bgs,
 .site-hc-svc__card, .site-hc__agents-ghost *, .site-hc-mark::before {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
@@ -1765,7 +1686,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc-float::before, .site-hc__agents > .fh-button { background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9)); }
 .site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.97), oklch(0.23 0 0 / 0.95)); }
 .site-hc__meta--dock { background: light-dark(oklch(0.99 0 0 / 0.92), oklch(0.19 0 0 / 0.92)); }
-.site-hc__types, .site-hc-docs, .site-hc-svc__card { background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95)) !important; }
+.site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc-svc__card { background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95)) !important; }
 .site-hc-mark::before { background: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent); }
 /* the art is drawn once into its own layer; its light sweep rests once the logo has locked */
 .site-hc__art { will-change: transform; contain: strict; }
@@ -1809,21 +1730,11 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__bg-btn:hover { scale: 1.06; }
 .site-hc__bg-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
 .site-hc__bgs {
-  position-anchor: --hc-bg;
-  position: fixed;
-  inset: auto;
-  top: anchor(bottom);
-  right: anchor(right);
-  margin: var(--fh-space-2) 0 0;
-  min-inline-size: 17rem;
-  max-block-size: calc(100vh - 6rem);
-  overflow: auto;
-  padding: 0;
-  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  border-radius: var(--site-nav-radius, 3px);
-  background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95));
-  color: var(--fh-color-text);
+  /* a tile panel (MEG-3.1), placed with the Docs menu */
+  --fh-mega-columns: minmax(0, 1.15fr) minmax(0, 1.6fr) minmax(15rem, 1fr);
 }
+@media (width < 64rem) { .site-hc__bgs { --fh-mega-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (width < 40rem) { .site-hc__bgs { --fh-mega-columns: minmax(0, 1fr); } }
 .site-hc__bgs ul:not(.fh-tiles) { display: grid; margin: 0; padding: 0; list-style: none; }
 .site-hc__bgs ul:not(.fh-tiles) > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
 .site-hc__bgs button:not(.fh-tile) {
@@ -1843,20 +1754,9 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__bgs button:not(.fh-tile):hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
 .site-hc__bgs button:not(.fh-tile):focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
 .site-hc__bgs button:not(.fh-tile)[aria-pressed="true"] { background: color-mix(in oklab, var(--fh-color-accent) 10%, transparent); }
-.site-hc__bgs-scenes { --fh-tiles-min: 8rem; } /* two across in the panel until it opens full width (inventory row 9) */
+.site-hc__bgs-scenes { --fh-tiles-min: 9rem; }
 /* The scene thumbnails are option tiles' previews (TIL-3.1, .fh-tile__media); the art below draws on them. */
 .site-hc__bgs-thumb { --_blur: 12px; }
-.site-hc__bgs-credit {
-  margin: 0;
-  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-4);
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  font: 600 var(--fh-text-label) / 1.2 var(--fh-font-mono);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--fh-color-text-subtle);
-}
-.site-hc__bgs-credit a { color: inherit; }
-.site-hc__bgs-credit a:hover { color: var(--fh-color-accent); }
 @media (prefers-reduced-motion: no-preference) {
   .site-hc__bgs:popover-open { animation: hc-docs-in 200ms cubic-bezier(0.22, 1, 0.36, 1); }
 }
@@ -1963,19 +1863,16 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 :root[data-hc-photo][data-hc-drift] .site-hc__drift { display: block; }
 
 /* The picker's photo grid and the effect switch */
-.site-hc__bgs { inline-size: 20rem; }
 .site-hc__bgs-label {
   margin: 0;
-  padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-2);
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  padding: var(--fh-space-3) 0 var(--fh-space-2);
   font: 800 var(--fh-text-label) / 1.2 var(--fh-font-mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 .site-hc__bgs ul.site-hc__bgs-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr));
   gap: var(--fh-space-2);
-  padding: 0 var(--fh-space-4) var(--fh-space-3);
 }
 .site-hc__bgs .site-hc__bgs-grid li + li { border: 0; }
 .site-hc__bgs .site-hc__bgs-grid button {
@@ -2008,7 +1905,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__bgs-grid button[aria-pressed="true"] .site-hc__bgs-cap { color: var(--fh-color-text); }
 .site-hc__bgs button.site-hc__bgs-fx {
   grid-template-columns: minmax(0, 1fr) auto;
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+  padding-inline: 0;
 }
 .site-hc__bgs button.site-hc__bgs-fx[aria-pressed] { background: none; }
 .site-hc__bgs-switch {
@@ -2056,7 +1953,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   grid-template-columns: minmax(0, 1fr) 7.5rem;
   align-items: center;
   gap: var(--fh-space-3);
-  padding: 0 var(--fh-space-4) var(--fh-space-3);
+  padding: 0 0 var(--fh-space-3);
 }
 .site-hc__bgs-amt input { inline-size: 100%; margin: 0; accent-color: var(--fh-color-accent); cursor: pointer; }
 .site-hc__bgs-amt output { font-variant-numeric: tabular-nums; }
@@ -2066,7 +1963,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__bgs ul.site-hc__bgs-drifts {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--fh-space-1-5, 0.375rem);
-  padding: 0 var(--fh-space-4) var(--fh-space-3);
 }
 .site-hc__bgs .site-hc__bgs-drifts li + li { border: 0; }
 .site-hc__bgs .site-hc__bgs-drifts button {
