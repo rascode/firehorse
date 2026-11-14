@@ -47,7 +47,7 @@
     & > small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wide); text-transform: uppercase; }
     &:has(> s, > del) > :is(b, strong) { color: var(--fh-tone, var(--fh-color-danger)); }
   }
-  .fh-price--lg > :is(b, strong) { font-family: var(--fh-font-figure); font-size: var(--fh-text-h3); letter-spacing: -0.02em; }
+  .fh-price--lg > :is(b, strong) { font-family: var(--fh-font-figure); font-size: var(--fh-text-h3); letter-spacing: var(--fh-tracking-heading); }
 
   /* Band from --low to --high, pin at --at. End labels sit under the track. */
   .fh-price-range {
@@ -57,7 +57,7 @@
 
     display: grid;
     gap: var(--fh-gap-bound);
-    padding-inline: 0.45rem;
+    padding-inline: var(--fh-inset-tight);
   }
 
   .fh-price-range__track {
@@ -82,7 +82,7 @@
     inset-inline-start: calc(var(--at) * 1%);
     inline-size: 0.7rem;
     aspect-ratio: 1;
-    border: 2px solid var(--fh-color-canvas);
+    border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--fh-color-canvas);
     border-radius: var(--fh-radius-round);
     background: var(--fh-color-text);
     box-shadow: 0 0 0 1px var(--fh-color-border-strong);
@@ -128,7 +128,7 @@
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: baseline;
       gap: var(--fh-gap-related);
-      padding-block: 0.28rem;
+      padding-block: var(--fh-gap-bound);
     }
 
     & dt {
@@ -165,7 +165,7 @@
   }
 
   .fh-price-split__total {
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     margin-block-start: 0.15rem;
     padding-block-start: 0.4rem;
 

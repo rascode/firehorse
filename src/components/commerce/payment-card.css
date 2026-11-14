@@ -37,12 +37,12 @@
       repeating-linear-gradient(90deg, color-mix(in oklab, white 7%, transparent) 0 1px, transparent 1px 8cqi),
       repeating-linear-gradient(0deg, color-mix(in oklab, white 7%, transparent) 0 1px, transparent 1px 8cqi),
       linear-gradient(135deg, var(--_c1), var(--_c2));
-    outline: 1px dashed color-mix(in oklab, white 22%, transparent);
+    outline: var(--fh-border-thin) dashed color-mix(in oklab, white 22%, transparent);
     outline-offset: -2.2cqi;
     color: var(--fh-color-on-media);
     box-shadow: 0 1px 0 color-mix(in oklab, white 20%, transparent) inset, var(--fh-shadow-overlay);
     backface-visibility: hidden;
-    transition: rotate 700ms cubic-bezier(0.3, 0.7, 0.2, 1);
+    transition: rotate var(--fh-duration-reveal) cubic-bezier(0.3, 0.7, 0.2, 1);
   }
   .fh-paycard__front { grid-template-rows: auto 1fr auto auto; }
   .fh-paycard__back { rotate: y 180deg; grid-template-rows: 18% 1fr; padding-inline: 0; }
@@ -61,11 +61,11 @@
       linear-gradient(0deg, transparent 45%, color-mix(in oklab, black 25%, transparent) 46% 54%, transparent 55%),
       linear-gradient(135deg, oklch(0.86 0.09 85), oklch(0.68 0.1 70));
   }
-  .fh-paycard__mark { align-self: center; font-family: var(--fh-font-sans); font-size: 4.2cqi; font-weight: var(--fh-weight-bold); letter-spacing: -0.02em; }
+  .fh-paycard__mark { align-self: center; font-family: var(--fh-font-sans); font-size: 4.2cqi; font-weight: var(--fh-weight-bold); letter-spacing: var(--fh-tracking-heading); }
   .fh-paycard__mark::first-letter { color: var(--_glow); }
-  .fh-paycard__brand { font-family: var(--fh-font-sans); font-size: 5.2cqi; font-weight: var(--fh-weight-heavy); font-style: italic; letter-spacing: 0.02em; text-transform: uppercase; opacity: 0.92; }
-  .fh-paycard__number { align-self: end; font-size: 6.4cqi; letter-spacing: 0.12em; word-spacing: 0.25em; text-shadow: 0 1px 0 color-mix(in oklab, black 40%, transparent); white-space: nowrap; }
-  .fh-paycard__row { display: flex; justify-content: space-between; gap: 4cqi; margin-block-start: 4cqi; font-size: 3.6cqi; letter-spacing: 0.08em; text-transform: uppercase; }
+  .fh-paycard__brand { font-family: var(--fh-font-sans); font-size: 5.2cqi; font-weight: var(--fh-weight-heavy); font-style: italic; letter-spacing: var(--fh-tracking-mono); text-transform: uppercase; opacity: 0.92; }
+  .fh-paycard__number { align-self: end; font-size: 6.4cqi; letter-spacing: var(--fh-tracking-caps); word-spacing: 0.25em; text-shadow: 0 1px 0 color-mix(in oklab, black 40%, transparent); white-space: nowrap; }
+  .fh-paycard__row { display: flex; justify-content: space-between; gap: 4cqi; margin-block-start: 4cqi; font-size: 3.6cqi; letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
   .fh-paycard__row small { display: block; margin-block-end: 0.6cqi; font-size: 2.4cqi; opacity: 0.7; }
   .fh-paycard__stripe { background-color: oklch(0.12 0 0); }
   .fh-paycard__sig {
@@ -86,7 +86,7 @@
   .fh-card-field {
     position: relative;
 
-    & > .fh-input { padding-inline-end: 4.5rem; font-family: var(--fh-font-mono); letter-spacing: 0.06em; }
+    & > .fh-input { padding-inline-end: 4.5rem; font-family: var(--fh-font-mono); letter-spacing: var(--fh-tracking-wide); }
     & > [data-card-brand] {
       position: absolute;
       inset-block: 0;
@@ -95,7 +95,7 @@
       align-items: center;
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-sans);
-      font-size: 0.7rem;
+      font-size: var(--fh-text-micro);
       font-weight: var(--fh-weight-heavy);
       font-style: italic;
       letter-spacing: 0.04em;
@@ -116,7 +116,7 @@
       justify-content: center;
       gap: var(--fh-gap-related);
       min-block-size: 2.75rem;
-      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       border-radius: var(--fh-button-radius, var(--fh-radius-sm));
       background-color: var(--fh-color-surface-raised);
       color: var(--fh-color-text);
@@ -127,7 +127,7 @@
       text-transform: uppercase;
       cursor: var(--fh-cursor-action);
       transition: border-color var(--fh-duration-fast);
-      &:hover { border-style: solid; border-color: var(--fh-color-text-muted); }
+      &:hover { border-style: var(--fh-card-border-style, solid); border-color: var(--fh-color-text-muted); }
       &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
     }
   }
@@ -142,7 +142,7 @@
     text-transform: uppercase;
 
     &::before,
-    &::after { content: ""; flex: 1; border-block-start: var(--fh-border-thin) solid var(--fh-color-border); }
+    &::after { content: ""; flex: 1; border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border); }
   }
 
 }
