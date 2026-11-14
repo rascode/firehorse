@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Site frame:** the category pages' summary strip and the Developer page's numbers use site names (`site-stats`, `site-stats--strip`, `site-stat`, `site-stat__text`), with the cube-card rules they use copied into `site/site.css` and the knob renamed `--site-stat-min`; the cube inside stays `fh-cube`, and the cube-card and order-summary specimens keep their fh- names. The frame never used `fh-summary`, so nothing moved for it (relay r7c-stats).
 - **Site frame:** the site header and its nav use site names (`site-header`, `site-nav`), with their rules copied from the header and nav components into `site/site.css`; `--fh-header-height` stays, and the home page dock's menu button keeps `fh-header__toggle` (relay r7b-header).
 - **Site frame:** the page, Stable and part docks use site names (`site-dock`, `site-rollover`, `data-site-rollover`), with their rules copied into `site/site.css` and their engage, height, rolling heading and tone follow in `site/site.js`; the home page dock and the dock specimens keep `fh-dock` (relay r7a-dock).
 - **Site:** specimen pages show variants in quiet `site-variant` navigation (not Chip) and wrap each demo in a labelled preview frame with a raised surface and hairline border (`scripts/specimen.mjs`, `site/site.css`, relay R3).

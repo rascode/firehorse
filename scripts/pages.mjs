@@ -176,8 +176,8 @@ const summary = (p, chips, kids, all) => {
 ${cells.slice(0, 4).map((x, i) => `        <li style="--_w: var(--site-walk-${walk[i % walk.length]})"><div class="site-tile"><span class="site-open__cube">${fill(x.value)}</span><small>${String(i + 1).padStart(2, "0")} · ${escHtml(p.meta.name)}</small><b>${x.label}</b><span>${fill(x.blurb)}</span></div></li>`).join("\n")}
       </ul>`;
   }
-  return `      <ul class="fh-cube-cards fh-cube-cards--strip site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
-${cells.slice(0, 4).map((x) => `        <li class="fh-cube-card"><b class="fh-cube fh-cube--xl">${fill(x.value)}</b><div class="fh-cube-card__text"><b>${x.label}</b><small>${fill(x.blurb)}</small></div></li>`).join("\n")}
+  return `      <ul class="site-stats site-stats--strip site-page-summary" data-tone="${p.meta.tone ?? "accent"}" aria-label="In this category">
+${cells.slice(0, 4).map((x) => `        <li class="site-stat"><b class="fh-cube fh-cube--xl">${fill(x.value)}</b><div class="site-stat__text"><b>${x.label}</b><small>${fill(x.blurb)}</small></div></li>`).join("\n")}
       </ul>`;
 };
 

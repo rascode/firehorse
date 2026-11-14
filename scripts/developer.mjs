@@ -80,8 +80,8 @@ const BLOCKS = {
       [tokens.size, "Custom properties", "Tokens and component knobs."],
       [kb(gzipSync(min).length), "Core, gzipped", "firehorse.min.css over the wire."],
     ];
-    return `<ul class="fh-cube-cards" data-tone="teal" aria-label="The source in numbers">
-${cells.map(([v, l, b]) => `  <li class="fh-cube-card"><b class="fh-cube fh-cube--lg">${esc(v)}</b><span><strong>${esc(l)}</strong>${esc(b)}</span></li>`).join("\n")}
+    return `<ul class="site-stats" data-tone="teal" aria-label="The source in numbers">
+${cells.map(([v, l, b]) => `  <li class="site-stat"><b class="fh-cube fh-cube--lg">${esc(v)}</b><span><strong>${esc(l)}</strong>${esc(b)}</span></li>`).join("\n")}
 </ul>`;
   },
 
