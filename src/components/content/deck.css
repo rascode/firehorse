@@ -165,12 +165,12 @@
     gap: var(--fh-gap-grouped-wide);
     margin: 0 clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated)) clamp(var(--fh-gap-sectioned), 5cqi, var(--fh-gap-separated));
     padding-block-end: var(--fh-inset-control);
-    border-block-end: 1px solid color-mix(in oklab, currentColor 55%, transparent);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, currentColor 55%, transparent);
     font-family: var(--fh-font-display);
     font-size: clamp(1.5rem, 7cqi, 4.5rem);
-    font-weight: 400;
+    font-weight: var(--fh-weight-regular);
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: var(--fh-tracking-heading);
   }
   .fh-deck__index { font-variant-numeric: tabular-nums; }
   .fh-deck__title { text-align: end; }
@@ -189,9 +189,9 @@
     margin-block-start: var(--fh-gap-related);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    font-weight: 400;
+    font-weight: var(--fh-weight-regular);
     line-height: 1.3;
-    letter-spacing: 0.06em;
+    letter-spacing: var(--fh-tracking-wide);
     text-transform: uppercase;
     opacity: 0.8;
   }
@@ -319,7 +319,7 @@
 
       .fh-deck--count::before {
         content: counter(fh-deck-step, decimal-leading-zero) " / " counter(fh-deck-total, decimal-leading-zero);
-        counter-reset: fh-deck-step var(--fh-deck-step) fh-deck-total var(--_n);
+        counter-reset: fh-deck-step var(--fh-deck-step, 1) fh-deck-total var(--_n);
         position: sticky;
         z-index: 10;
         inset-block-start: calc(var(--_top) + var(--fh-gap-grouped));
