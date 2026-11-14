@@ -16,8 +16,8 @@
     gap: var(--fh-gap-related);
     max-inline-size: 100%;
     margin: 0;
-    padding: 0.35rem var(--fh-inset-control) 0.35rem 0.55rem;
-    border: var(--fh-border-thin) solid var(--fh-color-rule);
+    padding: 0.35rem var(--fh-inset-control) 0.35rem var(--fh-inset-tight);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-rule);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
     color: var(--fh-color-text-muted);
@@ -78,33 +78,33 @@
   .fh-eyebrow-pill--sharp { border-radius: var(--fh-radius-sm); }
 
   .fh-eyebrow-pill--oval {
-    padding: 0.6rem 1.1rem 0.6rem 0.85rem;
-    border-radius: 50% / 100%;
+    padding: 0.6rem var(--fh-inset-tile) 0.6rem 0.85rem;
+    border-radius: var(--fh-radius-round) / 100%;
   }
 
   .fh-eyebrow-pill--tab {
     border-block-end: 0;
     border-radius: var(--fh-radius-md) var(--fh-radius-md) 0 0;
-    padding-block-end: 0.45rem;
+    padding-block-end: var(--fh-inset-tight);
     box-shadow: 0 1px 0 var(--fh-color-canvas);
   }
 
   /* Lines */
   .fh-eyebrow-pill--etched {
-    border-style: dashed;
+    border-style: var(--fh-card-border-style, dashed);
     border-color: var(--fh-color-etch);
     background-color: transparent;
   }
 
   .fh-eyebrow-pill--dotted {
-    border-style: dotted;
-    border-width: 1.5px;
+    border-style: var(--fh-card-border-style, dotted);
+    border-width: var(--fh-border-thick);
     border-color: var(--fh-color-etch);
     background-color: transparent;
   }
 
   .fh-eyebrow-pill--double {
-    border-style: double;
+    border-style: var(--fh-card-border-style, double);
     border-width: 3px;
     border-color: var(--fh-color-etch);
   }
@@ -118,7 +118,7 @@
   .fh-eyebrow-pill--underline {
     padding-inline: 0 var(--fh-inset-tight);
     border-width: 0 0 var(--fh-border-thin);
-    border-style: dashed;
+    border-style: var(--fh-card-border-style, dashed);
     border-color: var(--fh-color-etch);
     border-radius: 0;
     background-color: transparent;
@@ -201,20 +201,20 @@
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 45%, transparent);
     backdrop-filter: blur(10px) saturate(1.4);
     box-shadow:
-      inset 0 1px 0 color-mix(in oklab, white 10%, transparent),
-      0 6px 18px -8px color-mix(in oklab, black 60%, transparent);
+      inset 0 1px 0 color-mix(in oklab, var(--fh-color-on-ink) 10%, transparent),
+      0 6px 18px -8px color-mix(in oklab, var(--fh-color-ink) 60%, transparent);
   }
 
   /* Sizes */
   .fh-eyebrow-pill--sm {
     gap: var(--fh-gap-bound);
-    padding: 0.22rem 0.55rem 0.22rem 0.4rem;
+    padding: var(--fh-item-frame) var(--fh-inset-tight) var(--fh-item-frame) 0.4rem;
     font-size: var(--fh-text-micro);
   }
 
   .fh-eyebrow-pill--lg {
     gap: var(--fh-gap-related);
-    padding: 0.5rem 1rem 0.5rem 0.75rem;
+    padding: var(--fh-inset-tight) var(--fh-inset-tile) var(--fh-inset-tight) var(--fh-inset-control);
     font-size: var(--fh-text-caption);
   }
 
@@ -256,13 +256,13 @@
 
     & + & {
       padding-inline-start: var(--fh-inset-tight);
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
   .fh-eyebrow-pill__index {
     padding-inline-end: var(--fh-inset-tight);
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     color: var(--fh-tone);
     font-variant-numeric: tabular-nums;
   }
@@ -271,7 +271,7 @@
     display: inline-grid;
     place-items: center;
     min-inline-size: 1.15rem;
-    padding: 0.08rem 0.3rem;
+    padding: 0.08rem var(--fh-item-frame);
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
@@ -286,7 +286,7 @@
     gap: var(--fh-gap-bound);
     margin-inline-start: var(--fh-gap-bound);
     padding-inline-start: var(--fh-inset-tight);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     color: var(--fh-color-text);
     font-weight: var(--fh-weight-bold);
     text-decoration: none;
@@ -308,7 +308,7 @@
   .fh-eyebrow-pill > .fh-avatar {
     --fh-avatar-size: 1.25rem;
 
-    margin-inline-start: -0.25rem;
+    margin-inline-start: calc(-1 * var(--fh-gap-bound));
   }
 
   /* Dot variants */
@@ -335,7 +335,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-dot--blink {
-      animation: fh-blink-dot 1.1s steps(1, end) infinite;
+      animation: fh-blink-dot var(--fh-duration-scene) steps(1, end) infinite;
     }
   }
 

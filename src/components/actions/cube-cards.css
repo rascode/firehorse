@@ -29,7 +29,7 @@
     gap: var(--fh-gap-grouped);
     min-inline-size: 0;
     padding: var(--fh-inset-control);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 40%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 40%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--_c) 5%, transparent);
     color: var(--fh-color-text);
@@ -60,14 +60,14 @@
    *   </ul> */
   .fh-cube-cards--strip {
     --fh-cube-card-min: 14rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min)), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min, 14rem)), 1fr));
     gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
     overflow: hidden;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
 
     & > .fh-cube-card {
@@ -75,14 +75,14 @@
       align-items: flex-start;
       padding: var(--fh-inset-tile) var(--fh-inset-card);
       border: 0;
-      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       border-radius: 0;
       background: none;
     }
     & .fh-cube {
       --_cube: var(--_c);
-      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       background: none;
       color: var(--_c);
     }
@@ -96,7 +96,7 @@
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-tile);
 
-    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-gap-grouped); border-block-start: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
+    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-gap-grouped); border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
   }
 
 }
