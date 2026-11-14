@@ -1548,38 +1548,10 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__type-btn:hover { scale: 1.06; }
 .site-hc__type-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
 /* The typeface picker: a tile panel (MEG-3.1), placed with the Docs menu. */
-.site-hc__types-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
-  list-style: none;
-}
-.site-hc__types-list > li { margin: 0 0 -1px -1px; border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
-.site-hc__types button {
-  display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr);
-  align-items: center;
-  gap: var(--fh-space-3);
-  inline-size: 100%;
-  padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-4);
-  border: 0;
-  background: none;
-  color: inherit;
-  text-align: start;
-  cursor: pointer;
-  transition: background-color 160ms ease;
-}
-.site-hc__types button:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
-.site-hc__types button:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
-.site-hc__types-aa { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.site-hc__types-list { --fh-tiles-min: 10rem; } /* the faces: option tiles, specimen (TIL-3.2) */
 .site-hc__types-name { display: grid; gap: 0.1rem; }
 .site-hc__types-name b { font-size: var(--fh-text-body, 0.9375rem); font-weight: 700; font-family: inherit; }
 .site-hc__types-name small { font: 600 var(--fh-text-label) / 1.2 var(--fh-font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--fh-color-text-subtle); }
-.site-hc__types button[aria-pressed="true"] { background: color-mix(in oklab, var(--fh-color-accent) 10%, transparent); }
-.site-hc__types button[aria-pressed="true"] .site-hc__types-aa { color: var(--fh-color-accent); }
 @media (prefers-reduced-motion: no-preference) {
   .site-hc__types:popover-open { animation: hc-docs-in 200ms cubic-bezier(0.22, 1, 0.36, 1); }
 }
