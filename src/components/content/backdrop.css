@@ -1,0 +1,89 @@
+/*
+ * Firehorse — Backdrop (BKD)
+ * components/content · layer fh.components · docs /layout/#BKD
+ * BKD-1 Backdrop: BKD-1.1 Backdrop, BKD-1.2 Frost slider ([data-fh-frost-select], firehorse.js).
+ * BKD-2 Frost: BKD-2.1 Frost line.
+ * An app shell's glass over a backdrop (fh-app) is in admin.css.
+ */
+
+@layer fh.components {
+  /* —— Backdrop (BKD-1.1) ——
+   * A quiet abstract picture behind a whole page or app, edge to edge: soft
+   * tone fields under the etched contour art from the sign-in page, faint
+   * enough to read text over. It is fixed to the viewport and sits under
+   * everything; put it first in the page or the app.
+   *   <div class="fh-backdrop" aria-hidden="true"></div>
+   * Knobs: --fh-backdrop-strength (how much tone shows, 1), --fh-backdrop-art
+   * (the line art; none to drop it). */
+  .fh-backdrop {
+    --_k: var(--fh-backdrop-strength, 1);
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: var(--fh-color-canvas);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -10%;
+    }
+
+    /* Tone fields, blurred so they read as light, not shapes. */
+    &::before {
+      background:
+        radial-gradient(40% 45% at 12% 18%, color-mix(in oklab, var(--fh-tone-sky) calc(var(--_k) * 22%), transparent), transparent 70%),
+        radial-gradient(35% 40% at 88% 12%, color-mix(in oklab, var(--fh-tone-violet) calc(var(--_k) * 18%), transparent), transparent 70%),
+        radial-gradient(45% 40% at 78% 86%, color-mix(in oklab, var(--fh-tone-teal) calc(var(--_k) * 16%), transparent), transparent 70%),
+        radial-gradient(30% 35% at 22% 92%, color-mix(in oklab, var(--fh-tone-amber) calc(var(--_k) * 12%), transparent), transparent 70%);
+      filter: blur(48px);
+    }
+
+    /* The etched contours, very faint. */
+    &::after {
+      background-color: var(--fh-color-text);
+      mask: var(--fh-backdrop-art, url("art/etch-contours.svg")) center / cover no-repeat;
+      opacity: 0.06;
+    }
+  }
+
+  /* Frost: how much glass over a backdrop clouds and blurs, from one number
+     (--fh-frost, 0–1, a theme token). 0 is clear, 1 nearly solid. A range input
+     with data-fh-frost-select dials it live (BKD-1.2). --fh-frost-fill and
+     --fh-frost-filter are ready-made for pieces of your own. */
+  .fh-frost {
+    --_f: clamp(0, var(--fh-frost, 0.6), 1);
+    --fh-frost-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
+    --fh-frost-filter: blur(calc(var(--_f) * 32px)) saturate(calc(1 + var(--_f) * 0.4));
+  }
+
+  .fh-frost {
+    background-color: var(--fh-frost-fill, color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost, 0.6) * 75%), transparent));
+    backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, 0.6) * 32px)) saturate(calc(1 + var(--fh-frost, 0.6) * 0.4)));
+  }
+
+  /* —— Frost line (BKD-2.1) ——
+   * The art behind a hero, frosted from a line down: a flat wash of the
+   * canvas and a light blur, with a hard edge on the line (no gradient), so
+   * what sits above the line stays sharp and what sits below reads clearly.
+   * Put it in a positioned box over the art, under the content.
+   *   <section style="position: relative">…the art…
+   *     <div class="fh-backdrop fh-backdrop--frost" style="--fh-backdrop-frost-from: 55%" aria-hidden="true"></div>
+   *     …content…</section>
+   * Knobs: --fh-backdrop-frost-from (the line, from the top, 50%),
+   * --fh-backdrop-frost-wash (how much canvas, 45%), --fh-backdrop-frost-blur
+   * (half the chrome blur). */
+  .fh-backdrop--frost {
+    position: absolute;
+    inset-inline: 0;
+    inset-block: var(--fh-backdrop-frost-from, 50%) 0;
+    overflow: visible;
+    background-color: color-mix(in oklab, var(--fh-color-canvas) var(--fh-backdrop-frost-wash, 45%), transparent);
+    backdrop-filter: blur(var(--fh-backdrop-frost-blur, calc(var(--fh-blur-chrome) / 2)));
+
+    &::before,
+    &::after { content: none; }
+  }
+}

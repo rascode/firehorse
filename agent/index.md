@@ -36,6 +36,7 @@
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/auto-grid/) |
 | `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/columns/) |
 | `MST` | Masthead | Masthead | 1 Header (3) · 2 Lockup (1) | [open](https://firehorse.rascode.dev/layout/masthead/) |
+| `BKD` | Backdrop | Backdrop | 1 Backdrop (2) · 2 Frost (1) | [open](https://firehorse.rascode.dev/layout/backdrop/) |
 | `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/fender/) |
 | `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/cinch/) |
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/offset-panel/) |
@@ -617,6 +618,36 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
   <p class="fh-masthead__headline"><span class="fh-masthead__top">The design system</span> <span class="fh-masthead__turn">that <em><span class="fh-rotator fh-rotator--walk"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span>.</em></span></p>
   <div class="fh-masthead__below"><p class="fh-lede">Built for modern workflows</p></div>
 </header>
+```
+
+## BKD · Backdrop
+
+A quiet abstract picture behind a whole page or app: soft tone fields under the sign-in page's etched contours, fixed to the viewport. --fh-backdrop-strength sets how much tone shows. Glass over it frosts by --fh-frost (0–1), a theme token; a range with data-fh-frost-select dials it live and remembers it. The frost line frosts the art behind a hero from a line down, with a hard edge: --fh-backdrop-frost-from places the line.
+
+Classes: `fh-backdrop` `fh-field` `fh-field__label` `fh-range` `fh-backdrop--frost`
+
+### BKD-1 · Backdrop
+
+#### BKD-1.1 · Backdrop
+
+```html
+<div class="fh-backdrop" aria-hidden="true" style="position: absolute" data-fh="BKD-1.1"></div>
+```
+
+#### BKD-1.2 · Frost slider
+
+```html
+<label class="fh-field" style="position: relative; z-index: 1; max-inline-size: 16rem; margin-block-end: var(--fh-space-4)" data-fh="BKD-1.2"><span class="fh-field__label">Frost</span><input class="fh-range" type="range" min="0" max="100" value="60" data-fh-frost-select></label>
+```
+
+### BKD-2 · Frost
+
+#### BKD-2.1 · Frost line
+
+```html
+<div style="position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-lg); background: url(/img/backdrop/firehorse-horse.webp) center 30% / cover">
+  <div class="fh-backdrop fh-backdrop--frost" style="--fh-backdrop-frost-from: 55%" aria-hidden="true" data-fh="BKD-2.1"></div>
+</div>
 ```
 
 ## FND · Fender

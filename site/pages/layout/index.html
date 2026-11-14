@@ -4,7 +4,7 @@
   "name": "Layout",
   "tone": "lime",
   "title": "Layout · Firehorse",
-  "description": "Firehorse layout: the frame and its named lines, container queries, stack, cluster and auto grid, and the masthead. Page layouts live on Design patterns.",
+  "description": "Firehorse layout: the frame and its named lines, container queries, stack, cluster and auto grid, the masthead and the backdrop. Page layouts live on Design patterns.",
   "headline": "A frame, its slots, and the box you're in",
   "lede": "Every page, section and header is a <code>.fh-frame</code>: a grid with named <code>full</code> and <code>content</code> lines. Each direct child becomes a query container, so whatever you put inside measures its slot.",
   "scripts": [],
@@ -220,11 +220,39 @@
       </div>
     </section>
 
+    <!-- ═══════════════ BACKDROP ═══════════════ -->
+    <section id="backdrop" class="fh-section fh-section--ruled site-anchor" data-tone="sky" aria-labelledby="backdrop-title" data-fh-label="Backdrop" data-fh-index="05">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="sky"><b>04</b> Backdrop</p>
+          <h2 id="backdrop-title" class="fh-heading">What sits behind the page</h2>
+          <p class="fh-lede">A quiet picture behind a page or an app, the frost that glass takes over it, and a frost line that clears a hero's lower half for reading.</p>
+        </div>
+      </header>
+      <div class="fh-stack fh-stack--xl">
+        <div class="site-demo site-anchor" id="l-backdrop" data-fh-id="BKD" data-fh-name="Backdrop" data-fh-groups="Backdrop|Frost">
+          <div class="site-demo__head"><h3>Backdrop</h3><p>A quiet abstract picture behind a whole page or app: soft tone fields under the sign-in page's etched contours, fixed to the viewport. <code>--fh-backdrop-strength</code> sets how much tone shows. Glass over it frosts by <code>--fh-frost</code> (0–1), a theme token; a range with <code>data-fh-frost-select</code> dials it live and remembers it. The frost line frosts the art behind a hero from a line down, with a hard edge: <code>--fh-backdrop-frost-from</code> places the line.</p></div>
+          <div class="site-demo__stage" data-demo style="position: relative; overflow: hidden; contain: paint; min-block-size: 18rem; padding: var(--fh-space-8)">
+<div class="fh-backdrop" aria-hidden="true" style="position: absolute" data-fh-id="BKD-1.1" data-fh-name="Backdrop"></div>
+<label class="fh-field" style="position: relative; z-index: 1; max-inline-size: 16rem; margin-block-end: var(--fh-space-4)" data-fh-id="BKD-1.2" data-fh-name="Frost slider"><span class="fh-field__label">Frost</span><input class="fh-range" type="range" min="0" max="100" value="60" data-fh-frost-select></label>
+<section class="fh-section-card fh-frost" style="position: relative; z-index: 1; margin-block-start: var(--fh-space-4)"><header class="fh-section-card__head"><h3 class="fh-section-card__title">Frosted card</h3></header><p class="fh-section-card__lede">Move the slider: from clear glass to nearly solid.</p></section>
+<header class="fh-masthead fh-masthead--bar" data-tone="sky" style="position: relative">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">03</span><span class="fh-masthead__title">Finance</span></p>
+  <div class="fh-masthead__foot"><div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">Synced</span></div></div>
+</header>
+<div style="position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-lg); background: url(/img/backdrop/firehorse-horse.webp) center 30% / cover" data-fh-id="BKD-2.1" data-fh-name="Frost line">
+  <div class="fh-backdrop fh-backdrop--frost" style="--fh-backdrop-frost-from: 55%" aria-hidden="true"></div>
+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══════════════ PATTERNS ═══════════════ -->
     <section id="layout-patterns" class="fh-section fh-section--ruled site-anchor" data-tone="orange" aria-labelledby="layout-patterns-title" data-fh-label="Design patterns" data-fh-index="11">
       <header class="fh-section-head">
         <div>
-          <p class="site-chapter" data-tone="orange"><b>04</b> Design patterns</p>
+          <p class="site-chapter" data-tone="orange"><b>05</b> Design patterns</p>
           <h2 id="layout-patterns-title" class="fh-heading">Design patterns have their own page</h2>
           <p class="fh-lede">The frame, stack, cluster and grid here are the thread. Whole page layouts built from them, with their anatomy, rules and markup, live on <a class="fh-link" href="/patterns/">Design patterns</a>: Fender, Cinch, the offset panel, the etched split and the CTA band.</p>
         </div>

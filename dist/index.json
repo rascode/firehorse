@@ -1306,6 +1306,105 @@
       "tier": "free"
     },
     {
+      "id": "BKD",
+      "name": "Backdrop",
+      "section": "Backdrop",
+      "anchor": "l-backdrop",
+      "page": "/layout/",
+      "url": "https://firehorse.rascode.dev/layout/backdrop/",
+      "summary": "A quiet abstract picture behind a whole page or app: soft tone fields under the sign-in page's etched contours, fixed to the viewport. --fh-backdrop-strength sets how much tone shows. Glass over it frosts by --fh-frost (0–1), a theme token; a range with data-fh-frost-select dials it live and remembers it. The frost line frosts the art behind a hero from a line down, with a hard edge: --fh-backdrop-frost-from places the line.",
+      "classes": [
+        "fh-backdrop",
+        "fh-field",
+        "fh-field__label",
+        "fh-range",
+        "fh-backdrop--frost"
+      ],
+      "markup": "<div class=\"fh-backdrop\" aria-hidden=\"true\" style=\"position: absolute\" data-fh=\"BKD-1.1\"></div>",
+      "groups": [
+        {
+          "id": "BKD-1",
+          "name": "Backdrop",
+          "summary": "",
+          "variants": [
+            "BKD-1.1",
+            "BKD-1.2"
+          ],
+          "markup": "<div class=\"fh-backdrop\" aria-hidden=\"true\" style=\"position: absolute\" data-fh=\"BKD-1.1\"></div>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "BKD-2",
+          "name": "Frost",
+          "summary": "",
+          "variants": [
+            "BKD-2.1"
+          ],
+          "markup": "<div style=\"position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-lg); background: url(/img/backdrop/firehorse-horse.webp) center 30% / cover\">\n  <div class=\"fh-backdrop fh-backdrop--frost\" style=\"--fh-backdrop-frost-from: 55%\" aria-hidden=\"true\" data-fh=\"BKD-2.1\"></div>\n</div>",
+          "markupFrom": "variant"
+        }
+      ],
+      "variants": [
+        {
+          "id": "BKD-1.1",
+          "group": "BKD-1",
+          "name": "Backdrop",
+          "classes": [
+            "fh-backdrop"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-backdrop\" aria-hidden=\"true\" style=\"position: absolute\" data-fh=\"BKD-1.1\"></div>",
+          "tier": "free"
+        },
+        {
+          "id": "BKD-1.2",
+          "group": "BKD-1",
+          "name": "Frost slider",
+          "classes": [
+            "fh-field",
+            "fh-field__label",
+            "fh-range"
+          ],
+          "config": {},
+          "markup": "<label class=\"fh-field\" style=\"position: relative; z-index: 1; max-inline-size: 16rem; margin-block-end: var(--fh-space-4)\" data-fh=\"BKD-1.2\"><span class=\"fh-field__label\">Frost</span><input class=\"fh-range\" type=\"range\" min=\"0\" max=\"100\" value=\"60\" data-fh-frost-select></label>",
+          "tier": "free"
+        },
+        {
+          "id": "BKD-2.1",
+          "group": "BKD-2",
+          "name": "Frost line",
+          "classes": [
+            "fh-backdrop",
+            "fh-backdrop--frost"
+          ],
+          "config": {},
+          "markup": "<div style=\"position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-lg); background: url(/img/backdrop/firehorse-horse.webp) center 30% / cover\">\n  <div class=\"fh-backdrop fh-backdrop--frost\" style=\"--fh-backdrop-frost-from: 55%\" aria-hidden=\"true\" data-fh=\"BKD-2.1\"></div>\n</div>",
+          "tier": "free"
+        }
+      ],
+      "stageClasses": [
+        "fh-backdrop",
+        "fh-field",
+        "fh-field__label",
+        "fh-range",
+        "fh-section-card",
+        "fh-frost",
+        "fh-section-card__head",
+        "fh-section-card__title",
+        "fh-section-card__lede",
+        "fh-masthead",
+        "fh-masthead--bar",
+        "fh-masthead__caption",
+        "fh-masthead__index",
+        "fh-masthead__title",
+        "fh-masthead__foot",
+        "fh-masthead__tools",
+        "fh-chip",
+        "fh-backdrop--frost"
+      ],
+      "tier": "free"
+    },
+    {
       "id": "FND",
       "name": "Fender",
       "section": "Page design patterns",
@@ -6757,6 +6856,7 @@
     "fh-cluster": "CLS",
     "fh-column": "COL",
     "fh-masthead": "MST",
+    "fh-backdrop": "BKD",
     "fh-fender": "FND",
     "fh-cinch": "CIN",
     "fh-button": "BTN",
@@ -6861,6 +6961,7 @@
     "fh-auth-page",
     "fh-avatar",
     "fh-avatars",
+    "fh-backdrop",
     "fh-badge",
     "fh-banner",
     "fh-breadcrumb",
@@ -6894,6 +6995,7 @@
     "fh-footer",
     "fh-form-step",
     "fh-form-steps",
+    "fh-frost",
     "fh-gallery",
     "fh-hero",
     "fh-hero-split",
