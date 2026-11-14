@@ -320,12 +320,12 @@ body:has(.site-hc) .site-kc-launch:is(:hover, :focus-visible) { border-color: ok
 
 /* Theme colour: a solid dot in the theme colour (held legible, as the filled eyebrow end),
    right of Download from Git, the scheme pill's height; a small chevron inside in the
-   on-colour, nudged 1px down so it sits optically centred. It opens the colour menu (THS-2.1)
-   hanging from it (anchored). */
+   on-colour, nudged 1px down so it sits optically centred. It opens the colour panel: a tile
+   panel (MEG-3.1) of colour tiles (TIL-3.4), like the typeface and backdrop pickers. */
 .site-hc__root { position: relative; display: inline-flex; }
 .site-hc__root-btn {
   --_d: light-dark(oklch(from var(--fh-color-accent) min(l, 0.52) c h), oklch(from var(--fh-color-accent) max(l, 0.74) c h));
-  anchor-name: --hc-root;
+
   display: grid;
   place-items: center;
   inline-size: 2rem;
@@ -342,8 +342,6 @@ body:has(.site-hc) .site-kc-launch:is(:hover, :focus-visible) { border-color: ok
 .site-hc__root-btn:is(:hover, :focus-visible) { background: oklch(from var(--_d) calc(l - 0.06) c h); }
 .site-hc__root-btn:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
 .site-hc__root:has(.site-hc__roots:popover-open) .site-hc__root-btn .fh-icon { rotate: 180deg; translate: 0 -1px; }
-/* The list is the colour menu (THS-2.1); it hangs from the dot, flush with its right edge. */
-.site-hc__roots { position-anchor: --hc-root; }
 /* KC on the page's right margin, the content edge the logo, line, headline and top-right
    controls all keep (not the window's 16px corner). */
 body:has(.site-hc) .site-kc-launch { inset-inline-end: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2); }
@@ -912,10 +910,10 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__start-go { --fh-icon-size: 1.05em; color: var(--fh-tone); transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
 .site-hc__vivid:hover .site-hc__start-go { translate: 2px 0; }
 
-/* The three menus (Docs, Typeface, Backdrop): just under the page's top row (the nav pills and the
+/* The four menus (Docs, Typeface, Backdrop, Theme colour): just under the page's top row (the nav pills and the
    round pickers), the content column's width. */
 /* (.fh-mega in the selector: it outranks site.css's .fh-mega placement under the site header) */
-.fh-mega:is(.site-hc-docs, .site-hc__types, .site-hc__bgs) {
+.fh-mega:is(.site-hc-docs, .site-hc__types, .site-hc__bgs, .site-hc__roots) {
   --_col: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
   position-area: none;
   position-try-fallbacks: none;
@@ -1486,7 +1484,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__types-name b { font-size: var(--fh-text-body, 0.9375rem); font-weight: 700; font-family: inherit; }
 .site-hc__types-name small { font: 600 var(--fh-text-label) / 1.2 var(--fh-font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--fh-color-text-subtle); }
 @media (prefers-reduced-motion: no-preference) {
-  .site-hc__types:popover-open { animation: hc-docs-in 200ms cubic-bezier(0.22, 1, 0.36, 1); }
+  :is(.site-hc__types, .site-hc__roots):popover-open { animation: hc-docs-in 200ms cubic-bezier(0.22, 1, 0.36, 1); }
 }
 
 /* —— Configuration over code ——————————————————————————————————————————————
@@ -1583,7 +1581,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   backdrop-filter: none !important;
   background: light-dark(oklch(0.985 0.002 90 / 0.8), oklch(0.17 0 0 / 0.8)) !important;
 }
-.site-hc-float::before, .site-hc__agents > .fh-button, .site-hc__meta--dock, .site-hc__types, .site-hc-docs, .site-hc__bgs,
+.site-hc-float::before, .site-hc__agents > .fh-button, .site-hc__meta--dock, .site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc__roots,
 .site-hc-svc__card, .site-hc__agents-ghost *, .site-hc-mark::before {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
@@ -1591,7 +1589,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc-float::before, .site-hc__agents > .fh-button { background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9)); }
 .site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.97), oklch(0.23 0 0 / 0.95)); }
 .site-hc__meta--dock { background: light-dark(oklch(0.99 0 0 / 0.92), oklch(0.19 0 0 / 0.92)); }
-.site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc-svc__card { background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95)) !important; }
+.site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc__roots, .site-hc-svc__card { background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95)) !important; }
 .site-hc-mark::before { background: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent); }
 /* the art is drawn once into its own layer; its light sweep rests once the logo has locked */
 .site-hc__art { will-change: transform; contain: strict; }
