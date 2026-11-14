@@ -247,6 +247,10 @@
             <p>Yes. Firehorse is plain CSS with its own <code>fh-</code> names, so it sits next to either. Import <code>@rascode/firehorse/tailwind.css</code> before Tailwind CSS v4 and utilities win over Firehorse parts and get the Firehorse tokens; add <code>@rascode/firehorse/shadcn.css</code> and shadcn's components wear the Firehorse theme. <a class="fh-link" href="/guidelines/other-systems/">How to set it up</a>.</p>
           </details>
           <details name="home-faq">
+            <summary>If you update a component, do my sites get it on their own?</summary>
+            <p>No, and that is on purpose. Your site or app pins a Firehorse release (a Git tag such as <code>v1.1.0</code>, or a version number once it is on npm), so nothing we change reaches your product until you choose to take it. To update, move the pin to the new release, reinstall, rebuild and deploy, as with any other dependency; if you copied the files in from the ZIP, replace them with the new release's. Firehorse is CSS and tokens, so your markup, your theme and your knob settings carry over. Every variant has its own version, and the changelog names the ones that changed.</p>
+          </details>
+          <details name="home-faq">
             <summary>Do I need JavaScript?</summary>
             <p>No. Every component works with HTML and CSS alone. The optional firehorse.js adds the floating bar's engage timing, carousel controls, scroll spy and the aria wiring for form errors.</p>
           </details>

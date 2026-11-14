@@ -130,6 +130,10 @@ Rules:
               <p>Yes. Firehorse is plain CSS classes and custom properties, so it works in any framework or none. With Tailwind CSS v4, import <code>@rascode/firehorse/tailwind.css</code> before Tailwind: utilities then win over Firehorse parts, and the tokens become <code>fh-</code> utilities. With shadcn/ui, add <code>@rascode/firehorse/shadcn.css</code> and its components wear the Firehorse theme. <a class="fh-link" href="/guidelines/other-systems/">How to set it up</a>.</p>
             </details>
             <details name="fh-faq">
+              <summary>If you update a component, do my sites get it on their own?</summary>
+              <p>No, and that is on purpose. Your site or app pins a Firehorse release (a Git tag such as <code>v1.1.0</code>, or a version number once it is on npm), so nothing we change reaches your product until you choose to take it. To update, move the pin to the new release, reinstall, rebuild and deploy, as with any other dependency; if you copied the files in from the ZIP, replace them with the new release's. Firehorse is CSS and tokens, so your markup, your theme and your knob settings carry over. Every variant has its own version, and the changelog names the ones that changed.</p>
+            </details>
+            <details name="fh-faq">
               <summary>How do I hand it to an AI agent?</summary>
               <p>Point the agent at firehorse.rascode.dev/llms.txt and tell it to use only fh-* classes and --fh-* tokens. The agent contract covers the rest, including structured data.</p>
             </details>
