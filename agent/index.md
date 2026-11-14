@@ -46,6 +46,7 @@
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
 | `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/logo-strip/) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/) |
+| `TIL` | Tiles | Content | 1 Index tiles (2) · 2 Launch tiles (3) | [open](https://firehorse.rascode.dev/components/content/tiles/) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/stats-strip/) |
 | `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/key-value-list/) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/checklist/) |
@@ -991,6 +992,68 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
 Classes: `fh-grid` `fh-grid--ruled` `fh-grid--etched` `fh-card` `fh-card__meta` `fh-card__title` `fh-card__body` `fh-card__footer` `fh-card__price` `fh-action`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/.
+
+## TIL · Tiles
+
+Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something.
+
+Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command`
+
+### TIL-1 · Index tiles
+
+#### TIL-1.1 · Index tile
+
+```html
+<ul class="fh-tiles" data-fh="TIL-1.1">
+  <li><a class="fh-tile" href="#c-tiles" data-tone="teal"><span class="fh-tile__cube"><i class="fh-icon fh-icon--book-open" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">01 · Guide</small><b class="fh-tile__title">Guidelines</b><span class="fh-tile__note">The rules every Rascode design system follows.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
+  <li><a class="fh-tile" href="#c-tiles" data-tone="violet"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">02 · 6 families</small><b class="fh-tile__title">Foundations</b><span class="fh-tile__note">Tones, type, space, radius and every token.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
+  <li><a class="fh-tile" href="#c-tiles" data-tone="rose"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">03 · 4 families</small><b class="fh-tile__title">Layout</b><span class="fh-tile__note">The frame, container queries and the auto grid.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
+</ul>
+```
+
+#### TIL-1.2 · Row
+
+```html
+<ul class="fh-tiles" style="--fh-tiles-min: 16rem" data-fh="TIL-1.2">
+  <li><a class="fh-tile fh-tile--row" href="#c-tiles" data-tone="neutral"><span class="fh-tile__cube"><i class="fh-icon fh-icon--book-open" aria-hidden="true"></i></span><b class="fh-tile__title">Guidelines</b><span class="fh-tile__note">How to use it well</span><small class="fh-tile__eyebrow">01</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li>
+  <li><a class="fh-tile fh-tile--row" href="#c-tiles" data-tone="accent"><span class="fh-tile__cube"><i class="fh-icon fh-icon--box" aria-hidden="true"></i></span><b class="fh-tile__title">Components</b><span class="fh-tile__note">Every fh-* part</span><small class="fh-tile__eyebrow">02</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li>
+  <li><a class="fh-tile fh-tile--row" href="#c-tiles" data-tone="teal"><span class="fh-tile__cube"><i class="fh-icon fh-icon--pen-line" aria-hidden="true"></i></span><b class="fh-tile__title">Forms</b><span class="fh-tile__note">Inputs and flows</span><small class="fh-tile__eyebrow">03</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li>
+</ul>
+```
+
+### TIL-2 · Launch tiles
+
+#### TIL-2.1 · Launch tile
+
+```html
+<div class="fh-tiles fh-tiles--launch" data-fh="TIL-2.1">
+  <button class="fh-tile" type="button" data-tone="violet"><span class="fh-tile__cube"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">01</small><b class="fh-tile__title">Claude</b><span class="fh-tile__note">Anthropic</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile" type="button" data-tone="fuchsia"><span class="fh-tile__cube"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">02</small><b class="fh-tile__title">ChatGPT</b><span class="fh-tile__note">OpenAI</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile" type="button" data-tone="neutral"><span class="fh-tile__cube"><i class="fh-icon fh-icon--terminal" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">03</small><b class="fh-tile__title">Cursor</b><span class="fh-tile__note">Agent in your editor</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile" type="button" data-tone="lime"><span class="fh-tile__cube"><i class="fh-icon fh-icon--heart" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">04</small><b class="fh-tile__title">Lovable</b><span class="fh-tile__note">Builds the app</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+</div>
+```
+
+#### TIL-2.2 · Compact
+
+```html
+<div class="fh-tiles fh-tiles--launch" data-fh="TIL-2.2">
+  <button class="fh-tile fh-tile--compact" type="button" data-tone="violet"><span class="fh-tile__cube"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><b class="fh-tile__title">Claude</b><span class="fh-tile__note">Anthropic</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile fh-tile--compact" type="button" data-tone="teal"><span class="fh-tile__cube"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><b class="fh-tile__title">ChatGPT</b><span class="fh-tile__note">OpenAI</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile fh-tile--compact" type="button" data-tone="rose"><span class="fh-tile__cube"><i class="fh-icon fh-icon--heart" aria-hidden="true"></i></span><b class="fh-tile__title">Lovable</b><span class="fh-tile__note">Builds the app</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile fh-tile--compact" type="button" data-tone="sky"><span class="fh-tile__cube"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></span><b class="fh-tile__title">Perplexity</b><span class="fh-tile__note">Research the brief</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>
+</div>
+```
+
+#### TIL-2.3 · Command
+
+```html
+<div class="fh-tiles fh-tiles--launch" style="--fh-tiles-min: 12rem" data-fh="TIL-2.3">
+  <button class="fh-tile fh-tile--command" type="button" data-tone="violet"><b class="fh-tile__title">Claude Code</b><code>claude "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile fh-tile--command" type="button" data-tone="teal"><b class="fh-tile__title">Codex CLI</b><code>codex "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>
+  <button class="fh-tile fh-tile--command" type="button" data-tone="sky"><b class="fh-tile__title">Gemini CLI</b><code>gemini -p "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>
+</div>
+```
 
 ## STA · Stats strip
 

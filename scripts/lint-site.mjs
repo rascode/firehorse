@@ -6,7 +6,7 @@
 //   The "no site-* class inside a stage" rule stays on [data-specimen-stage] only.
 //   Retired rule: a built page has no site-specimen__stage or site-specimen__preview class.
 //   Held frame rule: outside a stage (.site-stage, [data-specimen-stage], [data-demo]) no element carries a held
-//   class (heldClasses from plan() in scripts/builds.mjs). Every page but the home page (index.html, artifact.html) and admin/**.
+//   class (heldClasses from plan() in scripts/builds.mjs). Every page but the home page (index.html, home-concept/, artifact.html) and admin/**.
 // node scripts/lint-site.mjs [dir]   (default site/dist; exits 1 on any error)
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname, sep } from "node:path";
@@ -73,7 +73,8 @@ export const heldFrameClasses = (html, held) => {
 
 /** The home page and admin are left out of the held-class frame rule (home is being redone; admin is held).
  *  artifact.html is the home page again, body only (scripts/site.mjs). */
-const frameRuleSkips = (rel) => rel === "index.html" || rel === "artifact.html" || rel.startsWith("admin/");
+// home-concept/ is the next home page (the hero it will become), so it follows the home page's rule.
+const frameRuleSkips = (rel) => rel === "index.html" || rel === "home-concept/index.html" || rel === "artifact.html" || rel.startsWith("admin/");
 
 /** Every stage-rule error in a built site: "path: <tag class="site-x"> inside a specimen stage". */
 export const lintSite = (dir = join(root, "site/dist"), held = plan().heldClasses) => {
