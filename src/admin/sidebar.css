@@ -93,6 +93,26 @@
     min-inline-size: 0;
   }
 
+  .fh-sidebar__who {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+  }
+
+  .fh-sidebar__person {
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-snug);
+  }
+
+  .fh-sidebar__foot .fh-env-pill {
+    padding-block: var(--fh-inset-tight);
+    padding-inline: var(--fh-inset-control);
+    font-size: var(--fh-text-caption);
+  }
+
   .fh-sidebar__group {
     display: grid;
     gap: var(--fh-gap-bound);
@@ -315,6 +335,11 @@
     font-weight: var(--fh-weight-medium);
   }
 
+  .fh-sidebar__body:has(> .fh-sidebar__window[data-open]) > :not(.fh-sidebar__window) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   .fh-sidebar__window {
     position: absolute;
     inset: 0;
@@ -324,7 +349,8 @@
     gap: var(--fh-gap-bound);
     padding: var(--fh-inset-tight);
     border-radius: calc(var(--fh-radius-lg) - var(--fh-inset-tight));
-    background-color: var(--_fill);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    background-color: color-mix(in oklab, var(--fh-color-surface) 88%, var(--_fill));
     backdrop-filter: var(--_filter);
     visibility: hidden;
     opacity: 0;
@@ -408,13 +434,18 @@
     gap: var(--fh-gap-bound);
   }
 
+  .fh-sidebar__window-group .fh-sidebar__pages {
+    margin: 0;
+    padding: 0 0 0 var(--fh-inset-control);
+  }
+
   .fh-sidebar__window-label {
     margin: 0;
-    padding-inline: var(--fh-inset-control);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    letter-spacing: var(--fh-tracking-wider);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
   }
 
@@ -450,7 +481,7 @@
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__label,
-  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric:not([data-kind="count"]) {
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric:not([data-kind="count"], [data-kind="dot"]) {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -472,7 +503,8 @@
     position: relative;
   }
 
-  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"] {
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"],
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="dot"] {
     position: absolute;
     inset-block-start: -0.2rem;
     inset-inline-end: -0.35rem;
@@ -488,6 +520,18 @@
     line-height: 1.2;
     overflow: visible;
     white-space: nowrap;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="dot"] {
+    padding: 0.15rem;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="dot"]::before {
+    margin: 0;
+    inline-size: 0.35rem;
+    block-size: 0.35rem;
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__group-head {
