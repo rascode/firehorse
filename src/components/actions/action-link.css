@@ -10,8 +10,15 @@
   /* —— Action link ——
    * Mono caps link with a dashed underline and arrow. Used for
    * "View all", section CTAs and card actions. Takes the tone. */
+  /* One set of measures for the family: every variant reads these, and only --lg changes one
+   * (the text size). Knobs: --fh-action-text (caption), --fh-action-weight (bold),
+   * --fh-action-tracking (wide), --fh-action-arrow (0.8em), --fh-action-color. */
   .fh-action {
     --_color: var(--fh-action-color, var(--fh-color-text));
+    --_text: var(--fh-action-text, var(--fh-text-caption));
+    --_weight: var(--fh-action-weight, var(--fh-weight-bold));
+    --_tracking: var(--fh-action-tracking, var(--fh-tracking-wide));
+    --_arrow: var(--fh-action-arrow, 0.8em);
 
     display: inline-flex;
     align-items: center;
@@ -23,9 +30,9 @@
     background: none;
     color: var(--_color);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-caption);
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-wide);
+    font-size: var(--_text);
+    font-weight: var(--_weight);
+    letter-spacing: var(--_tracking);
     line-height: var(--fh-leading-heading);
     text-transform: uppercase;
     text-decoration: none;
@@ -37,8 +44,8 @@
 
     &::after {
       content: "";
-      inline-size: 0.8em;
-      block-size: 0.8em;
+      inline-size: var(--_arrow);
+      block-size: var(--_arrow);
       flex: none;
       background-color: currentColor;
       mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
@@ -50,7 +57,7 @@
     }
 
     &:hover::after {
-      translate: 0.1rem -0.1rem;
+      translate: 0.1em -0.1em;
     }
 
     &[data-tone] {
@@ -65,33 +72,25 @@
     appearance: none;
   }
 
-  .fh-action--lg {
-    font-size: var(--fh-text-small);
-    font-weight: var(--fh-weight-bold);
-    letter-spacing: 0.04em;
-  }
+  /* Large: a step up in text size, nothing else. */
+  .fh-action--lg { --_text: var(--fh-action-text, var(--fh-text-small)); }
 
   /* —— Scroll cue (ACT-3.1) ——
    * A line of heavy mono caps that ends in a down arrow: "there's more below".
    * No dashed underline. On a link it takes the action's hover; as plain text
-   * (a <p>) it stays put. Underline a phrase in it with __phrase.
+   * (a <p>) it stays put. Underline a phrase in it with __phrase (the text link's underline).
+   * The family's size, weight and spacing; only the underline and the arrow differ.
    *   <p class="fh-action fh-action--cue">The design system built for modern workflows</p>
-   *   <a class="fh-action fh-action--cue" href="#next">Built for <u class="fh-action__phrase">modern workflows</u></a>
-   * Knob: --fh-action-cue-size (the caption size). */
+   *   <a class="fh-action fh-action--cue" href="#next">Built for <u class="fh-action__phrase">modern workflows</u></a> */
   .fh-action--cue {
     display: inline-block; /* running text, so its spaces stay spaces; the arrow sits inline after it */
     inline-size: fit-content;
     padding-block-end: 0;
     border-block-end: 0;
-    font-size: var(--fh-action-cue-size, var(--fh-text-caption));
-    font-weight: var(--fh-weight-black);
-    letter-spacing: var(--fh-tracking-mono);
 
     &::after {
       display: inline-block;
-      inline-size: 0.95em;
-      block-size: 0.95em;
-      margin-inline-start: 0.35em;
+      margin-inline-start: var(--fh-gap-bound);
       vertical-align: -0.1em;
       mask-image: var(--fh-icon-arrow-down);
     }
@@ -105,8 +104,8 @@
   }
   .fh-action__phrase {
     text-decoration-line: underline;
-    text-decoration-thickness: var(--fh-border-thick);
-    text-underline-offset: 0.2em;
+    text-decoration-thickness: var(--fh-link-underline, var(--fh-border-thin));
+    text-underline-offset: var(--fh-link-underline-offset, 0.18em);
   }
   @media (prefers-reduced-motion: reduce) {
     .fh-action--cue::after { transition: none; }

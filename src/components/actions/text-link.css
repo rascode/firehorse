@@ -4,12 +4,15 @@
  */
 
 @layer fh.components {
-  /* —— Text link —— */
+  /* —— Text link (ACT-2) ——
+   * Takes the size and weight of the copy it sits in. Its underline is the family's
+   * (the scroll cue's __phrase uses it too). Knobs: --fh-link-underline (border-thin),
+   * --fh-link-underline-offset (0.18em). */
   .fh-link {
     color: var(--fh-color-text);
     text-decoration-line: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
+    text-decoration-thickness: var(--fh-link-underline, var(--fh-border-thin));
+    text-underline-offset: var(--fh-link-underline-offset, 0.18em);
     text-decoration-color: var(--fh-color-etch);
     transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
 
