@@ -182,17 +182,6 @@ body:has(.site-hc) .fh-main { padding: 0; margin: 0; }
   gap: var(--fh-space-4);
   inline-size: 100%;
 }
-.site-hc__lede {
-  /* Two lines: "The design system built for" then "modern workflows" on its own. */
-  inline-size: max-content;
-  max-inline-size: none;
-  margin: 0;
-  font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.45rem);
-  font-weight: var(--fh-weight-medium, 500);
-  line-height: var(--fh-leading-snug, 1.3);
-  letter-spacing: var(--fh-tracking-body, -0.01em);
-  color: var(--fh-color-text-muted);
-}
 .site-hc__meta {
   --fh-tone: var(--fh-color-accent);
   margin: 0;
@@ -379,35 +368,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   :root.fh-js:not(.fh-ready) .site-hc__agents { animation-play-state: paused; }
 }
 
-/* "modern workflows": underlined by a line that runs a little past the words and ends in an
-   arrowhead pointing right, in the accent's text colour. */
-.site-hc__arrowline {
-  position: relative;
-  display: inline-block;
-  padding-inline-end: 0.9em;
-  color: var(--fh-color-text);
-}
-.site-hc__arrowline::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  inset-block-end: -0.14em;
-  block-size: 1.5px;
-  background: var(--fh-color-accent-text);
-}
-.site-hc__arrowline::before {
-  content: "";
-  position: absolute;
-  inset-inline-end: 0.5px;
-  inset-block-end: calc(-0.14em - 0.22em + 0.75px);
-  inline-size: 0.44em;
-  block-size: 0.44em;
-  border-block-start: 1.5px solid var(--fh-color-accent-text);
-  border-inline-end: 1.5px solid var(--fh-color-accent-text);
-  rotate: 45deg;
-  transform-origin: 50% 50%;
-}
-
 /* —— The agent picker ——
    The Firehorse tile menu (DRP-2.1, built by site-features.js), its web agents as launch tiles
    (TIL-2.1, data-agent-tiles="launch") five across. Only its width and side are set here. */
@@ -421,21 +381,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 
 
 
-
-/* "modern workflows": its own line, mono caps, heavier than the line above */
-.site-hc__arrowline {
-  display: inline-block;
-  margin-block-start: 0.15em;
-  padding-inline-end: 0;
-  font-family: var(--fh-font-mono);
-  font-size: 1.05em;
-  font-weight: 800;
-  letter-spacing: var(--fh-tracking-caps);
-  text-transform: uppercase;
-  color: var(--fh-color-text);
-}
-.site-hc__arrowline::before { content: none; }
-.site-hc__arrowline::after { inset-block-end: -0.2em; block-size: 1.5px; background: var(--fh-color-text); }
 
 /* The chip under the lede grows to meet the agent button: both 2.5rem tall */
 .site-hc__marks .fh-eyebrow-pill.site-hc__meta { font-size: calc(var(--fh-text-label) * 1.3); min-block-size: 2.5rem; }
@@ -453,13 +398,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    (offset set by home-concept.js as --hc-lede-x), a down arrow after "workflows". */
 .site-hc__below { inset-block-start: var(--fh-space-2); }
 .site-hc__lede { padding-inline-start: var(--hc-lede-x, 0.6em); }
-.site-hc__lede-down {
-  --fh-icon-size: 0.95em;
-  margin-inline-start: 0.35em;
-  rotate: 90deg;
-  vertical-align: -0.1em;
-  color: var(--fh-color-text);
-}
 
 /* —— Below the fold: "Build with" and the services flowing past ——
    A wide, light, roomy box under the hero. The services run right to left in grey; the one
@@ -741,14 +679,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 @supports (position-area: bottom) { .site-hc-nav--dock .site-hc-docs { position-area: block-end; position-try-fallbacks: none; } }
 .site-hc[data-nav-docked] :is(.site-hc__sections, .site-hc__spine) { opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
 .site-hc-next { min-block-size: 1px; scroll-margin-block-start: 5rem; }
-/* "modern workflows" on its own line, heavier */
-.site-hc__arrowline { font-weight: var(--fh-weight-heavy, 800); }
-.site-hc__lede { line-height: 1.5; }
-.site-hc__arrowline { font-weight: 800; }
-/* "The design system built for" at half size; "modern workflows" keeps its size */
-.site-hc__lede { font-size: calc(var(--fh-text-body, 1rem) * 0.5); line-height: 1.6; }
-.site-hc__arrowline { font-size: calc(var(--fh-text-body, 1rem) * 0.85); line-height: 1.5; }
-.site-hc__lede-down { --fh-icon-size: calc(var(--fh-text-body, 1rem) * 0.85); }
 
 /* Top right chip: "No JS" and the gzip size stay folded away until Download from Git is hovered
    (or focused); then they slide out to the left, and fold back in after. */
@@ -782,8 +712,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    a single Light / Dark toggle (Segment switch, SEG-2.1) right of the Git chip switches them. */
 .site-hc__git .site-hc__scheme-src { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; pointer-events: none; }
 
-/* "The design system built for": back up to a readable size */
-.site-hc__lede { font-size: 0.8125rem; }
 
 /* Start here: the label and a right arrow, one segment, no separator */
 .site-hc__sections .site-hc__vivid .fh-dot + .fh-eyebrow-pill__seg { inline-size: auto; display: inline-flex; align-items: center; gap: 0.4em; }
@@ -950,24 +878,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 /* Download from Git: no dashed underline */
 .site-hc__meta-label { border-block-end: 0; padding-block-end: 0; }
 
-/* The lede, under the start of the etch: one voice, mono caps at modern workflows' weight;
-   "modern workflows" no longer styled apart. */
-.site-hc__lede {
-  font-family: var(--fh-font-mono);
-  font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: var(--fh-tracking-caps);
-  text-transform: uppercase;
-  line-height: 1.6;
-  color: var(--fh-color-text);
-}
-.site-hc__arrowline { font: inherit; letter-spacing: inherit; color: inherit; padding: 0; }
-.site-hc__arrowline::after, .site-hc__arrowline::before { content: none; }
-.site-hc__lede-down { --fh-icon-size: 1em; }
-
-/* The lede on one line, set tight */
-.site-hc__lede { line-height: 1.3; white-space: nowrap; }
-
 /* The tagline swings in last, like a sign hung from its top edge: a short pendulum that
    settles quickly. Starts once the chip and the rest have landed (~3s). */
 @media (prefers-reduced-motion: no-preference) {
@@ -1103,11 +1013,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 }
 @media (prefers-reduced-motion: reduce) { .site-hc__meta--dock > * { transition: none !important; } }
 
-/* the tagline a little tighter */
-.site-hc__lede { letter-spacing: 0.05em; }
 
-/* The tagline tracked tighter */
-.site-hc__lede { letter-spacing: 0.03em; }
 
 /* The spine, full height: the top run draws down from the window's top to the underscore, the
    bottom run down from under the tagline to the window's foot. On scroll both draw back toward
