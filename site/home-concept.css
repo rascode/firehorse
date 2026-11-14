@@ -88,20 +88,11 @@ body:has(.site-hc) .fh-main { padding: 0; margin: 0; }
   padding-block-end: calc(var(--fh-space-1-5) + var(--fh-text-label) * 1.2);
 }
 
-/* Frost: from the top of the etch line to the bottom of the window, the horses blurred and
-   washed the way the site frosts its backdrop between hero and footer (blur 5px, the art at
-   about 55%). A flat wash, no gradient; a hard edge on the line. Its top is the etch's top,
-   from the same numbers that place the marks: the row's foot, the legal row's space, the
-   etch's 0.215em lift and its 2px. The logo sits above it, unfrosted. */
+/* Frost: Backdrop's frost line (BKD-2.1), from the top of the etch line to the bottom of the
+   window. Its line is the etch's top, from the same numbers that place the marks: the row's
+   foot, the legal row's space, the etch's 0.215em lift and its 2px. The logo sits above it. */
 .site-hc__frost {
-  position: absolute;
-  inset-inline: 0;
-  inset-block: calc(100vh - (50vh - 2.575rem) - (var(--fh-space-1-5) + var(--fh-text-label) * 1.2) - var(--fh-heading-size) * 0.215 - 2px) 0;
-  z-index: 0;
-  background: color-mix(in oklab, var(--fh-color-canvas) 45%, transparent);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-  pointer-events: none;
+  --fh-backdrop-frost-from: calc(100vh - (50vh - 2.575rem) - (var(--fh-space-1-5) + var(--fh-text-label) * 1.2) - var(--fh-heading-size) * 0.215 - 2px);
 }
 .site-hc__marks { z-index: 1; }
 
