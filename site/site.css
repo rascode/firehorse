@@ -1538,20 +1538,6 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
   --site-walk-7: oklch(from var(--fh-root) calc(l + 0.04) min(c, 0.2) calc(h - 20));
   --site-walk-8: oklch(from var(--fh-root) calc(l * 0.9) min(calc(c * 1.05), 0.2) h);
 }
-/* The rotating words take only the root's close family: the root, its analogous steps
- * (±20°, ±40°), the tint and the deep. The split complements (walk-3, walk-5) are left out, so
- * whatever the root, every word stays in harmony with the rest. */
-.site-hero__turn .fh-rotator > :nth-child(9n + 1) { --_w: var(--site-walk-0); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 2) { --_w: var(--site-walk-1); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 3) { --_w: var(--site-walk-2); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 4) { --_w: var(--site-walk-4); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 5) { --_w: var(--site-walk-7); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 6) { --_w: var(--site-walk-8); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 7) { --_w: var(--site-walk-6); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 8) { --_w: var(--site-walk-7); }
-.site-hero__turn .fh-rotator > :nth-child(9n + 9) { --_w: var(--site-walk-1); }
-/* Text needs contrast: the walk keeps its hues, lightness is clamped per scheme. */
-.site-hero__turn .fh-rotator > * { --fh-tone: light-dark(oklch(from var(--_w, var(--fh-root)) min(l, 0.52) c h), oklch(from var(--_w, var(--fh-root)) max(l, 0.74) c h)); }
 .site-backdrop {
   --_ink: color-mix(in oklab, var(--fh-color-text) 26%, transparent);
   /* Two bands of light, each one tile per horse width. Uneven stops, different
@@ -1668,7 +1654,7 @@ main > section[style*="--site-h"] { content-visibility: auto; contain-intrinsic-
    Lipizzaner uses the default Firehorse horse until its own art is generated
    (same canvas and proportions as the default sheet, so the placement holds). */
 /* Lipizzaner doesn't do the rainbow: every rotating hero word takes the accent (gold by night, claret by day). */
-:root[data-fh-theme="lipizzaner"] .site-hero__turn .fh-rotator > [data-tone] { --fh-tone: var(--fh-color-accent-text); }
+:root[data-fh-theme="lipizzaner"] .fh-rotator--walk > * { color: var(--fh-color-accent-text); }
 
 /* —— Footer: no etched hoof shading inside it; the horse behind the page carries the art. —— */
 

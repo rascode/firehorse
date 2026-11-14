@@ -81,28 +81,11 @@ body:has(.site-hc) .fh-main { padding: 0; margin: 0; }
   position: absolute;
   inset-inline: max(var(--fh-page-margin), (100% - var(--fh-content-max)) / 2);
   inset-block-end: calc(50vh - 2.575rem);
-  display: grid;
-  /* The etch runs on to the content's right edge, under the headline. */
-  grid-template-columns: auto minmax(var(--fh-space-8), 1fr);
-  grid-template-rows: auto 0; /* row 2 has no height; it gives the stack under the logo the logo's column to sit in */
-  container-type: inline-size; /* the content width, as the homepage hero's grid: its cqi sizes the headline */
-  align-items: end;
+  /* The lockup (MST-2.1) lays out the logo, etch and headline; here only its size and the
+     zero-height lower row, so the line stays put and "that ___." hangs below the box. */
+  --fh-masthead-mark-size: var(--fh-heading-size);
+  --fh-masthead-turn-row: 0;
   padding-block-end: calc(var(--fh-space-1-5) + var(--fh-text-label) * 1.2);
-  font-size: var(--fh-heading-size);
-}
-.site-hc__fh {
-  margin: 0;
-  font-family: var(--fh-font-sans);
-  font-size: 1em;
-  font-weight: 800; /* heavier than the footer's 700 (Inter runs to 900) */
-  letter-spacing: var(--fh-tracking-wordmark); /* -0.05em, tighter than the footer's heading tracking (-0.035em) */
-  line-height: 1;
-  color: var(--fh-color-text-strong);
-}
-.site-hc__etch {
-  margin-block-end: 0.215em;
-  margin-inline-start: 0.08em;
-  border-block-end: 2px dashed oklch(from var(--site-walk-3) clamp(0.62, l, 0.8) max(c, 0.14) h);
 }
 
 /* Frost: from the top of the etch line to the bottom of the window, the horses blurred and
@@ -149,25 +132,6 @@ body:has(.site-hc) .fh-main { padding: 0; margin: 0; }
   .site-hc__sections .fh-eyebrow-pill:is(:hover, :focus-visible) .fh-dot { animation: fh-doppler var(--fh-duration-pulse) ease-out infinite; }
 }
 
-/* The homepage headline on the right, split by the etch line. Same size as the homepage
-   (.site-hero .fh-display: clamp(2.6rem, 1rem + 5cqi, 5.6rem), cqi of the content width),
-   weight, tracking, leading and halo; the rotator and its colours come from the homepage's
-   own classes. "The design system" rests just above the line; "that ___." hangs just below. */
-.site-hc__tag {
-  margin: 0;
-  font-size: clamp(2.6rem, 1rem + 5cqi, 5.6rem);
-  font-weight: var(--fh-display-weight);
-  letter-spacing: var(--fh-tracking-wordmark); /* the logo's tracking, so the headline sets with it */
-  line-height: 0.96;
-  color: var(--fh-color-text-strong, var(--fh-color-text));
-  text-shadow: 0 0 0.5em color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
-}
-.site-hc__tag-top, .site-hc__tag-turn { position: absolute; inset-inline-end: 0; white-space: nowrap; }
-/* Bottom of the words a little above the etch (the etch sits 0.215em of the logo's size above
-   the marks' row foot, plus the legal row's space below that). */
-.site-hc__tag-top { inset-block-end: calc(var(--fh-space-1-5) + var(--fh-text-label) * 1.2 + var(--fh-heading-size) * 0.215 + 2px + var(--fh-space-3)); }
-.site-hc__tag-turn { inset-block-start: calc(100% - (var(--fh-space-1-5) + var(--fh-text-label) * 1.2) - var(--fh-heading-size) * 0.215 + var(--fh-space-3)); }
-.site-hc__tag em { font-style: normal; color: var(--fh-color-text-muted); }
 
 /* Top right: the homepage header's Download from Git, in the same place (the header bar's
    line, the content's right edge less the bar's 5px inset) and the same look: the rules
@@ -209,7 +173,7 @@ body:has(.site-hc) .fh-main { padding: 0; margin: 0; }
    (just below the row the logo and etch sit in); absolute, so the line does not move. */
 .site-hc__below {
   position: absolute;
-  grid-area: 2 / 1 / 3 / 2;
+  grid-area: 3 / 1 / 4 / 2; /* the lockup's lower row, under the logo */
   inset-inline-start: 0;
   inset-block-start: var(--fh-space-5);
   display: grid;
@@ -1712,19 +1676,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   font-weight: 800;
 }
 .site-hc__bgs-fx[aria-pressed="false"] ~ :is(.site-hc__bgs-amt, .site-hc__bgs-drifts) { opacity: 0.45; }
-
-/* The etch line from the logo to the right edge: its own colour, worked out from the theme's
-   accent. The accent's split complement (hue + 150deg), held at a vivid chroma and a lightness
-   that reads on each scheme, so it pops and belongs to the theme without echoing its colour:
-   Violet → gold, Firehorse orange → cyan, Emerald → magenta, Blue → orange, Amber → azure. */
-.site-hc__etch {
-  --hc-etch: light-dark(
-    oklch(from var(--fh-color-accent) 0.64 max(c, 0.19) calc(h + 150)),
-    oklch(from var(--fh-color-accent) 0.82 max(c, 0.16) calc(h + 150))
-  );
-  border-block-end-color: var(--hc-etch);
-  filter: drop-shadow(0 0 5px color-mix(in oklab, var(--hc-etch) 45%, transparent));
-}
 
 /* Every backdrop recedes on scroll the way the horses do: the system's fh-recede (MOT-3.1) on
    the scene, over the logo's lock distance, from the top right as the horses. */
