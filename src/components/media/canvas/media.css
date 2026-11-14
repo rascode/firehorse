@@ -59,7 +59,7 @@
     position: relative;
     min-block-size: 0;
     overflow: hidden;
-    border: var(--_hair) dashed var(--fh-color-etch);
+    border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-sunken);
   }
@@ -68,13 +68,13 @@
     align-self: center;
     aspect-ratio: 1;
     block-size: auto;
-    border: calc(10 * var(--_u)) solid var(--fh-tone);
-    border-radius: 50%;
+    border: calc(10 * var(--_u)) var(--fh-card-border-style, solid) var(--fh-tone);
+    border-radius: var(--fh-radius-round);
   }
 
   /* A quiet plate under the body, for copy over busy art. */
   .fh-canvas--plate .fh-canvas__body {
-    border: var(--_hair) dashed var(--fh-color-etch);
+    border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 82%, transparent);
     backdrop-filter: blur(calc(14 * var(--_u)));
   }

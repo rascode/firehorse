@@ -6,11 +6,11 @@
 @layer fh.components {
   /* —— Type —— */
   .fh-canvas__title {
-    max-inline-size: var(--fh-canvas-measure);
+    max-inline-size: var(--fh-canvas-measure, 15ch);
     margin: 0;
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
-    font-size: calc(var(--fh-canvas-title) * var(--_u));
+    font-size: calc(var(--fh-canvas-title, 84) * var(--_u));
     font-weight: var(--fh-display-weight, var(--fh-weight-medium));
     line-height: 0.98;
     letter-spacing: var(--fh-heading-tracking, -0.035em);
@@ -24,7 +24,7 @@
     max-inline-size: 34ch;
     margin: 0;
     color: var(--fh-color-text-muted);
-    font-size: calc(var(--fh-canvas-sub) * var(--_u));
+    font-size: calc(var(--fh-canvas-sub, 30) * var(--_u));
     line-height: 1.35;
     text-wrap: pretty;
   }
@@ -36,12 +36,12 @@
     inline-size: fit-content;
     margin: 0;
     padding: 0.6em 1em 0.6em 0.8em;
-    border: var(--_hair) solid var(--fh-color-rule);
+    border: var(--_hair) var(--fh-card-border-style, solid) var(--fh-color-rule);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--fh-canvas-small) * var(--_u));
+    font-size: calc(var(--fh-canvas-small, 20) * var(--_u));
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-widest);
     line-height: 1;
@@ -53,7 +53,7 @@
       flex: none;
       inline-size: 0.6em;
       block-size: 0.6em;
-      border-radius: 50%;
+      border-radius: var(--fh-radius-round);
       background-color: var(--fh-tone);
     }
   }
@@ -64,9 +64,9 @@
     align-items: baseline;
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
-    font-size: calc(var(--fh-canvas-small) * 1.5 * var(--_u));
+    font-size: calc(var(--fh-canvas-small, 20) * 1.5 * var(--_u));
     font-weight: var(--fh-heading-weight, var(--fh-weight-semibold));
-    letter-spacing: -0.02em;
+    letter-spacing: var(--fh-tracking-heading);
     line-height: 1;
     white-space: nowrap;
 
@@ -83,7 +83,7 @@
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--fh-canvas-small) * 1.2 * var(--_u));
+    font-size: calc(var(--fh-canvas-small, 20) * 1.2 * var(--_u));
     font-weight: var(--fh-weight-heavy);
     letter-spacing: var(--fh-tracking-mono);
     line-height: 1;
@@ -99,7 +99,7 @@
     font-size: calc(var(--fh-canvas-index, 220) * var(--_u));
     font-weight: var(--fh-weight-bold);
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.05em;
+    letter-spacing: var(--fh-tracking-wordmark);
     line-height: 0.8;
     -webkit-text-stroke: max(1px, calc(2 * var(--_u))) var(--fh-tone);
   }
@@ -120,7 +120,7 @@
       gap: 0.6em;
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
-      font-size: calc(var(--fh-canvas-small) * var(--_u));
+      font-size: calc(var(--fh-canvas-small, 20) * var(--_u));
       font-weight: var(--fh-weight-medium);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
@@ -152,7 +152,7 @@
     flex-direction: column;
     align-items: flex-start;
 
-    & > li { font-size: calc(var(--fh-canvas-small) * 1.1 * var(--_u)); letter-spacing: var(--fh-tracking-mono); text-transform: none; }
+    & > li { font-size: calc(var(--fh-canvas-small, 20) * 1.1 * var(--_u)); letter-spacing: var(--fh-tracking-mono); text-transform: none; }
   }
 
 }

@@ -14,7 +14,7 @@
   .fh-canvas--split .fh-canvas__body {
     display: grid;
     grid-template: "top media" auto "main media" 1fr "foot media" auto / minmax(0, 1fr) var(--fh-canvas-media, 40%);
-    column-gap: calc(var(--fh-canvas-pad) * 0.75 * var(--_u));
+    column-gap: calc(var(--fh-canvas-pad, 72) * 0.75 * var(--_u));
   }
 
   .fh-canvas--split .fh-canvas__top { grid-area: top; }
@@ -37,7 +37,7 @@
     align-items: flex-end;
     border-block-start: 0;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: var(--fh-tracking-wide);
   }
   .fh-canvas__face {
     display: grid;
@@ -50,12 +50,12 @@
   .fh-canvas__face > small {
     font-size: inherit;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: var(--fh-tracking-wide);
   }
   .fh-canvas__face > b {
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
-    font-size: calc(var(--fh-canvas-title) * 0.42 * var(--_u));
+    font-size: calc(var(--fh-canvas-title, 84) * 0.42 * var(--_u));
     font-weight: var(--fh-weight-medium);
     line-height: 0.95;
     letter-spacing: var(--fh-tracking-snug);

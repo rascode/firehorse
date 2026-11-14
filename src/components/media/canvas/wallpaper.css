@@ -27,9 +27,9 @@
     --fh-wall-band: 2;
     --fh-wall-radius: 0.225;
     --fh-wall-scale: 1;
-    --_icon: calc(var(--fh-wall-icon) * var(--fh-wall-scale));
-    --_pitch: calc((var(--fh-canvas-w) - 2 * var(--fh-wall-side)) / var(--fh-wall-cols));
-    --_x: calc(var(--fh-wall-side) + (var(--_pitch) - var(--_icon)) / 2);
+    --_icon: calc(var(--fh-wall-icon, 183) * var(--fh-wall-scale, 1));
+    --_pitch: calc((var(--fh-canvas-w, 1200) - 2 * var(--fh-wall-side, 54)) / var(--fh-wall-cols, 4));
+    --_x: calc(var(--fh-wall-side, 54) + (var(--_pitch) - var(--_icon)) / 2);
     --fh-canvas-title: calc(var(--_icon) * 0.8);
     --fh-canvas-small: calc(var(--_icon) * 0.15);
     --fh-canvas-measure: none;
@@ -37,7 +37,7 @@
     --_hair: max(1px, calc(3 * var(--_u)));
 
     /* A fixed image: flat fill, no glow, no frame (phone corners crop it). */
-    &::before { background: var(--_guide), var(--fh-canvas-art) center / cover no-repeat; background-color: var(--fh-color-canvas); }
+    &::before { background: var(--_guide), var(--fh-canvas-art, none) center / cover no-repeat; background-color: var(--fh-color-canvas); }
     &::after { content: none; }
   }
 
@@ -45,11 +45,11 @@
   .fh-canvas__band {
     position: absolute;
     inset-inline: calc(var(--_x) * var(--_u));
-    inset-block-start: calc(var(--fh-wall-top) * var(--_u));
-    z-index: 1;
+    inset-block-start: calc(var(--fh-wall-top, 225) * var(--_u));
+    z-index: var(--fh-z-raised);
     display: grid;
     grid-template-rows: repeat(2, calc(var(--_icon) * var(--_u)));
-    row-gap: calc((var(--fh-wall-row) - var(--_icon)) * var(--_u));
+    row-gap: calc((var(--fh-wall-row, 300) - var(--_icon)) * var(--_u));
     min-inline-size: 0;
 
     & > .fh-canvas__top { flex-wrap: nowrap; align-self: center; }
@@ -66,16 +66,16 @@
     &::after {
       content: "";
       position: absolute;
-      inset-block-start: calc(100% + (var(--fh-wall-row) - var(--_icon)) / 2 * var(--_u));
+      inset-block-start: calc(100% + (var(--fh-wall-row, 300) - var(--_icon)) / 2 * var(--_u));
       pointer-events: none;
     }
     &::after {
-      inset-inline: calc((var(--fh-wall-side) - var(--_x)) * var(--_u));
-      border-block-start: var(--_hair) dashed var(--fh-color-etch);
+      inset-inline: calc((var(--fh-wall-side, 54) - var(--_x)) * var(--_u));
+      border-block-start: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
     &::before {
       inset-inline-start: 0;
-      z-index: 1;
+      z-index: var(--fh-z-raised);
       inline-size: calc(var(--_icon) * var(--_u));
       block-size: max(2px, calc(var(--_icon) * 0.03 * var(--_u)));
       margin-block-start: calc(var(--_icon) * -0.015 * var(--_u));
@@ -87,9 +87,9 @@
   .fh-canvas__cells,
   .fh-canvas__dock {
     position: absolute;
-    inset-inline: calc(var(--fh-wall-side) * var(--_u));
+    inset-inline: calc(var(--fh-wall-side, 54) * var(--_u));
     display: grid;
-    grid-template-columns: repeat(var(--fh-wall-cols), minmax(0, 1fr));
+    grid-template-columns: repeat(var(--fh-wall-cols, 4), minmax(0, 1fr));
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -100,19 +100,19 @@
       justify-self: center;
       inline-size: calc(var(--_icon) * var(--_u));
       block-size: calc(var(--_icon) * var(--_u));
-      border: var(--_hair) dashed var(--fh-color-etch);
-      border-radius: calc(var(--_icon) * var(--fh-wall-radius) * var(--_u));
+      border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      border-radius: calc(var(--_icon) * var(--fh-wall-radius, 0.225) * var(--_u));
     }
   }
 
   .fh-canvas__cells {
-    inset-block-start: calc((var(--fh-wall-top) + var(--fh-wall-band) * var(--fh-wall-row)) * var(--_u));
-    block-size: calc((var(--fh-wall-rows) - var(--fh-wall-band)) * var(--fh-wall-row) * var(--_u));
-    grid-auto-rows: calc(var(--fh-wall-row) * var(--_u));
+    inset-block-start: calc((var(--fh-wall-top, 225) + var(--fh-wall-band, 2) * var(--fh-wall-row, 300)) * var(--_u));
+    block-size: calc((var(--fh-wall-rows, 6) - var(--fh-wall-band, 2)) * var(--fh-wall-row, 300) * var(--_u));
+    grid-auto-rows: calc(var(--fh-wall-row, 300) * var(--_u));
   }
 
   .fh-canvas__dock {
-    inset-block-start: calc(var(--fh-wall-dock) * var(--_u));
+    inset-block-start: calc(var(--fh-wall-dock, 2283) * var(--_u));
     block-size: calc(var(--_icon) * var(--_u));
     grid-auto-rows: calc(var(--_icon) * var(--_u));
   }
@@ -154,8 +154,8 @@
   /* —— Guides: status bar, and the title band against its two icon rows —— */
   .fh-canvas--wall[data-fh-guides] {
     --_guide-fill: color-mix(in oklab, var(--fh-color-warning) 18%, transparent);
-    --_guide: linear-gradient(var(--_guide-fill) 0 0) top / 100% calc(var(--fh-canvas-safe-t) * var(--_u)) no-repeat;
+    --_guide: linear-gradient(var(--_guide-fill) 0 0) top / 100% calc(var(--fh-canvas-safe-t, 0) * var(--_u)) no-repeat;
 
-    & .fh-canvas__band { outline: max(1px, calc(2 * var(--_u))) dashed var(--fh-color-warning); }
+    & .fh-canvas__band { outline: max(var(--fh-border-thin), calc(2 * var(--_u))) dashed var(--fh-color-warning); }
   }
 }
