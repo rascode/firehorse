@@ -834,7 +834,7 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
 
 ### TIL · Tiles
 
-Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview and the picked tile marked.
+Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview or a specimen and the picked tile marked.
 
 ```html
 <!-- TIL-1.1 · Index tiles › Index tile -->
@@ -880,6 +880,14 @@ Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered 
   <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__media"><img src="/img/backdrop/hv-rider-thumb.webp" alt loading="lazy"></span><b class="fh-tile__title">Rider</b><span class="fh-tile__note">Open · bright</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
   <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__media" style="background-image: radial-gradient(60% 70% at 30% 35%, var(--fh-color-accent), transparent 70%), radial-gradient(55% 60% at 75% 70%, oklch(from var(--fh-color-accent) l c calc(h + 120)), transparent 70%)"></span><b class="fh-tile__title">Glow</b><span class="fh-tile__note">Soft · radiating</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
   <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__media" style="background-image: linear-gradient(var(--fh-color-etch) 1px, transparent 1px), linear-gradient(90deg, var(--fh-color-etch) 1px, transparent 1px); background-size: 12px 12px; background-repeat: repeat"></span><b class="fh-tile__title">Grid</b><span class="fh-tile__note">The grid alone</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+</ul>
+
+<!-- TIL-3.2 · Option tiles › Option tile, specimen -->
+<ul class="fh-tiles fh-tiles--options" aria-label="Typeface" data-fh="TIL-3.2">
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="true"><span class="fh-tile__specimen" style="font-family: 'Inter', sans-serif">Aa</span><b class="fh-tile__title">Inter</b><span class="fh-tile__note">Default · neutral</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__specimen" style="font-family: 'Geist', sans-serif">Aa</span><b class="fh-tile__title">Geist</b><span class="fh-tile__note">Crisp · technical</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__specimen" style="font-family: 'Hanken Grotesk', sans-serif">Aa</span><b class="fh-tile__title">Hanken Grotesk</b><span class="fh-tile__note">Warm · rounded</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__specimen" style="font-family: 'Archivo', sans-serif">Aa</span><b class="fh-tile__title">Archivo</b><span class="fh-tile__note">Sturdy · editorial</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
 </ul>
 ```
 
