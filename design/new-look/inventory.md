@@ -10,14 +10,14 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | # | Style on the concept page | Where it shows | Firehorse equivalent | Status |
 |---|---|---|---|---|
 | 1 | Explore card: solid icon block, numbered mono eyebrow, large title, note, arrow | Home page Explore | Tiles · TIL-1.1 Index tile | Done |
-| 2 | Docs tile: block left, title and note, number and ↗ right | Docs panel | Tiles · TIL-1.2 Row | Done (panel still on page CSS, see 9) |
+| 2 | Docs tile: block left, title and note, number and ↗ right | Docs panel | Tiles · TIL-1.2 Row | Done |
 | 3 | Agent tile, stacked: block, number and ↗, large name, note | Send to an agent (concept) | Tiles · TIL-2.1 Launch tile | Done |
 | 4 | Agent tile, compact: tinted block, name and note inline | Send to an agent (home) | Tiles · TIL-2.2 Compact | Done |
 | 5 | Terminal cell: name, `$ command` in mono | Send to an agent | Tiles · TIL-2.3 Command | Done |
-| 6 | Backdrop options, rebuilt as tiles: a large thumbnail, name, mono caps note; the picked tile marked | Backdrop picker (camera), full width | Tiles · TIL-3.1 Option tile, media | Done (TIL-3.1; panel still narrow, see 9) |
+| 6 | Backdrop options, rebuilt as tiles: a large thumbnail, name, mono caps note; the picked tile marked | Backdrop picker (camera), full width | Tiles · TIL-3.1 Option tile, media | Done (TIL-3.1) |
 | 7 | Typeface options, rebuilt as tiles: a large "Aa" in the face, name, mono caps note; the picked tile marked | Typeface picker (T), full width | Tiles · TIL-3.2 Option tile, specimen | New |
 | 8 | Photo swatches as tiles with a mono caption, many across | Backdrop picker, Photos, full width | Tiles · TIL-3.3 Option tile, swatch | New |
-| 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · new variant (MEG-3) | New |
+| 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · MEG-3.1 Tile panel | Done (MEG-3.1) |
 | 10 | Tile menu: mono head with a status pill, labels, tile grids, copy pill, ask accordion | Send to an agent | Dropdown menu · new variant (DRP-2) | New |
 | 11 | Colour list: dot and mono caps label, picked dot ringed; stays a small menu (not full width) | Theme colour menu (brush) | Theme select · new variant (THS) | New |
 | 12 | Mono caps nav links with a roll and a chevron | Hero top left | Navigation · new variant (NAV) | New |
