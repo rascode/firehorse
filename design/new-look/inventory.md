@@ -19,7 +19,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 8 | Photo swatches as tiles with a mono caption, many across | Backdrop picker, Photos, full width | Tiles · TIL-3.3 Option tile, swatch | Done (TIL-3.3) |
 | 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · MEG-3.1 Tile panel | Done (MEG-3.1) |
 | 10 | Tile menu: mono head with a status pill, labels, tile grids, copy pill, ask accordion | Send to an agent | Dropdown menu · DRP-2.1 Tile menu | Done (DRP-2.1) |
-| 11 | Colour list: dot and mono caps label, picked dot ringed; stays a small menu (not full width) | Theme colour menu (brush) | Theme select · THS-2.1 Colour menu | Done (THS-2.1) |
+| 11 | Colour picker: opens like the typeface and backdrop pickers (Rascode, 2026-11-14), a full-width tile panel of colour tiles, the picked one marked | Theme colour menu (brush), full width | Mega panel · MEG-3.1 with Tiles · TIL-3.4 Option tile, colour (the compact list is Theme select · THS-2.1) | Done (TIL-3.4, THS-2.1) |
 | 12 | Mono caps nav links with a roll and a chevron | Hero top left | Navigation · new variant (NAV) | New |
 | 13 | Round icon buttons: white disc, dark glyph | Top right (camera, T, brush) | Button · new variant, round icon (BTN) | New |
 | 14 | Frosted pill trigger with an etched ring and ↑ | Send to an agent button | Button · new variant, etched pill (BTN) | New |
@@ -35,8 +35,9 @@ Notes
 - **MEG-3.1 Tile panel is the look to aim for** (Rascode, 2026-11-13: "MEG-3.1 is perfect"). New parts match it: a mono caps head, dashed etch rules, open tiles, large type, the accent for what's picked. The rest of this list ships in v1.1.0 (launch goal objective "New look", due 2026-11-18).
 - **Pickers are full width** (Rascode, 2026-11-13): the typeface and backdrop pickers open as
   full-width panels (the Tile panel, row 9) and show their options as tiles (rows 6 to 8), not the
-  current narrow list restyled. There is plenty of room; use it. The colour picker (row 11) is the
-  exception and stays a small menu.
+  current narrow list restyled. There is plenty of room; use it. The colour picker (row 11) now
+  opens the same way (Rascode, 2026-11-14); the small list it first became stays in Firehorse as
+  THS-2.1.
 - Tiles keeps one anatomy (`fh-tile__cube`, `__eyebrow`, `__title`, `__note`, `__go`) across
   index, launch and option tiles, so the pickers in 6 to 8 are a third group (TIL-3), not a new family.
 - The below-the-fold sections (Build with, The problem / The solution, Configuration over code)
