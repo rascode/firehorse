@@ -25,7 +25,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-overlay);
@@ -51,12 +51,12 @@
   .fh-mega__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
     & > * {
       padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
-      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     & h3 {
@@ -164,7 +164,7 @@
         grid-column: 1 / -1;
         inset-block-end: 0;
         inset-inline: calc(50% - 50cqi);
-        border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+        border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         pointer-events: none;
       }
 
@@ -305,7 +305,7 @@
       inline-size: 2.4rem;
       aspect-ratio: 1;
       overflow: hidden;
-      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
       border-radius: var(--fh-radius-md);
       background-color: var(--fh-color-surface-sunken);
 
@@ -324,7 +324,7 @@
     line-clamp: 2;
     overflow: hidden;
     color: color-mix(in oklab, var(--fh-color-text-strong) 92%, transparent);
-    font-size: 0.84rem;
+    font-size: var(--fh-text-small);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-snug);
     line-height: var(--fh-leading-snug);
@@ -348,7 +348,7 @@
     overflow: hidden;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fh-text-micro);
     letter-spacing: var(--fh-tracking-mono);
     line-height: var(--fh-leading-normal);
   }
@@ -526,7 +526,7 @@
       text-transform: uppercase;
     }
     /* a note cell (a credit, a line of fine print) reads left to right, its links inline */
-    & > :is(p, span) { justify-content: flex-start; gap: 0.4em; color: var(--fh-color-text-subtle); font-weight: var(--fh-weight-medium); }
+    & > :is(p, span) { justify-content: flex-start; gap: var(--fh-gap-bound); color: var(--fh-color-text-subtle); font-weight: var(--fh-weight-medium); }
     & > a { transition: background-color var(--fh-duration-fast) var(--fh-ease-standard); }
     & > a:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
     & > a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
