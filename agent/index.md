@@ -60,7 +60,7 @@
 | `TAB` | Tabs | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/tabs/) |
 | `NAV` | Navigation | Bars & tabs | — | [open](https://firehorse.rascode.dev/components/navigation/navigation/) |
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/hamburger/) |
-| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
+| `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) · 3 Tile panel (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
 | `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/drawer/) |
 | `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
@@ -1245,9 +1245,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## MEG · Mega panel
 
-Equal category columns with dashed rules and a footer rail. Default sits flush under the header; --headed puts the category titles on one row above a full-bleed etched rule with scaffold ticks, and pairs with fh-mega__link for rich rows.
+Equal category columns with dashed rules and a footer rail. Default sits flush under the header; --headed puts the category titles on one row above a full-bleed etched rule with scaffold ticks, and pairs with fh-mega__link for rich rows. --tiles spans the page: a mono title and count head, groups of tiles side by side and a rail of links along the foot.
 
-Classes: `fh-mega` `fh-frame` `fh-mega__grid` `fh-mega__rail` `fh-action` `fh-mega--headed` `fh-mega__link` `fh-mega__link-media` `fh-icon` `fh-mega__link-title` `fh-mega__link-desc`
+Classes: `fh-mega` `fh-frame` `fh-mega__grid` `fh-mega__rail` `fh-action` `fh-mega--headed` `fh-mega__link` `fh-mega__link-media` `fh-icon` `fh-mega__link-title` `fh-mega__link-desc` `fh-mega--tiles` `fh-mega__head` `fh-mega__title` `fh-mega__count` `fh-mega__groups` `fh-mega__group` `fh-mega__label` `fh-tiles` `fh-tile` `fh-tile--row` `fh-tile__cube` `fh-tile__title` `fh-tile__note` `fh-tile__eyebrow` `fh-tile__go` `fh-roll`
 
 ### MEG-1 · Default
 
@@ -1286,6 +1286,21 @@ Classes: `fh-mega` `fh-frame` `fh-mega__grid` `fh-mega__rail` `fh-action` `fh-me
     </section>
   </div>
   <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">Browse the catalog</a></div>
+</div>
+```
+
+### MEG-3 · Tile panel
+
+#### MEG-3.1 · Tile panel
+
+```html
+<div class="fh-mega fh-mega--tiles" style="position: relative; inset: auto; opacity: 1; translate: none; max-block-size: none; box-shadow: none" data-fh="MEG-3.1">
+  <header class="fh-mega__head"><span class="fh-mega__title">Docs</span><span class="fh-mega__count">6 pages</span></header>
+  <div class="fh-mega__groups">
+    <section class="fh-mega__group" aria-label="Basics"><p class="fh-mega__label">Basics</p><ul class="fh-tiles" style="--fh-tiles-min: 100%"><li><a class="fh-tile fh-tile--row" href="#c-mega" data-tone="neutral"><span class="fh-tile__cube"><i class="fh-icon fh-icon--book-open" aria-hidden="true"></i></span><b class="fh-tile__title">Guidelines</b><span class="fh-tile__note">How to use it well</span><small class="fh-tile__eyebrow">01</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li><li><a class="fh-tile fh-tile--row" href="#c-mega" data-tone="accent"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><b class="fh-tile__title">Foundations</b><span class="fh-tile__note">Tokens, type, colour</span><small class="fh-tile__eyebrow">02</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li><li><a class="fh-tile fh-tile--row" href="#c-mega" data-tone="sky"><span class="fh-tile__cube"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i></span><b class="fh-tile__title">Layout</b><span class="fh-tile__note">Grids, spacing, shells</span><small class="fh-tile__eyebrow">03</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li></ul></section>
+    <section class="fh-mega__group" aria-label="Build"><p class="fh-mega__label">Build</p><ul class="fh-tiles" style="--fh-tiles-min: 100%"><li><a class="fh-tile fh-tile--row" href="#c-mega" data-tone="accent"><span class="fh-tile__cube"><i class="fh-icon fh-icon--box" aria-hidden="true"></i></span><b class="fh-tile__title">Components</b><span class="fh-tile__note">Every fh-* part</span><small class="fh-tile__eyebrow">04</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li><li><a class="fh-tile fh-tile--row" href="#c-mega" data-tone="teal"><span class="fh-tile__cube"><i class="fh-icon fh-icon--pen-line" aria-hidden="true"></i></span><b class="fh-tile__title">Forms</b><span class="fh-tile__note">Inputs and flows</span><small class="fh-tile__eyebrow">05</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li><li><a class="fh-tile fh-tile--row" href="#c-mega" data-tone="rose"><span class="fh-tile__cube"><i class="fh-icon fh-icon--chart-bar" aria-hidden="true"></i></span><b class="fh-tile__title">Data</b><span class="fh-tile__note">Tables and charts</span><small class="fh-tile__eyebrow">06</small><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></a></li></ul></section>
+  </div>
+  <nav class="fh-mega__rail" aria-label="More"><a href="#c-mega"><span class="fh-roll">Start here</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a><a href="#c-mega"><span class="fh-roll">All categories</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a><a href="#c-mega"><span class="fh-roll">llms.txt for agents</span><i class="fh-icon fh-icon--arrow-up-right" aria-hidden="true"></i></a></nav>
 </div>
 ```
 

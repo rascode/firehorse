@@ -427,4 +427,110 @@
     }
   }
 
+  /* —— MEG-3 Tile panel ——————————————————————————————————————————————————————
+   * The full width of the page: a mono title and count head, groups of tiles side by side
+   * (a mono label over each), and a rail of links along the foot. On a frost, ruled with the
+   * dashed etch. Groups take Tiles (TIL): rows for pages, option tiles for pickers.
+   *   <div id="docs" popover class="fh-mega fh-mega--tiles">
+   *     <header class="fh-mega__head"><span class="fh-mega__title">Docs</span><span class="fh-mega__count">16 pages</span></header>
+   *     <div class="fh-mega__groups">
+   *       <section class="fh-mega__group" aria-label="Basics">
+   *         <p class="fh-mega__label">Basics</p>
+   *         <ul class="fh-tiles">…</ul>
+   *       </section> …
+   *     </div>
+   *     <nav class="fh-mega__rail"><a href="…"><span>Start here</span><i class="fh-icon fh-icon--arrow-right"></i></a> …</nav>
+   *   </div>
+   * Knobs: --fh-mega-top (from the top, default the header height), --fh-mega-inline (from
+   * each side, default 0: the window's width), --fh-mega-columns (the groups' track list). */
+  .fh-mega--tiles {
+    --_etch: var(--fh-border-thin) dashed var(--fh-color-etch);
+    --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+
+    inset: var(--fh-mega-top, var(--fh-header-height)) var(--fh-mega-inline, 0) auto;
+    inline-size: auto;
+    border: var(--_etch);
+    border-radius: var(--fh-radius-sm);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome, 12px)) saturate(1.15);
+    backdrop-filter: blur(var(--fh-blur-chrome, 12px)) saturate(1.15);
+    container-type: inline-size;
+    text-align: start;
+
+    &:popover-open { display: grid; align-content: start; }
+  }
+
+  .fh-mega__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+    border-block-end: var(--_etch);
+  }
+  :is(.fh-mega__title, .fh-mega__count, .fh-mega__label) {
+    margin: 0;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    letter-spacing: var(--fh-tracking-caps);
+    text-transform: uppercase;
+  }
+  .fh-mega__title { color: var(--fh-color-text); font-weight: var(--fh-weight-bold); }
+
+  /* Groups sit side by side; a soft rule between them (each draws its start edge, pulled 1px
+   * and clipped at the panel's edge, so a wrapped row starts clean). */
+  .fh-mega__groups {
+    display: grid;
+    grid-template-columns: var(--fh-mega-columns, repeat(auto-fit, minmax(min(100%, 15rem), 1fr)));
+    overflow: hidden;
+  }
+  .fh-mega__group {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-content: start;
+    min-inline-size: 0;
+    margin-inline-start: -1px;
+    border-inline-start: var(--_etch-soft);
+
+    & > .fh-tiles { border-block-start: var(--_etch-soft); }
+    /* a group of its own controls (switches, sliders, chips) gets the tile inset */
+    & > .fh-mega__body { padding: 0 var(--fh-inset-tile) var(--fh-inset-tile); }
+  }
+  .fh-mega__label { padding: var(--fh-inset-control) var(--fh-inset-tile) var(--fh-gap-related); }
+
+  /* The rail: equal link cells along the foot, mono caps, the arrow in the accent. */
+  .fh-mega--tiles .fh-mega__rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+    border-block-start: var(--_etch);
+
+    & > :is(a, p, span) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--fh-gap-related);
+      min-block-size: 2.75rem;
+      margin: 0 0 0 -1px;
+      padding: 0 var(--fh-inset-tile);
+      border-inline-start: var(--_etch-soft);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-caps);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    & > :is(p, span) { color: var(--fh-color-text-subtle); font-weight: var(--fh-weight-medium); }
+    & > a { transition: background-color var(--fh-duration-fast) var(--fh-ease-standard); }
+    & > a:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+    & > a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    & .fh-icon { color: var(--fh-color-accent); }
+    & :is(p, span) a { color: inherit; }
+  }
+
 }
