@@ -31,6 +31,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 20 | Frost: the art blurred and washed below the line | Hero | Backdrop · new option (BKD) | New |
 
 Notes
+- **MEG-3.1 Tile panel is the look to aim for** (Rascode, 2026-11-13: "MEG-3.1 is perfect"). New parts match it: a mono caps head, dashed etch rules, open tiles, large type, the accent for what's picked. The rest of this list ships in v1.1.0 (launch goal objective "New look", due 2026-11-18).
 - **Pickers are full width** (Rascode, 2026-11-13): the typeface and backdrop pickers open as
   full-width panels (the Tile panel, row 9) and show their options as tiles (rows 6 to 8), not the
   current narrow list restyled. There is plenty of room; use it. The colour picker (row 11) is the
