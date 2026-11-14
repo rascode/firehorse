@@ -335,9 +335,9 @@
     font-weight: var(--fh-weight-medium);
   }
 
+  /* An open window takes the list's place in the flow, so the body grows to fit the window's own groups. */
   .fh-sidebar__body:has(> .fh-sidebar__window[data-open]) > :not(.fh-sidebar__window) {
-    visibility: hidden;
-    pointer-events: none;
+    display: none;
   }
 
   .fh-sidebar__window {
@@ -368,6 +368,9 @@
   }
 
   .fh-sidebar__window[data-open] {
+    position: relative;
+    inset: auto;
+    min-block-size: 100%;
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
@@ -494,6 +497,7 @@
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__item {
+    position: relative;
     grid-template-columns: 1fr;
     justify-items: center;
     padding-inline: var(--fh-inset-tight);
@@ -506,8 +510,8 @@
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"],
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="dot"] {
     position: absolute;
-    inset-block-start: -0.2rem;
-    inset-inline-end: -0.35rem;
+    inset-block-start: 0.1rem;
+    inset-inline-end: calc(50% - var(--fh-sidebar-cube) / 2 - 0.45rem);
     clip-path: none;
     inline-size: auto;
     block-size: auto;
