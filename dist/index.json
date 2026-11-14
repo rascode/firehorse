@@ -1798,7 +1798,7 @@
       "anchor": "c-action",
       "page": "/components/actions/",
       "url": "https://firehorse.rascode.dev/components/actions/action-and-link/",
-      "summary": "Section CTAs and card actions: mono caps with a dashed underline and an arrow, larger or in a tone. Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with fh-action__phrase.",
+      "summary": "Section CTAs and card actions: mono caps with a dashed underline and an arrow, at the caption size or one step larger (--lg), each in the ink or a tone (data-tone). Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with fh-action__phrase.",
       "classes": [
         "fh-action",
         "fh-action--lg",
@@ -1816,7 +1816,8 @@
           "variants": [
             "ACT-1.1",
             "ACT-1.2",
-            "ACT-1.3"
+            "ACT-1.3",
+            "ACT-1.4"
           ],
           "markup": "<a class=\"fh-action\" href=\"#c-action\" data-fh=\"ACT-1.1\">View all</a>",
           "markupFrom": "variant"
@@ -1837,7 +1838,10 @@
           "name": "Cue",
           "summary": "",
           "variants": [
-            "ACT-3.1"
+            "ACT-3.1",
+            "ACT-3.2",
+            "ACT-3.3",
+            "ACT-3.4"
           ],
           "markup": "<p class=\"fh-action fh-action--cue\" data-fh=\"ACT-3.1\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
           "markupFrom": "variant"
@@ -1858,24 +1862,36 @@
         {
           "id": "ACT-1.2",
           "group": "ACT-1",
+          "name": "Toned",
+          "classes": [
+            "fh-action"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-action\" data-tone=\"teal\" href=\"#c-action\" data-fh=\"ACT-1.2\">Explore data architecture</a>",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-1.3",
+          "group": "ACT-1",
           "name": "Large",
           "classes": [
             "fh-action",
             "fh-action--lg"
           ],
           "config": {},
-          "markup": "<a class=\"fh-action fh-action--lg\" href=\"#c-action\" data-fh=\"ACT-1.2\">View all services</a>",
+          "markup": "<a class=\"fh-action fh-action--lg\" href=\"#c-action\" data-fh=\"ACT-1.3\">View all services</a>",
           "tier": "free"
         },
         {
-          "id": "ACT-1.3",
+          "id": "ACT-1.4",
           "group": "ACT-1",
-          "name": "Toned",
+          "name": "Large, toned",
           "classes": [
-            "fh-action"
+            "fh-action",
+            "fh-action--lg"
           ],
           "config": {},
-          "markup": "<a class=\"fh-action\" data-tone=\"teal\" href=\"#c-action\" data-fh=\"ACT-1.3\">Explore data architecture</a>",
+          "markup": "<a class=\"fh-action fh-action--lg\" data-tone=\"teal\" href=\"#c-action\" data-fh=\"ACT-1.4\">Explore every service</a>",
           "tier": "free"
         },
         {
@@ -1912,6 +1928,47 @@
           ],
           "config": {},
           "markup": "<p class=\"fh-action fh-action--cue\" data-fh=\"ACT-3.1\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-3.2",
+          "group": "ACT-3",
+          "name": "Scroll cue, toned",
+          "classes": [
+            "fh-action",
+            "fh-action--cue",
+            "fh-action__phrase"
+          ],
+          "config": {},
+          "markup": "<p class=\"fh-action fh-action--cue\" data-tone=\"teal\" data-fh=\"ACT-3.2\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-3.3",
+          "group": "ACT-3",
+          "name": "Scroll cue, large",
+          "classes": [
+            "fh-action",
+            "fh-action--cue",
+            "fh-action--lg",
+            "fh-action__phrase"
+          ],
+          "config": {},
+          "markup": "<p class=\"fh-action fh-action--cue fh-action--lg\" data-fh=\"ACT-3.3\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-3.4",
+          "group": "ACT-3",
+          "name": "Scroll cue, large, toned",
+          "classes": [
+            "fh-action",
+            "fh-action--cue",
+            "fh-action--lg",
+            "fh-action__phrase"
+          ],
+          "config": {},
+          "markup": "<p class=\"fh-action fh-action--cue fh-action--lg\" data-tone=\"teal\" data-fh=\"ACT-3.4\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
           "tier": "free"
         }
       ],

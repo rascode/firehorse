@@ -672,17 +672,20 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 
 ### ACT · Action & link
 
-Section CTAs and card actions: mono caps with a dashed underline and an arrow, larger or in a tone. Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with `fh-action__phrase`.
+Section CTAs and card actions: mono caps with a dashed underline and an arrow, at the caption size or one step larger (`--lg`), each in the ink or a tone (`data-tone`). Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with `fh-action__phrase`.
 
 ```html
 <!-- ACT-1.1 · Action › Action -->
 <a class="fh-action" href="#c-action" data-fh="ACT-1.1">View all</a>
 
-<!-- ACT-1.2 · Action › Large -->
-<a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT-1.2">View all services</a>
+<!-- ACT-1.2 · Action › Toned -->
+<a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT-1.2">Explore data architecture</a>
 
-<!-- ACT-1.3 · Action › Toned -->
-<a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT-1.3">Explore data architecture</a>
+<!-- ACT-1.3 · Action › Large -->
+<a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT-1.3">View all services</a>
+
+<!-- ACT-1.4 · Action › Large, toned -->
+<a class="fh-action fh-action--lg" data-tone="teal" href="#c-action" data-fh="ACT-1.4">Explore every service</a>
 
 <!-- ACT-2.1 · Link › Text link -->
 <a class="fh-link" href="#c-action" data-fh="ACT-2.1">Read the case study</a>
@@ -692,6 +695,15 @@ Section CTAs and card actions: mono caps with a dashed underline and an arrow, l
 
 <!-- ACT-3.1 · Cue › Scroll cue -->
 <p class="fh-action fh-action--cue" data-fh="ACT-3.1">The design system built for <u class="fh-action__phrase">modern workflows</u></p>
+
+<!-- ACT-3.2 · Cue › Scroll cue, toned -->
+<p class="fh-action fh-action--cue" data-tone="teal" data-fh="ACT-3.2">The design system built for <u class="fh-action__phrase">modern workflows</u></p>
+
+<!-- ACT-3.3 · Cue › Scroll cue, large -->
+<p class="fh-action fh-action--cue fh-action--lg" data-fh="ACT-3.3">The design system built for <u class="fh-action__phrase">modern workflows</u></p>
+
+<!-- ACT-3.4 · Cue › Scroll cue, large, toned -->
+<p class="fh-action fh-action--cue fh-action--lg" data-tone="teal" data-fh="ACT-3.4">The design system built for <u class="fh-action__phrase">modern workflows</u></p>
 ```
 
 ### MRK · Markers
