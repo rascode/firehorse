@@ -2,12 +2,12 @@
  * Firehorse — Sidenav (NAV)
  * components/navigation · layer fh.components · docs /components/navigation/#NAV
  *
- * Variants:
- *   NAV       flat grouped links
- *   NAV-2     collapsible area (SideNavSection)
- *   NAV-2.1   child link row (no icon)
- *   NAV-2.2   rail flyout
- *   NAV-2.3   nav count badge (NavBadge)
+ * Parts (all in NAV-1.1 Default; NAV-2 is Nav links, nav.css):
+ *   flat      flat grouped links
+ *   area      collapsible area (SideNavSection)
+ *   child     child link row (no icon)
+ *   flyout    rail flyout
+ *   badge     nav count badge (NavBadge)
  *   item      icon plus fh-sidenav__label (fh-sidenav__item), used by SHL-1.2
  */
 
@@ -82,7 +82,7 @@
     }
   }
 
-  /* —— Collapsible area (NAV-2) —— */
+  /* —— Collapsible area —— */
   .fh-sidenav__area {
     display: grid;
     gap: 0;
@@ -161,14 +161,14 @@
     }
   }
 
-  /* Child items — smaller type, no icons (NAV-2.1) */
+  /* Child items — smaller type, no icons (child) */
   .fh-sidenav__child {
     font-size: var(--fh-text-xs, 0.75rem);
     padding-block: 0.28rem;
     justify-content: flex-start;
   }
 
-  /* —— Nav badge (NAV-2.3) —— */
+  /* —— Nav badge —— */
   .fh-sidenav__badge {
     margin-inline-start: auto;
   }
@@ -178,7 +178,7 @@
     /* red when count > 0 — rose tone */
   }
 
-  /* —— Rail flyout (NAV-2.2) —— */
+  /* —— Rail flyout —— */
   .fh-sidenav-flyout {
     position: fixed;
     z-index: 40;

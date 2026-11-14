@@ -1,6 +1,6 @@
 /*
- * Firehorse — Nav
- * components/navigation · layer fh.components
+ * Firehorse — Nav (NAV-2 Nav links)
+ * components/navigation · layer fh.components · docs /components/navigation/#c-nav
  */
 
 @layer fh.components {
@@ -45,4 +45,60 @@
     }
   }
 
+}
+
+@layer fh.components {
+  /* —— NAV-2 Nav links ——————————————————————————————————————————————————————————
+   * A site's top links in the new look: mono caps, heavy, each in a pill hit area that washes on
+   * hover. The label rolls (fh-roll) and a link that opens a panel carries a chevron in the accent
+   * that turns over while its panel is open. The first label lines up with the column edge.
+   *   <nav class="fh-nav fh-nav--links" aria-label="Site">
+   *     <button class="fh-nav__link" type="button" popovertarget="docs"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+   *     <a class="fh-nav__link" href="/patterns/"><span class="fh-roll">Design patterns</span></a>
+   *     <div id="docs" popover class="fh-mega fh-mega--tiles">…</div>
+   *   </nav>
+   * Open state: aria-expanded="true" on the link, or a popover inside the nav that is open (one
+   * panel per nav). aria-current="page" washes the link too. Knob --fh-nav-size. */
+  .fh-nav--links {
+    grid-area: auto;
+    gap: 0;
+    margin-inline-start: calc(-1 * var(--fh-inset-control));
+
+    & .fh-nav__link {
+      gap: 0.35em;
+      block-size: 1.875rem;
+      padding: 0 var(--fh-inset-control);
+      border-radius: var(--fh-radius-pill);
+      font-size: var(--fh-nav-size, calc(var(--fh-text-label) * 1.1));
+      font-weight: var(--fh-weight-heavy);
+      letter-spacing: calc(var(--fh-tracking-caps) / 3);
+      white-space: nowrap;
+      opacity: 1;
+      cursor: var(--fh-cursor-action, pointer);
+      transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+      &::after { content: none; } /* the icon is the chevron here */
+      & > .fh-icon {
+        --fh-icon-size: 1.05em;
+        color: var(--fh-color-accent-text, var(--fh-color-accent));
+        transition: rotate 200ms var(--fh-ease-out);
+      }
+      &:is(:hover, :focus-visible, [aria-current="page"], [aria-expanded="true"]) {
+        background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+      }
+      &:focus-visible {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: 2px;
+      }
+      &[aria-expanded="true"] > .fh-icon { rotate: 180deg; }
+    }
+  }
+  .fh-nav--links:has(:popover-open) .fh-nav__link[popovertarget] {
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+
+    & > .fh-icon { rotate: 180deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fh-nav--links .fh-nav__link, .fh-nav--links .fh-nav__link > .fh-icon { transition: none; }
+  }
 }
