@@ -1842,39 +1842,8 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-.site-hc__bgs ul.site-hc__bgs-grid {
-  grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr));
-  gap: var(--fh-space-2);
-}
-.site-hc__bgs .site-hc__bgs-grid li + li { border: 0; }
-.site-hc__bgs .site-hc__bgs-grid button {
-  display: grid;
-  grid-template-columns: none;
-  gap: 0.3rem;
-  padding: 0;
-  background: none;
-}
-.site-hc__bgs-photo {
-  display: block;
-  aspect-ratio: 4 / 3;
-  border-radius: 4px;
-  border: var(--fh-border-thin) solid var(--fh-color-etch, var(--fh-color-border));
-  background: var(--fh-color-surface, var(--fh-color-canvas)) center / cover no-repeat;
-  transition: scale 160ms ease;
-}
-.site-hc__bgs-grid button:hover .site-hc__bgs-photo { scale: 1.04; }
-.site-hc__bgs-grid button[aria-pressed="true"] .site-hc__bgs-photo { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-accent); }
-.site-hc__bgs-grid button[aria-pressed="true"] { background: none; }
-.site-hc__bgs-cap {
-  overflow: hidden;
-  font: 600 0.6rem / 1.2 var(--fh-font-mono);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--fh-color-text-subtle);
-}
-.site-hc__bgs-grid button[aria-pressed="true"] .site-hc__bgs-cap { color: var(--fh-color-text); }
+/* The photos: option tiles, swatch (TIL-3.3), five or six across. */
+.site-hc__bgs-grid { --fh-tiles-min: 5.5rem; }
 .site-hc__bgs button.site-hc__bgs-fx {
   grid-template-columns: minmax(0, 1fr) auto;
   padding-inline: 0;
