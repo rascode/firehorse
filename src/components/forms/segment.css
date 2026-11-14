@@ -19,10 +19,16 @@
  *     <button class="fh-segment fh-segment--roll" type="button" aria-pressed="false" aria-label="Dark mode">
  *       <span class="fh-segment__roll" aria-hidden="true"><span>Light</span><span>Dark</span></span>
  *     </button>
- *   Knobs: --fh-segment-height (2rem), --fh-segment-bg, --fh-segment-fg, --fh-segment-roll-width.
+ *   Knobs: --fh-segment-bg, --fh-segment-fg, --fh-segment-roll-width.
  *
- * Every variant sets its text at one size, --fh-segment-text (the label size). Add
- * fh-segment--lg to any of them for a step up (the caption size; entities also go sans).
+ * One set of measures for the whole family, so every variant's outer pill is the same height:
+ *   --fh-segment-text          the text (the label size)
+ *   --fh-segment-pad-block     an item's padding, top and bottom (gap-bound)
+ *   --fh-segment-pad-inline    an item's padding, sides (inset-control)
+ *   --fh-segment-frame         the ring between the etch and the items, and between items (item-frame)
+ * A pill that stands alone (an entity chip, the rolling toggle) adds the frame to its padding,
+ * so it matches a switch's outer size. Add fh-segment--lg to any variant for a step up in text
+ * (the caption size; entities also go sans).
  *
  *   SEG-2.2 Mode toggle: a small pill of two or three buttons, the pressed one filled.
  *   The dictation field's Text | Transcribe switch (FLD-2) is one.
@@ -39,32 +45,45 @@
  *     </div>
  */
 @layer fh.components {
-  /* One text size for the whole family: every variant reads --_text. --lg scales it up. */
-  .fh-segment {
+  /* The family's measures (see above). .fh-dictate is the dictation field's own name for the mode toggle. */
+  :is(.fh-segment, .fh-dictate) {
     --_text: var(--fh-segment-text, var(--fh-text-label));
+    --_pad-b: var(--fh-segment-pad-block, var(--fh-gap-bound));
+    --_pad-i: var(--fh-segment-pad-inline, var(--fh-inset-control));
+    --_frame: var(--fh-segment-frame, var(--fh-item-frame));
+    --_etch: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+  }
+  .fh-segment--lg { --_text: var(--fh-segment-text, var(--fh-text-caption)); }
+
+  /* SEG-1.1 Switch, and the frame every grouped variant shares. */
+  :is(.fh-segment, .fh-dictate) {
     display: inline-flex;
     inline-size: fit-content;
     max-inline-size: 100%;
     flex-wrap: wrap;
-    gap: var(--fh-gap-bound);
-    padding: var(--fh-inset-tight);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    gap: var(--_frame);
+    padding: var(--_frame);
+    border: var(--_etch);
     border-radius: var(--fh-radius-pill);
+
+    &[hidden] { display: none; }
 
     & > a, & > button {
       display: inline-flex;
       align-items: center;
       gap: var(--fh-gap-bound);
-      padding: var(--fh-inset-tight) var(--fh-inset-tile);
+      padding: var(--_pad-b) var(--_pad-i);
       border: 0;
       border-radius: var(--fh-radius-pill);
       background: none;
       font-family: var(--fh-font-mono);
       font-size: var(--_text);
       font-weight: var(--fh-weight-medium);
+      line-height: var(--fh-leading-snug);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
       text-decoration: none;
+      white-space: nowrap;
       color: var(--fh-color-text-muted);
       cursor: var(--fh-cursor-action);
     }
@@ -79,46 +98,45 @@
       font-variant-numeric: tabular-nums;
       color: var(--fh-color-text-muted);
     }
+    & > :is(a, button) > :is(svg, .fh-icon) { --_icon: calc(var(--fh-leading-snug) * 1em); --fh-icon-size: var(--_icon); inline-size: var(--_icon); block-size: var(--_icon); vertical-align: 0; }
   }
 
-  /* SEG-1.2 Entities: the switch's pills and type, each chip in its own etch, no outer pill.
-     --lg scales the chips up: sentence case, sans, the small text size. */
+  /* SEG-1.2 Entities: no outer pill; each chip carries the etch and the frame in its own
+     padding, so it is as tall as a switch. --lg: sans, sentence case, the small text size. */
   .fh-segment--entities {
-    border-style: none;
     padding: 0;
+    border: 0;
     & > :is(a, button) {
-      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+      padding: calc(var(--_pad-b) + var(--_frame)) calc(var(--_pad-i) + var(--_frame));
+      border: var(--_etch);
     }
   }
-  /* --lg, on any segment: a step up in size (the caption size). Entities also turn sans and
-     sentence case, at the small text size. */
-  .fh-segment--lg { --_text: var(--fh-segment-text, var(--fh-text-caption)); }
   .fh-segment--entities.fh-segment--lg > :is(a, button) {
-    padding: var(--fh-inset-tight) var(--fh-inset-control);
     text-transform: none;
     letter-spacing: normal;
     font-family: var(--fh-font-sans);
     font-size: var(--fh-text-small);
   }
 
-  /* SEG-2.1 Rolling toggle: the whole pill is the button. Solid ink (black on light, white on
-     dark); the label is a two-line strip in a one-line window that slides up when pressed. */
+  /* SEG-2.1 Rolling toggle: the whole pill is the button, as tall as a switch (its padding is an
+     item's, plus the frame and the etch's width). Solid ink: black on light, white on dark; the
+     label is a two-line strip in a one-line window that slides up when pressed. */
   .fh-segment--roll {
     --_bg: var(--fh-segment-bg, var(--fh-color-text));
     --_fg: var(--fh-segment-fg, var(--fh-color-canvas));
-    --_h: var(--fh-segment-height, 2rem);
 
     flex-wrap: nowrap;
     align-items: center;
-    block-size: var(--_h);
-    padding-block: 0;
-    padding-inline: var(--fh-inset-control);
+    padding:
+      calc(var(--_pad-b) + var(--_frame) + var(--fh-border-thin))
+      calc(var(--_pad-i) + var(--_frame) + var(--fh-border-thin));
     border: 0;
     background-color: var(--_bg);
     color: var(--_fg);
     font-family: var(--fh-font-mono);
     font-size: var(--_text);
     font-weight: var(--fh-weight-bold);
+    line-height: var(--fh-leading-snug);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
     cursor: var(--fh-cursor-action);
@@ -135,29 +153,21 @@
     display: inline-grid;
     justify-items: center;
     inline-size: var(--fh-segment-roll-width, 5.6ch);
-    block-size: 1.2em;
-    line-height: 1.2em;
+    block-size: calc(var(--fh-leading-snug) * 1em); /* one line of the family's leading */
+    line-height: var(--fh-leading-snug);
     overflow: clip;
 
     & > span { transition: translate var(--fh-duration-slow) var(--fh-ease-out); }
   }
   .fh-segment--roll[aria-pressed="true"] .fh-segment__roll > span { translate: 0 -100%; }
 
-  /* SEG-2.2 Mode toggle: tight, small caps, the pressed one filled with the primary. */
+  /* SEG-2.2 Mode toggle (and SEG-2.3 with icons): the switch's frame and items, bold, the
+     pressed one filled with the primary. */
   :is(.fh-segment--mode, .fh-dictate) {
     flex-wrap: nowrap;
-    gap: calc(var(--fh-gap-bound) / 2);
-    padding: calc(var(--fh-gap-bound) / 2);
-    border-color: var(--fh-color-etch);
-
-    &[hidden] { display: none; }
 
     & > button {
-      gap: var(--fh-gap-bound);
-      padding: var(--fh-gap-bound) var(--fh-segment-mode-inline, 0.65rem);
-      font-size: var(--_text);
       font-weight: var(--fh-weight-bold);
-      white-space: nowrap;
       transition:
         background-color var(--fh-duration-base) var(--fh-ease-standard),
         color var(--fh-duration-base) var(--fh-ease-standard);
@@ -167,30 +177,6 @@
         color: var(--fh-color-on-primary);
       }
       &:disabled { opacity: 0.5; cursor: not-allowed; }
-      & > :is(svg, .fh-icon) { --fh-icon-size: 0.8rem; inline-size: 0.8rem; block-size: 0.8rem; vertical-align: 0; }
-    }
-  }
-  /* .fh-dictate isn't an .fh-segment, so it takes the switch's frame and button base here. */
-  .fh-dictate {
-    --_text: var(--fh-segment-text, var(--fh-text-label));
-    display: inline-flex;
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-    border-radius: var(--fh-radius-pill);
-
-    & > button {
-      display: inline-flex;
-      align-items: center;
-      border: 0;
-      border-radius: var(--fh-radius-pill);
-      background: none;
-      color: var(--fh-color-text-muted);
-      font-family: var(--fh-font-mono);
-      letter-spacing: var(--fh-tracking-wider);
-      text-transform: uppercase;
-      cursor: var(--fh-cursor-action);
-
-      &:hover { color: var(--fh-color-text); }
-      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
     }
   }
 
