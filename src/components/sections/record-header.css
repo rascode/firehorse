@@ -41,7 +41,7 @@
     place-items: center;
     inline-size: var(--_size);
     aspect-ratio: 1;
-    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 30%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 30%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, var(--fh-color-surface));
     color: var(--fh-tone, var(--fh-color-text));
@@ -55,11 +55,11 @@
     &[data-state]::after {
       content: "";
       position: absolute;
-      inset-block-end: -0.25rem;
-      inset-inline-end: -0.25rem;
+      inset-block-end: calc(-1 * var(--fh-gap-bound));
+      inset-inline-end: calc(-1 * var(--fh-gap-bound));
       inline-size: 0.8rem;
       aspect-ratio: 1;
-      border: 2px solid var(--fh-color-canvas);
+      border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background-color: var(--fh-color-text-subtle);
     }
@@ -87,7 +87,7 @@
     margin: 0;
     font-size: clamp(1.6rem, 1.2rem + 1.6cqi, 2.25rem);
     font-weight: var(--fh-weight-medium);
-    letter-spacing: -0.02em;
+    letter-spacing: var(--fh-tracking-heading);
     line-height: var(--fh-leading-tight);
     text-wrap: balance;
   }
@@ -139,13 +139,13 @@
 
     & > .fh-eyebrow-pill {
       grid-area: cover;
-      z-index: 1;
+      z-index: var(--fh-z-raised);
       align-self: start;
       margin: var(--fh-gap-grouped-wide);
     }
 
     & > .fh-record__mark {
-      z-index: 1;
+      z-index: var(--fh-z-raised);
       align-self: start;
       margin-block-start: calc(var(--fh-gap-grouped) * -1 - var(--_size) / 2);
       margin-inline-start: var(--fh-gap-sectioned);
@@ -160,7 +160,7 @@
     grid-area: cover;
     block-size: var(--fh-record-cover, 11rem);
     overflow: hidden;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 10%, var(--fh-color-surface));
     background-image:

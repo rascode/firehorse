@@ -17,9 +17,9 @@
     margin: 0;
     padding: var(--fh-item-frame);
     overflow: auto;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-sm);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, var(--fh-color-ink));
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-menu);
     opacity: 0;
@@ -47,7 +47,7 @@
       inline-size: 100%;
       padding: var(--fh-item-block) var(--fh-item-inline);
       border: 0;
-      border-radius: calc(var(--fh-radius-sm) - 1px);
+      border-radius: var(--fh-radius-sm);
       background: none;
       color: inherit;
       font-size: var(--fh-text-small);
@@ -56,7 +56,6 @@
 
       &:is(:hover, :focus-visible) {
         background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
-        outline: none;
       }
     }
 
@@ -148,7 +147,7 @@
     scrollbar-width: thin;
 
     & > .fh-menu__label { margin: 0; padding: var(--fh-inset-control) var(--fh-inset-tile) var(--fh-gap-related); letter-spacing: var(--fh-tracking-caps); font-size: var(--fh-text-label); }
-    & > .fh-tiles { --fh-tiles-min: var(--fh-menu-tiles-min, 8rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min)), 1fr)); border-block-start: var(--_etch-soft); }
+    & > .fh-tiles { --fh-tiles-min: var(--fh-menu-tiles-min, 8rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min, 8rem)), 1fr)); border-block-start: var(--_etch-soft); }
     & > .fh-tiles:has(> .fh-tile--command, > li > .fh-tile--command) { --fh-tiles-min: var(--fh-menu-command-min, 12rem); }
     & > hr { margin: 0; border: 0; border-block-start: var(--_etch-soft); }
   }
@@ -157,13 +156,13 @@
   .fh-menu__head {
     position: sticky;
     inset-block-start: 0;
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-control) var(--fh-inset-tile);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: inherit;
   }
   .fh-menu__title {
@@ -184,7 +183,7 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     padding: var(--fh-gap-bound) var(--fh-gap-related);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 55%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 55%, transparent);
     border-radius: var(--fh-radius-pill);
     color: var(--_ink);
     font-family: var(--fh-font-mono);
@@ -193,7 +192,7 @@
     text-transform: uppercase;
     white-space: nowrap;
 
-    &:not([data-tone]) { --_c: var(--fh-tone-lime); }
+    &:not([data-tone]) { --_c: var(--fh-tone); }
     & > .fh-icon { --fh-icon-size: 1.1em; }
   }
 
@@ -212,7 +211,7 @@
     gap: var(--fh-gap-related);
     min-block-size: 2.25rem;
     padding: 0 var(--fh-inset-tile);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     background: none;
     color: var(--fh-color-text);
@@ -232,7 +231,7 @@
 
   /* Ask: a row along the foot that opens into a short form (Firehorse fields inside). */
   .fh-menu__ask {
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
     & > summary {
       display: flex;
