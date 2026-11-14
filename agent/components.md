@@ -2031,10 +2031,14 @@ One fact per tile: label with an icon, the value, a line under it and where it c
 
 ### THS · Theme select
 
-A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
+A native select, or a small colour menu: a dot and a mono caps label per colour, the picked dot ringed, a check in the accent. firehorse.js sets data-fh-theme (on <html>, or on data-fh-theme-target) and remembers it.
 
 ```html
-<div class="fh-field"><label for="theme-select-demo">Theme</label><select class="fh-select" id="theme-select-demo" data-fh-theme-select data-fh="THS"><option value>Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select></div>
+<!-- THS-1.1 · Select › Select -->
+<div class="fh-field" data-fh="THS-1.1"><label for="theme-select-demo">Theme</label><select class="fh-select" id="theme-select-demo" data-fh-theme-select><option value>Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select></div>
+
+<!-- THS-2.1 · Colour menu › Colour menu -->
+<div class="fh-theme-menu" id="ths-colours-demo" role="radiogroup" aria-label="Theme (preview)" data-fh="THS-2.1"><header class="fh-theme-menu__head"><span class="fh-theme-menu__title">Theme</span><span class="fh-theme-menu__count">4</span></header><ul class="fh-theme-menu__list"><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#b33000, #da3a00)"><input type="radio" name="ths-colours-demo" value data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false" checked><i class="fh-theme-menu__dot" aria-hidden="true"></i>Firehorse</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#2b579a, #6f9fe8)"><input type="radio" name="ths-colours-demo" value="mustang" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Mustang</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#161616, #ece8df)"><input type="radio" name="ths-colours-demo" value="friesian" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Friesian</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#7a5200, #d6a640)"><input type="radio" name="ths-colours-demo" value="akhal-teke" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Akhal-Teke</label></li></ul></div>
 ```
 
 ### TML · Timelines

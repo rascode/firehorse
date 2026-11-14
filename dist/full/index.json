@@ -15051,17 +15051,86 @@
       "anchor": "themes",
       "page": "/theming/",
       "url": "https://firehorse.rascode.dev/theming/theme-select/",
-      "summary": "A native select. firehorse.js sets data-fh-theme on <html> and remembers it.",
+      "summary": "A native select, or a small colour menu: a dot and a mono caps label per colour, the picked dot ringed, a check in the accent. firehorse.js sets data-fh-theme (on <html>, or on data-fh-theme-target) and remembers it.",
       "classes": [
         "fh-field",
-        "fh-select"
+        "fh-select",
+        "fh-theme-menu",
+        "fh-theme-menu__head",
+        "fh-theme-menu__title",
+        "fh-theme-menu__count",
+        "fh-theme-menu__list",
+        "fh-theme-menu__item",
+        "fh-theme-menu__dot"
       ],
-      "markup": "<div class=\"fh-field\"><label for=\"theme-select-demo\">Theme</label><select class=\"fh-select\" id=\"theme-select-demo\" data-fh-theme-select data-fh=\"THS\"><option value>Firehorse</option><option value=\"mustang\">Mustang</option><option value=\"friesian\">Friesian</option><option value=\"akhal-teke\">Akhal-Teke</option></select></div>",
-      "groups": [],
-      "variants": [],
+      "markup": "<div class=\"fh-field\" data-fh=\"THS-1.1\"><label for=\"theme-select-demo\">Theme</label><select class=\"fh-select\" id=\"theme-select-demo\" data-fh-theme-select><option value>Firehorse</option><option value=\"mustang\">Mustang</option><option value=\"friesian\">Friesian</option><option value=\"akhal-teke\">Akhal-Teke</option></select></div>",
+      "groups": [
+        {
+          "id": "THS-1",
+          "name": "Select",
+          "summary": "",
+          "variants": [
+            "THS-1.1"
+          ],
+          "markup": "<div class=\"fh-field\" data-fh=\"THS-1.1\"><label for=\"theme-select-demo\">Theme</label><select class=\"fh-select\" id=\"theme-select-demo\" data-fh-theme-select><option value>Firehorse</option><option value=\"mustang\">Mustang</option><option value=\"friesian\">Friesian</option><option value=\"akhal-teke\">Akhal-Teke</option></select></div>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "THS-2",
+          "name": "Colour menu",
+          "summary": "",
+          "variants": [
+            "THS-2.1"
+          ],
+          "markup": "<div class=\"fh-theme-menu\" id=\"ths-colours-demo\" role=\"radiogroup\" aria-label=\"Theme (preview)\" data-fh=\"THS-2.1\"><header class=\"fh-theme-menu__head\"><span class=\"fh-theme-menu__title\">Theme</span><span class=\"fh-theme-menu__count\">4</span></header><ul class=\"fh-theme-menu__list\"><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#b33000, #da3a00)\"><input type=\"radio\" name=\"ths-colours-demo\" value data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\" checked><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Firehorse</label></li><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#2b579a, #6f9fe8)\"><input type=\"radio\" name=\"ths-colours-demo\" value=\"mustang\" data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\"><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Mustang</label></li><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#161616, #ece8df)\"><input type=\"radio\" name=\"ths-colours-demo\" value=\"friesian\" data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\"><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Friesian</label></li><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#7a5200, #d6a640)\"><input type=\"radio\" name=\"ths-colours-demo\" value=\"akhal-teke\" data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\"><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Akhal-Teke</label></li></ul></div>",
+          "markupFrom": "variant"
+        }
+      ],
+      "variants": [
+        {
+          "id": "THS-1.1",
+          "group": "THS-1",
+          "name": "Select",
+          "classes": [
+            "fh-field",
+            "fh-select"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-field\" data-fh=\"THS-1.1\"><label for=\"theme-select-demo\">Theme</label><select class=\"fh-select\" id=\"theme-select-demo\" data-fh-theme-select><option value>Firehorse</option><option value=\"mustang\">Mustang</option><option value=\"friesian\">Friesian</option><option value=\"akhal-teke\">Akhal-Teke</option></select></div>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "THS-2.1",
+          "group": "THS-2",
+          "name": "Colour menu",
+          "classes": [
+            "fh-theme-menu",
+            "fh-theme-menu__head",
+            "fh-theme-menu__title",
+            "fh-theme-menu__count",
+            "fh-theme-menu__list",
+            "fh-theme-menu__item",
+            "fh-theme-menu__dot"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-theme-menu\" id=\"ths-colours-demo\" role=\"radiogroup\" aria-label=\"Theme (preview)\" data-fh=\"THS-2.1\"><header class=\"fh-theme-menu__head\"><span class=\"fh-theme-menu__title\">Theme</span><span class=\"fh-theme-menu__count\">4</span></header><ul class=\"fh-theme-menu__list\"><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#b33000, #da3a00)\"><input type=\"radio\" name=\"ths-colours-demo\" value data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\" checked><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Firehorse</label></li><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#2b579a, #6f9fe8)\"><input type=\"radio\" name=\"ths-colours-demo\" value=\"mustang\" data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\"><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Mustang</label></li><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#161616, #ece8df)\"><input type=\"radio\" name=\"ths-colours-demo\" value=\"friesian\" data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\"><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Friesian</label></li><li><label class=\"fh-theme-menu__item\" style=\"--fh-theme-dot: light-dark(#7a5200, #d6a640)\"><input type=\"radio\" name=\"ths-colours-demo\" value=\"akhal-teke\" data-fh-theme-select data-fh-theme-target=\"#ths-colours-demo\" data-fh-theme-persist=\"false\"><i class=\"fh-theme-menu__dot\" aria-hidden=\"true\"></i>Akhal-Teke</label></li></ul></div>",
+          "status": "live",
+          "tier": "free"
+        }
+      ],
       "stageClasses": [
+        "fh-stack",
+        "fh-stack--lg",
         "fh-field",
-        "fh-select"
+        "fh-select",
+        "fh-theme-menu",
+        "fh-theme-menu__head",
+        "fh-theme-menu__title",
+        "fh-theme-menu__count",
+        "fh-theme-menu__list",
+        "fh-theme-menu__item",
+        "fh-theme-menu__dot"
       ],
       "status": "live",
       "tier": "free"
@@ -15970,6 +16039,7 @@
     "fh-app-dock": "ADK",
     "fh-meter-level": "MIX",
     "fh-canvas": "THB",
+    "fh-theme-menu": "THS",
     "fh-keyfield": "KEY",
     "fh-etched-split": "CIN",
     "fh-bleed": "CIN",
@@ -16178,6 +16248,7 @@
     "fh-tags",
     "fh-testimonial",
     "fh-textarea",
+    "fh-theme-menu",
     "fh-thumbs",
     "fh-tier",
     "fh-tiers",

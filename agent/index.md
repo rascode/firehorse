@@ -77,7 +77,7 @@
 | `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/table/) |
 | `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
-| `THS` | Theme select | Themes | — | [open](https://firehorse.rascode.dev/theming/theme-select/) |
+| `THS` | Theme select | Themes | 1 Select (1) · 2 Colour menu (1) | [open](https://firehorse.rascode.dev/theming/theme-select/) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
 | `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
 | `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
@@ -2288,11 +2288,25 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## THS · Theme select
 
-A native select. firehorse.js sets data-fh-theme on <html> and remembers it.
+A native select, or a small colour menu: a dot and a mono caps label per colour, the picked dot ringed, a check in the accent. firehorse.js sets data-fh-theme (on <html>, or on data-fh-theme-target) and remembers it.
 
-Classes: `fh-field` `fh-select`
+Classes: `fh-field` `fh-select` `fh-theme-menu` `fh-theme-menu__head` `fh-theme-menu__title` `fh-theme-menu__count` `fh-theme-menu__list` `fh-theme-menu__item` `fh-theme-menu__dot`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/theming/theme-select/.
+### THS-1 · Select
+
+#### THS-1.1 · Select
+
+```html
+<div class="fh-field" data-fh="THS-1.1"><label for="theme-select-demo">Theme</label><select class="fh-select" id="theme-select-demo" data-fh-theme-select><option value>Firehorse</option><option value="mustang">Mustang</option><option value="friesian">Friesian</option><option value="akhal-teke">Akhal-Teke</option></select></div>
+```
+
+### THS-2 · Colour menu
+
+#### THS-2.1 · Colour menu
+
+```html
+<div class="fh-theme-menu" id="ths-colours-demo" role="radiogroup" aria-label="Theme (preview)" data-fh="THS-2.1"><header class="fh-theme-menu__head"><span class="fh-theme-menu__title">Theme</span><span class="fh-theme-menu__count">4</span></header><ul class="fh-theme-menu__list"><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#b33000, #da3a00)"><input type="radio" name="ths-colours-demo" value data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false" checked><i class="fh-theme-menu__dot" aria-hidden="true"></i>Firehorse</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#2b579a, #6f9fe8)"><input type="radio" name="ths-colours-demo" value="mustang" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Mustang</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#161616, #ece8df)"><input type="radio" name="ths-colours-demo" value="friesian" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Friesian</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#7a5200, #d6a640)"><input type="radio" name="ths-colours-demo" value="akhal-teke" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Akhal-Teke</label></li></ul></div>
+```
 
 ## TML · Timelines
 
