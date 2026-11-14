@@ -27,8 +27,8 @@
     gap: 0;
     align-items: stretch;
     counter-reset: fh-tier;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
   }
 
@@ -41,8 +41,8 @@
     padding: var(--fh-inset-card) var(--_pad) var(--fh-inset-card);
     border: 0;
     border-radius: 0;
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     counter-increment: fh-tier;
     container: fh-tier / inline-size;
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -70,7 +70,7 @@
       margin-inline: calc(var(--_pad) * -1);
       padding-inline: var(--_pad);
       padding-block-end: var(--fh-inset-card);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
     & > header > .fh-tier__price { margin-inline: 0; padding: 0; border: 0; }
 
@@ -92,7 +92,7 @@
       position: absolute;
       inset-block-start: calc(var(--fh-gap-sectioned) - 0.1rem);
       inset-inline-end: var(--_pad);
-      padding: 0.2rem 0.6rem;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight);
       border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone);
       color: var(--fh-color-on-tone);
@@ -137,7 +137,7 @@
       font-family: var(--fh-font-figure);
       font-size: clamp(2.3rem, 1.5rem + 4cqi, 2.9rem);
       font-weight: var(--fh-weight-medium);
-      letter-spacing: -0.045em;
+      letter-spacing: var(--fh-tracking-tightest);
       font-variant-numeric: tabular-nums;
     }
   }

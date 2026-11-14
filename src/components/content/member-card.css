@@ -120,9 +120,9 @@
     margin: 0;
     font-family: var(--fh-font-display);
     font-size: clamp(1.75rem, 12cqi, 2.75rem);
-    font-weight: 400;
+    font-weight: var(--fh-weight-regular);
     line-height: 1.02;
-    letter-spacing: -0.03em;
+    letter-spacing: var(--fh-tracking-snug);
     text-wrap: balance;
   }
   .fh-member__id {
@@ -144,7 +144,7 @@
     gap: var(--fh-gap-grouped-wide);
     margin: clamp(var(--fh-gap-sectioned), 9cqi, var(--fh-gap-sectioned)) 0 0;
     padding-block-start: var(--fh-inset-tile);
-    border-block-start: 1px dotted var(--fh-color-text-subtle);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dotted) var(--fh-color-text-subtle);
   }
   .fh-member__facts > div:last-child { text-align: end; }
   .fh-member__facts :is(dt, dd),
@@ -180,7 +180,7 @@
     stroke: none;
     font-family: var(--fh-font-mono);
     font-size: calc(8.4 * 1px); /* SVG user units in the stamp viewBox, not a reading size */
-    letter-spacing: 0.12em;
+    letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
     transform-box: view-box;
     transform-origin: 50% 50%;
@@ -207,7 +207,7 @@
    * supported the body keeps its place and only takes the pane. */
   .fh-member > .fh-member__body {
     position: relative;
-    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-card-content-border, transparent);
     border-radius: var(--fh-card-content-radius, 0);
     background-color: var(--fh-card-content-bg, transparent);
     backdrop-filter: var(--fh-card-content-backdrop, none);
@@ -246,7 +246,7 @@
     gap: var(--fh-gap-grouped-wide);
     margin: var(--fh-gap-grouped-wide) 0 0;
     padding-block-start: var(--fh-inset-tile);
-    border-block-start: 1px solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
@@ -304,7 +304,7 @@
       animation-name: fh-member-smear;
     }
     .fh-member__badge {
-      animation: fh-member-sheen 9s ease-in-out infinite alternate;
+      animation: fh-member-sheen 9s var(--fh-ease-in-out) infinite alternate;
     }
     .fh-member__glyphs::after {
       animation: fh-member-glyphs-b calc(var(--fh-member-glitch, 2.8s) * 3) steps(1, end) infinite;
