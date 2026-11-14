@@ -28,7 +28,7 @@
     min-inline-size: 2.5rem;
     min-block-size: 2.5rem;
     padding: 0 var(--fh-inset-tight);
-    border: var(--fh-border-thin) solid transparent;
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
     border-radius: var(--fh-radius-sm);
     background: none;
     color: var(--fh-color-text);
@@ -120,7 +120,7 @@
   }
   :is(.fh-burger[aria-expanded="true"], .fh-burger:has(+ :popover-open), .fh-burger--open).fh-burger--dots > span {
     &::before,
-    &::after { inline-size: var(--_w); block-size: var(--_t); inset-inline-start: calc((var(--_w) - 4px) / -2); }
+    &::after { inline-size: var(--_w); block-size: var(--_t); inset-inline-start: calc((var(--_w) - var(--fh-gap-bound)) / -2); }
   }
 
   /* Label: Menu ↔ Close. */

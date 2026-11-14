@@ -14,14 +14,14 @@
   .fh-footer__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
   }
 
   .fh-footer__column {
     padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
     & h2,
     & h3 {
@@ -56,7 +56,7 @@
 
     & a {
       color: var(--fh-color-text-muted);
-      font-size: 0.84rem;
+      font-size: var(--fh-text-small);
       font-weight: var(--fh-weight-book);
       letter-spacing: var(--fh-tracking-body);
       text-decoration: none;

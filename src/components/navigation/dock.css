@@ -38,7 +38,7 @@
     position: sticky;
     inset-block-start: var(--fh-dock-offset, var(--fh-header-height));
     z-index: calc(var(--fh-z-sticky) - 1);
-    border-block-end: var(--fh-border-thin) dashed transparent;
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
     /* A frame (inline-size) that can also report when it is stuck. */
     container: fh-frame / inline-size scroll-state;
     transition:
@@ -61,7 +61,7 @@
       flex: 0 4 auto;
       flex-wrap: nowrap;
       min-inline-size: 0;
-      padding-block: 3px;
+      padding-block: var(--fh-gap-bound);
       overflow-x: auto;
       scrollbar-width: none;
       mask-image: linear-gradient(to right, black calc(100% - 1.5rem), transparent);
@@ -91,7 +91,7 @@
     inline-size: 2rem;
     aspect-ratio: 1;
     overflow: hidden;
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 45%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
@@ -109,7 +109,7 @@
   .fh-dock__text {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 0.18rem;
+    gap: var(--fh-gap-bound);
     min-inline-size: 0;
   }
 
@@ -153,8 +153,8 @@
     visibility: hidden;
     translate: -0.35rem 0;
     transition:
-      opacity var(--fh-duration-base) var(--fh-ease-standard) 0.1s,
-      translate var(--fh-duration-base) var(--fh-ease-out) 0.1s,
+      opacity var(--fh-duration-base) var(--fh-ease-standard) var(--fh-duration-instant),
+      translate var(--fh-duration-base) var(--fh-ease-out) var(--fh-duration-instant),
       visibility 0s linear var(--fh-duration-slow);
   }
 
@@ -272,7 +272,7 @@
       inset-block: 0;
       inset-inline: calc((100% - 100cqi) / 2);
       z-index: -1;
-      border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 12%, transparent);
       background-color: color-mix(in oklab, var(--fh-color-canvas) 92%, transparent);
       backdrop-filter: blur(var(--fh-blur-chrome));
       pointer-events: none;
@@ -323,7 +323,7 @@
     }
     .fh-dock__bar > .fh-chips > .fh-chip {
       scroll-snap-align: start;
-      padding: 0.3rem 0.65rem;
+      padding: var(--fh-gap-bound) var(--fh-item-inline);
       font-size: var(--fh-text-caption);
     }
 
