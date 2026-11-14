@@ -27,7 +27,7 @@
 
     & > section {
       display: grid;
-      gap: 0.15rem;
+      gap: var(--fh-gap-bound);
     }
 
     & .fh-label {
@@ -107,7 +107,7 @@
     place-items: center;
     inline-size: 1.75rem;
     block-size: 1.75rem;
-    margin-inline-end: 0.15rem;
+    margin-inline-end: var(--fh-gap-bound);
     border: 0;
     border-radius: var(--fh-radius-sm);
     background: transparent;
@@ -136,9 +136,9 @@
   .fh-sidenav__children {
     display: grid;
     gap: 0.1rem;
-    margin-inline-start: 0.85rem;
-    padding-inline-start: 0.65rem;
-    border-inline-start: 1px solid color-mix(in oklab, var(--fh-color-etch) 70%, transparent);
+    margin-inline-start: var(--fh-gap-grouped);
+    padding-inline-start: var(--fh-inset-control);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-etch) 70%, transparent);
     overflow: hidden;
   }
 
@@ -164,7 +164,7 @@
   /* Child items — smaller type, no icons (child) */
   .fh-sidenav__child {
     font-size: var(--fh-text-xs, 0.75rem);
-    padding-block: 0.28rem;
+    padding-block: var(--fh-gap-bound);
     justify-content: flex-start;
   }
 
@@ -188,14 +188,14 @@
     border-radius: var(--fh-radius-md);
     background: var(--fh-color-surface-menu, var(--fh-color-surface-raised));
     box-shadow: var(--fh-shadow-elevated, 0 8px 28px color-mix(in oklab, var(--fh-color-text) 18%, transparent));
-    border: 1px solid color-mix(in oklab, var(--fh-color-etch) 60%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-etch) 60%, transparent);
   }
 
   .fh-sidenav-flyout__title {
     margin: 0 0 var(--fh-gap-related);
     padding-inline: var(--fh-inset-tight);
     font-size: var(--fh-text-small);
-    font-weight: 600;
+    font-weight: var(--fh-weight-bold);
     color: var(--fh-color-text);
   }
 

@@ -10,7 +10,7 @@
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     padding: var(--fh-inset-tight) var(--fh-inset-tight) calc(var(--fh-inset-tight) + env(safe-area-inset-bottom, 0px));
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     background-color: color-mix(in oklab, var(--fh-color-surface-chrome) 92%, transparent);
     backdrop-filter: blur(var(--fh-blur-chrome, 12px));
 
@@ -18,7 +18,7 @@
       position: relative;
       display: grid;
       justify-items: center;
-      gap: 0.2rem;
+      gap: var(--fh-gap-bound);
       padding: var(--fh-inset-tight) 0;
       border-radius: var(--fh-radius-md);
       color: var(--fh-color-text-subtle);
@@ -27,8 +27,8 @@
 
       & > .fh-icon { font-size: 1.25rem; }
       &[aria-current="page"] { color: var(--fh-tone, var(--fh-color-text)); }
-      &[aria-current="page"]::before { content: ""; position: absolute; inset-block-start: -0.4rem; inline-size: 1.5rem; block-size: 2px; border-radius: 2px; background-color: currentColor; }
-      & > b { position: absolute; inset-block-start: 0.1rem; inset-inline-start: calc(50% + 0.35rem); min-inline-size: 1rem; padding: 0 0.25rem; border-radius: var(--fh-radius-pill); background-color: var(--fh-color-danger); color: var(--fh-color-on-media); font-size: var(--fh-text-micro); line-height: 1rem; text-align: center; }
+      &[aria-current="page"]::before { content: ""; position: absolute; inset-block-start: calc(-1 * var(--fh-gap-related)); inline-size: 1.5rem; block-size: 2px; border-radius: var(--fh-radius-sm); background-color: currentColor; }
+      & > b { position: absolute; inset-block-start: 0.1rem; inset-inline-start: calc(50% + var(--fh-gap-bound)); min-inline-size: 1rem; padding: 0 var(--fh-gap-bound); border-radius: var(--fh-radius-pill); background-color: var(--fh-color-danger); color: var(--fh-color-on-media); font-size: var(--fh-text-micro); line-height: 1rem; text-align: center; }
     }
   }
 

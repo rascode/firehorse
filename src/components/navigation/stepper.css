@@ -40,7 +40,7 @@
         flex: none;
         inline-size: 1.6rem;
         aspect-ratio: 1;
-        border: var(--fh-border-thick) dashed var(--fh-color-etch);
+        border: var(--fh-border-thick) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         border-radius: var(--fh-radius-round);
         font-size: var(--fh-text-micro);
       }
@@ -50,14 +50,14 @@
         content: "";
         flex: 1;
         min-inline-size: 1rem;
-        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+        border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       }
 
       &[aria-current] {
         color: var(--fh-color-text);
 
         &::before {
-          border-style: solid;
+          border-style: var(--fh-card-border-style, solid);
           border-color: var(--fh-tone);
           color: var(--fh-tone);
         }
@@ -68,7 +68,7 @@
 
         &::before {
           content: "✓";
-          border-style: solid;
+          border-style: var(--fh-card-border-style, solid);
           border-color: var(--fh-tone);
           background-color: var(--fh-tone);
           color: var(--fh-color-on-tone);
@@ -76,7 +76,7 @@
         }
 
         &::after {
-          border-block-start-style: solid;
+          border-block-start-style: var(--fh-card-border-style, solid);
           border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
         }
       }

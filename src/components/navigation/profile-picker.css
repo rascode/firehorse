@@ -41,8 +41,8 @@
     align-items: center;
     gap: var(--fh-gap-related);
     max-inline-size: 16rem;
-    padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    padding: var(--fh-gap-bound) var(--fh-inset-control) var(--fh-gap-bound) var(--fh-gap-bound);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     background: none;
     color: var(--fh-color-text);
@@ -64,7 +64,7 @@
     }
 
     &:hover {
-      border-style: solid;
+      border-style: var(--fh-card-border-style, solid);
       background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
     }
 
@@ -74,7 +74,7 @@
     }
 
     &:has(+ .fh-profile-menu:popover-open) {
-      border-style: solid;
+      border-style: var(--fh-card-border-style, solid);
       border-color: var(--fh-color-border-strong);
       background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
 
@@ -109,7 +109,7 @@
   }
 
   .fh-profile--compact {
-    padding: 0.2rem;
+    padding: var(--fh-gap-bound);
 
     & > .fh-profile__who,
     &::after { display: none; }
@@ -119,7 +119,7 @@
    * extends it to the full chip (name, handle, chevron). */
   .fh-profile--reveal {
     gap: 0;
-    padding: 0.2rem;
+    padding: var(--fh-gap-bound);
     transition:
       background-color var(--fh-duration-fast) var(--fh-ease-standard),
       border-color var(--fh-duration-fast) var(--fh-ease-standard),
@@ -144,7 +144,7 @@
     &:hover,
     &:focus-visible,
     &:has(+ .fh-profile-menu:popover-open) {
-      padding: 0.2rem var(--fh-inset-control) 0.2rem 0.2rem;
+      padding: var(--fh-gap-bound) var(--fh-inset-control) var(--fh-gap-bound) var(--fh-gap-bound);
 
       & > .fh-profile__who {
         max-inline-size: 12rem;
@@ -183,7 +183,7 @@
     gap: var(--fh-gap-grouped);
     margin: calc(-1 * var(--fh-gap-bound)) calc(-1 * var(--fh-gap-bound)) var(--fh-gap-bound);
     padding: var(--fh-inset-tile) var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 5%, transparent);
   }
 
@@ -215,15 +215,15 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
     margin: 0 0 var(--fh-gap-bound);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-sm);
 
     & > div {
       display: grid;
-      gap: 0.15rem;
+      gap: var(--fh-gap-bound);
       padding: var(--fh-inset-tight) var(--fh-inset-control);
 
-      & + div { border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch); }
+      & + div { border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch); }
     }
 
     & dt {
@@ -249,7 +249,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--fh-gap-grouped);
-    padding: 0.35rem 0.65rem;
+    padding: var(--fh-gap-bound) var(--fh-item-inline);
     font-size: var(--fh-text-small);
 
     & > :first-child {
@@ -262,6 +262,6 @@
   }
 
   /* A profile to switch to: avatar and two lines, check when current. */
-  .fh-menu > .fh-profile-menu__option { gap: var(--fh-gap-related); padding-block: 0.4rem; }
+  .fh-menu > .fh-profile-menu__option { gap: var(--fh-gap-related); padding-block: var(--fh-inset-tight); }
 
 }

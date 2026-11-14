@@ -15,14 +15,14 @@
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
-    border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 14%, transparent);
 
     & > :is(button, a) {
       display: inline-flex;
       align-items: center;
       gap: var(--fh-gap-related);
       flex: none;
-      padding: 0.7rem var(--fh-inset-tile);
+      padding: var(--fh-inset-control) var(--fh-inset-tile);
       border: 0;
       background: none;
       color: var(--fh-color-text-muted);
@@ -55,7 +55,7 @@
   .fh-tabs--sub {
     border-block-end-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
 
-    & > :is(button, a) { padding: 0.5rem var(--fh-gap-grouped); font-size: var(--fh-text-caption); }
+    & > :is(button, a) { padding: var(--fh-inset-tight) var(--fh-gap-grouped); font-size: var(--fh-text-caption); }
   }
 
   .fh-tabs--mono > :is(button, a) {
