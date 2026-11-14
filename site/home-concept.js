@@ -103,6 +103,31 @@ if (agents && tagTop && turn && marks) {
   fit();
 }
 
+// The announcement chip above the logo: its top on the cap line of "The design system".
+// Layout boxes (offsetTop), not painted ones, so the intro's transforms don't move the target;
+// the cap line from the face's own metrics, so any typeface from the picker lines up.
+{
+  const chip = document.querySelector(".site-hc__announce");
+  const top = document.querySelector(".site-hc__tag-top");
+  const box = document.querySelector(".site-hc__marks");
+  if (chip && top && box) {
+    const ctx = document.createElement("canvas").getContext("2d");
+    const capTop = (el) => {
+      const cs = getComputedStyle(el);
+      ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const m = ctx.measureText("T");
+      const half = (el.offsetHeight - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2;
+      return half + m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
+    };
+    const offsetIn = (el) => { let y = 0; for (let n = el; n && n !== box; n = n.offsetParent) y += n.offsetTop; return y; };
+    const place = () => box.style.setProperty("--hc-announce-y", `${Math.round(offsetIn(top) + capTop(top))}px`);
+    (document.fonts?.ready ?? Promise.resolve()).then(place);
+    addEventListener("resize", place, { passive: true });
+    setTimeout(place, 1800);
+    place();
+  }
+}
+
 // The lede starts on the underscore's left edge (the spine's line): glyph edge on the line.
 {
   const bar2 = document.querySelector(".site-hc__fh .site-mark__bar");

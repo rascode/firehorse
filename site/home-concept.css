@@ -2266,3 +2266,18 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    photo's most vivid colour). Its dot shows that colour, ringed with a dashed etch. */
 .site-hc__roots button > i.site-hc__roots-auto { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-text-subtle); outline: 1px dashed var(--fh-color-text-subtle); outline-offset: 3px; }
 .site-hc__roots button[aria-pressed="true"] > i.site-hc__roots-auto { outline-color: var(--_c); }
+
+/* —— Above the logo: the announcement chip (EYE-5.2) ——————————————————————————————————
+   On the logo's left edge. Its top is level with the cap line of "The design system" on the
+   right: home-concept.js measures both and sets --hc-announce-y (from the marks' top). Without
+   the script it rests just above the logo. */
+.site-hc__announce {
+  --fh-tone: var(--fh-color-accent);
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: var(--hc-announce-y, auto) auto;
+  margin: 0;
+  inline-size: max-content;
+  max-inline-size: none;
+}
+:root:not(.fh-js) .site-hc__announce { inset-block: auto calc(100% + var(--fh-space-4)); }
