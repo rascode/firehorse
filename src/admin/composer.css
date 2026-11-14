@@ -20,7 +20,7 @@
     align-items: flex-end;
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-tight);
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
     backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.2);
@@ -41,6 +41,10 @@
     & > .fh-textarea:focus-visible,
     & > .fh-field--dictate > .fh-textarea:focus-visible { box-shadow: none; outline: none; }
     &:focus-within { border-color: var(--fh-color-border-strong); }
+    &:has(:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
   }
 
   /* --attach: a row under the text for what the entry is filed under
@@ -59,7 +63,7 @@
     min-block-size: 3.5rem;
     max-block-size: 14rem;
     border: 0;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: 0;
     background-color: transparent;
     resize: none;
@@ -77,9 +81,9 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     padding-block-start: var(--fh-inset-tight);
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
-    & > .fh-input { min-block-size: 1.75rem; padding-block: 0.2rem; font-size: var(--fh-text-small); }
+    & > .fh-input { min-block-size: 1.75rem; padding-block: var(--fh-gap-bound); font-size: var(--fh-text-small); }
     /* A tag field (fh-tags) leads the row and takes the room left over. */
     & > .fh-tags:not(.fh-tags--inline) { flex: 1 1 22rem; min-block-size: 2.25rem; }
   }
@@ -108,7 +112,7 @@
     aspect-ratio: 1;
     border-radius: var(--fh-radius-round);
     background-color: var(--fh-color-danger);
-    animation: fh-dictate-blink 1.2s ease-in-out infinite;
+    animation: fh-dictate-blink var(--fh-duration-scene) var(--fh-ease-in-out) infinite;
   }
 
   @container fh-app (inline-size < 40rem) {

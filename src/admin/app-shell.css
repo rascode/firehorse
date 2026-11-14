@@ -82,12 +82,12 @@
   }
 
   .fh-app__side {
-    flex: 1 1 var(--fh-app-side);
+    flex: 1 1 var(--fh-app-side, 15rem);
     position: sticky;
     inset-block-start: 0;
     max-block-size: 100dvh;
     overflow: auto;
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: var(--fh-color-surface);
     container: fh-app-side / inline-size;
   }
@@ -143,7 +143,7 @@
     text-decoration: none;
 
     &:is(a):hover { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
-    &:is(a):focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: -2px; }
+    &:is(a):focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
   }
 
   .fh-app__focus-label {
@@ -185,7 +185,7 @@
       max-block-size: none;
       overflow: visible;
       border-inline-end: 0;
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
@@ -242,11 +242,11 @@
     cursor: var(--fh-cursor-action);
 
     &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); color: var(--fh-color-text); }
-    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 1px; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
   }
 
   .fh-app[data-fh-side="rail"] { --fh-app-side: 4.25rem; }
-  .fh-app[data-fh-side="rail"] > .fh-app__side { flex: 0 0 var(--fh-app-side); }
+  .fh-app[data-fh-side="rail"] > .fh-app__side { flex: 0 0 var(--fh-app-side, 15rem); }
 
   /* Only a rail is this narrow: icons only, centred. */
   @container fh-app-side (inline-size < 8rem) {
@@ -286,8 +286,8 @@
     align-items: center;
     gap: var(--fh-gap-grouped);
     min-block-size: 3.5rem;
-    padding-inline: var(--fh-app-pad);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    padding-inline: var(--fh-app-pad, var(--fh-inset-page));
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 86%, transparent);
     backdrop-filter: blur(var(--fh-blur-chrome));
   }
@@ -307,14 +307,14 @@
 
   .fh-app__content {
     flex: 1;
-    padding: var(--fh-app-pad);
+    padding: var(--fh-app-pad, var(--fh-inset-page));
   }
 
   /* —— Environment band (ADM-ENV) ——
    * A thin rule in the environment's colour along the top of the app, so
    * where you are is visible from any screen. Production gets a thicker one. */
   .fh-app[data-fh-env] {
-    border-block-start: 3px solid var(--fh-env-tone);
+    border-block-start: 3px var(--fh-card-border-style, solid) var(--fh-env-tone, var(--fh-color-text-subtle));
   }
 
   .fh-app[data-fh-env="production"] {
@@ -340,9 +340,9 @@
   }
 
   .fh-app.fh-app--rail > .fh-app__side {
-    flex: 0 0 var(--fh-app-side);
-    inline-size: var(--fh-app-side);
-    max-inline-size: var(--fh-app-side);
+    flex: 0 0 var(--fh-app-side, 15rem);
+    inline-size: var(--fh-app-side, 15rem);
+    max-inline-size: var(--fh-app-side, 15rem);
     min-inline-size: 0;
     position: sticky;
     inset: auto;
@@ -350,7 +350,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: var(--fh-color-surface);
     color: var(--fh-color-text);
     overflow: auto;
@@ -388,7 +388,7 @@
   }
 
   .fh-app.fh-app--rail .fh-app__side-state {
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     margin: 0;
     opacity: 0;
     inline-size: 1.9rem;
@@ -402,11 +402,11 @@
   }
 
   .fh-app.fh-app--rail[data-fh-app-shell-ready] .fh-app__side-toggle {
-    z-index: 1;
+    z-index: var(--fh-z-raised);
   }
 
   .fh-app.fh-app--rail .fh-app__side-switch:has(.fh-app__side-state:focus-visible) .fh-app__side-toggle {
-    outline: 2px solid var(--fh-color-focus);
+    outline: var(--fh-focus-width) solid var(--fh-color-focus);
     outline-offset: 1px;
   }
 
@@ -453,7 +453,7 @@
   }
 
   .fh-app.fh-app--rail .fh-app__menu:focus-visible {
-    outline: 2px solid var(--fh-color-focus);
+    outline: var(--fh-focus-width) solid var(--fh-color-focus);
     outline-offset: 1px;
   }
 
@@ -546,9 +546,9 @@
   /* Rail, and only while the sidebar stands beside the work area. */
   @container fh-app (inline-size >= 49rem) {
     .fh-app.fh-app--rail:is([data-fh-side="rail"], :has(.fh-app__side-state:checked)) > .fh-app__side {
-      flex-basis: var(--fh-app-rail);
-      inline-size: var(--fh-app-rail);
-      max-inline-size: var(--fh-app-rail);
+      flex-basis: var(--fh-app-rail, 3.5rem);
+      inline-size: var(--fh-app-rail, 3.5rem);
+      max-inline-size: var(--fh-app-rail, 3.5rem);
       overflow: visible;
     }
 
@@ -604,10 +604,15 @@
       overflow: visible;
       background-color: var(--fh-color-surface-raised);
       color: var(--fh-color-text);
-      border: var(--fh-border-thin) solid var(--fh-color-etch);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
+      outline: var(--fh-focus-width) solid transparent;
       border-radius: var(--fh-radius-sm);
       box-shadow: var(--fh-shadow-menu);
       z-index: var(--fh-z-dropdown);
+    }
+
+    .fh-app.fh-app--rail:is([data-fh-side="rail"], :has(.fh-app__side-state:checked)) .fh-sidenav__item:focus-visible .fh-sidenav__label {
+      outline-color: var(--fh-color-focus);
     }
 
     .fh-app.fh-app--rail:is([data-fh-side="rail"], :has(.fh-app__side-state:checked)) .fh-app__group summary {
@@ -633,7 +638,7 @@
     .fh-app.fh-app--rail:is([data-fh-side="rail"], :has(.fh-app__side-state:checked)) .fh-app__group summary::after {
       content: "";
       inline-size: 1.25rem;
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     .fh-app.fh-app--rail:is([data-fh-side="rail"], :has(.fh-app__side-state:checked)) .fh-app__group details > a.fh-sidenav__item {
@@ -665,14 +670,14 @@
       inset-block: 0;
       inset-inline-start: 0;
       inset-inline-end: auto;
-      inline-size: min(var(--fh-app-side), 100%);
-      max-inline-size: var(--fh-app-side);
+      inline-size: min(var(--fh-app-side, 15rem), 100%);
+      max-inline-size: var(--fh-app-side, 15rem);
       flex-basis: auto;
       block-size: 100dvh;
       max-block-size: none;
       margin: 0;
       border-block-end: 0;
-      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       overflow: auto;
     }
 

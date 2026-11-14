@@ -14,7 +14,7 @@
   .fh-app-dock {
     position: sticky;
     inset-block-start: var(--fh-app-bar-size, 3.5rem);
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     container: fh-app-dock / inline-size scroll-state;
   }
 
@@ -28,7 +28,7 @@
       inset-block: 0;
       inset-inline: calc(-1 * var(--fh-app-pad, var(--fh-gap-sectioned)));
       z-index: -1;
-      border-block-end: var(--fh-border-thin) dashed transparent;
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
       background-color: transparent;
       pointer-events: none;
       transition:
