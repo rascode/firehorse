@@ -3697,7 +3697,7 @@
       "anchor": "overlays",
       "page": "/components/overlays/",
       "url": "https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/",
-      "summary": "",
+      "summary": "A banner over the header, an empty state, and the announcement banner: a tag in the tone, the news in bold, and its links as ruled cells down the end, the last filled in the tone.",
       "classes": [
         "fh-banner",
         "fh-empty",
@@ -3705,6 +3705,12 @@
         "fh-button",
         "fh-button--sm",
         "fh-button--secondary",
+        "fh-banner--announce",
+        "fh-banner__tag",
+        "fh-banner__text",
+        "fh-banner__actions",
+        "fh-icon",
+        "fh-banner__cta",
         "fh-app-empty"
       ],
       "markup": "<div class=\"fh-banner\" data-tone=\"accent\" data-fh=\"EMP-1.1\"><span>Themes now switch with one attribute.</span><a href=\"#top\">Read the notes</a></div>",
@@ -3715,7 +3721,8 @@
           "summary": "",
           "variants": [
             "EMP-1.1",
-            "EMP-1.2"
+            "EMP-1.2",
+            "EMP-1.3"
           ],
           "markup": "<div class=\"fh-banner\" data-tone=\"accent\" data-fh=\"EMP-1.1\"><span>Themes now switch with one attribute.</span><a href=\"#top\">Read the notes</a></div>",
           "markupFrom": "variant"
@@ -3747,6 +3754,23 @@
           "config": {},
           "markup": "<div class=\"fh-empty\" data-tone=\"violet\" data-fh=\"EMP-1.2\">\n  <span class=\"fh-empty__icon\">∅</span>\n  <h4>No leads yet</h4>\n  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>\n  <a class=\"fh-button fh-button--sm fh-button--secondary\" href=\"#c-feedback\">Send a test lead</a>\n</div>",
           "tier": "free"
+        },
+        {
+          "id": "EMP-1.3",
+          "group": "EMP-1",
+          "name": "Announcement banner",
+          "classes": [
+            "fh-banner",
+            "fh-banner--announce",
+            "fh-banner__tag",
+            "fh-banner__text",
+            "fh-banner__actions",
+            "fh-icon",
+            "fh-banner__cta"
+          ],
+          "config": {},
+          "markup": "<aside class=\"fh-banner fh-banner--announce\" data-tone=\"accent\" aria-label=\"Announcement\" data-fh=\"EMP-1.3\">\n  <span class=\"fh-banner__tag\">Announcing</span>\n  <p class=\"fh-banner__text\"><b>Firehorse v1.1</b><span>The flagship design system from Rascode and Company</span></p>\n  <nav class=\"fh-banner__actions\" aria-label=\"Announcement links\"><a href=\"#top\">Read more<i class=\"fh-icon fh-icon--arrow-right\" aria-hidden=\"true\"></i></a><a class=\"fh-banner__cta\" href=\"#top\">Become a Pro<i class=\"fh-icon fh-icon--arrow-up-right\" aria-hidden=\"true\"></i></a></nav>\n</aside>",
+          "tier": "free"
         }
       ],
       "stageClasses": [
@@ -3757,7 +3781,13 @@
         "fh-empty__icon",
         "fh-button",
         "fh-button--sm",
-        "fh-button--secondary"
+        "fh-button--secondary",
+        "fh-banner--announce",
+        "fh-banner__tag",
+        "fh-banner__text",
+        "fh-banner__actions",
+        "fh-icon",
+        "fh-banner__cta"
       ],
       "tier": "free"
     },

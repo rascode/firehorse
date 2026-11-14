@@ -1384,6 +1384,8 @@ Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
 
 ### EMP · Empty state & banner
 
+A banner over the header, an empty state, and the announcement banner: a tag in the tone, the news in bold, and its links as ruled cells down the end, the last filled in the tone.
+
 ```html
 <!-- EMP-1.1 · Banner & empty › Banner -->
 <div class="fh-banner" data-tone="accent" data-fh="EMP-1.1"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
@@ -1395,6 +1397,13 @@ Alerts, progress, meters, rings, spinners, skeletons, empty states and tooltips.
   <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
   <a class="fh-button fh-button--sm fh-button--secondary" href="#c-feedback">Send a test lead</a>
 </div>
+
+<!-- EMP-1.3 · Banner & empty › Announcement banner -->
+<aside class="fh-banner fh-banner--announce" data-tone="accent" aria-label="Announcement" data-fh="EMP-1.3">
+  <span class="fh-banner__tag">Announcing</span>
+  <p class="fh-banner__text"><b>Firehorse v1.1</b><span>The flagship design system from Rascode and Company</span></p>
+  <nav class="fh-banner__actions" aria-label="Announcement links"><a href="#top">Read more<i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a><a class="fh-banner__cta" href="#top">Become a Pro<i class="fh-icon fh-icon--arrow-up-right" aria-hidden="true"></i></a></nav>
+</aside>
 ```
 
 ### AVT · Avatars

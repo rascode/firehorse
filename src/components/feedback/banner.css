@@ -29,3 +29,122 @@
   }
 
 }
+
+@layer fh.components {
+  /* —— EMP-1.3 Announcement banner ————————————————————————————————————————————
+   * The strip across the top of the page in the new look (the tile panel's, MEG-3.1): a tag in
+   * the tone, the news set bold with a quieter line after it, and the actions as cells down the
+   * end, ruled with the dashed etch: a mono caps link, and a call to action filled in the tone.
+   *   <aside class="fh-banner fh-banner--announce" data-tone="accent" aria-label="Announcement">
+   *     <span class="fh-banner__tag">Announcing</span>
+   *     <p class="fh-banner__text"><b>Firehorse v1.1</b><span>The flagship design system</span></p>
+   *     <nav class="fh-banner__actions" aria-label="Announcement">
+   *       <a href="…">Read more <i class="fh-icon fh-icon--arrow-right"></i></a>
+   *       <a class="fh-banner__cta" href="…">Become a Pro <i class="fh-icon fh-icon--arrow-up-right"></i></a>
+   *     </nav>
+   *   </aside>
+   * The quieter line drops out on a narrow banner; the cells keep their place at the end.
+   * Knob: --fh-banner-height (the strip's height, default 2.75rem). */
+  .fh-banner--announce {
+    --_c: var(--fh-tone, var(--fh-color-accent));
+    --_ink: light-dark(oklch(from var(--_c) min(l, 0.5) c h), oklch(from var(--_c) max(l, 0.74) c h));
+    --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    min-block-size: var(--fh-banner-height, 2.75rem);
+    padding: 0;
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+    container-type: inline-size;
+    font-size: var(--fh-text-small);
+    text-align: start;
+  }
+  .fh-banner__tag {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    padding: 0 var(--fh-inset-tile) 0 var(--fh-inset-page);
+    color: var(--_ink);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-caps);
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    /* a dot in the tone that breathes, before the tag */
+    &::before {
+      content: "";
+      inline-size: 0.45rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--_c);
+      box-shadow: 0 0 0 0.25rem color-mix(in oklab, var(--_c) 22%, transparent);
+    }
+  }
+  .fh-banner__text {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+    margin: 0;
+    padding-inline: var(--fh-inset-tile);
+    border-inline-start: var(--_etch-soft);
+    overflow: hidden;
+    white-space: nowrap;
+
+    & > b { font-weight: var(--fh-weight-bold); letter-spacing: var(--fh-tracking-heading); }
+    & > span { overflow: hidden; color: var(--fh-color-text-muted); text-overflow: ellipsis; }
+  }
+  .fh-banner__actions {
+    display: flex;
+    flex: none;
+    align-items: stretch;
+
+    & > a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-related);
+      padding: 0 var(--fh-inset-tile);
+      border-inline-start: var(--_etch-soft);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-weight: var(--fh-weight-bold);
+      letter-spacing: var(--fh-tracking-caps);
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+    & > a .fh-icon { color: var(--_ink); transition: translate var(--fh-duration-fast) var(--fh-ease-out); }
+    & > a:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+    & > a:is(:hover, :focus-visible) .fh-icon { translate: 2px 0; }
+    & > a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    & > a:last-child { padding-inline-end: var(--fh-inset-page); }
+    /* the call to action: filled in the tone */
+    & > .fh-banner__cta { background-color: var(--_c); color: var(--fh-color-on-accent); }
+    & > .fh-banner__cta .fh-icon { color: inherit; }
+    & > .fh-banner__cta:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--_c) 86%, var(--fh-color-text)); }
+    & > .fh-banner__cta:is(:hover, :focus-visible) .fh-icon { translate: 2px -2px; }
+  }
+  @container (inline-size < 48rem) {
+    .fh-banner--announce .fh-banner__text > span { display: none; }
+  }
+  @container (inline-size < 32rem) {
+    .fh-banner--announce .fh-banner__tag { display: none; }
+    .fh-banner--announce .fh-banner__text { padding-inline-start: var(--fh-inset-page); border: 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-banner__tag::before { animation: fh-banner-breathe 2.4s var(--fh-ease-standard) infinite; }
+    @keyframes fh-banner-breathe { 50% { box-shadow: 0 0 0 0.4rem color-mix(in oklab, var(--_c) 8%, transparent); } }
+  }
+}
