@@ -22,7 +22,7 @@
       min-inline-size: 0;
       overflow: hidden;
       padding: var(--fh-inset-card);
-      border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 3%, transparent);
       container: fh-tile / inline-size;
@@ -54,10 +54,10 @@
    * a tone pill on the name line, at the right, like data-featured. */
   .fh-tier__flag {
     position: absolute;
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     inset-block-start: calc(var(--fh-gap-sectioned) - 0.1rem);
     inset-inline-end: var(--fh-tier-pad, var(--fh-gap-sectioned));
-    border: var(--fh-border-thin) solid var(--fh-tone);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-tone);
     border-radius: var(--fh-radius-pill);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
@@ -77,13 +77,13 @@
     align-content: start;
     gap: 0;
     margin-inline: calc(var(--fh-tier-pad, var(--fh-gap-sectioned)) * -1);
-    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
 
     & > li {
       min-block-size: 0;
-      padding: var(--fh-inset-tight) var(--fh-tier-pad, var(--fh-inset-card)) var(--fh-inset-tight) calc(var(--fh-tier-pad, var(--fh-inset-card)) + 1.5rem);
+      padding: var(--fh-inset-tight) var(--fh-tier-pad, var(--fh-inset-card)) var(--fh-inset-tight) calc(var(--fh-tier-pad, var(--fh-inset-card)) + var(--fh-inset-card));
     }
-    & > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+    & > li + li { border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft); }
     & > li::before { display: none; }
     & > li::after {
       inset-block-start: 50%;

@@ -23,7 +23,7 @@
     & > li {
       position: relative;
       min-block-size: 1.55rem;
-      padding-inline-start: calc(1.55rem + var(--fh-inset-control));
+      padding-inline-start: calc(var(--fh-inset-card) + var(--fh-inset-control));
       padding-block-start: 0.12rem;
       color: var(--fh-color-text);
       font-size: var(--fh-text-small);
@@ -41,7 +41,7 @@
 
       /* dashed ring */
       &::before {
-        border: var(--fh-border-thick) dashed color-mix(in oklab, var(--_mark) 48%, transparent);
+        border: var(--fh-border-thick) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_mark) 48%, transparent);
         border-radius: var(--fh-radius-round);
         background-color: color-mix(in oklab, var(--_mark) 6%, transparent);
       }

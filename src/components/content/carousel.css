@@ -47,7 +47,7 @@
     &::scroll-marker-group {
       display: flex;
       justify-content: center;
-      gap: 0.35rem;
+      gap: var(--fh-gap-bound);
       padding-block-start: var(--fh-inset-tight);
     }
   }
@@ -57,7 +57,7 @@
     min-block-size: var(--fh-carousel-height, 18rem);
     margin: 0;
     overflow: hidden;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-lg);
     background-color: var(--fh-color-surface);
     scroll-snap-align: start;
@@ -114,8 +114,8 @@
     position: absolute;
     inset-block-start: var(--fh-gap-grouped);
     inset-inline-end: var(--fh-gap-grouped);
-    z-index: 1;
-    padding: 0.15rem 0.5rem;
+    z-index: var(--fh-z-raised);
+    padding: var(--fh-gap-bound) var(--fh-inset-tight);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 70%, transparent);
     backdrop-filter: blur(6px);
@@ -139,7 +139,7 @@
     inline-size: 2.25rem;
     aspect-ratio: 1;
     padding: 0;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-round);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 75%, transparent);
     backdrop-filter: blur(6px);

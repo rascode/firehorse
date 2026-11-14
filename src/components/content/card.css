@@ -127,7 +127,7 @@
     /* With a pane, it reaches out to --fh-card-content-inset from the card's edge. */
     margin: calc(var(--fh-card-content-inset, var(--_pad-b)) - var(--_pad-b)) calc(var(--fh-card-content-inset, var(--_pad-i)) - var(--_pad-i));
     padding: var(--fh-card-content-pad, 0);
-    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-card-content-border, transparent);
     border-radius: var(--fh-card-content-radius, 0);
     background-color: var(--fh-card-content-bg, transparent);
     backdrop-filter: var(--fh-card-content-backdrop, none);
@@ -168,7 +168,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        z-index: 1;
+        z-index: var(--fh-z-raised);
       }
 
       &:focus-visible {
@@ -215,7 +215,7 @@
       color: var(--fh-tone);
       font-size: var(--fh-text-body);
       font-weight: var(--fh-weight-heavy);
-      letter-spacing: 0.01em;
+      letter-spacing: var(--fh-tracking-body);
       text-transform: none;
       font-variant-numeric: tabular-nums;
     }
