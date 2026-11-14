@@ -71,7 +71,7 @@
     margin: 0;
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    font-weight: 600;
+    font-weight: var(--fh-weight-bold);
     letter-spacing: 0.04em;
   }
   .fh-invoice__title {
@@ -79,9 +79,9 @@
     margin: 0;
     font-family: var(--fh-font-display);
     font-size: clamp(2.5rem, 12cqi, 4.5rem);
-    font-weight: 600;
+    font-weight: var(--fh-weight-bold);
     line-height: 0.95;
-    letter-spacing: -0.04em;
+    letter-spacing: var(--fh-tracking-tightest);
   }
 
   .fh-invoice__label,
@@ -92,8 +92,8 @@
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    font-weight: 400;
-    letter-spacing: 0.06em;
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-wide);
     text-transform: uppercase;
   }
 
@@ -113,7 +113,7 @@
   .fh-invoice__parties address b,
   .fh-invoice__parties address strong {
     color: var(--fh-color-text);
-    font-weight: 600;
+    font-weight: var(--fh-weight-bold);
   }
   .fh-invoice__dates {
     display: grid;
@@ -136,11 +136,11 @@
   .fh-invoice__items :is(th, td):not(:first-child) { padding-inline-start: var(--fh-gap-grouped-wide); text-align: end; white-space: nowrap; }
   .fh-invoice__items td {
     padding-block: var(--fh-inset-tile);
-    border-block-start: 1px solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
   }
-  .fh-invoice__items tbody tr:last-child td { border-block-end: 1px solid var(--fh-color-border); }
+  .fh-invoice__items tbody tr:last-child td { border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border); }
   .fh-invoice__items td:not(:first-child) { color: var(--fh-color-text-muted); }
-  .fh-invoice__items td:last-child { color: var(--fh-color-text); font-weight: 600; }
+  .fh-invoice__items td:last-child { color: var(--fh-color-text); font-weight: var(--fh-weight-bold); }
   .fh-invoice__items small { display: block; color: var(--fh-color-text-subtle); }
   @container fh-invoice (inline-size < 26rem) {
     .fh-invoice__items :is(th, td):nth-child(3) { display: none; }
@@ -158,8 +158,8 @@
   .fh-invoice__totals dd { margin: 0; }
   .fh-invoice__total {
     padding-block-start: var(--fh-inset-control);
-    border-block-start: 1px solid var(--fh-color-text);
-    font-weight: 600;
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-text);
+    font-weight: var(--fh-weight-bold);
   }
   .fh-invoice__total :is(dt, dd) { color: var(--fh-color-text); }
 
@@ -192,7 +192,7 @@
     grid-row: 1;
     justify-self: center;
     padding-block-end: var(--fh-inset-card);
-    border-block-end: 1px solid var(--fh-color-border);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     inline-size: 100%;
     justify-content: center;
   }
@@ -200,8 +200,8 @@
     grid-column: 1;
     grid-row: 2;
     font-size: var(--fh-text-body);
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
   }
   .fh-invoice--classic .fh-invoice__number {
@@ -262,7 +262,7 @@
     place-items: center;
     inline-size: 2rem;
     aspect-ratio: 1;
-    border-radius: 50%;
+    border-radius: var(--fh-radius-round);
     background-color: var(--fh-color-text);
     color: var(--fh-color-surface-raised);
   }
@@ -288,7 +288,7 @@
     inline-size: 2rem;
     aspect-ratio: 1;
     border: 0;
-    border-radius: 50%;
+    border-radius: var(--fh-radius-round);
     background: transparent;
     color: var(--fh-color-text-muted);
     text-decoration: none;
@@ -348,7 +348,7 @@
     align-items: center;
     gap: var(--fh-gap-related);
     min-inline-size: 0;
-    padding: 0.25rem;
+    padding: var(--fh-gap-bound);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent);
     white-space: nowrap;
@@ -359,7 +359,7 @@
     flex: none;
     inline-size: 1.75rem;
     block-size: 1.75rem;
-    border-radius: 50%;
+    border-radius: var(--fh-radius-round);
     object-fit: cover;
   }
   .fh-pay__route > [aria-hidden] { color: var(--fh-color-text-subtle); }
@@ -380,19 +380,19 @@
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    letter-spacing: 0.06em;
+    letter-spacing: var(--fh-tracking-wide);
     text-transform: uppercase;
   }
   .fh-pay__total > b {
     font-family: var(--fh-font-figure, var(--fh-font-display));
     font-size: 2.25rem;
-    font-weight: 600;
+    font-weight: var(--fh-weight-bold);
     line-height: 1;
-    letter-spacing: -0.03em;
+    letter-spacing: var(--fh-tracking-snug);
   }
   .fh-pay__sum dl { display: flex; gap: var(--fh-gap-grouped-wide); margin: 0; text-align: end; }
-  .fh-pay__sum dd { margin: 0; font-weight: 600; }
-  .fh-pay__sum dd small { display: block; color: var(--fh-color-text-subtle); font-weight: 400; }
+  .fh-pay__sum dd { margin: 0; font-weight: var(--fh-weight-bold); }
+  .fh-pay__sum dd small { display: block; color: var(--fh-color-text-subtle); font-weight: var(--fh-weight-regular); }
 
   .fh-pay__details {
     border-radius: var(--fh-radius-md);
@@ -405,7 +405,7 @@
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    letter-spacing: 0.06em;
+    letter-spacing: var(--fh-tracking-wide);
     text-transform: uppercase;
     cursor: var(--fh-cursor-action);
     list-style: none;
@@ -419,7 +419,7 @@
     margin: 0;
     padding: 0 var(--fh-inset-tile) var(--fh-inset-tile);
   }
-  .fh-pay__details dd { margin: var(--fh-gap-bound) 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .fh-pay__details dd { margin: var(--fh-gap-bound) 0 0; font-weight: var(--fh-weight-bold); font-variant-numeric: tabular-nums; }
 
   .fh-pay__actions {
     display: flex;
@@ -437,7 +437,7 @@
     .fh-pay__panel {
       transform-origin: 50% 100%;
       transition:
-        opacity 0.25s var(--fh-ease-out),
+        opacity var(--fh-duration-base) var(--fh-ease-out),
         scale 0.35s var(--fh-ease-out),
         translate 0.35s var(--fh-ease-out),
         overlay 0.35s allow-discrete,

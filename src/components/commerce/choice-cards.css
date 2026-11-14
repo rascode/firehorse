@@ -25,17 +25,17 @@
     align-items: center;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-control) var(--fh-inset-tile);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     cursor: var(--fh-cursor-action);
     transition: border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
 
     & > input { margin: 0; accent-color: var(--fh-tone, var(--fh-color-text)); inline-size: 1rem; block-size: 1rem; }
     & b { display: block; font-weight: var(--fh-weight-medium); font-size: var(--fh-text-small); }
-    & small { color: var(--fh-color-text-subtle); font-size: 0.78rem; }
+    & small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption); }
     & > :last-child { font-family: var(--fh-font-mono); font-variant-numeric: tabular-nums; font-size: var(--fh-text-caption); }
     &:hover:not(:has(:disabled)) { border-color: var(--fh-color-text-muted); }
-    &:has(:checked) { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 6%, transparent); }
+    &:has(:checked) { border-style: var(--fh-card-border-style, solid); border-color: var(--fh-tone, var(--fh-color-text)); background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 6%, transparent); }
     &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
     &:has(:disabled) {
       color: var(--fh-color-text-subtle);
