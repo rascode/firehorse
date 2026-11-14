@@ -24,8 +24,8 @@
     --fh-cols: 12;
     --fh-cols-gutter: var(--fh-space-6);
     display: grid;
-    grid-template-columns: repeat(var(--fh-cols), minmax(0, 1fr));
-    column-gap: var(--fh-cols-gutter);
+    grid-template-columns: repeat(var(--fh-cols, 12), minmax(0, 1fr));
+    column-gap: var(--fh-cols-gutter, var(--fh-space-6));
     row-gap: var(--fh-gap, var(--fh-space-8));
     align-items: start;
     container: fh-cols / inline-size;
@@ -39,85 +39,85 @@
     & > [data-align="center"] { align-self: center; }
     & > [data-align="end"] { align-self: end; }
     & > [data-align="stretch"] { align-self: stretch; }
-    & > [data-layer="over"] { position: relative; z-index: 1; }
+    & > [data-layer="over"] { position: relative; z-index: var(--fh-z-raised); }
   }
 
   .fh-cols > .fh-cols[data-subgrid] {
     grid-template-columns: subgrid;
-    column-gap: var(--fh-cols-gutter);
+    column-gap: var(--fh-cols-gutter, var(--fh-space-6));
   }
 
   @container fh-cols (inline-size >= 40rem) {
     .fh-cols {
-    & > [data-span-md="1"] { grid-column: auto / span min(1, var(--fh-cols)); }
+    & > [data-span-md="1"] { grid-column: auto / span min(1, var(--fh-cols, 12)); }
     & > [data-start-md="1"] { grid-column-start: 1; }
-    & > [data-span-md="2"] { grid-column: auto / span min(2, var(--fh-cols)); }
+    & > [data-span-md="2"] { grid-column: auto / span min(2, var(--fh-cols, 12)); }
     & > [data-start-md="2"] { grid-column-start: 2; }
-    & > [data-span-md="3"] { grid-column: auto / span min(3, var(--fh-cols)); }
+    & > [data-span-md="3"] { grid-column: auto / span min(3, var(--fh-cols, 12)); }
     & > [data-start-md="3"] { grid-column-start: 3; }
-    & > [data-span-md="4"] { grid-column: auto / span min(4, var(--fh-cols)); }
+    & > [data-span-md="4"] { grid-column: auto / span min(4, var(--fh-cols, 12)); }
     & > [data-start-md="4"] { grid-column-start: 4; }
-    & > [data-span-md="5"] { grid-column: auto / span min(5, var(--fh-cols)); }
+    & > [data-span-md="5"] { grid-column: auto / span min(5, var(--fh-cols, 12)); }
     & > [data-start-md="5"] { grid-column-start: 5; }
-    & > [data-span-md="6"] { grid-column: auto / span min(6, var(--fh-cols)); }
+    & > [data-span-md="6"] { grid-column: auto / span min(6, var(--fh-cols, 12)); }
     & > [data-start-md="6"] { grid-column-start: 6; }
-    & > [data-span-md="7"] { grid-column: auto / span min(7, var(--fh-cols)); }
+    & > [data-span-md="7"] { grid-column: auto / span min(7, var(--fh-cols, 12)); }
     & > [data-start-md="7"] { grid-column-start: 7; }
-    & > [data-span-md="8"] { grid-column: auto / span min(8, var(--fh-cols)); }
+    & > [data-span-md="8"] { grid-column: auto / span min(8, var(--fh-cols, 12)); }
     & > [data-start-md="8"] { grid-column-start: 8; }
-    & > [data-span-md="9"] { grid-column: auto / span min(9, var(--fh-cols)); }
+    & > [data-span-md="9"] { grid-column: auto / span min(9, var(--fh-cols, 12)); }
     & > [data-start-md="9"] { grid-column-start: 9; }
-    & > [data-span-md="10"] { grid-column: auto / span min(10, var(--fh-cols)); }
+    & > [data-span-md="10"] { grid-column: auto / span min(10, var(--fh-cols, 12)); }
     & > [data-start-md="10"] { grid-column-start: 10; }
-    & > [data-span-md="11"] { grid-column: auto / span min(11, var(--fh-cols)); }
+    & > [data-span-md="11"] { grid-column: auto / span min(11, var(--fh-cols, 12)); }
     & > [data-start-md="11"] { grid-column-start: 11; }
-    & > [data-span-md="12"] { grid-column: auto / span min(12, var(--fh-cols)); }
+    & > [data-span-md="12"] { grid-column: auto / span min(12, var(--fh-cols, 12)); }
     & > [data-start-md="12"] { grid-column-start: 12; }
-    & > [data-span-md="13"] { grid-column: auto / span min(13, var(--fh-cols)); }
+    & > [data-span-md="13"] { grid-column: auto / span min(13, var(--fh-cols, 12)); }
     & > [data-start-md="13"] { grid-column-start: 13; }
-    & > [data-span-md="14"] { grid-column: auto / span min(14, var(--fh-cols)); }
+    & > [data-span-md="14"] { grid-column: auto / span min(14, var(--fh-cols, 12)); }
     & > [data-start-md="14"] { grid-column-start: 14; }
-    & > [data-span-md="15"] { grid-column: auto / span min(15, var(--fh-cols)); }
+    & > [data-span-md="15"] { grid-column: auto / span min(15, var(--fh-cols, 12)); }
     & > [data-start-md="15"] { grid-column-start: 15; }
-    & > [data-span-md="16"] { grid-column: auto / span min(16, var(--fh-cols)); }
+    & > [data-span-md="16"] { grid-column: auto / span min(16, var(--fh-cols, 12)); }
     & > [data-start-md="16"] { grid-column-start: 16; }
     }
   }
 
   @container fh-cols (inline-size >= 60rem) {
     .fh-cols {
-      & > [data-span] { grid-column: auto / span var(--fh-cols); }
-    & > [data-span="1"] { grid-column-end: span min(1, var(--fh-cols)); }
+      & > [data-span] { grid-column: auto / span var(--fh-cols, 12); }
+    & > [data-span="1"] { grid-column-end: span min(1, var(--fh-cols, 12)); }
     & > [data-start="1"] { grid-column-start: 1; }
-    & > [data-span="2"] { grid-column-end: span min(2, var(--fh-cols)); }
+    & > [data-span="2"] { grid-column-end: span min(2, var(--fh-cols, 12)); }
     & > [data-start="2"] { grid-column-start: 2; }
-    & > [data-span="3"] { grid-column-end: span min(3, var(--fh-cols)); }
+    & > [data-span="3"] { grid-column-end: span min(3, var(--fh-cols, 12)); }
     & > [data-start="3"] { grid-column-start: 3; }
-    & > [data-span="4"] { grid-column-end: span min(4, var(--fh-cols)); }
+    & > [data-span="4"] { grid-column-end: span min(4, var(--fh-cols, 12)); }
     & > [data-start="4"] { grid-column-start: 4; }
-    & > [data-span="5"] { grid-column-end: span min(5, var(--fh-cols)); }
+    & > [data-span="5"] { grid-column-end: span min(5, var(--fh-cols, 12)); }
     & > [data-start="5"] { grid-column-start: 5; }
-    & > [data-span="6"] { grid-column-end: span min(6, var(--fh-cols)); }
+    & > [data-span="6"] { grid-column-end: span min(6, var(--fh-cols, 12)); }
     & > [data-start="6"] { grid-column-start: 6; }
-    & > [data-span="7"] { grid-column-end: span min(7, var(--fh-cols)); }
+    & > [data-span="7"] { grid-column-end: span min(7, var(--fh-cols, 12)); }
     & > [data-start="7"] { grid-column-start: 7; }
-    & > [data-span="8"] { grid-column-end: span min(8, var(--fh-cols)); }
+    & > [data-span="8"] { grid-column-end: span min(8, var(--fh-cols, 12)); }
     & > [data-start="8"] { grid-column-start: 8; }
-    & > [data-span="9"] { grid-column-end: span min(9, var(--fh-cols)); }
+    & > [data-span="9"] { grid-column-end: span min(9, var(--fh-cols, 12)); }
     & > [data-start="9"] { grid-column-start: 9; }
-    & > [data-span="10"] { grid-column-end: span min(10, var(--fh-cols)); }
+    & > [data-span="10"] { grid-column-end: span min(10, var(--fh-cols, 12)); }
     & > [data-start="10"] { grid-column-start: 10; }
-    & > [data-span="11"] { grid-column-end: span min(11, var(--fh-cols)); }
+    & > [data-span="11"] { grid-column-end: span min(11, var(--fh-cols, 12)); }
     & > [data-start="11"] { grid-column-start: 11; }
-    & > [data-span="12"] { grid-column-end: span min(12, var(--fh-cols)); }
+    & > [data-span="12"] { grid-column-end: span min(12, var(--fh-cols, 12)); }
     & > [data-start="12"] { grid-column-start: 12; }
-    & > [data-span="13"] { grid-column-end: span min(13, var(--fh-cols)); }
+    & > [data-span="13"] { grid-column-end: span min(13, var(--fh-cols, 12)); }
     & > [data-start="13"] { grid-column-start: 13; }
-    & > [data-span="14"] { grid-column-end: span min(14, var(--fh-cols)); }
+    & > [data-span="14"] { grid-column-end: span min(14, var(--fh-cols, 12)); }
     & > [data-start="14"] { grid-column-start: 14; }
-    & > [data-span="15"] { grid-column-end: span min(15, var(--fh-cols)); }
+    & > [data-span="15"] { grid-column-end: span min(15, var(--fh-cols, 12)); }
     & > [data-start="15"] { grid-column-start: 15; }
-    & > [data-span="16"] { grid-column-end: span min(16, var(--fh-cols)); }
+    & > [data-span="16"] { grid-column-end: span min(16, var(--fh-cols, 12)); }
     & > [data-start="16"] { grid-column-start: 16; }
     & > [data-row="1"] { grid-row-start: 1; }
     & > [data-row="2"] { grid-row-start: 2; }

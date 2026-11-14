@@ -19,7 +19,7 @@
 
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    border-block: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
   }
 
   .fh-etched-split__pane {
@@ -29,7 +29,7 @@
     container: fh-pane / inline-size;
 
     & + & {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
@@ -48,7 +48,7 @@
       & + & {
         padding-inline: var(--_pad) var(--_gutter);
         border-block-start: 0;
-        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+        border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       }
     }
   }
