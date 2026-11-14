@@ -14,7 +14,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
 
     & > li {
@@ -24,7 +24,7 @@
       gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       padding: var(--fh-inset-control) var(--fh-inset-tile);
     }
-    & > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
+    & > li + li { border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft); }
     & > li::before { grid-row: 1 / span 2; display: none; }
     & b { display: flex; align-items: center; font-weight: var(--fh-weight-medium); }
     & > li[data-health] > b::before {

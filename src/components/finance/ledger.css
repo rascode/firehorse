@@ -21,7 +21,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     container-type: inline-size;
 
     & > li:not(.fh-ledger__day) {
@@ -31,7 +31,7 @@
       align-items: center;
       gap: var(--fh-gap-bound) var(--fh-gap-grouped);
       padding: var(--fh-inset-control) var(--fh-inset-tight);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
     & > li[data-status="pending"] { background-color: color-mix(in oklab, var(--fh-color-warning) 5%, transparent); }
     & > li[data-status="declined"] { background-color: color-mix(in oklab, var(--fh-color-danger) 4%, transparent); }
@@ -39,7 +39,7 @@
 
   .fh-ledger__day {
     padding: var(--fh-inset-tile) var(--fh-inset-tight) var(--fh-inset-tight);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
     letter-spacing: var(--fh-tracking-wider);

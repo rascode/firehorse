@@ -27,8 +27,8 @@
     flex-direction: column;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-card);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-inline-start: 3px solid var(--fh-tone, var(--fh-color-etch-soft));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-inline-start: 3px var(--fh-card-border-style, solid) var(--fh-tone, var(--fh-color-etch-soft));
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface, transparent);
     color: inherit;
@@ -78,7 +78,7 @@
   .fh-account__tag {
     flex: none;
     padding: var(--fh-inset-tight) var(--fh-inset-tight);
-    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 40%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 40%, transparent);
     border-radius: var(--fh-radius-pill);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
@@ -113,7 +113,7 @@
     display: flex;
     gap: var(--fh-gap-related);
     padding-block-start: var(--fh-inset-control);
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     font-size: var(--fh-text-caption);
     color: var(--fh-color-text-muted);
   }
