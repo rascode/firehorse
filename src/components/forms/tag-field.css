@@ -18,7 +18,7 @@
     padding: var(--fh-inset-tight);
     /* Concentric with the chips inside: outer radius = chip radius + inset.
      * Chip radius is capped at half a compact chip's height (~1.7rem). */
-    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + var(--fh-gap-bound));
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), var(--fh-radius-lg)) + var(--fh-gap-bound));
     background-color: var(--fh-color-field);
     cursor: text;
 
@@ -38,7 +38,7 @@
     }
 
     & > .fh-chip {
-      padding-block: 0.22rem;
+      padding-block: var(--fh-gap-bound);
       background-color: var(--fh-color-canvas);
     }
   }
@@ -58,9 +58,9 @@
     flex: none;
     inline-size: fit-content;
     min-block-size: 0;
-    padding: 0.2rem;
+    padding: var(--fh-gap-bound);
     border: 0;
-    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), 0.85rem) + 0.2rem);
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), var(--fh-radius-lg)) + var(--fh-gap-bound));
     background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
     cursor: var(--fh-cursor);
 
@@ -71,7 +71,7 @@
       flex: none;
       inline-size: 8rem;
       min-inline-size: 0;
-      padding: 0.22rem 0.5rem;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight);
       border: 0;
       background: none;
       font-size: var(--fh-text-label);
@@ -83,7 +83,7 @@
     &:focus-within { background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent); }
 
     & > .fh-chip {
-      border-style: dashed;
+      border-style: var(--fh-card-border-style, dashed);
       border-color: transparent;
       background-color: transparent;
       transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -101,7 +101,7 @@
     inline-size: 1.5rem;
     aspect-ratio: 1;
     padding: 0;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-round);
     background: none;
     color: var(--fh-color-text-muted);
@@ -116,7 +116,7 @@
       mask: var(--fh-icon-plus) center / contain no-repeat;
     }
 
-    &:hover, &:focus-visible { border-style: solid; border-color: var(--fh-color-border-strong); color: var(--fh-color-text); }
+    &:hover, &:focus-visible { border-style: var(--fh-card-border-style, solid); border-color: var(--fh-color-border-strong); color: var(--fh-color-text); }
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
   }
 
@@ -129,12 +129,12 @@
     flex: none;
     align-items: center;
     inline-size: 14rem;
-    padding-inline-start: 0.2rem;
+    padding-inline-start: var(--fh-gap-bound);
 
     & > input {
       flex: 1;
       min-inline-size: 0;
-      padding: 0.22rem 0.5rem 0.22rem 0.1rem;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight) var(--fh-gap-bound) 0.1rem;
       border: 0;
       outline: 0;
       background: none;
@@ -154,6 +154,7 @@
     font-size: var(--fh-text-micro);
     cursor: var(--fh-cursor-action);
 
-    &:hover, &:focus-visible { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); color: var(--fh-color-text); outline: none; }
+    &:hover, &:focus-visible { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); color: var(--fh-color-text); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
   }
 }
