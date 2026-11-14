@@ -70,7 +70,7 @@
     display: grid;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-tile) var(--fh-inset-card) var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     /* Flat on purpose: drawers are drawn with lines, never a gradient wash. */
     background-color: transparent;
   }
@@ -108,7 +108,7 @@
     grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
     gap: 1px;
     overflow: hidden;
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-border);
 
@@ -157,12 +157,12 @@
       align-items: center;
       min-block-size: 2.4rem;
       padding-block: var(--fh-inset-tight);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
     & dt { display: flex; align-items: center; gap: var(--fh-gap-related); color: var(--fh-color-text-muted); font-size: var(--fh-text-small); }
     & dt > .fh-icon { color: var(--fh-color-text-subtle); }
     & dd { margin: 0; min-inline-size: 0; font-size: var(--fh-text-small); overflow-wrap: anywhere; }
-    & :is(.fh-input, .fh-select) { min-block-size: 2rem; padding-block: 0.3rem; font-size: var(--fh-text-small); }
+    & :is(.fh-input, .fh-select) { min-block-size: 2rem; padding-block: var(--fh-gap-bound); font-size: var(--fh-text-small); }
   }
 
   @container fh-dialog (inline-size < 24rem) {
@@ -176,7 +176,7 @@
     justify-content: space-between;
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-control) var(--fh-inset-card);
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     background-color: var(--fh-color-surface-raised);
   }
 

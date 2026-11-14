@@ -11,12 +11,12 @@
    *   </div>
    * Use the same `name` on each <details> for exclusive open. */
   .fh-accordion {
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
     overflow: hidden;
 
     & > details + details {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     & summary {
@@ -43,7 +43,7 @@
         flex: none;
         inline-size: 1.9rem;
         aspect-ratio: 1;
-        border: var(--fh-border-thick) solid color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+        border: var(--fh-border-thick) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 28%, transparent);
         border-radius: var(--fh-radius-pill);
         background:
           linear-gradient(currentColor, currentColor) center / 0.75rem 1.5px no-repeat,
