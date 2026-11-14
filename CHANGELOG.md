@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Site frame:** the page, Stable and part docks use site names (`site-dock`, `site-rollover`, `data-site-rollover`), with their rules copied into `site/site.css` and their engage, height, rolling heading and tone follow in `site/site.js`; the home page dock and the dock specimens keep `fh-dock` (relay r7a-dock).
 - **Site:** specimen pages show variants in quiet `site-variant` navigation (not Chip) and wrap each demo in a labelled preview frame with a raised surface and hairline border (`scripts/specimen.mjs`, `site/site.css`, relay R3).
 - **Site:** category index cards and the page jump bar use site-only catalogue styling (`site-family`, `site-jump`); the dock lists families only, not groups like CHP-3 (relay R5).
 - **Site:** specimen pages keep their category page's scripts and styles (`scripts/specimen.mjs`, relay R2). Each specimen takes its category page's styles and scripts, each path made root-relative, then `/specimen.js`, with no duplicates, so `/data/datatable/` loads `/data-demo.js` and `/motion/motion/` loads `/motion-page.css` and `/motion-page.js`.

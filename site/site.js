@@ -509,3 +509,135 @@
   new ResizeObserver(place).observe(card);
   new MutationObserver(place).observe(document.documentElement, { attributes: true, attributeFilter: ["data-fh-theme"] });
 })();
+
+/* Site dock (.site-dock) and its rolling heading (.site-rollover): the frame's own copy of what
+ * firehorse.js does for its own dock and rollover (engage, height, rollover, tone follow, chip spy). */
+(() => {
+  const docks = [...document.querySelectorAll(".site-dock")];
+  if (!docks.length) return;
+  const root = document.documentElement;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const headerOffset = () =>
+    parseFloat(getComputedStyle(root).getPropertyValue("--fh-header-height")) * parseFloat(getComputedStyle(root).fontSize) || 68;
+
+  // Engage when the anchor (data-engage) or the dock's own start passes under the chrome, with hysteresis.
+  for (const dock of docks) {
+    const anchor = dock.dataset.engage ? document.querySelector(dock.dataset.engage) : null;
+    const sentinel = document.createElement("span");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.style.cssText = "display:block;block-size:0;";
+    if (!anchor) dock.before(sentinel);
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const edge = (anchor ?? sentinel).getBoundingClientRect().bottom;
+      const top = headerOffset();
+      const on = dock.dataset.active === "true";
+      if (!on && edge < top + 4) dock.dataset.active = "true";
+      else if (on && edge > top + 60) delete dock.dataset.active;
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    update();
+  }
+
+  // Anchors clear the real dock height. firehorse.js measures the first dock specimen on the page into the
+  // same token, so this observer also watches the demo stages and writes the frame dock's height last.
+  if ("ResizeObserver" in globalThis) {
+    const ro = new ResizeObserver(() => root.style.setProperty("--fh-dock-height", `${docks[0].offsetHeight}px`));
+    ro.observe(docks[0]);
+    document.querySelectorAll("[data-demo]").forEach((s) => ro.observe(s));
+  }
+
+  // The heading rolls to the labelled section in view: forward rolls up, back rolls down.
+  const rollover = (box, html, dir = "up") => {
+    if (box.dataset.current === html) return;
+    box.dataset.current = html;
+    for (const old of [...box.children]) {
+      if (old.hasAttribute("data-leave")) { old.remove(); continue; }
+      old.removeAttribute("data-enter");
+      old.setAttribute("data-leave", dir);
+      old.setAttribute("aria-hidden", "true");
+      setTimeout(() => old.remove(), 700);
+    }
+    const item = document.createElement("span");
+    item.className = "site-rollover__item";
+    item.innerHTML = html;
+    item.setAttribute("data-enter", dir);
+    box.append(item);
+  };
+  const rollers = [...document.querySelectorAll('.site-rollover[data-site-rollover="sections"]')];
+  const labelled = [...document.querySelectorAll("main [data-fh-label]")];
+  if (rollers.length && labelled.length) {
+    for (const r of rollers) r.dataset.current = r.dataset.current || r.textContent.trim();
+    const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const total = String(Math.max(0, ...labelled.map((s) => parseInt(s.dataset.fhIndex, 10) || 0))).padStart(2, "0");
+    const seen = new Set();
+    let last = -1;
+    let rollTimer = 0;
+    const pick = () => {
+      const i = labelled.findIndex((s) => seen.has(s));
+      if (i === last) return;
+      const dir = i > last ? "up" : "down";
+      last = i;
+      const s = labelled[i];
+      for (const r of rollers) {
+        // data-site-part="index" shows "04 / 16"; the default part shows the label (index in front unless in an eyebrow pill).
+        const pill = r.closest(".fh-eyebrow-pill");
+        const part = r.dataset.sitePart;
+        let html = esc(r.dataset.siteDefault || "");
+        if (s && part === "index") html = s.dataset.fhIndex ? `${esc(s.dataset.fhIndex)} / ${total}` : esc(r.dataset.siteDefault || "");
+        else if (s) html = `${s.dataset.fhIndex && !pill ? `<b>${esc(s.dataset.fhIndex)}</b>` : ""}${esc(s.dataset.fhLabel)}`;
+        for (const t of pill ? [r, pill] : [r]) {
+          if (s?.dataset.tone) t.dataset.tone = s.dataset.tone;
+          else if (t === pill) t.dataset.tone = pill.dataset.fhDefaultTone ??= pill.dataset.tone || "";
+          else delete t.dataset.tone;
+        }
+        rollover(r, html, dir);
+      }
+    };
+    const band = new IntersectionObserver(
+      // Wait for the scroll to settle so a long jump rolls once.
+      (es) => { for (const e of es) e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); clearTimeout(rollTimer); rollTimer = setTimeout(pick, 140); },
+      { rootMargin: `-${Math.round(headerOffset() + 96)}px 0px -60% 0px` },
+    );
+    labelled.forEach((s) => band.observe(s));
+  }
+
+  // Tone follow (data-follow) and the dock's own chip strip. firehorse.js still spies .fh-toc and [data-spy].
+  const spyLinks = [...document.querySelectorAll('.site-dock .fh-chips a[href^="#"]')];
+  const followers = docks.filter((d) => d.hasAttribute("data-follow"));
+  const allSpy = [...spyLinks, ...document.querySelectorAll('.fh-toc a[href^="#"], [data-spy] a[href^="#"]')];
+  const sections = [...document.querySelectorAll("main [id]")].filter(
+    (el) => el.matches("section, article, [data-tone]") || allSpy.some((a) => a.hash === `#${el.id}`),
+  );
+  if (!sections.length || (!spyLinks.length && !followers.length)) return;
+  const baseTone = new Map(followers.map((d) => [d, d.dataset.tone]));
+  const visible = new Set();
+  const choose = () => {
+    const current = sections.find((s) => visible.has(s));
+    const id = current?.id;
+    for (const a of spyLinks) {
+      if (a.hash === `#${id}`) {
+        if (a.getAttribute("aria-current") !== "true") {
+          a.setAttribute("aria-current", "true");
+          const strip = a.closest(".fh-chips");
+          if (strip && strip.scrollWidth > strip.clientWidth) {
+            strip.scrollTo({ left: a.offsetLeft - strip.offsetLeft - (strip.clientWidth - a.offsetWidth) / 2, behavior: reduced.matches ? "instant" : "smooth" });
+          }
+        }
+      } else a.removeAttribute("aria-current");
+    }
+    const tone = current?.closest("[data-tone]")?.dataset.tone ?? current?.querySelector("[data-tone]")?.dataset.tone;
+    for (const d of followers) {
+      const next = tone ?? baseTone.get(d);
+      if (next) d.dataset.tone = next;
+    }
+  };
+  const io = new IntersectionObserver(
+    (entries) => { for (const e of entries) e.isIntersecting ? visible.add(e.target) : visible.delete(e.target); choose(); },
+    { rootMargin: `-${Math.round(headerOffset() + 64)}px 0px -55% 0px` },
+  );
+  sections.forEach((s) => io.observe(s));
+})();

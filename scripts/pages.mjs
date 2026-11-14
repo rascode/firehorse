@@ -206,21 +206,21 @@ const pageHead = (p, chips, all) => {
 ${summary(p, chips, kids, all)}
     </section>
 
-    <div class="fh-dock fh-frame site-page-dock" data-tone="${tone}" data-follow data-engage="#top">
-      <div class="fh-dock__bar">
+    <div class="site-dock fh-frame site-page-dock" data-tone="${tone}" data-follow data-engage="#top">
+      <div class="site-dock__bar">
         <a class="site-mark site-dock-home" href="/" aria-label="Firehorse home"><span class="site-mark__word" aria-hidden="true"><span class="site-mark__bar">_</span>f<span class="site-dock-fold site-dock-fold--ire">ire</span>h<span class="site-dock-fold site-dock-fold--orse">orse</span></span></a>
-        <div class="fh-dock__identity">
-          <p class="fh-eyebrow-pill fh-dock__heading" data-tone="${tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><span class="fh-rollover" data-fh-rollover="sections" data-fh-default="${escHtml(m.name)}" aria-live="polite"><span class="fh-rollover__item">${escHtml(m.name)}</span></span></span><span class="fh-eyebrow-pill__seg">${m.dockBadge ?? `<strong><span class="fh-rollover" data-fh-rollover="sections" data-fh-part="index" data-fh-default="${pad(chips.length)}" aria-hidden="true"><span class="fh-rollover__item">${pad(chips.length)}</span></span></strong>`}</span></p>
+        <div class="site-dock__identity">
+          <p class="fh-eyebrow-pill site-dock__heading" data-tone="${tone}"><span class="fh-dot fh-dot--live"></span><span class="fh-eyebrow-pill__seg"><span class="site-rollover" data-site-rollover="sections" data-site-default="${escHtml(m.name)}" aria-live="polite"><span class="site-rollover__item">${escHtml(m.name)}</span></span></span><span class="fh-eyebrow-pill__seg">${m.dockBadge ?? `<strong><span class="site-rollover" data-site-rollover="sections" data-site-part="index" data-site-default="${pad(chips.length)}" aria-hidden="true"><span class="site-rollover__item">${pad(chips.length)}</span></span></strong>`}</span></p>
         </div>
 ${m.dockCta ? "" : `        <nav class="site-jump" data-spy aria-label="On this page">
 ${chipHtml}
         </nav>
-`}${m.dockCta ? `        <div class="fh-dock__actions">${m.dockCta}</div>` : next ? `        <div class="fh-dock__actions">
+`}${m.dockCta ? `        <div class="site-dock__actions">${m.dockCta}</div>` : next ? `        <div class="site-dock__actions">
           <a class="fh-button fh-button--sm fh-button--outline" href="${next.path}"><span class="fh-roll">Next · ${escHtml(next.meta.name)}</span></a>
         </div>` : ""}
         <button class="fh-header__toggle site-dock-menu" type="button" popovertarget="site-drawer" aria-label="Open menu"></button>
       </div>
-      <span class="fh-dock__progress" aria-hidden="true"></span>
+      <span class="site-dock__progress" aria-hidden="true"></span>
     </div>
 `;
 };

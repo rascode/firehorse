@@ -191,19 +191,19 @@ for (const p of posts) {
   const page = head({ title: `${p.title} · The Stable`, description: p.description, path, type: "article", image: p.cover ? `/stable/img/${p.cover}.webp` : null, jsonld }) + `
 <script>document.documentElement.toggleAttribute("data-stable-top", scrollY < 1)</script>
 <article class="stable-post" data-tone="${topic.tone}">
-  <div class="fh-dock fh-frame stable-dock" data-tone="${topic.tone}" data-follow>
-    <div class="fh-dock__bar">
-      <div class="fh-dock__identity">
+  <div class="site-dock fh-frame stable-dock" data-tone="${topic.tone}" data-follow>
+    <div class="site-dock__bar">
+      <div class="site-dock__identity">
         ${postPill(p, topic)}
-        <p class="fh-dock__title stable-dock__title">${esc(p.title)}</p>
+        <p class="site-dock__title stable-dock__title">${esc(p.title)}</p>
       </div>
       <ul class="fh-cubes stable-dock__cubes" aria-label="Reading">
         <li><b class="fh-cube">${p.minutes}</b> min read</li>
         <li><b class="fh-cube" data-progress>0%</b> read</li>
       </ul>
-      <div class="fh-dock__actions"><a class="fh-button fh-button--sm fh-button--outline" href="#subscribe"><span class="fh-roll">Subscribe</span></a></div>
+      <div class="site-dock__actions"><a class="fh-button fh-button--sm fh-button--outline" href="#subscribe"><span class="fh-roll">Subscribe</span></a></div>
     </div>
-    <span class="fh-dock__progress" aria-hidden="true"></span>
+    <span class="site-dock__progress" aria-hidden="true"></span>
   </div>
 
   <header class="fh-section stable-head">

@@ -215,7 +215,7 @@ function mountTags(list) {
   addEventListener("resize", () => requestAnimationFrame(placeTags));
 
   // IDs toggle: one in the floating bar, one in the index.
-  $$(".fh-dock__actions").slice(0, 1).forEach((a) => a.insertAdjacentHTML("afterbegin", `<button class="fh-button fh-button--sm fh-button--ghost site-ids-toggle" type="button" data-ids-toggle aria-pressed="false" title="Show every variant's ID"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i><span>IDs</span></button>`));
+  $$(".site-dock__actions").slice(0, 1).forEach((a) => a.insertAdjacentHTML("afterbegin", `<button class="fh-button fh-button--sm fh-button--ghost site-ids-toggle" type="button" data-ids-toggle aria-pressed="false" title="Show every variant's ID"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i><span>IDs</span></button>`));
   document.addEventListener("click", (ev) => { if (ev.target.closest("[data-ids-toggle]")) setIds(!root.hasAttribute("data-site-ids")); });
   let saved = null; try { saved = localStorage.getItem(IDS_KEY); } catch {}
   setIds(saved === "1", false);
