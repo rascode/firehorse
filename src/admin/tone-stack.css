@@ -67,22 +67,22 @@
     color: inherit;
     font-family: var(--fh-font-display);
     font-size: clamp(1.1rem, 3.2cqi, 1.35rem);
-    font-weight: 400;
+    font-weight: var(--fh-weight-regular);
     letter-spacing: -0.015em;
   }
   .fh-tone-panel--hero .fh-tone-panel__title {
     max-inline-size: 14ch;
     font-size: clamp(1.75rem, 6cqi, 2.75rem);
-    font-weight: 600;
+    font-weight: var(--fh-weight-bold);
     line-height: 1.02;
-    letter-spacing: -0.03em;
+    letter-spacing: var(--fh-tracking-snug);
   }
 
   .fh-tone-panel__tools {
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-related);
-    padding: 0.25rem;
+    padding: var(--fh-item-frame);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-color-on-ink) 75%, transparent);
     color: var(--fh-color-ink);
@@ -95,15 +95,15 @@
     flex: none;
     inline-size: 2.5rem;
     aspect-ratio: 1;
-    border: 1px solid color-mix(in oklab, currentColor 35%, transparent);
-    border-radius: 0.75rem;
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, currentColor 35%, transparent);
+    border-radius: var(--fh-radius-lg);
   }
   .fh-tone-panel__toggle::before {
     content: "";
     inline-size: 0.5rem;
     block-size: 0.5rem;
-    border-inline-end: 1.5px solid currentColor;
-    border-block-end: 1.5px solid currentColor;
+    border-inline-end: var(--fh-border-thick) var(--fh-card-border-style, solid) currentColor;
+    border-block-end: var(--fh-border-thick) var(--fh-card-border-style, solid) currentColor;
     rotate: 45deg;
     translate: 0 -20%;
   }
@@ -137,7 +137,7 @@
     font-family: var(--fh-font-figure, var(--fh-font-display));
     font-size: clamp(1.6rem, 5cqi, 2.4rem);
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.03em;
+    letter-spacing: var(--fh-tracking-snug);
     line-height: 1;
   }
 
@@ -150,7 +150,7 @@
   .fh-tone-panel__actions :is(a, button) {
     display: inline-flex;
     align-items: center;
-    gap: 0.4em;
+    gap: var(--fh-gap-bound);
     padding: 0;
     border: 0;
     background: none;
@@ -171,7 +171,7 @@
   .fh-tone-panel__table th {
     padding: 0 var(--fh-inset-control) var(--fh-inset-tight) 0;
     font-size: var(--fh-text-small);
-    font-weight: 400;
+    font-weight: var(--fh-weight-regular);
     text-align: start;
     opacity: 0.75;
   }
@@ -190,9 +190,9 @@
     .fh-tone-panel::details-content {
       block-size: 0;
       overflow: clip;
-      transition: block-size 0.35s var(--fh-ease-out), content-visibility 0.35s allow-discrete;
+      transition: block-size var(--fh-duration-slow) var(--fh-ease-out), content-visibility var(--fh-duration-slow) allow-discrete;
     }
     .fh-tone-panel[open]::details-content { block-size: auto; }
-    .fh-tone-panel__toggle::before { transition: rotate 0.3s var(--fh-ease-out), translate 0.3s var(--fh-ease-out); }
+    .fh-tone-panel__toggle::before { transition: rotate var(--fh-duration-base) var(--fh-ease-out), translate var(--fh-duration-base) var(--fh-ease-out); }
   }
 }

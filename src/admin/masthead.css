@@ -28,7 +28,7 @@
     --_fill: var(--fh-masthead-fill, calc(15% + clamp(0, var(--fh-frost, 0.6), 1) * 75%));
     display: grid;
     gap: var(--fh-gap-grouped-wide);
-    padding: clamp(var(--fh-inset-card), 4cqi, var(--fh-inset-card));
+    padding: var(--fh-inset-card);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
@@ -44,11 +44,11 @@
     justify-content: space-between;
     gap: var(--fh-gap-grouped-wide);
     padding-block-end: var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     font-family: var(--fh-font-display);
     font-size: clamp(1.75rem, 6cqi, 4rem);
     font-weight: var(--fh-weight-regular);
-    letter-spacing: -0.02em;
+    letter-spacing: var(--fh-tracking-heading);
     line-height: 1;
   }
 

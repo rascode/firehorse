@@ -24,7 +24,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-overview-min, 15rem)), 1fr));
     overflow: hidden;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
   }
 
@@ -73,7 +73,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
 
     & > li {
       display: grid;
@@ -113,7 +113,7 @@
     font-size: var(--fh-text-small);
     text-underline-offset: 0.2em;
 
-    &::after { content: " ↗"; color: var(--fh-color-text-subtle); font-size: 0.8em; }
+    &::after { content: " ↗"; color: var(--fh-color-text-subtle); font-size: var(--fh-text-micro); }
   }
 
   /* —— A tab panel's own heading: title, a line on it, then its tools —— */

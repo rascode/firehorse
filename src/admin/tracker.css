@@ -80,7 +80,7 @@
     align-items: center;
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-card);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
 
     & form { display: contents; }
@@ -100,7 +100,7 @@
     align-items: center;
     gap: var(--fh-gap-related);
     padding: var(--fh-gap-related) var(--fh-inset-control);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-pill);
     background: none;
     color: var(--fh-color-text);
@@ -109,8 +109,8 @@
     cursor: var(--fh-cursor-action);
 
     & .fh-icon { color: var(--fh-tone, var(--fh-color-text-muted)); }
-    &:hover { border-style: solid; border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); background: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 8%, transparent); }
-    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; }
+    &:hover { border-style: var(--fh-card-border-style, solid); border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); background: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 8%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
   }
 
   /* Body: the cards, and the day's log beside them on wide screens. */
@@ -156,7 +156,7 @@
     transition: border-color var(--fh-duration-fast) var(--fh-ease-out), background-color var(--fh-duration-fast) var(--fh-ease-out);
 
     &:hover { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); background-image: linear-gradient(color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 9%, transparent), color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 9%, transparent)); }
-    &:focus-visible { outline: 2px solid var(--fh-color-focus); outline-offset: 2px; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
   }
 
   .fh-check-card__check {
@@ -165,10 +165,10 @@
     inset-inline-end: var(--fh-inset-control);
     inline-size: 1.125rem;
     aspect-ratio: 1;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
 
-    .fh-check-card:hover & { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 18%, transparent); }
+    .fh-check-card:hover & { border-style: var(--fh-card-border-style, solid); border-color: var(--fh-tone, var(--fh-color-text)); background: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 18%, transparent); }
   }
 
   .fh-check-card__area {
@@ -194,7 +194,7 @@
   /* The action: the verb small above, the subject. */
   .fh-check-card__title {
     display: grid;
-    gap: 0.15rem;
+    gap: var(--fh-gap-bound);
     font-size: var(--fh-text-small);
     font-weight: var(--fh-weight-medium);
     line-height: var(--fh-leading-snug);
@@ -254,13 +254,13 @@
       display: grid;
       gap: var(--fh-gap-bound);
       padding: var(--fh-inset-control) 0 var(--fh-inset-control) var(--fh-gap-grouped-wide);
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
       &::before {
         content: "";
         position: absolute;
         inset-inline-start: calc(var(--fh-gap-bound) * -1 - var(--fh-border-thin) / 2);
-        inset-block-start: calc(var(--fh-inset-control) + 0.4em);
+        inset-block-start: calc(var(--fh-inset-control) + var(--fh-inset-tight));
         inline-size: var(--fh-gap-related);
         aspect-ratio: 1;
         border-radius: var(--fh-radius-pill);
