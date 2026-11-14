@@ -3037,6 +3037,48 @@
     }
   }
 
+  .fh-tile--colour {
+    --_on: oklch(from var(--_c) clamp(.16, (.64 - l) * 100, .99) calc(c * .2) h);
+
+    & .fh-tile__media {
+      padding: var(--fh-inset-control);
+      border-color: color-mix(in oklab, var(--_c) 60%, var(--fh-color-etch));
+      background: radial-gradient(120% 90% at 20% 0%, oklch(from var(--_c) calc(l + .08) c h / .9), transparent 60%),
+        var(--_c);
+      align-items: flex-end;
+      display: flex;
+    }
+  }
+
+  .fh-tile__code {
+    color: var(--_on, currentColor);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-caps);
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .fh-tile__media--auto {
+    padding: calc(var(--fh-inset-control) + var(--fh-gap-related));
+  }
+
+  .fh-tile__media--auto:after {
+    content: "";
+    inset: var(--fh-gap-related);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
+    border-radius: calc(var(--fh-radius-md) - 2px);
+    pointer-events: none;
+    position: absolute;
+  }
+
+  @media (forced-colors: active) {
+    .fh-tile--colour .fh-tile__media {
+      forced-color-adjust: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .fh-tile, .fh-tile__cube, .fh-tile__go, .fh-tile__media, .fh-tile__specimen {
       transition: none;

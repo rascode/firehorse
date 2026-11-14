@@ -834,7 +834,7 @@ Dashed cells that share their rules, a tone-colored meta line, and a title link 
 
 ### TIL · Tiles
 
-Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview, a specimen or a small swatch, and the picked tile marked.
+Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview, a specimen, a small swatch or the colour itself, and the picked tile marked.
 
 ```html
 <!-- TIL-1.1 · Index tiles › Index tile -->
@@ -898,6 +898,15 @@ Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered 
   <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Meadow"><span class="fh-tile__media" style="background-image: linear-gradient(160deg, oklch(0.85 0.12 130), oklch(0.45 0.1 150))"></span><b class="fh-tile__title">Meadow</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
   <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Dune"><span class="fh-tile__media" style="background-image: linear-gradient(170deg, oklch(0.9 0.05 80), oklch(0.65 0.09 60))"></span><b class="fh-tile__title">Dune</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
   <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Ink"><span class="fh-tile__media" style="background-image: radial-gradient(70% 70% at 30% 30%, oklch(0.45 0 0), oklch(0.15 0 0))"></span><b class="fh-tile__title">Ink</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+</ul>
+
+<!-- TIL-3.4 · Option tiles › Option tile, colour -->
+<ul class="fh-tiles fh-tiles--options" aria-label="Theme colour" data-fh="TIL-3.4">
+  <li><button class="fh-tile fh-tile--option fh-tile--colour" type="button" aria-pressed="false" style="--fh-tile-tone: var(--fh-color-accent)"><span class="fh-tile__media fh-tile__media--auto"><span class="fh-tile__code">Auto</span></span><b class="fh-tile__title">From backdrop</b><span class="fh-tile__note">Follows the photo</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--colour" type="button" aria-pressed="false" style="--fh-tile-tone: #ff5a1f"><span class="fh-tile__media"><span class="fh-tile__code">#FF5A1F</span></span><b class="fh-tile__title">Firehorse</b><span class="fh-tile__note">The house colour</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--colour" type="button" aria-pressed="false" style="--fh-tile-tone: #f59e0b"><span class="fh-tile__media"><span class="fh-tile__code">#F59E0B</span></span><b class="fh-tile__title">Amber</b><span class="fh-tile__note">Warm · golden</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--colour" type="button" aria-pressed="true" style="--fh-tile-tone: #10b981"><span class="fh-tile__media"><span class="fh-tile__code">#10B981</span></span><b class="fh-tile__title">Emerald</b><span class="fh-tile__note">Fresh · calm</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--colour" type="button" aria-pressed="false" style="--fh-tile-tone: #3b82f6"><span class="fh-tile__media"><span class="fh-tile__code">#3B82F6</span></span><b class="fh-tile__title">Blue</b><span class="fh-tile__note">Clear · steady</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
 </ul>
 ```
 

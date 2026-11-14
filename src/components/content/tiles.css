@@ -222,7 +222,11 @@
    * font-family on it); --fh-tile-specimen sets its size. For typefaces, weights, scales.
    * TIL-3.3 Swatch: .fh-tiles--swatches with .fh-tile--swatch, many small previews with a
    * mono caps caption (the title) and no note, set on a gap instead of rules; picked, the
-   * preview is ringed and the caption reads full strength. For photos, colours, textures. */
+   * preview is ringed and the caption reads full strength. For photos, colours, textures.
+   * TIL-3.4 Colour: .fh-tile--colour, the preview filled with the tile's colour (--fh-tile-tone)
+   * and its code in mono caps on it (.fh-tile__code); picked, the ring, check and name take that
+   * colour. .fh-tile__media--auto marks a colour that follows something else (a dashed ring
+   * inside). For theme colours, accents and palettes. */
   .fh-tiles--options {
     --fh-tiles-min: 10rem;
     --fh-tile-min-height: 0;
@@ -341,6 +345,43 @@
     background-color: transparent;
 
     & .fh-tile__title { color: var(--fh-color-text); }
+  }
+
+  /* —— TIL-3.4 Colour: the preview is the colour ————————————————————————————— */
+  .fh-tile--colour {
+    --_on: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
+
+    & .fh-tile__media {
+      display: flex;
+      align-items: flex-end;
+      padding: var(--fh-inset-control);
+      border-color: color-mix(in oklab, var(--_c) 60%, var(--fh-color-etch));
+      background:
+        radial-gradient(120% 90% at 20% 0%, oklch(from var(--_c) calc(l + 0.08) c h / 0.9), transparent 60%),
+        var(--_c);
+    }
+  }
+  .fh-tile__code {
+    color: var(--_on, currentColor);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-caps);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+  /* A colour that follows something else: a dashed ring just inside the preview, in its on-colour. */
+  .fh-tile__media--auto { padding: calc(var(--fh-inset-control) + var(--fh-gap-related)); }
+  .fh-tile__media--auto::after {
+    content: "";
+    position: absolute;
+    inset: var(--fh-gap-related);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
+    border-radius: calc(var(--fh-radius-md) - 2px);
+    pointer-events: none;
+  }
+  @media (forced-colors: active) {
+    .fh-tile--colour .fh-tile__media { forced-color-adjust: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
