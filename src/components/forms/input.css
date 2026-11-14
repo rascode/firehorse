@@ -34,8 +34,8 @@
 
     &:focus,
     &:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     &:user-invalid,
@@ -49,7 +49,7 @@
 
     @media (pointer: coarse) {
       min-block-size: var(--fh-tap-target);
-      font-size: max(16px, var(--fh-text-body)); /* stops iOS zoom-on-focus */
+      font-size: var(--fh-text-body); /* body is 1rem, the 16px floor that stops iOS zoom-on-focus */
     }
 
     @media (forced-colors: active) {
@@ -135,7 +135,7 @@
       padding: var(--fh-item-frame);
       border: var(--fh-border-thin) solid var(--fh-color-border-strong);
       border-radius: var(--fh-radius-sm);
-      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, var(--fh-color-ink));
       box-shadow: var(--fh-shadow-menu);
     }
 

@@ -63,7 +63,7 @@
     min-inline-size: 0;
     min-block-size: 2.5rem;
     padding: var(--fh-gap-bound) var(--fh-item-inline) var(--fh-gap-bound) var(--fh-gap-bound);
-    border: var(--fh-border-thin) solid transparent;
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
     border-radius: var(--fh-entity-radius, var(--fh-radius-sm));
     background: none;
     color: var(--fh-color-text);
@@ -233,8 +233,8 @@
     &:hover { background-color: var(--fh-color-field-hover); }
 
     &:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     &:disabled { opacity: 0.55; cursor: not-allowed; }
@@ -263,9 +263,9 @@
     padding: var(--fh-inset-tight);
     overflow: auto;
     overscroll-behavior: contain;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: calc(var(--fh-entity-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, var(--fh-color-ink));
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-menu);
     opacity: 0;
@@ -366,7 +366,11 @@
     &:has(> input:focus-visible),
     &[data-highlighted] {
       background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
-      outline: none;
+    }
+
+    &:has(> input:focus-visible) {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     &:has(> input:checked),
@@ -395,7 +399,7 @@
        control on any fill; it firms up on hover and while the list is open. */
     & > .fh-entity {
       padding-inline-end: var(--fh-gap-grouped);
-      border-style: dashed;
+      border-style: var(--fh-card-border-style, dashed);
       border-color: var(--fh-color-etch);
 
       &:hover { border-color: var(--fh-color-border-strong); }
@@ -410,19 +414,19 @@
     --_line: dashed;
 
     & > .fh-entity {
-      border-style: dashed;
+      border-style: var(--fh-card-border-style, dashed);
       border-color: var(--fh-color-etch);
       background-color: transparent;
 
       &:hover {
-        border-style: solid;
+        border-style: var(--fh-card-border-style, solid);
         background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent);
       }
 
       &:has(~ .fh-entity-picker__list:popover-open),
       &[aria-expanded="true"],
       &[data-state="open"] {
-        border-style: solid;
+        border-style: var(--fh-card-border-style, solid);
         border-color: var(--fh-color-border-strong);
         box-shadow: none;
       }
@@ -433,7 +437,7 @@
       position: absolute;
       inset-block-start: -0.05rem;
       inset-inline: var(--fh-gap-related);
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       pointer-events: none;
     }
   }
@@ -443,6 +447,6 @@
 
   @media (forced-colors: active) {
     .fh-entity-picker > .fh-entity { border-color: ButtonText; }
-    .fh-entity-picker__list .fh-entity:has(> input:checked) { outline: 2px solid Highlight; }
+    .fh-entity-picker__list .fh-entity:has(> input:checked) { outline: var(--fh-border-heavy) solid Highlight; }
   }
 }
