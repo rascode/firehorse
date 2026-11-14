@@ -2050,7 +2050,7 @@ A show and hide toggle inside a password field. Put the input in an fh-input-gro
 
 ## SEG · Segment switch
 
-One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe, with or without an icon before each label.
+One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current, and its entity chips match it (add fh-segment--lg for larger ones); the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe, with or without an icon before each label.
 
 Classes: `fh-segment` `fh-segment--entities` `fh-segment--roll` `fh-segment__roll` `fh-segment--mode` `fh-icon`
 

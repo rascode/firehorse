@@ -9,7 +9,8 @@
  *       <a href="?s=business" data-tone="amber">Business <b>3</b></a>
  *       <a href="?s=personal" data-tone="sky">Personal <b>4</b></a>
  *     </nav>
- *   SEG-1.2 Entities: smaller chips under a switch.
+ *   SEG-1.2 Entities: chips under a switch, the same size and type as the switch, each in
+ *   its own etch. Add fh-segment--lg for larger, sentence-case chips.
  *     <nav class="fh-segment fh-segment--entities" aria-label="Business"> <a …>Rascode</a> … </nav>
  *
  * SEG-2 Toggle: two states of one thing.
@@ -75,18 +76,21 @@
     }
   }
 
-  /* SEG-1.2 Entities: smaller chips under the switch. */
+  /* SEG-1.2 Entities: the switch's pills and type, each chip in its own etch, no outer pill.
+     --lg scales the chips up: sentence case, sans, the small text size. */
   .fh-segment--entities {
     border-style: none;
     padding: 0;
     & > :is(a, button) {
-      padding: var(--fh-inset-tight) var(--fh-inset-control);
       border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
-      text-transform: none;
-      letter-spacing: normal;
-      font-family: var(--fh-font-sans);
-      font-size: var(--fh-text-small);
     }
+  }
+  .fh-segment--entities.fh-segment--lg > :is(a, button) {
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    text-transform: none;
+    letter-spacing: normal;
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-text-small);
   }
 
   /* SEG-2.1 Rolling toggle: the whole pill is the button. Solid ink (black on light, white on
