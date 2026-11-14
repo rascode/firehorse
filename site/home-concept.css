@@ -1993,3 +1993,11 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   max-inline-size: none;
 }
 :root:not(.fh-js) .site-hc__announce { inset-block: auto calc(100% + var(--fh-space-4)); }
+
+/* The announcement banner (EMP-1.3) holds the top of the window; the page's chrome sits below it. */
+.site-hc__banner { position: fixed; inset: 0 0 auto; z-index: 60; }
+:root:root:has(.site-hc__banner) { --site-hc-banner: var(--fh-banner-height, 2.75rem); --site-chrome-top: calc(var(--site-hc-banner) + var(--fh-space-4)); }
+/* Parts placed inside the hero already move down with it, so they keep the old top. */
+:root:has(.site-hc__banner) :is(.site-hc__sections, .site-hc__git:not(.is-fixed)) { margin-block-start: calc(-1 * var(--site-hc-banner)); }
+/* The art moves down with the hero, so its lines stay on the hero's. */
+:root:has(.site-hc__banner) :is(.site-hc__art, .site-backdrop) { translate: 0 var(--site-hc-banner); }
