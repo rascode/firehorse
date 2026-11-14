@@ -125,7 +125,7 @@
     inset-block-start: var(--_fh-y, 1rem);
     inset-inline-start: 0;
     padding: var(--fh-glide-pad, 0.3125rem);
-    border-radius: 999px;
+    border-radius: var(--fh-radius-pill);
     isolation: isolate;
     translate: var(--_fh-x0, 0) 0;
     will-change: translate;
@@ -136,9 +136,9 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch, var(--fh-color-border-strong));
     border-radius: inherit;
-    background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9));
+    background: color-mix(in oklab, var(--fh-color-canvas) 90%, transparent);
     opacity: 0;
   }
   .fh-glide > * > * { animation: none; }
@@ -172,5 +172,5 @@
    * opens the new look out as a circle from the control that made it. */
   :root[data-fh-vt="reveal"]::view-transition-old(root),
   :root[data-fh-vt="reveal"]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
-  :root[data-fh-vt="reveal"]::view-transition-new(root) { z-index: 1; }
+  :root[data-fh-vt="reveal"]::view-transition-new(root) { z-index: var(--fh-z-raised); }
 }
