@@ -15,10 +15,10 @@
       content: attr(data-tooltip);
       position: absolute;
       z-index: var(--fh-z-dropdown);
-      inset-block-end: calc(100% + 0.5rem);
+      inset-block-end: calc(100% + var(--fh-gap-related));
       inset-inline-start: 50%;
-      padding: 0.3rem 0.5rem;
-      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      padding: var(--fh-gap-bound) var(--fh-inset-tight);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
       border-radius: var(--fh-radius-sm);
       background-color: var(--fh-color-surface-raised);
       box-shadow: var(--fh-shadow-menu);
@@ -46,6 +46,6 @@
   }
 
   [data-tooltip-position="bottom"]::after {
-    inset-block: calc(100% + 0.5rem) auto;
+    inset-block: calc(100% + var(--fh-gap-related)) auto;
   }
 }

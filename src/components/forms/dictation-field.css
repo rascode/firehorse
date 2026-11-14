@@ -54,7 +54,7 @@
     display: inline-flex;
     gap: 2px;
     padding: 2px;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
 
     &[hidden] {
@@ -66,7 +66,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-bound);
-    padding: 0.3rem 0.65rem;
+    padding: var(--fh-gap-bound) 0.65rem;
     border: 0;
     border-radius: var(--fh-radius-pill);
     background: none;
@@ -115,7 +115,7 @@
     aspect-ratio: 1;
     border-radius: var(--fh-radius-round);
     background-color: var(--fh-color-danger);
-    animation: fh-dictate-blink 1.2s ease-in-out infinite;
+    animation: fh-dictate-blink 1.2s var(--fh-ease-in-out) infinite;
   }
 
   .fh-dictate__live {
@@ -162,7 +162,7 @@
       block-size: 30%;
       border-radius: 1px;
       background-color: var(--fh-color-danger);
-      animation: fh-dictate-wave 0.9s ease-in-out infinite;
+      animation: fh-dictate-wave var(--fh-duration-intro) var(--fh-ease-in-out) infinite;
     }
 
     & > i:nth-child(2) { animation-delay: -0.15s; }
