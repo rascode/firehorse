@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Site frame:** the site header and its nav use site names (`site-header`, `site-nav`), with their rules copied from the header and nav components into `site/site.css`; `--fh-header-height` stays, and the home page dock's menu button keeps `fh-header__toggle` (relay r7b-header).
 - **Site frame:** the page, Stable and part docks use site names (`site-dock`, `site-rollover`, `data-site-rollover`), with their rules copied into `site/site.css` and their engage, height, rolling heading and tone follow in `site/site.js`; the home page dock and the dock specimens keep `fh-dock` (relay r7a-dock).
 - **Site:** specimen pages show variants in quiet `site-variant` navigation (not Chip) and wrap each demo in a labelled preview frame with a raised surface and hairline border (`scripts/specimen.mjs`, `site/site.css`, relay R3).
 - **Site:** category index cards and the page jump bar use site-only catalogue styling (`site-family`, `site-jump`); the dock lists families only, not groups like CHP-3 (relay R5).

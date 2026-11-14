@@ -218,7 +218,7 @@ ${chipHtml}
 `}${m.dockCta ? `        <div class="site-dock__actions">${m.dockCta}</div>` : next ? `        <div class="site-dock__actions">
           <a class="fh-button fh-button--sm fh-button--outline" href="${next.path}"><span class="fh-roll">Next · ${escHtml(next.meta.name)}</span></a>
         </div>` : ""}
-        <button class="fh-header__toggle site-dock-menu" type="button" popovertarget="site-drawer" aria-label="Open menu"></button>
+        <button class="site-header__toggle site-dock-menu" type="button" popovertarget="site-drawer" aria-label="Open menu"></button>
       </div>
       <span class="site-dock__progress" aria-hidden="true"></span>
     </div>

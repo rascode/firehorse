@@ -38,7 +38,7 @@
   /* —— Dock call to action: as wide as the header's actions ——
    * The dock's CTA (.site-dock-cta) spans from the left edge of the header's
    * scheme switch to the right edge of its Download button, so the two line up. */
-  const dockCta = $(".site-dock-cta"), hdrActions = $(".fh-header__actions");
+  const dockCta = $(".site-dock-cta"), hdrActions = $(".site-header__actions");
   if (dockCta && hdrActions) {
     const fit = () => dockCta.style.setProperty("--site-hdr-actions-w", `${hdrActions.getBoundingClientRect().width}px`);
     new ResizeObserver(fit).observe(hdrActions);
@@ -422,7 +422,7 @@
  * under it. A pick sets --site-pick and data-site-root on <html> (see site.css), so the root, the
  * accent and every harmony re-tint live. Remembered per browser; Reset clears it. */
 (() => {
-  const brand = document.querySelector(".site-header-oval .fh-header__brand");
+  const brand = document.querySelector(".site-header-oval .site-header__brand");
   const pop = document.getElementById("site-root-pick");
   if (!brand || !pop || !pop.showPopover) return;
   const html = document.documentElement;
@@ -472,7 +472,7 @@
     probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
     probe.textContent = f.textContent;
     // The dock mark is hidden until it engages; measure beside the header mark, same font.
-    (document.querySelector(".fh-header .site-mark__word") ?? f.parentElement).append(probe);
+    (document.querySelector(".site-header .site-mark__word") ?? f.parentElement).append(probe);
     const w = probe.getBoundingClientRect().width;
     probe.remove();
     if (w) f.style.setProperty("--_w", w + "px");

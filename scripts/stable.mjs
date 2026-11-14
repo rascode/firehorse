@@ -29,7 +29,7 @@ const header = (() => {
     const to = ctx.where.get(id) ?? "/";
     return to.endsWith("#") ? `href="${to.slice(0, -1)}"` : `href="${to}#${id}"`;
   });
-  return h.replace(/(<a class="fh-nav__link") (href="\/stable\/")/, '$1 aria-current="page" $2')
+  return h.replace(/(<a class="site-nav__link") (href="\/stable\/")/, '$1 aria-current="page" $2')
     .replace(/(<li><a) (href="\/stable\/")/, '$1 aria-current="page" $2');
 })();
 const TOPICS = {

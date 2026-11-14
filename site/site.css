@@ -39,7 +39,7 @@ body::before {
   background-color: var(--fh-color-canvas);
 }
 
-.fh-header { inset-block-start: env(safe-area-inset-top, 0px); }
+.site-header { inset-block-start: env(safe-area-inset-top, 0px); }
 
 /* —— Brand mark —— */
 .site-mark {
@@ -90,7 +90,7 @@ body::before {
 /* —— Scheme switch in the header —— */
 .site-scheme { --fh-gap: 0; }
 @container fh-frame (inline-size < 76rem) {
-  .fh-header__actions .site-scheme { display: none; }
+  .site-header__actions .site-scheme { display: none; }
 }
 .site-scheme > label { padding: 0.38rem 0.6rem; font-size: 0.58rem; }
 
@@ -2339,8 +2339,8 @@ figcaption .site-id--end { margin-inline-start: auto; }
   animation-range: 0 calc(var(--site-chrome-top) + var(--fh-header-height));
 }
 @keyframes site-head-ground { from { --site-head-ground: 0%; } to { --site-head-ground: 100%; } }
-.site-header-oval > .fh-header__bar { min-block-size: var(--fh-header-height); gap: var(--fh-space-4); }
-.site-header-oval .fh-nav {
+.site-header-oval > .site-header__bar { min-block-size: var(--fh-header-height); gap: var(--fh-space-4); }
+.site-header-oval .site-nav {
   justify-self: center;
   gap: var(--fh-space-1);
   padding: 0.2rem var(--fh-space-2);
@@ -2349,7 +2349,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
   background-color: var(--_pill-fill);
   backdrop-filter: blur(var(--fh-blur-chrome));
 }
-.site-header-oval .fh-nav__link { padding: var(--fh-space-1-5) var(--fh-space-3); }
+.site-header-oval .site-nav__link { padding: var(--fh-space-1-5) var(--fh-space-3); }
 .site-header-oval .site-git {
   --fh-button-bg: var(--_pill-fill);
   --fh-button-fg: var(--fh-color-text);
@@ -2363,7 +2363,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
 }
 .site-header-oval .site-git:is(:hover, :focus-visible) { border-color: color-mix(in oklab, var(--_c) 70%, transparent); background-color: color-mix(in oklab, var(--_c) 10%, var(--_pill-fill)); }
 /* Phones: the menu button gets the same pill so the header still reads as one shape. */
-.site-header-oval .fh-header__toggle { border: var(--_pill-etch); border-radius: var(--fh-radius-pill, 999px); background-color: var(--_pill-fill); }
+.site-header-oval .site-header__toggle { border: var(--_pill-etch); border-radius: var(--fh-radius-pill, 999px); background-color: var(--_pill-fill); }
 :root:has(.site-header-oval) {
   --fh-dock-offset: calc(var(--site-chrome-top) + var(--fh-header-height) + var(--site-oval-gap));
   --site-dock-offset: calc(var(--site-chrome-top) + var(--fh-header-height) + var(--site-oval-gap));
@@ -2389,13 +2389,13 @@ figcaption .site-id--end { margin-inline-start: auto; }
  * row instead of two. Phones drop the section pill and the Next button (the lit chip already
  * names the section), so the row is home · chips · menu. Back near the top, the header returns. */
 .site-dock-home, .site-dock-menu { display: none; }
-.fh-header { transition: opacity var(--fh-duration-base) var(--fh-ease-standard), visibility 0s linear 0s; }
+.site-header { transition: opacity var(--fh-duration-base) var(--fh-ease-standard), visibility 0s linear 0s; }
 :root.fh-js:has(.site-page-dock[data-active="true"], .site-hero ~ .fh-dock[data-active="true"]) {
   --fh-dock-offset: var(--site-chrome-top) !important;
   --site-dock-offset: var(--site-chrome-top) !important;
   scroll-padding-block-start: calc(var(--site-chrome-top) + var(--fh-header-height));
 }
-:root.fh-js:has(.site-page-dock[data-active="true"], .site-hero ~ .fh-dock[data-active="true"]):not(:has(.fh-header [popover]:popover-open)) .fh-header {
+:root.fh-js:has(.site-page-dock[data-active="true"], .site-hero ~ .fh-dock[data-active="true"]):not(:has(.site-header [popover]:popover-open)) .site-header {
   opacity: 0;
   visibility: hidden;
   transition-delay: 0s, var(--fh-duration-base);
@@ -2445,7 +2445,7 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-page-cards .fh-card__footer .fh-cubes { gap: var(--fh-space-1-5); }
 .fh-drawer .site-drawer__sub { padding-inline-start: var(--fh-space-4); }
 /* Phones: the stacked logo and the menu need the header row; Download from Git lives in the drawer ("Get it"). */
-@media (width < 36rem) { .fh-header__actions:has(.site-git) { display: none; } }
+@media (width < 36rem) { .site-header__actions:has(.site-git) { display: none; } }
 
 /* —— Media page ——————————————————————————————————————————————
  * Canvases in a gallery. Each row's columns are weighted by the
@@ -2611,7 +2611,7 @@ main > .fh-section > :is(.fh-section-head, .fh-hero),
 main > .fh-section > .fh-hero-split,
 main > .site-hero .site-hero__grid > .fh-hero { padding-inline: var(--fh-inset-card); }
 /* The mark stands on the same text line as the page head below it. */
-.site-header-oval .fh-header__brand { padding-inline-start: var(--fh-inset-card); }
+.site-header-oval .site-header__brand { padding-inline-start: var(--fh-inset-card); }
 /* A label that captions a framed table starts where the table's text starts. */
 .fh-label:has(+ .fh-table-wrap) { padding-inline-start: calc(var(--fh-inset-card) + var(--fh-border-thin)); }
 /* A note under a framed demo stands on the same line as the section head. */
@@ -2645,7 +2645,7 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
 }
 .site-root-pick__today { display: inline-flex; align-items: center; gap: var(--fh-space-1-5); font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); }
 .site-root-pick__today::before { content: ""; inline-size: 0.75rem; aspect-ratio: 1; border-radius: var(--fh-radius-round, 50%); background: var(--site-day); }
-.site-header-oval .fh-header__brand { anchor-name: --site-brand; }
+.site-header-oval .site-header__brand { anchor-name: --site-brand; }
 .site-root-pick {
   position-anchor: --site-brand;
   inset: auto;
@@ -2769,7 +2769,7 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
 /* Scheme, back in the header: a small etched pill left of Download, matching the oval and the
  * GitHub pill. Three icon-only radios (light, dark, system); the lit one gets a soft root fill.
  * Radios, so CSS switches the scheme without script; site.js only remembers the choice. */
-.fh-header__actions:has(.site-scheme-pill) { align-items: center; gap: var(--fh-space-2); }
+.site-header__actions:has(.site-scheme-pill) { align-items: center; gap: var(--fh-space-2); }
 .site-scheme-pill {
   display: inline-flex;
   gap: 0.1rem;
@@ -2795,7 +2795,7 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
 .site-scheme-pill label:hover { color: var(--fh-color-text); }
 .site-scheme-pill label:has(:checked) { color: var(--fh-color-text); background-color: color-mix(in oklab, var(--fh-color-accent) 16%, transparent); }
 .site-scheme-pill label:has(:focus-visible) { outline: 2px solid var(--fh-color-focus, var(--fh-color-accent)); outline-offset: 1px; }
-@media (width < 48rem) { .fh-header__actions .site-scheme-pill { display: none; } }
+@media (width < 48rem) { .site-header__actions .site-scheme-pill { display: none; } }
 
 /* Sticky navigation. Once a page dock engages (home included), the main header slides away and
  * the dock alone holds the top. Its chips take their colours from the theme root: a left-to-right
@@ -3030,7 +3030,7 @@ main > .fh-section > .site-note { padding-inline: var(--fh-inset-card); }
  * the button itself never moves. The menu sits just left of it, where the scheme pill was. */
 /* The dock stays inside the page width; the header's actions step in by the dock's end padding
  * and border instead, so the two GitHub pills still meet on the same pixels. */
-.site-header-oval .fh-header__actions { margin-inline-end: calc(var(--fh-space-1) + var(--fh-border-thin)); }
+.site-header-oval .site-header__actions { margin-inline-end: calc(var(--fh-space-1) + var(--fh-border-thin)); }
 .site-dock .site-dock__actions .site-git, .fh-dock .fh-dock__actions .site-git {
   --_c: var(--fh-color-accent);
   --fh-button-bg: color-mix(in oklab, var(--_c) 5%, color-mix(in oklab, var(--fh-color-canvas) 72%, transparent));
@@ -3117,7 +3117,7 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 }
 .site-theme-btn .fh-icon { --fh-icon-size: 0.95rem; }
 .site-theme-btn:is(:hover, :focus-visible, :has(+ :popover-open)) { color: var(--fh-color-text); border-color: color-mix(in oklab, var(--fh-color-accent) 70%, transparent); }
-@media (width < 48rem) { .fh-header__actions .site-theme-btn { display: none; } }
+@media (width < 48rem) { .site-header__actions .site-theme-btn { display: none; } }
 
 /* The picker: an etched panel under the button; each row is one theme in its own colours, with
  * a square, edge-framed horse avatar (the breed's etching, inked in the theme's accent). */
@@ -3622,7 +3622,7 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-open--quote .site-open__body { justify-items: center; text-align: center; }
 /* The header and sticky-bar mark at its small size reads lighter than the same weight at the
  * footer's size; one step heavier (Inter 800) makes them read as one mark. */
-.fh-header .site-mark, .site-dock-home.site-mark { font-weight: 800; }
+.site-header .site-mark, .site-dock-home.site-mark { font-weight: 800; }
 
 /* Open card options (prototypes F–I on /open/). The shared solid cube: a fill from the section's walk step, text flipped dark or light from its lightness. */
 .site-open__pad { padding-inline: var(--fh-inset-card); }
@@ -3847,7 +3847,7 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
   --site-nav-etch: var(--fh-border-thin) dashed var(--fh-color-accent);
 }
 .site-header-oval { --_pill-fill: var(--site-nav-fill); --_pill-etch: var(--site-nav-etch); }
-.site-header-oval :is(.fh-nav, .site-git, .fh-header__toggle) { border-radius: var(--site-nav-radius); }
+.site-header-oval :is(.site-nav, .site-git, .site-header__toggle) { border-radius: var(--site-nav-radius); }
 .site-header-oval .site-git:is(:hover, :focus-visible) { background-color: var(--site-nav-fill); }
 .site-dock[data-active="true"] .site-dock__bar, .fh-dock[data-active="true"] .fh-dock__bar {
   border: var(--site-nav-etch);
@@ -3977,7 +3977,7 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-c-walk small { font-size: 0.6rem; color: var(--fh-color-text-subtle); writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
 
 /* Header and dock logo: larger (the two stay the same size so the dock locks onto the header mark). */
-.fh-header .site-mark, .fh-header .site-mark--tagged, .site-dock-home.site-mark { font-size: 1.5rem; }
+.site-header .site-mark, .site-header .site-mark--tagged, .site-dock-home.site-mark { font-size: 1.5rem; }
 
 /* W–Y · Habit cards (prototypes on /open/): Helm's Today habits on the Explore tile.
    The tile, cube, dashed grid and type are Explore's own; the area sets the tone. */
@@ -4511,7 +4511,7 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
   }
 
   /* Header hand-off: while the dock is engaged, the header CTA steps back to an inverted fill. */
-  :root:has(.site-dock[data-active="true"]) .fh-header__actions > .fh-button:not(.fh-button--secondary, .fh-button--ghost) {
+  :root:has(.site-dock[data-active="true"]) .site-header__actions > .fh-button:not(.fh-button--secondary, .fh-button--ghost) {
     --fh-button-bg: var(--fh-color-canvas);
     --fh-button-fg: var(--fh-color-text);
     --fh-button-border: color-mix(in oklab, var(--fh-color-text) 35%, transparent);
@@ -4628,5 +4628,172 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     .site-rollover__item[data-leave] { display: none; }
+  }
+}
+
+/* —— Site frame: site-header (was fh-header) ——
+ * The site's header bar, copied from src/components/navigation/header.css into the same layer,
+ * so the site rules above still win as before. --fh-header-height stays: src/js/firehorse.js reads it. */
+@layer fh.components {
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--fh-z-sticky);
+    background-color: color-mix(in oklab, var(--fh-color-canvas) 88%, transparent);
+    backdrop-filter: blur(var(--fh-blur-chrome));
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-rule);
+
+    /* While a mega panel or the drawer is open, the header goes solid. */
+    :root:has(:is(.fh-mega, .fh-drawer):popover-open) & {
+      background-color: var(--fh-color-surface-raised);
+      backdrop-filter: none;
+      border-block-end-color: transparent;
+    }
+  }
+
+  .site-header__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "brand nav actions";
+    align-items: center;
+    gap: var(--fh-gap-sectioned);
+    min-block-size: var(--fh-header-height);
+  }
+
+  .site-header__brand {
+    grid-area: brand;
+    justify-self: start;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    color: var(--fh-color-text-strong);
+    font-weight: var(--fh-weight-heavy);
+    font-size: 1.25rem;
+    letter-spacing: var(--fh-tracking-tight);
+    text-decoration: none;
+  }
+
+  .site-header__actions {
+    grid-area: actions;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+  }
+
+  /* The menu button: two lines that turn into a cross. The page dock carries one too. */
+  .site-header__toggle {
+    grid-area: toggle;
+    display: none;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+
+    &::before,
+    &::after {
+      content: "";
+      grid-area: 1 / 1;
+      inline-size: 1.15rem;
+      block-size: 1.5px;
+      background-color: currentColor;
+      transition:
+        translate var(--fh-duration-base) var(--fh-ease-out),
+        rotate var(--fh-duration-base) var(--fh-ease-out);
+    }
+
+    &::before {
+      translate: 0 -0.28rem;
+    }
+
+    &::after {
+      translate: 0 0.28rem;
+    }
+
+    &:hover {
+      color: var(--fh-color-accent-text);
+    }
+
+    :root:has(.fh-drawer:popover-open) &::before {
+      translate: 0 0;
+      rotate: 45deg;
+    }
+
+    :root:has(.fh-drawer:popover-open) &::after {
+      translate: 0 0;
+      rotate: -45deg;
+    }
+  }
+
+  /* The header collapses by its own width. */
+  @container fh-frame (inline-size < 60rem) {
+    .site-header__bar {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-areas: "brand actions toggle";
+      gap: var(--fh-gap-grouped);
+    }
+
+    .site-header__bar > .site-nav {
+      display: none;
+    }
+
+    .site-header__toggle {
+      display: grid;
+    }
+  }
+
+  @container fh-frame (inline-size < 26rem) {
+    .site-header__actions .fh-button:not(:first-child) {
+      display: none;
+    }
+  }
+}
+
+/* —— Site frame: site-nav (was fh-nav) ——
+ * The header's links, copied from src/components/navigation/nav.css into the same layer. */
+@layer fh.components {
+  .site-nav {
+    grid-area: nav;
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-sectioned);
+  }
+
+  .site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    padding: var(--fh-inset-tight) 0;
+    border: 0;
+    background: none;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wider);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.72;
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(:hover, :focus-visible, [aria-current="page"], [aria-expanded="true"]) {
+      opacity: 1;
+    }
+
+    /* Buttons that open a panel get a chevron. */
+    &[popovertarget]::after {
+      content: "";
+      inline-size: 0.7rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+      opacity: 0.7;
+      transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    }
   }
 }
