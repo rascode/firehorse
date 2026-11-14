@@ -90,7 +90,7 @@
     font-variant-numeric: tabular-nums;
     transition: scale var(--fh-duration-fast) var(--fh-ease-out);
 
-    & .fh-icon { --fh-icon-size: 1.2rem; font-size: 1.2rem; }
+    & .fh-icon { --fh-icon-size: var(--fh-text-large); font-size: var(--fh-text-large); }
   }
   .fh-tile__eyebrow {
     color: var(--fh-color-text-subtle);
@@ -132,11 +132,11 @@
     padding: var(--fh-inset-tile);
 
     & .fh-tile__cube { --fh-tile-cube: 2rem; grid-area: 1 / 1 / 3 / 2; margin: 0; font-size: var(--fh-text-small); }
-    & .fh-tile__cube .fh-icon { --fh-icon-size: 1rem; font-size: 1rem; }
+    & .fh-tile__cube .fh-icon { --fh-icon-size: 1rem; font-size: var(--fh-text-body); }
     & .fh-tile__title { grid-area: 1 / 2; font-size: var(--fh-text-lede); line-height: 1.15; }
     & .fh-tile__note { grid-area: 2 / 2; font-size: var(--fh-text-caption); }
-    & .fh-tile__eyebrow { grid-area: 1 / 3; align-self: start; padding-inline-end: 1.5rem; }
-    & .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); font-size: 1rem; }
+    & .fh-tile__eyebrow { grid-area: 1 / 3; align-self: start; padding-inline-end: var(--fh-inset-card); }
+    & .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); font-size: var(--fh-text-body); }
   }
 
   /* —— TIL-2 Launch tiles: a size down, the arrow up and to the right ——————————— */
@@ -148,11 +148,11 @@
 
     & .fh-tile { gap: calc(var(--fh-gap-bound) * 1.5); padding: var(--fh-inset-control) var(--fh-inset-tile) var(--fh-inset-tile); }
     & .fh-tile__cube { margin-block-end: var(--fh-gap-bound); font-size: var(--fh-text-small); }
-    & .fh-tile__cube .fh-icon { --fh-icon-size: 1rem; font-size: 1rem; }
+    & .fh-tile__cube .fh-icon { --fh-icon-size: 1rem; font-size: var(--fh-text-body); }
     & .fh-tile__title { line-height: 1.1; }
     & .fh-tile__note { max-inline-size: 100%; overflow: hidden; font-size: var(--fh-text-caption); text-overflow: ellipsis; white-space: nowrap; }
     & .fh-tile__eyebrow { position: absolute; inset-block-start: var(--fh-inset-tile); inset-inline-end: 2.6rem; }
-    & .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); font-size: 1rem; }
+    & .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); font-size: var(--fh-text-body); }
     & .fh-tile:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: 2px -2px; }
   }
 
@@ -173,11 +173,15 @@
       background: color-mix(in oklab, var(--_c) 18%, transparent);
       color: var(--_ink);
     }
-    & .fh-tile__cube .fh-icon { --fh-icon-size: 0.95rem; font-size: 0.95rem; }
+    & .fh-tile__cube .fh-icon { --fh-icon-size: var(--fh-text-body); font-size: var(--fh-text-body); }
     & .fh-tile__title { grid-area: 1 / 2; font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); letter-spacing: normal; }
     & .fh-tile__note { grid-area: 2 / 2; font-size: var(--fh-text-label); }
-    & .fh-tile__go { position: static; grid-area: 1 / 3 / 3 / 4; font-size: 0.8rem; opacity: 0; translate: -0.3rem 0.3rem; }
-    &:is(a, button, label):is(:hover, :focus-visible) { box-shadow: inset 2px 0 0 var(--_c); }
+    & .fh-tile__go { position: static; grid-area: 1 / 3 / 3 / 4; font-size: var(--fh-text-caption); opacity: 0; translate: -0.3rem 0.3rem; }
+    &:is(a, button, label):hover { box-shadow: inset 2px 0 0 var(--_c); }
+    &:is(a, button, label):focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__cube { scale: 1.06; }
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { opacity: 1; translate: 0 0; }
   }
@@ -201,7 +205,7 @@
       white-space: nowrap;
     }
     & code::before { content: "$ "; color: var(--_ink); }
-    & .fh-tile__go { inset-block-start: var(--fh-inset-control); inset-inline-end: var(--fh-inset-tile); font-size: 0.9rem; }
+    & .fh-tile__go { inset-block-start: var(--fh-inset-control); inset-inline-end: var(--fh-inset-tile); font-size: var(--fh-text-small); }
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: none; }
   }
 
@@ -254,11 +258,11 @@
       block-size: 1.6rem;
       inset-block-start: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
       inset-inline-end: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
-      z-index: 1;
-      border-radius: 50%;
+      z-index: var(--fh-z-raised);
+      border-radius: var(--fh-radius-round);
       background: var(--_c);
       color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-      font-size: 0.85rem;
+      font-size: var(--fh-text-small);
       opacity: 0;
       scale: 0.6;
       transition: opacity var(--fh-duration-fast), scale var(--fh-duration-fast) var(--fh-ease-out);
@@ -273,7 +277,7 @@
     aspect-ratio: var(--fh-tile-media-ratio, 4 / 3);
     overflow: hidden;
     isolation: isolate;
-    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background: var(--fh-color-canvas) center / cover no-repeat;
     transition: box-shadow var(--fh-duration-fast) var(--fh-ease-standard), scale var(--fh-duration-fast) var(--fh-ease-out);
@@ -376,8 +380,8 @@
     content: "";
     position: absolute;
     inset: var(--fh-gap-related);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
-    border-radius: calc(var(--fh-radius-md) - 2px);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
+    border-radius: calc(var(--fh-radius-md) - var(--fh-radius-sm));
     pointer-events: none;
   }
   @media (forced-colors: active) {
