@@ -41,10 +41,10 @@
     --_n: 12;
     --_edge: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
     inset-inline: var(--_edge);
-    background-image: linear-gradient(to right, var(--fh-guides-fill) 0 calc(100% - var(--fh-cols-gutter)), transparent 0);
-    background-size: calc((100% + var(--fh-cols-gutter)) / var(--_n)) 100%;
+    background-image: linear-gradient(to right, var(--fh-guides-fill, color-mix(in oklab, var(--fh-color-accent) 9%, transparent)) 0 calc(100% - var(--fh-cols-gutter, var(--fh-space-6))), transparent 0);
+    background-size: calc((100% + var(--fh-cols-gutter, var(--fh-space-6))) / var(--_n)) 100%;
     background-repeat: repeat-x;
-    outline: 1px dashed var(--fh-guides-color);
+    outline: var(--fh-border-thin) dashed var(--fh-guides-color, color-mix(in oklab, var(--fh-color-accent) 55%, transparent));
   }
   html[data-fh-guides~="cols-16"]::before { --_n: 16; }
 
@@ -52,7 +52,7 @@
   html[data-fh-guides]::after {
     --_none: linear-gradient(transparent, transparent);
     --_line: 1px;
-    --_c: var(--fh-guides-color);
+    --_c: var(--fh-guides-color, color-mix(in oklab, var(--fh-color-accent) 55%, transparent));
     inset-inline: 0;
     background-image:
       var(--_golden, var(--_none)), var(--_golden-y, var(--_none)),
@@ -70,11 +70,11 @@
     --_thirds-y: linear-gradient(to bottom, transparent calc(33.333% - 0.5px), var(--_c) 0 calc(33.333% + 0.5px), transparent 0 calc(66.667% - 0.5px), var(--_c) 0 calc(66.667% + 0.5px), transparent 0);
   }
   html[data-fh-guides~="baseline"]::after {
-    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 1px, transparent 1px var(--fh-guides-baseline));
+    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 1px, transparent 1px var(--fh-guides-baseline, var(--fh-space-2)));
   }
   html[data-fh-guides~="modular"]::after {
-    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module));
-    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module));
+    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module, var(--fh-space-8)));
+    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module, var(--fh-space-8)));
   }
   html[data-fh-guides~="safe"]::after {
     --_m: var(--fh-page-margin);

@@ -54,10 +54,10 @@
     z-index: -1;
     grid-column: content;
     inset-block: var(--fh-panel-top, 0) 0;
-    inline-size: min(var(--fh-panel-size), 100% - var(--fh-panel-gutter));
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    inline-size: min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-block-end: 0;
-    background-color: var(--fh-panel-fill);
+    background-color: var(--fh-panel-fill, color-mix(in oklab, var(--fh-color-canvas) 62%, transparent));
     pointer-events: none;
   }
 
@@ -71,8 +71,8 @@
    * inside the panel's width, so text never runs across the edge line. */
   .fh-panel-inset {
     box-sizing: border-box;
-    max-inline-size: min(var(--fh-panel-size), 100% - var(--fh-panel-gutter));
-    padding-inline: var(--fh-panel-pad);
+    max-inline-size: min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem));
+    padding-inline: var(--fh-panel-pad, var(--fh-inset-card));
   }
 
   /* A footer that takes its time: the columns, then open room to the bottom of the page. */
@@ -95,13 +95,13 @@
     .fh-footer--panel .fh-footer__columns {
       /* The grid's own left rule sits inside the panel's, so take it off the panel's width. */
       --_panel: calc(min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem)) - var(--fh-border-thin));
-      --_cols: calc(var(--fh-footer-panel-columns) + 1);
+      --_cols: calc(var(--fh-footer-panel-columns, 3) + 1);
       grid-template-columns:
-        repeat(var(--fh-footer-panel-columns), calc(var(--_panel) / var(--fh-footer-panel-columns)))
+        repeat(var(--fh-footer-panel-columns, 3), calc(var(--_panel) / var(--fh-footer-panel-columns, 3)))
         minmax(0, 1fr)
         calc(100% / var(--_cols));
       /* One row: the grid draws the bottom rule, so it also runs under the open strip. */
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     .fh-footer--panel .fh-footer__column {
@@ -112,7 +112,7 @@
     .fh-footer--panel .fh-footer__column:last-child {
       grid-column: -2;
       margin-inline-start: calc(-1 * var(--fh-border-thin));
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 }
