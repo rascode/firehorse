@@ -44,7 +44,11 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
   // The agents as Tiles: compact (TIL-2.2) by default; data-agent-tiles="launch" on the host gives the
   // stacked launch tiles (TIL-2.1). The terminal agents are command tiles (TIL-2.3) either way.
   const launch = host.dataset.agentTiles === "launch";
-  host.innerHTML = `<button class="fh-button fh-button--${host.classList.contains("site-agents--sm") ? "sm" : size} fh-button--secondary" type="button" popovertarget="${id}" style="anchor-name: --${id}"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>${label}<i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+  // data-agent-button="etched" on the host gives the etched pill (BTN-5.1), which draws its own ↑.
+  const trigger = host.dataset.agentButton === "etched"
+    ? `<button class="fh-button fh-button--etched" type="button" popovertarget="${id}" style="anchor-name: --${id}" data-fh="BTN-5.1">${label}</button>`
+    : `<button class="fh-button fh-button--${host.classList.contains("site-agents--sm") ? "sm" : size} fh-button--secondary" type="button" popovertarget="${id}" style="anchor-name: --${id}"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>${label}<i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>`;
+  host.innerHTML = `${trigger}
     <div class="fh-menu fh-menu--tiles site-agents__menu" id="${id}" popover style="position-anchor: --${id}" aria-label="Choose an agent" data-fh="DRP-2.1">
       <header class="fh-menu__head"><span class="fh-menu__title">Send to an agent</span><span class="fh-menu__status" data-tone="lime"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Prompt copied on every pick</span></header>
       <p class="fh-menu__label">Open with the prompt</p>

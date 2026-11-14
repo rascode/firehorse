@@ -409,7 +409,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 /* Send to an agent, under the headline on the right; home-concept.js sets its width (that of
    "The design system") and top. The button fills it, label and icons centred. */
 .site-hc__agents { position: absolute; inset-inline-end: 0; z-index: 1; }
-.site-hc__agents > .fh-button { inline-size: auto; justify-content: center; }
+
 @media (prefers-reduced-motion: no-preference) {
   .site-hc__agents { animation: hc-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both; }
   :root.fh-js:not(.fh-ready) .site-hc__agents { animation-play-state: paused; }
@@ -449,32 +449,13 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    (TIL-2.1, data-agent-tiles="launch") five across. Only its width and side are set here. */
 .site-hc__agents .fh-menu.site-agents__menu { --fh-menu-width: min(45rem, calc(100vi - 2rem)); --fh-menu-tiles-min: 8rem; --fh-menu-command-min: 12rem; }
 
-/* Send to an agent trigger: frosted white pill, an etched ring around it, bold label, up arrow */
-.site-hc__agents > .fh-button {
-  gap: var(--fh-space-2);
-  min-block-size: 2.5rem;
-  padding-inline: var(--fh-space-5);
-  border: 0;
-  border-radius: 999px;
-  background: oklch(1 0 0 / 0.55);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  backdrop-filter: blur(14px) saturate(1.2);
-  box-shadow: inset 0 0 0 var(--fh-border-thin) oklch(1 0 0 / 0.7);
-  color: oklch(0.16 0 0);
-  font-size: 0.875rem;
-  font-weight: 700;
-  outline: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  outline-offset: 4px;
-  transition: background-color 160ms ease, outline-color 160ms ease;
-}
-.site-hc__agents > .fh-button:hover { background: oklch(1 0 0 / 0.72); outline-color: var(--fh-color-accent); }
-.site-hc__agents > .fh-button:focus-visible { outline: 2px solid var(--fh-color-accent); outline-offset: 4px; }
-.site-hc__agents > .fh-button > .fh-icon--send { display: none; }
-.site-hc__agents > .fh-button > .fh-icon--chevron-down {
-  --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3Cpath d='M12 19V5'/%3E%3C/svg%3E");
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.site-hc__agents > .fh-button:hover > .fh-icon--chevron-down { transform: translateY(-2px); }
+
+
+
+
+
+
+
 
 
 /* "modern workflows": its own line, mono caps, heavier than the line above */
@@ -1070,10 +1051,13 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 
 /* Send to an agent rides up with the page, scaling to the nav pill's height, and locks level
    with the nav (its middle on the pill's middle), on the right. At the lock its label flips
-   (the Download from Git roll) and its arrow turns from up to down: the menu now opens below. */
+   (the Download from Git roll) and its arrow turns from up to down: the menu now opens below.
+   The pill is the etched pill (BTN-5.1); its ↑ is the ::after it draws. */
+.site-hc__agents[data-locked] > .fh-button::after { rotate: 180deg; }
+.site-hc__agents[data-locked] > .fh-button:hover::after { translate: 0 2px; }
 .site-hc__agents .hc-agent-roll { transition: none; }
-.site-hc__agents > .fh-button > .fh-icon--chevron-down { transition: rotate 380ms cubic-bezier(0.22, 1, 0.36, 1), translate 200ms cubic-bezier(0.16, 1, 0.3, 1); }
-.site-hc__agents[data-locked] > .fh-button > .fh-icon--chevron-down { rotate: 180deg; }
+
+
 @media (prefers-reduced-motion: no-preference) {
   .site-hc__agents[data-locked] .hc-agent-roll {
     translate: 0 calc(-1 * var(--_line));
@@ -1084,30 +1068,18 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
     transition: translate var(--fh-duration-slow) var(--fh-ease-out), clip-path var(--fh-duration-slow) var(--fh-ease-out);
   }
 }
-/* hover nudge follows the arrow's direction */
-.site-hc__agents[data-locked] > .fh-button:hover > .fh-icon--chevron-down { translate: 0 2px; }
 
-/* Send to an agent, matched to the nav pill from the start: the etch sits right on the edge
-   (no gap), 40px tall like the pill, the nav links' type size. */
-.site-hc__agents > .fh-button {
-  min-block-size: 0;
-  block-size: 2.5rem;
-  outline: 0;
-  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  font-size: calc(var(--fh-text-label) * 1.1);
-  padding-inline: var(--fh-space-4);
-}
-.site-hc__agents > .fh-button:hover { outline: 0; border-color: var(--fh-color-accent); }
-.site-hc__agents > .fh-button:focus-visible { outline: 2px solid var(--fh-color-accent); outline-offset: 2px; }
+
+
+
+
+
+
 
 /* Dark mode: the pieces that had light-only colours now follow the scheme */
 .site-hc-mark { color: var(--fh-color-text); }
-.site-hc__agents > .fh-button {
-  background: light-dark(oklch(1 0 0 / 0.55), oklch(0.16 0 0 / 0.55));
-  box-shadow: inset 0 0 0 var(--fh-border-thin) light-dark(oklch(1 0 0 / 0.7), oklch(1 0 0 / 0.08));
-  color: light-dark(oklch(0.16 0 0), oklch(0.97 0 0));
-}
-.site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.72), oklch(0.2 0 0 / 0.72)); }
+
+
 
 /* Build with: the flow no longer pauses just because the pointer is over it; it pauses only
    while a send card is open. A resting pointer gets a quiet "aiming" cue before the card. */
@@ -1115,17 +1087,10 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc-svc__item.is-aiming { opacity: 0.85; }
 .site-hc-svc__item.is-aiming span { text-decoration: underline dashed; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: color-mix(in oklab, currentColor 45%, transparent); }
 
-/* Send to an agent: solid, like the scheme chip — black with white text in light mode,
-   white with black text in dark mode. */
-.site-hc__agents > .fh-button {
-  background: light-dark(#000, #fff);
-  color: light-dark(#fff, #000);
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-.site-hc__agents > .fh-button:hover { background: light-dark(oklch(0.24 0 0), oklch(0.9 0 0)); }
-.site-hc__agents > .fh-button > .fh-icon { color: inherit; }
+
+
+
+
 
 /* "Build with" at the logo's size and weight (the marks' heading size, 800, wordmark tracking);
    its line underneath a step larger and a third narrower. */
@@ -1163,17 +1128,10 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 /* the invisible stand-in that keeps Send to an agent's place in the hero for measuring */
 .site-hc__agents-ghost { visibility: hidden; pointer-events: none; animation: none !important; }
 
-/* Send to an agent dressed exactly like the nav pill: the same light frost and dashed etch */
-.site-hc__agents > .fh-button {
-  background: light-dark(oklch(1 0 0 / 0.72), oklch(0.19 0 0 / 0.72));
-  color: var(--fh-color-text);
-  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(14px) saturate(1.15);
-  backdrop-filter: blur(14px) saturate(1.15);
-}
-.site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.86), oklch(0.23 0 0 / 0.86)); border-color: var(--fh-color-text-subtle); }
-.site-hc__agents > .fh-button > .fh-icon { color: var(--fh-color-accent); }
+
+
+
+
 
 /* The Git chip, docked bottom right beside KC (placed by home-concept.js) */
 .site-hc__meta--dock {
@@ -1489,7 +1447,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   -webkit-backdrop-filter: blur(9px);
   backdrop-filter: blur(9px);
 }
-.site-hc-float::before, .site-hc__agents > .fh-button { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.site-hc-float::before { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .site-hc-svc__box, .site-hc-ps__card, .site-hc-cfg__panel, .site-hc-float, .site-hc__agents.is-fixed, .site-hc-mark__link { transform: translateZ(0); }
 
 /* The rotating words: room for ascenders and descenders (g, y, p) in every typeface. The
@@ -1518,13 +1476,13 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   backdrop-filter: none !important;
   background: light-dark(oklch(0.985 0.002 90 / 0.8), oklch(0.17 0 0 / 0.8)) !important;
 }
-.site-hc-float::before, .site-hc__agents > .fh-button, .site-hc__meta--dock, .site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc__roots,
+.site-hc-float::before, .site-hc__meta--dock, .site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc__roots,
 .site-hc-svc__card, .site-hc__agents-ghost *, .site-hc-mark::before {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
-.site-hc-float::before, .site-hc__agents > .fh-button { background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9)); }
-.site-hc__agents > .fh-button:hover { background: light-dark(oklch(1 0 0 / 0.97), oklch(0.23 0 0 / 0.95)); }
+.site-hc-float::before { background: light-dark(oklch(0.99 0 0 / 0.9), oklch(0.19 0 0 / 0.9)); }
+
 .site-hc__meta--dock { background: light-dark(oklch(0.99 0 0 / 0.92), oklch(0.19 0 0 / 0.92)); }
 .site-hc__types, .site-hc-docs, .site-hc__bgs, .site-hc__roots, .site-hc-svc__card { background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95)) !important; }
 .site-hc-mark::before { background: color-mix(in oklab, var(--fh-color-canvas) 55%, transparent); }
