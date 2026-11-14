@@ -1198,14 +1198,14 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview, a specimen, a small swatch or the colour itself, and the picked tile marked.
 
-Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command` `fh-tiles--options` `fh-tile--option` `fh-tile__media` `fh-tile__specimen` `fh-tiles--swatches` `fh-tile--swatch` `fh-tile--colour` `fh-tile__media--auto` `fh-tile__code`
+Classes: `fh-tiles` `fh-tiles--lg` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command` `fh-tiles--options` `fh-tile--option` `fh-tile__media` `fh-tile__specimen` `fh-tiles--swatches` `fh-tile--swatch` `fh-tile--colour` `fh-tile__media--auto` `fh-tile__code`
 
 ### TIL-1 · Index tiles
 
 #### TIL-1.1 · Index tile
 
 ```html
-<ul class="fh-tiles" data-fh="TIL-1.1">
+<ul class="fh-tiles fh-tiles--lg" data-fh="TIL-1.1">
   <li><a class="fh-tile" href="#c-tiles" data-tone="teal"><span class="fh-tile__cube"><i class="fh-icon fh-icon--book-open" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">01 · Guide</small><b class="fh-tile__title">Guidelines</b><span class="fh-tile__note">The rules every Rascode design system follows.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
   <li><a class="fh-tile" href="#c-tiles" data-tone="violet"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">02 · 6 families</small><b class="fh-tile__title">Foundations</b><span class="fh-tile__note">Tones, type, space, radius and every token.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
   <li><a class="fh-tile" href="#c-tiles" data-tone="rose"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">03 · 4 families</small><b class="fh-tile__title">Layout</b><span class="fh-tile__note">The frame, container queries and the auto grid.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>

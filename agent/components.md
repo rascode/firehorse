@@ -948,7 +948,7 @@ Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered 
 
 ```html
 <!-- TIL-1.1 · Index tiles › Index tile -->
-<ul class="fh-tiles" data-fh="TIL-1.1">
+<ul class="fh-tiles fh-tiles--lg" data-fh="TIL-1.1">
   <li><a class="fh-tile" href="#c-tiles" data-tone="teal"><span class="fh-tile__cube"><i class="fh-icon fh-icon--book-open" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">01 · Guide</small><b class="fh-tile__title">Guidelines</b><span class="fh-tile__note">The rules every Rascode design system follows.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
   <li><a class="fh-tile" href="#c-tiles" data-tone="violet"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">02 · 6 families</small><b class="fh-tile__title">Foundations</b><span class="fh-tile__note">Tones, type, space, radius and every token.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>
   <li><a class="fh-tile" href="#c-tiles" data-tone="rose"><span class="fh-tile__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">03 · 4 families</small><b class="fh-tile__title">Layout</b><span class="fh-tile__note">The frame, container queries and the auto grid.</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>

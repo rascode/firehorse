@@ -7,12 +7,12 @@
   /* —— Tiles ——
    * Open tiles on one ruled grid: no box per tile, a rule between them, set from
    * the card border preset (--fh-card-border-style / --fh-card-border-color). Each
-   * tile leads with a solid cube in its tone, then a numbered mono eyebrow, a large
-   * title and a muted note; an arrow sits top right and takes the tone on hover.
+   * tile leads with a solid cube in its tone, then a numbered mono eyebrow, a title
+   * and a muted note; an arrow sits top right and takes the tone on hover.
    * Large type, open spacing, an icon and a colour per tile.
    *
    * Index tiles (TIL-1) go somewhere: a page, a section, a category.
-   *   <ul class="fh-tiles">
+   *   <ul class="fh-tiles fh-tiles--lg">
    *     <li><a class="fh-tile" href="/forms/" data-tone="teal">
    *       <span class="fh-tile__cube"><i class="fh-icon fh-icon--pen-line" aria-hidden="true"></i></span>
    *       <small class="fh-tile__eyebrow">07 · 5 families</small>
@@ -23,15 +23,33 @@
    *   Row: .fh-tile--row (cube on the left, title and note beside it, number and arrow on the right).
    *
    * Launch tiles (TIL-2) do something: open an app, send a prompt, copy a command.
-   * .fh-tiles--launch sets them a size down, the arrow up and to the right.
-   *   Compact: .fh-tile--compact (a small cube, the title and note inline, the arrow on hover).
+   * .fh-tiles--launch sets a narrower column and keeps each note to one line.
+   *   Compact: .fh-tile--compact (a row a size down: a washed cube, the arrow on hover).
    *   Command: .fh-tile--command (a name and a mono command line, "$ " in the tone).
    *
    * Option tiles (TIL-3) pick one: a preview, a name and a mono caps note; the picked
    * tile is marked. .fh-tiles--options with .fh-tile--option (see TIL-3 below).
    *
-   * Knobs: --fh-tiles-min (the column floor), --fh-tile-cube (the cube's size),
-   * --fh-tile-tone (a tile's colour, else its data-tone), --fh-tile-media-ratio. */
+   * One set of values for the whole family. Every variant reads these; a size step changes
+   * only the title (and the cube and its icon, which are sized in em of the title):
+   *   --fh-tile-title            the title size (lede; --lg h3, --sm small)
+   *   --fh-tile-title-weight     the title weight (heading weight)
+   *   --fh-tile-title-tracking   the title tracking (heading tracking)
+   *   --fh-tile-leading          the line height of every line in a tile (snug)
+   *   --fh-tile-note             the sans note (caption)
+   *   --fh-tile-mono             the mono caps lines: eyebrow, option note, swatch caption, code (label)
+   *   --fh-tile-mono-weight      their weight (regular)
+   *   --fh-tile-tracking         their tracking (caps)
+   *   --fh-tile-pad-block        a tile's padding, top and bottom (inset-tile)
+   *   --fh-tile-pad-inline       a tile's padding, sides (inset-tile)
+   *   --fh-tile-gap              the space between a tile's parts (gap-related)
+   *   --fh-tile-cube             the cube (2em of the title)
+   *   --fh-tile-icon             the icon in the cube (1em of the title)
+   *   --fh-tile-arrow            the arrow, the copy icon and the check (body)
+   *   --fh-tile-nudge            how far the arrow moves on hover (gap-bound)
+   *   --fh-tile-tone             a tile's colour, else its data-tone
+   * Grid knobs: --fh-tiles-min (the column floor), --fh-tile-media-ratio (option previews).
+   * Size steps: fh-tiles--lg / fh-tiles--sm on the grid, or fh-tile--lg / fh-tile--sm on one tile. */
   .fh-tiles {
     --_rule: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
 
@@ -49,23 +67,40 @@
     & > li > .fh-tile { block-size: 100%; }
   }
 
+  /* The family's values (see above), set once on the tile. */
   .fh-tile {
+    --_title: var(--fh-tile-title, var(--fh-text-lede));
+    --_title-weight: var(--fh-tile-title-weight, var(--fh-heading-weight));
+    --_title-tracking: var(--fh-tile-title-tracking, var(--fh-heading-tracking));
+    --_leading: var(--fh-tile-leading, var(--fh-leading-snug));
+    --_note: var(--fh-tile-note, var(--fh-text-caption));
+    --_mono: var(--fh-tile-mono, var(--fh-text-label));
+    --_mono-weight: var(--fh-tile-mono-weight, var(--fh-weight-regular));
+    --_tracking: var(--fh-tile-tracking, var(--fh-tracking-caps));
+    --_pad-b: var(--fh-tile-pad-block, var(--fh-inset-tile));
+    --_pad-i: var(--fh-tile-pad-inline, var(--fh-inset-tile));
+    --_gap: var(--fh-tile-gap, var(--fh-gap-related));
+    --_arrow: var(--fh-tile-arrow, var(--fh-text-body));
+    --_nudge: var(--fh-tile-nudge, var(--fh-gap-bound));
     --_c: var(--fh-tile-tone, var(--fh-tone, var(--fh-color-accent)));
     /* the tone as ink: dark enough on light, light enough on dark */
     --_ink: light-dark(oklch(from var(--_c) min(l, 0.5) c h), oklch(from var(--_c) max(l, 0.74) c h));
+    /* the tone's own on-colour: dark or light to read on it */
+    --_on: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
 
     position: relative;
     display: grid;
     align-content: start;
     justify-items: start;
-    gap: var(--fh-gap-grouped);
+    gap: var(--_gap);
     min-inline-size: 0;
-    min-block-size: var(--fh-tile-min-height, 13rem);
-    padding: var(--fh-inset-card);
+    min-block-size: var(--fh-tile-min-height, auto);
+    padding: var(--_pad-b) var(--_pad-i);
     border: 0;
     background: none;
     color: var(--fh-color-text);
     font: inherit;
+    line-height: var(--_leading);
     text-align: start;
     text-decoration: none;
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -75,138 +110,124 @@
     &:is(a, button, label):focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
   }
 
-  /* The cube: solid in the tone, its icon or number flipped dark or light to read on it. */
+  /* Size steps: the title only (the cube and its icon follow, being sized in em of it). */
+  :is(.fh-tiles--lg .fh-tile, .fh-tile--lg) { --_title: var(--fh-tile-title, var(--fh-text-h3)); }
+  :is(.fh-tiles--sm .fh-tile, .fh-tile--sm, .fh-tile--compact) { --_title: var(--fh-tile-title, var(--fh-text-small)); }
+
+  /* The cube: solid in the tone, its icon or number in the tone's on-colour. Set in the title's
+     size, so its em lengths follow the title through a size step. */
   .fh-tile__cube {
     display: inline-grid;
     place-items: center;
-    inline-size: var(--fh-tile-cube, 2.75rem);
-    block-size: var(--fh-tile-cube, 2.75rem);
-    margin-block-end: var(--fh-gap-grouped);
+    inline-size: var(--fh-tile-cube, 2em);
+    block-size: var(--fh-tile-cube, 2em);
+    margin-block-end: var(--_gap); /* a stacked tile: the cube stands a gap apart from the text */
     border-radius: var(--fh-radius-md);
     background: var(--_c);
-    color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-    font-size: var(--fh-text-lede);
+    color: var(--_on);
+    font-size: var(--_title);
     font-weight: var(--fh-display-weight);
+    line-height: var(--fh-leading-none);
     font-variant-numeric: tabular-nums;
     transition: scale var(--fh-duration-fast) var(--fh-ease-out);
 
-    & .fh-icon { --fh-icon-size: var(--fh-text-large); font-size: var(--fh-text-large); }
+    & .fh-icon { --fh-icon-size: var(--fh-tile-icon, 1em); font-size: var(--fh-tile-icon, 1em); }
   }
-  .fh-tile__eyebrow {
+  /* The mono caps lines: the eyebrow, an option tile's note, a swatch's caption, a colour's code. */
+  :is(.fh-tile__eyebrow, .fh-tile--option .fh-tile__note, .fh-tile--swatch .fh-tile__title, .fh-tile__code) {
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    letter-spacing: var(--fh-tracking-caps);
+    font-size: var(--_mono);
+    font-weight: var(--_mono-weight);
+    letter-spacing: var(--_tracking);
+    line-height: var(--_leading);
     text-transform: uppercase;
   }
   .fh-tile__title {
-    font-size: var(--fh-tile-title, clamp(1.4rem, 1rem + 0.9vw, 1.9rem));
-    font-weight: var(--fh-heading-weight);
-    letter-spacing: var(--fh-heading-tracking);
-    line-height: 1.05;
+    font-size: var(--_title);
+    font-weight: var(--_title-weight);
+    letter-spacing: var(--_title-tracking);
+    line-height: var(--_leading);
   }
   .fh-tile__note {
     color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-small);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--_note);
+    line-height: var(--_leading);
   }
   .fh-tile__go {
     position: absolute;
-    inset-block-start: var(--fh-inset-card);
-    inset-inline-end: var(--fh-inset-card);
+    inset-block-start: var(--_pad-b);
+    inset-inline-end: var(--_pad-i);
     color: var(--fh-color-text-subtle);
-    font-size: 1.25rem;
+    font-size: var(--_arrow);
     transition: translate var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast), opacity var(--fh-duration-fast);
   }
-  .fh-tile:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: 0.35rem 0; color: var(--_ink); }
+  /* The hover nudge goes the way the arrow points; a copy icon or a check stays put. */
+  .fh-tile:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { color: var(--_ink); }
+  .fh-tile:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go.fh-icon--arrow-right { translate: var(--_nudge) 0; }
+  .fh-tile:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go.fh-icon--arrow-up-right { translate: var(--_nudge) calc(-1 * var(--_nudge)); }
 
-  /* —— TIL-1.2 Row: cube left, title and note beside it, number and arrow right ——
-   * For lists of pages in a menu or panel. The eyebrow becomes the number. */
-  .fh-tile--row {
+  /* —— TIL-1.2 Row (and TIL-2.2 Compact): cube left, title and note beside it ——
+   * For lists of pages in a menu or panel. The eyebrow becomes the number, before the arrow. */
+  :is(.fh-tile--row, .fh-tile--compact) {
     grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-rows: auto auto;
     align-items: center;
-    column-gap: var(--fh-gap-grouped);
-    row-gap: 0.1rem;
-    min-block-size: 0;
-    padding: var(--fh-inset-tile);
+    column-gap: var(--_gap);
+    row-gap: 0;
 
-    & .fh-tile__cube { --fh-tile-cube: 2rem; grid-area: 1 / 1 / 3 / 2; margin: 0; font-size: var(--fh-text-small); }
-    & .fh-tile__cube .fh-icon { --fh-icon-size: 1rem; font-size: var(--fh-text-body); }
-    & .fh-tile__title { grid-area: 1 / 2; font-size: var(--fh-text-lede); line-height: 1.15; }
-    & .fh-tile__note { grid-area: 2 / 2; font-size: var(--fh-text-caption); }
-    & .fh-tile__eyebrow { grid-area: 1 / 3; align-self: start; padding-inline-end: var(--fh-inset-card); }
-    & .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); font-size: var(--fh-text-body); }
+    & .fh-tile__cube { grid-area: 1 / 1 / 3 / 2; margin: 0; }
+    & .fh-tile__title { grid-area: 1 / 2; }
+    & .fh-tile__note { grid-area: 2 / 2; }
+    & .fh-tile__eyebrow { grid-area: 1 / 3; align-self: start; padding-inline-end: calc(var(--_arrow) + var(--_gap)); }
   }
 
-  /* —— TIL-2 Launch tiles: a size down, the arrow up and to the right ——————————— */
+  /* —— TIL-2 Launch tiles: a narrower column, each note on one line ———————————— */
   .fh-tiles--launch {
     --fh-tiles-min: 9rem;
-    --fh-tile-min-height: 0;
-    --fh-tile-cube: 2rem;
-    --fh-tile-title: var(--fh-text-lede);
 
-    & .fh-tile { gap: calc(var(--fh-gap-bound) * 1.5); padding: var(--fh-inset-control) var(--fh-inset-tile) var(--fh-inset-tile); }
-    & .fh-tile__cube { margin-block-end: var(--fh-gap-bound); font-size: var(--fh-text-small); }
-    & .fh-tile__cube .fh-icon { --fh-icon-size: 1rem; font-size: var(--fh-text-body); }
-    & .fh-tile__title { line-height: 1.1; }
-    & .fh-tile__note { max-inline-size: 100%; overflow: hidden; font-size: var(--fh-text-caption); text-overflow: ellipsis; white-space: nowrap; }
-    & .fh-tile__eyebrow { position: absolute; inset-block-start: var(--fh-inset-tile); inset-inline-end: 2.6rem; }
-    & .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); font-size: var(--fh-text-body); }
-    & .fh-tile:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: 2px -2px; }
+    & .fh-tile__note { max-inline-size: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* the number sits before the arrow, top right */
+    & .fh-tile:not(.fh-tile--row, .fh-tile--compact) .fh-tile__eyebrow {
+      position: absolute;
+      inset-block-start: var(--_pad-b);
+      inset-inline-end: calc(var(--_pad-i) + var(--_arrow) + var(--_gap));
+    }
   }
 
-  /* —— TIL-2.2 Compact: a small cube with the title and note inline ——————————
-   * Two across in a menu; the arrow shows on hover, a bar in the tone on the start edge. */
+  /* —— TIL-2.2 Compact: a row a size down ————————————————————————————————————
+   * Two across in a menu: the cube washed in the tone, the arrow shown on hover, a bar in the
+   * tone on the start edge. Its size step (the title) is set with the steps above. */
   .fh-tile--compact {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-rows: auto auto;
-    align-items: center;
-    column-gap: calc(var(--fh-gap-related) * 1.25);
-    row-gap: 0.1rem;
-    padding: var(--fh-inset-control);
-
     & .fh-tile__cube {
-      --fh-tile-cube: 1.9rem;
-      grid-area: 1 / 1 / 3 / 2;
-      margin: 0;
       background: color-mix(in oklab, var(--_c) 18%, transparent);
       color: var(--_ink);
     }
-    & .fh-tile__cube .fh-icon { --fh-icon-size: var(--fh-text-body); font-size: var(--fh-text-body); }
-    & .fh-tile__title { grid-area: 1 / 2; font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); letter-spacing: normal; }
-    & .fh-tile__note { grid-area: 2 / 2; font-size: var(--fh-text-label); }
-    & .fh-tile__go { position: static; grid-area: 1 / 3 / 3 / 4; font-size: var(--fh-text-caption); opacity: 0; translate: -0.3rem 0.3rem; }
-    &:is(a, button, label):hover { box-shadow: inset 2px 0 0 var(--_c); }
+    & .fh-tile__go { position: static; grid-area: 1 / 3 / 3 / 4; opacity: 0; }
+    &:is(a, button, label):hover { box-shadow: inset var(--fh-border-thick) 0 0 var(--_c); }
     &:is(a, button, label):focus-visible {
       outline: var(--fh-focus-width) solid var(--fh-color-focus);
       outline-offset: var(--fh-focus-offset);
     }
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__cube { scale: 1.06; }
-    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { opacity: 1; translate: 0 0; }
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { opacity: 1; }
   }
   .fh-tiles:has(> * > .fh-tile--compact, > .fh-tile--compact) { --fh-tiles-min: 12rem; }
 
   /* —— TIL-2.3 Command: a name and a mono command line ——————————————————————
    * For terminal agents and CLIs; "$ " in the tone, a copy icon top right. */
   .fh-tile--command {
-    gap: var(--fh-gap-bound);
-    min-block-size: 0;
-    padding: var(--fh-inset-control) var(--fh-inset-tile);
-
-    & .fh-tile__title { font-size: var(--fh-text-body, 1rem); font-weight: var(--fh-heading-weight); line-height: 1.2; }
     & code {
       max-inline-size: 100%;
       overflow: hidden;
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
+      font-size: var(--_mono);
+      line-height: var(--_leading);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
     & code::before { content: "$ "; color: var(--_ink); }
-    & .fh-tile__go { inset-block-start: var(--fh-inset-control); inset-inline-end: var(--fh-inset-tile); font-size: var(--fh-text-small); }
-    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: none; }
   }
 
   /* —— TIL-3 Option tiles: pick one ———————————————————————————————————————————
@@ -223,7 +244,7 @@
    * TIL-3.1 Media: .fh-tile__media holds an <img>, a <video>, a background image or a drawn
    * preview; --fh-tile-media-ratio sets its shape (4 / 3).
    * TIL-3.2 Specimen: .fh-tile__specimen, a large "Aa" set in the face it offers (put the
-   * font-family on it); --fh-tile-specimen sets its size. For typefaces, weights, scales.
+   * font-family on it); --fh-tile-specimen sets its size (h1). For typefaces, weights, scales.
    * TIL-3.3 Swatch: .fh-tiles--swatches with .fh-tile--swatch, many small previews with a
    * mono caps caption (the title) and no note, set on a gap instead of rules; picked, the
    * preview is ringed and the caption reads full strength. For photos, colours, textures.
@@ -231,43 +252,22 @@
    * and its code in mono caps on it (.fh-tile__code); picked, the ring, check and name take that
    * colour. .fh-tile__media--auto marks a colour that follows something else (a dashed ring
    * inside). For theme colours, accents and palettes. */
-  .fh-tiles--options {
-    --fh-tiles-min: 10rem;
-    --fh-tile-min-height: 0;
-    --fh-tile-title: var(--fh-text-lede);
-  }
+  .fh-tiles--options { --fh-tiles-min: 10rem; }
   .fh-tile--option {
     justify-items: stretch;
     inline-size: 100%;
-    gap: var(--fh-gap-bound);
-    padding: var(--fh-inset-tile);
 
-    & .fh-tile__title { margin-block-start: var(--fh-gap-bound); line-height: 1.1; }
-    & .fh-tile__note {
-      color: var(--fh-color-text-subtle);
-      font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      letter-spacing: var(--fh-tracking-caps);
-      text-transform: uppercase;
-    }
-    /* The check: a disc in the tone on the preview's corner, shown when picked. */
+    /* The check: in the tone, at the arrow's size, on the preview's corner, shown when picked. */
     & .fh-tile__go {
-      display: grid;
-      place-items: center;
-      inline-size: 1.6rem;
-      block-size: 1.6rem;
-      inset-block-start: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
-      inset-inline-end: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
+      inset-block-start: calc(var(--_pad-b) + var(--_gap));
+      inset-inline-end: calc(var(--_pad-i) + var(--_gap));
       z-index: var(--fh-z-raised);
-      border-radius: var(--fh-radius-round);
-      background: var(--_c);
-      color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-      font-size: var(--fh-text-small);
+      color: var(--_c);
       opacity: 0;
       scale: 0.6;
       transition: opacity var(--fh-duration-fast), scale var(--fh-duration-fast) var(--fh-ease-out);
     }
-    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { translate: none; color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h); }
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__go { color: var(--_c); }
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__media { scale: 1.02; }
   }
   .fh-tile__media {
@@ -286,17 +286,17 @@
   }
   .fh-tile__specimen {
     display: block;
-    margin-block-end: var(--fh-gap-grouped);
-    padding-inline-end: 2rem; /* clear of the check */
+    margin-block-end: var(--_gap);
+    padding-inline-end: calc(var(--_arrow) + var(--_gap) + var(--_gap)); /* clear of the check */
     color: var(--fh-color-text);
-    font-size: var(--fh-tile-specimen, clamp(2.5rem, 2rem + 1.4vw, 3.25rem));
-    font-weight: var(--fh-heading-weight);
-    letter-spacing: var(--fh-heading-tracking);
-    line-height: 1;
+    font-size: var(--fh-tile-specimen, var(--fh-text-h1));
+    font-weight: var(--_title-weight);
+    letter-spacing: var(--_title-tracking);
+    line-height: var(--fh-leading-none);
     transition: color var(--fh-duration-fast) var(--fh-ease-standard), scale var(--fh-duration-fast) var(--fh-ease-out);
     transform-origin: left bottom;
   }
-  .fh-tile--option:has(.fh-tile__specimen) .fh-tile__go { inset-block-start: var(--fh-inset-tile); inset-inline-end: var(--fh-inset-tile); }
+  .fh-tile--option:has(.fh-tile__specimen) .fh-tile__go { inset-block-start: var(--_pad-b); inset-inline-end: var(--_pad-i); }
   .fh-tile--option:is(a, button, label):is(:hover, :focus-visible) .fh-tile__specimen { scale: 1.04; }
   .fh-tile--option:is([aria-pressed="true"], [aria-checked="true"], [aria-current]:not([aria-current="false"]), :has(input:checked)) {
     background-color: color-mix(in oklab, var(--_c) 10%, transparent);
@@ -317,29 +317,18 @@
     & > *, & > .fh-tile { margin: 0; border: 0; }
   }
   .fh-tile--swatch {
-    gap: calc(var(--fh-gap-bound) * 1.5);
     padding: 0;
 
     & .fh-tile__title {
       max-inline-size: 100%;
-      margin: 0;
       overflow: hidden;
-      color: var(--fh-color-text-subtle);
-      font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-micro);
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-caps);
-      line-height: 1.2;
       text-overflow: ellipsis;
-      text-transform: uppercase;
       white-space: nowrap;
     }
+    /* the check sits a gap in from the preview's corner (the tile has no padding) */
     & .fh-tile__go {
-      inline-size: 1.2rem;
-      block-size: 1.2rem;
-      inset-block-start: var(--fh-gap-related);
-      inset-inline-end: var(--fh-gap-related);
-      font-size: var(--fh-text-micro);
+      inset-block-start: var(--_gap);
+      inset-inline-end: var(--_gap);
     }
     &:is(a, button, label):is(:hover, :focus-visible) { background-color: transparent; }
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__media { scale: 1.04; }
@@ -353,34 +342,24 @@
 
   /* —— TIL-3.4 Colour: the preview is the colour ————————————————————————————— */
   .fh-tile--colour {
-    --_on: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
-
     & .fh-tile__media {
       display: flex;
       align-items: flex-end;
-      padding: var(--fh-inset-control);
+      padding: var(--_gap);
       border-color: color-mix(in oklab, var(--_c) 60%, var(--fh-color-etch));
       background:
         radial-gradient(120% 90% at 20% 0%, oklch(from var(--_c) calc(l + 0.08) c h / 0.9), transparent 60%),
         var(--_c);
     }
   }
-  .fh-tile__code {
-    color: var(--_on, currentColor);
-    font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-caps);
-    line-height: 1.2;
-    text-transform: uppercase;
-  }
+  .fh-tile--colour .fh-tile__code { color: var(--_on); }
   /* A colour that follows something else: a dashed ring just inside the preview, in its on-colour. */
-  .fh-tile__media--auto { padding: calc(var(--fh-inset-control) + var(--fh-gap-related)); }
+  .fh-tile__media--auto { padding: calc(var(--_gap) + var(--_gap)); }
   .fh-tile__media--auto::after {
     content: "";
     position: absolute;
-    inset: var(--fh-gap-related);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
+    inset: var(--_gap);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_on) 70%, transparent);
     border-radius: calc(var(--fh-radius-md) - var(--fh-radius-sm));
     pointer-events: none;
   }
