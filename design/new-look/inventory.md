@@ -20,7 +20,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · MEG-3.1 Tile panel | Done (MEG-3.1) |
 | 10 | Tile menu: mono head with a status pill, labels, tile grids, copy pill, ask accordion | Send to an agent | Dropdown menu · DRP-2.1 Tile menu | Done (DRP-2.1) |
 | 11 | Colour picker: opens like the typeface and backdrop pickers (Rascode, 2026-11-14), a full-width tile panel of colour tiles, the picked one marked | Theme colour menu (brush), full width | Mega panel · MEG-3.1 with Tiles · TIL-3.4 Option tile, colour (the compact list is Theme select · THS-2.1) | Done (TIL-3.4, THS-2.1) |
-| 12 | Mono caps nav links with a roll and a chevron | Hero top left | Navigation · new variant (NAV) | New |
+| 12 | Mono caps nav links with a roll and a chevron | Hero top left | Navigation · NAV-2.1 Nav links | Done (NAV-2.1) |
 | 13 | Round icon buttons: white disc, dark glyph | Top right (camera, T, brush) | Button · new variant, round icon (BTN) | New |
 | 14 | Frosted pill trigger with an etched ring and ↑ | Send to an agent button | Button · new variant, etched pill (BTN) | New |
 | 15 | Segmented pill with a filled action end (v1.1 · Download from Git) | Bottom right | Eyebrow pill · EYE-5.4 | Exists |
