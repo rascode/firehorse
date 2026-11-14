@@ -290,6 +290,28 @@
 </form>
             </div>
           </div>
+          <div class="site-demo site-anchor" id="c-segment" data-fh-id="SEG" data-fh-name="Segment switch" data-fh-groups="Switch|Toggle">
+            <div class="site-demo__head"><h3>Segment switch</h3><p>One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe.</p></div>
+            <div class="site-demo__stage" data-demo>
+<div class="fh-stack">
+  <nav class="fh-segment" aria-label="Segment" data-fh-id="SEG-1.1" data-fh-name="Switch">
+    <a href="#c-segment" aria-current="true">All <b>9</b></a>
+    <a href="#c-segment" data-tone="amber">Business <b>5</b></a>
+    <a href="#c-segment" data-tone="sky">Personal <b>4</b></a>
+  </nav>
+  <nav class="fh-segment fh-segment--entities" aria-label="Business" data-fh-id="SEG-1.2" data-fh-name="Entities">
+    <a href="#c-segment" aria-current="true">All businesses</a>
+    <a href="#c-segment" data-tone="orange">Rascode</a>
+    <a href="#c-segment" data-tone="violet">Lymynal</a>
+  </nav>
+  <button class="fh-segment fh-segment--roll" type="button" aria-pressed="false" aria-label="Dark mode" data-fh-id="SEG-2.1" data-fh-name="Rolling toggle" onclick="this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'))"><span class="fh-segment__roll" aria-hidden="true"><span>Light</span><span>Dark</span></span></button>
+  <div class="fh-segment fh-segment--mode" role="group" aria-label="Input" data-fh-id="SEG-2.2" data-fh-name="Mode toggle" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))">
+    <button type="button" aria-pressed="true">Text</button>
+    <button type="button" aria-pressed="false">Transcribe</button>
+  </div>
+</div>
+            </div>
+          </div>
           <div class="site-demo site-anchor" id="c-choice" data-fh-id="CHO">
             <div class="site-demo__head"><h3>Choices</h3><p>Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add <code>fh-segmented--stack</code> to stack its options.</p></div>
             <div class="site-demo__stage" data-demo>
@@ -335,7 +357,7 @@
           <div class="site-demo__stage" data-demo>
 <div class="fh-field fh-field--dictate" data-fh-dictate data-fh-id="FLD-2.1" data-fh-name="Dictation">
   <label for="f-dictate">Message</label>
-  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
     <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
     <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
   </div>

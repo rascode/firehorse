@@ -16,7 +16,7 @@
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
 | Metrics | `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) |
 | Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
-| Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` |
+| Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` `fh-segment` (`--entities` `--roll` `__roll` `--mode`) |
 | Disclosure | `fh-accordion` `fh-tabs` (`--mono`) `fh-dialog` (`__header` `__body` `__footer`) `fh-menu` `fh-toaster` `fh-toast` |
 | Chrome | `fh-header` (`__bar` `__brand` `__actions` `__toggle`) `fh-nav` `fh-nav__link` `fh-drawer` (`__group`) `fh-mega` (`__grid` `__rail`) `fh-footer` (`__columns` `__column` `__base`) |
 | Design patterns | `fh-hero` `fh-hero__actions` `fh-hero-split` `fh-section-head` `fh-etched-split` (`__pane`) `fh-cta-band` (`__main` `__title` `__aside` `__people` `__fine`) `fh-window` (`__bar` `__body`) `fh-letter` (`__portrait`) `fh-panel` `fh-panel-inset` `[data-fh-panel-start]` `fh-footer--tall` |
@@ -1717,7 +1717,7 @@ The "Required" chip comes from the input's own `required` attribute and settles 
 <!-- FLD-2.1 · Dictation › Dictation -->
 <div class="fh-field fh-field--dictate" data-fh-dictate data-fh="FLD-2.1">
   <label for="f-dictate">Message</label>
-  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
     <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
     <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
   </div>
@@ -1743,6 +1743,35 @@ The "Required" chip comes from the input's own `required` attribute and settles 
     <input class="fh-input" id="f-reveal" name="password" type="password" autocomplete="off" value="correct horse battery">
     <button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button>
   </div>
+</div>
+```
+
+### SEG · Segment switch
+
+One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe.
+
+```html
+<!-- SEG-1.1 · Switch › Switch -->
+<nav class="fh-segment" aria-label="Segment" data-fh="SEG-1.1">
+  <a href="#c-segment" aria-current="true">All <b>9</b></a>
+  <a href="#c-segment" data-tone="amber">Business <b>5</b></a>
+  <a href="#c-segment" data-tone="sky">Personal <b>4</b></a>
+</nav>
+
+<!-- SEG-1.2 · Switch › Entities -->
+<nav class="fh-segment fh-segment--entities" aria-label="Business" data-fh="SEG-1.2">
+  <a href="#c-segment" aria-current="true">All businesses</a>
+  <a href="#c-segment" data-tone="orange">Rascode</a>
+  <a href="#c-segment" data-tone="violet">Lymynal</a>
+</nav>
+
+<!-- SEG-2.1 · Toggle › Rolling toggle -->
+<button class="fh-segment fh-segment--roll" type="button" aria-pressed="false" aria-label="Dark mode" onclick="this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'))" data-fh="SEG-2.1"><span class="fh-segment__roll" aria-hidden="true"><span>Light</span><span>Dark</span></span></button>
+
+<!-- SEG-2.2 · Toggle › Mode toggle -->
+<div class="fh-segment fh-segment--mode" role="group" aria-label="Input" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))" data-fh="SEG-2.2">
+  <button type="button" aria-pressed="true">Text</button>
+  <button type="button" aria-pressed="false">Transcribe</button>
 </div>
 ```
 
@@ -2303,7 +2332,7 @@ Type or talk. The label and a Text | Transcribe switch share the first row; whil
 ```html
 <div class="fh-field fh-field--dictate" data-fh-dictate>
   <label for="f-dictate">Message</label>
-  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
     <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
     <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
   </div>

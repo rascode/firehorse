@@ -70,6 +70,7 @@
 | `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups | [open](https://firehorse.rascode.dev/components/avatars/avatars/) |
 | `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/sign-in-and-sign-up/) |
 | `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (1) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/fields/) |
+| `SEG` | Segment switch | Fields & choices | 1 Switch (2) · 2 Toggle (2) | [open](https://firehorse.rascode.dev/forms/segment-switch/) |
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/choices/) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/upload-range-tags-sheet/) |
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
@@ -1935,7 +1936,7 @@ Classes: `fh-auth` `fh-auth__art` `fh-auth__panel` `fh-auth__brand` `fh-icon` `f
 
 The "Required" chip comes from the input's own required attribute and settles to "Done" once the field is valid. Errors only show after the visitor has interacted, or at once with aria-invalid="true" (for errors the server sends back).
 
-Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet` `fh-input-reveal` `fh-money` `fh-money__currency` `fh-money__select`
+Classes: `fh-form` `fh-form__row` `fh-field` `fh-input` `fh-field__error` `fh-field--optional` `fh-input-group` `fh-select-wrap` `fh-select` `fh-textarea` `fh-field__hint` `fh-form__actions` `fh-button` `fh-field--dictate` `fh-segment` `fh-segment--mode` `fh-dictate` `fh-dictate__mode` `fh-dictate__live` `fh-dictate__wave` `fh-dictate__clock` `fh-dictate__interim` `fh-dictate__error` `fh-field--quiet` `fh-input-reveal` `fh-money` `fh-money__currency` `fh-money__select`
 
 ### FLD-1 · Fields
 
@@ -1985,7 +1986,7 @@ Type or talk. The label and a Text | Transcribe switch share the first row; whil
 ```html
 <div class="fh-field fh-field--dictate" data-fh-dictate data-fh="FLD-2.1">
   <label for="f-dictate">Message</label>
-  <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
     <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
     <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
   </div>
@@ -2025,6 +2026,51 @@ A show and hide toggle inside a password field. Put the input in an fh-input-gro
     <input class="fh-input" id="f-reveal" name="password" type="password" autocomplete="off" value="correct horse battery">
     <button class="fh-input-reveal" type="button" aria-label="Show password" aria-pressed="false"></button>
   </div>
+</div>
+```
+
+## SEG · Segment switch
+
+One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe.
+
+Classes: `fh-segment` `fh-segment--entities` `fh-segment--roll` `fh-segment__roll` `fh-segment--mode`
+
+### SEG-1 · Switch
+
+#### SEG-1.1 · Switch
+
+```html
+<nav class="fh-segment" aria-label="Segment" data-fh="SEG-1.1">
+  <a href="#c-segment" aria-current="true">All <b>9</b></a>
+  <a href="#c-segment" data-tone="amber">Business <b>5</b></a>
+  <a href="#c-segment" data-tone="sky">Personal <b>4</b></a>
+</nav>
+```
+
+#### SEG-1.2 · Entities
+
+```html
+<nav class="fh-segment fh-segment--entities" aria-label="Business" data-fh="SEG-1.2">
+  <a href="#c-segment" aria-current="true">All businesses</a>
+  <a href="#c-segment" data-tone="orange">Rascode</a>
+  <a href="#c-segment" data-tone="violet">Lymynal</a>
+</nav>
+```
+
+### SEG-2 · Toggle
+
+#### SEG-2.1 · Rolling toggle
+
+```html
+<button class="fh-segment fh-segment--roll" type="button" aria-pressed="false" aria-label="Dark mode" onclick="this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'))" data-fh="SEG-2.1"><span class="fh-segment__roll" aria-hidden="true"><span>Light</span><span>Dark</span></span></button>
+```
+
+#### SEG-2.2 · Mode toggle
+
+```html
+<div class="fh-segment fh-segment--mode" role="group" aria-label="Input" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))" data-fh="SEG-2.2">
+  <button type="button" aria-pressed="true">Text</button>
+  <button type="button" aria-pressed="false">Transcribe</button>
 </div>
 ```
 

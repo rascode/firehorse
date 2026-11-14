@@ -4456,6 +4456,8 @@
         "fh-form__actions",
         "fh-button",
         "fh-field--dictate",
+        "fh-segment",
+        "fh-segment--mode",
         "fh-dictate",
         "fh-dictate__mode",
         "fh-dictate__live",
@@ -4488,7 +4490,7 @@
           "variants": [
             "FLD-2.1"
           ],
-          "markup": "<div class=\"fh-field fh-field--dictate\" data-fh-dictate data-fh=\"FLD-2.1\">\n  <label for=\"f-dictate\">Message</label>\n  <div class=\"fh-dictate\" role=\"group\" aria-label=\"Type, or talk and we transcribe\">\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"text\" aria-pressed=\"true\">Text</button>\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"voice\" aria-pressed=\"false\">Transcribe</button>\n  </div>\n  <textarea class=\"fh-textarea\" id=\"f-dictate\" placeholder=\"A few lines is plenty.\"></textarea>\n  <p class=\"fh-dictate__live\" role=\"status\" hidden>\n    <span class=\"fh-dictate__wave\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></span>\n    <span>Listening <time class=\"fh-dictate__clock\">0:00</time></span>\n    <span class=\"fh-dictate__interim\"></span>\n  </p>\n  <p class=\"fh-dictate__error\" role=\"alert\" hidden></p>\n</div>",
+          "markup": "<div class=\"fh-field fh-field--dictate\" data-fh-dictate data-fh=\"FLD-2.1\">\n  <label for=\"f-dictate\">Message</label>\n  <div class=\"fh-segment fh-segment--mode fh-dictate\" role=\"group\" aria-label=\"Type, or talk and we transcribe\">\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"text\" aria-pressed=\"true\">Text</button>\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"voice\" aria-pressed=\"false\">Transcribe</button>\n  </div>\n  <textarea class=\"fh-textarea\" id=\"f-dictate\" placeholder=\"A few lines is plenty.\"></textarea>\n  <p class=\"fh-dictate__live\" role=\"status\" hidden>\n    <span class=\"fh-dictate__wave\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></span>\n    <span>Listening <time class=\"fh-dictate__clock\">0:00</time></span>\n    <span class=\"fh-dictate__interim\"></span>\n  </p>\n  <p class=\"fh-dictate__error\" role=\"alert\" hidden></p>\n</div>",
           "markupFrom": "group",
           "anchor": "c-dictate",
           "demo": true
@@ -4549,6 +4551,8 @@
           "classes": [
             "fh-field",
             "fh-field--dictate",
+            "fh-segment",
+            "fh-segment--mode",
             "fh-dictate",
             "fh-dictate__mode",
             "fh-textarea",
@@ -4559,7 +4563,7 @@
             "fh-dictate__error"
           ],
           "config": {},
-          "markup": "<div class=\"fh-field fh-field--dictate\" data-fh-dictate data-fh=\"FLD-2.1\">\n  <label for=\"f-dictate\">Message</label>\n  <div class=\"fh-dictate\" role=\"group\" aria-label=\"Type, or talk and we transcribe\">\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"text\" aria-pressed=\"true\">Text</button>\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"voice\" aria-pressed=\"false\">Transcribe</button>\n  </div>\n  <textarea class=\"fh-textarea\" id=\"f-dictate\" placeholder=\"A few lines is plenty.\"></textarea>\n  <p class=\"fh-dictate__live\" role=\"status\" hidden>\n    <span class=\"fh-dictate__wave\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></span>\n    <span>Listening <time class=\"fh-dictate__clock\">0:00</time></span>\n    <span class=\"fh-dictate__interim\"></span>\n  </p>\n  <p class=\"fh-dictate__error\" role=\"alert\" hidden></p>\n</div>",
+          "markup": "<div class=\"fh-field fh-field--dictate\" data-fh-dictate data-fh=\"FLD-2.1\">\n  <label for=\"f-dictate\">Message</label>\n  <div class=\"fh-segment fh-segment--mode fh-dictate\" role=\"group\" aria-label=\"Type, or talk and we transcribe\">\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"text\" aria-pressed=\"true\">Text</button>\n    <button type=\"button\" class=\"fh-dictate__mode\" data-mode=\"voice\" aria-pressed=\"false\">Transcribe</button>\n  </div>\n  <textarea class=\"fh-textarea\" id=\"f-dictate\" placeholder=\"A few lines is plenty.\"></textarea>\n  <p class=\"fh-dictate__live\" role=\"status\" hidden>\n    <span class=\"fh-dictate__wave\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></span>\n    <span>Listening <time class=\"fh-dictate__clock\">0:00</time></span>\n    <span class=\"fh-dictate__interim\"></span>\n  </p>\n  <p class=\"fh-dictate__error\" role=\"alert\" hidden></p>\n</div>",
           "tier": "free"
         },
         {
@@ -4604,6 +4608,106 @@
         "fh-field__hint",
         "fh-form__actions",
         "fh-button"
+      ],
+      "tier": "free"
+    },
+    {
+      "id": "SEG",
+      "name": "Segment switch",
+      "section": "Fields & choices",
+      "anchor": "c-segment",
+      "page": "/forms/",
+      "url": "https://firehorse.rascode.dev/forms/segment-switch/",
+      "summary": "One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe.",
+      "classes": [
+        "fh-segment",
+        "fh-segment--entities",
+        "fh-segment--roll",
+        "fh-segment__roll",
+        "fh-segment--mode"
+      ],
+      "markup": "<nav class=\"fh-segment\" aria-label=\"Segment\" data-fh=\"SEG-1.1\">\n  <a href=\"#c-segment\" aria-current=\"true\">All <b>9</b></a>\n  <a href=\"#c-segment\" data-tone=\"amber\">Business <b>5</b></a>\n  <a href=\"#c-segment\" data-tone=\"sky\">Personal <b>4</b></a>\n</nav>",
+      "groups": [
+        {
+          "id": "SEG-1",
+          "name": "Switch",
+          "summary": "",
+          "variants": [
+            "SEG-1.1",
+            "SEG-1.2"
+          ],
+          "markup": "<nav class=\"fh-segment\" aria-label=\"Segment\" data-fh=\"SEG-1.1\">\n  <a href=\"#c-segment\" aria-current=\"true\">All <b>9</b></a>\n  <a href=\"#c-segment\" data-tone=\"amber\">Business <b>5</b></a>\n  <a href=\"#c-segment\" data-tone=\"sky\">Personal <b>4</b></a>\n</nav>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "SEG-2",
+          "name": "Toggle",
+          "summary": "",
+          "variants": [
+            "SEG-2.1",
+            "SEG-2.2"
+          ],
+          "markup": "<button class=\"fh-segment fh-segment--roll\" type=\"button\" aria-pressed=\"false\" aria-label=\"Dark mode\" onclick=\"this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'))\" data-fh=\"SEG-2.1\"><span class=\"fh-segment__roll\" aria-hidden=\"true\"><span>Light</span><span>Dark</span></span></button>",
+          "markupFrom": "variant"
+        }
+      ],
+      "variants": [
+        {
+          "id": "SEG-1.1",
+          "group": "SEG-1",
+          "name": "Switch",
+          "classes": [
+            "fh-segment"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-segment\" aria-label=\"Segment\" data-fh=\"SEG-1.1\">\n  <a href=\"#c-segment\" aria-current=\"true\">All <b>9</b></a>\n  <a href=\"#c-segment\" data-tone=\"amber\">Business <b>5</b></a>\n  <a href=\"#c-segment\" data-tone=\"sky\">Personal <b>4</b></a>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "SEG-1.2",
+          "group": "SEG-1",
+          "name": "Entities",
+          "classes": [
+            "fh-segment",
+            "fh-segment--entities"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-segment fh-segment--entities\" aria-label=\"Business\" data-fh=\"SEG-1.2\">\n  <a href=\"#c-segment\" aria-current=\"true\">All businesses</a>\n  <a href=\"#c-segment\" data-tone=\"orange\">Rascode</a>\n  <a href=\"#c-segment\" data-tone=\"violet\">Lymynal</a>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "SEG-2.1",
+          "group": "SEG-2",
+          "name": "Rolling toggle",
+          "classes": [
+            "fh-segment",
+            "fh-segment--roll",
+            "fh-segment__roll"
+          ],
+          "config": {},
+          "markup": "<button class=\"fh-segment fh-segment--roll\" type=\"button\" aria-pressed=\"false\" aria-label=\"Dark mode\" onclick=\"this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'))\" data-fh=\"SEG-2.1\"><span class=\"fh-segment__roll\" aria-hidden=\"true\"><span>Light</span><span>Dark</span></span></button>",
+          "tier": "free"
+        },
+        {
+          "id": "SEG-2.2",
+          "group": "SEG-2",
+          "name": "Mode toggle",
+          "classes": [
+            "fh-segment",
+            "fh-segment--mode"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-segment fh-segment--mode\" role=\"group\" aria-label=\"Input\" onclick=\"const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))\" data-fh=\"SEG-2.2\">\n  <button type=\"button\" aria-pressed=\"true\">Text</button>\n  <button type=\"button\" aria-pressed=\"false\">Transcribe</button>\n</div>",
+          "tier": "free"
+        }
+      ],
+      "stageClasses": [
+        "fh-stack",
+        "fh-segment",
+        "fh-segment--entities",
+        "fh-segment--roll",
+        "fh-segment__roll",
+        "fh-segment--mode"
       ],
       "tier": "free"
     },
@@ -6225,6 +6329,8 @@
     "fh-banner": "EMP",
     "fh-sign": "AUT",
     "fh-up": "AUT",
+    "fh-segment": "SEG",
+    "fh-switch": "SEG",
     "fh-upload": "UPL",
     "fh-range": "UPL",
     "fh-sheet": "UPL",
@@ -6351,6 +6457,7 @@
     "fh-review-bars",
     "fh-rollover",
     "fh-search",
+    "fh-segment",
     "fh-segmented",
     "fh-select",
     "fh-select-wrap",
@@ -6367,6 +6474,7 @@
     "fh-stepper",
     "fh-steps",
     "fh-swatches-ramp",
+    "fh-switch",
     "fh-table",
     "fh-table-wrap",
     "fh-tabs",

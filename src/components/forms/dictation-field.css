@@ -16,7 +16,7 @@
    *
    *   <div class="fh-field fh-field--dictate" data-fh-dictate>
    *     <label for="msg">Message</label>
-   *     <div class="fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+   *     <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
    *       <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>
    *       <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>
    *     </div>
@@ -50,63 +50,8 @@
     }
   }
 
-  .fh-dictate {
-    display: inline-flex;
-    gap: 2px;
-    padding: 2px;
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-    border-radius: var(--fh-radius-pill);
-
-    &[hidden] {
-      display: none;
-    }
-  }
-
-  .fh-dictate__mode {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--fh-gap-bound);
-    padding: var(--fh-gap-bound) 0.65rem;
-    border: 0;
-    border-radius: var(--fh-radius-pill);
-    background: none;
-    color: var(--fh-color-text-muted);
-    font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    font-weight: var(--fh-weight-bold);
-    letter-spacing: var(--fh-tracking-wider);
-    text-transform: uppercase;
-    white-space: nowrap;
-    cursor: var(--fh-cursor-action);
-    transition:
-      background-color var(--fh-duration-base) var(--fh-ease-standard),
-      color var(--fh-duration-base) var(--fh-ease-standard);
-
-    &:hover {
-      color: var(--fh-color-text);
-    }
-
-    &[aria-pressed="true"] {
-      background-color: var(--fh-color-primary);
-      color: var(--fh-color-on-primary);
-    }
-
-    &:focus-visible {
-      outline: var(--fh-focus-width) solid var(--fh-color-focus);
-      outline-offset: var(--fh-focus-offset);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    & > svg,
-    & > .fh-icon {
-      inline-size: 0.8rem;
-      block-size: 0.8rem;
-    }
-  }
+  /* The Text | Transcribe switch is the Segment switch's mode toggle (SEG-2.2):
+     its look lives in components/forms/segment.css, under .fh-segment--mode and .fh-dictate. */
 
   /* Recording: a red dot and the clock ride the Transcribe button. */
   .fh-field--dictate[data-listening] .fh-dictate__mode[data-mode="voice"]::after {

@@ -1,13 +1,12 @@
 # Finance
 
-Money views from the same tokens: a balance hero with its Business / Personal and per-entity split, a segment switch, account cards, a ledger that reads pending and declined at a glance, virtual card tiles and connection health. Built for Chicken and Egg and Helm's Finance view; nothing in here is specific to a provider.
+Money views from the same tokens: a balance hero with its Business / Personal and per-entity split, account cards (the segment switch, SEG, now lives in Forms), a ledger that reads pending and declined at a glance, virtual card tiles and connection health. Built for Chicken and Egg and Helm's Finance view; nothing in here is specific to a provider.
 
 Docs: https://firehorse.rascode.dev/finance/
 
 | ID  | Component          | Class            |
 | --- | ------------------ | ---------------- |
 | BAL | Balance            | `.fh-balance`    |
-| SEG | Segment switch     | `.fh-segment`    |
 | ACN | Account card       | `.fh-account`    |
 | LDG | Ledger             | `.fh-ledger`     |
 | VCD | Virtual card       | `.fh-vcard`      |

@@ -643,7 +643,7 @@ ready(() => {
     }
     if (!sw) {
       sw = document.createElement("div");
-      sw.className = "fh-dictate";
+      sw.className = "fh-segment fh-segment--mode fh-dictate";
       sw.setAttribute("role", "group");
       sw.setAttribute("aria-label", "Type, or talk and we transcribe");
       sw.innerHTML =
