@@ -35,7 +35,7 @@
     display: grid;
     inline-size: 100%;
     max-inline-size: var(--fh-social-width, 19rem);
-    padding: 0.5rem;
+    padding: var(--fh-inset-tight);
     overflow: clip;
     isolation: isolate;
     container: fh-social / inline-size;
@@ -50,7 +50,7 @@
     inline-size: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    border-radius: calc(var(--_r) - 0.5rem);
+    border-radius: calc(var(--_r) - var(--fh-inset-tight));
   }
 
   .fh-social__body {
@@ -65,8 +65,8 @@
     margin: 0;
     font-family: var(--fh-font-display);
     font-size: clamp(1.15rem, 7cqi, 1.4rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-heading);
   }
   .fh-social__check {
     --fh-icon-size: 0.85em;
@@ -92,7 +92,7 @@
   }
   .fh-social__stats > div { display: flex; align-items: center; gap: 0.35em; }
   .fh-social__stats dt { display: inline-flex; color: var(--fh-color-text-muted); }
-  .fh-social__stats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; font-size: var(--fh-text-small); }
+  .fh-social__stats dd { margin: 0; font-weight: var(--fh-weight-bold); font-variant-numeric: tabular-nums; font-size: var(--fh-text-small); }
   .fh-social__foot > .fh-button { border-radius: var(--fh-radius-pill); }
 
   /* —— Full-bleed treatments —— */
@@ -128,7 +128,7 @@
    * place of the graded blur. */
   .fh-social > .fh-social__body {
     position: relative;
-    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-card-content-border, transparent);
     border-radius: var(--fh-card-content-radius, 0);
     background-color: var(--fh-card-content-bg, transparent);
     backdrop-filter: var(--fh-card-content-backdrop, none);
