@@ -340,13 +340,65 @@ const dropStateLabels = (markup) => String(markup)
   .replace(/<([a-z][\w:-]*)\b[^>]*\bfh-sr-only\b[^>]*>([\s\S]*?)<\/\1>/gi, (all, _tag, text) => STATE_LABEL_TEXT.test(text.replace(/<[^>]+>/g, "").trim()) ? "" : all)
   .replace(/(^|>)([^<]+)(?=<|$)/g, (all, edge, text) => STATE_LABEL_TEXT.test(text.trim()) ? edge : all);
 
-/** The closed control: the first button that is not an open state, after state labels are gone.
- *  Later buttons in these families are other states or items inside an open menu. */
+/** A menu item is an entry inside an open menu, not the control that opens it. */
+const isMenuItem = (btn) => /\brole="menuitem/.test(btn) || /\bfh-tile\b/.test(btn) || /\bfh-menu__/.test(btn);
+
+/** Inner HTML of the element whose opening tag starts at `at`. */
+const innerHTML = (s, at) => {
+  const open = readTag(s, at);
+  if (!open || open.kind !== "open" || open.self) return "";
+  let i = open.end, depth = 1;
+  while (depth > 0 && i < s.length) {
+    const lt = s.indexOf("<", i);
+    if (lt < 0) return "";
+    const n = readTag(s, lt);
+    if (!n) { i = lt + 1; continue; }
+    if (n.kind === "open" && !n.self && n.name === open.name) depth++;
+    else if (n.kind === "close" && n.name === open.name) depth--;
+    if (depth === 0) return s.slice(open.end, lt);
+    i = n.end;
+  }
+  return "";
+};
+
+/** The family's demo stage on the category page. Family markup is the first variant, so a trigger
+ *  that sits beside that variant (the Dropdown "View options" button) is only here. */
+const familyStage = (main, id) => {
+  const s = String(main ?? "");
+  const mark = s.search(new RegExp(`\\bdata-fh-id="${id}"(?![-.\\w])`));
+  if (mark < 0) return "";
+  const hostAt = s.lastIndexOf("<", mark);
+  const host = readTag(s, hostAt);
+  if (!host || host.kind !== "open") return "";
+  let i = host.end, depth = 1;
+  while (depth > 0 && i < s.length) {
+    const lt = s.indexOf("<", i);
+    if (lt < 0) return "";
+    const n = readTag(s, lt);
+    if (!n) { i = lt + 1; continue; }
+    if (n.kind === "open" && !n.self && n.name === host.name) depth++;
+    else if (n.kind === "close" && n.name === host.name) depth--;
+    if (depth > 0 && n.kind === "open" && /\bsite-demo__stage\b/.test(s.slice(lt, n.end))) return innerHTML(s, lt);
+    i = n.end;
+  }
+  return "";
+};
+
+/** The closed control: the first button that is not an open state and not a menu item, after state
+ *  labels are gone. Later buttons in these families are other states or items inside an open menu.
+ *  When the family markup is only that menu, the trigger is read from the category page's demo stage. */
 const closedControl = (markup) => {
   const cleaned = dropStateLabels(markup);
   const buttons = [...cleaned.matchAll(/<button\b[^>]*>[\s\S]*?<\/button>/gi)];
-  const closed = buttons.find((m) => !/\bfh-[\w-]*--open\b/.test(m[0]) && !/\baria-expanded="true"/.test(m[0]));
-  return (closed ? closed[0] : cleaned).trim();
+  const closed = buttons.find((m) => !/\bfh-[\w-]*--open\b/.test(m[0]) && !/\baria-expanded="true"/.test(m[0]) && !isMenuItem(m[0]));
+  return closed ? closed[0].trim() : "";
+};
+
+const previewForCard = (p, f) => {
+  const fn = CARD_PREVIEW[f.id];
+  if (!fn) return f.markup;
+  if (fn !== closedControl) return fn(f.markup);
+  return closedControl(f.markup) || closedControl(familyStage(p.main, f.id)) || f.markup;
 };
 
 /** DRW opens on :popover-open (src/components/navigation/drawer.css). A card cannot show that
@@ -373,7 +425,7 @@ export const categoryGrid = (p, redirects) => {
     const f = s.specimen, st = shownStatus(f.id);
     const n = entriesOf(f), vs = n.reduce((t, g) => t + g.items.length, 0);
     const meta = [n.length ? `${n.length} group${n.length > 1 ? "s" : ""}` : "", vs ? `${vs} variant${vs > 1 ? "s" : ""}` : ""].filter(Boolean).join(" · ") || "One component";
-    const preview = CARD_PREVIEW[f.id] ? CARD_PREVIEW[f.id](f.markup) : f.markup;
+    const preview = previewForCard(p, f);
     return `        <article class="site-family"${st !== "live" ? ` data-fh-release="${st}"` : ""} data-specimen-card="${f.id}">
           <div class="site-family__preview site-stage site-stage--card" data-stage="${stageMode(preview)}" inert aria-hidden="true">
 ${preview}

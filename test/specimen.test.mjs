@@ -147,14 +147,32 @@ for (const page of gridPages) {
 }
 // Card previews (navigation): Drawer is open in the card only. Hamburger and Dropdown keep the closed
 // control and carry no state-label text. Family pages keep the original markup.
+// The stage is the card's own preview div. The old end marker was the next
+// <p class="fh-card__meta">, which the grid no longer writes (it writes
+// site-family__meta). indexOf then returned -1 and the slice ran on through
+// the rest of the page. Stop at this div's own close, nested divs included.
 const cardStage = (page, id) => {
   const at = page.indexOf(`data-specimen-card="${id}"`);
   const from = at < 0 ? 0 : at;
   const found = cardPreviewTags(page.slice(from))[0];
-  const open = found ? from + found.index : -1;
+  if (!found) return "";
+  const open = from + found.index;
   const inner = page.indexOf(">", open) + 1;
-  const end = page.indexOf('<p class="fh-card__meta">', open);
-  return page.slice(inner, end).replace(/\s*<\/div>\s*$/, "");
+  let depth = 1, i = inner;
+  while (i < page.length && depth > 0) {
+    const nextOpen = page.indexOf("<div", i);
+    const nextClose = page.indexOf("</div>", i);
+    if (nextClose < 0) return "";
+    if (nextOpen !== -1 && nextOpen < nextClose) {
+      depth++;
+      i = nextOpen + 4;
+    } else {
+      depth--;
+      if (depth === 0) return page.slice(inner, nextClose);
+      i = nextClose + 6;
+    }
+  }
+  return "";
 };
 const stageText = (html) => html.replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 const stateLabelText = /\b(?:States|Morphs|Opens|Open|Closed|Hover|Focus|Disabled|Cross|Arrow|Spin|Squeeze|Minus|Plus|Dots)\b|With label|Full-screen menu|Side drawer/;
