@@ -1788,8 +1788,8 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__root:has(.site-hc__roots:popover-open) .site-hc__brush { translate: 0 -0.12rem; }
 
 /* —— Backdrop picker: the camera, left of the T ——————————————————————————————
-   Same black / white circle as the T. Its list matches the typeface list: a thumbnail of each
-   backdrop, its name and a line. A pick sets data-hc-bg on <html>; the hero art swaps. */
+   Same black / white circle as the T. The scenes are option tiles (TIL-3.1): a large preview of
+   each backdrop, its name and a mono caps line. A pick sets data-hc-bg on <html>; the hero art swaps. */
 .site-hc__bg { position: relative; display: inline-flex; }
 .site-hc__bg-btn {
   anchor-name: --hc-bg;
@@ -1824,9 +1824,9 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   background: light-dark(oklch(0.99 0 0 / 0.95), oklch(0.18 0 0 / 0.95));
   color: var(--fh-color-text);
 }
-.site-hc__bgs ul { display: grid; margin: 0; padding: 0; list-style: none; }
-.site-hc__bgs li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
-.site-hc__bgs button {
+.site-hc__bgs ul:not(.fh-tiles) { display: grid; margin: 0; padding: 0; list-style: none; }
+.site-hc__bgs ul:not(.fh-tiles) > li + li { border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
+.site-hc__bgs button:not(.fh-tile) {
   display: grid;
   grid-template-columns: 3.25rem minmax(0, 1fr);
   align-items: center;
@@ -1840,21 +1840,12 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   cursor: pointer;
   transition: background-color 160ms ease;
 }
-.site-hc__bgs button:hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
-.site-hc__bgs button:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
-.site-hc__bgs button[aria-pressed="true"] { background: color-mix(in oklab, var(--fh-color-accent) 10%, transparent); }
-.site-hc__bgs button[aria-pressed="true"] .site-hc__bgs-thumb { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-accent); }
-.site-hc__bgs-thumb {
-  --_blur: 5px;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  inline-size: 3.25rem;
-  aspect-ratio: 4 / 3;
-  border-radius: 4px;
-  border: var(--fh-border-thin) solid var(--fh-color-etch, var(--fh-color-border));
-  background-color: var(--fh-color-canvas);
-}
+.site-hc__bgs button:not(.fh-tile):hover { background: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+.site-hc__bgs button:not(.fh-tile):focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: -2px; }
+.site-hc__bgs button:not(.fh-tile)[aria-pressed="true"] { background: color-mix(in oklab, var(--fh-color-accent) 10%, transparent); }
+.site-hc__bgs-scenes { --fh-tiles-min: 8rem; } /* two across in the panel until it opens full width (inventory row 9) */
+/* The scene thumbnails are option tiles' previews (TIL-3.1, .fh-tile__media); the art below draws on them. */
+.site-hc__bgs-thumb { --_blur: 12px; }
 .site-hc__bgs-credit {
   margin: 0;
   padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-4);
@@ -1901,7 +1892,8 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   background-image:
     linear-gradient(color-mix(in oklab, var(--fh-color-text) 14%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in oklab, var(--fh-color-text) 14%, transparent) 1px, transparent 1px);
-  background-size: 8px 8px;
+  background-size: 12px 12px;
+  background-repeat: repeat;
 }
 
 /* Aurora: bright, airy, flowing. Soft colour fields drifting over a pale sky, and long ribbons
@@ -1954,7 +1946,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   background: repeating-radial-gradient(circle at 66% 44%, transparent 0 calc(var(--_blur) * 0.9), color-mix(in oklab, var(--fh-color-text) 9%, transparent) calc(var(--_blur) * 0.9 + 0.5px) calc(var(--_blur) * 0.9 + 1.5px));
   mask: radial-gradient(circle at 66% 44%, #000 0 18%, transparent 62%);
 }
-.site-hc__bgs-thumb[data-scene="aura"] { --_blur: 4px; }
+.site-hc__bgs-thumb[data-scene="aura"] { --_blur: 10px; }
 
 /* Photos (Unsplash): home-concept.js puts the picked photo on the scene as --_img / --_pos and
    sets data-hc-photo on <html>. A wash in the page colour so the type holds. */
