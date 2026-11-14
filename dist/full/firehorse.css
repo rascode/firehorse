@@ -1961,26 +1961,26 @@
   }
 
   .fh-link {
-    color: var(--fh-color-text);
+    --_ink: var(--fh-color-text);
+    --_line: var(--fh-color-etch);
+    color: var(--_ink);
     text-decoration-line: underline;
     text-decoration-thickness: var(--fh-link-underline, var(--fh-border-thin));
     text-underline-offset: var(--fh-link-underline-offset, .18em);
-    -webkit-text-decoration-color: var(--fh-color-etch);
-    text-decoration-color: var(--fh-color-etch);
-    transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
+    -webkit-text-decoration-color: var(--_line);
+    text-decoration-color: var(--_line);
+    transition: color var(--fh-duration-fast) var(--fh-ease-standard),
+      text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
 
     &:hover {
-      text-decoration-color: currentColor;
+      --_ink: var(--fh-color-text);
+      --_line: currentColor;
     }
   }
 
   .fh-link--quiet {
-    color: var(--fh-color-text-muted);
-    text-decoration-line: none;
-
-    &:hover {
-      color: var(--fh-color-text);
-    }
+    --_ink: var(--fh-color-text-muted);
+    --_line: var(--fh-color-etch-soft);
   }
 
   .fh-roll {

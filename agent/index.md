@@ -790,7 +790,7 @@ Classes: `fh-action` `fh-action--lg` `fh-link` `fh-link--quiet` `fh-action--cue`
 #### ACT-2.2 · Quiet link
 
 ```html
-<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT-2.2">Privacy policy</a>
+<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT-2.2">Read the case study</a>
 ```
 
 ### ACT-3 · Cue

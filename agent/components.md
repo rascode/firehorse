@@ -691,7 +691,7 @@ Section CTAs and card actions: mono caps with a dashed underline and an arrow, a
 <a class="fh-link" href="#c-action" data-fh="ACT-2.1">Read the case study</a>
 
 <!-- ACT-2.2 · Link › Quiet link -->
-<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT-2.2">Privacy policy</a>
+<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT-2.2">Read the case study</a>
 
 <!-- ACT-3.1 · Cue › Scroll cue -->
 <p class="fh-action fh-action--cue" data-fh="ACT-3.1">The design system built for <u class="fh-action__phrase">modern workflows</u></p>

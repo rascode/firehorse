@@ -5,29 +5,33 @@
 
 @layer fh.components {
   /* —— Text link (ACT-2) ——
-   * Takes the size and weight of the copy it sits in. Its underline is the family's
-   * (the scroll cue's __phrase uses it too). Knobs: --fh-link-underline (border-thin),
-   * --fh-link-underline-offset (0.18em). */
+   * Takes the size, weight and leading of the copy it sits in. One recipe for both:
+   * the same underline (thickness, offset), only the colour steps. Quiet is muted text
+   * on a softer etch; on hover both go to full ink with a solid underline.
+   * Knobs: --fh-link-underline (border-thin), --fh-link-underline-offset (0.18em). */
   .fh-link {
-    color: var(--fh-color-text);
+    --_ink: var(--fh-color-text);
+    --_line: var(--fh-color-etch);
+
+    color: var(--_ink);
     text-decoration-line: underline;
     text-decoration-thickness: var(--fh-link-underline, var(--fh-border-thin));
     text-underline-offset: var(--fh-link-underline-offset, 0.18em);
-    text-decoration-color: var(--fh-color-etch);
-    transition: text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
+    text-decoration-color: var(--_line);
+    transition:
+      color var(--fh-duration-fast) var(--fh-ease-standard),
+      text-decoration-color var(--fh-duration-fast) var(--fh-ease-standard);
 
     &:hover {
-      text-decoration-color: currentColor;
+      --_ink: var(--fh-color-text);
+      --_line: currentColor;
     }
   }
 
+  /* ACT-2.2 Quiet: the same link a step down in colour. */
   .fh-link--quiet {
-    color: var(--fh-color-text-muted);
-    text-decoration-line: none;
-
-    &:hover {
-      color: var(--fh-color-text);
-    }
+    --_ink: var(--fh-color-text-muted);
+    --_line: var(--fh-color-etch-soft);
   }
 
   /*
