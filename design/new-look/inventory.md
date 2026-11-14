@@ -18,7 +18,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 7 | Typeface options, rebuilt as tiles: a large "Aa" in the face, name, mono caps note; the picked tile marked | Typeface picker (T), full width | Tiles · TIL-3.2 Option tile, specimen | Done (TIL-3.2) |
 | 8 | Photo swatches as tiles with a mono caption, many across | Backdrop picker, Photos, full width | Tiles · TIL-3.3 Option tile, swatch | Done (TIL-3.3) |
 | 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · MEG-3.1 Tile panel | Done (MEG-3.1) |
-| 10 | Tile menu: mono head with a status pill, labels, tile grids, copy pill, ask accordion | Send to an agent | Dropdown menu · new variant (DRP-2) | New |
+| 10 | Tile menu: mono head with a status pill, labels, tile grids, copy pill, ask accordion | Send to an agent | Dropdown menu · DRP-2.1 Tile menu | Done (DRP-2.1) |
 | 11 | Colour list: dot and mono caps label, picked dot ringed; stays a small menu (not full width) | Theme colour menu (brush) | Theme select · new variant (THS) | New |
 | 12 | Mono caps nav links with a roll and a chevron | Hero top left | Navigation · new variant (NAV) | New |
 | 13 | Round icon buttons: white disc, dark glyph | Top right (camera, T, brush) | Button · new variant, round icon (BTN) | New |
