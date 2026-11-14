@@ -5,11 +5,14 @@
 //   Demo frame rule: a site-demo__stage carries the same frame (site-stage, data-stage fill or inline).
 //   The "no site-* class inside a stage" rule stays on [data-specimen-stage] only.
 //   Retired rule: a built page has no site-specimen__stage or site-specimen__preview class.
+//   Held frame rule: outside a stage (.site-stage, [data-specimen-stage], [data-demo]) no element carries a held
+//   class (heldClasses from plan() in scripts/builds.mjs). Every page but the home page (index.html, artifact.html) and admin/**.
 // node scripts/lint-site.mjs [dir]   (default site/dist; exits 1 on any error)
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, relative, dirname } from "node:path";
+import { join, relative, dirname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { elements } from "./release.mjs";
+import { plan } from "./builds.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -54,14 +57,33 @@ export const retiredSpecimenClasses = (html) => {
   return [...found];
 };
 
+const ANY_STAGE = /\sclass="[^"]*\bsite-stage\b|\sdata-specimen-stage(?=[\s>=])|\sdata-demo(?=[\s>=])/;
+
+/** Frame rule: held classes on elements outside every stage (.site-stage, [data-specimen-stage], [data-demo]): [{ class, tag }]. */
+export const heldFrameClasses = (html, held) => {
+  const stages = elements(html, ANY_STAGE);
+  const inStage = (i) => stages.some((s) => i >= s.start && i < s.end);
+  const found = new Map();
+  for (const m of html.matchAll(/<([a-z][\w-]*)\b[^>]*?\sclass="([^"]*)"/gi)) {
+    if (inStage(m.index)) continue;
+    for (const c of m[2].split(/\s+/)) if (held.has(c) && !found.has(c)) found.set(c, { class: c, tag: m[1].toLowerCase() });
+  }
+  return [...found.values()];
+};
+
+/** The home page and admin are left out of the held-class frame rule (home is being redone; admin is held).
+ *  artifact.html is the home page again, body only (scripts/site.mjs). */
+const frameRuleSkips = (rel) => rel === "index.html" || rel === "artifact.html" || rel.startsWith("admin/");
+
 /** Every stage-rule error in a built site: "path: <tag class="site-x"> inside a specimen stage". */
-export const lintSite = (dir = join(root, "site/dist")) => {
+export const lintSite = (dir = join(root, "site/dist"), held = plan().heldClasses) => {
   const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : f.endsWith(".html") ? [p] : []; });
   const errors = [];
   let stages = 0;
   for (const file of walk(dir)) {
     const html = readFileSync(file, "utf8");
-    const rel = relative(dir, file);
+    const rel = relative(dir, file).split(sep).join("/");
+    if (!frameRuleSkips(rel)) for (const v of heldFrameClasses(html, held)) errors.push(`${rel}: <${v.tag} class="${v.class}"> outside a stage names a held class (use a site-* name)`);
     stages += elements(html, STAGE_OPEN).length;
     for (const v of new Map(stageViolations(html).map((v) => [v.class, v])).values()) errors.push(`${rel}: <${v.tag} class="${v.class}"> inside a specimen stage (no site-* class may sit in a stage)`);
     for (const v of stageFrameViolations(html)) errors.push(v.kind === "class"
@@ -80,5 +102,5 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (!existsSync(dir)) { console.error(`✗ lint-site: no ${relative(root, dir)} (run npm run site)`); process.exit(1); }
   const { errors, stages } = lintSite(dir);
   if (errors.length) { console.error(errors.join("\n") + `\n\n✗ lint-site: ${errors.length} error(s)`); process.exit(1); }
-  console.log(`✓ lint-site: ${stages} specimen stages, no site-* class inside one, every stage is site-stage fill or inline, no retired preview class, every demo stage carries the frame`);
+  console.log(`✓ lint-site: ${stages} specimen stages, no site-* class inside one, every stage is site-stage fill or inline, no retired preview class, every demo stage carries the frame, no held class outside a stage`);
 }

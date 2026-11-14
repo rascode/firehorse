@@ -143,9 +143,9 @@ const subscribe = (source, placement) => `
     <form class="fh-form stable-form" data-subscribe data-source="${esc(source)}" data-placement="${esc(placement)}" novalidate>
       <div class="fh-field"><label for="sub-name">Name</label><input class="fh-input" id="sub-name" name="name" autocomplete="name"></div>
       <div class="fh-field"><label for="sub-email">Email</label><input class="fh-input" id="sub-email" name="email" type="email" autocomplete="email" required aria-describedby="sub-email-error"><p class="fh-field__error" id="sub-email-error">Enter an email address so we know where to send it.</p></div>
-      <fieldset class="fh-choice-cards stable-lists"><legend class="fh-label">What to send</legend>
-        <label class="fh-choice-card"><input type="radio" name="list" value="highlights" checked><span><b>Highlights</b><small>Releases and big ideas</small></span></label>
-        <label class="fh-choice-card"><input type="radio" name="list" value="pro"><span><b>Every change</b><small>Detailed notes for Pro customers</small></span></label>
+      <fieldset class="site-choices stable-lists"><legend class="fh-label">What to send</legend>
+        <label class="site-choice"><input type="radio" name="list" value="highlights" checked><span><b>Highlights</b><small>Releases and big ideas</small></span></label>
+        <label class="site-choice"><input type="radio" name="list" value="pro"><span><b>Every change</b><small>Detailed notes for Pro customers</small></span></label>
       </fieldset>
       <input type="text" name="_hp" tabindex="-1" autocomplete="off" class="fh-sr-only" aria-hidden="true">
       <div class="fh-form__actions"><button class="fh-button" type="submit"><span class="fh-roll">Subscribe</span></button></div>

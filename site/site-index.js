@@ -311,7 +311,7 @@ function mountKC(list) {
     <div class="fh-detail__identity"><span class="site-kc-face site-kc-face--lg">${face}</span><div><h2 id="kc-title">KC</h2><p>Knows every component by name and number</p></div></div>
   </header>
   <div class="fh-detail__body">
-    <div class="fh-chat site-kc__log" role="log" aria-live="polite" aria-label="Conversation with KC"></div>
+    <div class="site-chat site-kc__log" role="log" aria-live="polite" aria-label="Conversation with KC"></div>
     <div class="fh-chips fh-chips--wrap site-kc__ask" aria-label="Try asking">
       <button class="fh-chip fh-chip--sm" type="button" data-kc-ask="A filled chip with an icon">A filled chip with an icon</button>
       <button class="fh-chip fh-chip--sm" type="button" data-kc-ask="Glass card">Glass card</button>
@@ -340,8 +340,8 @@ function mountKC(list) {
   };
   const say = (who, html) => {
     log.insertAdjacentHTML("beforeend", who === "kc"
-      ? `<div class="fh-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm site-kc-face">${face}</span><div class="fh-message__bubble"><p class="fh-message__name">KC</p>${html}</div></div>`
-      : `<div class="fh-message" data-from="me"><div class="fh-message__bubble"><p>${esc(html)}</p></div></div>`);
+      ? `<div class="site-message" data-from="them" data-tone="sky"><span class="fh-avatar fh-avatar--sm site-kc-face">${face}</span><div class="site-message__bubble"><p class="site-message__name">KC</p>${html}</div></div>`
+      : `<div class="site-message" data-from="me"><div class="site-message__bubble"><p>${esc(html)}</p></div></div>`);
     log.lastElementChild.scrollIntoView({ block: "nearest" });
   };
   const hitsHtml = (hits) => `<ul class="site-kc__hits">${hits.map((e) => `<li>${tagHtml(e)}<a href="${hrefOf(e)}" data-kc-go>${esc(fullName(e))}</a></li>`).join("")}</ul><p class="site-kc__hint">Click an ID to copy it with its markup.</p>`;
