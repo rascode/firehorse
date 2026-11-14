@@ -42,19 +42,19 @@
     justify-content: center;
     gap: var(--fh-gap-related);
     min-block-size: 2.25rem;
-    padding: 0.55rem var(--fh-inset-tile);
-    border: var(--fh-border-thin) solid var(--_border);
+    padding: var(--fh-inset-tight) var(--fh-inset-tile);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_border);
     border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     background-color: var(--_bg);
     background-image: linear-gradient(
       180deg,
-      color-mix(in oklab, var(--_bg) calc(100% - 14% * var(--_sheen)), white),
+      color-mix(in oklab, var(--_bg) calc(100% - 14% * var(--_sheen)), var(--fh-color-on-ink)),
       var(--_bg) 55%,
-      color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), black)
+      color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), var(--fh-color-ink))
     );
     color: var(--_fg);
     font-family: var(--fh-button-font, var(--fh-font-mono));
-    font-size: 0.7rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
     letter-spacing: var(--fh-tracking-widest);
     line-height: var(--fh-leading-snug);
@@ -219,8 +219,8 @@
 
   .fh-button--lg {
     min-block-size: 2.75rem;
-    padding: 0.75rem 1.35rem;
-    font-size: 0.76rem;
+    padding: var(--fh-inset-control) 1.35rem;
+    font-size: var(--fh-text-caption);
   }
 
   .fh-button--block {
@@ -250,10 +250,10 @@
       margin: auto;
       inline-size: 1em;
       block-size: 1em;
-      border: 2px solid var(--_fg);
+      border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--_fg);
       border-inline-end-color: transparent;
       border-radius: var(--fh-radius-round);
-      animation: fh-spin 0.7s linear infinite;
+      animation: fh-spin var(--fh-duration-reveal) linear infinite;
     }
   }
 
@@ -269,13 +269,13 @@
       border-radius: inherit;
       background: linear-gradient(
         180deg,
-        color-mix(in oklab, var(--fh-tone) 72%, white) 0%,
+        color-mix(in oklab, var(--fh-tone) 72%, var(--fh-color-on-ink)) 0%,
         color-mix(in oklab, var(--fh-tone) 52%, transparent) 38%,
         transparent 72%
       );
       mask:
-        linear-gradient(black 0 0) content-box exclude,
-        linear-gradient(black 0 0);
+        linear-gradient(var(--fh-color-ink) 0 0) content-box exclude,
+        linear-gradient(var(--fh-color-ink) 0 0);
       pointer-events: none;
     }
   }
@@ -365,7 +365,7 @@
     min-block-size: var(--fh-button-etched-height, 2.5rem);
     padding-block: 0;
     padding-inline: var(--fh-inset-tile);
-    border-style: dashed;
+    border-style: var(--fh-card-border-style, dashed);
     border-radius: var(--fh-radius-pill);
     background-image: none;
     font-size: calc(var(--fh-text-label) * 1.1);
