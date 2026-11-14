@@ -42,12 +42,12 @@
       inline-size: calc(var(--p) * 100%);
       border-radius: inherit;
       background: var(--fh-tone, var(--fh-color-accent));
-      transition: inline-size 600ms var(--fh-ease-out);
+      transition: inline-size var(--fh-duration-enter) var(--fh-ease-out);
     }
   }
   .fh-stages[data-state="active"] .fh-stages__track::after {
     background:
-      repeating-linear-gradient(-45deg, color-mix(in oklab, white 22%, transparent) 0 6px, transparent 6px 12px) 0 0 / 34px 100%,
+      repeating-linear-gradient(-45deg, color-mix(in oklab, var(--fh-color-on-ink) 22%, transparent) 0 6px, transparent 6px 12px) 0 0 / 34px 100%,
       var(--fh-tone, var(--fh-color-accent));
   }
   @media (prefers-reduced-motion: no-preference) {
@@ -66,8 +66,8 @@
       display: inline-flex;
       align-items: center;
       gap: var(--fh-gap-bound);
-      padding: 0.15rem 0.55rem;
-      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      padding: 0.15rem var(--fh-inset-tight);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       border-radius: var(--fh-radius-pill);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
@@ -78,12 +78,12 @@
     & > li::before { content: ""; inline-size: 0.4rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background-color: currentColor; opacity: 0.5; }
     & > li[data-state="done"] { color: var(--fh-color-text-muted); }
     & > li[data-state="done"]::before { opacity: 1; background-color: var(--fh-color-success); }
-    & > li[data-state="active"] { border-style: solid; border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 60%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
+    & > li[data-state="active"] { border-style: var(--fh-card-border-style, solid); border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 60%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
     & > li[data-state="active"]::before { opacity: 1; }
     & > li[data-state="failed"] { color: var(--fh-color-danger); }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .fh-stages__list > li[data-state="active"]::before { animation: fh-stage-pulse 1.1s ease-in-out infinite; }
+    .fh-stages__list > li[data-state="active"]::before { animation: fh-stage-pulse var(--fh-duration-scene) var(--fh-ease-in-out) infinite; }
   }
   @keyframes fh-stage-pulse { 50% { scale: 0.55; opacity: 0.45; } }
 

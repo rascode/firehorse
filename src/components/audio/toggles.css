@@ -14,7 +14,7 @@
     min-inline-size: 2rem;
     block-size: 2rem;
     padding-inline: var(--fh-inset-tight);
-    border: var(--fh-border-thin) dashed transparent;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
     border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     background: none;
     color: var(--fh-color-text-muted);
@@ -25,7 +25,7 @@
     cursor: var(--fh-cursor-action);
     transition: color var(--fh-duration-fast), border-color var(--fh-duration-fast), background-color var(--fh-duration-fast);
 
-    & > .fh-icon { font-size: 1rem; }
+    & > .fh-icon { font-size: var(--fh-text-body); }
     &:hover { color: var(--fh-color-text); background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
     &[aria-pressed="true"] { border-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 55%, transparent); color: var(--fh-tone, var(--fh-color-text)); }
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
