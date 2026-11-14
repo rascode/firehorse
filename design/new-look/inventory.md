@@ -14,7 +14,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 3 | Agent tile, stacked: block, number and ↗, large name, note | Send to an agent (concept) | Tiles · TIL-2.1 Launch tile | Done |
 | 4 | Agent tile, compact: tinted block, name and note inline | Send to an agent (home) | Tiles · TIL-2.2 Compact | Done |
 | 5 | Terminal cell: name, `$ command` in mono | Send to an agent | Tiles · TIL-2.3 Command | Done |
-| 6 | Backdrop options, rebuilt as tiles: a large thumbnail, name, mono caps note; the picked tile marked | Backdrop picker (camera), full width | Tiles · TIL-3.1 Option tile, media | New |
+| 6 | Backdrop options, rebuilt as tiles: a large thumbnail, name, mono caps note; the picked tile marked | Backdrop picker (camera), full width | Tiles · TIL-3.1 Option tile, media | Done (TIL-3.1; panel still narrow, see 9) |
 | 7 | Typeface options, rebuilt as tiles: a large "Aa" in the face, name, mono caps note; the picked tile marked | Typeface picker (T), full width | Tiles · TIL-3.2 Option tile, specimen | New |
 | 8 | Photo swatches as tiles with a mono caption, many across | Backdrop picker, Photos, full width | Tiles · TIL-3.3 Option tile, swatch | New |
 | 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · new variant (MEG-3) | New |
