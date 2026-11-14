@@ -21,6 +21,9 @@
  *     </button>
  *   Knobs: --fh-segment-height (2rem), --fh-segment-bg, --fh-segment-fg, --fh-segment-roll-width.
  *
+ * Every variant sets its text at one size, --fh-segment-text (the label size). Add
+ * fh-segment--lg to any of them for a step up (the caption size; entities also go sans).
+ *
  *   SEG-2.2 Mode toggle: a small pill of two or three buttons, the pressed one filled.
  *   The dictation field's Text | Transcribe switch (FLD-2) is one.
  *     <div class="fh-segment fh-segment--mode" role="group" aria-label="Input">
@@ -36,7 +39,9 @@
  *     </div>
  */
 @layer fh.components {
+  /* One text size for the whole family: every variant reads --_text. --lg scales it up. */
   .fh-segment {
+    --_text: var(--fh-segment-text, var(--fh-text-label));
     display: inline-flex;
     inline-size: fit-content;
     max-inline-size: 100%;
@@ -55,7 +60,7 @@
       border-radius: var(--fh-radius-pill);
       background: none;
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
+      font-size: var(--_text);
       font-weight: var(--fh-weight-medium);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
@@ -85,6 +90,9 @@
       border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
   }
+  /* --lg, on any segment: a step up in size (the caption size). Entities also turn sans and
+     sentence case, at the small text size. */
+  .fh-segment--lg { --_text: var(--fh-segment-text, var(--fh-text-caption)); }
   .fh-segment--entities.fh-segment--lg > :is(a, button) {
     padding: var(--fh-inset-tight) var(--fh-inset-control);
     text-transform: none;
@@ -109,9 +117,9 @@
     background-color: var(--_bg);
     color: var(--_fg);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--fh-text-label) * 1.16);
+    font-size: var(--_text);
     font-weight: var(--fh-weight-bold);
-    letter-spacing: var(--fh-tracking-caps);
+    letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
     cursor: var(--fh-cursor-action);
     transition:
@@ -147,7 +155,7 @@
     & > button {
       gap: var(--fh-gap-bound);
       padding: var(--fh-gap-bound) var(--fh-segment-mode-inline, 0.65rem);
-      font-size: var(--fh-text-micro);
+      font-size: var(--_text);
       font-weight: var(--fh-weight-bold);
       white-space: nowrap;
       transition:
@@ -164,6 +172,7 @@
   }
   /* .fh-dictate isn't an .fh-segment, so it takes the switch's frame and button base here. */
   .fh-dictate {
+    --_text: var(--fh-segment-text, var(--fh-text-label));
     display: inline-flex;
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
