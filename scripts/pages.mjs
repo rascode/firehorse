@@ -251,7 +251,8 @@ const exploreTiles = (list) => {
     const c = counts(x.main);
     const meta = c.families.length ? `${c.families.length} families` : "Guide";
     const held = x.release && x.release !== "live";
-    return `        <li style="--_w: var(--site-walk-${walk[i % walk.length]})"${held ? ` data-fh-release="${x.release}"` : ""}><a href="${x.path}"><span class="site-open__cube" aria-hidden="true"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}"></i></span><small>${String(i + 1).padStart(2, "0")} · ${meta}${held ? ` ${chip(x.release)}` : ""}</small><b>${escHtml(x.meta.name)}</b><span>${escHtml(short(x.meta.description ?? ""))}</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a></li>`;
+    // Firehorse index tiles (TIL-1.1), each in a step of the site's colour walk.
+    return `        <li style="--fh-tile-tone: var(--site-walk-${walk[i % walk.length]})"${held ? ` data-fh-release="${x.release}"` : ""}><a class="fh-tile" href="${x.path}"><span class="fh-tile__cube" aria-hidden="true"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}"></i></span><small class="fh-tile__eyebrow">${String(i + 1).padStart(2, "0")} · ${meta}${held ? ` ${chip(x.release)}` : ""}</small><b class="fh-tile__title">${escHtml(x.meta.name)}</b><span class="fh-tile__note">${escHtml(short(x.meta.description ?? ""))}</span><i class="fh-icon fh-icon--arrow-right fh-tile__go" aria-hidden="true"></i></a></li>`;
   }).join("\n");
   return `    <section id="explore" class="fh-section site-anchor site-open site-explore" data-tone="accent" aria-labelledby="explore-title" data-fh-label="Explore" data-fh-index="02">
       <hr class="site-open__rule" aria-hidden="true">
@@ -260,7 +261,7 @@ const exploreTiles = (list) => {
         <h2 id="explore-title" class="site-open__display">Every part.<br><em>One click to copy.</em></h2>
         <p class="site-open__lede">Each category opens on live components. Every one copies its markup, with its Index ID, in a click; or <code>git clone</code> the whole system and make it yours.</p>
       </header>
-      <ul class="site-explore__grid">
+      <ul class="fh-tiles">
 ${tiles}
       </ul>
     </section>`;

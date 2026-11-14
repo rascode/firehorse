@@ -518,111 +518,22 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   background-color: var(--fh-color-surface-menu, color-mix(in oklab, var(--fh-color-surface) 92%, transparent));
   backdrop-filter: blur(14px);
   box-shadow: none;
-  counter-reset: hc-agent;
 }
 /* header: a mono eyebrow on the left, the hint on the right, a dashed rule under them */
 .site-hc__agents .site-agents__head { padding: var(--fh-space-4) var(--fh-space-5); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); background: none; }
 .site-hc__agents .site-agents__head::before { display: none; }
 .site-hc__agents .site-agents__menu .fh-menu__label { margin: var(--fh-space-4) var(--fh-space-5) var(--fh-space-2); }
 
-/* the web agents: Explore tiles, five across, on one dashed grid edge to edge */
-.site-hc__agents .site-agents__grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-inline: 0;
-  border-inline-start: 0;
-  border-radius: 0;
-}
-.site-hc__agents .site-agents__grid > button {
-  --_t: light-dark(oklch(from var(--fh-tone) min(l, 0.52) c h), oklch(from var(--fh-tone) max(l, 0.74) c h));
-  display: grid;
-  align-content: start;
-  justify-items: start;
-  gap: var(--fh-space-1-5);
-  min-block-size: 0;
-  padding: var(--fh-space-3) var(--fh-space-4) var(--fh-space-3-5, 0.875rem);
-  counter-increment: hc-agent;
-}
-.site-hc__agents .site-agents__grid > button:nth-child(5n) { border-inline-end: 0; }
-.site-hc__agents .site-agents__grid > button:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent); box-shadow: none; }
-/* the cube: solid in the tone, the icon flipped dark or light to read on it (as Explore's) */
-.site-hc__agents .site-agents__grid .fh-icon-tile {
-  --fh-icon-tile: 2rem;
-  margin-block-end: var(--fh-space-1);
-  border: 0;
-  border-radius: var(--fh-radius-md);
-  background: var(--_t);
-  color: oklch(from var(--_t) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-}
-.site-hc__agents .site-agents__grid > button:is(:hover, :focus-visible) .fh-icon-tile { scale: 1; }
-/* as an Explore tile: a numbered mono eyebrow ("01"), the name large, the note muted under it */
-.site-hc__agents .site-agents__name { display: grid; gap: 0.2rem; min-inline-size: 0; }
-.site-hc__agents .site-agents__name::before {
-  content: counter(hc-agent, decimal-leading-zero);
-  font-family: var(--fh-font-mono);
-  font-size: var(--fh-text-label);
-  letter-spacing: var(--fh-tracking-caps);
-  color: var(--fh-color-text-subtle);
-}
-.site-hc__agents .site-agents__name b {
-  font-size: var(--fh-text-lede, 1.125rem);
-  font-weight: var(--fh-heading-weight);
-  letter-spacing: var(--fh-tracking-tight);
-  line-height: 1.1;
-}
-.site-hc__agents .site-agents__name small {
-  display: block;
-  max-inline-size: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: var(--fh-text-caption, 0.75rem);
-  color: var(--fh-color-text-muted);
-}
-/* the arrow: top right, up and to the right, in the tone on hover */
-.site-hc__agents .site-agents__grid .site-agents__go {
-  position: absolute;
-  inset-block-start: var(--fh-space-4);
-  inset-inline-end: var(--fh-space-4);
-  opacity: 1;
-  translate: none;
-  font-size: 1rem;
-  color: var(--fh-color-text-subtle);
-  transition: translate var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast);
-}
-.site-hc__agents .site-agents__grid > button:is(:hover, :focus-visible) .site-agents__go { translate: 2px -2px; color: var(--_t); }
-
-/* the terminal agents: one row of mono cells on the same dashed grid */
-.site-hc__agents .site-agents__cli { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); }
-.site-hc__agents .site-agents__cli > button {
-  display: grid;
-  gap: var(--fh-space-1);
-  justify-items: start;
-  margin: 0;
-  padding: var(--fh-space-3) 2.75rem var(--fh-space-3) var(--fh-space-5);
-  border: 0;
-  border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
-  border-radius: 0;
-  background: none;
-  position: relative;
-}
-.site-hc__agents .site-agents__cli > button:last-child { border-inline-end: 0; }
-.site-hc__agents .site-agents__cli > button b { font-size: var(--fh-text-small); font-weight: var(--fh-heading-weight); }
-.site-hc__agents .site-agents__cli > button code { max-inline-size: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fh-text-label); color: var(--fh-color-text-subtle); background: none; padding: 0; }
-.site-hc__agents .site-agents__cli .site-agents__go { position: absolute; inset-block-start: var(--fh-space-3); inset-inline-end: var(--fh-space-4); }
-.site-hc__agents .site-agents__cli > button:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent); }
+/* The web agents are launch tiles (TIL-2.1) and the terminal agents command tiles (TIL-2.3): Firehorse
+   parts, set by data-agent-tiles="launch" on the host. The menu runs them edge to edge. */
+.site-hc__agents :is(.site-agents__grid, .site-agents__cli) { margin-inline: 0; }
+.site-hc__agents .site-agents__grid { --fh-tiles-min: 8rem; } /* five across */
+.site-hc__agents .site-agents__cli { --fh-tiles-min: 12rem; } /* three across */
 
 /* foot: the copy-only action as a quiet etched pill, right-aligned */
 .site-hc__agents .site-agents__foot { display: flex; justify-content: flex-end; padding: var(--fh-space-3) var(--fh-space-5); border: 0; background: none; }
 .site-hc__agents .site-agents__copy { border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: 999px; background: none; }
 
-/* number sits in the icon row, beside the arrow, so each tile is one line shorter */
-.site-hc__agents .site-agents__grid > button { position: relative; }
-.site-hc__agents .site-agents__name::before {
-  position: absolute;
-  inset-block-start: calc(var(--fh-space-3) + 0.55rem);
-  inset-inline-end: 2.4rem;
-  line-height: 1;
-}
 .site-hc__agents .site-agents__head { padding-block: var(--fh-space-2-5, 0.625rem); }
 
 /* Send to an agent trigger: frosted white pill, an etched ring around it, bold label, up arrow */
