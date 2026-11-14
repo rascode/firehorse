@@ -7,8 +7,8 @@
   /* —— Cells ——————————————————————————————————————————————— */
   .fh-cell--number,
   .fh-cell--currency,
-  .fh-cell--percent { text-align: end; font-family: var(--fh-font-mono); font-size: 0.82rem; }
-  .fh-cell--formula { font-family: var(--fh-font-mono); font-size: 0.8rem; color: var(--fh-color-text-muted); }
+  .fh-cell--percent { text-align: end; font-family: var(--fh-font-mono); font-size: var(--fh-text-caption); }
+  .fh-cell--formula { font-family: var(--fh-font-mono); font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); }
   .fh-cell--long { white-space: normal; }
   .fh-cell--long > span {
     display: -webkit-box;
@@ -19,7 +19,7 @@
     line-height: var(--fh-leading-snug);
   }
   .fh-cell--date time { color: var(--fh-color-text); }
-  .fh-cell--date small { margin-inline-start: var(--fh-gap-bound); color: var(--fh-color-text-subtle); font-size: 0.78em; }
+  .fh-cell--date small { margin-inline-start: var(--fh-gap-bound); color: var(--fh-color-text-subtle); font-size: var(--fh-text-micro); }
   .fh-cell--date[data-overdue] time { color: var(--fh-color-danger); }
   .fh-cell--url a,
   .fh-cell--email a,
@@ -32,11 +32,11 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     max-inline-size: 100%;
-    padding: 0.12rem 0.5rem;
+    padding: 0.12rem var(--fh-inset-tight);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-tone) 16%, transparent);
     color: var(--fh-color-text);
-    font-size: 0.78rem;
+    font-size: var(--fh-text-caption);
     line-height: 1.35;
     white-space: nowrap;
     overflow: hidden;
@@ -45,7 +45,7 @@
   }
   .fh-pill + .fh-pill { margin-inline-start: var(--fh-gap-bound); }
   .fh-pill--link {
-    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone) 35%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-tone) 35%, transparent);
     background: none;
   }
   .fh-pill--link::before {
@@ -61,7 +61,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-bound);
-    font-size: 0.82rem;
+    font-size: var(--fh-text-caption);
 
     &::before {
       content: "";
@@ -77,7 +77,7 @@
    * progress, so it stands apart from what's queued. In a datatable, give
    * the option `live: true`. */
   @media (prefers-reduced-motion: no-preference) {
-    .fh-status--live::before { animation: fh-doppler var(--fh-duration-pulse) ease-out infinite; }
+    .fh-status--live::before { animation: fh-doppler var(--fh-duration-pulse) var(--fh-ease-out) infinite; }
   }
 
   /* Progress / percent bar. */
@@ -94,7 +94,7 @@
         linear-gradient(var(--fh-tone), var(--fh-tone)) 0 / calc(var(--v, 0) * 1%) 100% no-repeat,
         color-mix(in oklab, var(--fh-color-text) 10%, transparent);
     }
-    & > span { min-inline-size: 2.6rem; text-align: end; font-family: var(--fh-font-mono); font-size: 0.78rem; color: var(--fh-color-text-muted); }
+    & > span { min-inline-size: 2.6rem; text-align: end; font-family: var(--fh-font-mono); font-size: var(--fh-text-caption); color: var(--fh-color-text-muted); }
   }
 
   /* Rating: five marks, filled up to --v. */
@@ -107,7 +107,7 @@
     background:
       linear-gradient(90deg, var(--fh-tone) calc(var(--v, 0) * 20%), color-mix(in oklab, var(--fh-color-text) 16%, transparent) 0);
     mask: var(--_star) 0 50% / 1.1em 1.1em repeat-x;
-    font-size: 0.85rem;
+    font-size: var(--fh-text-small);
   }
 
   /* Attachments: tiny thumbnails. */
@@ -120,7 +120,7 @@
       inline-size: 1.8rem;
       block-size: 1.8rem;
       border-radius: var(--fh-radius-sm);
-      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
       object-fit: cover;
       background: var(--fh-color-surface-sunken);
     }

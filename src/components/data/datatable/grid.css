@@ -24,8 +24,8 @@
     & :is(th, td) {
       block-size: var(--_row);
       padding: 0 var(--_pad);
-      border-block-end: var(--fh-border-thin) solid var(--_rule);
-      border-inline-end: var(--fh-border-thin) solid color-mix(in oklab, var(--_rule) 70%, transparent);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_rule);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--_rule) 70%, transparent);
       text-align: start;
       vertical-align: middle;
       white-space: nowrap;
@@ -80,7 +80,7 @@
       position: sticky;
       inset-block-end: 0;
       z-index: 2;
-      border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
       border-block-end: 0;
       background-color: var(--_head);
       color: var(--fh-color-text-subtle);
@@ -106,7 +106,7 @@
     text-align: start;
     cursor: var(--fh-cursor-action);
 
-    & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); font-size: 1.05em; opacity: 0.75; }
+    & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); font-size: var(--fh-text-micro); opacity: 0.75; }
     & > span { flex: 1; overflow: hidden; text-overflow: ellipsis; }
 
     /* Sort indicator from aria-sort on the <th>. */
@@ -137,7 +137,7 @@
   .fh-dt__resize {
     position: absolute;
     inset-block: 0;
-    inset-inline-end: -4px;
+    inset-inline-end: calc(-1 * var(--fh-gap-bound));
     z-index: 5;
     inline-size: 8px;
     cursor: col-resize;
@@ -147,7 +147,7 @@
       content: "";
       position: absolute;
       inset-block: 25%;
-      inset-inline-start: 3px;
+      inset-inline-start: var(--fh-gap-bound);
       inline-size: 2px;
       border-radius: 1px;
       background-color: var(--fh-tone);
@@ -202,7 +202,7 @@
     justify-content: space-between;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-tight) var(--fh-inset-control);
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-small);
   }
