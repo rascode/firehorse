@@ -25,7 +25,7 @@
      * complements, a tint). Defaults to the page's harmony root, else the canvas tone. */
     --fh-canvas-root: var(--fh-root, var(--fh-tone));
     /* one native pixel at the drawn size (cqi resolves against this canvas) */
-    --_u: calc(100cqi / var(--fh-canvas-w));
+    --_u: calc(100cqi / var(--fh-canvas-w, 1200));
     --_hair: max(1px, var(--_u));
     --_guide: none;
 
@@ -33,7 +33,7 @@
     container: fh-canvas / inline-size;
     display: block;
     inline-size: 100%;
-    aspect-ratio: var(--fh-canvas-w) / var(--fh-canvas-h);
+    aspect-ratio: var(--fh-canvas-w, 1200) / var(--fh-canvas-h, 630);
     margin: 0;
     overflow: hidden;
     isolation: isolate;
@@ -52,12 +52,12 @@
       pointer-events: none;
       background:
         var(--_guide),
-        radial-gradient(ellipse 70% 80% at 78% 108%, color-mix(in oklab, var(--fh-canvas-root) 30%, transparent), transparent 70%),
-        radial-gradient(ellipse 45% 60% at 8% 100%, color-mix(in oklab, oklch(from var(--fh-canvas-root) l calc(c * 0.8) calc(h + 150)) 18%, transparent), transparent 70%),
-        radial-gradient(ellipse 40% 55% at 100% 30%, color-mix(in oklab, oklch(from var(--fh-canvas-root) l calc(c * 0.8) calc(h + 210)) 14%, transparent), transparent 70%),
-        linear-gradient(var(--fh-canvas-grid-color) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid) * var(--_u)) calc(var(--fh-canvas-grid) * var(--_u)),
-        linear-gradient(90deg, var(--fh-canvas-grid-color) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid) * var(--_u)) calc(var(--fh-canvas-grid) * var(--_u)),
-        var(--fh-canvas-art) center / cover no-repeat;
+        radial-gradient(ellipse 70% 80% at 78% 108%, color-mix(in oklab, var(--fh-canvas-root, var(--fh-root, var(--fh-tone))) 30%, transparent), transparent 70%),
+        radial-gradient(ellipse 45% 60% at 8% 100%, color-mix(in oklab, oklch(from var(--fh-canvas-root, var(--fh-root, var(--fh-tone))) l calc(c * 0.8) calc(h + 150)) 18%, transparent), transparent 70%),
+        radial-gradient(ellipse 40% 55% at 100% 30%, color-mix(in oklab, oklch(from var(--fh-canvas-root, var(--fh-root, var(--fh-tone))) l calc(c * 0.8) calc(h + 210)) 14%, transparent), transparent 70%),
+        linear-gradient(var(--fh-canvas-grid-color, color-mix(in oklab, var(--fh-color-scaffold) 12%, transparent)) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid, 32) * var(--_u)) calc(var(--fh-canvas-grid, 32) * var(--_u)),
+        linear-gradient(90deg, var(--fh-canvas-grid-color, color-mix(in oklab, var(--fh-color-scaffold) 12%, transparent)) var(--_hair), transparent 0) 0 0 / calc(var(--fh-canvas-grid, 32) * var(--_u)) calc(var(--fh-canvas-grid, 32) * var(--_u)),
+        var(--fh-canvas-art, none) center / cover no-repeat;
       background-color: var(--fh-color-canvas);
     }
 
@@ -67,22 +67,22 @@
     &::after {
       content: "";
       position: absolute;
-      inset: calc(var(--fh-canvas-frame) * var(--_u)) 0;
+      inset: calc(var(--fh-canvas-frame, 24) * var(--_u)) 0;
       z-index: -1;
       pointer-events: none;
-      border-block: var(--_hair) dashed var(--fh-color-etch);
+      border-block: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
   .fh-canvas--plain {
-    &::before { background: var(--_guide), var(--fh-canvas-art) center / cover no-repeat; background-color: var(--fh-color-canvas); }
+    &::before { background: var(--_guide), var(--fh-canvas-art, none) center / cover no-repeat; background-color: var(--fh-color-canvas); }
     &::after { content: none; }
   }
 
   /* Real size, for export. */
   .fh-canvas--native {
     flex: none;
-    inline-size: calc(var(--fh-canvas-w) * 1px);
+    inline-size: calc(var(--fh-canvas-w, 1200) * 1px);
     max-inline-size: none;
   }
 
