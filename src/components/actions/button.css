@@ -14,7 +14,7 @@
  *   <a class="fh-button" href="/contact">Discuss a project</a>
  *   <button class="fh-button fh-button--secondary">Cancel</button>
  *
- * Primary buttons get an up-right arrow automatically. Opt out with
+ * Primary buttons get an up-right arrow automatically (the etched pill draws its own ↑). Opt out with
  * `fh-button--plain`. Add `data-tone="sky"` for a tone-lit top edge.
  * `fh-button--flat` is solid black with white text in every scheme and
  * theme: no sheen, shadow or press. A command in `<code>` keeps its case.
@@ -90,7 +90,7 @@
     }
 
     /* Auto arrow on primary CTAs */
-    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc)::after {
+    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc, .fh-button--etched)::after {
       content: "";
       inline-size: 0.85em;
       block-size: 0.85em;
@@ -260,7 +260,7 @@
   /* —— Tone edge ——
    * A 1px masked edge in the page tone: bright at the crown, fading
    * down the sides, absent at the base. Primary buttons only. */
-  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost, .fh-button--disc) {
+  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost, .fh-button--disc, .fh-button--etched) {
     &::before {
       content: "";
       position: absolute;
@@ -341,5 +341,57 @@
   }
   @media (forced-colors: active) {
     .fh-button--disc { border: var(--fh-border-thin) solid ButtonText; }
+  }
+}
+
+@layer fh.components {
+  /* —— BTN-5 Etched pill: a frosted trigger ———————————————————————————————————————
+   * A pill that opens something above the page (a menu, a share sheet, a send panel), set on art
+   * or a busy hero. BTN-5.1 Etched pill: a dense frost of the canvas (no live blur, so it costs
+   * nothing while the art moves behind it), the dashed etch as its edge, mono caps in the text
+   * colour and an ↑ in the accent. On hover the frost firms up, the edge darkens and the ↑ lifts.
+   * fh-button--plain drops the ↑. No primary arrow, no tone edge.
+   *   <button class="fh-button fh-button--etched" type="button" popovertarget="share">Send to an agent</button>
+   * Knobs: --fh-button-bg (the frost), --fh-button-fg, --fh-button-border (the etch),
+   * --fh-button-etched-height (2.5rem). */
+  .fh-button--etched {
+    --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 90%, transparent));
+    --_fg: var(--fh-button-fg, var(--fh-color-text));
+    --_border: var(--fh-button-border, var(--fh-color-etch));
+    --_shadow: none;
+    --_shadow-hover: none;
+    --_shadow-active: none;
+
+    min-block-size: var(--fh-button-etched-height, 2.5rem);
+    padding-block: 0;
+    padding-inline: var(--fh-inset-tile);
+    border-style: dashed;
+    border-radius: var(--fh-radius-pill);
+    background-image: none;
+    font-size: calc(var(--fh-text-label) * 1.1);
+
+    &:hover {
+      --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 97%, transparent));
+      --_border: var(--fh-button-border, var(--fh-color-text-subtle));
+    }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+
+    &:not(.fh-button--plain)::after {
+      content: "";
+      inline-size: 1em;
+      block-size: 1em;
+      flex: none;
+      background-color: var(--fh-color-accent);
+      mask: var(--fh-icon-arrow-up) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-out), rotate var(--fh-duration-slow) var(--fh-ease-out);
+    }
+    &:hover::after { translate: 0 -2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fh-button--etched::after { transition: none; }
+    .fh-button--etched:hover::after { translate: none; }
+  }
+  @media (forced-colors: active) {
+    .fh-button--etched::after { background-color: ButtonText; }
   }
 }

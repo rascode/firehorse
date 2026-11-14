@@ -572,7 +572,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 
 ### BTN · Button
 
-Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge. `--flat` is solid black with white text in every scheme. `--disc` is one glyph on a round disc, in the text colour or, with `data-tone`, in a tone.
+Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge. `--flat` is solid black with white text in every scheme. `--disc` is one glyph on a round disc, in the text colour or, with `data-tone`, in a tone. `--etched` is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.
 
 ```html
 <!-- BTN-1.1 · Solid › Primary -->
@@ -607,6 +607,9 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 
 <!-- BTN-4.2 · Round icon › Disc, tone -->
 <button class="fh-button fh-button--disc" type="button" data-tone="accent" aria-label="Theme colour" data-fh="BTN-4.2"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i></button>
+
+<!-- BTN-5.1 · Etched pill › Etched pill -->
+<button class="fh-button fh-button--etched" type="button" data-fh="BTN-5.1">Send to an agent</button>
 ```
 
 ### ACT · Action & link

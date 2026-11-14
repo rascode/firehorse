@@ -258,6 +258,7 @@
     --fh-dock-height: 4.25rem;
     --fh-tap-target: 2.75rem;
     --fh-icon-arrow-up-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3C/svg%3E");
+    --fh-icon-arrow-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3Cpath d='M12 19V5'/%3E%3C/svg%3E");
     --fh-icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     --fh-icon-chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E");
     --fh-icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
@@ -1543,7 +1544,7 @@
       pointer-events: none;
     }
 
-    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc):after {
+    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc, .fh-button--etched):after {
       content: "";
       block-size: .85em;
       inline-size: .85em;
@@ -1698,7 +1699,7 @@
     }
   }
 
-  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost, .fh-button--disc) {
+  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost, .fh-button--disc, .fh-button--etched) {
     &:before {
       content: "";
       border-radius: inherit;
@@ -1792,6 +1793,62 @@
   @media (forced-colors: active) {
     .fh-button--disc {
       border: var(--fh-border-thin) solid ButtonText;
+    }
+  }
+
+  .fh-button--etched {
+    --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 90%, transparent));
+    --_fg: var(--fh-button-fg, var(--fh-color-text));
+    --_border: var(--fh-button-border, var(--fh-color-etch));
+    --_shadow: none;
+    --_shadow-hover: none;
+    --_shadow-active: none;
+    min-block-size: var(--fh-button-etched-height, 2.5rem);
+    padding-block: 0;
+    padding-inline: var(--fh-inset-tile);
+    border-radius: var(--fh-radius-pill);
+    font-size: calc(var(--fh-text-label) * 1.1);
+    background-image: none;
+    border-style: dashed;
+
+    &:hover {
+      --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 97%, transparent));
+      --_border: var(--fh-button-border, var(--fh-color-text-subtle));
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 2px;
+    }
+
+    &:not(.fh-button--plain):after {
+      content: "";
+      background-color: var(--fh-color-accent);
+      block-size: 1em;
+      inline-size: 1em;
+      mask: var(--fh-icon-arrow-up) center / contain no-repeat;
+      transition: translate var(--fh-duration-fast) var(--fh-ease-out), rotate var(--fh-duration-slow) var(--fh-ease-out);
+      flex: none;
+    }
+
+    &:hover:after {
+      translate: 0 -2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-button--etched:after {
+      transition: none;
+    }
+
+    .fh-button--etched:hover:after {
+      translate: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .fh-button--etched:after {
+      background-color: buttontext;
     }
   }
 

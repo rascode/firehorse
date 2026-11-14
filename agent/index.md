@@ -39,7 +39,7 @@
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/offset-panel/) |
 | `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/etched-split/) |
 | `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/cta-band/) |
-| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) · 4 Round icon (2) | [open](https://firehorse.rascode.dev/components/actions/button/) |
+| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) · 4 Round icon (2) · 5 Etched pill (1) | [open](https://firehorse.rascode.dev/components/actions/button/) |
 | `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
 | `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
@@ -577,9 +577,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## BTN · Button
 
-Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge. --flat is solid black with white text in every scheme. --disc is one glyph on a round disc, in the text colour or, with data-tone, in a tone.
+Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge. --flat is solid black with white text in every scheme. --disc is one glyph on a round disc, in the text colour or, with data-tone, in a tone. --etched is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.
 
-Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-button--flat` `fh-button--outline` `fh-button--ghost` `fh-button--sm` `fh-button--disc` `fh-icon`
+Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-button--flat` `fh-button--outline` `fh-button--ghost` `fh-button--sm` `fh-button--disc` `fh-icon` `fh-button--etched`
 
 ### BTN-1 · Solid
 
@@ -653,6 +653,14 @@ Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-bu
 
 ```html
 <button class="fh-button fh-button--disc" type="button" data-tone="accent" aria-label="Theme colour" data-fh="BTN-4.2"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i></button>
+```
+
+### BTN-5 · Etched pill
+
+#### BTN-5.1 · Etched pill
+
+```html
+<button class="fh-button fh-button--etched" type="button" data-fh="BTN-5.1">Send to an agent</button>
 ```
 
 ## ACT · Action & link
