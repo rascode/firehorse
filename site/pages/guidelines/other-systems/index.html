@@ -1,0 +1,130 @@
+<!--@meta {
+  "path": "/guidelines/other-systems/",
+  "order": 6,
+  "name": "Other systems",
+  "parent": "/guidelines/",
+  "tone": "teal",
+  "title": "Firehorse with Tailwind CSS, shadcn/ui and other systems · Firehorse",
+  "description": "Firehorse works next to Tailwind CSS v4 and shadcn/ui. One import puts its layers between Tailwind's preflight and utilities and gives Tailwind the Firehorse tokens; another puts shadcn's components on the Firehorse theme.",
+  "headline": "Works with what you <em>already use</em>",
+  "lede": "Firehorse is plain CSS: fh- classes, --fh- tokens and named cascade layers, with no framework of its own. It sits next to Tailwind CSS and shadcn/ui. The one thing to get right is the order, and a one-line import does that for you.",
+  "scripts": [],
+  "styles": [],
+  "icon": "layers",
+  "summary": [
+    { "value": "1", "label": "Line for Tailwind", "blurb": "Layers in order, Firehorse loaded, tokens as fh- utilities." },
+    { "value": "1", "label": "Line for shadcn/ui", "blurb": "Its components wear the active Firehorse theme, light and dark." }
+  ]
+}-->
+<!--@main-->
+    <section id="why" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="why-title" data-fh-label="Why it fits" data-fh-index="01">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="why-title">Why it fits</h2>
+          <p class="fh-lede">Nothing in Firehorse competes for the same names or the same place in the cascade as another system, as long as the layers are in order.</p>
+        </header>
+        <ol class="fh-steps">
+          <li><b>Its own names</b><p>Every class starts with <code>fh-</code> and every token with <code>--fh-</code>, so none collide with Tailwind's utilities, shadcn's classes or your own.</p></li>
+          <li><b>Named layers</b><p>All of Firehorse sits in one cascade layer, <code>fh</code>, with its parts inside it (<code>fh.reset</code> to <code>fh.utilities</code>). Where that layer sits decides whether Firehorse or the other system wins when both style the same thing.</p></li>
+          <li><b>Live tokens</b><p>The tokens are CSS custom properties that follow the Firehorse theme and the light or dark scheme. Any system that reads CSS variables can use them.</p></li>
+          <li><b>No framework</b><p>Menus, dialogs and accordions are native HTML (popover, dialog, details). Firehorse works in React, Vue, Svelte or plain HTML, and never fights a component library's JavaScript.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="tailwind" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="tailwind-title" data-fh-label="Tailwind CSS" data-fh-index="02">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="tailwind-title">Tailwind CSS v4</h2>
+          <p class="fh-lede">Import Firehorse's Tailwind file first, then Tailwind. That's all.</p>
+        </header>
+        <div class="fh-stack">
+          <figure class="fh-code">
+            <figcaption><span>app.css</span></figcaption>
+            <pre><code>@import "@rascode/firehorse/tailwind.css";
+@import "tailwindcss";</code></pre>
+          </figure>
+          <ol class="fh-steps">
+            <li><b>Layers in order</b><p>Firehorse sits above Tailwind's preflight and below its components and utilities. So <code>fh-button mt-6</code> takes the margin and <code>fh-button rounded-none</code> loses its corners: a utility on a Firehorse part always wins.</p></li>
+            <li><b>Firehorse loaded</b><p>The file loads <code>firehorse.css</code> for you. Its reset and document defaults replace preflight's where both set something.</p></li>
+            <li><b>Tokens as utilities</b><p>Tailwind gets the Firehorse tokens as theme values, prefixed <code>fh-</code> so they never clash with your palette: <code>bg-fh-surface-raised</code>, <code>text-fh-muted</code>, <code>border-fh-etch</code>, <code>ring-fh-focus</code>, <code>font-fh-mono</code>, <code>rounded-fh-md</code>. They are the live tokens, so changing the Firehorse theme or scheme restyles the utilities too.</p></li>
+          </ol>
+          <div class="fh-table-wrap">
+            <table class="fh-table">
+              <thead><tr><th>Utility prefix</th><th>Firehorse token</th></tr></thead>
+              <tbody>
+                <tr><td><code>*-fh-canvas</code>, <code>*-fh-surface</code>, <code>*-fh-surface-raised</code>, <code>*-fh-surface-sunken</code></td><td><code>--fh-color-canvas</code> and the surfaces</td></tr>
+                <tr><td><code>*-fh-text</code>, <code>*-fh-strong</code>, <code>*-fh-muted</code>, <code>*-fh-subtle</code></td><td>The text colours</td></tr>
+                <tr><td><code>*-fh-accent</code>, <code>*-fh-accent-text</code>, <code>*-fh-on-accent</code></td><td>The accent and the ink on it</td></tr>
+                <tr><td><code>*-fh-border</code>, <code>*-fh-border-strong</code>, <code>*-fh-etch</code>, <code>*-fh-focus</code></td><td>Lines and focus</td></tr>
+                <tr><td><code>*-fh-success</code>, <code>*-fh-warning</code>, <code>*-fh-danger</code>, <code>*-fh-tone</code></td><td>Status, and the nearest <code>data-tone</code></td></tr>
+                <tr><td><code>font-fh-sans</code>, <code>font-fh-display</code>, <code>font-fh-mono</code></td><td>The type families</td></tr>
+                <tr><td><code>rounded-fh-sm</code>, <code>-md</code>, <code>-lg</code>, <code>-pill</code></td><td>The radii</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fh-muted">Without this file, the order you import in decides the result. Firehorse after Tailwind keeps its components, but Tailwind utilities can't override them. Firehorse before Tailwind loses its components to preflight: buttons, fields and tiles lose their padding, borders and fills.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="shadcn" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="shadcn-title" data-fh-label="shadcn/ui" data-fh-index="03">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="shadcn-title">shadcn/ui</h2>
+          <p class="fh-lede">shadcn gives you React components with Radix behaviour; Firehorse gives you the design system underneath them. One import puts shadcn's components on the Firehorse theme.</p>
+        </header>
+        <div class="fh-stack">
+          <figure class="fh-code">
+            <figcaption><span>globals.css</span></figcaption>
+            <pre><code>@import "@rascode/firehorse/tailwind.css";
+@import "tailwindcss";
+@import "@rascode/firehorse/shadcn.css";
+
+/* keep shadcn's @custom-variant and @theme inline blocks;
+   delete the :root and .dark colour blocks it generated */</code></pre>
+          </figure>
+          <ol class="fh-steps">
+            <li><b>shadcn's variables on Firehorse tokens</b><p><code>--primary</code> is the Firehorse accent, <code>--background</code> the canvas, <code>--card</code> the raised surface, <code>--muted-foreground</code> the muted text, <code>--border</code>, <code>--ring</code>, <code>--radius</code> and the chart and sidebar colours follow. Change the Firehorse theme and every shadcn component follows it.</p></li>
+            <li><b>Light and dark</b><p>The page is light until <code>.dark</code> is set, as shadcn expects; <code>.dark</code> switches Firehorse to dark too. A <code>data-fh-scheme</code> attribute still wins where you set one.</p></li>
+            <li><b>Both side by side</b><p>Use shadcn components where you want their React behaviour and Firehorse parts everywhere else. They share one palette, one radius and one focus ring.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="others" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="others-title" data-fh-label="Other systems" data-fh-index="04">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="others-title">Bootstrap, MUI and the rest</h2>
+          <p class="fh-lede">The same rule applies: Firehorse's class names never collide, and the cascade decides who wins.</p>
+        </header>
+        <ol class="fh-steps">
+          <li><b>CSS outside any layer wins</b><p>Bootstrap's stylesheet and CSS-in-JS libraries such as MUI add CSS outside any layer, and that beats every Firehorse layer. To let Firehorse win, import the other stylesheet into a layer of its own before Firehorse's: <code>@import "bootstrap.css" layer(vendor);</code> with <code>@layer vendor, fh;</code> first.</p></li>
+          <li><b>Read the tokens</b><p>Point the other system's theme at <code>--fh-</code> tokens, as the shadcn file does, so both wear one theme.</p></li>
+          <li><b>One reset</b><p>If both systems ship a reset, put the one you want to keep in the later layer.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="tested" class="fh-section fh-section--ruled site-anchor" data-tone="teal" aria-labelledby="tested-title" data-fh-label="How it's tested" data-fh-index="05">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <h2 class="fh-title" id="tested-title">How it's tested</h2>
+          <p class="fh-lede">A page with Firehorse parts, Tailwind utilities on and around them, and shadcn's Button, Card and Input, built with Tailwind v4 three ways and checked in light and dark.</p>
+        </header>
+        <div class="fh-table-wrap">
+          <table class="fh-table">
+            <thead><tr><th>Check</th><th>Firehorse after Tailwind</th><th>Firehorse before Tailwind</th><th>With the bridges</th></tr></thead>
+            <tbody>
+              <tr><td>Firehorse parts keep their padding, borders and fills</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+              <tr><td>A utility on a Firehorse part wins</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td><code>fh-</code> token utilities</td><td>No</td><td>No</td><td>Yes</td></tr>
+              <tr><td>shadcn components wear the Firehorse theme</td><td>No</td><td>No</td><td>Yes</td></tr>
+              <tr><td>Light and dark follow <code>.dark</code></td><td>No</td><td>No</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+<!--@after-->

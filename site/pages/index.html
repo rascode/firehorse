@@ -69,6 +69,7 @@
           <a class="fh-chip fh-chip--indexed" data-tone="accent" href="#explore"><b class="fh-chip__index">02</b><span class="fh-roll">Explore</span></a>
           <a class="fh-chip fh-chip--indexed" data-tone="neutral" href="#systems"><b class="fh-chip__index">03</b><span class="fh-roll">Start here</span></a>
           <a class="fh-chip fh-chip--indexed" data-tone="accent" href="#services"><b class="fh-chip__index">04</b><span class="fh-roll">Work with Rascode</span></a>
+          <a class="fh-chip fh-chip--indexed" data-tone="accent" href="#questions"><b class="fh-chip__index">05</b><span class="fh-roll">Questions</span></a>
         </nav>
         <div class="fh-dock__actions">
           <a class="fh-button fh-button--sm fh-button--plain site-git" href="https://github.com/rascode/firehorse" rel="noopener"><span class="fh-roll">Download from Git</span></a>
@@ -231,6 +232,33 @@
           <li data-tone="amber"><span class="fh-steps__mark"></span><div><p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="amber"><span class="fh-eyebrow-pill__index">03</span>Step</p><h3>Get a fixed scope</h3><p>Price and dates before any work starts.</p></div></li>
         </ol>
         <div class="site-services__go"><button class="fh-button fh-button--lg fh-button--block" type="button" data-lead data-lead-side="end">Tell us what you're building</button></div>
+      </div>
+    </section>
+    <!-- ═══════════════ QUESTIONS ═══════════════ -->
+    <section id="questions" class="fh-section fh-section--ruled site-anchor" data-tone="accent" aria-labelledby="questions-title" data-fh-label="Questions" data-fh-index="05">
+      <div class="fh-split">
+        <header class="fh-stack fh-stack--sm">
+          <p class="site-chapter" data-tone="accent"><b>05</b> Questions</p>
+          <h2 id="questions-title" class="site-open__heading">The short answers</h2>
+        </header>
+        <div class="fh-accordion" data-schema="faq">
+          <details name="home-faq" open>
+            <summary>Does it work with Tailwind or shadcn/ui?</summary>
+            <p>Yes. Firehorse is plain CSS with its own <code>fh-</code> names, so it sits next to either. Import <code>@rascode/firehorse/tailwind.css</code> before Tailwind CSS v4 and utilities win over Firehorse parts and get the Firehorse tokens; add <code>@rascode/firehorse/shadcn.css</code> and shadcn's components wear the Firehorse theme. <a class="fh-link" href="/guidelines/other-systems/">How to set it up</a>.</p>
+          </details>
+          <details name="home-faq">
+            <summary>Do I need JavaScript?</summary>
+            <p>No. Every component works with HTML and CSS alone. The optional firehorse.js adds the floating bar's engage timing, carousel controls, scroll spy and the aria wiring for form errors.</p>
+          </details>
+          <details name="home-faq">
+            <summary>Which browsers does it support?</summary>
+            <p>The main build targets current browsers: Chrome 123, Firefox 128 and Safari 17.5 and newer. A compat build covers Chrome 108 and Safari 16.4 with simpler fallbacks.</p>
+          </details>
+          <details name="home-faq">
+            <summary>How do I hand it to an AI agent?</summary>
+            <p>Point the agent at firehorse.rascode.dev/llms.txt and tell it to use only fh-* classes and --fh-* tokens. The agent contract covers the rest, including structured data.</p>
+          </details>
+        </div>
       </div>
     </section>
 <!--@after-->
