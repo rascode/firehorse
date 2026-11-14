@@ -318,8 +318,8 @@ body:has(.site-hc) .site-kc-launch:is(:hover, :focus-visible) { border-color: ok
 
 /* Theme colour: a solid dot in the theme colour (held legible, as the filled eyebrow end),
    right of Download from Git, the scheme pill's height; a small chevron inside in the
-   on-colour, nudged 1px down so it sits optically centred. It opens a light, etched, rounded
-   vertical list of five roots hanging from it (anchored), no heavy menu. */
+   on-colour, nudged 1px down so it sits optically centred. It opens the colour menu (THS-2.1)
+   hanging from it (anchored). */
 .site-hc__root { position: relative; display: inline-flex; }
 .site-hc__root-btn {
   --_d: light-dark(oklch(from var(--fh-color-accent) min(l, 0.52) c h), oklch(from var(--fh-color-accent) max(l, 0.74) c h));
@@ -340,48 +340,8 @@ body:has(.site-hc) .site-kc-launch:is(:hover, :focus-visible) { border-color: ok
 .site-hc__root-btn:is(:hover, :focus-visible) { background: oklch(from var(--_d) calc(l - 0.06) c h); }
 .site-hc__root-btn:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
 .site-hc__root:has(.site-hc__roots:popover-open) .site-hc__root-btn .fh-icon { rotate: 180deg; translate: 0 -1px; }
-.site-hc__roots {
-  position-anchor: --hc-root;
-  position: fixed;
-  inset: auto;
-  top: anchor(bottom);
-  right: anchor(right); /* hangs from the dot, flush with its right edge, so it stays on screen */
-  margin: var(--fh-space-2) 0 0;
-  padding: var(--fh-space-1-5);
-  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  border-radius: 1.25rem;
-  background: var(--site-nav-fill, color-mix(in oklab, var(--fh-color-canvas) 80%, transparent));
-  backdrop-filter: blur(var(--fh-blur-chrome, 12px));
-  color: var(--fh-color-text);
-  box-shadow: none;
-}
-.site-hc__roots ul { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
-.site-hc__roots button {
-  display: flex;
-  align-items: center;
-  gap: var(--fh-space-2);
-  inline-size: 100%;
-  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  color: inherit;
-  font: var(--fh-weight-medium) var(--fh-text-label) / 1.2 var(--fh-font-mono);
-  letter-spacing: var(--fh-tracking-caps);
-  text-transform: uppercase;
-  text-align: start;
-  white-space: nowrap;
-  cursor: var(--fh-cursor-action, pointer);
-}
-.site-hc__roots button > i { flex: none; inline-size: 0.85rem; aspect-ratio: 1; border-radius: 50%; background: var(--_c); }
-.site-hc__roots button:is(:hover, :focus-visible) { background: color-mix(in oklab, var(--_c) 12%, transparent); }
-.site-hc__roots button:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
-.site-hc__roots button[aria-pressed="true"] { font-weight: var(--fh-weight-heavy); }
-.site-hc__roots button[aria-pressed="true"] > i { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--_c); }
-@media (prefers-reduced-motion: no-preference) {
-  .site-hc__roots:popover-open { animation: hc-roots-in 0.18s var(--fh-ease-out) both; }
-}
-@keyframes hc-roots-in { from { opacity: 0; translate: 0 -4px; } }
+/* The list is the colour menu (THS-2.1); it hangs from the dot, flush with its right edge. */
+.site-hc__roots { position-anchor: --hc-root; }
 /* KC on the page's right margin, the content edge the logo, line, headline and top-right
    controls all keep (not the window's 16px corner). */
 body:has(.site-hc) .site-kc-launch { inset-inline-end: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2); }
@@ -1974,10 +1934,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   }
 }
 
-/* "From backdrop": the theme colour follows the picked backdrop (home-concept.js samples the
-   photo's most vivid colour). Its dot shows that colour, ringed with a dashed etch. */
-.site-hc__roots button > i.site-hc__roots-auto { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-text-subtle); outline: 1px dashed var(--fh-color-text-subtle); outline-offset: 3px; }
-.site-hc__roots button[aria-pressed="true"] > i.site-hc__roots-auto { outline-color: var(--_c); }
 
 /* —— Above the logo: the announcement chip (EYE-5.2) ——————————————————————————————————
    On the logo's left edge. Its top is level with the cap line of "The design system" on the
