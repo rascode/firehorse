@@ -1547,7 +1547,7 @@
       pointer-events: none;
     }
 
-    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon):after {
+    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc):after {
       content: "";
       block-size: .85em;
       inline-size: .85em;
@@ -1702,7 +1702,7 @@
     }
   }
 
-  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost) {
+  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost, .fh-button--disc) {
     &:before {
       content: "";
       border-radius: inherit;
@@ -1715,6 +1715,87 @@
       position: absolute;
       inset: 0;
       mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    }
+  }
+
+  .fh-button--disc {
+    --_bg: var(--fh-button-bg, var(--fh-color-text));
+    --_fg: var(--fh-button-fg, var(--fh-color-canvas));
+    --_s: var(--fh-button-disc, 2rem);
+    inline-size: var(--_s);
+    block-size: var(--_s);
+    min-block-size: var(--_s);
+    border-radius: var(--fh-radius-round);
+    font-family: var(--fh-font-sans);
+    font-size: calc(var(--_s) * .48);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0;
+    text-transform: none;
+    transition: scale var(--fh-duration-fast) var(--fh-ease-out),
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      color var(--fh-duration-base) var(--fh-ease-standard);
+    background-image: none;
+    border: 0;
+    padding: 0;
+    line-height: 1;
+    overflow: hidden;
+
+    & > :is(.fh-icon, svg) {
+      --fh-icon-size: calc(var(--_s) * .52);
+      inline-size: calc(var(--_s) * .52);
+      block-size: calc(var(--_s) * .52);
+      margin: 0;
+    }
+
+    &:is(:hover, [aria-expanded="true"]) {
+      scale: 1.06;
+    }
+
+    &:active {
+      --_lift: 0px;
+      scale: .97;
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 2px;
+    }
+
+    @media (pointer: coarse) {
+      min-block-size: var(--_s);
+      overflow: visible;
+
+      &:before {
+        content: "";
+        inset: calc((var(--_s) - var(--fh-tap-target)) / 2);
+        border-radius: inherit;
+        position: absolute;
+      }
+    }
+  }
+
+  .fh-button--disc[data-tone] {
+    --_bg: var(--fh-button-bg, light-dark(oklch(from var(--fh-tone) min(l, .52) c h), oklch(from var(--fh-tone) max(l, .74) c h)));
+    --_fg: var(--fh-button-fg, oklch(from var(--_bg) clamp(.16, (.64 - l) * 100, .99) calc(c * .2) h));
+
+    &:is(:hover, :focus-visible) {
+      background-color: oklch(from var(--_bg) calc(l - .06) c h);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-button--disc {
+      transition: none;
+    }
+
+    .fh-button--disc:is(:hover, [aria-expanded="true"], :active) {
+      scale: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .fh-button--disc {
+      border: var(--fh-border-thin) solid ButtonText;
     }
   }
 

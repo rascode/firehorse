@@ -90,7 +90,7 @@
     }
 
     /* Auto arrow on primary CTAs */
-    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon)::after {
+    &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc)::after {
       content: "";
       inline-size: 0.85em;
       block-size: 0.85em;
@@ -260,7 +260,7 @@
   /* —— Tone edge ——
    * A 1px masked edge in the page tone: bright at the crown, fading
    * down the sides, absent at the base. Primary buttons only. */
-  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost) {
+  .fh-button[data-tone]:not(.fh-button--secondary, .fh-button--ghost, .fh-button--disc) {
     &::before {
       content: "";
       position: absolute;
@@ -280,4 +280,66 @@
     }
   }
 
+}
+
+@layer fh.components {
+  /* —— BTN-4 Round icon: a disc ————————————————————————————————————————————————
+   * One glyph on a solid disc, for a row of small page controls (a picker, a mode, a tool).
+   * BTN-4.1 Disc: the text colour as the fill and the canvas as the glyph, so it reads black on
+   * light and white on dark in every theme. BTN-4.2 Disc, tone: add data-tone and the fill is
+   * that tone, held legible (dark enough on light, light enough on dark), the glyph in its
+   * on-colour. It grows a touch on hover; while the panel it opens is open (aria-expanded) it
+   * stays grown. The glyph is an .fh-icon, an <svg> or a letter.
+   *   <button class="fh-button fh-button--disc" type="button" aria-label="Typeface"><span aria-hidden="true">T</span></button>
+   *   <button class="fh-button fh-button--disc" type="button" data-tone="accent" aria-label="Theme colour"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i></button>
+   * Knob --fh-button-disc (the size, 2rem). Name it with aria-label: there is no visible text. */
+  .fh-button--disc {
+    --_bg: var(--fh-button-bg, var(--fh-color-text));
+    --_fg: var(--fh-button-fg, var(--fh-color-canvas));
+    --_s: var(--fh-button-disc, 2rem);
+
+    inline-size: var(--_s);
+    block-size: var(--_s);
+    min-block-size: var(--_s);
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--fh-radius-round);
+    background-image: none;
+    font-family: var(--fh-font-sans);
+    font-size: calc(var(--_s) * 0.48);
+    font-weight: var(--fh-weight-heavy);
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+    transition:
+      scale var(--fh-duration-fast) var(--fh-ease-out),
+      background-color var(--fh-duration-base) var(--fh-ease-standard),
+      color var(--fh-duration-base) var(--fh-ease-standard);
+
+    & > :is(.fh-icon, svg) { --fh-icon-size: calc(var(--_s) * 0.52); inline-size: calc(var(--_s) * 0.52); block-size: calc(var(--_s) * 0.52); margin: 0; }
+    &:is(:hover, [aria-expanded="true"]) { scale: 1.06; }
+    &:active { --_lift: 0px; scale: 0.97; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+
+    /* A finger gets the tap target round it, the disc keeps its size. */
+    @media (pointer: coarse) {
+      min-block-size: var(--_s);
+      overflow: visible;
+      &::before { content: ""; position: absolute; inset: calc((var(--_s) - var(--fh-tap-target)) / 2); border-radius: inherit; }
+    }
+  }
+  .fh-button--disc[data-tone] {
+    --_bg: var(--fh-button-bg, light-dark(oklch(from var(--fh-tone) min(l, 0.52) c h), oklch(from var(--fh-tone) max(l, 0.74) c h)));
+    --_fg: var(--fh-button-fg, oklch(from var(--_bg) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h));
+
+    &:is(:hover, :focus-visible) { background-color: oklch(from var(--_bg) calc(l - 0.06) c h); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fh-button--disc { transition: none; }
+    .fh-button--disc:is(:hover, [aria-expanded="true"], :active) { scale: none; }
+  }
+  @media (forced-colors: active) {
+    .fh-button--disc { border: var(--fh-border-thin) solid ButtonText; }
+  }
 }

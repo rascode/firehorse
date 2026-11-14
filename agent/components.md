@@ -572,7 +572,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 
 ### BTN · Button
 
-Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge. `--flat` is solid black with white text in every scheme.
+Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge. `--flat` is solid black with white text in every scheme. `--disc` is one glyph on a round disc, in the text colour or, with `data-tone`, in a tone.
 
 ```html
 <!-- BTN-1.1 · Solid › Primary -->
@@ -601,6 +601,12 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 
 <!-- BTN-3.2 · States › Small, disabled -->
 <button class="fh-button fh-button--sm" type="button" disabled data-fh="BTN-3.2">Disabled</button>
+
+<!-- BTN-4.1 · Round icon › Disc -->
+<button class="fh-button fh-button--disc" type="button" aria-label="Typeface" data-fh="BTN-4.1"><i class="fh-icon fh-icon--type" aria-hidden="true"></i></button>
+
+<!-- BTN-4.2 · Round icon › Disc, tone -->
+<button class="fh-button fh-button--disc" type="button" data-tone="accent" aria-label="Theme colour" data-fh="BTN-4.2"><i class="fh-icon fh-icon--palette" aria-hidden="true"></i></button>
 ```
 
 ### ACT · Action & link

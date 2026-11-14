@@ -17,8 +17,8 @@ const sha = (f) => createHash("sha256").update(readFileSync(join(root, f))).dige
 
 // The full build is what dist/firehorse.css was before the split (base 633c585), plus the fh-tpl dialog fix and
 // the record parts of relay L8a (stage section, expandable record rows, warning row state), plus the
-// a.fh-sidenav__item rule of SHL-1.2 (relay SB1, 1.1.1), plus the token specimens of M1 (token-specimens.css), the sidecar resize handle (G2), the Motion demo parts (G4), the quieter sidecar heads (G3), the Tiles family (TIL, tiles.css), its option tiles (TIL-3.1 to TIL-3.3, new look), the tile panel (MEG-3.1, new look), the tile menu (DRP-2.1, new look), the announcement banner (EMP-1.3, new look), the colour menu (THS-2.1, new look), the colour option tile (TIL-3.4, new look) and the nav links (NAV-2.1, new look).
-const BASE_FULL = "d32a2ec8b6533df96e7cedbd44dd610e3c4a5b58de729490673b0923410628eb";
+// a.fh-sidenav__item rule of SHL-1.2 (relay SB1, 1.1.1), plus the token specimens of M1 (token-specimens.css), the sidecar resize handle (G2), the Motion demo parts (G4), the quieter sidecar heads (G3), the Tiles family (TIL, tiles.css), its option tiles (TIL-3.1 to TIL-3.3, new look), the tile panel (MEG-3.1, new look), the tile menu (DRP-2.1, new look), the announcement banner (EMP-1.3, new look), the colour menu (THS-2.1, new look), the colour option tile (TIL-3.4, new look), the nav links (NAV-2.1, new look) and the round icon buttons (BTN-4, new look).
+const BASE_FULL = "bab2dba4e5897ae3dbac3549459faba821e08e79eaae6e9442b6a95fb9b4f602";
 expect(sha("dist/full/firehorse.css") === BASE_FULL, "dist/full/firehorse.css differs from the recorded full build (633c585 dist/firehorse.css plus the fh-tpl dialog fix and the L8a record parts); a source change to a held or live family means recording the new hash here");
 for (const f of ["firehorse.min.css", "firehorse.compat.min.css", "admin.css", "admin.min.css", "index.json"]) expect(existsSync(join(root, "dist/full", f)), `missing dist/full/${f}`);
 
