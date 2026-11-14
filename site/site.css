@@ -769,7 +769,7 @@ body::before {
 .site-tok__type { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); }
 
 /* —— Agent terminal —— */
-.site-terminal .fh-window__body { padding: 0; }
+.site-terminal :is(.fh-window__body, .site-window__body) { padding: 0; }
 .site-terminal .site-pre { background: transparent; font-size: 0.78rem; padding: var(--fh-space-5); }
 .site-files { display: grid; gap: 0; }
 .site-files a {
@@ -1274,7 +1274,7 @@ body::before {
 
 /* ═══════════════ Structured data ═══════════════ */
 .site-schema-col { display: grid; gap: var(--fh-space-5); align-content: start; min-inline-size: 0; }
-.site-schema-col .fh-window { margin: 0; }
+.site-schema-col :is(.fh-window, .site-window) { margin: 0; }
 .site-schema-map { margin-block-start: var(--fh-space-10); }
 .site-schema-map code { white-space: nowrap; }
 
@@ -2054,12 +2054,12 @@ figcaption .site-id--end { margin-inline-start: auto; }
  * a column so its stage (or body) takes the spare height and its
  * Markup bar sits on the shared bottom edge. Stacked on narrow
  * screens, nothing changes. */
-.fh-split:has(> :is(.site-demo, .fh-window, .site-adaptive__live, .site-schema-col, .site-theme-panel)) { align-items: stretch; }
+.fh-split:has(> :is(.site-demo, .fh-window, .site-window, .site-adaptive__live, .site-schema-col, .site-theme-panel)) { align-items: stretch; }
 .site-demo { display: flex; flex-direction: column; gap: var(--fh-space-2); }
 .site-demo > .site-demo__stage { flex: 1 1 auto; }
 .site-demo > .site-code { margin-block-start: auto; }
-.fh-split > :is(.fh-window, .site-adaptive__live, .site-schema-col, .site-theme-panel) { display: flex; flex-direction: column; }
-.fh-split > :is(.fh-window, .site-adaptive__live, .site-schema-col, .site-theme-panel) > :last-child { flex: 1 1 auto; }
+.fh-split > :is(.fh-window, .site-window, .site-adaptive__live, .site-schema-col, .site-theme-panel) { display: flex; flex-direction: column; }
+.fh-split > :is(.fh-window, .site-window, .site-adaptive__live, .site-schema-col, .site-theme-panel) > :last-child { flex: 1 1 auto; }
 
 /* —— Action & link / Markers as quiet rows (the DET fh-dl look) —— */
 .fh-dl.site-rows > div { align-items: center; padding-block: var(--fh-space-4); }
@@ -4768,5 +4768,50 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
     &:hover:not(:has(:disabled)) { border-color: var(--fh-color-text-muted); }
     &:has(:checked) { border-style: solid; border-color: var(--fh-tone, var(--fh-color-text)); background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 6%, transparent); }
     &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+}
+
+/* Window frame (site copy of the window frame pattern) */
+/* The window, its bar and its body, copied from src/patterns/window-frame.css into the same layer, so the site rules above still win. */
+@layer fh.patterns {
+  .site-window {
+    margin: 0;
+    overflow: hidden;
+    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--fh-color-surface);
+    box-shadow: var(--fh-shadow-overlay);
+    container: site-window / inline-size;
+  }
+
+  .site-window__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    min-block-size: 2.25rem;
+    padding-inline: var(--fh-inset-control);
+    background-color: var(--fh-color-surface-chrome);
+    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wide);
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.6rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone-rose);
+      box-shadow:
+        0.95rem 0 0 var(--fh-tone-amber),
+        1.9rem 0 0 var(--fh-tone-lime);
+      margin-inline-end: 2.2rem;
+    }
+  }
+
+  .site-window__body {
+    padding: clamp(var(--fh-inset-tile), 4cqi, var(--fh-inset-card));
   }
 }
