@@ -1436,118 +1436,15 @@ pre.site-config-code { margin: 0; padding: var(--fh-space-3) var(--fh-space-4); 
 .site-icon:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
 .site-icon[hidden] { display: none; }
 
-/* Agents menu */
+/* Agents menu: the menu is the Firehorse tile menu (DRP-2.1, site-features.js). The site sets its
+   width here and opens it on the side of the button with more room (data-up, site-features.js). */
 .site-agents { display: inline-flex; }
-/* A drafting sheet, not a list: frosted panel with a ruled header, the web
-   agents on a two-column dashed grid (each lights in its own tone on hover,
-   with an arrow that slides in), the terminal agents as real command lines,
-   and one plain bar to copy the prompt. Items rise in one after another. */
-.fh-menu.site-agents__menu {
-  inline-size: min(27rem, calc(100vi - 2rem));
-  /* Fits the room on its side of the button (site-features.js picks the side
-     with more room); the page never moves, the menu scrolls inside if it must. */
-  max-block-size: min(44rem, calc(100% - var(--fh-space-3)));
-  padding: 0;
-  border-color: color-mix(in oklab, var(--fh-color-text) 18%, transparent);
-  border-radius: var(--fh-radius-md);
-  background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2);
-  box-shadow: 0 24px 60px -12px rgb(0 0 0 / 0.55), 0 0 0 1px color-mix(in oklab, var(--fh-color-canvas) 60%, transparent);
-  scrollbar-width: thin;
-}
+.fh-menu.site-agents__menu { --fh-menu-width: min(27rem, calc(100vi - 2rem)); --fh-menu-tiles-min: 11rem; --fh-menu-command-min: 100%; }
 @supports (position-area: bottom) {
   .fh-menu.site-agents__menu[data-up] { position-area: block-start span-inline-end; margin-block: 0 var(--fh-space-1-5); }
 }
-/* Header: the same window chrome as the live demo, three dots and a mono
-   title, with a lime "copied" tag on the right. */
-.site-agents__head {
-  position: sticky;
-  inset-block-start: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--fh-space-3);
-  min-block-size: 2.5rem;
-  padding-inline: var(--fh-space-4) var(--fh-space-3);
-  border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
-  background-color: var(--fh-color-surface-chrome);
-}
-.site-agents__head::before {
-  content: "";
-  flex: none;
-  inline-size: 0.55rem;
-  aspect-ratio: 1;
-  border-radius: var(--fh-radius-round);
-  background-color: var(--fh-tone-rose);
-  box-shadow: 0.85rem 0 0 var(--fh-tone-amber), 1.7rem 0 0 var(--fh-tone-lime);
-  margin-inline-end: 1.9rem;
-}
-.site-agents__title {
-  color: var(--fh-color-text);
-  font-family: var(--fh-font-mono);
-  font-size: 0.68rem;
-  font-weight: var(--fh-weight-medium);
-  letter-spacing: var(--fh-tracking-wider);
-  text-transform: uppercase;
-}
-.site-agents__hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  margin-inline-start: auto;
-  padding: 0.15rem 0.5rem;
-  border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone-lime) 55%, transparent);
-  border-radius: var(--fh-radius-pill);
-  color: var(--fh-tone-lime);
-  font-family: var(--fh-font-mono);
-  font-size: 0.58rem;
-  letter-spacing: var(--fh-tracking-wide);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.site-agents__hint .fh-icon { font-size: 0.7rem; }
-.site-agents__menu .fh-menu__label { margin: var(--fh-space-4) var(--fh-space-4) var(--fh-space-2); }
-
-/* The agents and terminal agents are Firehorse Tiles (TIL-2.2, TIL-2.3, site-features.js); the menu only insets them. */
-.site-agents__grid, .site-agents__cli { margin-inline: var(--fh-space-3); }
-.site-agents__cli { --fh-tiles-min: 100%; } /* one terminal agent per row, as before */
-
-/* The bottom bar is a standard button (fh-button--secondary), so it takes the
-   theme's button style; this only sets its place and width. */
-.site-agents__foot { padding: var(--fh-space-4) var(--fh-space-3) var(--fh-space-3); }
-.site-agents__copy { inline-size: 100%; }
-/* "Don't see your agent?": a quiet, etched callout under the menu's actions; opens into a
-   three-field request (agent, link, email) that goes to the team to add it. */
-.site-agents__ask { margin: 0 var(--fh-space-3) var(--fh-space-3); border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: var(--fh-radius-md, 10px); }
-.site-agents__ask > summary { display: flex; align-items: center; gap: var(--fh-space-3); padding: var(--fh-space-2-5, 0.625rem) var(--fh-space-3); list-style: none; cursor: pointer; }
-.site-agents__ask > summary::-webkit-details-marker { display: none; }
-.site-agents__ask-q { display: grid; gap: 0.1rem; flex: 1; min-inline-size: 0; }
-.site-agents__ask-q b { font-size: var(--fh-text-small); font-weight: var(--fh-weight-medium); }
-.site-agents__ask-q small { color: var(--fh-color-text-subtle); font-size: var(--fh-text-caption, 0.75rem); }
-.site-agents__ask > summary .fh-icon { color: var(--fh-color-text-subtle); transition: rotate var(--fh-duration-fast) var(--fh-ease-standard); }
-.site-agents__ask[open] > summary .fh-icon { rotate: 180deg; }
-.site-agents__ask > summary:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; border-radius: inherit; }
-.site-agents__ask-form { display: grid; gap: var(--fh-space-2); padding: 0 var(--fh-space-3) var(--fh-space-3); }
-.site-agents__ask-form label { display: grid; gap: 0.25rem; }
-.site-agents__ask-form label > span { font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; color: var(--fh-color-text-muted); }
-.site-agents__ask-form label small { text-transform: none; letter-spacing: 0; color: var(--fh-color-text-subtle); }
-.site-agents__ask-form input { inline-size: 100%; padding: 0.45rem 0.6rem; border: var(--fh-border-thin) solid var(--fh-color-border, var(--fh-color-etch)); border-radius: var(--fh-radius-sm, 6px); background: var(--fh-color-canvas); color: var(--fh-color-text); font: inherit; font-size: var(--fh-text-small); }
-.site-agents__ask-form input:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
 .site-agents__ask-hp { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
-.site-agents__ask-send { justify-self: start; }
 .site-agents__ask-status { margin: 0; min-block-size: 1em; font-size: var(--fh-text-caption, 0.75rem); color: var(--fh-color-text-muted); }
-
-@media (prefers-reduced-motion: no-preference) {
-  .site-agents__menu :is(.site-agents__grid, .site-agents__cli) > button {
-    transition-property: background-color, box-shadow, border-color, opacity, translate;
-    transition-duration: var(--fh-duration-fast), var(--fh-duration-fast), var(--fh-duration-fast), 0.35s, 0.35s;
-    transition-timing-function: ease, ease, ease, var(--fh-ease-out), var(--fh-ease-out);
-  }
-  .site-agents__menu:popover-open :is(.site-agents__grid, .site-agents__cli) > button {
-    transition-delay: 0s, 0s, 0s, calc(var(--_i, 0) * 22ms), calc(var(--_i, 0) * 22ms);
-    @starting-style { opacity: 0; translate: 0 0.4rem; }
-  }
-}
 
 /* Playground teaser */
 .site-pg-teaser { display: grid; gap: var(--fh-space-6); padding: var(--fh-space-6); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); border-radius: var(--fh-radius-lg); container: fh-pgt / inline-size; }
@@ -2021,7 +1918,6 @@ figcaption .site-id--end { margin-inline-start: auto; }
   color: var(--fh-color-text);
 }
 .site-tp__row:has(input:checked) .site-tp__check { opacity: 1; }
-.site-tp .site-agents__foot { padding-block-start: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .site-tp__row:not(.site-tp__row--head) { transition-property: background-color, box-shadow, opacity, translate; transition-duration: var(--fh-duration-fast), var(--fh-duration-fast), 0.35s, 0.35s; }
   .site-tp:popover-open .site-tp__row:not(.site-tp__row--head) {

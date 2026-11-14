@@ -504,37 +504,10 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
   transform-origin: 50% 50%;
 }
 
-/* —— The agent picker, as Explore tiles ——
-   The homepage menu (site-features.js) restyled on this page only, in the spirit of the Explore
-   cards: the button's own width, a plain etched panel, the web agents as open tiles on one dashed
-   grid (five across: a solid cube in the agent's tone, a numbered mono eyebrow, the name set large,
-   an arrow up and to the right that slides and takes the tone on hover), the terminal agents as a
-   row of mono cells, and a quiet copy link. Behaviour is the menu's own, unchanged. */
-.site-hc__agents .fh-menu.site-agents__menu {
-  inline-size: anchor-size(width);
-  min-inline-size: min(36rem, calc(100vi - 2rem));
-  border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
-  border-radius: var(--site-nav-radius, 3px);
-  background-color: var(--fh-color-surface-menu, color-mix(in oklab, var(--fh-color-surface) 92%, transparent));
-  backdrop-filter: blur(14px);
-  box-shadow: none;
-}
-/* header: a mono eyebrow on the left, the hint on the right, a dashed rule under them */
-.site-hc__agents .site-agents__head { padding: var(--fh-space-4) var(--fh-space-5); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch)); background: none; }
-.site-hc__agents .site-agents__head::before { display: none; }
-.site-hc__agents .site-agents__menu .fh-menu__label { margin: var(--fh-space-4) var(--fh-space-5) var(--fh-space-2); }
-
-/* The web agents are launch tiles (TIL-2.1) and the terminal agents command tiles (TIL-2.3): Firehorse
-   parts, set by data-agent-tiles="launch" on the host. The menu runs them edge to edge. */
-.site-hc__agents :is(.site-agents__grid, .site-agents__cli) { margin-inline: 0; }
-.site-hc__agents .site-agents__grid { --fh-tiles-min: 8rem; } /* five across */
-.site-hc__agents .site-agents__cli { --fh-tiles-min: 12rem; } /* three across */
-
-/* foot: the copy-only action as a quiet etched pill, right-aligned */
-.site-hc__agents .site-agents__foot { display: flex; justify-content: flex-end; padding: var(--fh-space-3) var(--fh-space-5); border: 0; background: none; }
-.site-hc__agents .site-agents__copy { border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong)); border-radius: 999px; background: none; }
-
-.site-hc__agents .site-agents__head { padding-block: var(--fh-space-2-5, 0.625rem); }
+/* —— The agent picker ——
+   The Firehorse tile menu (DRP-2.1, built by site-features.js), its web agents as launch tiles
+   (TIL-2.1, data-agent-tiles="launch") five across. Only its width and side are set here. */
+.site-hc__agents .fh-menu.site-agents__menu { --fh-menu-width: min(45rem, calc(100vi - 2rem)); --fh-menu-tiles-min: 8rem; --fh-menu-command-min: 12rem; }
 
 /* Send to an agent trigger: frosted white pill, an etched ring around it, bold label, up arrow */
 .site-hc__agents > .fh-button {
@@ -582,8 +555,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 /* The chip under the lede grows to meet the agent button: both 2.5rem tall */
 .site-hc__marks .fh-eyebrow-pill.site-hc__meta { font-size: calc(var(--fh-text-label) * 1.3); min-block-size: 2.5rem; }
 
-/* The button is narrow now, so the picker opens up from it, right edges aligned, at a set width */
-.site-hc__agents .fh-menu.site-agents__menu { inline-size: min(45rem, calc(100vi - 2rem)); min-inline-size: 0; }
+/* The button is narrow, so the picker opens up from it, right edges aligned */
 @supports (position-area: top) {
   .site-hc__agents .fh-menu.site-agents__menu[data-up] { position-area: block-start span-inline-start; }
 }

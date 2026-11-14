@@ -45,21 +45,21 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
   // stacked launch tiles (TIL-2.1). The terminal agents are command tiles (TIL-2.3) either way.
   const launch = host.dataset.agentTiles === "launch";
   host.innerHTML = `<button class="fh-button fh-button--${host.classList.contains("site-agents--sm") ? "sm" : size} fh-button--secondary" type="button" popovertarget="${id}" style="anchor-name: --${id}"><i class="fh-icon fh-icon--send" aria-hidden="true"></i>${label}<i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
-    <div class="fh-menu site-agents__menu" id="${id}" popover style="position-anchor: --${id}" aria-label="Choose an agent">
-      <header class="site-agents__head"><span class="site-agents__title">Send to an agent</span><span class="site-agents__hint"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Prompt copied on every pick</span></header>
+    <div class="fh-menu fh-menu--tiles site-agents__menu" id="${id}" popover style="position-anchor: --${id}" aria-label="Choose an agent" data-fh="DRP-2.1">
+      <header class="fh-menu__head"><span class="fh-menu__title">Send to an agent</span><span class="fh-menu__status" data-tone="lime"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Prompt copied on every pick</span></header>
       <p class="fh-menu__label">Open with the prompt</p>
-      <div class="fh-tiles fh-tiles--launch site-agents__grid">${AGENTS.filter((a) => !a.command).map((a, i) => `<button class="fh-tile${launch ? "" : " fh-tile--compact"}" type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i}"><span class="fh-tile__cube"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span>${launch ? `<small class="fh-tile__eyebrow">${String(i + 1).padStart(2, "0")}</small>` : ""}<b class="fh-tile__title">${a.name}</b><span class="fh-tile__note">${a.note}</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>`).join("")}</div>
+      <div class="fh-tiles fh-tiles--launch">${AGENTS.filter((a) => !a.command).map((a, i) => `<button class="fh-tile${launch ? "" : " fh-tile--compact"}" type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i}"><span class="fh-tile__cube"><i class="fh-icon fh-icon--${a.icon}" aria-hidden="true"></i></span>${launch ? `<small class="fh-tile__eyebrow">${String(i + 1).padStart(2, "0")}</small>` : ""}<b class="fh-tile__title">${a.name}</b><span class="fh-tile__note">${a.note}</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button>`).join("")}</div>
       <p class="fh-menu__label">From your terminal</p>
-      <div class="fh-tiles fh-tiles--launch site-agents__cli">${AGENTS.filter((a) => a.command).map((a, i) => `<button class="fh-tile fh-tile--command" type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b class="fh-tile__title">${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>`).join("")}</div>
-      <div class="site-agents__foot"><button type="button" class="fh-button fh-button--sm fh-button--secondary site-agents__copy" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button></div>
-      <details class="site-agents__ask">
-        <summary><span class="site-agents__ask-q"><b>Don't see your agent?</b><small>Tell us and we'll add it to the list.</small></span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+      <div class="fh-tiles fh-tiles--launch">${AGENTS.filter((a) => a.command).map((a, i) => `<button class="fh-tile fh-tile--command" type="button" data-agent="${a.id}" data-tone="${a.tone}" style="--_i:${i + 10}"><b class="fh-tile__title">${a.name}</b><code>${a.command("…").replace(/"/g, "&quot;")}</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button>`).join("")}</div>
+      <div class="fh-menu__foot"><button type="button" class="fh-menu__pill" data-agent="copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button></div>
+      <details class="fh-menu__ask">
+        <summary><span class="fh-menu__ask-q"><b>Don't see your agent?</b><small>Tell us and we'll add it</small></span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
         <form class="site-agents__ask-form" novalidate data-placement="agent-menu">
-          <label><span>Agent</span><input name="agent" required maxlength="120" placeholder="Its name" autocomplete="off"></label>
-          <label><span>Link <small>optional</small></span><input name="link" type="url" maxlength="300" placeholder="https://"></label>
-          <label><span>Your email <small>optional, to hear when it's in</small></span><input name="email" type="email" maxlength="200" placeholder="you@company.com" autocomplete="email"></label>
+          <div class="fh-field"><label for="${id}-agent">Agent</label><input class="fh-input" id="${id}-agent" name="agent" required maxlength="120" placeholder="Its name" autocomplete="off"></div>
+          <div class="fh-field fh-field--optional"><label for="${id}-link">Link</label><input class="fh-input" id="${id}-link" name="link" type="url" maxlength="300" placeholder="https://"></div>
+          <div class="fh-field fh-field--optional"><label for="${id}-email">Your email</label><input class="fh-input" id="${id}-email" name="email" type="email" maxlength="200" placeholder="you@company.com" autocomplete="email"><p class="fh-field__hint">To hear when it's in.</p></div>
           <input class="site-agents__ask-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button type="submit" class="fh-button fh-button--sm site-agents__ask-send"><span>Send request</span></button>
+          <button type="submit" class="fh-button fh-button--sm"><span>Send request</span></button>
           <p class="site-agents__ask-status" role="status" aria-live="polite"></p>
         </form>
       </details>
