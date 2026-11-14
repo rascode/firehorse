@@ -15,7 +15,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 4 | Agent tile, compact: tinted block, name and note inline | Send to an agent (home) | Tiles · TIL-2.2 Compact | Done |
 | 5 | Terminal cell: name, `$ command` in mono | Send to an agent | Tiles · TIL-2.3 Command | Done |
 | 6 | Backdrop options, rebuilt as tiles: a large thumbnail, name, mono caps note; the picked tile marked | Backdrop picker (camera), full width | Tiles · TIL-3.1 Option tile, media | Done (TIL-3.1) |
-| 7 | Typeface options, rebuilt as tiles: a large "Aa" in the face, name, mono caps note; the picked tile marked | Typeface picker (T), full width | Tiles · TIL-3.2 Option tile, specimen | New |
+| 7 | Typeface options, rebuilt as tiles: a large "Aa" in the face, name, mono caps note; the picked tile marked | Typeface picker (T), full width | Tiles · TIL-3.2 Option tile, specimen | Done (TIL-3.2) |
 | 8 | Photo swatches as tiles with a mono caption, many across | Backdrop picker, Photos, full width | Tiles · TIL-3.3 Option tile, swatch | New |
 | 9 | Tile panel, full width: mono title and count head, grouped tile grid, footer link rail | Docs panel, and the typeface and backdrop pickers | Mega panel · MEG-3.1 Tile panel | Done (MEG-3.1) |
 | 10 | Tile menu: mono head with a status pill, labels, tile grids, copy pill, ask accordion | Send to an agent | Dropdown menu · new variant (DRP-2) | New |
