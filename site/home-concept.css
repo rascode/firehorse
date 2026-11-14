@@ -318,30 +318,10 @@ body:has(.site-hc) .site-kc-launch:is(:hover, :focus-visible) { border-color: ok
   line-height: 1.2;
 }
 
-/* Theme colour: a solid dot in the theme colour (held legible, as the filled eyebrow end),
-   right of Download from Git, the scheme pill's height; a small chevron inside in the
-   on-colour, nudged 1px down so it sits optically centred. It opens the colour panel: a tile
+/* Theme colour: a solid dot in the theme colour, the tip of a paintbrush inside. It opens the colour panel: a tile
    panel (MEG-3.1) of colour tiles (TIL-3.4), like the typeface and backdrop pickers. */
 .site-hc__root { position: relative; display: inline-flex; }
-.site-hc__root-btn {
-  --_d: light-dark(oklch(from var(--fh-color-accent) min(l, 0.52) c h), oklch(from var(--fh-color-accent) max(l, 0.74) c h));
-
-  display: grid;
-  place-items: center;
-  inline-size: 2rem;
-  block-size: 2rem;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--_d);
-  color: oklch(from var(--_d) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.2) h);
-  cursor: var(--fh-cursor-action, pointer);
-  transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
-}
-.site-hc__root-btn .fh-icon { --fh-icon-size: 0.8rem; translate: 0 1px; transition: rotate var(--fh-duration-fast) var(--fh-ease-standard); }
-.site-hc__root-btn:is(:hover, :focus-visible) { background: oklch(from var(--_d) calc(l - 0.06) c h); }
-.site-hc__root-btn:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
-.site-hc__root:has(.site-hc__roots:popover-open) .site-hc__root-btn .fh-icon { rotate: 180deg; translate: 0 -1px; }
+/* The dot is a tone disc (BTN-4.2) in the accent; the brush tip inside is drawn below. */
 /* KC on the page's right margin, the content edge the logo, line, headline and top-right
    controls all keep (not the window's 16px corner). */
 body:has(.site-hc) .site-kc-launch { inset-inline-end: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2); }
@@ -1434,23 +1414,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 .site-hc__fh, .site-hc-mark, .site-hc-mark__link .site-hc-mark { font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important; }
 
 .site-hc__type { position: relative; display: inline-flex; }
-.site-hc__type-btn {
-  anchor-name: --hc-type;
-  display: grid;
-  place-items: center;
-  inline-size: 2rem;
-  block-size: 2rem;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: light-dark(#000, #fff);
-  color: light-dark(#fff, #000);
-  font: 800 0.95rem / 1 var(--fh-font-sans);
-  cursor: pointer;
-  transition: scale 160ms ease, background-color 200ms ease;
-}
-.site-hc__type-btn:hover { scale: 1.06; }
-.site-hc__type-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
+/* The T is a disc (BTN-4.1). */
 /* The typeface picker: a tile panel (MEG-3.1), placed with the Docs menu. */
 .site-hc__types-list { --fh-tiles-min: 10rem; } /* the faces: option tiles, specimen (TIL-3.2) */
 .site-hc__types-name { display: grid; gap: 0.1rem; }
@@ -1572,7 +1536,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 /* —— Theme colour dot: the tip of a paintbrush ——————————————————————————————
    Only the head of the brush: bristles and ferrule rising from the dot's bottom edge, the
    handle cut off by the circle. Drawn in the dot's on-colour. */
-.site-hc__root-btn { overflow: hidden; }
 .site-hc__brush {
   place-self: end center;
   inline-size: 1.15rem;
@@ -1588,23 +1551,7 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    Same black / white circle as the T. The scenes are option tiles (TIL-3.1): a large preview of
    each backdrop, its name and a mono caps line. A pick sets data-hc-bg on <html>; the hero art swaps. */
 .site-hc__bg { position: relative; display: inline-flex; }
-.site-hc__bg-btn {
-  anchor-name: --hc-bg;
-  display: grid;
-  place-items: center;
-  inline-size: 2rem;
-  block-size: 2rem;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: light-dark(#000, #fff);
-  color: light-dark(#fff, #000);
-  cursor: pointer;
-  transition: scale 160ms ease, background-color 200ms ease;
-}
-.site-hc__cam { inline-size: 1.05rem; block-size: 1.05rem; }
-.site-hc__bg-btn:hover { scale: 1.06; }
-.site-hc__bg-btn:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
+/* The camera is a disc (BTN-4.1). */
 .site-hc__bgs {
   /* a tile panel (MEG-3.1), placed with the Docs menu */
   --fh-mega-columns: minmax(0, 1.15fr) minmax(0, 1.6fr) minmax(15rem, 1fr);
