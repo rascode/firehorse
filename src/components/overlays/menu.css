@@ -111,3 +111,165 @@
   .fh-menu > .fh-menu__danger > .fh-icon { color: inherit; }
 
 }
+
+@layer fh.components {
+  /* —— DRP-2 Tile menu ———————————————————————————————————————————————————————
+   * A wide menu of tiles, in the look of the tile panel (MEG-3.1): a mono caps head with a
+   * status pill, mono labels over grids of Tiles (TIL) run edge to edge, a foot with an etched
+   * pill action, and an ask row that opens into a short form. On a frost, ruled with the dashed
+   * etch; the tiles rise in one after another as it opens.
+   *   <div id="m2" popover class="fh-menu fh-menu--tiles">
+   *     <header class="fh-menu__head"><span class="fh-menu__title">Send to an agent</span>
+   *       <span class="fh-menu__status" data-tone="lime"><i class="fh-icon fh-icon--check"></i>Copied</span></header>
+   *     <p class="fh-menu__label">Open with the prompt</p>
+   *     <div class="fh-tiles fh-tiles--launch">…</div>
+   *     <div class="fh-menu__foot"><button class="fh-menu__pill" type="button">…</button></div>
+   *     <details class="fh-menu__ask"><summary><span class="fh-menu__ask-q"><b>…</b><small>…</small></span>
+   *       <i class="fh-icon fh-icon--chevron-down"></i></summary><form>…</form></details>
+   *   </div>
+   * Knobs: --fh-menu-width (default up to 45rem), --fh-menu-tiles-min (the tile grids' column
+   * floor, default 8rem), --fh-menu-command-min (command tiles, default 12rem). Set --_i on each
+   * tile for the rise order. */
+  .fh-menu--tiles {
+    --_etch: var(--fh-border-thin) dashed var(--fh-color-etch);
+    --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
+
+    inline-size: var(--fh-menu-width, min(45rem, calc(100vi - 2rem)));
+    min-inline-size: 0;
+    max-block-size: min(44rem, calc(100dvh - 2rem));
+    padding: 0;
+    border: var(--_etch);
+    border-radius: var(--fh-radius-sm);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+    box-shadow: none;
+    container-type: inline-size;
+    scrollbar-width: thin;
+
+    & > .fh-menu__label { margin: 0; padding: var(--fh-inset-control) var(--fh-inset-tile) var(--fh-gap-related); letter-spacing: var(--fh-tracking-caps); font-size: var(--fh-text-label); }
+    & > .fh-tiles { --fh-tiles-min: var(--fh-menu-tiles-min, 8rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min)), 1fr)); border-block-start: var(--_etch-soft); }
+    & > .fh-tiles:has(> .fh-tile--command, > li > .fh-tile--command) { --fh-tiles-min: var(--fh-menu-command-min, 12rem); }
+    & > hr { margin: 0; border: 0; border-block-start: var(--_etch-soft); }
+  }
+
+  /* Head: the title in mono caps, a status pill at the end, the etch under them; stays put as the menu scrolls. */
+  .fh-menu__head {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    background-color: inherit;
+  }
+  .fh-menu__title {
+    margin: 0;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-caps);
+    text-transform: uppercase;
+  }
+  /* The status pill: dashed in its tone (data-tone, default lime), mono caps, an icon before. */
+  .fh-menu__status {
+    --_c: var(--fh-tone);
+    --_ink: light-dark(oklch(from var(--_c) min(l, 0.5) c h), oklch(from var(--_c) max(l, 0.74) c h));
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    padding: var(--fh-gap-bound) var(--fh-gap-related);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 55%, transparent);
+    border-radius: var(--fh-radius-pill);
+    color: var(--_ink);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &:not([data-tone]) { --_c: var(--fh-tone-lime); }
+    & > .fh-icon { --fh-icon-size: 1.1em; }
+  }
+
+  /* Foot: one etched pill action across the menu (or several side by side). */
+  .fh-menu__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+  }
+  .fh-menu__pill {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-gap-related);
+    min-block-size: 2.25rem;
+    padding: 0 var(--fh-inset-tile);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-weight: var(--fh-weight-bold);
+    letter-spacing: var(--fh-tracking-caps);
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: var(--fh-cursor-action);
+    transition: border-color var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    & > .fh-icon { color: var(--fh-color-accent); }
+    &:is(:hover, :focus-visible) { border-color: var(--fh-color-accent); background-color: color-mix(in oklab, var(--fh-color-accent) 8%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+  }
+
+  /* Ask: a row along the foot that opens into a short form (Firehorse fields inside). */
+  .fh-menu__ask {
+    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+
+    & > summary {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-gap-grouped);
+      padding: var(--fh-inset-control) var(--fh-inset-tile);
+      list-style: none;
+      cursor: var(--fh-cursor-action);
+      transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+    }
+    & > summary::-webkit-details-marker { display: none; }
+    & > summary:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
+    & > summary:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    & > summary > .fh-icon { color: var(--fh-color-accent); transition: rotate var(--fh-duration-fast) var(--fh-ease-standard); }
+    &[open] > summary > .fh-icon { rotate: 180deg; }
+    & > :not(summary) { display: grid; gap: var(--fh-gap-grouped); padding: 0 var(--fh-inset-tile) var(--fh-inset-tile); }
+  }
+  .fh-menu__ask-q {
+    display: grid;
+    flex: 1;
+    gap: var(--fh-gap-bound);
+    min-inline-size: 0;
+
+    & > b { font-size: var(--fh-text-lede); font-weight: var(--fh-weight-bold); letter-spacing: var(--fh-tracking-heading); }
+    & > small { color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-caps); text-transform: uppercase; }
+  }
+
+  /* The tiles rise in one after another as the menu opens. */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-menu--tiles > .fh-tiles :is(.fh-tile) {
+      transition-property: background-color, opacity, translate;
+      transition-duration: var(--fh-duration-fast), var(--fh-duration-slow), var(--fh-duration-slow);
+      transition-timing-function: var(--fh-ease-standard), var(--fh-ease-out), var(--fh-ease-out);
+    }
+    .fh-menu--tiles:popover-open > .fh-tiles :is(.fh-tile) {
+      transition-delay: 0s, calc(var(--_i, 0) * 22ms), calc(var(--_i, 0) * 22ms);
+      @starting-style { opacity: 0; translate: 0 0.4rem; }
+    }
+  }
+}

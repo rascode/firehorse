@@ -62,7 +62,7 @@
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/hamburger/) |
 | `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) · 3 Tile panel (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
 | `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/drawer/) |
-| `DRP` | Dropdown menu | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
+| `DRP` | Dropdown menu | Drawers & menus | 1 Default (1) · 2 Tile menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
 | `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
@@ -1360,11 +1360,50 @@ Classes: `fh-drawer` `fh-drawer__group` `fh-label`
 
 ## DRP · Dropdown menu
 
-Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning.
+Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning. --tiles is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
 
-Classes: `fh-button` `fh-button--secondary` `fh-icon` `fh-menu` `fh-menu__label` `fh-menu__danger`
+Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--tiles` `fh-menu__head` `fh-menu__title` `fh-menu__status` `fh-tiles` `fh-tiles--launch` `fh-tile` `fh-tile__cube` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--command` `fh-menu__foot` `fh-menu__pill` `fh-menu__ask` `fh-menu__ask-q` `fh-field` `fh-input` `fh-field--optional` `fh-button` `fh-button--sm`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/navigation/dropdown-menu/.
+### DRP-1 · Default
+
+#### DRP-1.1 · Default
+
+```html
+<div class="fh-menu" role="menu" aria-label="Sample menu (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 16rem" data-fh="DRP-1.1">
+  <p class="fh-menu__label">View</p>
+  <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
+  <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>
+  <hr>
+  <p class="fh-menu__label">Show</p>
+  <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Owners</button>
+  <button type="button" role="menuitemcheckbox" aria-checked="false"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Health</button>
+  <hr>
+  <button type="button" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete view</button>
+</div>
+```
+
+### DRP-2 · Tile menu
+
+#### DRP-2.1 · Tile menu
+
+```html
+<div class="fh-menu fh-menu--tiles" role="dialog" aria-label="Send to an agent (static)" style="position: relative; inset: auto; margin: 0; opacity: 1; translate: none; max-block-size: none; --fh-menu-width: min(45rem, 100%)" data-fh="DRP-2.1">
+  <header class="fh-menu__head"><span class="fh-menu__title">Send to an agent</span><span class="fh-menu__status" data-tone="lime"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Prompt copied on every pick</span></header>
+  <p class="fh-menu__label">Open with the prompt</p>
+  <div class="fh-tiles fh-tiles--launch"><button class="fh-tile" type="button" data-tone="accent" style="--_i: 0"><span class="fh-tile__cube"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">01</small><b class="fh-tile__title">Claude</b><span class="fh-tile__note">Anthropic</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button><button class="fh-tile" type="button" data-tone="teal" style="--_i: 1"><span class="fh-tile__cube"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">02</small><b class="fh-tile__title">ChatGPT</b><span class="fh-tile__note">OpenAI</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button><button class="fh-tile" type="button" data-tone="neutral" style="--_i: 2"><span class="fh-tile__cube"><i class="fh-icon fh-icon--terminal" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">03</small><b class="fh-tile__title">Cursor</b><span class="fh-tile__note">In your editor</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button><button class="fh-tile" type="button" data-tone="rose" style="--_i: 3"><span class="fh-tile__cube"><i class="fh-icon fh-icon--heart" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">04</small><b class="fh-tile__title">Lovable</b><span class="fh-tile__note">Builds the app</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button><button class="fh-tile" type="button" data-tone="sky" style="--_i: 4"><span class="fh-tile__cube"><i class="fh-icon fh-icon--zap" aria-hidden="true"></i></span><small class="fh-tile__eyebrow">05</small><b class="fh-tile__title">Bolt</b><span class="fh-tile__note">StackBlitz</span><i class="fh-icon fh-icon--arrow-up-right fh-tile__go" aria-hidden="true"></i></button></div>
+  <p class="fh-menu__label">From your terminal</p>
+  <div class="fh-tiles fh-tiles--launch"><button class="fh-tile fh-tile--command" type="button" data-tone="accent" style="--_i: 5"><b class="fh-tile__title">Claude Code</b><code>claude "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button><button class="fh-tile fh-tile--command" type="button" data-tone="teal" style="--_i: 6"><b class="fh-tile__title">Codex CLI</b><code>codex "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button><button class="fh-tile fh-tile--command" type="button" data-tone="sky" style="--_i: 7"><b class="fh-tile__title">Gemini CLI</b><code>gemini -p "…"</code><i class="fh-icon fh-icon--copy fh-tile__go" aria-hidden="true"></i></button></div>
+  <div class="fh-menu__foot"><button class="fh-menu__pill" type="button"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Copy the prompt only</button></div>
+  <details class="fh-menu__ask">
+    <summary><span class="fh-menu__ask-q"><b>Don't see your agent?</b><small>Tell us and we'll add it</small></span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+    <form novalidate>
+      <div class="fh-field"><label for="drp-ask-agent">Agent</label><input class="fh-input" id="drp-ask-agent" name="agent" required placeholder="Its name" autocomplete="off"></div>
+      <div class="fh-field fh-field--optional"><label for="drp-ask-email">Your email</label><input class="fh-input" id="drp-ask-email" name="email" type="email" placeholder="you@company.com"></div>
+      <button class="fh-button fh-button--sm" type="submit">Send request</button>
+    </form>
+  </details>
+</div>
+```
 
 ## ACC · Accordion
 
