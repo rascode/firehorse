@@ -124,6 +124,12 @@ const demoOpens = [...guidelines.matchAll(/<div\b[^>]*\bclass="[^"]*\bsite-demo_
 expect(
   demoOpens.length >= 9 && demoOpens.every((m) => /\bsite-stage\b/.test(m[0]) && /\sdata-stage="(?:fill|inline)"/.test(m[0])),
   `guidelines: ${demoOpens.length} demo stages, one is missing the frame`);
+// A card preview: an opening div whose class list contains site-stage and site-stage--card
+// (any order, other classes allowed), followed by data-stage fill or inline.
+const cardPreviewTags = (html) => [...html.matchAll(/<div\b[^>]*\bclass="([^"]*)"[^>]*\bdata-stage="(fill|inline)"[^>]*>/g)].filter((m) => {
+  const classes = m[1].split(/\s+/).filter(Boolean);
+  return classes.includes("site-stage") && classes.includes("site-stage--card");
+});
 const gridPages = [...new Set(want.map((f) => f.page))];
 for (const page of gridPages) {
   const html = readFileSync(fileOf(page), "utf8"), main = html.match(/<main[\s\S]*<\/main>/)?.[0] ?? "";
@@ -134,15 +140,18 @@ for (const page of gridPages) {
   const keeps = /"keepSections":\s*true/.test(readFileSync(join(root, "site/pages", page, "index.html"), "utf8"));
   for (const f of fams) expect(keeps || !main.includes(`data-fh-id="${f.id}`), `${page}: grid page still shows the ${f.id} demo`);
   expect(new RegExp(`<noscript>[\\s\\S]*href="${specimenPath(fams[0])}"`).test(html), `${page}: grid page has no noscript link list`);
-  expect((main.match(/class="site-stage site-stage--card" data-stage="(?:fill|inline)"/g) ?? []).length === fams.length, `${page}: a card has no preview`);
-  for (const f of fams) expect(main.includes(`class="site-stage site-stage--card" data-stage="${stageMode(f.markup)}"`), `${page}: ${f.id} preview is not ${stageMode(f.markup)}`);
+  const previews = cardPreviewTags(main);
+  expect(previews.length === fams.length, `${page}: a card has no preview`);
+  for (const f of fams) expect(previews.some((m) => m[2] === stageMode(f.markup)), `${page}: ${f.id} preview is not ${stageMode(f.markup)}`);
   expect(!/class="[^"]*site-specimen__(?:stage|preview)"/.test(main), `${page}: retired preview class`);
 }
 // Card previews (navigation): Drawer is open in the card only. Hamburger and Dropdown keep the closed
 // control and carry no state-label text. Family pages keep the original markup.
 const cardStage = (page, id) => {
   const at = page.indexOf(`data-specimen-card="${id}"`);
-  const open = page.indexOf('<div class="site-stage site-stage--card"', at);
+  const from = at < 0 ? 0 : at;
+  const found = cardPreviewTags(page.slice(from))[0];
+  const open = found ? from + found.index : -1;
   const inner = page.indexOf(">", open) + 1;
   const end = page.indexOf('<p class="fh-card__meta">', open);
   return page.slice(inner, end).replace(/\s*<\/div>\s*$/, "");
