@@ -12,7 +12,7 @@
 | Layout | `fh-stack` (`--2xs`…`--2xl`) `fh-cluster` (`--between` `--end`) `fh-grid` (`[data-cols]` `--ruled` `--etched` `--rounded`) `fh-split` (`--wide-start` `--wide-end` `--sidebar`) `fh-center` `fh-ratio` `fh-reel` |
 | Masthead | `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar` `--split` `--lockup` `__above` `__wordmark` `__bar` `__etch` `__headline` `__top` `__turn` `__below`) |
 | Type | `fh-display` `fh-title` `fh-heading` `fh-subheading` `fh-lede` `fh-body` `fh-small` `fh-label` `fh-eyebrow` `fh-mono` `fh-index` `fh-price` `fh-signature` `fh-prose` `fh-muted` `fh-subtle` `fh-rotator` (`--walk`) |
-| Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
+| Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg` `--cue` `__phrase`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
 | Metrics | `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) |
@@ -672,13 +672,26 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 
 ### ACT · Action & link
 
-Section CTAs and card actions.
+Section CTAs and card actions: mono caps with a dashed underline and an arrow, larger or in a tone. Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with `fh-action__phrase`.
 
 ```html
-<a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT">View all services</a>
-<a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT">Explore data architecture</a>
-<a class="fh-link" href="#c-action" data-fh="ACT">Read the case study</a>
-<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT">Privacy policy</a>
+<!-- ACT-1.1 · Action › Action -->
+<a class="fh-action" href="#c-action" data-fh="ACT-1.1">View all</a>
+
+<!-- ACT-1.2 · Action › Large -->
+<a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT-1.2">View all services</a>
+
+<!-- ACT-1.3 · Action › Toned -->
+<a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT-1.3">Explore data architecture</a>
+
+<!-- ACT-2.1 · Link › Text link -->
+<a class="fh-link" href="#c-action" data-fh="ACT-2.1">Read the case study</a>
+
+<!-- ACT-2.2 · Link › Quiet link -->
+<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT-2.2">Privacy policy</a>
+
+<!-- ACT-3.1 · Cue › Scroll cue -->
+<p class="fh-action fh-action--cue" data-fh="ACT-3.1">The design system built for <u class="fh-action__phrase">modern workflows</u></p>
 ```
 
 ### MRK · Markers

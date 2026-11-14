@@ -317,6 +317,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "weight"
   },
+  "--fh-weight-black": {
+    "$value": "800",
+    "$type": "fontWeight",
+    "tier": "primitives",
+    "group": "weight"
+  },
   "--fh-text-micro": {
     "$value": "0.6875rem",
     "$type": "dimension",
@@ -979,6 +985,12 @@ export const tokens = {
   },
   "--fh-icon-arrow-up": {
     "$value": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3Cpath d='M12 19V5'/%3E%3C/svg%3E\")",
+    "$type": "asset",
+    "tier": "primitives",
+    "group": "icon"
+  },
+  "--fh-icon-arrow-down": {
+    "$value": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m19 12-7 7-7-7'/%3E%3Cpath d='M12 5v14'/%3E%3C/svg%3E\")",
     "$type": "asset",
     "tier": "primitives",
     "group": "icon"

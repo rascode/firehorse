@@ -2243,22 +2243,137 @@
       "anchor": "c-action",
       "page": "/components/actions/",
       "url": "https://firehorse.rascode.dev/components/actions/action-and-link/",
-      "summary": "Section CTAs and card actions.",
+      "summary": "Section CTAs and card actions: mono caps with a dashed underline and an arrow, larger or in a tone. Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with fh-action__phrase.",
       "classes": [
         "fh-action",
         "fh-action--lg",
         "fh-link",
-        "fh-link--quiet"
+        "fh-link--quiet",
+        "fh-action--cue",
+        "fh-action__phrase"
       ],
-      "markup": "<a class=\"fh-action fh-action--lg\" href=\"#c-action\" data-fh=\"ACT\">View all services</a>\n<a class=\"fh-action\" data-tone=\"teal\" href=\"#c-action\" data-fh=\"ACT\">Explore data architecture</a>\n<a class=\"fh-link\" href=\"#c-action\" data-fh=\"ACT\">Read the case study</a>\n<a class=\"fh-link fh-link--quiet\" href=\"#c-action\" data-fh=\"ACT\">Privacy policy</a>",
-      "groups": [],
-      "variants": [],
+      "markup": "<a class=\"fh-action\" href=\"#c-action\" data-fh=\"ACT-1.1\">View all</a>",
+      "groups": [
+        {
+          "id": "ACT-1",
+          "name": "Action",
+          "summary": "",
+          "variants": [
+            "ACT-1.1",
+            "ACT-1.2",
+            "ACT-1.3"
+          ],
+          "markup": "<a class=\"fh-action\" href=\"#c-action\" data-fh=\"ACT-1.1\">View all</a>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "ACT-2",
+          "name": "Link",
+          "summary": "",
+          "variants": [
+            "ACT-2.1",
+            "ACT-2.2"
+          ],
+          "markup": "<a class=\"fh-link\" href=\"#c-action\" data-fh=\"ACT-2.1\">Read the case study</a>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "ACT-3",
+          "name": "Cue",
+          "summary": "",
+          "variants": [
+            "ACT-3.1"
+          ],
+          "markup": "<p class=\"fh-action fh-action--cue\" data-fh=\"ACT-3.1\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
+          "markupFrom": "variant"
+        }
+      ],
+      "variants": [
+        {
+          "id": "ACT-1.1",
+          "group": "ACT-1",
+          "name": "Action",
+          "classes": [
+            "fh-action"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-action\" href=\"#c-action\" data-fh=\"ACT-1.1\">View all</a>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-1.2",
+          "group": "ACT-1",
+          "name": "Large",
+          "classes": [
+            "fh-action",
+            "fh-action--lg"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-action fh-action--lg\" href=\"#c-action\" data-fh=\"ACT-1.2\">View all services</a>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-1.3",
+          "group": "ACT-1",
+          "name": "Toned",
+          "classes": [
+            "fh-action"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-action\" data-tone=\"teal\" href=\"#c-action\" data-fh=\"ACT-1.3\">Explore data architecture</a>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-2.1",
+          "group": "ACT-2",
+          "name": "Text link",
+          "classes": [
+            "fh-link"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-link\" href=\"#c-action\" data-fh=\"ACT-2.1\">Read the case study</a>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-2.2",
+          "group": "ACT-2",
+          "name": "Quiet link",
+          "classes": [
+            "fh-link",
+            "fh-link--quiet"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-link fh-link--quiet\" href=\"#c-action\" data-fh=\"ACT-2.2\">Privacy policy</a>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "ACT-3.1",
+          "group": "ACT-3",
+          "name": "Scroll cue",
+          "classes": [
+            "fh-action",
+            "fh-action--cue",
+            "fh-action__phrase"
+          ],
+          "config": {},
+          "markup": "<p class=\"fh-action fh-action--cue\" data-fh=\"ACT-3.1\">The design system built for <u class=\"fh-action__phrase\">modern workflows</u></p>",
+          "status": "live",
+          "tier": "free"
+        }
+      ],
       "stageClasses": [
         "fh-dl",
         "fh-action",
         "fh-action--lg",
         "fh-link",
-        "fh-link--quiet"
+        "fh-link--quiet",
+        "fh-action--cue",
+        "fh-action__phrase"
       ],
       "status": "live",
       "tier": "free"
@@ -16334,7 +16449,6 @@
     "fh-bleed": "CIN",
     "fh-cta-band": "CTB",
     "fh-crosses": "CTB",
-    "fh-link": "ACT",
     "fh-stats": "STA",
     "fh-list": "LST",
     "fh-tiers": "TIR",

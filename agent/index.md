@@ -42,7 +42,7 @@
 | `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/etched-split/) |
 | `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/cta-band/) |
 | `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) · 4 Round icon (2) · 5 Etched pill (1) | [open](https://firehorse.rascode.dev/components/actions/button/) |
-| `ACT` | Action & link | Actions | — | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
+| `ACT` | Action & link | Actions | 1 Action (3) · 2 Link (2) · 3 Cue (1) | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
 | `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
@@ -749,11 +749,51 @@ Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-bu
 
 ## ACT · Action & link
 
-Section CTAs and card actions.
+Section CTAs and card actions: mono caps with a dashed underline and an arrow, larger or in a tone. Text links for running copy. A scroll cue is a line of heavy mono caps that ends in a down arrow, for under a hero; underline a phrase in it with fh-action__phrase.
 
-Classes: `fh-action` `fh-action--lg` `fh-link` `fh-link--quiet`
+Classes: `fh-action` `fh-action--lg` `fh-link` `fh-link--quiet` `fh-action--cue` `fh-action__phrase`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/actions/action-and-link/.
+### ACT-1 · Action
+
+#### ACT-1.1 · Action
+
+```html
+<a class="fh-action" href="#c-action" data-fh="ACT-1.1">View all</a>
+```
+
+#### ACT-1.2 · Large
+
+```html
+<a class="fh-action fh-action--lg" href="#c-action" data-fh="ACT-1.2">View all services</a>
+```
+
+#### ACT-1.3 · Toned
+
+```html
+<a class="fh-action" data-tone="teal" href="#c-action" data-fh="ACT-1.3">Explore data architecture</a>
+```
+
+### ACT-2 · Link
+
+#### ACT-2.1 · Text link
+
+```html
+<a class="fh-link" href="#c-action" data-fh="ACT-2.1">Read the case study</a>
+```
+
+#### ACT-2.2 · Quiet link
+
+```html
+<a class="fh-link fh-link--quiet" href="#c-action" data-fh="ACT-2.2">Privacy policy</a>
+```
+
+### ACT-3 · Cue
+
+#### ACT-3.1 · Scroll cue
+
+```html
+<p class="fh-action fh-action--cue" data-fh="ACT-3.1">The design system built for <u class="fh-action__phrase">modern workflows</u></p>
+```
 
 ## MRK · Markers
 
