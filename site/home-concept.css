@@ -815,28 +815,8 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
 @media (prefers-reduced-motion: reduce) { .site-hc__git .site-hc__meta > * { transition: none !important; } }
 
 /* The scheme pill stays in the page (site.js and the CSS read its radios) but out of sight;
-   a single "Dark" chip right of the Git chip toggles light / dark. Black with white text in
-   light mode, the opposite in dark. */
+   a single Light / Dark toggle (Segment switch, SEG-2.1) right of the Git chip switches them. */
 .site-hc__git .site-hc__scheme-src { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; pointer-events: none; }
-.site-hc__dark {
-  display: inline-flex;
-  align-items: center;
-  block-size: 2rem;
-  padding-inline: var(--fh-space-3-5, 0.875rem);
-  border: 0;
-  border-radius: 999px;
-  background: light-dark(#000, #fff);
-  color: light-dark(#fff, #000);
-  font-family: var(--fh-font-mono);
-  font-size: 0.8rem;
-  font-weight: var(--fh-weight-bold, 700);
-  letter-spacing: var(--fh-tracking-caps);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 200ms ease, color 200ms ease, scale 160ms ease;
-}
-.site-hc__dark:hover { scale: 1.04; }
-.site-hc__dark:focus-visible { outline: var(--fh-focus-width, 2px) solid var(--fh-color-focus); outline-offset: 2px; }
 
 /* "The design system built for": back up to a readable size */
 .site-hc__lede { font-size: 0.8125rem; }
@@ -949,12 +929,6 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    still plays first) */
 .site-hc__etch { transform-origin: 0 50%; }
 
-/* The scheme chip names the mode you're in: "Light" in light, "Dark" in dark; the word rolls
-   between the two as the page cross-fades (a view transition) into the other scheme. */
-.site-hc__dark-roll { display: inline-grid; block-size: 1.2em; line-height: 1.2em; overflow: hidden; inline-size: 5.6ch; justify-items: center; }
-.site-hc__dark-roll > span { transition: translate 420ms cubic-bezier(0.22, 1, 0.36, 1); }
-.site-hc__dark[aria-pressed="true"] .site-hc__dark-roll > span { translate: 0 -100%; }
-@media (prefers-reduced-motion: reduce) { .site-hc__dark-roll > span { transition: none; } }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 480ms; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
 
 /* —— Scroll choreography, compositor-driven (replaces the per-frame script) ——————————
