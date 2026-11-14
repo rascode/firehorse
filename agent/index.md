@@ -75,6 +75,7 @@
 | `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (2) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/fields/) |
 | `SEG` | Segment switch | Fields & choices | 1 Switch (2) · 2 Toggle (3) | [open](https://firehorse.rascode.dev/forms/segment-switch/) |
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/choices/) |
+| `CAL` | Calendar pickers | Fields & choices | 1 Booking (1) | [open](https://firehorse.rascode.dev/forms/#CAL) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/upload-range-tags-sheet/) |
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
 | `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/datatable/) |
@@ -82,9 +83,6 @@
 | `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
 | `THS` | Theme select | Themes | 1 Select (1) · 2 Colour menu (1) | [open](https://firehorse.rascode.dev/theming/theme-select/) |
-| `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
-| `CAL` | Calendar pickers | Calendar | 1 Pickers (3) · 2 Inline (1) · 3 Booking (1) | [open](https://firehorse.rascode.dev/pro/project-management/#CAL) |
-| `KEY` | Key fields | Key fields | 1 Fields (4) · 2 Groups (1) | [open](https://firehorse.rascode.dev/pro/keys/#KEY) |
 
 ## NEU · Neutral ramp
 
@@ -2288,6 +2286,57 @@ Classes: `fh-stack` `fh-stack--lg` `fh-segmented` `fh-sr-only` `fh-check` `fh-sw
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/choices/.
 
+## CAL · Calendar pickers
+
+Pickers for dates and booking. Booking (CAL-1.1) is a quiet month grid beside the chosen day's times.
+
+Classes: `fh-cal-book` `fh-cal-book__layout` `fh-cal-book__month` `fh-cal-book__head` `fh-cal-book__label` `fh-cluster` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-cal-book__week` `fh-cal-book__grid` `fh-cal-book__day` `fh-cal-book__times` `fh-cal-book__group` `fh-label` `fh-chips` `fh-cal-book__chips` `fh-chip`
+
+### CAL-1 · Booking
+
+#### CAL-1.1 · Booking calendar
+
+```html
+<div class="fh-cal-book" data-fh="CAL-1.1">
+  <div class="fh-cal-book__layout">
+    <div class="fh-cal-book__month">
+      <div class="fh-cal-book__head">
+        <p class="fh-cal-book__label">November 2026</p>
+        <div class="fh-cluster" style="gap: var(--fh-gap-bound)"><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Previous month">‹</button><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Next month">›</button></div>
+      </div>
+      <div class="fh-cal-book__week" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="fh-cal-book__grid" role="group" aria-label="November 2026">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <button type="button" class="fh-cal-book__day" disabled>1</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">2</button>
+        <button type="button" class="fh-cal-book__day" data-open="true" data-today="true" aria-pressed="true">3</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">4</button>
+        <button type="button" class="fh-cal-book__day" data-open="true">5</button>
+        <button type="button" class="fh-cal-book__day" disabled>6</button>
+        <button type="button" class="fh-cal-book__day" disabled>7</button>
+      </div>
+    </div>
+    <div class="fh-cal-book__times">
+      <p class="fh-cal-book__label">Tue 3 Nov</p>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Morning</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Morning times">
+          <button type="button" class="fh-chip" data-tone="sky" aria-pressed="true">10:00</button>
+          <button type="button" class="fh-chip">11:30</button>
+        </div>
+      </div>
+      <div class="fh-cal-book__group">
+        <p class="fh-label">Afternoon</p>
+        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Afternoon times">
+          <button type="button" class="fh-chip">14:00</button>
+          <button type="button" class="fh-chip">16:30</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
 ## UPL · Upload, range, tags, sheet
 
 A dropzone over a real file input, a styled range, a tag field, and a dialog that slides in as a side sheet.
@@ -2659,253 +2708,6 @@ Classes: `fh-field` `fh-select` `fh-theme-menu` `fh-theme-menu__head` `fh-theme-
 <div class="fh-theme-menu" id="ths-colours-demo" role="radiogroup" aria-label="Theme (preview)" data-fh="THS-2.1"><header class="fh-theme-menu__head"><span class="fh-theme-menu__title">Theme</span><span class="fh-theme-menu__count">4</span></header><ul class="fh-theme-menu__list"><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#b33000, #da3a00)"><input type="radio" name="ths-colours-demo" value data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false" checked><i class="fh-theme-menu__dot" aria-hidden="true"></i>Firehorse</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#2b579a, #6f9fe8)"><input type="radio" name="ths-colours-demo" value="mustang" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Mustang</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#161616, #ece8df)"><input type="radio" name="ths-colours-demo" value="friesian" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Friesian</label></li><li><label class="fh-theme-menu__item" style="--fh-theme-dot: light-dark(#7a5200, #d6a640)"><input type="radio" name="ths-colours-demo" value="akhal-teke" data-fh-theme-select data-fh-theme-target="#ths-colours-demo" data-fh-theme-persist="false"><i class="fh-theme-menu__dot" aria-hidden="true"></i>Akhal-Teke</label></li></ul></div>
 ```
 
-## TML · Timelines
-
-Classes: `fh-milestones` `fh-milestones__item` `fh-milestones__date` `fh-milestones__body` `fh-milestones__title` `fh-phases` `fh-phases__stop` `fh-phases__date` `fh-phases__title` `fh-phases__items` `fh-dot` `fh-dot--live` `fh-schedule` `fh-schedule__grid` `fh-schedule__head` `fh-schedule__row` `fh-schedule__label` `fh-schedule__bar` `fh-activity` `fh-activity__day` `fh-activity__item` `fh-avatar` `fh-activity__body` `fh-activity__line` `fh-status` `fh-activity__time` `fh-activity__remark` `fh-progress`
-
-### TML-1 · Timelines
-
-#### TML-1.1 · Milestones
-
-```html
-<div>
-<ol class="fh-milestones" data-tone="sky" data-fh="TML-1.1">
-  <li class="fh-milestones__item" data-state="done"><time class="fh-milestones__date" datetime="2026-11-01">Nov 1</time><div class="fh-milestones__body"><p class="fh-milestones__title">Shell</p><p>Side navigation, environment band and selector.</p></div></li>
-  <li class="fh-milestones__item" data-state="done"><time class="fh-milestones__date" datetime="2026-11-01">Nov 1</time><div class="fh-milestones__body"><p class="fh-milestones__title">Sign-in</p><p>Glass sign-in with username or email.</p></div></li>
-  <li class="fh-milestones__item" data-state="now"><time class="fh-milestones__date" datetime="2026-11-15">Nov 15</time><div class="fh-milestones__body"><p class="fh-milestones__title">Applications</p><p>The registry everything maps back to.</p></div></li>
-  <li class="fh-milestones__item" data-state="next"><time class="fh-milestones__date" datetime="2026-12-01">Dec 1</time><div class="fh-milestones__body"><p class="fh-milestones__title">Enterprise</p><p>Organisations, their people and sites.</p></div></li>
-  <li class="fh-milestones__item" data-state="next"><time class="fh-milestones__date" datetime="2026-12-15">Dec 15</time><div class="fh-milestones__body"><p class="fh-milestones__title">Identity &amp; access</p><p>People, accounts and roles.</p></div></li>
-</ol>
-</div>
-```
-
-#### TML-1.2 · Horizontal track
-
-```html
-<div style="min-inline-size: 0">
-<ol class="fh-phases" data-tone="violet" aria-label="Project phases" data-fh="TML-1.2">
-  <li class="fh-phases__stop" data-state="done"><time class="fh-phases__date">Oct 6</time><p class="fh-phases__title">Discovery</p><p>Scope signed.</p></li>
-  <li class="fh-phases__stop" data-state="done"><time class="fh-phases__date">Oct 20</time><p class="fh-phases__title">Design</p><p>System approved.</p></li>
-  <li class="fh-phases__stop" data-state="now"><time class="fh-phases__date">Nov 3</time><p class="fh-phases__title">Build</p><p>Sprint 2 of 3.</p><ul class="fh-phases__items"><li><span class="fh-dot fh-dot--live" data-tone="amber" aria-hidden="true"></span><span>Checkout</span></li><li><span class="fh-dot" data-tone="violet" aria-hidden="true"></span><span>Order emails</span></li></ul></li>
-  <li class="fh-phases__stop" data-state="next"><time class="fh-phases__date">Dec 1</time><p class="fh-phases__title">Launch</p><p>Go-live and handover.</p></li>
-</ol>
-</div>
-```
-
-#### TML-1.3 · Schedule
-
-```html
-<div class="fh-schedule" data-fh="TML-1.3">
-  <div class="fh-schedule__grid" style="--fh-schedule-cols: 6; --fh-schedule-now: 1.03" data-now="Today">
-    <div class="fh-schedule__head"><span></span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
-    <div class="fh-schedule__row" data-tone="lime"><span class="fh-schedule__label">Shell &amp; sign-in</span><span class="fh-schedule__bar" data-state="done" style="--start: 1; --span: 1">Done</span></div>
-    <div class="fh-schedule__row" data-tone="orange"><span class="fh-schedule__label">Applications</span><span class="fh-schedule__bar" data-state="now" style="--start: 1; --span: 2">Registry, domains, deploys</span></div>
-    <div class="fh-schedule__row" data-tone="sky"><span class="fh-schedule__label">Enterprise</span><span class="fh-schedule__bar" data-state="next" style="--start: 2; --span: 2">Organisations</span></div>
-    <div class="fh-schedule__row" data-tone="amber"><span class="fh-schedule__label">Business</span><span class="fh-schedule__bar" data-state="next" style="--start: 3; --span: 2">Entities, money</span></div>
-    <div class="fh-schedule__row" data-tone="violet"><span class="fh-schedule__label">Identity &amp; access</span><span class="fh-schedule__bar" data-state="next" style="--start: 4; --span: 2">People, roles</span></div>
-    <div class="fh-schedule__row" data-tone="teal"><span class="fh-schedule__label">Settings</span><span class="fh-schedule__bar" data-state="next" style="--start: 6; --span: 1">Preferences</span></div>
-  </div>
-</div>
-```
-
-#### TML-1.4 · Activity feed
-
-```html
-<ol class="fh-activity" data-fh="TML-1.4">
-  <li class="fh-activity__day">Today</li>
-  <li class="fh-activity__item"><span class="fh-avatar" data-tone="sky"><img src="/img/avatars/ava.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Ava</b> moved <a href="#timelines">Northwind Labs</a> to <span class="fh-status" data-tone="lime">Won</span></p><time class="fh-activity__time" datetime="2026-11-01T14:10">2h ago</time></div></li>
-  <li class="fh-activity__item" data-tone="amber"><span class="fh-avatar" data-tone="amber"><img src="/img/avatars/mateo.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Mateo</b> commented on <a href="#timelines">Launch checklist</a></p><time class="fh-activity__time" datetime="2026-11-01T11:42">4h ago</time><blockquote class="fh-activity__remark">DNS is ready; we can flip it Monday morning.</blockquote></div></li>
-  <li class="fh-activity__item"><span class="fh-avatar" data-tone="violet"><img src="/img/avatars/ruth.webp" alt></span><div class="fh-activity__body"><p class="fh-activity__line"><b>Ruth</b> is uploading the brand kit</p><time class="fh-activity__time" datetime="2026-11-01T09:05">7h ago</time><progress class="fh-progress" value="64" max="100">64%</progress></div></li>
-  <li class="fh-activity__day">Yesterday</li>
-  <li class="fh-activity__item"><span class="fh-avatar" data-tone="teal">SL</span><div class="fh-activity__body"><p class="fh-activity__line"><b>Sam</b> created the project <a href="#timelines">Halcyon Health site</a></p><time class="fh-activity__time" datetime="2026-10-31T16:20">Oct 31, 4:20 PM</time></div></li>
-</ol>
-```
-
-## CAL · Calendar pickers
-
-Classes: `fh-field` `fh-datepicker` `fh-input` `fh-field--full` `fh-cal-book` `fh-cal-book__layout` `fh-cal-book__month` `fh-cal-book__head` `fh-cal-book__label` `fh-cluster` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-cal-book__week` `fh-cal-book__grid` `fh-cal-book__day` `fh-cal-book__times` `fh-cal-book__group` `fh-label` `fh-chips` `fh-cal-book__chips` `fh-chip`
-
-### CAL-1 · Pickers
-
-#### CAL-1.1 · Date picker
-
-```html
-<div class="fh-field" data-fh="CAL-1.1">
-  <label for="pm-due">Due date</label>
-  <div class="fh-datepicker" data-fh-datepicker data-mode="single"><input class="fh-input" type="date" id="pm-due" name="due" value="2026-11-14"></div>
-</div>
-```
-
-#### CAL-1.2 · Date and time picker
-
-```html
-<div class="fh-field" data-fh="CAL-1.2">
-  <label for="pm-kickoff">Kickoff call</label>
-  <div class="fh-datepicker" data-fh-datepicker data-mode="datetime"><input class="fh-input" type="datetime-local" id="pm-kickoff" name="kickoff"></div>
-</div>
-```
-
-#### CAL-1.3 · Date range picker
-
-```html
-<div class="fh-field fh-field--full" data-fh="CAL-1.3">
-  <label for="pm-from">Reporting period</label>
-  <div class="fh-datepicker" data-fh-datepicker data-mode="range"><input class="fh-input" type="date" id="pm-from" name="from" aria-label="Start"><input class="fh-input" type="date" id="pm-to" name="to" aria-label="End"></div>
-</div>
-```
-
-### CAL-2 · Inline
-
-#### CAL-2.1 · Inline calendar
-
-```html
-<div data-fh-calendar data-mode="single" data-value="2026-11-14" data-min="2026-11-01" aria-label="Pick a day"></div>
-```
-
-### CAL-3 · Booking
-
-A quiet month grid beside the chosen day's times. Open days take a faint fill; the picked day and time take the primary. Under Calendar pickers (CAL).
-
-#### CAL-3.1 · Booking calendar
-
-```html
-<div class="fh-cal-book" data-fh="CAL-3.1">
-  <div class="fh-cal-book__layout">
-    <div class="fh-cal-book__month">
-      <div class="fh-cal-book__head">
-        <p class="fh-cal-book__label">November 2026</p>
-        <div class="fh-cluster" style="gap: var(--fh-gap-bound)"><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Previous month">‹</button><button type="button" class="fh-button fh-button--sm fh-button--ghost" aria-label="Next month">›</button></div>
-      </div>
-      <div class="fh-cal-book__week" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
-      <div class="fh-cal-book__grid" role="group" aria-label="November 2026">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-        <button type="button" class="fh-cal-book__day" disabled>1</button>
-        <button type="button" class="fh-cal-book__day" data-open="true">2</button>
-        <button type="button" class="fh-cal-book__day" data-open="true" data-today="true" aria-pressed="true">3</button>
-        <button type="button" class="fh-cal-book__day" data-open="true">4</button>
-        <button type="button" class="fh-cal-book__day" data-open="true">5</button>
-        <button type="button" class="fh-cal-book__day" disabled>6</button>
-        <button type="button" class="fh-cal-book__day" disabled>7</button>
-      </div>
-    </div>
-    <div class="fh-cal-book__times">
-      <p class="fh-cal-book__label">Tue 3 Nov</p>
-      <div class="fh-cal-book__group">
-        <p class="fh-label">Morning</p>
-        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Morning times">
-          <button type="button" class="fh-chip" data-tone="sky" aria-pressed="true">10:00</button>
-          <button type="button" class="fh-chip">11:30</button>
-        </div>
-      </div>
-      <div class="fh-cal-book__group">
-        <p class="fh-label">Afternoon</p>
-        <div class="fh-chips fh-cal-book__chips" role="group" aria-label="Afternoon times">
-          <button type="button" class="fh-chip">14:00</button>
-          <button type="button" class="fh-chip">16:30</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-```
-
-## KEY · Key fields
-
-Classes: `fh-keyfield` `fh-keyfield__head` `fh-keyfield__label` `fh-keyfield__type` `fh-keyfield__name` `fh-keyfield__value` `fh-keyfield__mask` `fh-keyfield__dots` `fh-keyfield__last` `fh-keyfield__action` `fh-icon` `fh-keyfield__editor` `fh-input` `fh-button` `fh-button--sm` `fh-keyfield__hint` `fh-select` `fh-keyset` `fh-keyset__head` `fh-keyset__name` `fh-keyset__count`
-
-### KEY-1 · Fields
-
-#### KEY-1.1 · Key field (copy-only)
-
-```html
-<div>
-<div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="set" data-key-id="demo-secret" data-fh="KEY-1.1">
-  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-1">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div>
-  <code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code>
-  <div class="fh-keyfield__value">
-    <output class="fh-keyfield__mask" aria-labelledby="kf-1"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output>
-    <button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy secret key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
-  </div>
-</div>
-</div>
-```
-
-#### KEY-1.2 · Key field with reveal
-
-```html
-<div>
-<div class="fh-keyfield" data-fh-keyfield data-kind="identifier" data-state="set" data-revealable data-key-id="demo-publishable" data-fh="KEY-1.2">
-  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-2">Publishable key</span><span class="fh-keyfield__type" data-kind="identifier">Stripe publishable</span></div>
-  <code class="fh-keyfield__name">ACME__STRIPE_PUBLISHABLE_KEY</code>
-  <div class="fh-keyfield__value">
-    <output class="fh-keyfield__mask" aria-labelledby="kf-2"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">9c1e</span></output>
-    <button class="fh-keyfield__action" type="button" data-keyfield-reveal aria-pressed="false" aria-label="Show value" title="Show"><i class="fh-icon fh-icon--eye" aria-hidden="true"></i></button>
-    <button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy publishable key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
-  </div>
-</div>
-</div>
-```
-
-#### KEY-1.3 · Key field, not set
-
-```html
-<div>
-<div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-required data-fh="KEY-1.3">
-  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-3">Webhook signing secret</span><span class="fh-keyfield__type" data-kind="credential">Stripe webhook</span></div>
-  <code class="fh-keyfield__name">ACME__STRIPE_WEBHOOK_SECRET</code>
-  <div class="fh-keyfield__value">
-    <output class="fh-keyfield__mask" aria-labelledby="kf-3">Not set</output>
-    <button class="fh-keyfield__action" type="button" aria-label="Set webhook signing secret" title="Set"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button>
-  </div>
-  <form class="fh-keyfield__editor" hidden>
-    <input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="whsec_…" aria-label="Webhook signing secret">
-    <button class="fh-button fh-button--sm" type="submit">Save</button>
-    <p class="fh-keyfield__hint">Starts with whsec_. Stored sealed; only the last four show.</p>
-  </form>
-</div>
-</div>
-```
-
-#### KEY-1.4 · Key field, needs a type
-
-```html
-<div>
-<div class="fh-keyfield" data-fh-keyfield data-state="untyped" data-fh="KEY-1.4">
-  <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-4">Team ID</span><span class="fh-keyfield__type">Needs a type</span></div>
-  <code class="fh-keyfield__name">ACME__XAI_TEAM_ID</code>
-  <form class="fh-keyfield__editor">
-    <select class="fh-select" aria-label="Type for ACME__XAI_TEAM_ID"><option value>Choose a type…</option><option>ID</option><option>API key</option><option>Secret</option></select>
-    <button class="fh-button fh-button--sm" type="submit">Set type</button>
-    <p class="fh-keyfield__hint">Nothing about its value shows until it has a type.</p>
-  </form>
-</div>
-</div>
-```
-
-### KEY-2 · Groups
-
-#### KEY-2.1 · Service keys
-
-```html
-<section class="fh-keyset" aria-labelledby="ks-1" data-fh="KEY-2.1">
-  <header class="fh-keyset__head"><i class="fh-icon fh-icon--video" aria-hidden="true"></i><span class="fh-keyset__name" id="ks-1">Zoom</span><span class="fh-keyset__count">1 of 2 set</span></header>
-  <div class="fh-keyfield" data-fh-keyfield data-kind="identifier" data-state="set" data-revealable data-key-id="demo-zoom-id">
-    <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-5">Client ID</span><span class="fh-keyfield__type" data-kind="identifier">OAuth client ID</span></div>
-    <code class="fh-keyfield__name">ACME__ZOOM_CLIENT_ID</code>
-    <div class="fh-keyfield__value">
-      <output class="fh-keyfield__mask" aria-labelledby="kf-5"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">Qx7w</span></output>
-      <button class="fh-keyfield__action" type="button" data-keyfield-reveal aria-pressed="false" aria-label="Show value" title="Show"><i class="fh-icon fh-icon--eye" aria-hidden="true"></i></button>
-      <button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy client ID" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
-    </div>
-  </div>
-  <div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-required>
-    <div class="fh-keyfield__head"><span class="fh-keyfield__label" id="kf-6">Client secret</span><span class="fh-keyfield__type" data-kind="credential">OAuth client secret</span></div>
-    <code class="fh-keyfield__name">ACME__ZOOM_CLIENT_SECRET</code>
-    <div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="kf-6">Not set</output></div>
-  </div>
-</section>
-```
-
 ## Former IDs
 
 IDs retired before or since release, and what replaced them. Use the new ID.
@@ -2936,9 +2738,6 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `BTN-08` | `BTN-3.2` |
 | `BTN-09` | `BTN-1.5` |
 | `CAL-01` | `CAL-1.1` |
-| `CAL-02` | `CAL-1.3` |
-| `CAL-03` | `CAL-1.2` |
-| `CAL-04` | `CAL-2.1` |
 | `CHC` | `CHP-3` |
 | `CHC-01` | `CHP-3.1` |
 | `CHC-02` | `CHP-3.2` |
@@ -2987,9 +2786,5 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `TAG-03` | `TAG-2.2` |
 | `TAG-04` | `TAG-2.3` |
 | `TAG-05` | `TAG-2.4` |
-| `TML-01` | `TML-1.1` |
-| `TML-02` | `TML-1.3` |
-| `TML-03` | `TML-1.4` |
-| `TML-04` | `TML-1.2` |
 | `WRT-01` | `WRT-1.1` |
 | `WRT-02` | `WRT-1.2` |
