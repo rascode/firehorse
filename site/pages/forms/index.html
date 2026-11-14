@@ -291,7 +291,7 @@
             </div>
           </div>
           <div class="site-demo site-anchor" id="c-segment" data-fh-id="SEG" data-fh-name="Segment switch" data-fh-groups="Switch|Toggle">
-            <div class="site-demo__head"><h3>Segment switch</h3><p>One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe.</p></div>
+            <div class="site-demo__head"><h3>Segment switch</h3><p>One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe, with or without an icon before each label.</p></div>
             <div class="site-demo__stage" data-demo>
 <div class="fh-stack">
   <nav class="fh-segment" aria-label="Segment" data-fh-id="SEG-1.1" data-fh-name="Switch">
@@ -308,6 +308,10 @@
   <div class="fh-segment fh-segment--mode" role="group" aria-label="Input" data-fh-id="SEG-2.2" data-fh-name="Mode toggle" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))">
     <button type="button" aria-pressed="true">Text</button>
     <button type="button" aria-pressed="false">Transcribe</button>
+  </div>
+  <div class="fh-segment fh-segment--mode" role="group" aria-label="Input" data-fh-id="SEG-2.3" data-fh-name="Mode toggle, icons" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))">
+    <button type="button" aria-pressed="true"><i class="fh-icon fh-icon--keyboard" aria-hidden="true"></i>Text</button>
+    <button type="button" aria-pressed="false"><i class="fh-icon fh-icon--mic" aria-hidden="true"></i>Transcribe</button>
   </div>
 </div>
             </div>
@@ -353,8 +357,9 @@
         </div>
 
         <div class="site-demo site-anchor" id="c-dictate" data-fh-id="FLD-2" data-fh-name="Dictation">
-          <div class="site-demo__head"><h3>Dictation field</h3><p>Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with <code>data-fh-dictate</code> (or drive the same markup yourself).</p></div>
+          <div class="site-demo__head"><h3>Dictation field</h3><p>Type or talk. The label and a Text | Transcribe switch share the first row, text only or with a keyboard and a mic (<code>data-fh-dictate="icons"</code>); while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with <code>data-fh-dictate</code> (or drive the same markup yourself).</p></div>
           <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
 <div class="fh-field fh-field--dictate" data-fh-dictate data-fh-id="FLD-2.1" data-fh-name="Dictation">
   <label for="f-dictate">Message</label>
   <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
@@ -368,6 +373,21 @@
     <span class="fh-dictate__interim"></span>
   </p>
   <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
+<div class="fh-field fh-field--dictate" data-fh-dictate="icons" data-fh-id="FLD-2.2" data-fh-name="Dictation, icons">
+  <label for="f-dictate-icons">Message</label>
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+    <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true"><i class="fh-icon fh-icon--keyboard" aria-hidden="true"></i>Text</button>
+    <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false"><i class="fh-icon fh-icon--mic" aria-hidden="true"></i>Transcribe</button>
+  </div>
+  <textarea class="fh-textarea" id="f-dictate-icons" placeholder="A few lines is plenty."></textarea>
+  <p class="fh-dictate__live" role="status" hidden>
+    <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+    <span class="fh-dictate__interim"></span>
+  </p>
+  <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
 </div>
           </div>
         </div>

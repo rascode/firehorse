@@ -27,6 +27,12 @@
  *       <button type="button" aria-pressed="false">Transcribe</button>
  *     </div>
  *   .fh-dictate (the dictation field's own name for it) gets the same look.
+ *
+ *   SEG-2.3 Mode toggle, icons: the same, with an icon before each label.
+ *     <div class="fh-segment fh-segment--mode" role="group" aria-label="Input">
+ *       <button type="button" aria-pressed="true"><i class="fh-icon fh-icon--keyboard" aria-hidden="true"></i>Text</button>
+ *       <button type="button" aria-pressed="false"><i class="fh-icon fh-icon--mic" aria-hidden="true"></i>Transcribe</button>
+ *     </div>
  */
 @layer fh.components {
   .fh-segment {
@@ -149,7 +155,7 @@
         color: var(--fh-color-on-primary);
       }
       &:disabled { opacity: 0.5; cursor: not-allowed; }
-      & > :is(svg, .fh-icon) { inline-size: 0.8rem; block-size: 0.8rem; }
+      & > :is(svg, .fh-icon) { --fh-icon-size: 0.8rem; inline-size: 0.8rem; block-size: 0.8rem; vertical-align: 0; }
     }
   }
   /* .fh-dictate isn't an .fh-segment, so it takes the switch's frame and button base here. */

@@ -646,9 +646,11 @@ ready(() => {
       sw.className = "fh-segment fh-segment--mode fh-dictate";
       sw.setAttribute("role", "group");
       sw.setAttribute("aria-label", "Type, or talk and we transcribe");
+      // data-fh-dictate="icons": a keyboard before Text, a mic before Transcribe
+      const icon = (name) => (field.dataset.fhDictate === "icons" ? `<i class="fh-icon fh-icon--${name}" aria-hidden="true"></i>` : "");
       sw.innerHTML =
-        '<button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">Text</button>' +
-        '<button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">Transcribe</button>';
+        `<button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true">${icon("keyboard")}Text</button>` +
+        `<button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false">${icon("mic")}Transcribe</button>`;
       (field.querySelector("label") ?? area).after(sw);
     }
     let live = field.querySelector(".fh-dictate__live");

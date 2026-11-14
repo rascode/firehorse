@@ -1730,6 +1730,22 @@ The "Required" chip comes from the input's own `required` attribute and settles 
   <p class="fh-dictate__error" role="alert" hidden></p>
 </div>
 
+<!-- FLD-2.2 · Dictation › Dictation, icons -->
+<div class="fh-field fh-field--dictate" data-fh-dictate="icons" data-fh="FLD-2.2">
+  <label for="f-dictate-icons">Message</label>
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+    <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true"><i class="fh-icon fh-icon--keyboard" aria-hidden="true"></i>Text</button>
+    <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false"><i class="fh-icon fh-icon--mic" aria-hidden="true"></i>Transcribe</button>
+  </div>
+  <textarea class="fh-textarea" id="f-dictate-icons" placeholder="A few lines is plenty."></textarea>
+  <p class="fh-dictate__live" role="status" hidden>
+    <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+    <span class="fh-dictate__interim"></span>
+  </p>
+  <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
+
 <!-- FLD-3.1 · Quiet › Quiet -->
 <div class="fh-field fh-field--quiet" data-fh="FLD-3.1">
   <label for="f-quiet">Notes</label>
@@ -1748,7 +1764,7 @@ The "Required" chip comes from the input's own `required` attribute and settles 
 
 ### SEG · Segment switch
 
-One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe.
+One etched pill of choices, or a toggle between two states. The switch is links or buttons with one current; the rolling toggle is a single solid pill whose word rolls to the other state; the mode toggle fills the pressed button, as in the dictation field's Text | Transcribe, with or without an icon before each label.
 
 ```html
 <!-- SEG-1.1 · Switch › Switch -->
@@ -1772,6 +1788,12 @@ One etched pill of choices, or a toggle between two states. The switch is links 
 <div class="fh-segment fh-segment--mode" role="group" aria-label="Input" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))" data-fh="SEG-2.2">
   <button type="button" aria-pressed="true">Text</button>
   <button type="button" aria-pressed="false">Transcribe</button>
+</div>
+
+<!-- SEG-2.3 · Toggle › Mode toggle, icons -->
+<div class="fh-segment fh-segment--mode" role="group" aria-label="Input" onclick="const b = event.target.closest('button'); if (b) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))" data-fh="SEG-2.3">
+  <button type="button" aria-pressed="true"><i class="fh-icon fh-icon--keyboard" aria-hidden="true"></i>Text</button>
+  <button type="button" aria-pressed="false"><i class="fh-icon fh-icon--mic" aria-hidden="true"></i>Transcribe</button>
 </div>
 ```
 
@@ -2327,9 +2349,10 @@ A disabled option, a disabled segmented group, and a disabled switch. The contro
 
 ### Dictation field
 
-Type or talk. The label and a Text | Transcribe switch share the first row; while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with `data-fh-dictate` (or drive the same markup yourself).
+Type or talk. The label and a Text | Transcribe switch share the first row, text only or with a keyboard and a mic (`data-fh-dictate="icons"`); while listening, a live caption shows the waveform, clock and interim words. Progressive: without the switch it is a plain textarea. Wire with `data-fh-dictate` (or drive the same markup yourself).
 
 ```html
+<div class="fh-stack fh-stack--lg">
 <div class="fh-field fh-field--dictate" data-fh-dictate>
   <label for="f-dictate">Message</label>
   <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
@@ -2343,6 +2366,21 @@ Type or talk. The label and a Text | Transcribe switch share the first row; whil
     <span class="fh-dictate__interim"></span>
   </p>
   <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
+<div class="fh-field fh-field--dictate" data-fh-dictate="icons">
+  <label for="f-dictate-icons">Message</label>
+  <div class="fh-segment fh-segment--mode fh-dictate" role="group" aria-label="Type, or talk and we transcribe">
+    <button type="button" class="fh-dictate__mode" data-mode="text" aria-pressed="true"><i class="fh-icon fh-icon--keyboard" aria-hidden="true"></i>Text</button>
+    <button type="button" class="fh-dictate__mode" data-mode="voice" aria-pressed="false"><i class="fh-icon fh-icon--mic" aria-hidden="true"></i>Transcribe</button>
+  </div>
+  <textarea class="fh-textarea" id="f-dictate-icons" placeholder="A few lines is plenty."></textarea>
+  <p class="fh-dictate__live" role="status" hidden>
+    <span class="fh-dictate__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span>Listening <time class="fh-dictate__clock">0:00</time></span>
+    <span class="fh-dictate__interim"></span>
+  </p>
+  <p class="fh-dictate__error" role="alert" hidden></p>
+</div>
 </div>
 ```
 
