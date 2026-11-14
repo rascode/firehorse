@@ -1338,27 +1338,27 @@ Opens
 
 ### MEG · Mega panel
 
-Equal category columns with dashed rules and a footer rail. Default sits flush under the header; `--headed` puts the category titles on one row above a full-bleed etched rule with scaffold ticks, and pairs with `fh-mega__link` for rich rows. `--tiles` spans the page: a mono title and count head, groups of tiles side by side and a rail of links along the foot.
+Grouped links under the header, on a frost ruled with the dashed etch: a quiet mono label over each group, a soft rule between groups and a rail of link cells along the foot. Default holds plain links; `--headed` lines the labels up on one row and pairs with `fh-mega__link` for rich rows; `--tiles` adds a mono title and count head and holds groups of tiles.
 
 ```html
 <!-- MEG-1.1 · Default › Default -->
-<div class="fh-mega fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-1.1">
+<div class="fh-mega" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none" data-fh="MEG-1.1">
   <div class="fh-mega__grid">
     <section data-tone="sky"><h3>Agents</h3><ul><li><a href="#c-mega">Lead follow-up</a></li><li><a href="#c-mega">Inbox triage</a></li></ul></section>
     <section data-tone="teal"><h3>Data</h3><ul><li><a href="#c-mega">Warehouses</a></li><li><a href="#c-mega">Pipelines</a></li></ul></section>
     <section data-tone="orange"><h3>Automation</h3><ul><li><a href="#c-mega">Workflows</a></li><li><a href="#c-mega">Webhooks</a></li></ul></section>
   </div>
-  <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">All services</a></div>
+  <nav class="fh-mega__rail" aria-label="More"><a href="#c-mega"><span class="fh-roll">All services</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a><a href="#c-mega"><span class="fh-roll">Talk to us</span><i class="fh-icon fh-icon--arrow-up-right" aria-hidden="true"></i></a></nav>
 </div>
 
 <!-- MEG-2.1 · Headed › Headed -->
-<div class="fh-mega fh-mega--headed fh-frame" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none; border: var(--fh-border-thin) dashed var(--fh-color-etch); border-radius: var(--fh-radius-lg)" data-fh="MEG-2.1">
+<div class="fh-mega fh-mega--headed" style="position: relative; inset: auto; display: block; opacity: 1; translate: none; max-block-size: none; box-shadow: none" data-fh="MEG-2.1">
   <div class="fh-mega__grid">
     <section data-tone="sky">
       <h3><a href="#c-mega">Agents</a></h3>
       <ul>
         <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><span class="fh-mega__link-title">Lead follow-up</span><span class="fh-mega__link-desc">Answers and books on your channels.</span></a></li>
-        <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--inbox" aria-hidden="true"></i></span><span class="fh-mega__link-title">Inbox triage</span><span class="fh-mega__link-desc">Sorts and tags every message.</span></a></li>
+        <li><a class="fh-mega__link" href="#c-mega"><span class="fh-mega__link-media"><i class="fh-icon fh-icon--mail" aria-hidden="true"></i></span><span class="fh-mega__link-title">Inbox triage</span><span class="fh-mega__link-desc">Sorts and tags every message.</span></a></li>
       </ul>
     </section>
     <section data-tone="teal">
@@ -1368,7 +1368,7 @@ Equal category columns with dashed rules and a footer rail. Default sits flush u
       </ul>
     </section>
   </div>
-  <div class="fh-mega__rail"><a class="fh-action" href="#c-mega">Browse the catalog</a></div>
+  <nav class="fh-mega__rail" aria-label="More"><a href="#c-mega"><span class="fh-roll">Browse the catalog</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a><a href="#c-mega"><span class="fh-roll">Book a call</span><i class="fh-icon fh-icon--arrow-up-right" aria-hidden="true"></i></a></nav>
 </div>
 
 <!-- MEG-3.1 · Tile panel › Tile panel -->
