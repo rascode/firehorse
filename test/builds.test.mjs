@@ -17,8 +17,8 @@ const sha = (f) => createHash("sha256").update(readFileSync(join(root, f))).dige
 
 // The full build is what dist/firehorse.css was before the split (base 633c585), plus the fh-tpl dialog fix and
 // the record parts of relay L8a (stage section, expandable record rows, warning row state), plus the
-// a.fh-sidenav__item rule of SHL-1.2 (relay SB1, 1.1.1), plus the token specimens of M1 (token-specimens.css), the sidecar resize handle (G2), the Motion demo parts (G4), the quieter sidecar heads (G3), the Tiles family (TIL, tiles.css), its option tiles (TIL-3.1 and TIL-3.2, new look) and the tile panel (MEG-3.1, new look).
-const BASE_FULL = "4c59bca2d1952635f8868ff23df3e0611b76c9ffbb30558ccac962db1ee865af";
+// a.fh-sidenav__item rule of SHL-1.2 (relay SB1, 1.1.1), plus the token specimens of M1 (token-specimens.css), the sidecar resize handle (G2), the Motion demo parts (G4), the quieter sidecar heads (G3), the Tiles family (TIL, tiles.css), its option tiles (TIL-3.1 to TIL-3.3, new look) and the tile panel (MEG-3.1, new look).
+const BASE_FULL = "9194d6069c1525ef379b98a39e5e2ce958e9e3d30a39cfd1806df76059d1975d";
 expect(sha("dist/full/firehorse.css") === BASE_FULL, "dist/full/firehorse.css differs from the recorded full build (633c585 dist/firehorse.css plus the fh-tpl dialog fix and the L8a record parts); a source change to a held or live family means recording the new hash here");
 for (const f of ["firehorse.min.css", "firehorse.compat.min.css", "admin.css", "admin.min.css", "index.json"]) expect(existsSync(join(root, "dist/full", f)), `missing dist/full/${f}`);
 

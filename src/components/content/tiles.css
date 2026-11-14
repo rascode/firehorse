@@ -219,7 +219,10 @@
    * TIL-3.1 Media: .fh-tile__media holds an <img>, a <video>, a background image or a drawn
    * preview; --fh-tile-media-ratio sets its shape (4 / 3).
    * TIL-3.2 Specimen: .fh-tile__specimen, a large "Aa" set in the face it offers (put the
-   * font-family on it); --fh-tile-specimen sets its size. For typefaces, weights, scales. */
+   * font-family on it); --fh-tile-specimen sets its size. For typefaces, weights, scales.
+   * TIL-3.3 Swatch: .fh-tiles--swatches with .fh-tile--swatch, many small previews with a
+   * mono caps caption (the title) and no note, set on a gap instead of rules; picked, the
+   * preview is ringed and the caption reads full strength. For photos, colours, textures. */
   .fh-tiles--options {
     --fh-tiles-min: 10rem;
     --fh-tile-min-height: 0;
@@ -293,6 +296,51 @@
     & .fh-tile__media { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 4px var(--_c); }
     & :is(.fh-tile__title, .fh-tile__specimen) { color: var(--_ink); }
     & .fh-tile__go { opacity: 1; scale: 1; }
+  }
+
+  /* —— TIL-3.3 Swatch: many across, a caption under each ———————————————————— */
+  .fh-tiles--swatches {
+    --fh-tiles-min: 6.5rem;
+
+    gap: var(--fh-gap-related);
+    overflow: visible; /* the picked ring sits outside the preview */
+    border-block-start: 0;
+
+    & > *, & > .fh-tile { margin: 0; border: 0; }
+  }
+  .fh-tile--swatch {
+    gap: calc(var(--fh-gap-bound) * 1.5);
+    padding: 0;
+
+    & .fh-tile__title {
+      max-inline-size: 100%;
+      margin: 0;
+      overflow: hidden;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-caps);
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    & .fh-tile__go {
+      inline-size: 1.2rem;
+      block-size: 1.2rem;
+      inset-block-start: var(--fh-gap-related);
+      inset-inline-end: var(--fh-gap-related);
+      font-size: var(--fh-text-micro);
+    }
+    &:is(a, button, label):is(:hover, :focus-visible) { background-color: transparent; }
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__media { scale: 1.04; }
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__title { color: var(--fh-color-text); }
+  }
+  .fh-tile--swatch.fh-tile--option:is([aria-pressed="true"], [aria-checked="true"], [aria-current]:not([aria-current="false"]), :has(input:checked)) {
+    background-color: transparent;
+
+    & .fh-tile__title { color: var(--fh-color-text); }
   }
 
   @media (prefers-reduced-motion: reduce) {

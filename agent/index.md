@@ -46,7 +46,7 @@
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
 | `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/logo-strip/) |
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/) |
-| `TIL` | Tiles | Content | 1 Index tiles (2) · 2 Launch tiles (3) · 3 Option tiles (2) | [open](https://firehorse.rascode.dev/components/content/tiles/) |
+| `TIL` | Tiles | Content | 1 Index tiles (2) · 2 Launch tiles (3) · 3 Option tiles (3) | [open](https://firehorse.rascode.dev/components/content/tiles/) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/stats-strip/) |
 | `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/key-value-list/) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/checklist/) |
@@ -995,9 +995,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## TIL · Tiles
 
-Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview or a specimen and the picked tile marked.
+Open tiles on one ruled grid: a solid icon block in the tile's tone, a numbered mono eyebrow, a large title and a muted note, the arrow top right. Index tiles go somewhere; launch tiles do something; option tiles pick one, with a large preview, a specimen or a small swatch, and the picked tile marked.
 
-Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command` `fh-tiles--options` `fh-tile--option` `fh-tile__media` `fh-tile__specimen`
+Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--row` `fh-tiles--launch` `fh-tile--compact` `fh-tile--command` `fh-tiles--options` `fh-tile--option` `fh-tile__media` `fh-tile__specimen` `fh-tiles--swatches` `fh-tile--swatch`
 
 ### TIL-1 · Index tiles
 
@@ -1076,6 +1076,19 @@ Classes: `fh-tiles` `fh-tile` `fh-tile__cube` `fh-icon` `fh-tile__eyebrow` `fh-t
   <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__specimen" style="font-family: 'Geist', sans-serif">Aa</span><b class="fh-tile__title">Geist</b><span class="fh-tile__note">Crisp · technical</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
   <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__specimen" style="font-family: 'Hanken Grotesk', sans-serif">Aa</span><b class="fh-tile__title">Hanken Grotesk</b><span class="fh-tile__note">Warm · rounded</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
   <li><button class="fh-tile fh-tile--option" type="button" aria-pressed="false"><span class="fh-tile__specimen" style="font-family: 'Archivo', sans-serif">Aa</span><b class="fh-tile__title">Archivo</b><span class="fh-tile__note">Sturdy · editorial</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+</ul>
+```
+
+#### TIL-3.3 · Option tile, swatch
+
+```html
+<ul class="fh-tiles fh-tiles--options fh-tiles--swatches" aria-label="Photos" style="max-inline-size: 44rem" data-fh="TIL-3.3">
+  <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="true" title="Straw hat"><span class="fh-tile__media"><img src="/img/backdrop/hv-hat-thumb.webp" alt loading="lazy"></span><b class="fh-tile__title">Straw hat</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Rider"><span class="fh-tile__media"><img src="/img/backdrop/hv-rider-thumb.webp" alt loading="lazy"></span><b class="fh-tile__title">Rider</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Dusk"><span class="fh-tile__media" style="background-image: linear-gradient(160deg, oklch(from var(--fh-color-accent) 0.7 c h), oklch(0.25 0.05 280))"></span><b class="fh-tile__title">Dusk</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Meadow"><span class="fh-tile__media" style="background-image: linear-gradient(160deg, oklch(0.85 0.12 130), oklch(0.45 0.1 150))"></span><b class="fh-tile__title">Meadow</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Dune"><span class="fh-tile__media" style="background-image: linear-gradient(170deg, oklch(0.9 0.05 80), oklch(0.65 0.09 60))"></span><b class="fh-tile__title">Dune</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option fh-tile--swatch" type="button" aria-pressed="false" title="Ink"><span class="fh-tile__media" style="background-image: radial-gradient(70% 70% at 30% 30%, oklch(0.45 0 0), oklch(0.15 0 0))"></span><b class="fh-tile__title">Ink</b><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
 </ul>
 ```
 

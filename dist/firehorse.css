@@ -2977,6 +2977,66 @@
     }
   }
 
+  .fh-tiles--swatches {
+    --fh-tiles-min: 6.5rem;
+    gap: var(--fh-gap-related);
+    border-block-start: 0;
+    overflow: visible;
+
+    & > *, & > .fh-tile {
+      border: 0;
+      margin: 0;
+    }
+  }
+
+  .fh-tile--swatch {
+    gap: calc(var(--fh-gap-bound) * 1.5);
+    padding: 0;
+
+    & .fh-tile__title {
+      max-inline-size: 100%;
+      color: var(--fh-color-text-subtle);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-micro);
+      font-weight: var(--fh-weight-medium);
+      letter-spacing: var(--fh-tracking-caps);
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin: 0;
+      line-height: 1.2;
+      overflow: hidden;
+    }
+
+    & .fh-tile__go {
+      block-size: 1.2rem;
+      inline-size: 1.2rem;
+      font-size: var(--fh-text-micro);
+      inset-block-start: var(--fh-gap-related);
+      inset-inline-end: var(--fh-gap-related);
+    }
+
+    &:is(a, button, label):is(:hover, :focus-visible) {
+      background-color: #0000;
+    }
+
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__media {
+      scale: 1.04;
+    }
+
+    &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__title {
+      color: var(--fh-color-text);
+    }
+  }
+
+  .fh-tile--swatch.fh-tile--option:is([aria-pressed="true"], [aria-checked="true"], [aria-current]:not([aria-current="false"]), :has(input:checked)) {
+    background-color: #0000;
+
+    & .fh-tile__title {
+      color: var(--fh-color-text);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .fh-tile, .fh-tile__cube, .fh-tile__go, .fh-tile__media, .fh-tile__specimen {
       transition: none;
