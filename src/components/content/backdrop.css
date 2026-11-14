@@ -3,6 +3,8 @@
  * components/content · layer fh.components · docs /layout/#BKD
  * BKD-1 Backdrop: BKD-1.1 Backdrop, BKD-1.2 Frost slider ([data-fh-frost-select], firehorse.js).
  * BKD-2 Frost: BKD-2.1 Frost line.
+ * BKD-3 Blueprint: BKD-3.1 Blueprint.
+ * BKD-4 Chooser: BKD-4.1 Background chooser ([data-fh-backdrop-select], firehorse.js).
  * An app shell's glass over a backdrop (fh-app) is in admin.css.
  */
 
@@ -85,5 +87,54 @@
 
     &::before,
     &::after { content: none; }
+  }
+
+  /* —— Blueprint (BKD-3.1) ——
+   * A drafting sheet behind the page: major and minor grid, faint registration marks
+   * at the centre of each major cell, and a soft vignette. Light: pale paper and
+   * ink-blue lines; dark: deep blueprint ground and pale lines.
+   *   <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true"></div>
+   * Knobs: --fh-backdrop-strength (line contrast, 1), same as the default backdrop.
+   * An image backdrop uses data-fh-backdrop="image" and --fh-backdrop-image. */
+  .fh-backdrop[data-fh-backdrop="blueprint"] {
+    --_bp-ink: light-dark(var(--fh-tone-sky), var(--fh-color-etch));
+    --_maj: color-mix(in oklab, var(--_bp-ink) calc(26% * var(--_k)), transparent);
+    --_min: color-mix(in oklab, var(--_bp-ink) calc(11% * var(--_k)), transparent);
+    --_reg: color-mix(in oklab, var(--_bp-ink) calc(18% * var(--_k)), transparent);
+    background-color: light-dark(
+      color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)),
+      color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky))
+    );
+    background-image:
+      linear-gradient(var(--_reg) 1px, transparent 1px) 0 calc(60px - 0.5px) / 120px 120px,
+      linear-gradient(90deg, var(--_reg) 1px, transparent 1px) calc(60px - 0.5px) 0 / 120px 120px,
+      linear-gradient(var(--_maj) 1px, transparent 1px) 0 0 / 120px 120px,
+      linear-gradient(90deg, var(--_maj) 1px, transparent 1px) 0 0 / 120px 120px,
+      linear-gradient(var(--_min) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, var(--_min) 1px, transparent 1px) 0 0 / 24px 24px;
+    mask-image: radial-gradient(130% 120% at 50% 45%, black 58%, transparent 100%);
+
+    &::before,
+    &::after { content: none; }
+  }
+
+  .fh-backdrop[data-fh-backdrop="image"] {
+    background-color: var(--fh-color-canvas);
+    background-image: var(--fh-backdrop-image, none);
+    background-position: center;
+    background-size: cover;
+    mask-image: radial-gradient(130% 120% at 50% 45%, black 58%, transparent 100%);
+
+    &::before,
+    &::after { content: none; }
+  }
+
+  @media (forced-colors: active) {
+    .fh-backdrop:is([data-fh-backdrop="blueprint"], [data-fh-backdrop="image"]) {
+      forced-color-adjust: none;
+      background-image: none;
+      background-color: Canvas;
+      mask-image: none;
+    }
   }
 }

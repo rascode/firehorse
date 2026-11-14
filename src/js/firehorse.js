@@ -26,6 +26,8 @@
  *      data-fh-rows (sm · md · lg · xl), so every table and key value
  *      list on the page opens up or tightens at once. Frost select
  *      ([data-fh-frost-select], a range 0–100) dials --fh-frost.
+ *      Backdrop select ([data-fh-backdrop-select]) picks data-fh-backdrop on
+ *      the nearest .fh-backdrop or the root, and remembers it in fh-backdrop.
  *  14. Word rotators (.fh-rotator): the slot eases to each word's width,
  *      extra words are hidden from screen readers, and the roll pauses
  *      off screen. The roll itself is CSS and runs without this.
@@ -164,6 +166,86 @@ function setFrost(v, { remember = true } = {}) {
   });
   globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setFrost });
   ready(() => { const v = getComputedStyle(document.documentElement).getPropertyValue("--fh-frost"); for (const el of document.querySelectorAll("[data-fh-frost-select]")) el.value = String(Math.round(Number(v || 0.6) * 100)); });
+}
+
+/* Backdrop select: buttons or a file input with data-fh-backdrop-select and
+ * data-backdrop (default, blueprint, image). Sets data-fh-backdrop and
+ * --fh-backdrop-image on the nearest .fh-backdrop in [data-fh-backdrop-scope],
+ * else the first .fh-backdrop, else <html>. Firehorse.setBackdrop(). */
+const BACKDROP_KEY = "fh-backdrop";
+const backdropTarget = (el) => {
+  const scope = el?.closest?.("[data-fh-backdrop-scope]");
+  if (scope) {
+    const b = scope.querySelector(".fh-backdrop");
+    if (b) return b;
+  }
+  return document.querySelector(".fh-backdrop") || document.documentElement;
+};
+const backdropImageCss = (src) => (src?.startsWith("url(") ? src : `url("${src}")`);
+const parseBackdropSaved = (raw) => {
+  if (!raw) return null;
+  try {
+    const o = JSON.parse(raw);
+    return typeof o === "object" && o ? o : { mode: String(raw) };
+  } catch {
+    return { mode: raw };
+  }
+};
+function syncBackdropSelects(target) {
+  const mode = target.getAttribute("data-fh-backdrop") || "default";
+  const isImage = mode === "image";
+  for (const el of document.querySelectorAll("[data-fh-backdrop-select]")) {
+    if (el.type === "file") continue;
+    const pick = el.dataset.backdrop || "default";
+    const on = isImage ? pick === "image" : pick === mode;
+    if ("ariaPressed" in el) el.setAttribute("aria-pressed", String(on));
+    if (el.type === "radio") el.checked = on;
+  }
+}
+function setBackdrop({ mode = "default", image = "" } = {}, { target, remember = true, fromStorage = false } = {}) {
+  const t = target || document.documentElement;
+  const next = mode === "default" || !mode ? "" : mode;
+  if (!next) {
+    t.removeAttribute("data-fh-backdrop");
+    t.style.removeProperty("--fh-backdrop-image");
+  } else if (next === "image" && image) {
+    t.setAttribute("data-fh-backdrop", "image");
+    t.style.setProperty("--fh-backdrop-image", backdropImageCss(image));
+  } else {
+    t.setAttribute("data-fh-backdrop", next);
+    t.style.removeProperty("--fh-backdrop-image");
+  }
+  if (remember) {
+    themeStore.set(
+      BACKDROP_KEY,
+      JSON.stringify({
+        mode: next || "default",
+        image: next === "image" ? image.replace(/^url\(["']?|["']?\)$/g, "") || image : "",
+      }),
+    );
+  }
+  syncBackdropSelects(t);
+  if (!fromStorage) t.dispatchEvent(new CustomEvent("fh:backdrop", { bubbles: true, detail: { mode: next || "default", image, target: t } }));
+  return { mode: next || "default", image };
+}
+{
+  const saved = parseBackdropSaved(themeStore.get(BACKDROP_KEY));
+  if (saved?.mode && saved.mode !== "default") setBackdrop(saved, { remember: false, fromStorage: true });
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest?.("[data-fh-backdrop-select]");
+    if (!el || el.type === "file") return;
+    const img = el.dataset.image || "";
+    setBackdrop({ mode: el.dataset.backdrop || "default", image: img }, { target: backdropTarget(el) });
+  });
+  document.addEventListener("change", (e) => {
+    const el = e.target.closest?.("[data-fh-backdrop-select]");
+    if (!el || el.type !== "file") return;
+    const file = el.files?.[0];
+    if (!file) return;
+    setBackdrop({ mode: "image", image: URL.createObjectURL(file) }, { target: backdropTarget(el) });
+  });
+  globalThis.Firehorse = Object.assign(globalThis.Firehorse || {}, { setBackdrop });
+  ready(() => syncBackdropSelects(backdropTarget(document.querySelector("[data-fh-backdrop-select]"))));
 }
 
 ready(() => {

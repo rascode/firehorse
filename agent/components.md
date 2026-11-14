@@ -482,7 +482,7 @@ The head of a page or app. The header is a glass panel with a large caption: num
 
 ### BKD · Backdrop
 
-A quiet abstract picture behind a whole page or app: soft tone fields under the sign-in page's etched contours, fixed to the viewport. --fh-backdrop-strength sets how much tone shows. Glass over it frosts by --fh-frost (0–1), a theme token; a range with data-fh-frost-select dials it live and remembers it. The frost line frosts the art behind a hero from a line down, with a hard edge: --fh-backdrop-frost-from places the line.
+A quiet abstract picture behind a whole page or app: soft tone fields under the sign-in page's etched contours, fixed to the viewport, or a blueprint sheet with data-fh-backdrop="blueprint". --fh-backdrop-strength sets how much tone or grid shows. A grid of option tiles with data-fh-backdrop-select picks the backdrop and remembers it. Glass over it frosts by --fh-frost (0–1), a theme token; a range with data-fh-frost-select dials it live and remembers it. The frost line frosts the art behind a hero from a line down, with a hard edge: --fh-backdrop-frost-from places the line.
 
 ```html
 <!-- BKD-1.1 · Backdrop › Backdrop -->
@@ -495,6 +495,24 @@ A quiet abstract picture behind a whole page or app: soft tone fields under the 
 <div style="position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-lg); background: url(/img/backdrop/firehorse-horse.webp) center 30% / cover">
   <div class="fh-backdrop fh-backdrop--frost" style="--fh-backdrop-frost-from: 55%" aria-hidden="true" data-fh="BKD-2.1"></div>
 </div>
+
+<!-- BKD-3.1 · Blueprint › Blueprint -->
+<div class="fh-grid" data-cols="2" style="--fh-grid-min: 10rem; --fh-gap: var(--fh-space-4); position: relative; z-index: 1; margin-block-start: var(--fh-space-6)">
+  <div data-fh-scheme="light" style="position: relative; overflow: hidden; contain: paint; min-block-size: 11rem; border-radius: var(--fh-radius-lg); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft, var(--fh-color-etch))">
+    <div class="fh-backdrop" data-fh-backdrop="blueprint" style="position: absolute" aria-hidden="true" data-fh="BKD-3.1"></div>
+  </div>
+  <div data-fh-scheme="dark" style="position: relative; overflow: hidden; contain: paint; min-block-size: 11rem; border-radius: var(--fh-radius-lg); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft, var(--fh-color-etch))">
+    <div class="fh-backdrop" data-fh-backdrop="blueprint" style="position: absolute" aria-hidden="true" data-fh="BKD-3.1"></div>
+  </div>
+</div>
+
+<!-- BKD-4.1 · Chooser › Background chooser -->
+<ul class="fh-tiles fh-tiles--options" aria-label="Backdrop" style="position: relative; z-index: 1; max-inline-size: 40rem; margin-block-start: var(--fh-space-6)" data-fh="BKD-4.1">
+  <li><button class="fh-tile fh-tile--option" type="button" data-fh-backdrop-select data-backdrop="default" aria-pressed="true"><span class="fh-tile__media" style="background-color: var(--fh-color-canvas); background-image: radial-gradient(42% 48% at 16% 22%, color-mix(in oklab, var(--fh-tone-violet) 22%, transparent), transparent 72%), radial-gradient(38% 42% at 82% 78%, color-mix(in oklab, var(--fh-tone-teal) 16%, transparent), transparent 72%)"></span><b class="fh-tile__title">Default</b><span class="fh-tile__note">Tone · etched art</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" data-fh-backdrop-select data-backdrop="blueprint" aria-pressed="false"><span class="fh-tile__media" style="background-color: light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky))); background-image: linear-gradient(light-dark(color-mix(in oklab, var(--fh-tone-sky) 26%, transparent), var(--fh-color-etch)) 1px, transparent 1px), linear-gradient(90deg, light-dark(color-mix(in oklab, var(--fh-tone-sky) 26%, transparent), var(--fh-color-etch)) 1px, transparent 1px); background-size: 16px 16px"></span><b class="fh-tile__title">Blueprint</b><span class="fh-tile__note">Grid · drafting sheet</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><button class="fh-tile fh-tile--option" type="button" data-fh-backdrop-select data-backdrop="image" data-image="/img/backdrop/hv-hat-thumb.webp" aria-pressed="false"><span class="fh-tile__media"><img src="/img/backdrop/hv-hat-thumb.webp" alt loading="lazy"></span><b class="fh-tile__title">Photo</b><span class="fh-tile__note">Image · still</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></button></li>
+  <li><label class="fh-tile fh-tile--option"><input type="file" accept="image/*" class="fh-sr-only" data-fh-backdrop-select data-backdrop="image"><span class="fh-tile__media" style="display: grid; place-items: center; border: var(--fh-border-thin) dashed var(--fh-color-etch); color: var(--fh-color-text-muted); font-family: var(--fh-font-mono); font-size: var(--fh-text-lede)">+</span><b class="fh-tile__title">Add an image</b><span class="fh-tile__note">Your file</span><i class="fh-icon fh-icon--check fh-tile__go" aria-hidden="true"></i></label></li>
+</ul>
 ```
 
 ### FND · Fender
