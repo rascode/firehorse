@@ -565,7 +565,7 @@
 
   hr {
     border: 0;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
   }
 
   strong, b {
@@ -789,7 +789,7 @@
     }
 
     & blockquote {
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       color: var(--fh-color-text);
       padding-inline-start: var(--fh-space-5);
     }
@@ -803,7 +803,7 @@
 
     & pre {
       padding: var(--fh-space-4);
-      border: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       border-radius: var(--fh-radius-md);
       font-size: var(--fh-text-small);
       line-height: var(--fh-leading-normal);
@@ -862,7 +862,7 @@
       z-index: -1;
       inset-block: 0;
       inset-inline: calc(max(var(--_margin), (100% - var(--_max)) / 2) - var(--fh-scaffold-outdent));
-      border-inline: var(--fh-border-thin) solid var(--fh-color-scaffold);
+      border-inline: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-scaffold);
       pointer-events: none;
       position: absolute;
     }
@@ -890,7 +890,7 @@
   }
 
   .fh-section--ruled {
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     margin-block-start: var(--fh-section-space);
 
     &:before, &:after {
@@ -918,12 +918,12 @@
 
   .fh-rule {
     border: 0;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     block-size: 0;
   }
 
   .fh-rule--solid {
-    border-block-start-style: solid;
+    border-block-start-style: var(--fh-card-border-style, solid);
     border-block-start-color: var(--fh-color-border);
   }
 
@@ -1124,8 +1124,8 @@
   .fh-cols {
     --fh-cols: 12;
     --fh-cols-gutter: var(--fh-space-6);
-    grid-template-columns: repeat(var(--fh-cols), minmax(0, 1fr));
-    column-gap: var(--fh-cols-gutter);
+    grid-template-columns: repeat(var(--fh-cols, 12), minmax(0, 1fr));
+    column-gap: var(--fh-cols-gutter, var(--fh-space-6));
     row-gap: var(--fh-gap, var(--fh-space-8));
     align-items: start;
     display: grid;
@@ -1153,20 +1153,20 @@
     }
 
     & > [data-layer="over"] {
-      z-index: 1;
+      z-index: var(--fh-z-raised);
       position: relative;
     }
   }
 
   .fh-cols > .fh-cols[data-subgrid] {
     grid-template-columns: subgrid;
-    column-gap: var(--fh-cols-gutter);
+    column-gap: var(--fh-cols-gutter, var(--fh-space-6));
   }
 
   @container fh-cols (inline-size >= 40rem) {
     .fh-cols {
       & > [data-span-md="1"] {
-        grid-column: auto / span min(1, var(--fh-cols));
+        grid-column: auto / span min(1, var(--fh-cols, 12));
       }
 
       & > [data-start-md="1"] {
@@ -1174,7 +1174,7 @@
       }
 
       & > [data-span-md="2"] {
-        grid-column: auto / span min(2, var(--fh-cols));
+        grid-column: auto / span min(2, var(--fh-cols, 12));
       }
 
       & > [data-start-md="2"] {
@@ -1182,7 +1182,7 @@
       }
 
       & > [data-span-md="3"] {
-        grid-column: auto / span min(3, var(--fh-cols));
+        grid-column: auto / span min(3, var(--fh-cols, 12));
       }
 
       & > [data-start-md="3"] {
@@ -1190,7 +1190,7 @@
       }
 
       & > [data-span-md="4"] {
-        grid-column: auto / span min(4, var(--fh-cols));
+        grid-column: auto / span min(4, var(--fh-cols, 12));
       }
 
       & > [data-start-md="4"] {
@@ -1198,7 +1198,7 @@
       }
 
       & > [data-span-md="5"] {
-        grid-column: auto / span min(5, var(--fh-cols));
+        grid-column: auto / span min(5, var(--fh-cols, 12));
       }
 
       & > [data-start-md="5"] {
@@ -1206,7 +1206,7 @@
       }
 
       & > [data-span-md="6"] {
-        grid-column: auto / span min(6, var(--fh-cols));
+        grid-column: auto / span min(6, var(--fh-cols, 12));
       }
 
       & > [data-start-md="6"] {
@@ -1214,7 +1214,7 @@
       }
 
       & > [data-span-md="7"] {
-        grid-column: auto / span min(7, var(--fh-cols));
+        grid-column: auto / span min(7, var(--fh-cols, 12));
       }
 
       & > [data-start-md="7"] {
@@ -1222,7 +1222,7 @@
       }
 
       & > [data-span-md="8"] {
-        grid-column: auto / span min(8, var(--fh-cols));
+        grid-column: auto / span min(8, var(--fh-cols, 12));
       }
 
       & > [data-start-md="8"] {
@@ -1230,7 +1230,7 @@
       }
 
       & > [data-span-md="9"] {
-        grid-column: auto / span min(9, var(--fh-cols));
+        grid-column: auto / span min(9, var(--fh-cols, 12));
       }
 
       & > [data-start-md="9"] {
@@ -1238,7 +1238,7 @@
       }
 
       & > [data-span-md="10"] {
-        grid-column: auto / span min(10, var(--fh-cols));
+        grid-column: auto / span min(10, var(--fh-cols, 12));
       }
 
       & > [data-start-md="10"] {
@@ -1246,7 +1246,7 @@
       }
 
       & > [data-span-md="11"] {
-        grid-column: auto / span min(11, var(--fh-cols));
+        grid-column: auto / span min(11, var(--fh-cols, 12));
       }
 
       & > [data-start-md="11"] {
@@ -1254,7 +1254,7 @@
       }
 
       & > [data-span-md="12"] {
-        grid-column: auto / span min(12, var(--fh-cols));
+        grid-column: auto / span min(12, var(--fh-cols, 12));
       }
 
       & > [data-start-md="12"] {
@@ -1262,7 +1262,7 @@
       }
 
       & > [data-span-md="13"] {
-        grid-column: auto / span min(13, var(--fh-cols));
+        grid-column: auto / span min(13, var(--fh-cols, 12));
       }
 
       & > [data-start-md="13"] {
@@ -1270,7 +1270,7 @@
       }
 
       & > [data-span-md="14"] {
-        grid-column: auto / span min(14, var(--fh-cols));
+        grid-column: auto / span min(14, var(--fh-cols, 12));
       }
 
       & > [data-start-md="14"] {
@@ -1278,7 +1278,7 @@
       }
 
       & > [data-span-md="15"] {
-        grid-column: auto / span min(15, var(--fh-cols));
+        grid-column: auto / span min(15, var(--fh-cols, 12));
       }
 
       & > [data-start-md="15"] {
@@ -1286,7 +1286,7 @@
       }
 
       & > [data-span-md="16"] {
-        grid-column: auto / span min(16, var(--fh-cols));
+        grid-column: auto / span min(16, var(--fh-cols, 12));
       }
 
       & > [data-start-md="16"] {
@@ -1298,11 +1298,11 @@
   @container fh-cols (inline-size >= 60rem) {
     .fh-cols {
       & > [data-span] {
-        grid-column: auto / span var(--fh-cols);
+        grid-column: auto / span var(--fh-cols, 12);
       }
 
       & > [data-span="1"] {
-        grid-column-end: span min(1, var(--fh-cols));
+        grid-column-end: span min(1, var(--fh-cols, 12));
       }
 
       & > [data-start="1"] {
@@ -1310,7 +1310,7 @@
       }
 
       & > [data-span="2"] {
-        grid-column-end: span min(2, var(--fh-cols));
+        grid-column-end: span min(2, var(--fh-cols, 12));
       }
 
       & > [data-start="2"] {
@@ -1318,7 +1318,7 @@
       }
 
       & > [data-span="3"] {
-        grid-column-end: span min(3, var(--fh-cols));
+        grid-column-end: span min(3, var(--fh-cols, 12));
       }
 
       & > [data-start="3"] {
@@ -1326,7 +1326,7 @@
       }
 
       & > [data-span="4"] {
-        grid-column-end: span min(4, var(--fh-cols));
+        grid-column-end: span min(4, var(--fh-cols, 12));
       }
 
       & > [data-start="4"] {
@@ -1334,7 +1334,7 @@
       }
 
       & > [data-span="5"] {
-        grid-column-end: span min(5, var(--fh-cols));
+        grid-column-end: span min(5, var(--fh-cols, 12));
       }
 
       & > [data-start="5"] {
@@ -1342,7 +1342,7 @@
       }
 
       & > [data-span="6"] {
-        grid-column-end: span min(6, var(--fh-cols));
+        grid-column-end: span min(6, var(--fh-cols, 12));
       }
 
       & > [data-start="6"] {
@@ -1350,7 +1350,7 @@
       }
 
       & > [data-span="7"] {
-        grid-column-end: span min(7, var(--fh-cols));
+        grid-column-end: span min(7, var(--fh-cols, 12));
       }
 
       & > [data-start="7"] {
@@ -1358,7 +1358,7 @@
       }
 
       & > [data-span="8"] {
-        grid-column-end: span min(8, var(--fh-cols));
+        grid-column-end: span min(8, var(--fh-cols, 12));
       }
 
       & > [data-start="8"] {
@@ -1366,7 +1366,7 @@
       }
 
       & > [data-span="9"] {
-        grid-column-end: span min(9, var(--fh-cols));
+        grid-column-end: span min(9, var(--fh-cols, 12));
       }
 
       & > [data-start="9"] {
@@ -1374,7 +1374,7 @@
       }
 
       & > [data-span="10"] {
-        grid-column-end: span min(10, var(--fh-cols));
+        grid-column-end: span min(10, var(--fh-cols, 12));
       }
 
       & > [data-start="10"] {
@@ -1382,7 +1382,7 @@
       }
 
       & > [data-span="11"] {
-        grid-column-end: span min(11, var(--fh-cols));
+        grid-column-end: span min(11, var(--fh-cols, 12));
       }
 
       & > [data-start="11"] {
@@ -1390,7 +1390,7 @@
       }
 
       & > [data-span="12"] {
-        grid-column-end: span min(12, var(--fh-cols));
+        grid-column-end: span min(12, var(--fh-cols, 12));
       }
 
       & > [data-start="12"] {
@@ -1398,7 +1398,7 @@
       }
 
       & > [data-span="13"] {
-        grid-column-end: span min(13, var(--fh-cols));
+        grid-column-end: span min(13, var(--fh-cols, 12));
       }
 
       & > [data-start="13"] {
@@ -1406,7 +1406,7 @@
       }
 
       & > [data-span="14"] {
-        grid-column-end: span min(14, var(--fh-cols));
+        grid-column-end: span min(14, var(--fh-cols, 12));
       }
 
       & > [data-start="14"] {
@@ -1414,7 +1414,7 @@
       }
 
       & > [data-span="15"] {
-        grid-column-end: span min(15, var(--fh-cols));
+        grid-column-end: span min(15, var(--fh-cols, 12));
       }
 
       & > [data-start="15"] {
@@ -1422,7 +1422,7 @@
       }
 
       & > [data-span="16"] {
-        grid-column-end: span min(16, var(--fh-cols));
+        grid-column-end: span min(16, var(--fh-cols, 12));
       }
 
       & > [data-start="16"] {
@@ -1498,17 +1498,17 @@
     align-items: center;
     gap: var(--fh-gap-related);
     min-block-size: 2.25rem;
-    padding: .55rem var(--fh-inset-tile);
-    border: var(--fh-border-thin) solid var(--_border);
+    padding: var(--fh-inset-tight) var(--fh-inset-tile);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_border);
     border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     background-color: var(--_bg);
     background-image: linear-gradient(180deg,
-      color-mix(in oklab, var(--_bg) calc(100% - 14% * var(--_sheen)), white),
+      color-mix(in oklab, var(--_bg) calc(100% - 14% * var(--_sheen)), var(--fh-color-on-ink)),
       var(--_bg) 55%,
-      color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), black));
+      color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), var(--fh-color-ink)));
     color: var(--_fg);
     font-family: var(--fh-button-font, var(--fh-font-mono));
-    font-size: .7rem;
+    font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
     letter-spacing: var(--fh-tracking-widest);
     line-height: var(--fh-leading-snug);
@@ -1658,8 +1658,8 @@
 
   .fh-button--lg {
     min-block-size: 2.75rem;
-    padding: .75rem 1.35rem;
-    font-size: .76rem;
+    padding: var(--fh-inset-control) 1.35rem;
+    font-size: var(--fh-text-caption);
   }
 
   .fh-button--block {
@@ -1687,13 +1687,13 @@
 
     &:before {
       content: "";
-      border: 2px solid var(--_fg);
+      border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--_fg);
       border-radius: var(--fh-radius-round);
-      border-inline-end-color: #0000;
       block-size: 1em;
       inline-size: 1em;
+      animation: fh-spin var(--fh-duration-reveal) linear infinite;
+      border-inline-end-color: #0000;
       margin: auto;
-      animation: .7s linear infinite fh-spin;
       position: absolute;
       inset: 0;
     }
@@ -1704,14 +1704,15 @@
       content: "";
       border-radius: inherit;
       background: linear-gradient(180deg,
-        color-mix(in oklab, var(--fh-tone) 72%, white) 0%,
+        color-mix(in oklab, var(--fh-tone) 72%, var(--fh-color-on-ink)) 0%,
         color-mix(in oklab, var(--fh-tone) 52%, transparent) 38%,
         transparent 72%);
+      mask: linear-gradient(var(--fh-color-ink) 0 0) content-box exclude,
+        linear-gradient(var(--fh-color-ink) 0 0);
       pointer-events: none;
       padding: 1px;
       position: absolute;
       inset: 0;
-      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
     }
   }
 
@@ -1806,10 +1807,10 @@
     min-block-size: var(--fh-button-etched-height, 2.5rem);
     padding-block: 0;
     padding-inline: var(--fh-inset-tile);
+    border-style: var(--fh-card-border-style, dashed);
     border-radius: var(--fh-radius-pill);
     font-size: calc(var(--fh-text-label) * 1.1);
     background-image: none;
-    border-style: dashed;
 
     &:hover {
       --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 97%, transparent));
@@ -1857,7 +1858,7 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     border: 0;
-    border-block-end: var(--fh-border-thin) dashed color-mix(in oklab, var(--_color) 45%, transparent);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_color) 45%, transparent);
     color: var(--_color);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-caption);
@@ -1963,7 +1964,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-dot--live {
-      animation: fh-doppler var(--fh-duration-pulse) ease-out infinite;
+      animation: fh-doppler var(--fh-duration-pulse) var(--fh-ease-out) infinite;
     }
   }
 
@@ -1987,8 +1988,8 @@
     gap: var(--fh-gap-related);
     inline-size: fit-content;
     max-inline-size: 100%;
-    padding: .35rem var(--fh-inset-control) .35rem .55rem;
-    border: var(--fh-border-thin) solid var(--fh-color-rule);
+    padding: .35rem var(--fh-inset-control) .35rem var(--fh-inset-tight);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-rule);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
     color: var(--fh-color-text-muted);
@@ -2042,32 +2043,32 @@
   }
 
   .fh-eyebrow-pill--oval {
-    border-radius: 50% / 100%;
-    padding: .6rem 1.1rem .6rem .85rem;
+    padding: .6rem var(--fh-inset-tile) .6rem .85rem;
+    border-radius: var(--fh-radius-round) / 100%;
   }
 
   .fh-eyebrow-pill--tab {
     border-radius: var(--fh-radius-md) var(--fh-radius-md) 0 0;
     box-shadow: 0 1px 0 var(--fh-color-canvas);
     border-block-end: 0;
-    padding-block-end: .45rem;
+    padding-block-end: var(--fh-inset-tight);
   }
 
   .fh-eyebrow-pill--etched {
-    border-style: dashed;
+    border-style: var(--fh-card-border-style, dashed);
     border-color: var(--fh-color-etch);
     background-color: #0000;
   }
 
   .fh-eyebrow-pill--dotted {
-    border-style: dotted;
-    border-width: 1.5px;
+    border-style: var(--fh-card-border-style, dotted);
+    border-width: var(--fh-border-thick);
     border-color: var(--fh-color-etch);
     background-color: #0000;
   }
 
   .fh-eyebrow-pill--double {
-    border-style: double;
+    border-style: var(--fh-card-border-style, double);
     border-width: 3px;
     border-color: var(--fh-color-etch);
   }
@@ -2081,7 +2082,7 @@
   .fh-eyebrow-pill--underline {
     padding-inline: 0 var(--fh-inset-tight);
     border-width: 0 0 var(--fh-border-thin);
-    border-style: dashed;
+    border-style: var(--fh-card-border-style, dashed);
     border-color: var(--fh-color-etch);
     background-color: #0000;
     border-radius: 0;
@@ -2157,19 +2158,20 @@
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 45%, transparent);
     -webkit-backdrop-filter: blur(10px) saturate(1.4);
     backdrop-filter: blur(10px) saturate(1.4);
-    box-shadow: inset 0 1px oklab(100% 0 5.96046e-8 / .1), 0 6px 18px -8px oklab(0% none none / .6);
+    box-shadow: inset 0 1px 0 color-mix(in oklab, var(--fh-color-on-ink) 10%, transparent),
+      0 6px 18px -8px color-mix(in oklab, var(--fh-color-ink) 60%, transparent);
   }
 
   .fh-eyebrow-pill--sm {
     gap: var(--fh-gap-bound);
+    padding: var(--fh-item-frame) var(--fh-inset-tight) var(--fh-item-frame) .4rem;
     font-size: var(--fh-text-micro);
-    padding: .22rem .55rem .22rem .4rem;
   }
 
   .fh-eyebrow-pill--lg {
     gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tight) var(--fh-inset-tile) var(--fh-inset-tight) var(--fh-inset-control);
     font-size: var(--fh-text-caption);
-    padding: .5rem 1rem .5rem .75rem;
   }
 
   .fh-eyebrow-pill--filled-end {
@@ -2202,35 +2204,35 @@
     display: inline-flex;
 
     & + & {
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       padding-inline-start: var(--fh-inset-tight);
     }
   }
 
   .fh-eyebrow-pill__index {
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     color: var(--fh-tone);
     font-variant-numeric: tabular-nums;
     padding-inline-end: var(--fh-inset-tight);
   }
 
   .fh-eyebrow-pill__count {
+    min-inline-size: 1.15rem;
+    padding: .08rem var(--fh-item-frame);
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-tone);
-    min-inline-size: 1.15rem;
     color: var(--fh-color-on-tone);
     font-weight: var(--fh-weight-heavy);
     letter-spacing: 0;
     font-variant-numeric: tabular-nums;
     place-items: center;
-    padding: .08rem .3rem;
     display: inline-grid;
   }
 
   .fh-eyebrow-pill .fh-eyebrow-pill__action {
     align-items: center;
     gap: var(--fh-gap-bound);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     color: var(--fh-color-text);
     font-weight: var(--fh-weight-bold);
     margin-inline-start: var(--fh-gap-bound);
@@ -2254,7 +2256,7 @@
 
   .fh-eyebrow-pill > .fh-avatar {
     --fh-avatar-size: 1.25rem;
-    margin-inline-start: -.25rem;
+    margin-inline-start: calc(-1 * var(--fh-gap-bound));
   }
 
   .fh-dot--ring {
@@ -2280,7 +2282,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-dot--blink {
-      animation: 1.1s step-end infinite fh-blink-dot;
+      animation: fh-blink-dot var(--fh-duration-scene) steps(1, end) infinite;
     }
   }
 
@@ -2295,8 +2297,8 @@
     gap: var(--fh-gap-bound);
     inline-size: fit-content;
     max-inline-size: 100%;
-    padding: .2rem var(--fh-inset-control) .2rem .2rem;
-    border: var(--fh-border-thin) solid var(--fh-color-rule);
+    padding: var(--fh-item-frame) var(--fh-inset-control) var(--fh-item-frame) var(--fh-item-frame);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-rule);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
     font-family: var(--fh-font-mono);
@@ -2376,7 +2378,7 @@
   .fh-badge {
     align-items: center;
     gap: var(--fh-gap-bound);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 32%, transparent);
     border-radius: var(--fh-radius-pill);
     inline-size: fit-content;
     max-inline-size: 100%;
@@ -2399,8 +2401,8 @@
   }
 
   .fh-badge--solid {
+    border-style: var(--fh-card-border-style, solid);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, transparent);
-    border-style: solid;
   }
 
   .fh-checklist {
@@ -2421,7 +2423,7 @@
       font-size: var(--fh-text-small);
       line-height: var(--fh-leading-normal);
       padding-block-start: .12rem;
-      padding-inline-start: calc(1.55rem + var(--fh-inset-control));
+      padding-inline-start: calc(var(--fh-inset-card) + var(--fh-inset-control));
       position: relative;
 
       &:before, &:after {
@@ -2434,7 +2436,7 @@
       }
 
       &:before {
-        border: var(--fh-border-thick) dashed color-mix(in oklab, var(--_mark) 48%, transparent);
+        border: var(--fh-border-thick) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_mark) 48%, transparent);
         border-radius: var(--fh-radius-round);
         background-color: color-mix(in oklab, var(--_mark) 6%, transparent);
       }
@@ -2596,7 +2598,7 @@
   .fh-card__content {
     margin: calc(var(--fh-card-content-inset, var(--_pad-b)) - var(--_pad-b)) calc(var(--fh-card-content-inset, var(--_pad-i)) - var(--_pad-i));
     padding: var(--fh-card-content-pad, 0);
-    border: var(--fh-border-thin) solid var(--fh-card-content-border, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-card-content-border, transparent);
     border-radius: var(--fh-card-content-radius, 0);
     background-color: var(--fh-card-content-bg, transparent);
     -webkit-backdrop-filter: var(--fh-card-content-backdrop, none);
@@ -2643,7 +2645,7 @@
 
       &:after {
         content: "";
-        z-index: 1;
+        z-index: var(--fh-z-raised);
         position: absolute;
         inset: 0;
       }
@@ -2691,7 +2693,7 @@
       color: var(--fh-tone);
       font-size: var(--fh-text-body);
       font-weight: var(--fh-weight-heavy);
-      letter-spacing: .01em;
+      letter-spacing: var(--fh-tracking-body);
       text-transform: none;
       font-variant-numeric: tabular-nums;
     }
@@ -2773,8 +2775,8 @@
     display: inline-grid;
 
     & .fh-icon {
-      --fh-icon-size: 1.2rem;
-      font-size: 1.2rem;
+      --fh-icon-size: var(--fh-text-large);
+      font-size: var(--fh-text-large);
     }
   }
 
@@ -2831,7 +2833,7 @@
 
     & .fh-tile__cube .fh-icon {
       --fh-icon-size: 1rem;
-      font-size: 1rem;
+      font-size: var(--fh-text-body);
     }
 
     & .fh-tile__title {
@@ -2848,11 +2850,11 @@
     & .fh-tile__eyebrow {
       grid-area: 1 / 3;
       align-self: start;
-      padding-inline-end: 1.5rem;
+      padding-inline-end: var(--fh-inset-card);
     }
 
     & .fh-tile__go {
-      font-size: 1rem;
+      font-size: var(--fh-text-body);
       inset-block-start: var(--fh-inset-tile);
       inset-inline-end: var(--fh-inset-tile);
     }
@@ -2876,7 +2878,7 @@
 
     & .fh-tile__cube .fh-icon {
       --fh-icon-size: 1rem;
-      font-size: 1rem;
+      font-size: var(--fh-text-body);
     }
 
     & .fh-tile__title {
@@ -2898,7 +2900,7 @@
     }
 
     & .fh-tile__go {
-      font-size: 1rem;
+      font-size: var(--fh-text-body);
       inset-block-start: var(--fh-inset-tile);
       inset-inline-end: var(--fh-inset-tile);
     }
@@ -2925,8 +2927,8 @@
     }
 
     & .fh-tile__cube .fh-icon {
-      --fh-icon-size: .95rem;
-      font-size: .95rem;
+      --fh-icon-size: var(--fh-text-body);
+      font-size: var(--fh-text-body);
     }
 
     & .fh-tile__title {
@@ -2942,15 +2944,20 @@
     }
 
     & .fh-tile__go {
+      font-size: var(--fh-text-caption);
       opacity: 0;
       grid-area: 1 / 3 / 3 / 4;
-      font-size: .8rem;
       position: static;
       translate: -.3rem .3rem;
     }
 
-    &:is(a, button, label):is(:hover, :focus-visible) {
+    &:is(a, button, label):hover {
       box-shadow: inset 2px 0 0 var(--_c);
+    }
+
+    &:is(a, button, label):focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     &:is(a, button, label):is(:hover, :focus-visible) .fh-tile__cube {
@@ -2994,7 +3001,7 @@
     }
 
     & .fh-tile__go {
-      font-size: .9rem;
+      font-size: var(--fh-text-small);
       inset-block-start: var(--fh-inset-control);
       inset-inline-end: var(--fh-inset-tile);
     }
@@ -3032,14 +3039,14 @@
     & .fh-tile__go {
       block-size: 1.6rem;
       inline-size: 1.6rem;
-      z-index: 1;
+      z-index: var(--fh-z-raised);
+      border-radius: var(--fh-radius-round);
       background: var(--_c);
       color: oklch(from var(--_c) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+      font-size: var(--fh-text-small);
       opacity: 0;
       transition: opacity var(--fh-duration-fast), scale var(--fh-duration-fast) var(--fh-ease-out);
-      border-radius: 50%;
       place-items: center;
-      font-size: .85rem;
       display: grid;
       inset-block-start: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
       inset-inline-end: calc(var(--fh-inset-tile) + var(--fh-gap-grouped));
@@ -3060,7 +3067,7 @@
     inline-size: 100%;
     aspect-ratio: var(--fh-tile-media-ratio, 4 / 3);
     isolation: isolate;
-    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background: var(--fh-color-canvas) center / cover no-repeat;
     transition: box-shadow var(--fh-duration-fast) var(--fh-ease-standard), scale var(--fh-duration-fast) var(--fh-ease-out);
@@ -3205,8 +3212,8 @@
   .fh-tile__media--auto:after {
     content: "";
     inset: var(--fh-gap-related);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
-    border-radius: calc(var(--fh-radius-md) - 2px);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_on, currentColor) 70%, transparent);
+    border-radius: calc(var(--fh-radius-md) - var(--fh-radius-sm));
     pointer-events: none;
     position: absolute;
   }
@@ -3224,8 +3231,8 @@
   }
 
   .fh-stats {
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
     grid-template-columns: minmax(0, 1fr);
     margin: 0;
@@ -3235,8 +3242,8 @@
     & > div {
       gap: var(--fh-gap-related);
       padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
-      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       background-color: color-mix(in oklab, var(--fh-tone) 2.5%, transparent);
       flex-direction: column;
       display: flex;
@@ -3311,12 +3318,12 @@
   }
 
   .fh-accordion {
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-lg);
     overflow: hidden;
 
     & > details + details {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     & summary {
@@ -3340,7 +3347,7 @@
       &:after {
         content: "";
         aspect-ratio: 1;
-        border: var(--fh-border-thick) solid color-mix(in oklab, var(--fh-color-text) 28%, transparent);
+        border: var(--fh-border-thick) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 28%, transparent);
         border-radius: var(--fh-radius-pill);
         inline-size: 1.9rem;
         transition: rotate var(--fh-duration-base) var(--fh-ease-standard),
@@ -3380,7 +3387,7 @@
 
   .fh-tabs {
     scrollbar-width: none;
-    border-block-end: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 14%, transparent);
     gap: 0;
     display: flex;
     overflow-x: auto;
@@ -3388,7 +3395,7 @@
     & > :is(button, a) {
       align-items: center;
       gap: var(--fh-gap-related);
-      padding: .7rem var(--fh-inset-tile);
+      padding: var(--fh-inset-control) var(--fh-inset-tile);
       color: var(--fh-color-text-muted);
       font-size: var(--fh-text-small);
       font-weight: var(--fh-weight-book);
@@ -3422,7 +3429,7 @@
     border-block-end-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
 
     & > :is(button, a) {
-      padding: .5rem var(--fh-gap-grouped);
+      padding: var(--fh-inset-tight) var(--fh-gap-grouped);
       font-size: var(--fh-text-caption);
     }
   }
@@ -3438,7 +3445,7 @@
   .fh-dialog {
     inline-size: min(100% - 2 * var(--fh-page-margin), var(--fh-dialog-size, 32rem));
     max-block-size: min(100dvh - 2 * var(--fh-gap-sectioned), 48rem);
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-lg);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, transparent);
     color: var(--fh-color-text);
@@ -3489,14 +3496,14 @@
     justify-content: space-between;
     align-items: start;
     gap: var(--fh-gap-grouped-wide);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     display: flex;
   }
 
   .fh-dialog__footer {
     justify-content: flex-end;
     gap: var(--fh-gap-grouped);
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     flex-wrap: wrap;
     display: flex;
   }
@@ -3531,9 +3538,9 @@
     max-block-size: min(22rem, 60dvh);
     min-inline-size: 13rem;
     padding: var(--fh-item-frame);
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-sm);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, var(--fh-color-ink));
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-menu);
     opacity: 0;
@@ -3560,7 +3567,7 @@
       gap: var(--fh-item-gap);
       inline-size: 100%;
       padding: var(--fh-item-block) var(--fh-item-inline);
-      border-radius: calc(var(--fh-radius-sm) - 1px);
+      border-radius: var(--fh-radius-sm);
       color: inherit;
       font-size: var(--fh-text-small);
       text-align: start;
@@ -3571,7 +3578,6 @@
 
       &:is(:hover, :focus-visible) {
         background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
-        outline: none;
       }
     }
 
@@ -3661,7 +3667,7 @@
 
     & > .fh-tiles {
       --fh-tiles-min: var(--fh-menu-tiles-min, 8rem);
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min)), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min, 8rem)), 1fr));
       border-block-start: var(--_etch-soft);
     }
 
@@ -3677,12 +3683,12 @@
   }
 
   .fh-menu__head {
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     justify-content: space-between;
     align-items: center;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-control) var(--fh-inset-tile);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: inherit;
     display: flex;
     position: sticky;
@@ -3705,7 +3711,7 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     padding: var(--fh-gap-bound) var(--fh-gap-related);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_c) 55%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 55%, transparent);
     border-radius: var(--fh-radius-pill);
     color: var(--_ink);
     font-family: var(--fh-font-mono);
@@ -3716,7 +3722,7 @@
     display: inline-flex;
 
     &:not([data-tone]) {
-      --_c: var(--fh-tone-lime);
+      --_c: var(--fh-tone);
     }
 
     & > .fh-icon {
@@ -3737,7 +3743,7 @@
     gap: var(--fh-gap-related);
     min-block-size: 2.25rem;
     padding: 0 var(--fh-inset-tile);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
@@ -3768,7 +3774,7 @@
   }
 
   .fh-menu__ask {
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
     & > summary {
       align-items: center;
@@ -3861,7 +3867,8 @@
   .fh-toast {
     --_edge: var(--fh-color-border-strong);
     gap: var(--fh-gap-grouped);
-    border: var(--fh-border-thin) solid var(--_edge);
+    padding: var(--fh-inset-tile);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_edge);
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
@@ -3873,7 +3880,6 @@
       translate var(--fh-duration-base) var(--fh-ease-out);
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
-    padding: .9rem .95rem;
     display: grid;
 
     @starting-style {
@@ -3883,7 +3889,7 @@
 
     & .fh-close {
       inline-size: 1.5rem;
-      margin: -.2rem -.3rem 0 0;
+      margin: calc(-1 * var(--fh-gap-bound)) calc(-1 * var(--fh-gap-bound)) 0 0;
     }
 
     &[data-tone="success"] {
@@ -4026,8 +4032,8 @@
     }
 
     &:focus, &:focus-visible {
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
-      outline: none;
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     :is(&:user-invalid, &[aria-invalid="true"]) {
@@ -4040,7 +4046,7 @@
 
     @media (pointer: coarse) {
       min-block-size: var(--fh-tap-target);
-      font-size: max(16px, var(--fh-text-body));
+      font-size: var(--fh-text-body);
     }
 
     @media (forced-colors: active) {
@@ -4113,7 +4119,7 @@
       padding: var(--fh-item-frame);
       border: var(--fh-border-thin) solid var(--fh-color-border-strong);
       border-radius: var(--fh-radius-sm);
-      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, black);
+      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, var(--fh-color-ink));
       box-shadow: var(--fh-shadow-menu);
       margin-block-start: var(--fh-gap-bound);
     }
@@ -4229,8 +4235,8 @@
     align-self: stretch;
 
     &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
       outline-offset: -2px;
-      outline: 2px solid;
     }
 
     @media (pointer: coarse) {
@@ -4244,7 +4250,7 @@
 
   @media (forced-colors: active) {
     .fh-money .fh-input-group {
-      outline: 1px solid fieldtext;
+      outline: var(--fh-border-thin) solid FieldText;
     }
   }
 
@@ -4283,14 +4289,14 @@
 
     &:before {
       content: "";
+      inset-block: var(--fh-gap-bound);
       aspect-ratio: 1;
       border-radius: var(--fh-radius-round);
       background-color: var(--_thumb);
       transition: translate var(--fh-duration-base) var(--fh-ease-out),
         background-color var(--fh-duration-base) var(--fh-ease-standard);
       position: absolute;
-      inset-block: .2rem;
-      inset-inline-start: .2rem;
+      inset-inline-start: var(--fh-gap-bound);
     }
 
     &:checked {
@@ -4312,7 +4318,7 @@
     }
 
     @media (forced-colors: active) {
-      border: 1px solid buttontext;
+      border: var(--fh-border-thin) solid ButtonText;
     }
   }
 
@@ -4321,7 +4327,7 @@
     inline-size: fit-content;
     max-inline-size: 100%;
     padding: var(--fh-item-frame);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     min-inline-size: 0;
     margin: 0;
@@ -4393,7 +4399,7 @@
     flex-direction: column;
 
     & > label {
-      border-radius: .8rem;
+      border-radius: var(--fh-radius-lg);
     }
   }
 
@@ -4403,7 +4409,7 @@
       flex-direction: column;
 
       & > label {
-        border-radius: .8rem;
+        border-radius: var(--fh-radius-lg);
       }
     }
   }
@@ -4533,8 +4539,8 @@
 
   .fh-theme-menu__dot {
     aspect-ratio: 1;
+    border-radius: var(--fh-radius-round);
     background: var(--_c, var(--fh-color-accent));
-    border-radius: 50%;
     flex: none;
     inline-size: .85rem;
   }
@@ -4553,7 +4559,7 @@
 
   .fh-theme-menu__dot--auto {
     box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-text-subtle);
-    outline: 1px dashed var(--fh-color-text-subtle);
+    outline: var(--fh-border-thin) dashed var(--fh-color-text-subtle);
     outline-offset: 3px;
   }
 
@@ -4607,7 +4613,7 @@
     justify-items: center;
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-card) var(--fh-inset-card);
-    border: var(--fh-border-thick) dashed var(--fh-color-etch);
+    border: var(--fh-border-thick) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-color-field) 35%, transparent);
     color: var(--fh-color-text-muted);
@@ -4647,11 +4653,11 @@
       cursor: default;
 
       &:before {
-        border: 2px solid color-mix(in oklab, currentColor 25%, transparent);
+        border: var(--fh-border-heavy) var(--fh-card-border-style, solid) color-mix(in oklab, currentColor 25%, transparent);
         border-radius: var(--fh-radius-round);
+        animation: fh-spin var(--fh-duration-reveal) linear infinite;
         background: none;
         border-block-start-color: currentColor;
-        animation: .7s linear infinite fh-spin;
         mask: none;
       }
 
@@ -4666,7 +4672,7 @@
     }
 
     &[data-invalid], &[data-invalid]:hover {
-      border-style: solid;
+      border-style: var(--fh-card-border-style, solid);
       border-color: color-mix(in oklab, var(--fh-color-danger) 70%, transparent);
     }
 
@@ -4848,7 +4854,7 @@
     gap: var(--fh-gap-bound);
     min-block-size: 2.5rem;
     padding: var(--fh-inset-tight);
-    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), .85rem) + var(--fh-gap-bound));
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), var(--fh-radius-lg)) + var(--fh-gap-bound));
     background-color: var(--fh-color-field);
     cursor: text;
     flex-wrap: wrap;
@@ -4870,20 +4876,20 @@
     }
 
     & > .fh-chip {
+      padding-block: var(--fh-gap-bound);
       background-color: var(--fh-color-canvas);
-      padding-block: .22rem;
     }
   }
 
   .fh-tags--inline {
-    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), .85rem) + .2rem);
-    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
     min-block-size: 0;
     inline-size: fit-content;
+    padding: var(--fh-gap-bound);
+    border-radius: calc(min(var(--fh-chip-radius, var(--fh-radius-pill)), var(--fh-radius-lg)) + var(--fh-gap-bound));
+    background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
     cursor: var(--fh-cursor);
     border: 0;
     flex: none;
-    padding: .2rem;
     display: inline-flex;
 
     &:focus-within {
@@ -4893,13 +4899,13 @@
     & > input {
       inline-size: 8rem;
       min-inline-size: 0;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight);
       font-size: var(--fh-text-label);
       box-shadow: none;
       background: none;
       border: 0;
       outline: none;
       flex: none;
-      padding: .22rem .5rem;
     }
 
     &:focus-within {
@@ -4907,9 +4913,9 @@
     }
 
     & > .fh-chip {
+      border-style: var(--fh-card-border-style, dashed);
       transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
       background-color: #0000;
-      border-style: dashed;
       border-color: #0000;
     }
 
@@ -4924,7 +4930,7 @@
 
   .fh-tags__add {
     aspect-ratio: 1;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-round);
     inline-size: 1.5rem;
     color: var(--fh-color-text-muted);
@@ -4945,7 +4951,7 @@
     }
 
     &:hover, &:focus-visible {
-      border-style: solid;
+      border-style: var(--fh-card-border-style, solid);
       border-color: var(--fh-color-border-strong);
       color: var(--fh-color-text);
     }
@@ -4957,21 +4963,21 @@
   }
 
   .fh-tags__entry {
+    inline-size: 14rem;
     flex: none;
     align-items: center;
-    inline-size: 14rem;
-    padding-inline-start: .2rem;
+    padding-inline-start: var(--fh-gap-bound);
     display: inline-flex;
 
     & > input {
       min-inline-size: 0;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight) var(--fh-gap-bound) .1rem;
       color: var(--fh-color-text);
       font-size: var(--fh-text-label);
       background: none;
       border: 0;
       outline: 0;
       flex: 1;
-      padding: .22rem .5rem .22rem .1rem;
     }
   }
 
@@ -4989,7 +4995,11 @@
     &:hover, &:focus-visible {
       background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
       color: var(--fh-color-text);
-      outline: none;
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
   }
 
@@ -5028,7 +5038,7 @@
   }
 
   .fh-dictate {
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
     gap: 2px;
     padding: 2px;
@@ -5042,6 +5052,7 @@
   .fh-dictate__mode {
     align-items: center;
     gap: var(--fh-gap-bound);
+    padding: var(--fh-gap-bound) .65rem;
     border-radius: var(--fh-radius-pill);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
@@ -5055,7 +5066,6 @@
       color var(--fh-duration-base) var(--fh-ease-standard);
     background: none;
     border: 0;
-    padding: .3rem .65rem;
     display: inline-flex;
 
     &:hover {
@@ -5089,7 +5099,7 @@
     border-radius: var(--fh-radius-round);
     background-color: var(--fh-color-danger);
     inline-size: .4rem;
-    animation: 1.2s ease-in-out infinite fh-dictate-blink;
+    animation: fh-dictate-blink 1.2s var(--fh-ease-in-out) infinite;
   }
 
   .fh-dictate__live {
@@ -5133,10 +5143,10 @@
 
     & > i {
       background-color: var(--fh-color-danger);
-      border-radius: 1px;
       block-size: 30%;
       inline-size: 2px;
-      animation: .9s ease-in-out infinite fh-dictate-wave;
+      animation: fh-dictate-wave var(--fh-duration-intro) var(--fh-ease-in-out) infinite;
+      border-radius: 1px;
     }
 
     & > i:nth-child(2) {
@@ -5200,7 +5210,7 @@
   .fh-form-step {
     gap: var(--fh-gap-grouped-wide) var(--fh-gap-separated);
     padding-block: var(--fh-gap-sectioned);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     display: grid;
 
     &:first-child {
@@ -5390,7 +5400,7 @@
     --fh-auth-flow-b: 14.3s;
     --fh-auth-glass: color-mix(in oklab, var(--fh-color-surface) 80%, transparent);
     --fh-auth-glass-blur: var(--fh-blur-chrome);
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-lg);
     background-color: var(--fh-color-surface);
     isolation: isolate;
@@ -5401,9 +5411,9 @@
   }
 
   .fh-auth__art {
-    background-color: var(--fh-auth-ink);
+    background-color: var(--fh-auth-ink, color-mix(in oklab, var(--fh-color-text) 34%, transparent));
     min-block-size: 9rem;
-    mask: var(--fh-auth-art) center / cover no-repeat;
+    mask: var(--fh-auth-art, url("art/etch-contours.svg")) center / cover no-repeat;
     position: relative;
     overflow: hidden;
 
@@ -5432,11 +5442,11 @@
   @media (prefers-reduced-motion: no-preference) {
     .fh-auth__art:before, .fh-auth__art:after {
       will-change: translate;
-      animation: fh-auth-flow var(--fh-auth-flow) linear infinite;
+      animation: fh-auth-flow var(--fh-auth-flow, 9s) linear infinite;
     }
 
     .fh-auth__art:after {
-      animation-duration: var(--fh-auth-flow-b);
+      animation-duration: var(--fh-auth-flow-b, 14.3s);
     }
   }
 
@@ -5453,9 +5463,9 @@
     inset-inline-end: var(--fh-gap-grouped-wide);
 
     & .fh-segmented {
-      background-color: var(--fh-auth-glass);
-      -webkit-backdrop-filter: blur(var(--fh-auth-glass-blur)) saturate(1.2);
-      backdrop-filter: blur(var(--fh-auth-glass-blur)) saturate(1.2);
+      background-color: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
+      -webkit-backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
+      backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
     }
   }
 
@@ -5464,7 +5474,7 @@
     inline-size: var(--fh-auth-logo-size, 7.5rem);
     aspect-ratio: var(--fh-auth-logo-ratio, 4);
     background-color: var(--fh-color-text);
-    mask: var(--fh-auth-logo) left center / contain no-repeat;
+    mask: var(--fh-auth-logo, none) left center / contain no-repeat;
     display: block;
   }
 
@@ -5503,7 +5513,7 @@
     & h1, & h2, & h3 {
       font-size: clamp(1.5rem, 1.2rem + 1.6cqi, 2rem);
       font-weight: var(--fh-weight-medium);
-      letter-spacing: -.02em;
+      letter-spacing: var(--fh-tracking-heading);
       margin: 0;
       line-height: 1.1;
     }
@@ -5621,7 +5631,7 @@
   }
 
   .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) .fh-auth__art {
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
   }
 
   @container fh-auth (inline-size >= 46rem) {
@@ -5631,7 +5641,7 @@
 
     .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) .fh-auth__art {
       border-block-end: 0;
-      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
@@ -5647,7 +5657,7 @@
     }
 
     & .fh-auth__panel {
-      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
       border-radius: var(--fh-radius-lg);
       background-color: color-mix(in oklab, var(--fh-color-surface) 86%, transparent);
       box-shadow: var(--fh-shadow-overlay);
@@ -5658,7 +5668,7 @@
     grid-template-columns: minmax(0, 1fr);
 
     & > .fh-auth__art {
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
@@ -5673,11 +5683,11 @@
       inline-size: min(27rem, 100% - 2 * var(--fh-gap-sectioned));
       min-block-size: 0;
       margin-block: var(--fh-gap-sectioned);
-      border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 14%, transparent);
       border-radius: var(--fh-radius-lg);
-      background-color: var(--fh-auth-glass);
-      -webkit-backdrop-filter: blur(var(--fh-auth-glass-blur)) saturate(1.2);
-      backdrop-filter: blur(var(--fh-auth-glass-blur)) saturate(1.2);
+      background-color: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
+      -webkit-backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
+      backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
       box-shadow: inset 0 1px 0 color-mix(in oklab, var(--fh-color-text) 10%, transparent),
         var(--fh-shadow-overlay);
       grid-area: 1 / 1;
@@ -5741,8 +5751,8 @@
 
     & > li:before {
       content: "";
-      border: var(--fh-border-thin) solid currentColor;
-      border-radius: 50%;
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) currentColor;
+      border-radius: var(--fh-radius-round);
       block-size: .4rem;
       inline-size: .4rem;
     }
@@ -5760,7 +5770,7 @@
     }
 
     & > li[data-state="checking"]:before {
-      border-style: dashed;
+      border-style: var(--fh-card-border-style, dashed);
     }
   }
 
@@ -5820,7 +5830,7 @@
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
       color: var(--fh-color-text-muted);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
 
     & .fh-table__head {
@@ -5849,7 +5859,7 @@
       text-align: start;
       text-transform: uppercase;
       white-space: nowrap;
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
 
     & :is(tbody, tfoot) :is(td, th) {
@@ -5860,7 +5870,7 @@
     }
 
     & tbody tr + tr :is(td, th) {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
 
     & tbody tr:hover {
@@ -5868,7 +5878,7 @@
     }
 
     & tfoot :is(td, th) {
-      border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
       font-weight: var(--fh-weight-bold);
     }
 
@@ -5927,7 +5937,7 @@
       }
 
       & tbody tr + tr {
-        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+        border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       }
     }
   }
@@ -5939,7 +5949,7 @@
     --_zebra: var(--fh-table-zebra, transparent);
     --_head: var(--fh-color-surface-raised);
     --_ctl: var(--fh-dt-control, 1.875rem);
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-lg);
     background-color: var(--fh-color-surface);
     min-inline-size: 0;
@@ -5966,7 +5976,7 @@
     align-items: center;
     gap: var(--fh-gap-related) var(--fh-gap-grouped);
     padding: var(--fh-inset-control) var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     flex-wrap: wrap;
     display: flex;
   }
@@ -5978,7 +5988,7 @@
   }
 
   .fh-dt__toolbar .fh-segmented {
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-sm);
     flex-direction: row;
     gap: 0;
@@ -6037,7 +6047,7 @@
   .fh-dt .fh-dt__search {
     min-inline-size: 7rem;
     min-block-size: var(--_ctl);
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     font-size: var(--fh-text-small);
     transition: border-color var(--fh-duration-fast) var(--fh-ease-standard);
     block-size: var(--_ctl);
@@ -6092,7 +6102,7 @@
     gap: var(--fh-gap-bound);
     min-block-size: var(--_ctl);
     padding: 0 var(--fh-inset-tight);
-    border: var(--fh-border-thin) solid transparent;
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
     border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     color: var(--fh-color-text-muted);
     font: inherit;
@@ -6140,7 +6150,7 @@
   }
 
   .fh-dt__tool--action {
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 55%, transparent);
     color: var(--fh-color-text);
 
     & > .fh-icon {
@@ -6148,8 +6158,8 @@
     }
 
     &:hover {
+      border-style: var(--fh-card-border-style, solid);
       background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent);
-      border-style: solid;
     }
   }
 
@@ -6157,7 +6167,7 @@
     max-block-size: min(28rem, 70vh);
     inline-size: min(26rem, 100vw - 2rem);
     padding: var(--fh-inset-control);
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
@@ -6197,8 +6207,8 @@
 
     & :is(select, input) {
       min-block-size: 2rem;
+      padding-block: var(--fh-gap-bound);
       font-size: var(--fh-text-small);
-      padding-block: .25rem;
     }
   }
 
@@ -6225,7 +6235,7 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     padding: var(--fh-inset-tight) var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     flex-wrap: wrap;
     display: flex;
 
@@ -6267,8 +6277,8 @@
     & :is(th, td) {
       block-size: var(--_row);
       padding: 0 var(--_pad);
-      border-block-end: var(--fh-border-thin) solid var(--_rule);
-      border-inline-end: var(--fh-border-thin) solid color-mix(in oklab, var(--_rule) 70%, transparent);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_rule);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--_rule) 70%, transparent);
       text-align: start;
       vertical-align: middle;
       white-space: nowrap;
@@ -6344,7 +6354,7 @@
 
     & tfoot td {
       z-index: 2;
-      border-block-start: var(--fh-border-thin) solid var(--fh-color-border-strong);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
       background-color: var(--_head);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
@@ -6437,7 +6447,7 @@
     inline-size: 8px;
     position: absolute;
     inset-block: 0;
-    inset-inline-end: -4px;
+    inset-inline-end: calc(-1 * var(--fh-gap-bound));
 
     &:after {
       content: "";
@@ -6447,7 +6457,7 @@
       inline-size: 2px;
       position: absolute;
       inset-block: 25%;
-      inset-inline-start: 3px;
+      inset-inline-start: var(--fh-gap-bound);
     }
 
     &:hover:after, &[data-dragging]:after {
@@ -6501,7 +6511,7 @@
     align-items: center;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-tight) var(--fh-inset-control);
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     color: var(--fh-color-text-subtle);
     font-size: var(--fh-text-small);
     flex-wrap: wrap;
@@ -6516,7 +6526,7 @@
     max-inline-size: calc(100% - 2 * var(--fh-gap-grouped));
     margin: calc(var(--fh-gap-separated) * -1) auto var(--fh-gap-grouped);
     padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tile);
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-pill);
     background-color: var(--fh-color-surface-raised);
     box-shadow: var(--fh-shadow-overlay);
@@ -6547,13 +6557,13 @@
   .fh-cell--number, .fh-cell--currency, .fh-cell--percent {
     text-align: end;
     font-family: var(--fh-font-mono);
-    font-size: .82rem;
+    font-size: var(--fh-text-caption);
   }
 
   .fh-cell--formula {
     font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
     color: var(--fh-color-text-muted);
-    font-size: .8rem;
   }
 
   .fh-cell--long {
@@ -6598,15 +6608,15 @@
   .fh-pill {
     align-items: center;
     gap: var(--fh-gap-bound);
+    max-inline-size: 100%;
+    padding: .12rem var(--fh-inset-tight);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-tone) 16%, transparent);
-    max-inline-size: 100%;
     color: var(--fh-color-text);
+    font-size: var(--fh-text-caption);
     white-space: nowrap;
     text-overflow: ellipsis;
     vertical-align: middle;
-    padding: .12rem .5rem;
-    font-size: .78rem;
     line-height: 1.35;
     display: inline-flex;
     overflow: hidden;
@@ -6617,7 +6627,7 @@
   }
 
   .fh-pill--link {
-    border: var(--fh-border-thin) solid color-mix(in oklab, var(--fh-tone) 35%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-tone) 35%, transparent);
     background: none;
   }
 
@@ -6632,7 +6642,7 @@
   .fh-status {
     align-items: center;
     gap: var(--fh-gap-bound);
-    font-size: .82rem;
+    font-size: var(--fh-text-caption);
     display: inline-flex;
 
     &:before {
@@ -6647,7 +6657,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-status--live:before {
-      animation: fh-doppler var(--fh-duration-pulse) ease-out infinite;
+      animation: fh-doppler var(--fh-duration-pulse) var(--fh-ease-out) infinite;
     }
   }
 
@@ -6668,8 +6678,8 @@
       text-align: end;
       min-inline-size: 2.6rem;
       font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-caption);
       color: var(--fh-color-text-muted);
-      font-size: .78rem;
     }
   }
 
@@ -6680,7 +6690,7 @@
     block-size: 1.1em;
     inline-size: 5.5em;
     mask: var(--_star) 0 50% / 1.1em 1.1em repeat-x;
-    font-size: .85rem;
+    font-size: var(--fh-text-small);
     display: inline-block;
   }
 
@@ -6691,7 +6701,7 @@
 
     & > * {
       border-radius: var(--fh-radius-sm);
-      border: var(--fh-border-thin) solid var(--fh-color-border);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
       object-fit: cover;
       background: var(--fh-color-surface-sunken);
       block-size: 1.8rem;
@@ -6735,7 +6745,7 @@
   .fh-dt__card {
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-control);
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-raised);
     cursor: var(--fh-cursor-action);
@@ -6779,9 +6789,9 @@
 
     & dt {
       color: var(--fh-color-text-subtle);
+      font-size: var(--fh-text-caption);
       white-space: nowrap;
       text-overflow: ellipsis;
-      font-size: .75rem;
       overflow: hidden;
     }
 
@@ -6887,7 +6897,7 @@
     padding: var(--fh-inset-tight) 0;
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
-    font-size: .7rem;
+    font-size: var(--fh-text-label);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
@@ -6938,7 +6948,7 @@
       & > .fh-icon {
         --fh-icon-size: 1.05em;
         color: var(--fh-color-accent-text, var(--fh-color-accent));
-        transition: rotate .2s var(--fh-ease-out);
+        transition: rotate var(--fh-duration-base) var(--fh-ease-out);
       }
 
       &:is(:hover, :focus-visible, [aria-current="page"], [aria-expanded="true"]) {
@@ -6979,7 +6989,7 @@
     padding: var(--fh-inset-card) var(--fh-page-margin) var(--fh-inset-card);
     overscroll-behavior: contain;
     border: 0;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
     opacity: 0;
@@ -7011,7 +7021,7 @@
     padding-block: var(--fh-inset-card);
 
     & + & {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
 
     & > ul {
@@ -7040,7 +7050,7 @@
 
   .fh-drawer__section {
     & + & {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
 
     & > summary {
@@ -7131,7 +7141,7 @@
 
     & .fh-mega__rail {
       padding: var(--fh-inset-tile) 0 0;
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       flex-direction: column;
       align-items: flex-start;
     }
@@ -7150,7 +7160,7 @@
     max-block-size: calc(100dvh - var(--fh-header-height));
     overscroll-behavior: contain;
     border: 0;
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
     box-shadow: var(--fh-shadow-overlay);
@@ -7177,14 +7187,14 @@
   }
 
   .fh-mega__grid {
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
     display: grid;
 
     & > * {
       padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
-      border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     & h3 {
@@ -7264,7 +7274,7 @@
 
       &:before {
         content: "";
-        border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+        border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         pointer-events: none;
         grid-area: 1 / 1 / 2 / -1;
         position: absolute;
@@ -7394,7 +7404,7 @@
     &:has( > img), &.fh-avatar {
       --fh-avatar-size: 2.4rem;
       aspect-ratio: 1;
-      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
       border-radius: var(--fh-radius-md);
       background-color: var(--fh-color-surface-sunken);
       inline-size: 2.4rem;
@@ -7412,7 +7422,7 @@
     -webkit-line-clamp: 2;
     line-clamp: 2;
     color: color-mix(in oklab, var(--fh-color-text-strong) 92%, transparent);
-    font-size: .84rem;
+    font-size: var(--fh-text-small);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-snug);
     line-height: var(--fh-leading-snug);
@@ -7436,8 +7446,8 @@
     line-clamp: 2;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
     letter-spacing: var(--fh-tracking-mono);
-    font-size: .72rem;
     line-height: var(--fh-leading-normal);
     -webkit-box-orient: vertical;
     display: -webkit-box;
@@ -7647,16 +7657,16 @@
   }
 
   .fh-footer__columns {
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
     display: grid;
   }
 
   .fh-footer__column {
     padding: var(--fh-inset-card) var(--fh-inset-card) var(--fh-inset-card);
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
 
     & h2, & h3 {
       align-items: center;
@@ -7690,7 +7700,7 @@
 
     & a {
       color: var(--fh-color-text-muted);
-      font-size: .84rem;
+      font-size: var(--fh-text-small);
       font-weight: var(--fh-weight-book);
       letter-spacing: var(--fh-tracking-body);
       transition: color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -7729,10 +7739,11 @@
     justify-content: center;
     align-items: center;
     gap: var(--fh-gap-bound);
-    border-radius: var(--fh-radius-sm);
-    background-color: var(--_cube, var(--fh-tone));
     min-inline-size: 2rem;
     max-inline-size: 11rem;
+    padding: .34rem var(--fh-inset-tight);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--_cube, var(--fh-tone));
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
@@ -7743,7 +7754,6 @@
     white-space: nowrap;
     transition: background-color var(--fh-duration-base) var(--fh-ease-standard);
     flex: none;
-    padding: .34rem .45rem;
     font-style: normal;
     line-height: 1.1;
     display: inline-flex;
@@ -7752,23 +7762,23 @@
 
   .fh-cube--lg {
     min-inline-size: 2.75rem;
+    padding: var(--fh-inset-tight) .65rem;
     font-size: var(--fh-text-small);
-    padding: .55rem .65rem;
   }
 
   .fh-cube--sm {
     min-inline-size: 1.5rem;
+    padding: var(--fh-item-frame) .35rem;
     font-size: var(--fh-text-micro);
-    padding: .22rem .35rem;
   }
 
   .fh-cube--xl {
-    border-radius: var(--fh-radius-md);
     min-inline-size: 3.5rem;
     max-inline-size: 14rem;
+    padding: var(--fh-inset-control) .85rem;
+    border-radius: var(--fh-radius-md);
     font-size: var(--fh-text-lede);
-    letter-spacing: -.02em;
-    padding: .7rem .85rem;
+    letter-spacing: var(--fh-tracking-heading);
   }
 
   .fh-cube > .fh-icon {
@@ -7776,7 +7786,7 @@
   }
 
   .fh-cube--outline {
-    border: var(--fh-border-thin) dashed var(--_cube, var(--fh-tone));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone));
     background-color: color-mix(in oklab, var(--_cube, var(--fh-tone)) 8%, transparent);
     color: var(--_cube, var(--fh-tone));
   }
@@ -7815,11 +7825,12 @@
   .fh-chip {
     align-items: center;
     gap: var(--fh-gap-related);
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    padding: .38rem var(--fh-inset-control);
     border: var(--fh-border-thin) var(--fh-chip-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 22%, transparent);
     border-radius: var(--fh-chip-radius, var(--fh-radius-pill));
     background: var(--fh-chip-bg, none);
-    inline-size: fit-content;
-    max-inline-size: 100%;
     box-shadow: inset 0 calc(var(--fh-chip-underline, 0px) * -1) 0 color-mix(in oklab, var(--fh-tone) 70%, transparent);
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-caption);
@@ -7830,7 +7841,6 @@
       border-color var(--fh-duration-fast) var(--fh-ease-standard),
       background-color var(--fh-duration-fast) var(--fh-ease-standard);
     flex: none;
-    padding: .38rem .8rem;
     text-decoration: none;
     display: inline-flex;
 
@@ -7849,7 +7859,7 @@
     }
 
     &:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], :has(:checked)) {
-      border-style: solid;
+      border-style: var(--fh-card-border-style, solid);
       border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
       background-color: color-mix(in oklab, var(--fh-tone) 14%, transparent);
       color: var(--fh-color-text);
@@ -7897,7 +7907,7 @@
   }
 
   .fh-chip--solid {
-    border-style: solid;
+    border-style: var(--fh-card-border-style, solid);
     border-color: var(--fh-tone);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
@@ -7919,7 +7929,7 @@
   }
 
   .fh-chip--tone {
-    border-style: solid;
+    border-style: var(--fh-card-border-style, solid);
     border-color: color-mix(in oklab, var(--fh-tone) 45%, transparent);
     background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
     color: var(--fh-color-text);
@@ -7984,18 +7994,18 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-chip--live:before {
-      animation: fh-doppler var(--fh-duration-pulse) ease-out infinite;
+      animation: fh-doppler var(--fh-duration-pulse) var(--fh-ease-out) infinite;
     }
   }
 
   .fh-chip--sm {
+    padding: var(--fh-item-frame) .6rem;
     font-size: var(--fh-text-label);
-    padding: .22rem .6rem;
   }
 
   .fh-chip--lg {
+    padding: var(--fh-inset-tight) var(--fh-inset-tile);
     font-size: var(--fh-text-small);
-    padding: .5rem 1rem;
   }
 
   .fh-chips {
@@ -8016,7 +8026,7 @@
   }
 
   .fh-chips--track {
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 22%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 22%, transparent);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 40%, transparent);
     inline-size: fit-content;
@@ -8053,7 +8063,7 @@
     gap: var(--fh-gap-grouped);
     min-inline-size: 0;
     padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) var(--fh-inset-tight);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 40%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 40%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
     color: var(--fh-color-text);
@@ -8161,8 +8171,8 @@
     column-gap: var(--fh-gap-grouped);
     row-gap: var(--fh-gap-bound);
     padding: var(--fh-inset-tile) var(--fh-inset-card);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
-    border-inline-start: 3px solid var(--fh-tone);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    border-inline-start: 3px var(--fh-card-border-style, solid) var(--fh-tone);
     border-radius: var(--fh-radius-sm);
     background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
     color: var(--fh-color-text-muted);
@@ -8188,9 +8198,9 @@
     }
 
     & > .fh-close {
-      grid-area: 1 / 3;
       inline-size: 1.5rem;
-      margin: -.2rem -.4rem 0 0;
+      margin: calc(-1 * var(--fh-gap-bound)) -.4rem 0 0;
+      grid-area: 1 / 3;
     }
 
     & > .fh-alert__actions {
@@ -8212,7 +8222,7 @@
     align-items: center;
     gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
     padding: var(--fh-inset-tight) var(--fh-page-margin);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     background-color: color-mix(in oklab, var(--fh-tone) 9%, var(--fh-color-canvas));
     color: var(--fh-color-text);
     font-size: var(--fh-text-caption);
@@ -8235,7 +8245,7 @@
     --_ink: light-dark(oklch(from var(--_c) min(l, .5) c h), oklch(from var(--_c) max(l, .74) c h));
     --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
     min-block-size: var(--fh-banner-height, 2.75rem);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
     -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
@@ -8514,7 +8524,7 @@
     aspect-ratio: 1;
     border-radius: var(--fh-radius-round);
     background: radial-gradient(closest-side, var(--fh-color-canvas) 78%, transparent 79%),
-      conic-gradient(var(--fh-tone) calc(var(--fh-value) * 1%), color-mix(in oklab, var(--fh-color-text) 10%, transparent) 0);
+      conic-gradient(var(--fh-tone) calc(var(--fh-value, 0) * 1%), color-mix(in oklab, var(--fh-color-text) 10%, transparent) 0);
     font-family: var(--fh-font-mono);
     font-size: calc(var(--_size) / 5);
     font-weight: var(--fh-weight-bold);
@@ -8529,10 +8539,10 @@
   .fh-spinner {
     inline-size: var(--fh-spinner-size, 1rem);
     aspect-ratio: 1;
-    border: 2px solid color-mix(in oklab, currentColor 25%, transparent);
+    border: var(--fh-border-heavy) var(--fh-card-border-style, solid) color-mix(in oklab, currentColor 25%, transparent);
     border-radius: var(--fh-radius-round);
+    animation: fh-spin var(--fh-duration-reveal) linear infinite;
     border-block-start-color: currentColor;
-    animation: .7s linear infinite fh-spin;
     display: inline-block;
   }
 
@@ -8588,7 +8598,7 @@
     justify-items: center;
     gap: var(--fh-gap-grouped);
     padding: clamp(var(--fh-inset-card), 8cqi, var(--fh-inset-page)) var(--fh-inset-card);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background-image: repeating-linear-gradient(-45deg, var(--fh-color-border) 0 1px, transparent 1px 9px);
     text-align: center;
@@ -8610,7 +8620,7 @@
   .fh-empty__icon {
     aspect-ratio: 1;
     inline-size: 3rem;
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 55%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-canvas);
     color: var(--fh-tone);
@@ -8628,14 +8638,14 @@
     --_size: var(--fh-avatar-size, 2.25rem);
     inline-size: var(--_size);
     aspect-ratio: var(--fh-avatar-ratio, 1);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 45%, transparent);
     border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: calc(var(--_size) * .3);
     font-weight: var(--fh-weight-heavy);
-    letter-spacing: .02em;
+    letter-spacing: var(--fh-tracking-mono);
     text-transform: uppercase;
     flex: none;
     place-items: center;
@@ -8652,7 +8662,7 @@
     &[data-status]:after {
       content: "";
       aspect-ratio: 1;
-      border: 2px solid var(--fh-color-canvas);
+      border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background-color: var(--fh-color-live);
       inline-size: .6rem;
@@ -8687,9 +8697,9 @@
     display: flex;
 
     & > .fh-avatar {
-      border-style: solid;
+      border-style: var(--fh-card-border-style, solid);
       border-color: var(--fh-color-canvas);
-      border-width: 2px;
+      border-width: var(--fh-border-heavy);
     }
 
     & > .fh-avatar + .fh-avatar {
@@ -8774,7 +8784,7 @@
   }
 
   .fh-list {
-    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -8790,7 +8800,7 @@
       position: relative;
 
       & + li {
-        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+        border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       }
 
       & > div {
@@ -8872,17 +8882,17 @@
 
     & > li {
       grid-template-columns: var(--_when) minmax(0, 1fr);
-      column-gap: calc(var(--fh-gap-grouped) * 2 + 1rem);
+      column-gap: calc(var(--fh-gap-grouped) * 2 + var(--fh-gap-grouped-wide));
       padding-block-end: var(--fh-inset-card);
       display: grid;
       position: relative;
 
       &:not(:last-child):before {
         content: "";
-        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+        inset-block: var(--fh-inset-tile) 0;
+        border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         position: absolute;
-        inset-block: 1rem 0;
-        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + .5rem);
+        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + var(--fh-inset-tight));
       }
 
       &:after {
@@ -8893,8 +8903,8 @@
         inline-size: .6rem;
         box-shadow: 0 0 0 3px var(--fh-color-canvas);
         position: absolute;
-        inset-block-start: .4rem;
-        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + .5rem - .3rem);
+        inset-block-start: var(--fh-inset-tight);
+        inset-inline-start: calc(var(--_when) + var(--fh-gap-grouped) + var(--fh-inset-tight) - var(--fh-gap-bound));
       }
 
       & > time, & > .fh-timeline__when {
@@ -8906,7 +8916,7 @@
         text-transform: uppercase;
         font-variant-numeric: tabular-nums;
         grid-column: 1;
-        padding-block-start: .15rem;
+        padding-block-start: var(--fh-gap-bound);
       }
 
       & > :not(time, .fh-timeline__when) {
@@ -8933,7 +8943,7 @@
     & > div {
       gap: var(--fh-gap-bound);
       padding-block: var(--fh-row-pad, var(--fh-inset-control));
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       display: grid;
     }
 
@@ -8973,7 +8983,7 @@
       gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       min-inline-size: 0;
       padding-block: var(--fh-row-pad, var(--fh-inset-control));
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       flex-wrap: wrap;
       display: flex;
       container: fh-kv-row / inline-size;
@@ -9050,15 +9060,15 @@
   }
 
   .fh-kbd {
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
-    background-color: var(--fh-color-surface-raised);
     min-inline-size: 1.5em;
+    padding: .05rem var(--fh-gap-bound);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
+    border-block-end-width: var(--fh-border-heavy);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     text-align: center;
-    border-block-end-width: 2px;
-    border-radius: 4px;
-    padding: .05rem .35rem;
     font-size: .72em;
     line-height: 1.5;
     display: inline-block;
@@ -9076,7 +9086,7 @@
 
     &:before, &:after {
       content: "";
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       flex: 1;
     }
 
@@ -9086,7 +9096,7 @@
   }
 
   .fh-code {
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-sunken);
     margin: 0;
@@ -9098,7 +9108,7 @@
       gap: var(--fh-gap-grouped);
       min-block-size: 2.5rem;
       padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tile);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-label);
@@ -9109,19 +9119,19 @@
     & > pre {
       padding: var(--fh-inset-tile) var(--fh-inset-card);
       color: var(--fh-color-text);
+      font-size: var(--fh-text-caption);
       tab-size: 2;
       margin: 0;
-      font-size: .78rem;
       line-height: 1.7;
       overflow-x: auto;
     }
   }
 
   .fh-avatars__more {
+    border-style: var(--fh-card-border-style, solid);
     background-color: var(--fh-color-surface-chrome);
     color: var(--fh-color-text-muted);
     font-size: calc(var(--fh-avatar-size, 2.25rem) * .28);
-    border-style: solid;
   }
 
   .fh-avatars--lg > .fh-avatar {
@@ -9200,7 +9210,7 @@
       block-size: 2.25rem;
       min-inline-size: 2.25rem;
       padding-inline: var(--fh-inset-tight);
-      border: var(--fh-border-thin) solid transparent;
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
       border-radius: var(--fh-radius-sm);
       color: var(--fh-color-text-muted);
       background: none;
@@ -9267,7 +9277,7 @@
       &:before {
         content: counter(fh-stepper);
         aspect-ratio: 1;
-        border: var(--fh-border-thick) dashed var(--fh-color-etch);
+        border: var(--fh-border-thick) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         border-radius: var(--fh-radius-round);
         inline-size: 1.6rem;
         font-size: var(--fh-text-micro);
@@ -9278,7 +9288,7 @@
 
       &:not(:last-child):after {
         content: "";
-        border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+        border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         flex: 1;
         min-inline-size: 1rem;
       }
@@ -9287,7 +9297,7 @@
         color: var(--fh-color-text);
 
         &:before {
-          border-style: solid;
+          border-style: var(--fh-card-border-style, solid);
           border-color: var(--fh-tone);
           color: var(--fh-tone);
         }
@@ -9298,7 +9308,7 @@
 
         &:before {
           content: "✓";
-          border-style: solid;
+          border-style: var(--fh-card-border-style, solid);
           border-color: var(--fh-tone);
           background-color: var(--fh-tone);
           color: var(--fh-color-on-tone);
@@ -9306,7 +9316,7 @@
         }
 
         &:after {
-          border-block-start-style: solid;
+          border-block-start-style: var(--fh-card-border-style, solid);
           border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
         }
       }
@@ -9341,7 +9351,7 @@
     }
 
     & :is(ol, ul) {
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       gap: 0;
       margin: 0;
       padding: 0;
@@ -9356,12 +9366,12 @@
 
     & a {
       padding: var(--fh-inset-tight) var(--fh-inset-tile);
+      border-inline-start: var(--fh-border-heavy) var(--fh-card-border-style, solid) transparent;
       color: var(--fh-color-text-muted);
       font-size: var(--fh-text-small);
       line-height: var(--fh-leading-snug);
       transition: color var(--fh-duration-fast) var(--fh-ease-standard),
         border-color var(--fh-duration-fast) var(--fh-ease-standard);
-      border-inline-start: 2px solid #0000;
       margin-inline-start: -1px;
       text-decoration: none;
       display: block;
@@ -9422,7 +9432,7 @@
     display: grid;
 
     & > section {
-      gap: .15rem;
+      gap: var(--fh-gap-bound);
       display: grid;
     }
 
@@ -9489,16 +9499,16 @@
   }
 
   .fh-sidenav__chevron {
-    border-radius: var(--fh-radius-sm);
     block-size: 1.75rem;
     inline-size: 1.75rem;
+    border-radius: var(--fh-radius-sm);
     color: var(--fh-color-text-subtle);
     cursor: pointer;
     background: none;
     border: 0;
     flex: none;
     place-items: center;
-    margin-inline-end: .15rem;
+    margin-inline-end: var(--fh-gap-bound);
     display: inline-grid;
   }
 
@@ -9520,10 +9530,10 @@
   }
 
   .fh-sidenav__children {
-    border-inline-start: 1px solid color-mix(in oklab, var(--fh-color-etch) 70%, transparent);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-etch) 70%, transparent);
     gap: .1rem;
-    margin-inline-start: .85rem;
-    padding-inline-start: .65rem;
+    margin-inline-start: var(--fh-gap-grouped);
+    padding-inline-start: var(--fh-inset-control);
     display: grid;
     overflow: hidden;
   }
@@ -9548,8 +9558,8 @@
 
   .fh-sidenav__child {
     font-size: var(--fh-text-xs, .75rem);
+    padding-block: var(--fh-gap-bound);
     justify-content: flex-start;
-    padding-block: .28rem;
   }
 
   .fh-sidenav__badge {
@@ -9564,7 +9574,7 @@
     border-radius: var(--fh-radius-md);
     background: var(--fh-color-surface-menu, var(--fh-color-surface-raised));
     box-shadow: var(--fh-shadow-elevated, 0 8px 28px color-mix(in oklab, var(--fh-color-text) 18%, transparent));
-    border: 1px solid color-mix(in oklab, var(--fh-color-etch) 60%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-etch) 60%, transparent);
     position: fixed;
   }
 
@@ -9572,8 +9582,8 @@
     margin: 0 0 var(--fh-gap-related);
     padding-inline: var(--fh-inset-tight);
     font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-bold);
     color: var(--fh-color-text);
-    font-weight: 600;
   }
 
   .fh-sidenav-flyout__list {
@@ -9609,8 +9619,8 @@
 
   .fh-tiers {
     counter-reset: fh-tier;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
     align-items: stretch;
@@ -9623,8 +9633,8 @@
     gap: var(--fh-gap-sectioned);
     padding: var(--fh-inset-card) var(--_pad) var(--fh-inset-card);
     border: 0;
-    border-inline-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
-    border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     counter-increment: fh-tier;
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
     border-radius: 0;
@@ -9654,7 +9664,7 @@
     & > header, & > .fh-tier__price {
       margin-inline: calc(var(--_pad) * -1);
       padding-inline: var(--_pad);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       padding-block-end: var(--fh-inset-card);
     }
 
@@ -9680,6 +9690,7 @@
 
     &[data-featured]:before {
       content: attr(data-featured);
+      padding: var(--fh-gap-bound) var(--fh-inset-tight);
       border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone);
       color: var(--fh-color-on-tone);
@@ -9688,7 +9699,6 @@
       font-weight: var(--fh-weight-heavy);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
-      padding: .2rem .6rem;
       position: absolute;
       inset-block-start: calc(var(--fh-gap-sectioned) - .1rem);
       inset-inline-end: var(--_pad);
@@ -9727,7 +9737,7 @@
       font-family: var(--fh-font-figure);
       font-size: clamp(2.3rem, 1.5rem + 4cqi, 2.9rem);
       font-weight: var(--fh-weight-medium);
-      letter-spacing: -.045em;
+      letter-spacing: var(--fh-tracking-tightest);
       font-variant-numeric: tabular-nums;
       margin-inline-end: .15em;
     }
@@ -9764,7 +9774,7 @@
 
   .fh-feature__icon {
     aspect-ratio: 1;
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 50%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 50%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-tone) 8%, transparent);
     inline-size: 2.5rem;
@@ -9781,7 +9791,7 @@
   .fh-testimonial {
     gap: var(--fh-gap-sectioned);
     padding: clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
-    border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
     margin: 0;
     display: grid;
@@ -9883,7 +9893,7 @@
     & > * {
       min-inline-size: 0;
       padding: var(--fh-inset-card);
-      border: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 3%, transparent);
       position: relative;
@@ -9933,8 +9943,8 @@
   }
 
   .fh-tier__flag {
-    z-index: 1;
-    border: var(--fh-border-thin) solid var(--fh-tone);
+    z-index: var(--fh-z-raised);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-tone);
     border-radius: var(--fh-radius-pill);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
@@ -9953,18 +9963,18 @@
 
   .fh-tier > .fh-checklist {
     margin-inline: calc(var(--fh-tier-pad, var(--fh-gap-sectioned)) * -1);
-    border-block: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     flex: 1;
     align-content: start;
     gap: 0;
 
     & > li {
       min-block-size: 0;
-      padding: var(--fh-inset-tight) var(--fh-tier-pad, var(--fh-inset-card)) var(--fh-inset-tight) calc(var(--fh-tier-pad, var(--fh-inset-card)) + 1.5rem);
+      padding: var(--fh-inset-tight) var(--fh-tier-pad, var(--fh-inset-card)) var(--fh-inset-tight) calc(var(--fh-tier-pad, var(--fh-inset-card)) + var(--fh-inset-card));
     }
 
     & > li + li {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     }
 
     & > li:before {
@@ -10010,7 +10020,7 @@
 
     &::scroll-marker-group {
       justify-content: center;
-      gap: .35rem;
+      gap: var(--fh-gap-bound);
       padding-block-start: var(--fh-inset-tight);
       display: flex;
     }
@@ -10018,7 +10028,7 @@
 
   .fh-carousel__slide {
     min-block-size: var(--fh-carousel-height, 18rem);
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-lg);
     background-color: var(--fh-color-surface);
     scroll-snap-align: start;
@@ -10071,7 +10081,8 @@
   }
 
   .fh-carousel__count {
-    z-index: 1;
+    z-index: var(--fh-z-raised);
+    padding: var(--fh-gap-bound) var(--fh-inset-tight);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 70%, transparent);
     -webkit-backdrop-filter: blur(6px);
@@ -10081,7 +10092,6 @@
     font-size: var(--fh-text-micro);
     letter-spacing: var(--fh-tracking-wider);
     font-variant-numeric: tabular-nums;
-    padding: .15rem .5rem;
     position: absolute;
     inset-block-start: var(--fh-gap-grouped);
     inset-inline-end: var(--fh-gap-grouped);
@@ -10093,7 +10103,7 @@
 
   .fh-carousel__prev, .fh-carousel__next {
     aspect-ratio: 1;
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-round);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 75%, transparent);
     -webkit-backdrop-filter: blur(6px);
@@ -10134,7 +10144,7 @@
   }
 
   .fh-swatches-ramp {
-    border: var(--fh-border-thin) solid var(--fh-color-border-strong);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-md);
     grid-template-columns: repeat(3, minmax(0, 1fr));
     display: grid;
@@ -10175,7 +10185,7 @@
     & > div {
       gap: var(--fh-gap-related);
       padding: var(--fh-inset-tile);
-      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 45%, transparent);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 45%, transparent);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
       display: grid;
@@ -10219,7 +10229,7 @@
     & > div:not(.fh-type-scale) {
       gap: var(--fh-gap-related) var(--fh-gap-sectioned);
       padding-block: var(--fh-inset-card);
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       align-items: baseline;
       display: grid;
 
@@ -10284,7 +10294,7 @@
     & > div {
       aspect-ratio: 1.3;
       padding: var(--fh-inset-tight);
-      border: var(--fh-border-thick) solid var(--fh-color-text-muted);
+      border: var(--fh-border-thick) var(--fh-card-border-style, solid) var(--fh-color-text-muted);
       border-radius: var(--r, var(--fh-radius-md));
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-micro);
@@ -10302,7 +10312,7 @@
   }
 
   .fh-motion-tile {
-    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch, var(--fh-color-border-strong));
     border-radius: var(--fh-radius-md, 10px);
     background: color-mix(in oklab, var(--fh-tone) 14%, var(--fh-color-surface, var(--fh-color-canvas)));
     block-size: 5.5rem;
@@ -10318,10 +10328,10 @@
   }
 
   .fh-motion-tile--line > span {
+    inset: auto var(--fh-inset-tile) var(--fh-inset-tile);
     background: var(--fh-tone);
     block-size: 2px;
     position: absolute;
-    inset: auto 1rem 1.1rem;
   }
 
   .fh-motion-tile--art {
@@ -10354,7 +10364,7 @@
   }
 
   .fh-motion-hero__line {
-    border-block-end: 2px dashed var(--fh-tone);
+    border-block-end: var(--fh-border-heavy) var(--fh-card-border-style, dashed) var(--fh-tone);
     block-size: 2px;
     display: block;
   }
@@ -10379,12 +10389,12 @@
   }
 
   .fh-motion-hero__chips > li {
-    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    padding: var(--fh-gap-bound) var(--fh-inset-control);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch, var(--fh-color-border-strong));
+    border-radius: var(--fh-radius-pill);
     font: 600 var(--fh-text-label) / 1 var(--fh-font-mono);
     letter-spacing: var(--fh-tracking-wider);
     text-transform: uppercase;
-    border-radius: 999px;
-    padding: .35rem .7rem;
   }
 
   .fh-motion-art {
@@ -10410,7 +10420,7 @@
     align-content: start;
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-tile);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch, var(--fh-color-border-strong));
     border-radius: var(--fh-radius-md, 10px);
     display: grid;
   }
@@ -10432,14 +10442,14 @@
   }
 
   .fh-motion-pro {
+    padding: .05rem var(--fh-gap-bound);
+    border-radius: var(--fh-radius-pill);
     background: var(--fh-color-text);
     color: var(--fh-color-canvas);
     font: 800 .55rem / 1.3 var(--fh-font-mono);
     letter-spacing: .04em;
     text-transform: uppercase;
     vertical-align: middle;
-    border-radius: 999px;
-    padding: .05rem .3rem;
   }
 
   .fh-dialog--float {
@@ -10501,7 +10511,7 @@
   .fh-detail__header {
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-tile) var(--fh-inset-card) var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     background-color: #0000;
     display: grid;
   }
@@ -10547,7 +10557,7 @@
   }
 
   .fh-detail__facts {
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-border);
     grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
@@ -10617,7 +10627,7 @@
       gap: var(--fh-gap-grouped);
       min-block-size: 2.4rem;
       padding-block: var(--fh-inset-tight);
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       grid-template-columns: minmax(7rem, .4fr) minmax(0, 1fr);
       align-items: center;
       display: grid;
@@ -10644,8 +10654,8 @@
 
     & :is(.fh-input, .fh-select) {
       min-block-size: 2rem;
+      padding-block: var(--fh-gap-bound);
       font-size: var(--fh-text-small);
-      padding-block: .3rem;
     }
   }
 
@@ -10661,7 +10671,7 @@
     align-items: center;
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-control) var(--fh-inset-card);
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     background-color: var(--fh-color-surface-raised);
     flex-wrap: wrap;
     display: flex;
@@ -10684,7 +10694,7 @@
     min-block-size: 2.5rem;
     min-inline-size: 2.5rem;
     padding: 0 var(--fh-inset-tight);
-    border: var(--fh-border-thin) solid transparent;
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
     border-radius: var(--fh-radius-sm);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
@@ -10855,7 +10865,7 @@
     &:before, &:after {
       inline-size: var(--_w);
       block-size: var(--_t);
-      inset-inline-start: calc((var(--_w) - 4px) / -2);
+      inset-inline-start: calc((var(--_w) - var(--fh-gap-bound)) / -2);
     }
   }
 
@@ -10887,7 +10897,7 @@
     align-items: center;
     gap: var(--fh-gap-grouped);
     padding: var(--fh-inset-control) var(--fh-inset-tile);
-    border-block-end: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     color: var(--fh-color-text-muted);
     display: flex;
 
@@ -10936,7 +10946,6 @@
 
       &:is(:hover, :focus-visible, [aria-selected="true"]) {
         background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 12%, transparent);
-        outline: none;
       }
 
       & > .fh-icon-tile {
@@ -10959,7 +10968,7 @@
   .fh-command__foot {
     gap: var(--fh-gap-grouped-wide);
     padding: var(--fh-inset-tight) var(--fh-inset-tile);
-    border-block-start: var(--fh-border-thin) solid var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
@@ -11012,7 +11021,7 @@
   .fh-price--lg > :is(b, strong) {
     font-family: var(--fh-font-figure);
     font-size: var(--fh-text-h3);
-    letter-spacing: -.02em;
+    letter-spacing: var(--fh-tracking-heading);
   }
 
   @media (hover: hover) {
@@ -11028,11 +11037,11 @@
     border-radius: var(--fh-radius-sm);
     inline-size: 2.5rem;
     color: var(--fh-color-text);
+    font-size: var(--fh-text-large);
     cursor: var(--fh-cursor-action);
     background: none;
     border: 0;
     place-items: center;
-    font-size: 1.2rem;
     display: inline-grid;
     position: relative;
 
@@ -11041,16 +11050,16 @@
     }
 
     & > b {
+      min-inline-size: 1.05rem;
+      padding: 0 var(--fh-gap-bound);
       border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone, var(--fh-color-accent));
-      min-inline-size: 1.05rem;
       color: var(--fh-color-on-tone);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-micro);
-      padding: 0 .28rem;
       line-height: 1.05rem;
       position: absolute;
-      inset-block-start: .2rem;
+      inset-block-start: var(--fh-gap-bound);
       inset-inline-end: .15rem;
     }
   }
@@ -11058,7 +11067,7 @@
   .fh-ship-meter {
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-control);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 45%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 45%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-success)) 7%, transparent);
     font-size: var(--fh-text-small);
@@ -11263,7 +11272,7 @@
   }
 
   .fh-metric--needed {
-    border-style: dashed;
+    border-style: var(--fh-card-border-style, dashed);
     border-color: var(--fh-color-etch);
     background-color: #0000;
 
@@ -11280,7 +11289,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--fh-color-focus);
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
       outline-offset: 2px;
     }
   }
@@ -11336,7 +11345,7 @@
   }
 
   .fh-metric__more {
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     margin-block-start: var(--fh-gap-related);
 
     & > summary {
@@ -11367,7 +11376,7 @@
       }
 
       &:focus-visible {
-        outline: 2px solid var(--fh-color-focus);
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
         outline-offset: 2px;
         border-radius: var(--fh-radius-sm);
       }
@@ -11397,15 +11406,15 @@
     --_bad: var(--fh-color-danger);
     align-items: center;
     gap: var(--fh-gap-bound);
+    inline-size: fit-content;
+    padding: .1rem var(--fh-inset-tight);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--_c, var(--fh-color-text-muted)) 14%, transparent);
-    inline-size: fit-content;
     color: var(--_c, var(--fh-color-text-muted));
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    padding: .1rem .45rem;
     display: inline-flex;
 
     &[data-trend="up"] {
@@ -11533,7 +11542,7 @@
       & tbody tr {
         gap: var(--fh-gap-bound);
         padding: var(--fh-inset-control) var(--_pad);
-        border-block-end: var(--fh-border-thin) solid var(--_rule);
+        border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_rule);
         grid-template-columns: minmax(0, 1fr);
         display: grid;
       }
@@ -11627,7 +11636,7 @@
   .fh-etched-split {
     --_gutter: max(var(--fh-page-margin), (100cqi - var(--fh-content-max)) / 2);
     --_pad: var(--fh-inset-card);
-    border-block: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     grid-template-columns: minmax(0, 1fr);
     display: grid;
   }
@@ -11639,7 +11648,7 @@
     container: fh-pane / inline-size;
 
     & + & {
-      border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
   }
 
@@ -11658,7 +11667,7 @@
       & + & {
         padding-inline: var(--_pad) var(--_gutter);
         border-block-start: 0;
-        border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+        border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       }
     }
   }
@@ -11672,7 +11681,7 @@
     --_bar: var(--fh-tone, var(--fh-color-accent));
     gap: var(--fh-gap-sectioned);
     padding: var(--_pad);
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     background: linear-gradient(var(--_bar), var(--_bar)) 0 0 / clamp(4rem, 14cqi, 9rem) 2px no-repeat border-box,
       color-mix(in oklab, var(--_bar) 4%, transparent);
     justify-items: start;
@@ -11716,7 +11725,7 @@
   .fh-cta-band__aside {
     gap: var(--fh-gap-sectioned);
     min-inline-size: 0;
-    border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     align-content: end;
     justify-self: stretch;
     padding-block-start: var(--fh-inset-card);
@@ -11782,7 +11791,7 @@
       margin-block: calc(-1 * var(--_pad));
       padding: var(--_pad) 0 var(--_pad) var(--_pad);
       border-block-start: 0;
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       grid-area: 1 / 2;
     }
   }
@@ -11802,9 +11811,9 @@
   .fh-panel {
     z-index: -1;
     inset-block: var(--fh-panel-top, 0) 0;
-    inline-size: min(var(--fh-panel-size), 100% - var(--fh-panel-gutter));
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
-    background-color: var(--fh-panel-fill);
+    inline-size: min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    background-color: var(--fh-panel-fill, color-mix(in oklab, var(--fh-color-canvas) 62%, transparent));
     pointer-events: none;
     border-block-end: 0;
     grid-column: content;
@@ -11819,8 +11828,8 @@
 
   .fh-panel-inset {
     box-sizing: border-box;
-    max-inline-size: min(var(--fh-panel-size), 100% - var(--fh-panel-gutter));
-    padding-inline: var(--fh-panel-pad);
+    max-inline-size: min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem));
+    padding-inline: var(--fh-panel-pad, var(--fh-inset-card));
   }
 
   .fh-footer--tall {
@@ -11834,11 +11843,11 @@
   @container fh-frame (inline-size >= 78rem) {
     .fh-footer--panel .fh-footer__columns {
       --_panel: calc(min(var(--fh-panel-size, 52rem), 100% - var(--fh-panel-gutter, 3rem)) - var(--fh-border-thin));
-      --_cols: calc(var(--fh-footer-panel-columns) + 1);
-      grid-template-columns: repeat(var(--fh-footer-panel-columns), calc(var(--_panel) / var(--fh-footer-panel-columns)))
+      --_cols: calc(var(--fh-footer-panel-columns, 3) + 1);
+      grid-template-columns: repeat(var(--fh-footer-panel-columns, 3), calc(var(--_panel) / var(--fh-footer-panel-columns, 3)))
         minmax(0, 1fr)
         calc(100% / var(--_cols));
-      border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }
 
     .fh-footer--panel .fh-footer__column {
@@ -11846,7 +11855,7 @@
     }
 
     .fh-footer--panel .fh-footer__column:last-child {
-      border-inline-start: var(--fh-border-thin) dashed var(--fh-color-etch);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       grid-column: -2;
       margin-inline-start: calc(-1 * var(--fh-border-thin));
     }
@@ -12234,22 +12243,22 @@
   }
 
   :root, [style*="--fh-root:"], [data-fh-root] {
-    --fh-root-tint-1: oklch(from var(--fh-root) calc(l + (1 - l) * .25) calc(c * .85) h);
-    --fh-root-tint-2: oklch(from var(--fh-root) calc(l + (1 - l) * .5) calc(c * .6) h);
-    --fh-root-tint-3: oklch(from var(--fh-root) calc(l + (1 - l) * .75) calc(c * .35) h);
-    --fh-root-shade-1: oklch(from var(--fh-root) calc(l * .8) calc(c * .95) h);
-    --fh-root-shade-2: oklch(from var(--fh-root) calc(l * .6) calc(c * .85) h);
-    --fh-root-shade-3: oklch(from var(--fh-root) calc(l * .4) calc(c * .7) h);
-    --fh-root-analog-1: oklch(from var(--fh-root) l calc(c * .95) calc(h - 30));
-    --fh-root-analog-2: oklch(from var(--fh-root) l calc(c * .95) calc(h + 30));
-    --fh-root-complement: oklch(from var(--fh-root) l calc(c * .85) calc(h + 180));
-    --fh-root-split-1: oklch(from var(--fh-root) l calc(c * .85) calc(h + 150));
-    --fh-root-split-2: oklch(from var(--fh-root) l calc(c * .85) calc(h + 210));
-    --fh-root-triad-1: oklch(from var(--fh-root) l calc(c * .9) calc(h + 120));
-    --fh-root-triad-2: oklch(from var(--fh-root) l calc(c * .9) calc(h + 240));
-    --fh-root-muted: oklch(from var(--fh-root) l calc(c * .3) h);
-    --fh-root-wash: color-mix(in oklch, var(--fh-root) 10%, transparent);
-    --fh-root-on: oklch(from var(--fh-root) clamp(0, calc((.62 - l) * 1000), 1) 0 h);
+    --fh-root-tint-1: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + (1 - l) * .25) calc(c * .85) h);
+    --fh-root-tint-2: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + (1 - l) * .5) calc(c * .6) h);
+    --fh-root-tint-3: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + (1 - l) * .75) calc(c * .35) h);
+    --fh-root-shade-1: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l * .8) calc(c * .95) h);
+    --fh-root-shade-2: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l * .6) calc(c * .85) h);
+    --fh-root-shade-3: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l * .4) calc(c * .7) h);
+    --fh-root-analog-1: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h - 30));
+    --fh-root-analog-2: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h + 30));
+    --fh-root-complement: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .85) calc(h + 180));
+    --fh-root-split-1: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .85) calc(h + 150));
+    --fh-root-split-2: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .85) calc(h + 210));
+    --fh-root-triad-1: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .9) calc(h + 120));
+    --fh-root-triad-2: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .9) calc(h + 240));
+    --fh-root-muted: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .3) h);
+    --fh-root-wash: color-mix(in oklch, var(--fh-root, var(--fh-color-accent)) 10%, transparent);
+    --fh-root-on: oklch(from var(--fh-root, var(--fh-color-accent)) clamp(0, calc((.62 - l) * 1000), 1) 0 h);
   }
 
   [data-fh-root="tone"] {
@@ -12263,7 +12272,7 @@
 
   [data-fh-overlay]:after {
     content: "";
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     border-radius: inherit;
     pointer-events: none;
     position: absolute;
@@ -12276,22 +12285,22 @@
   }
 
   [data-fh-overlay="wash"]:after {
-    background-color: color-mix(in oklch, var(--fh-root) 16%, transparent);
+    background-color: color-mix(in oklch, var(--fh-root, var(--fh-color-accent)) 16%, transparent);
   }
 
   [data-fh-overlay="glow"]:after {
-    background: radial-gradient(60% 70% at 20% 15%, color-mix(in oklch, var(--fh-root) 52%, transparent), transparent 70%),
-      radial-gradient(55% 60% at 85% 30%, color-mix(in oklch, var(--fh-root-analog-2) 38%, transparent), transparent 70%),
-      radial-gradient(70% 60% at 50% 110%, color-mix(in oklch, var(--fh-root-analog-1) 32%, transparent), transparent 70%);
+    background: radial-gradient(60% 70% at 20% 15%, color-mix(in oklch, var(--fh-root, var(--fh-color-accent)) 52%, transparent), transparent 70%),
+      radial-gradient(55% 60% at 85% 30%, color-mix(in oklch, var(--fh-root-analog-2, oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h + 30))) 38%, transparent), transparent 70%),
+      radial-gradient(70% 60% at 50% 110%, color-mix(in oklch, var(--fh-root-analog-1, oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h - 30))) 32%, transparent), transparent 70%);
   }
 
   [data-fh-overlay="aurora"]:after {
     background: conic-gradient(from 210deg at 50% 60%,
-      color-mix(in oklch, var(--fh-root-analog-1) 42%, transparent),
-      color-mix(in oklch, var(--fh-root) 48%, transparent),
-      color-mix(in oklch, var(--fh-root-analog-2) 38%, transparent),
-      color-mix(in oklch, var(--fh-root-complement) 28%, transparent),
-      color-mix(in oklch, var(--fh-root-analog-1) 42%, transparent));
+      color-mix(in oklch, var(--fh-root-analog-1, oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h - 30))) 42%, transparent),
+      color-mix(in oklch, var(--fh-root, var(--fh-color-accent)) 48%, transparent),
+      color-mix(in oklch, var(--fh-root-analog-2, oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h + 30))) 38%, transparent),
+      color-mix(in oklch, var(--fh-root-complement, oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .85) calc(h + 180))) 28%, transparent),
+      color-mix(in oklch, var(--fh-root-analog-1, oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .95) calc(h - 30))) 42%, transparent));
     filter: blur(24px);
   }
 
@@ -12300,16 +12309,16 @@
   }
 
   [data-fh-overlay="duotone"]:after {
-    background-color: var(--fh-root);
+    background-color: var(--fh-root, var(--fh-color-accent));
     mix-blend-mode: screen;
     opacity: .9;
   }
 
   [data-fh-overlay="duotone"]:before {
     content: "";
-    z-index: 1;
+    z-index: var(--fh-z-raised);
     border-radius: inherit;
-    background-color: var(--fh-root-tint-3);
+    background-color: var(--fh-root-tint-3, oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + (1 - l) * .75) calc(c * .35) h));
     mix-blend-mode: soft-light;
     opacity: .6;
     pointer-events: none;
@@ -12322,12 +12331,12 @@
   }
 
   .fh-sr-only:not(:focus, :focus-within) {
+    block-size: 1px;
+    inline-size: 1px;
+    margin: calc(-1 * var(--fh-space-px));
     clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
-    block-size: 1px;
-    inline-size: 1px;
-    margin: -1px;
     padding: 0;
     position: absolute;
     overflow: hidden;
@@ -12905,10 +12914,10 @@
   .fh-glide {
     z-index: calc(var(--fh-z-sticky) + 40);
     padding: var(--fh-glide-pad, .3125rem);
+    border-radius: var(--fh-radius-pill);
     isolation: isolate;
     translate: var(--_fh-x0, 0) 0;
     will-change: translate;
-    border-radius: 999px;
     position: fixed;
     inset-block-start: var(--_fh-y, 1rem);
     inset-inline-start: 0;
@@ -12917,10 +12926,10 @@
   .fh-glide:before {
     content: "";
     z-index: -1;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch, var(--fh-color-border-strong));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch, var(--fh-color-border-strong));
     border-radius: inherit;
+    background: color-mix(in oklab, var(--fh-color-canvas) 90%, transparent);
     opacity: 0;
-    background: light-dark(oklch(99% 0 0 / .9), oklch(19% 0 0 / .9));
     position: absolute;
     inset: 0;
   }
@@ -13012,7 +13021,7 @@
   }
 
   :root[data-fh-vt="reveal"]::view-transition-new(root) {
-    z-index: 1;
+    z-index: var(--fh-z-raised);
   }
 
   :root {
@@ -13035,9 +13044,9 @@
     --_n: 12;
     --_edge: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
     inset-inline: var(--_edge);
-    background-image: linear-gradient(to right, var(--fh-guides-fill) 0 calc(100% - var(--fh-cols-gutter)), transparent 0);
-    background-size: calc((100% + var(--fh-cols-gutter)) / var(--_n)) 100%;
-    outline: 1px dashed var(--fh-guides-color);
+    background-image: linear-gradient(to right, var(--fh-guides-fill, color-mix(in oklab, var(--fh-color-accent) 9%, transparent)) 0 calc(100% - var(--fh-cols-gutter, var(--fh-space-6))), transparent 0);
+    background-size: calc((100% + var(--fh-cols-gutter, var(--fh-space-6))) / var(--_n)) 100%;
+    outline: var(--fh-border-thin) dashed var(--fh-guides-color, color-mix(in oklab, var(--fh-color-accent) 55%, transparent));
     background-repeat: repeat-x;
   }
 
@@ -13048,7 +13057,7 @@
   html[data-fh-guides]:after {
     --_none: linear-gradient(transparent, transparent);
     --_line: 1px;
-    --_c: var(--fh-guides-color);
+    --_c: var(--fh-guides-color, color-mix(in oklab, var(--fh-color-accent) 55%, transparent));
     background-image: var(--_golden, var(--_none)), var(--_golden-y, var(--_none)),
       var(--_thirds, var(--_none)), var(--_thirds-y, var(--_none)),
       var(--_baseline, var(--_none)),
@@ -13068,12 +13077,12 @@
   }
 
   html[data-fh-guides~="baseline"]:after {
-    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 1px, transparent 1px var(--fh-guides-baseline));
+    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 1px, transparent 1px var(--fh-guides-baseline, var(--fh-space-2)));
   }
 
   html[data-fh-guides~="modular"]:after {
-    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module));
-    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module));
+    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module, var(--fh-space-8)));
+    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module, var(--fh-space-8)));
   }
 
   html[data-fh-guides~="safe"]:after {
