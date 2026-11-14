@@ -1,0 +1,56 @@
+/*!
+ * Firehorse for shadcn/ui — https://firehorse.rascode.dev/guidelines/other-systems/
+ *
+ * In your globals.css, after `@import "tailwindcss";` and in place of the :root and .dark
+ * colour blocks shadcn generated:
+ *
+ *   @import "@rascode/firehorse/tailwind.css";   (first, if you also want fh- utilities)
+ *   @import "tailwindcss";
+ *   @import "@rascode/firehorse/shadcn.css";     ← this file
+ *
+ * It points shadcn's theme variables at Firehorse tokens, so shadcn components wear the
+ * active Firehorse theme. Firehorse tokens follow the colour scheme on their own, so .dark
+ * (shadcn's dark mode) only has to set the scheme, and the page is light without it. Keep shadcn's own @theme inline block:
+ * it maps these variables to bg-primary, text-muted-foreground and the rest.
+ * Firehorse itself must be loaded too: through tailwind.css above, or dist/firehorse.css.
+ */
+
+:root {
+  --background: var(--fh-color-canvas);
+  --foreground: var(--fh-color-text);
+  --card: var(--fh-color-surface-raised);
+  --card-foreground: var(--fh-color-text);
+  --popover: var(--fh-color-surface-menu);
+  --popover-foreground: var(--fh-color-text);
+  --primary: var(--fh-color-accent);
+  --primary-foreground: var(--fh-color-on-accent);
+  --secondary: var(--fh-color-surface);
+  --secondary-foreground: var(--fh-color-text);
+  --muted: var(--fh-color-surface-sunken);
+  --muted-foreground: var(--fh-color-text-muted);
+  --accent: color-mix(in oklab, var(--fh-color-text) 8%, var(--fh-color-surface));
+  --accent-foreground: var(--fh-color-text);
+  --destructive: var(--fh-color-danger);
+  --border: var(--fh-color-border);
+  --input: var(--fh-color-border-strong);
+  --ring: var(--fh-color-focus);
+  --radius: var(--fh-radius-md);
+  --chart-1: var(--fh-tone-accent);
+  --chart-2: var(--fh-tone-teal);
+  --chart-3: var(--fh-tone-sky);
+  --chart-4: var(--fh-tone-amber);
+  --chart-5: var(--fh-tone-rose);
+  --sidebar: var(--fh-color-surface);
+  --sidebar-foreground: var(--fh-color-text);
+  --sidebar-primary: var(--fh-color-accent);
+  --sidebar-primary-foreground: var(--fh-color-on-accent);
+  --sidebar-accent: color-mix(in oklab, var(--fh-color-text) 8%, var(--fh-color-surface));
+  --sidebar-accent-foreground: var(--fh-color-text);
+  --sidebar-border: var(--fh-color-border);
+  --sidebar-ring: var(--fh-color-focus);
+}
+
+/* shadcn's convention: light unless .dark is set (Firehorse's own default is dark). A
+ * data-fh-scheme attribute still wins where you set one. */
+:root:not(.dark, [data-fh-scheme]) { color-scheme: light; }
+.dark:not([data-fh-scheme]) { color-scheme: dark; }

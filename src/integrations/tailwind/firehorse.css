@@ -1,0 +1,51 @@
+/*!
+ * Firehorse for Tailwind CSS v4 — https://firehorse.rascode.dev/guidelines/other-systems/
+ *
+ *   @import "@rascode/firehorse/tailwind.css";   ← this file, first
+ *   @import "tailwindcss";
+ *
+ * One import, before Tailwind's, does three things:
+ *   1. Puts Firehorse's layers between Tailwind's: above its preflight (base), below its
+ *      components and utilities. So `fh-button mt-4` and `fh-tile bg-…` take the utility,
+ *      and Firehorse's reset and document defaults replace preflight's where both speak.
+ *   2. Loads Firehorse (firehorse.css).
+ *   3. Gives Tailwind Firehorse's tokens as theme values, prefixed fh- so they never clash
+ *      with your palette or shadcn's: bg-fh-surface, text-fh-muted, border-fh-etch,
+ *      ring-fh-focus, font-fh-mono, rounded-fh-md. They are the live tokens (inline), so the
+ *      Firehorse theme and scheme (light, dark) restyle the utilities too.
+ */
+
+@layer theme, base, fh, components, utilities;
+
+@import "../../../dist/firehorse.css";
+
+@theme inline {
+  --color-fh-canvas: var(--fh-color-canvas);
+  --color-fh-surface: var(--fh-color-surface);
+  --color-fh-surface-raised: var(--fh-color-surface-raised);
+  --color-fh-surface-sunken: var(--fh-color-surface-sunken);
+  --color-fh-text: var(--fh-color-text);
+  --color-fh-strong: var(--fh-color-text-strong);
+  --color-fh-muted: var(--fh-color-text-muted);
+  --color-fh-subtle: var(--fh-color-text-subtle);
+  --color-fh-accent: var(--fh-color-accent);
+  --color-fh-accent-text: var(--fh-color-accent-text);
+  --color-fh-on-accent: var(--fh-color-on-accent);
+  --color-fh-border: var(--fh-color-border);
+  --color-fh-border-strong: var(--fh-color-border-strong);
+  --color-fh-etch: var(--fh-color-etch);
+  --color-fh-focus: var(--fh-color-focus);
+  --color-fh-success: var(--fh-color-success);
+  --color-fh-warning: var(--fh-color-warning);
+  --color-fh-danger: var(--fh-color-danger);
+  --color-fh-tone: var(--fh-tone);
+
+  --font-fh-sans: var(--fh-font-sans);
+  --font-fh-display: var(--fh-font-display);
+  --font-fh-mono: var(--fh-font-mono);
+
+  --radius-fh-sm: var(--fh-radius-sm);
+  --radius-fh-md: var(--fh-radius-md);
+  --radius-fh-lg: var(--fh-radius-lg);
+  --radius-fh-pill: var(--fh-radius-pill);
+}

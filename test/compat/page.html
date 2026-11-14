@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" class="__SCHEME__">
+<head><meta charset="utf-8"><title>Compat: __NAME__</title><link rel="stylesheet" href="out/__NAME__.css"></head>
+<body>
+<main style="padding: 2rem; display: grid; gap: 2rem; max-width: 60rem">
+  <section>
+    <h1>Plain h1 with no classes</h1>
+    <p>A plain paragraph with <a href="#">a plain link</a>.</p>
+    <ul><li>Plain list item one</li><li>Plain list item two</li></ul>
+  </section>
+  <section class="fh-stack">
+    <p class="fh-label">Firehorse alone</p>
+    <div class="fh-cluster">
+      <button class="fh-button" id="fh-btn" type="button">Firehorse button</button>
+      <button class="fh-button fh-button--secondary" type="button">Secondary</button>
+    </div>
+    <div class="fh-field" style="max-width: 20rem"><label for="fh-in">Email</label><input class="fh-input" id="fh-in" type="email" placeholder="you@company.com"></div>
+    <div class="fh-tiles fh-tiles--launch" style="max-width: 30rem"><button class="fh-tile" type="button" data-tone="teal" id="fh-tile"><span class="fh-tile__cube"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><b class="fh-tile__title">Tile</b><span class="fh-tile__note">Launch tile</span></button><button class="fh-tile" type="button" data-tone="rose"><span class="fh-tile__cube"></span><b class="fh-tile__title">Tile</b><span class="fh-tile__note">Launch tile</span></button></div>
+  </section>
+  <section>
+    <p class="fh-label">Firehorse with Tailwind utilities on it</p>
+    <button class="fh-button mt-6 rounded-none" id="fh-util" type="button">fh-button mt-6 rounded-none</button>
+  </section>
+  <section>
+    <p class="fh-label">Tailwind with Firehorse tokens (bridge only)</p>
+    <div class="bg-fh-surface-raised text-fh-muted border border-fh-etch rounded-fh-md p-4 font-fh-mono" id="tw-theme">bg-fh-surface-raised text-fh-muted border-fh-etch rounded-fh-md font-fh-mono</div>
+  </section>
+  <section>
+    <p class="fh-label">shadcn/ui Button, Card, Input</p>
+    <div class="flex gap-3">
+      <button id="cn-btn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2">shadcn Button</button>
+      <button id="cn-outline" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all shrink-0 outline-none border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input h-9 px-4 py-2">Outline</button>
+    </div>
+    <div id="cn-card" class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm mt-4" style="max-width: 24rem">
+      <div class="px-6 grid gap-1.5"><div class="leading-none font-semibold">Card title</div><div class="text-muted-foreground text-sm" id="cn-desc">Card description in muted text.</div></div>
+      <div class="px-6"><input id="cn-in" class="placeholder:text-muted-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm" placeholder="shadcn Input"></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
