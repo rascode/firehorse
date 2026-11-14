@@ -26,7 +26,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 15 | Segmented pill with a filled action end (v1.1 · Download from Git) | Bottom right | Eyebrow pill · EYE-5.4 | Exists |
 | 16 | Light / Dark rolling toggle pill; and the Text \| Transcribe switch in the dictation field (Rascode, 2026-11-14) | Bottom right; dictation field | Segment switch · SEG-2.1 Rolling toggle, SEG-2.2 Mode toggle (SEG moved to Forms and live, Rascode, 2026-11-14) | Done (SEG-2.1, SEG-2.2) |
 | 17 | Announcement chip (Introducing · Firehorse v1.1) | Above the logo | Eyebrow pill · EYE-5.2 | Exists |
-| 18 | Hero lockup: wordmark, etched line to the edge, headline split by the line, rotating word | Hero | Masthead · new variant (MST) with Word rotator (WRT); both go live (Rascode, 2026-11-14). Word rotator keeps only the home page's rotator and the same rotator inside paragraph text; its other variants are removed | New |
+| 18 | Hero lockup: wordmark, etched line to the edge, headline split by the line, rotating word | Hero | Masthead · new variant (MST) with Word rotator (WRT); both go live (Rascode, 2026-11-14). Word rotator keeps only the home page's rotator and the same rotator inside paragraph text; its other variants are removed | Done (MST-2.1, WRT-1.1, WRT-1.2) |
 | 19 | Lede with a mono caps underlined phrase and a down arrow | Under the logo | Action & link · new variant (ACT) | New |
 | 20 | Frost: the art blurred and washed below the line | Hero | Backdrop · new option (BKD); goes live (Rascode, 2026-11-14) | New |
 | 21 | Announcement banner across the top: tag, the news, Read more and Become a Pro cells (Rascode, 2026-11-13) | Top of the concept page | Empty state & banner · EMP-1.3 Announcement banner | Done (EMP-1.3) |
