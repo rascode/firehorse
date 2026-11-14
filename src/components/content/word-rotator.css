@@ -12,15 +12,18 @@
    *     <span class="fh-rotator"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span></span>.</h1>
    * Two to nine words. Change the words by editing the markup; no script
    * to configure.
-   * Style the rolling word apart from the sentence around it:
-   *   modifiers  --accent · --script · --display · --mono · --italic
-   *              --underline · --highlight · --gradient · --down · --fade
-   *   data-tone  on the rotator colours every word (and its underline or
-   *              highlight); on a word, colours that word alone
+   *   WRT-1.1 Headline: in a display headline (fh-display, a heading).
+   *   WRT-1.2 In a paragraph: the same rotator inside running text.
+   * Colour the rolling word:
+   *   --walk     each word a step of the root colour's own family (the root,
+   *              its ±20° and ±40° neighbours, a tint and a deep), held to a
+   *              lightness that reads on each scheme. The root is --fh-root
+   *              (the accent unless set), or --fh-rotator-root.
+   *   data-tone  on the rotator colours every word; on a word, that word alone
    *   knobs      --fh-rotator-step (time on each word, 2.6s)
    *              --fh-rotator-color · --fh-rotator-font · --fh-rotator-weight
    *              --fh-rotator-style · --fh-rotator-scale (size vs. the line, 1)
-   *              --fh-rotator-tracking
+   *              --fh-rotator-tracking · --fh-rotator-root (for --walk)
    * The slot holds the widest word; with dist/firehorse.js it eases to each
    * word's own width instead, so the text after it glides. */
   .fh-rotator {
@@ -59,27 +62,21 @@
   /* Styles */
   .fh-rotator[data-tone] { --fh-rotator-color: var(--fh-tone); }
   .fh-rotator > [data-tone] { color: var(--fh-tone); }
-  .fh-rotator--accent { --fh-rotator-color: var(--fh-color-accent); }
-  .fh-rotator--script { --fh-rotator-font: var(--fh-font-script); --fh-rotator-scale: 1.15; --fh-rotator-tracking: 0; }
-  .fh-rotator--display { --fh-rotator-font: var(--fh-font-display); }
-  .fh-rotator--mono { --fh-rotator-font: var(--fh-font-mono); --fh-rotator-scale: 0.9; --fh-rotator-tracking: -0.02em; }
-  .fh-rotator--italic { --fh-rotator-style: italic; }
-  .fh-rotator--underline > * {
-    text-decoration: underline;
-    text-decoration-color: var(--fh-tone, var(--fh-color-accent));
-    text-decoration-thickness: 0.06em;
-    text-underline-offset: 0.12em;
+
+  /* Walk: the root's close family, word by word (its split complements left out, so every word
+     stays in harmony whatever the root). Lightness is clamped per scheme for contrast. */
+  .fh-rotator.fh-rotator--walk > * {
+    --_r: var(--fh-rotator-root, var(--fh-root, var(--fh-color-accent)));
+    color: light-dark(oklch(from var(--_w, var(--_r)) min(l, 0.52) c h), oklch(from var(--_w, var(--_r)) max(l, 0.74) c h));
   }
-  .fh-rotator--highlight > * {
-    padding-inline: 0.12em;
-    border-radius: var(--fh-radius-sm);
-    background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-accent)) 22%, transparent);
-  }
-  .fh-rotator--gradient > * {
-    background: linear-gradient(90deg, var(--fh-tone-sky), var(--fh-tone-fuchsia), var(--fh-tone-amber));
-    background-clip: text;
-    color: transparent;
-  }
+  .fh-rotator--walk > :nth-child(9n + 2) { --_w: oklch(from var(--_r) calc(l + 0.04) min(c, 0.2) calc(h + 20)); }
+  .fh-rotator--walk > :nth-child(9n + 3) { --_w: oklch(from var(--_r) calc(l + 0.06) min(calc(c * 0.92), 0.19) calc(h + 40)); }
+  .fh-rotator--walk > :nth-child(9n + 4) { --_w: oklch(from var(--_r) calc(l + (1 - l) * 0.35) calc(c * 0.7) h); }
+  .fh-rotator--walk > :nth-child(9n + 5) { --_w: oklch(from var(--_r) calc(l + 0.04) min(c, 0.2) calc(h - 20)); }
+  .fh-rotator--walk > :nth-child(9n + 6) { --_w: oklch(from var(--_r) calc(l * 0.9) min(calc(c * 1.05), 0.2) h); }
+  .fh-rotator--walk > :nth-child(9n + 7) { --_w: oklch(from var(--_r) calc(l + 0.06) min(calc(c * 0.92), 0.19) calc(h - 40)); }
+  .fh-rotator--walk > :nth-child(9n + 8) { --_w: oklch(from var(--_r) calc(l + 0.04) min(c, 0.2) calc(h - 20)); }
+  .fh-rotator--walk > :nth-child(9n + 9) { --_w: oklch(from var(--_r) calc(l + 0.04) min(c, 0.2) calc(h + 20)); }
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-rotator > * {
@@ -98,8 +95,6 @@
     .fh-rotator:has(> :nth-child(7):last-child) > * { animation-name: fh-rotator-7; --_n: 7; }
     .fh-rotator:has(> :nth-child(8):last-child) > * { animation-name: fh-rotator-8; --_n: 8; }
     .fh-rotator:has(> :nth-child(9):last-child) > * { animation-name: fh-rotator-9; --_n: 9; }
-    .fh-rotator--down > * { animation-direction: normal; --_from: -100%; --_to: 100%; }
-    .fh-rotator--fade > * { --_from: 0; --_to: 0; }
     /* Off screen or in a hidden tab, nothing moves. */
     .fh-rotator:not(:hover)[data-fh-paused] > * { animation-play-state: paused; }
   }

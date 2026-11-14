@@ -10,12 +10,13 @@
 |---|---|
 | Frame | `fh-page` `fh-frame` `fh-section` (`--ruled` `--hero` `--flush` `--tight` `--narrow`) `fh-main` `fh-bleed` `fh-container` `fh-rule` `fh-cq` |
 | Layout | `fh-stack` (`--2xs`…`--2xl`) `fh-cluster` (`--between` `--end`) `fh-grid` (`[data-cols]` `--ruled` `--etched` `--rounded`) `fh-split` (`--wide-start` `--wide-end` `--sidebar`) `fh-center` `fh-ratio` `fh-reel` |
-| Type | `fh-display` `fh-title` `fh-heading` `fh-subheading` `fh-lede` `fh-body` `fh-small` `fh-label` `fh-eyebrow` `fh-mono` `fh-index` `fh-price` `fh-signature` `fh-prose` `fh-muted` `fh-subtle` |
+| Masthead | `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar` `--split` `--lockup` `__above` `__wordmark` `__bar` `__etch` `__headline` `__top` `__turn` `__below`) |
+| Type | `fh-display` `fh-title` `fh-heading` `fh-subheading` `fh-lede` `fh-body` `fh-small` `fh-label` `fh-eyebrow` `fh-mono` `fh-index` `fh-price` `fh-signature` `fh-prose` `fh-muted` `fh-subtle` `fh-rotator` (`--walk`) |
 | Actions | `fh-button` (`--secondary` `--outline` `--ghost` `--accent` `--plain` `--sm` `--lg` `--block` `--icon`) `fh-action` (`--lg`) `fh-link` (`--quiet`) `fh-roll` `fh-close` |
 | Markers | `fh-dot` (`--live`) `fh-eyebrow-pill` (`--sentence`) `fh-breadcrumb` `fh-badge` (`--solid`) |
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
 | Metrics | `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) |
-| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-masthead` (`__mark` `__caption` `__index` `__title` `__foot` `__meta` `__tools` `--bar`) `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
+| Admin (admin.css) | `fh-app` `fh-backdrop` `fh-frost` `[data-fh-frost-select]` `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` `fh-segment` (`--entities` `--roll` `__roll` `--mode`) |
 | Disclosure | `fh-accordion` `fh-tabs` (`--mono`) `fh-dialog` (`__header` `__body` `__footer`) `fh-menu` `fh-toaster` `fh-toast` |
 | Chrome | `fh-header` (`__bar` `__brand` `__actions` `__toggle`) `fh-nav` `fh-nav__link` `fh-drawer` (`__group`) `fh-mega` (`__grid` `__rail`) `fh-footer` (`__columns` `__column` `__base`) |
@@ -189,6 +190,18 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
   <span class="fh-button" style="box-shadow: var(--fh-shadow-convex-hover)">Hover</span>
   <span class="fh-button" style="translate: 0 2px; box-shadow: var(--fh-shadow-convex-active)">Press</span>
 </div>
+```
+
+### WRT · Word rotator
+
+The rolling word, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns; change them by editing the HTML. `--walk` gives each word a step of the root colour's own family, held to a lightness that reads on each scheme. In a headline, or inside a paragraph.
+
+```html
+<!-- WRT-1.1 · Word rotator › Headline -->
+<p class="fh-display">The design system that <span class="fh-rotator fh-rotator--walk" data-fh="WRT-1.1"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">flexes</span><span aria-hidden="true">grows</span><span aria-hidden="true">adjusts</span><span aria-hidden="true">bends</span><span aria-hidden="true">shifts</span><span aria-hidden="true">responds</span></span>.</p>
+
+<!-- WRT-1.2 · Word rotator › In a paragraph -->
+<p class="fh-lede">Firehorse is the design system that <span class="fh-rotator fh-rotator--walk" data-fh="WRT-1.2"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span> with your product: every component reads the box it sits in, so nothing needs a breakpoint.</p>
 ```
 
 ### MOT · Motion
@@ -419,6 +432,51 @@ The grid itself. `data-cols="16"` for the finer one; a child `.fh-cols[data-subg
   <div class="fh-card fh-card--solid" data-span="7" data-start="1" data-row="1" data-row-span="2" style="min-block-size: 16rem">Image · 1–7, two rows</div>
   <div class="fh-card" data-span="6" data-start="6" data-row="2" data-layer="over">Card · 6–11, over the image</div>
 </div>
+```
+
+### MST · Masthead
+
+The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. Shown over a picture so the frost reads.
+
+```html
+<!-- MST-1.1 · Header › Bar -->
+<header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh="MST-1.1">
+  <span class="fh-avatar fh-avatar--circle fh-masthead__mark" role="img" aria-label="Acme Supply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 12 5l7 14"></path><path d="M8.5 13h7"></path><circle cx="12" cy="5" r="1.3" fill="currentColor"></circle></svg></span>
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses</p>
+    <div class="fh-masthead__tools">
+      <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Row spacing</legend><label><input type="radio" name="mst-rows" value="sm" data-fh-rows-select> S</label><label><input type="radio" name="mst-rows" value="md" data-fh-rows-select checked> M</label><label><input type="radio" name="mst-rows" value="lg" data-fh-rows-select> L</label><label><input type="radio" name="mst-rows" value="xl" data-fh-rows-select> XL</label></fieldset>
+    </div>
+  </div>
+</header>
+
+<!-- MST-1.2 · Header › Page -->
+<header class="fh-masthead" data-tone="amber" data-fh="MST-1.2">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses · 5 owned · 2 client</p>
+    <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#l-masthead">New business</a></div>
+  </div>
+</header>
+
+<!-- MST-1.3 · Header › Split -->
+<header class="fh-masthead fh-masthead--bar fh-masthead--split" data-tone="sky" data-fh="MST-1.3">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">05</span><span class="fh-masthead__title">Today is <small>Nov-05-26</small></span></p>
+  <div class="fh-masthead__tools">
+    <span class="fh-chip" data-tone="lime">Local</span>
+    <span class="fh-avatar fh-avatar--circle fh-avatar--sm" data-tone="sky">HJ</span>
+  </div>
+</header>
+
+<!-- MST-2.1 · Lockup › Lockup -->
+<header class="fh-masthead fh-masthead--lockup" data-fh="MST-2.1">
+  <p class="fh-eyebrow-pill fh-masthead__above" data-tone="accent"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span class="fh-eyebrow-pill__seg">Introducing</span><span class="fh-eyebrow-pill__seg"><strong>Firehorse v1.1</strong></span></p>
+  <p class="fh-masthead__wordmark"><span class="fh-masthead__bar">_</span>firehorse</p>
+  <span class="fh-masthead__etch" aria-hidden="true"></span>
+  <p class="fh-masthead__headline"><span class="fh-masthead__top">The design system</span> <span class="fh-masthead__turn">that <em><span class="fh-rotator fh-rotator--walk"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span>.</em></span></p>
+  <div class="fh-masthead__below"><p class="fh-lede">Built for modern workflows</p></div>
+</header>
 ```
 
 ### FND · Fender

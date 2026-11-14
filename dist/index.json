@@ -208,6 +208,71 @@
       "tier": "free"
     },
     {
+      "id": "WRT",
+      "name": "Word rotator",
+      "section": "Foundations",
+      "anchor": "rotator",
+      "page": "/foundations/",
+      "url": "https://firehorse.rascode.dev/foundations/word-rotator/",
+      "summary": "The rolling word, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns; change them by editing the HTML. --walk gives each word a step of the root colour's own family, held to a lightness that reads on each scheme. In a headline, or inside a paragraph.",
+      "classes": [
+        "fh-display",
+        "fh-rotator",
+        "fh-rotator--walk",
+        "fh-lede"
+      ],
+      "markup": "<p class=\"fh-display\">The design system that <span class=\"fh-rotator fh-rotator--walk\" data-fh=\"WRT-1.1\"><span>scales</span><span aria-hidden=\"true\">adapts</span><span aria-hidden=\"true\">fits</span><span aria-hidden=\"true\">flexes</span><span aria-hidden=\"true\">grows</span><span aria-hidden=\"true\">adjusts</span><span aria-hidden=\"true\">bends</span><span aria-hidden=\"true\">shifts</span><span aria-hidden=\"true\">responds</span></span>.</p>",
+      "groups": [
+        {
+          "id": "WRT-1",
+          "name": "Word rotator",
+          "summary": "",
+          "variants": [
+            "WRT-1.1",
+            "WRT-1.2"
+          ],
+          "markup": "<p class=\"fh-display\">The design system that <span class=\"fh-rotator fh-rotator--walk\" data-fh=\"WRT-1.1\"><span>scales</span><span aria-hidden=\"true\">adapts</span><span aria-hidden=\"true\">fits</span><span aria-hidden=\"true\">flexes</span><span aria-hidden=\"true\">grows</span><span aria-hidden=\"true\">adjusts</span><span aria-hidden=\"true\">bends</span><span aria-hidden=\"true\">shifts</span><span aria-hidden=\"true\">responds</span></span>.</p>",
+          "markupFrom": "variant"
+        }
+      ],
+      "variants": [
+        {
+          "id": "WRT-1.1",
+          "group": "WRT-1",
+          "name": "Headline",
+          "classes": [
+            "fh-display",
+            "fh-rotator",
+            "fh-rotator--walk"
+          ],
+          "config": {},
+          "markup": "<p class=\"fh-display\">The design system that <span class=\"fh-rotator fh-rotator--walk\" data-fh=\"WRT-1.1\"><span>scales</span><span aria-hidden=\"true\">adapts</span><span aria-hidden=\"true\">fits</span><span aria-hidden=\"true\">flexes</span><span aria-hidden=\"true\">grows</span><span aria-hidden=\"true\">adjusts</span><span aria-hidden=\"true\">bends</span><span aria-hidden=\"true\">shifts</span><span aria-hidden=\"true\">responds</span></span>.</p>",
+          "tier": "free"
+        },
+        {
+          "id": "WRT-1.2",
+          "group": "WRT-1",
+          "name": "In a paragraph",
+          "classes": [
+            "fh-lede",
+            "fh-rotator",
+            "fh-rotator--walk"
+          ],
+          "config": {},
+          "markup": "<p class=\"fh-lede\">Firehorse is the design system that <span class=\"fh-rotator fh-rotator--walk\" data-fh=\"WRT-1.2\"><span>scales</span><span aria-hidden=\"true\">adapts</span><span aria-hidden=\"true\">fits</span><span aria-hidden=\"true\">grows</span><span aria-hidden=\"true\">responds</span></span> with your product: every component reads the box it sits in, so nothing needs a breakpoint.</p>",
+          "tier": "free"
+        }
+      ],
+      "stageClasses": [
+        "fh-dl",
+        "fh-display",
+        "fh-rotator",
+        "fh-rotator--walk",
+        "fh-lede"
+      ],
+      "tier": "free"
+    },
+    {
       "id": "MOT",
       "name": "Motion",
       "section": "Motion",
@@ -1033,6 +1098,210 @@
         "fh-cols",
         "fh-card",
         "fh-card--solid"
+      ],
+      "tier": "free"
+    },
+    {
+      "id": "MST",
+      "name": "Masthead",
+      "section": "Masthead",
+      "anchor": "l-masthead",
+      "page": "/layout/",
+      "url": "https://firehorse.rascode.dev/layout/masthead/",
+      "summary": "The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. Shown over a picture so the frost reads.",
+      "classes": [
+        "fh-masthead",
+        "fh-masthead--bar",
+        "fh-avatar",
+        "fh-avatar--circle",
+        "fh-masthead__mark",
+        "fh-masthead__caption",
+        "fh-masthead__index",
+        "fh-masthead__title",
+        "fh-masthead__foot",
+        "fh-masthead__meta",
+        "fh-masthead__tools",
+        "fh-segmented",
+        "fh-segmented--sm",
+        "fh-sr-only",
+        "fh-chip",
+        "fh-button",
+        "fh-button--sm",
+        "fh-masthead--split",
+        "fh-avatar--sm",
+        "fh-masthead--lockup",
+        "fh-eyebrow-pill",
+        "fh-masthead__above",
+        "fh-dot",
+        "fh-dot--live",
+        "fh-eyebrow-pill__seg",
+        "fh-masthead__wordmark",
+        "fh-masthead__bar",
+        "fh-masthead__etch",
+        "fh-masthead__headline",
+        "fh-masthead__top",
+        "fh-masthead__turn",
+        "fh-rotator",
+        "fh-rotator--walk",
+        "fh-masthead__below",
+        "fh-lede"
+      ],
+      "markup": "<header class=\"fh-masthead fh-masthead--bar\" data-tone=\"amber\" data-fh=\"MST-1.1\">\n  <span class=\"fh-avatar fh-avatar--circle fh-masthead__mark\" role=\"img\" aria-label=\"Acme Supply\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 19 12 5l7 14\"></path><path d=\"M8.5 13h7\"></path><circle cx=\"12\" cy=\"5\" r=\"1.3\" fill=\"currentColor\"></circle></svg></span>\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses</p>\n    <div class=\"fh-masthead__tools\">\n      <fieldset class=\"fh-segmented fh-segmented--sm\"><legend class=\"fh-sr-only\">Row spacing</legend><label><input type=\"radio\" name=\"mst-rows\" value=\"sm\" data-fh-rows-select> S</label><label><input type=\"radio\" name=\"mst-rows\" value=\"md\" data-fh-rows-select checked> M</label><label><input type=\"radio\" name=\"mst-rows\" value=\"lg\" data-fh-rows-select> L</label><label><input type=\"radio\" name=\"mst-rows\" value=\"xl\" data-fh-rows-select> XL</label></fieldset>\n    </div>\n  </div>\n</header>",
+      "groups": [
+        {
+          "id": "MST-1",
+          "name": "Header",
+          "summary": "",
+          "variants": [
+            "MST-1.1",
+            "MST-1.2",
+            "MST-1.3"
+          ],
+          "markup": "<header class=\"fh-masthead fh-masthead--bar\" data-tone=\"amber\" data-fh=\"MST-1.1\">\n  <span class=\"fh-avatar fh-avatar--circle fh-masthead__mark\" role=\"img\" aria-label=\"Acme Supply\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 19 12 5l7 14\"></path><path d=\"M8.5 13h7\"></path><circle cx=\"12\" cy=\"5\" r=\"1.3\" fill=\"currentColor\"></circle></svg></span>\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses</p>\n    <div class=\"fh-masthead__tools\">\n      <fieldset class=\"fh-segmented fh-segmented--sm\"><legend class=\"fh-sr-only\">Row spacing</legend><label><input type=\"radio\" name=\"mst-rows\" value=\"sm\" data-fh-rows-select> S</label><label><input type=\"radio\" name=\"mst-rows\" value=\"md\" data-fh-rows-select checked> M</label><label><input type=\"radio\" name=\"mst-rows\" value=\"lg\" data-fh-rows-select> L</label><label><input type=\"radio\" name=\"mst-rows\" value=\"xl\" data-fh-rows-select> XL</label></fieldset>\n    </div>\n  </div>\n</header>",
+          "markupFrom": "variant"
+        },
+        {
+          "id": "MST-2",
+          "name": "Lockup",
+          "summary": "",
+          "variants": [
+            "MST-2.1"
+          ],
+          "markup": "<header class=\"fh-masthead fh-masthead--lockup\" data-fh=\"MST-2.1\">\n  <p class=\"fh-eyebrow-pill fh-masthead__above\" data-tone=\"accent\"><span class=\"fh-dot fh-dot--live\" aria-hidden=\"true\"></span><span class=\"fh-eyebrow-pill__seg\">Introducing</span><span class=\"fh-eyebrow-pill__seg\"><strong>Firehorse v1.1</strong></span></p>\n  <p class=\"fh-masthead__wordmark\"><span class=\"fh-masthead__bar\">_</span>firehorse</p>\n  <span class=\"fh-masthead__etch\" aria-hidden=\"true\"></span>\n  <p class=\"fh-masthead__headline\"><span class=\"fh-masthead__top\">The design system</span> <span class=\"fh-masthead__turn\">that <em><span class=\"fh-rotator fh-rotator--walk\"><span>scales</span><span aria-hidden=\"true\">adapts</span><span aria-hidden=\"true\">grows</span><span aria-hidden=\"true\">responds</span></span>.</em></span></p>\n  <div class=\"fh-masthead__below\"><p class=\"fh-lede\">Built for modern workflows</p></div>\n</header>",
+          "markupFrom": "variant"
+        }
+      ],
+      "variants": [
+        {
+          "id": "MST-1.1",
+          "group": "MST-1",
+          "name": "Bar",
+          "classes": [
+            "fh-masthead",
+            "fh-masthead--bar",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-masthead__mark",
+            "fh-masthead__caption",
+            "fh-masthead__index",
+            "fh-masthead__title",
+            "fh-masthead__foot",
+            "fh-masthead__meta",
+            "fh-masthead__tools",
+            "fh-segmented",
+            "fh-segmented--sm",
+            "fh-sr-only"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-masthead fh-masthead--bar\" data-tone=\"amber\" data-fh=\"MST-1.1\">\n  <span class=\"fh-avatar fh-avatar--circle fh-masthead__mark\" role=\"img\" aria-label=\"Acme Supply\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 19 12 5l7 14\"></path><path d=\"M8.5 13h7\"></path><circle cx=\"12\" cy=\"5\" r=\"1.3\" fill=\"currentColor\"></circle></svg></span>\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses</p>\n    <div class=\"fh-masthead__tools\">\n      <fieldset class=\"fh-segmented fh-segmented--sm\"><legend class=\"fh-sr-only\">Row spacing</legend><label><input type=\"radio\" name=\"mst-rows\" value=\"sm\" data-fh-rows-select> S</label><label><input type=\"radio\" name=\"mst-rows\" value=\"md\" data-fh-rows-select checked> M</label><label><input type=\"radio\" name=\"mst-rows\" value=\"lg\" data-fh-rows-select> L</label><label><input type=\"radio\" name=\"mst-rows\" value=\"xl\" data-fh-rows-select> XL</label></fieldset>\n    </div>\n  </div>\n</header>",
+          "tier": "free"
+        },
+        {
+          "id": "MST-1.2",
+          "group": "MST-1",
+          "name": "Page",
+          "classes": [
+            "fh-masthead",
+            "fh-masthead__caption",
+            "fh-masthead__index",
+            "fh-masthead__title",
+            "fh-masthead__foot",
+            "fh-masthead__meta",
+            "fh-masthead__tools",
+            "fh-chip",
+            "fh-button",
+            "fh-button--sm"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-masthead\" data-tone=\"amber\" data-fh=\"MST-1.2\">\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">07</span><span class=\"fh-masthead__title\">Business</span></p>\n  <div class=\"fh-masthead__foot\">\n    <p class=\"fh-masthead__meta\">7 businesses · 5 owned · 2 client</p>\n    <div class=\"fh-masthead__tools\"><span class=\"fh-chip\" data-tone=\"lime\">All synced</span><a class=\"fh-button fh-button--sm\" href=\"#l-masthead\">New business</a></div>\n  </div>\n</header>",
+          "tier": "free"
+        },
+        {
+          "id": "MST-1.3",
+          "group": "MST-1",
+          "name": "Split",
+          "classes": [
+            "fh-masthead",
+            "fh-masthead--bar",
+            "fh-masthead--split",
+            "fh-masthead__caption",
+            "fh-masthead__index",
+            "fh-masthead__title",
+            "fh-masthead__tools",
+            "fh-chip",
+            "fh-avatar",
+            "fh-avatar--circle",
+            "fh-avatar--sm"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-masthead fh-masthead--bar fh-masthead--split\" data-tone=\"sky\" data-fh=\"MST-1.3\">\n  <p class=\"fh-masthead__caption\"><span class=\"fh-masthead__index\">05</span><span class=\"fh-masthead__title\">Today is <small>Nov-05-26</small></span></p>\n  <div class=\"fh-masthead__tools\">\n    <span class=\"fh-chip\" data-tone=\"lime\">Local</span>\n    <span class=\"fh-avatar fh-avatar--circle fh-avatar--sm\" data-tone=\"sky\">HJ</span>\n  </div>\n</header>",
+          "tier": "free"
+        },
+        {
+          "id": "MST-2.1",
+          "group": "MST-2",
+          "name": "Lockup",
+          "classes": [
+            "fh-masthead",
+            "fh-masthead--lockup",
+            "fh-eyebrow-pill",
+            "fh-masthead__above",
+            "fh-dot",
+            "fh-dot--live",
+            "fh-eyebrow-pill__seg",
+            "fh-masthead__wordmark",
+            "fh-masthead__bar",
+            "fh-masthead__etch",
+            "fh-masthead__headline",
+            "fh-masthead__top",
+            "fh-masthead__turn",
+            "fh-rotator",
+            "fh-rotator--walk",
+            "fh-masthead__below",
+            "fh-lede"
+          ],
+          "config": {},
+          "markup": "<header class=\"fh-masthead fh-masthead--lockup\" data-fh=\"MST-2.1\">\n  <p class=\"fh-eyebrow-pill fh-masthead__above\" data-tone=\"accent\"><span class=\"fh-dot fh-dot--live\" aria-hidden=\"true\"></span><span class=\"fh-eyebrow-pill__seg\">Introducing</span><span class=\"fh-eyebrow-pill__seg\"><strong>Firehorse v1.1</strong></span></p>\n  <p class=\"fh-masthead__wordmark\"><span class=\"fh-masthead__bar\">_</span>firehorse</p>\n  <span class=\"fh-masthead__etch\" aria-hidden=\"true\"></span>\n  <p class=\"fh-masthead__headline\"><span class=\"fh-masthead__top\">The design system</span> <span class=\"fh-masthead__turn\">that <em><span class=\"fh-rotator fh-rotator--walk\"><span>scales</span><span aria-hidden=\"true\">adapts</span><span aria-hidden=\"true\">grows</span><span aria-hidden=\"true\">responds</span></span>.</em></span></p>\n  <div class=\"fh-masthead__below\"><p class=\"fh-lede\">Built for modern workflows</p></div>\n</header>",
+          "tier": "free"
+        }
+      ],
+      "stageClasses": [
+        "fh-stack",
+        "fh-masthead",
+        "fh-masthead--bar",
+        "fh-avatar",
+        "fh-avatar--circle",
+        "fh-masthead__mark",
+        "fh-masthead__caption",
+        "fh-masthead__index",
+        "fh-masthead__title",
+        "fh-masthead__foot",
+        "fh-masthead__meta",
+        "fh-masthead__tools",
+        "fh-segmented",
+        "fh-segmented--sm",
+        "fh-sr-only",
+        "fh-chip",
+        "fh-button",
+        "fh-button--sm",
+        "fh-masthead--split",
+        "fh-avatar--sm",
+        "fh-masthead--lockup",
+        "fh-eyebrow-pill",
+        "fh-masthead__above",
+        "fh-dot",
+        "fh-dot--live",
+        "fh-eyebrow-pill__seg",
+        "fh-masthead__wordmark",
+        "fh-masthead__bar",
+        "fh-masthead__etch",
+        "fh-masthead__headline",
+        "fh-masthead__top",
+        "fh-masthead__turn",
+        "fh-rotator",
+        "fh-rotator--walk",
+        "fh-masthead__below",
+        "fh-lede"
       ],
       "tier": "free"
     },
@@ -6259,7 +6528,9 @@
     "TML-01": "TML-1.1",
     "TML-02": "TML-1.3",
     "TML-03": "TML-1.4",
-    "TML-04": "TML-1.2"
+    "TML-04": "TML-1.2",
+    "WRT-01": "WRT-1.1",
+    "WRT-02": "WRT-1.2"
   },
   "nonRoot": [
     "fh-auto-grid",
@@ -6319,6 +6590,7 @@
     "fh-stack": "STK",
     "fh-cluster": "CLS",
     "fh-column": "COL",
+    "fh-masthead": "MST",
     "fh-fender": "FND",
     "fh-cinch": "CIN",
     "fh-button": "BTN",
@@ -6344,6 +6616,8 @@
     "fh-timeline": "TML",
     "fh-neutral": "NEU",
     "fh-ramp": "NEU",
+    "fh-word": "WRT",
+    "fh-rotator": "WRT",
     "fh-auto": "GRD",
     "fh-offset": "PNL",
     "fh-etched": "ESP",
@@ -6466,6 +6740,7 @@
     "fh-link",
     "fh-list",
     "fh-logos",
+    "fh-masthead",
     "fh-matrix",
     "fh-mega",
     "fh-menu",
@@ -6496,6 +6771,7 @@
     "fh-rating",
     "fh-review-bars",
     "fh-rollover",
+    "fh-rotator",
     "fh-search",
     "fh-segment",
     "fh-segmented",

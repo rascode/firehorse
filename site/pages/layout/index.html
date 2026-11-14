@@ -4,7 +4,7 @@
   "name": "Layout",
   "tone": "lime",
   "title": "Layout · Firehorse",
-  "description": "Firehorse layout: the frame and its named lines, container queries, stack, cluster and auto grid. Page layouts live on Design patterns.",
+  "description": "Firehorse layout: the frame and its named lines, container queries, stack, cluster and auto grid, and the masthead. Page layouts live on Design patterns.",
   "headline": "A frame, its slots, and the box you're in",
   "lede": "Every page, section and header is a <code>.fh-frame</code>: a grid with named <code>full</code> and <code>content</code> lines. Each direct child becomes a query container, so whatever you put inside measures its slot.",
   "scripts": [],
@@ -169,11 +169,62 @@
       </div>
     </section>
 
+    <!-- ═══════════════ MASTHEAD ═══════════════ -->
+    <section id="masthead" class="fh-section fh-section--ruled site-anchor" data-tone="amber" aria-labelledby="masthead-title" data-fh-label="Masthead" data-fh-index="04">
+      <header class="fh-section-head">
+        <div>
+          <p class="site-chapter" data-tone="amber"><b>03</b> Masthead</p>
+          <h2 id="masthead-title" class="fh-heading">The head of the page</h2>
+          <p class="fh-lede">A glass header for an app or a record page, or a lockup that signs off a hero: the wordmark on one etched line with the headline.</p>
+        </div>
+      </header>
+      <div class="fh-stack fh-stack--xl">
+        <div class="site-demo site-anchor" id="l-masthead" data-fh-id="MST" data-fh-groups="Header|Lockup" data-fh-name="Masthead">
+          <div class="site-demo__head"><h3>Masthead</h3><p>The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. <code>--bar</code> is the one-line top bar, the client's round logo first (<code>__mark</code>); <code>--split</code> puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. Shown over a picture so the frost reads.</p></div>
+          <div class="site-demo__stage" data-demo style="background: url(/img/backdrop/firehorse-horse.webp) center / cover; padding: var(--fh-space-8)">
+<div class="fh-stack">
+<header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh-id="MST-1.1" data-fh-name="Bar">
+  <span class="fh-avatar fh-avatar--circle fh-masthead__mark" role="img" aria-label="Acme Supply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 12 5l7 14"/><path d="M8.5 13h7"/><circle cx="12" cy="5" r="1.3" fill="currentColor"/></svg></span>
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses</p>
+    <div class="fh-masthead__tools">
+      <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Row spacing</legend><label><input type="radio" name="mst-rows" value="sm" data-fh-rows-select> S</label><label><input type="radio" name="mst-rows" value="md" data-fh-rows-select checked> M</label><label><input type="radio" name="mst-rows" value="lg" data-fh-rows-select> L</label><label><input type="radio" name="mst-rows" value="xl" data-fh-rows-select> XL</label></fieldset>
+    </div>
+  </div>
+</header>
+<header class="fh-masthead" data-tone="amber" data-fh-id="MST-1.2" data-fh-name="Page">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses · 5 owned · 2 client</p>
+    <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#l-masthead">New business</a></div>
+  </div>
+</header>
+<header class="fh-masthead fh-masthead--bar fh-masthead--split" data-tone="sky" data-fh-id="MST-1.3" data-fh-name="Split">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">05</span><span class="fh-masthead__title">Today is <small>Nov-05-26</small></span></p>
+  <div class="fh-masthead__tools">
+    <span class="fh-chip" data-tone="lime">Local</span>
+    <span class="fh-avatar fh-avatar--circle fh-avatar--sm" data-tone="sky">HJ</span>
+  </div>
+</header>
+<header class="fh-masthead fh-masthead--lockup" data-fh-id="MST-2.1" data-fh-name="Lockup">
+  <p class="fh-eyebrow-pill fh-masthead__above" data-tone="accent"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span class="fh-eyebrow-pill__seg">Introducing</span><span class="fh-eyebrow-pill__seg"><strong>Firehorse v1.1</strong></span></p>
+  <p class="fh-masthead__wordmark"><span class="fh-masthead__bar">_</span>firehorse</p>
+  <span class="fh-masthead__etch" aria-hidden="true"></span>
+  <p class="fh-masthead__headline"><span class="fh-masthead__top">The design system</span> <span class="fh-masthead__turn">that <em><span class="fh-rotator fh-rotator--walk"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span>.</em></span></p>
+  <div class="fh-masthead__below"><p class="fh-lede">Built for modern workflows</p></div>
+</header>
+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══════════════ PATTERNS ═══════════════ -->
     <section id="layout-patterns" class="fh-section fh-section--ruled site-anchor" data-tone="orange" aria-labelledby="layout-patterns-title" data-fh-label="Design patterns" data-fh-index="11">
       <header class="fh-section-head">
         <div>
-          <p class="site-chapter" data-tone="orange"><b>03</b> Design patterns</p>
+          <p class="site-chapter" data-tone="orange"><b>04</b> Design patterns</p>
           <h2 id="layout-patterns-title" class="fh-heading">Design patterns have their own page</h2>
           <p class="fh-lede">The frame, stack, cluster and grid here are the thread. Whole page layouts built from them, with their anatomy, rules and markup, live on <a class="fh-link" href="/patterns/">Design patterns</a>: Fender, Cinch, the offset panel, the etched split and the CTA band.</p>
         </div>

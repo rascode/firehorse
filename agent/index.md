@@ -29,11 +29,13 @@
 | `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/space/) |
 | `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/radius/) |
 | `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/elevation/) |
+| `WRT` | Word rotator | Foundations | 1 Word rotator (2) | [open](https://firehorse.rascode.dev/foundations/word-rotator/) |
 | `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/motion/) |
 | `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/stack/) |
 | `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/cluster/) |
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/auto-grid/) |
 | `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/columns/) |
+| `MST` | Masthead | Masthead | 1 Header (3) · 2 Lockup (1) | [open](https://firehorse.rascode.dev/layout/masthead/) |
 | `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/fender/) |
 | `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/cinch/) |
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/offset-panel/) |
@@ -156,6 +158,26 @@ The convex button style (data-fh-button="convex"): bends out at rest, the shadow
 Classes: `fh-cluster` `fh-button`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/elevation/.
+
+## WRT · Word rotator
+
+The rolling word, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns; change them by editing the HTML. --walk gives each word a step of the root colour's own family, held to a lightness that reads on each scheme. In a headline, or inside a paragraph.
+
+Classes: `fh-display` `fh-rotator` `fh-rotator--walk` `fh-lede`
+
+### WRT-1 · Word rotator
+
+#### WRT-1.1 · Headline
+
+```html
+<p class="fh-display">The design system that <span class="fh-rotator fh-rotator--walk" data-fh="WRT-1.1"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">flexes</span><span aria-hidden="true">grows</span><span aria-hidden="true">adjusts</span><span aria-hidden="true">bends</span><span aria-hidden="true">shifts</span><span aria-hidden="true">responds</span></span>.</p>
+```
+
+#### WRT-1.2 · In a paragraph
+
+```html
+<p class="fh-lede">Firehorse is the design system that <span class="fh-rotator fh-rotator--walk" data-fh="WRT-1.2"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">fits</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span> with your product: every component reads the box it sits in, so nothing needs a breakpoint.</p>
+```
 
 ## MOT · Motion
 
@@ -534,6 +556,67 @@ Three placements to start from. Offset: copy held to the left, the image breakin
   <div class="fh-card fh-card--solid" data-span="7" data-start="1" data-row="1" data-row-span="2" style="min-block-size: 16rem">Image · 1–7, two rows</div>
   <div class="fh-card" data-span="6" data-start="6" data-row="2" data-layer="over">Card · 6–11, over the image</div>
 </div>
+```
+
+## MST · Masthead
+
+The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. Shown over a picture so the frost reads.
+
+Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-masthead__mark` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm` `fh-masthead--split` `fh-avatar--sm` `fh-masthead--lockup` `fh-eyebrow-pill` `fh-masthead__above` `fh-dot` `fh-dot--live` `fh-eyebrow-pill__seg` `fh-masthead__wordmark` `fh-masthead__bar` `fh-masthead__etch` `fh-masthead__headline` `fh-masthead__top` `fh-masthead__turn` `fh-rotator` `fh-rotator--walk` `fh-masthead__below` `fh-lede`
+
+### MST-1 · Header
+
+#### MST-1.1 · Bar
+
+```html
+<header class="fh-masthead fh-masthead--bar" data-tone="amber" data-fh="MST-1.1">
+  <span class="fh-avatar fh-avatar--circle fh-masthead__mark" role="img" aria-label="Acme Supply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 12 5l7 14"></path><path d="M8.5 13h7"></path><circle cx="12" cy="5" r="1.3" fill="currentColor"></circle></svg></span>
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses</p>
+    <div class="fh-masthead__tools">
+      <fieldset class="fh-segmented fh-segmented--sm"><legend class="fh-sr-only">Row spacing</legend><label><input type="radio" name="mst-rows" value="sm" data-fh-rows-select> S</label><label><input type="radio" name="mst-rows" value="md" data-fh-rows-select checked> M</label><label><input type="radio" name="mst-rows" value="lg" data-fh-rows-select> L</label><label><input type="radio" name="mst-rows" value="xl" data-fh-rows-select> XL</label></fieldset>
+    </div>
+  </div>
+</header>
+```
+
+#### MST-1.2 · Page
+
+```html
+<header class="fh-masthead" data-tone="amber" data-fh="MST-1.2">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
+  <div class="fh-masthead__foot">
+    <p class="fh-masthead__meta">7 businesses · 5 owned · 2 client</p>
+    <div class="fh-masthead__tools"><span class="fh-chip" data-tone="lime">All synced</span><a class="fh-button fh-button--sm" href="#l-masthead">New business</a></div>
+  </div>
+</header>
+```
+
+#### MST-1.3 · Split
+
+```html
+<header class="fh-masthead fh-masthead--bar fh-masthead--split" data-tone="sky" data-fh="MST-1.3">
+  <p class="fh-masthead__caption"><span class="fh-masthead__index">05</span><span class="fh-masthead__title">Today is <small>Nov-05-26</small></span></p>
+  <div class="fh-masthead__tools">
+    <span class="fh-chip" data-tone="lime">Local</span>
+    <span class="fh-avatar fh-avatar--circle fh-avatar--sm" data-tone="sky">HJ</span>
+  </div>
+</header>
+```
+
+### MST-2 · Lockup
+
+#### MST-2.1 · Lockup
+
+```html
+<header class="fh-masthead fh-masthead--lockup" data-fh="MST-2.1">
+  <p class="fh-eyebrow-pill fh-masthead__above" data-tone="accent"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span class="fh-eyebrow-pill__seg">Introducing</span><span class="fh-eyebrow-pill__seg"><strong>Firehorse v1.1</strong></span></p>
+  <p class="fh-masthead__wordmark"><span class="fh-masthead__bar">_</span>firehorse</p>
+  <span class="fh-masthead__etch" aria-hidden="true"></span>
+  <p class="fh-masthead__headline"><span class="fh-masthead__top">The design system</span> <span class="fh-masthead__turn">that <em><span class="fh-rotator fh-rotator--walk"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span>.</em></span></p>
+  <div class="fh-masthead__below"><p class="fh-lede">Built for modern workflows</p></div>
+</header>
 ```
 
 ## FND · Fender
@@ -2813,3 +2896,5 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `TML-02` | `TML-1.3` |
 | `TML-03` | `TML-1.4` |
 | `TML-04` | `TML-1.2` |
+| `WRT-01` | `WRT-1.1` |
+| `WRT-02` | `WRT-1.2` |
