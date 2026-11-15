@@ -85,8 +85,8 @@ for (const f of want) {
   expect(new RegExp(`<h1[^>]*>${f.name.replace(/&/g, "&amp;").replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</h1>`).test(html), `${path}: h1 is not the name ${f.name}`);
   expect(new RegExp(`id="${f.id}">${f.id}</code>`).test(html), `${path}: no ID chip ${f.id}`);
   expect(new RegExp(`data-specimen-tier>${f.tier === "pro" ? "Pro" : "Free"}<`).test(html), `${path}: no tier chip`);
-  expect(attrs(html, "data-specimen-panel").join(" ") === "markup classes agent", `${path}: panels are ${attrs(html, "data-specimen-panel").join(" ")}`);
-  const order = ["data-specimen-stage", "data-specimen-switcher", 'data-specimen-panel="markup"', 'data-specimen-panel="classes"', 'data-specimen-panel="agent"', 'class="fh-section site-specimen site-specimen__foot"']
+  expect(attrs(html, "data-specimen-panel").join(" ") === "markup values classes agent", `${path}: panels are ${attrs(html, "data-specimen-panel").join(" ")}`);
+  const order = ["data-specimen-stage", "data-specimen-switcher", 'data-specimen-panel="markup"', 'data-specimen-panel="values"', 'data-specimen-panel="classes"', 'data-specimen-panel="agent"', 'class="fh-section site-specimen site-specimen__foot"']
     .map((a) => html.search(new RegExp(a)));
   const hasSwitch = f.variants.some((v) => isPublic(v.id)) || f.groups.some((g) => !g.variants.length && g.markup && isPublic(g.id));
   const seq = order.filter((i, k) => !(k === 1 && !hasSwitch));
