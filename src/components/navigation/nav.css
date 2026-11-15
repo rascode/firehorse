@@ -15,6 +15,7 @@
  *   --fh-nav-height    control height: a nav link, a search field, a page cell
  *   --fh-nav-pad-inline  inset-control
  *   --fh-nav-gap       gap-bound: a label and its icon
+ *   --fh-nav-frame     item-frame: the space between links in a row (re-resolved by density)
  *   --fh-nav-icon      1em: chevrons and the search glass
  *   --fh-nav-wash      the hover and current wash (text at 6%)
  * --fh-nav-size is the old name for --fh-nav-text and still works.
@@ -118,10 +119,12 @@
     }
   }
 
-  /* Links layout: the links sit side by side and the first label lines up with the column edge. */
+  /* Links layout: the links sit side by side, the family frame between them (as Segment's options,
+     so a hovered link never touches the current one), and the first label lines up with the column
+     edge. */
   .fh-nav--links {
     grid-area: auto;
-    gap: 0;
+    gap: var(--fh-nav-frame, var(--fh-item-frame));
     margin-inline-start: calc(-1 * var(--fh-nav-pad-inline, var(--fh-inset-control)));
   }
 
