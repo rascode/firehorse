@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firehorse.rascode.dev/schema/option-set.schema.json",
+  "title": "Option set",
+  "description": "One known list of values, shared by every field that points at it (field.optionSet), so every endpoint draws the same value with the same label, tone and order. Data display contract, layer 1. A value with no tone falls back to the default tone map in display-rules.json (toneMap).",
+  "type": "object",
+  "required": ["key", "options"],
+  "additionalProperties": false,
+  "properties": {
+    "key": {
+      "description": "Dotted key: <owner>.<field>, e.g. relay.status, goal.priority. Sets derived from a semantic type's own options are semantic.<type>.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+    },
+    "label": { "description": "What the set is, for people: 'Relay status'.", "type": "string" },
+    "kind": {
+      "description": "status: values are states with a tone (drawn as dot or chip). choice: plain categories (chip, segmented or select by count).",
+      "enum": ["status", "choice"],
+      "default": "choice"
+    },
+    "ordinal": { "description": "The order means something (low < high), so sorting follows the list, not the alphabet.", "type": "boolean", "default": false },
+    "options": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/option" }
+    }
+  },
+  "$defs": {
+    "tone": {
+      "description": "A Firehorse tone (--fh-tone-*).",
+      "enum": ["neutral", "accent", "lime", "sky", "amber", "rose", "teal", "violet", "fuchsia", "orange"]
+    },
+    "option": {
+      "type": "object",
+      "required": ["value"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "description": "What is stored.", "type": ["string", "number", "boolean"] },
+        "label": { "description": "What is shown. Defaults to the value.", "type": "string" },
+        "tone": { "$ref": "#/$defs/tone" },
+        "icon": { "description": "A Firehorse icon name (fh-icon--<name>).", "type": "string" },
+        "description": { "description": "One line shown in pickers and tooltips.", "type": "string" },
+        "live": { "description": "The state is in motion (running, syncing): the dot pulses.", "type": "boolean" }
+      }
+    }
+  }
+}

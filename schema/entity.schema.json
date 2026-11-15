@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firehorse.rascode.dev/schema/entity.schema.json",
+  "title": "Entity",
+  "description": "The one object every relationship sends: a person, an organisation or a record. Every relation cell, picker row and reference reads this object and shows as much of it as its variant allows (name, name + key, avatar + name, full, chip, stack, ref, picker). Data display contract, layer 1.",
+  "type": "object",
+  "required": ["id", "label"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "description": "Stable identity, used for keys, selection and the sidecar.", "type": ["string", "number"] },
+    "kind": { "description": "What the thing is. Decides the rule grid row (entity person vs entity record).", "enum": ["person", "org", "record"], "default": "record" },
+    "label": { "description": "The name shown everywhere.", "type": "string", "minLength": 1 },
+    "description": { "description": "One line under the name: a role, an email, a record's summary.", "type": "string" },
+    "image": { "description": "Avatar or logo URL. Without one, initials are drawn.", "type": "string" },
+    "initials": { "description": "Up to two letters. Derived from the label when absent.", "type": "string", "maxLength": 2 },
+    "tone": { "description": "Avatar tone when there is no image.", "enum": ["neutral", "accent", "lime", "sky", "amber", "rose", "teal", "violet", "fuchsia", "orange"] },
+    "key": { "description": "A short human key shown in mono: RLY-497, INV-0042.", "type": "string" },
+    "href": { "description": "Where the name links to.", "type": "string" },
+    "sidecar": { "description": "A sidecar address; when present the value opens the record beside the page (the ref variant).", "type": "string" },
+    "stat": {
+      "description": "One figure beside the entity in the full variant: open deals, last seen.",
+      "type": "object",
+      "required": ["value"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": ["string", "number"] },
+        "label": { "type": "string" },
+        "tone": { "enum": ["neutral", "accent", "lime", "sky", "amber", "rose", "teal", "violet", "fuchsia", "orange"] }
+      }
+    }
+  }
+}
