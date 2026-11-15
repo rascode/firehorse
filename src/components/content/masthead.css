@@ -9,11 +9,28 @@
  */
 
 @layer fh.components {
-  /* Frost panel recipe (sidebar and app bar); sidebar.css repeats this for admin builds. */
-  :where(:root, .fh-theme) {
-    --fh-frost-panel-f: clamp(0, var(--fh-frost, 0.45), 1);
-    --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
-    --fh-frost-panel-filter: blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * 0.35));
+  /* Row cube tile (sidebar nav and app bar lead); tokens live on primitives. */
+  :is(.fh-sidebar__cube, .fh-masthead__lead > .fh-sidebar__cube) {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--fh-tile-cube-size, var(--fh-sidebar-cube, 1.5rem));
+    block-size: var(--fh-tile-cube-size, var(--fh-sidebar-cube, 1.5rem));
+    border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    background: var(--_c);
+    color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-display-weight);
+    line-height: 1;
+  }
+
+  :is(.fh-sidebar__cube, .fh-masthead__lead > .fh-sidebar__cube) .fh-icon {
+    --fh-icon-size: var(--fh-tile-cube-icon, 0.95rem);
+    font-size: var(--fh-text-caption);
+  }
+
+  :is(.fh-sidebar__cube, .fh-masthead__lead > .fh-sidebar__cube)[data-tone] {
+    --_c: var(--fh-tone);
   }
 
   /* —— Masthead ——
@@ -250,7 +267,6 @@
    *   </header>
    * Knobs: --fh-app-bar-edge (opt-in border, like --fh-sidebar-edge). */
   .fh-masthead--app {
-    --fh-sidebar-cube: 1.5rem;
     --_f: var(--fh-frost-panel-f);
     --_fill: var(--fh-frost-panel-fill);
     --_filter: var(--fh-frost-panel-filter);
@@ -262,7 +278,7 @@
     grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
     align-items: center;
     gap: var(--fh-gap-grouped);
-    min-block-size: calc(var(--fh-sidebar-cube) + 2 * var(--fh-inset-tight));
+    min-block-size: calc(var(--fh-tile-cube-size, var(--fh-sidebar-cube, 1.5rem)) + 2 * var(--fh-inset-tight));
     padding: var(--fh-inset-tight);
     border: var(--fh-app-bar-edge, 0);
     border-radius: var(--fh-radius-lg);
@@ -282,26 +298,7 @@
     padding-inline-end: var(--fh-inset-control);
   }
 
-  .fh-masthead__lead .fh-sidebar__cube {
-    display: inline-grid;
-    place-items: center;
-    flex: none;
-    inline-size: var(--fh-sidebar-cube);
-    block-size: var(--fh-sidebar-cube);
-    border-radius: var(--fh-radius-sm);
-    background: var(--_c, var(--fh-tone));
-    color: oklch(from var(--_c, var(--fh-tone)) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-    font-size: var(--fh-text-caption);
-    font-weight: var(--fh-display-weight);
-    line-height: 1;
-  }
-
-  .fh-masthead__lead .fh-sidebar__cube .fh-icon {
-    --fh-icon-size: 0.95rem;
-    font-size: var(--fh-text-caption);
-  }
-
-  .fh-masthead__lead .fh-sidebar__cube[data-tone] {
+  .fh-masthead__lead[data-tone] {
     --_c: var(--fh-tone);
   }
 

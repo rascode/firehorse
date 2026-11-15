@@ -203,6 +203,14 @@
     --fh-blur-chrome: 10px;
     /* Frost over a backdrop: 0 is clear glass, 1 is nearly solid. */
     --fh-frost: 0.6;
+    /* Frost panel (sidebar and app bar): one recipe on --fh-frost. */
+    --fh-frost-panel-f: clamp(0, var(--fh-frost, 0.45), 1);
+    --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
+    --fh-frost-panel-filter: blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * 0.35));
+    /* Sidebar row cube and app bar lead tile: one scale (SBR, MST-3). */
+    --fh-tile-cube-size: 1.5rem;
+    --fh-tile-cube-radius: var(--fh-radius-sm);
+    --fh-tile-cube-icon: 0.95rem;
     /* Floating sheets: gap from the screen edge. */
     --fh-float-gap: 0.75rem;
 

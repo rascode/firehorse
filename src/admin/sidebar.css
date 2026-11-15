@@ -19,20 +19,13 @@
    *     <div class="fh-sidebar__foot">…</div>
    *   </nav>
    * Wrap the nav in a host with container fh-sidebar-host for the sheet at narrow width. */
-  /* Frost panel recipe (sidebar and app bar): one set of tokens so a theme change moves both. */
-  :where(:root, .fh-theme) {
-    --fh-frost-panel-f: clamp(0, var(--fh-frost, 0.45), 1);
-    --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
-    --fh-frost-panel-filter: blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * 0.35));
-  }
-
   .fh-sidebar {
     --_f: var(--fh-frost-panel-f);
     --_fill: var(--fh-frost-panel-fill);
     --_filter: var(--fh-frost-panel-filter);
     --fh-sidebar-width: 15rem;
     --fh-sidebar-rail: 3.5rem;
-    --fh-sidebar-cube: 1.5rem;
+    --fh-sidebar-cube: var(--fh-tile-cube-size);
 
     position: relative;
     display: grid;
@@ -218,8 +211,7 @@
       color var(--fh-duration-fast) var(--fh-ease-standard);
   }
 
-  .fh-sidebar__item[data-tone],
-  .fh-sidebar__cube[data-tone] {
+  .fh-sidebar__item[data-tone] {
     --_c: var(--fh-tone);
   }
 
@@ -248,25 +240,6 @@
     opacity: 0.55;
     cursor: default;
     pointer-events: none;
-  }
-
-  .fh-sidebar__cube {
-    display: inline-grid;
-    place-items: center;
-    flex: none;
-    inline-size: var(--fh-sidebar-cube);
-    block-size: var(--fh-sidebar-cube);
-    border-radius: var(--fh-radius-sm);
-    background: var(--_c);
-    color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-    font-size: var(--fh-text-caption);
-    font-weight: var(--fh-display-weight);
-    line-height: 1;
-  }
-
-  .fh-sidebar__cube .fh-icon {
-    --fh-icon-size: 0.95rem;
-    font-size: var(--fh-text-caption);
   }
 
   .fh-sidebar__label {
