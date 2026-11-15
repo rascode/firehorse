@@ -11485,11 +11485,14 @@
   .fh-fold__body {
     gap: var(--fh-gap-related);
     overflow-wrap: anywhere;
+    grid-template-columns: minmax(0, 1fr);
     justify-self: stretch;
     min-inline-size: 0;
     display: grid;
 
     & > * {
+      overflow-wrap: anywhere;
+      min-inline-size: 0;
       margin-block: 0;
     }
   }

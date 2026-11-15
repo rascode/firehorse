@@ -31,8 +31,10 @@
     min-inline-size: 0;
     /* A long path or hash breaks at the edge instead of being cut off by the closed clamp. */
     overflow-wrap: anywhere;
+    /* One column the body's own width: a paragraph never sizes the track wider than the body. */
+    grid-template-columns: minmax(0, 1fr);
 
-    & > * { margin-block: 0; }
+    & > * { margin-block: 0; min-inline-size: 0; overflow-wrap: anywhere; }
   }
 
   /* Closed: N lines of the body's own line height, the last line fading out. A mask,
