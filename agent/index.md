@@ -65,7 +65,7 @@
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/hamburger/) |
 | `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) · 3 Tile panel (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
 | `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/drawer/) |
-| `DRP` | Dropdown menu | Drawers & menus | 1 Default (1) · 2 Tile menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
+| `DRP` | Dropdown menu | Drawers & menus | 1 Default (2) · 2 Tile menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
 | `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
@@ -1638,9 +1638,9 @@ Classes: `fh-drawer` `fh-drawer__group` `fh-label`
 
 ## DRP · Dropdown menu
 
-Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning. --tiles is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
+On the etched frost: quiet mono labels, sans items in rows that run the menu's width, shortcuts, checkable items, soft rules between groups and a danger zone. --inset sets the rows in from the frame, each rounded. Positioned with CSS anchor positioning. --tiles is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
 
-Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--tiles` `fh-menu__head` `fh-menu__title` `fh-menu__status` `fh-tiles` `fh-tiles--launch` `fh-tile` `fh-tile__cube` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--command` `fh-menu__foot` `fh-menu__pill` `fh-menu__ask` `fh-menu__ask-q` `fh-field` `fh-input` `fh-field--optional` `fh-button` `fh-button--sm`
+Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--inset` `fh-menu--tiles` `fh-menu__head` `fh-menu__title` `fh-menu__status` `fh-tiles` `fh-tiles--launch` `fh-tile` `fh-tile__cube` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--command` `fh-menu__foot` `fh-menu__pill` `fh-menu__ask` `fh-menu__ask-q` `fh-field` `fh-input` `fh-field--optional` `fh-button` `fh-button--sm`
 
 ### DRP-1 · Default
 
@@ -1648,6 +1648,22 @@ Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--tiles`
 
 ```html
 <div class="fh-menu" role="menu" aria-label="Sample menu (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 16rem" data-fh="DRP-1.1">
+  <p class="fh-menu__label">View</p>
+  <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
+  <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>
+  <hr>
+  <p class="fh-menu__label">Show</p>
+  <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Owners</button>
+  <button type="button" role="menuitemcheckbox" aria-checked="false"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Health</button>
+  <hr>
+  <button type="button" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete view</button>
+</div>
+```
+
+#### DRP-1.2 · Inset
+
+```html
+<div class="fh-menu fh-menu--inset" role="menu" aria-label="Sample inset menu (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 16rem" data-fh="DRP-1.2">
   <p class="fh-menu__label">View</p>
   <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
   <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>

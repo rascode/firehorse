@@ -51,7 +51,6 @@
   .fh-mega {
     --_label: var(--fh-mega-label, var(--fh-text-label));
     --_strong: var(--fh-mega-title-weight, var(--fh-weight-bold));
-    --_tracking: var(--fh-mega-tracking, var(--fh-tracking-caps));
     --_leading: var(--fh-mega-leading, var(--fh-leading-snug));
     --_text: var(--fh-mega-text, var(--fh-text-small));
     --_pad-b: var(--fh-mega-pad-block, var(--fh-inset-control));
@@ -121,7 +120,7 @@
     font-family: var(--fh-font-mono);
     font-size: var(--_label);
     font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--_tracking);
+    letter-spacing: var(--fh-mega-tracking, var(--fh-tracking-caps));
     line-height: var(--_leading);
     text-transform: uppercase;
   }
@@ -232,7 +231,7 @@
 
     & .fh-mega__link-media:has(> img) {
       --fh-avatar-size: 2rem;
-      inline-size: var(--fh-avatar-size);
+      inline-size: var(--fh-avatar-size, 2rem);
     }
   }
 
@@ -251,7 +250,7 @@
     &:has(> img),
     &.fh-avatar {
       --fh-avatar-size: 2.4rem;
-      inline-size: var(--fh-avatar-size);
+      inline-size: var(--fh-avatar-size, 2.4rem);
       aspect-ratio: 1;
       overflow: hidden;
       border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
@@ -287,7 +286,7 @@
     line-height: var(--_leading, var(--fh-leading-snug));
   }
   :is(.fh-mega__link-role, .fh-mega__link-meta) {
-    letter-spacing: var(--_tracking, var(--fh-tracking-caps));
+    letter-spacing: var(--fh-mega-tracking, var(--fh-tracking-caps));
     text-transform: uppercase;
   }
   .fh-mega__link-role { color: var(--fh-tone, var(--fh-color-text-muted)); font-weight: var(--fh-weight-medium); }
@@ -324,7 +323,7 @@
       font-family: var(--fh-font-mono);
       font-size: var(--_label);
       font-weight: var(--_strong);
-      letter-spacing: var(--_tracking);
+      letter-spacing: var(--fh-mega-tracking, var(--fh-tracking-caps));
       line-height: var(--_leading);
       text-decoration: none;
       text-transform: uppercase;

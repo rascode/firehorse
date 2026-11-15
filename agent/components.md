@@ -1409,11 +1409,24 @@ The mobile menu: a full-width popover under the header with grouped links. Open 
 
 ### DRP · Dropdown menu
 
-Labels, icons, shortcuts, checkable items and a danger zone. Positioned with CSS anchor positioning. `--tiles` is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
+On the etched frost: quiet mono labels, sans items in rows that run the menu's width, shortcuts, checkable items, soft rules between groups and a danger zone. `--inset` sets the rows in from the frame, each rounded. Positioned with CSS anchor positioning. `--tiles` is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
 
 ```html
 <!-- DRP-1.1 · Default › Default -->
 <div class="fh-menu" role="menu" aria-label="Sample menu (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 16rem" data-fh="DRP-1.1">
+  <p class="fh-menu__label">View</p>
+  <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
+  <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>
+  <hr>
+  <p class="fh-menu__label">Show</p>
+  <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Owners</button>
+  <button type="button" role="menuitemcheckbox" aria-checked="false"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Health</button>
+  <hr>
+  <button type="button" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete view</button>
+</div>
+
+<!-- DRP-1.2 · Default › Inset -->
+<div class="fh-menu fh-menu--inset" role="menu" aria-label="Sample inset menu (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 16rem" data-fh="DRP-1.2">
   <p class="fh-menu__label">View</p>
   <button type="button" role="menuitemradio" aria-checked="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Grid<kbd>G</kbd></button>
   <button type="button" role="menuitemradio" aria-checked="false"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i>Board<kbd>B</kbd></button>
