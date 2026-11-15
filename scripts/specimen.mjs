@@ -153,6 +153,40 @@ export const tokensOf = (classes = []) => {
   return { files: files.map((s) => s.file), tokens };
 };
 
+// Family values: the family's own public knobs (--fh-<family>-*), read from its CSS so the table never drifts.
+// A knob is a --fh-* name the CSS reads that is not a system token (declared in src/tokens). Its default is the
+// fallback inside var() (or the value the family declares for it); "sets" is the property it feeds, followed
+// through a private --_name to the properties that read it.
+let tokenNames;
+const systemTokens = () => tokenNames ??= new Set(readdirSync(join(root, "src/tokens")).filter((n) => n.endsWith(".css"))
+  .flatMap((n) => [...readFileSync(join(root, "src/tokens", n), "utf8").matchAll(/(--fh-[\w-]+)\s*:/g)].map((m) => m[1])));
+/** The text of a var()'s fallback starting at index i (just after the comma), up to the matching ")". */
+const fallbackAt = (css, i) => { let depth = 0, j = i; for (; j < css.length; j++) { const c = css[j]; if (c === "(") depth++; else if (c === ")") { if (!depth) break; depth--; } } return css.slice(i, j).trim(); };
+/** The property whose value holds index i ("font-size", or a private "--_text"). */
+const propAt = (css, i) => { const head = css.slice(0, i); const k = Math.max(head.lastIndexOf(";"), head.lastIndexOf("{"), head.lastIndexOf("}")); const m = /^\s*([\w-]+)\s*:/.exec(head.slice(k + 1)); return m ? m[1] : ""; };
+/** The family a source file is headed for ("Firehorse — Banner (EMP-1)" → "EMP"), or "". */
+const headedFor = (file) => (/\(([A-Z]{3})(?:-[\d.]+)?\)/.exec(readFileSync(join(root, file), "utf8").slice(0, 400)) ?? [])[1] ?? "";
+export const familyValues = (files = [], id = "") => {
+  const sys = systemTokens(), knobs = new Map();
+  // Only the family's own files: a demo that places a button or a chip pulls in that family's file, not its knobs.
+  const own = files.filter((x) => headedFor(x) === id);
+  for (const file of (own.length ? own : files)) {
+    const css = sources().find((x) => x.file === file)?.css ?? "";
+    for (const m of css.matchAll(/var\((--fh-[\w-]+)\s*(,)?/g)) {
+      const name = m[1];
+      if (sys.has(name) || name === "--fh-tone") continue; // --fh-tone is the context data-tone sets, not a knob
+      const k = knobs.get(name) ?? { name, def: "", sets: new Set() };
+      if (m[2] && !k.def) k.def = fallbackAt(css, m.index + m[0].length);
+      const prop = propAt(css, m.index);
+      if (prop.startsWith("--_")) for (const u of css.matchAll(new RegExp(`var\\(${prop.replace(/[-]/g, "\\-")}[,)]`, "g"))) { const q = propAt(css, u.index); if (q && !q.startsWith("--")) k.sets.add(q); }
+      else if (prop && !prop.startsWith("--")) k.sets.add(prop);
+      knobs.set(name, k);
+    }
+    for (const m of css.matchAll(/(--fh-[\w-]+)\s*:\s*([^;]+);/g)) { const k = knobs.get(m[1]); if (k && !k.def) k.def = m[2].trim(); }
+  }
+  return [...knobs.values()].sort((a, b) => a.name.localeCompare(b.name)).map((k) => ({ name: k.name, def: /var\(--_/.test(k.def) ? "follows the family" : k.def.replace(/^var\((--fh-[\w-]+)\)$/, "$1"), sets: [...k.sets].slice(0, 4) }));
+};
+
 // Agent notes: the family's entry in agent/components.md (### ID · Name, up to the next heading).
 let agentCache;
 // A family with its own agent doc (agent/components/<name>.md, such as values.md for VAL) is read there too, under the same
@@ -223,6 +257,7 @@ ${g.items.map((e) => `            <a class="site-variant" href="#${e.id}" data-s
             <pre class="site-pre"><code id="src-${key(e.id)}">${highlight(e.markup)}</code></pre>
           </div>`).join("\n");
   const { files, tokens } = tokensOf(f.classes);
+  const values = familyValues(files, f.id);
   const list_ = (xs) => `<ul class="site-specimen__codes">${xs.map((x) => `<li><code>${esc(x)}</code></li>`).join("")}</ul>`;
   const notes = agentEntry(f.id);
   const asks = [`<p class="site-specimen__ask"><code>${esc(askLine(f.id, f.name))}</code></p>`, ...items.map((e) => `<p class="site-specimen__ask"${forAttr(e)}><code>${esc(askLine(e.id, label(e)))}</code></p>`)].join("\n            ");
@@ -262,6 +297,13 @@ ${switcher}      <div class="site-specimen__panels">
         <section class="site-specimen__panel" aria-labelledby="panel-markup" data-specimen-panel="markup">
           <h2 class="fh-subheading" id="panel-markup">Markup</h2>
 ${markupPanel}
+        </section>
+        <section class="site-specimen__panel" aria-labelledby="panel-values" data-specimen-panel="values">
+          <h2 class="fh-subheading" id="panel-values">Family values</h2>
+          ${values.length ? `<p class="fh-small fh-muted">The family's own knobs: set one on the family (or any ancestor) to retune every variant at once.</p>
+          <div class="fh-table-wrap"><table class="fh-table site-specimen__values"><thead><tr><th scope="col">Knob</th><th scope="col">Default</th><th scope="col">Sets</th></tr></thead><tbody>
+${values.map((v) => `            <tr><td><code>${esc(v.name)}</code></td><td><code>${esc(v.def || "—")}</code></td><td>${v.sets.map((x) => `<code>${esc(x)}</code>`).join(" ") || "—"}</td></tr>`).join("\n")}
+          </tbody></table></div>` : `<p class="fh-small">This family has no knobs of its own yet; it reads the system tokens directly.</p>`}
         </section>
         <section class="site-specimen__panel" aria-labelledby="panel-classes" data-specimen-panel="classes">
           <h2 class="fh-subheading" id="panel-classes">Classes &amp; tokens</h2>
