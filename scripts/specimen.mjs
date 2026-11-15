@@ -245,6 +245,13 @@ ${g.items.map((e) => `            <a class="site-variant" href="#${e.id}" data-s
         <p class="site-specimen__meta"><code class="fh-chip fh-chip--plain fh-mono" id="${f.id}">${f.id}</code> <span class="fh-chip fh-chip--tone" data-tone="${tier === "pro" ? "fuchsia" : tone}" data-specimen-tier>${tier === "pro" ? "Pro" : "Free"}</span>${held}</p>
       </div>
       ${f.summary ? `<p class="fh-lede">${esc(f.summary)}</p>` : ""}
+      <div class="site-specimen__modebar">
+        <div class="fh-segment fh-segment--mode" role="group" aria-label="Colour mode of the previews" data-specimen-mode data-fh="SEG-2.3">
+          <button type="button" data-mode="dark" aria-pressed="true"><i class="fh-icon fh-icon--moon" aria-hidden="true"></i>Dark</button>
+          <button type="button" data-mode="light" aria-pressed="false"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i>Light</button>
+        </div>
+        <span class="fh-small fh-muted">Shows every preview below in dark or light.</span>
+      </div>
     </section>
 
     <section class="fh-section site-specimen site-specimen__body" data-tone="${tone}" aria-label="${esc(f.name)} specimen" data-specimen="${f.id}">

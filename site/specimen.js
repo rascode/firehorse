@@ -14,6 +14,22 @@
     return;
   }
 
+  /* —— Specimen: Dark / Light for the previews (the Mode toggle, SEG-2.3), remembered on this browser —— */
+  const modes = [...document.querySelectorAll("[data-specimen-mode] button[data-mode]")];
+  if (modes.length) {
+    const frames = () => document.querySelectorAll(".site-specimen__stages, .site-specimen__frame [data-specimen-stage]");
+    const setMode = (mode) => {
+      for (const f of frames()) f.dataset.fhScheme = mode;
+      for (const b of modes) b.setAttribute("aria-pressed", String(b.dataset.mode === mode));
+      try { localStorage.setItem("fh-specimen-mode", mode); } catch {}
+    };
+    let start = null;
+    try { start = localStorage.getItem("fh-specimen-mode"); } catch {}
+    if (start !== "light" && start !== "dark") start = getComputedStyle(document.documentElement).colorScheme.includes("light") && !getComputedStyle(document.documentElement).colorScheme.includes("dark") ? "light" : "dark";
+    for (const b of modes) b.addEventListener("click", () => setMode(b.dataset.mode));
+    setMode(start);
+  }
+
   /* —— Specimen: the variant switcher —— */
   const body = document.querySelector("[data-specimen]");
   const picks = [...document.querySelectorAll("[data-specimen-pick]")];
@@ -21,7 +37,8 @@
   const ids = picks.map((a) => a.dataset.specimenPick);
   const parts = [...document.querySelectorAll("[data-specimen-for]")];
   // An ID, or a group ID (BTN-2), or nothing: the variant to show.
-  const resolve = (id) => (ids.includes(id) ? id : ids.find((v) => v.startsWith(`${id}.`)) ?? null);
+  const was = (id) => document.querySelector(`[data-fh-was="${CSS.escape(id)}"]`)?.closest("[data-specimen-for]")?.dataset.specimenFor ?? null;
+  const resolve = (id) => (ids.includes(id) ? id : ids.find((v) => v.startsWith(`${id}.`)) ?? (id ? was(id) : null));
   const show = (id) => {
     for (const el of parts) el.hidden = el.dataset.specimenFor !== id;
     for (const a of picks) a.dataset.specimenPick === id ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current");

@@ -3887,6 +3887,10 @@ main > .fh-section[id] { scroll-margin-block-start: 0; }
 .site-specimen__head .fh-display { font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.6rem); line-height: var(--fh-leading-tight); text-wrap: balance; max-inline-size: 100%; }
 .site-specimen__head .fh-lede { max-inline-size: 46rem; }
 .site-specimen__head .fh-breadcrumb { justify-self: start; }
+/* Dark / Light for the previews: the Mode toggle sets data-fh-scheme on the stages (site/specimen.js). */
+.site-specimen__modebar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-3); }
+.site-specimen__modebar .fh-segment { flex: none; }
+.site-specimen__stages[data-fh-scheme] { color: var(--fh-color-text); }
 /* The pill stays whole at every width: it takes its content's width (on phones the component
    already drops to the last two crumbs), and nothing inside it shrinks, so the round end and the
    label never squash or spill out. */

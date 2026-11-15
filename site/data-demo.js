@@ -1,6 +1,7 @@
 // Firehorse site: the datatable demo and its record drawer.
 // Sample data only: companies, people and figures are invented.
 import { FirehorseTable } from "./datatable.js";
+import { renderValue } from "./values.js";
 
 const people = ["ava", "cole", "eleanor", "isla", "mateo", "maya", "ray", "reginald", "ruth", "sam", "wes"];
 const person = (n) => ({ name: n[0].toUpperCase() + n.slice(1), image: `/img/avatars/${n}.webp` });
@@ -58,6 +59,8 @@ const config = {
   sort: [{ key: "value", dir: "desc" }],
   hidden: ["email", "phone", "website", "watchers", "weighted"],
   footnote: "Sample data",
+  // A row opens its hidden fields (email, phone, website, watchers, weighted) as a record table under it.
+  expand: true,
   fields: [
     { key: "company", label: "Company", type: "text", width: "13rem" },
     { key: "contact", label: "Contact", type: "user" },
@@ -94,7 +97,9 @@ if (el) {
   // —— Record drawer ——
   const dlg = document.getElementById("record");
   const $ = (s) => dlg.querySelector(s);
-  const money = (v) => new Intl.NumberFormat(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v);
+  // Every value in the drawer is drawn by the contract in the record context, as in the table.
+  const field = (key, extra = {}) => ({ ...config.fields.find((f) => f.key === key), ...extra });
+  const rec = (key, v, extra) => renderValue(field(key, extra), v, "record", { row: current });
   let current = null;
   const render = (row) => {
     current = row;
@@ -107,18 +112,18 @@ if (el) {
       `<span class="fh-chip fh-chip--solid fh-chip--sm" data-tone="${stage.tone}">${row.stage}</span>` +
       row.services.map((s) => `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="${services.find((x) => x.value === s).tone}">${s}</span>`).join("") +
       (row.signed ? `<span class="fh-chip fh-chip--sm" data-tone="lime"><i class="fh-icon fh-icon--badge-check" aria-hidden="true"></i>Signed</span>` : "");
-    $("[data-r='facts']").innerHTML = `<div><dt>Value</dt><dd>${money(row.value)}</dd></div><div><dt>Probability</dt><dd>${row.probability}%</dd></div><div><dt>Weighted</dt><dd>${money(row.weighted)}</dd></div>`;
+    $("[data-r='facts']").innerHTML = `<div><dt>Value</dt><dd>${rec("value", row.value, { currency: "USD", display: { record: "amount" } })}</dd></div><div><dt>Probability</dt><dd>${rec("probability", row.probability)}</dd></div><div><dt>Weighted</dt><dd>${rec("weighted", row.weighted, { currency: "USD", display: { record: "amount" } })}</dd></div>`;
     $("[data-r='deal']").innerHTML = [
-      ["user", "Owner", `<span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="${row.owner.image}" alt=""></span>${row.owner.name}</span>`],
-      ["calendar", "Next step", new Date(row.next).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })],
-      ["star", "Priority", `<span class="fh-rating" data-tone="amber" style="--v:${row.priority}" role="img" aria-label="${row.priority} of 5"></span>`],
-      ["chart-line", "Health", el.querySelector(`[data-id="${row.id}"] .fh-sparkline`)?.outerHTML ?? ""],
+      ["user", "Owner", rec("owner", row.owner, { display: { record: "avatar-name" } })],
+      ["calendar", "Next step", rec("next", row.next)],
+      ["star", "Priority", rec("priority", row.priority)],
+      ["chart-line", "Health", rec("health", row.health)],
     ].map(([i, k, v]) => `<div><dt><i class="fh-icon fh-icon--${i}" aria-hidden="true"></i>${k}</dt><dd>${v}</dd></div>`).join("");
     $("[data-r='contact']").innerHTML = [
-      ["user", "Name", `<span class="fh-cell__user"><span class="fh-avatar fh-avatar--xs"><img src="${row.contact.image}" alt=""></span>${row.contact.name}</span>`],
-      ["at-sign", "Email", `<a class="fh-link" href="mailto:${row.email}">${row.email}</a>`],
-      ["phone", "Phone", row.phone],
-      ["globe", "Website", `<a class="fh-link" href="${row.website}" target="_blank" rel="noopener">${row.website.replace("https://", "")}</a>`],
+      ["user", "Name", rec("contact", row.contact, { display: { record: "avatar-name" } })],
+      ["at-sign", "Email", rec("email", row.email)],
+      ["phone", "Phone", rec("phone", row.phone)],
+      ["globe", "Website", rec("website", row.website)],
     ].map(([i, k, v]) => `<div><dt><i class="fh-icon fh-icon--${i}" aria-hidden="true"></i>${k}</dt><dd>${v}</dd></div>`).join("");
     const sel = $("[data-r-edit='stage']");
     sel.innerHTML = stages.map((s) => `<option ${s.value === row.stage ? "selected" : ""}>${s.value}</option>`).join("");

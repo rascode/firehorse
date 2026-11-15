@@ -9,7 +9,7 @@ import { sitePages, assemble, render, absolutize, frameDemoStages } from "./page
 import { sourceFiles } from "./developer.mjs";
 // release.json decides what is built: the public build (default) leaves held pages, demos, links and field types
 // out; --all (or FH_RELEASE=all) builds everything with a Held / Draft / Pro chip, for a local preview.
-import { showAll, fieldGroups, fieldTypeStatus, chip, isLivePage, heldLinks } from "./release.mjs";
+import { showAll, fieldGroups, fieldTypeStatus, chip, isLivePage, heldLinks, isPublic } from "./release.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = process.env.FH_SITE_OUT ?? join(root, "site/dist"); // FH_SITE_OUT: build elsewhere (e.g. where site/dist can't be cleared)
 rmSync(out, { recursive: true, force: true });
@@ -109,10 +109,12 @@ const busted = {
   "themes/rascode.css": stamp("dist/themes/rascode.css"), "site.css": stamp("site/site.css"), "playground.css": stamp("site/playground.css"),
 };
 const siteJs = stamp("site/site.js");
+// The library modules the site serves at its root (dist/*.js): the demos import them by name.
+const SITE_MODULES = ["firehorse.js", "audio.js", "datatable.js", "sidecar.js", "records.js", "money.js", "tabs-nav.js", "values.js", "value-rules.js", "value-render.js", "column-menu.js", "table.js", "record-table.js", "metrics.js"];
 const bust = (s) => Object.entries(busted).reduce((acc, [f, v]) => acc.replaceAll(`href="${f}"`, `href="${f}?v=${v}"`).replaceAll(`href="/${f}"`, `href="/${f}?v=${v}"`), s);
 // Every local script gets a content stamp too (module scripts are cached hard by browsers).
 const jsStamp = Object.fromEntries([...readdirSync(join(root, "site")).filter((f) => f.endsWith(".js")).map((f) => [f, stamp(`site/${f}`)]),
-  ...["firehorse.js", "audio.js", "datatable.js", "sidecar.js", "records.js", "money.js", "tabs-nav.js", "values.js", "value-rules.js"].map((f) => [f, stamp(`dist/${f}`)])]);
+  ...SITE_MODULES.map((f) => [f, stamp(`dist/${f}`)])]);
 const bustJs = (s) => s.replace(/src="(\/?)([\w-]+\.js)"/g, (m, slash, f) => (jsStamp[f] ? `src="${slash}${f}?v=${jsStamp[f]}"` : m));
 const fill = (s) => bustJs(bust(s)).replaceAll('src="site.js"', `src="site.js?v=${siteJs}"`).replaceAll('src="/site.js"', `src="/site.js?v=${siteJs}"`).replaceAll("{{HORSE}}", horse).replaceAll("{{TOKENS}}", String(tokenCount)).replaceAll("{{GZIP}}", gzipKb).replaceAll("{{SCHEMA_ROWS}}", schemaRows).replaceAll("{{SEMANTIC_FIELDS}}", semanticFields).replaceAll("{{SEMANTIC_KEY_FIELDS}}", semanticKeyFields).replaceAll("{{DS_VERSION}}", JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version);
 // Docs pages: site/pages/**/*.html wrapped in site/parts/layout.html (see scripts/pages.mjs).
@@ -125,12 +127,24 @@ for (const p of docPages) {
   for (const id of new Set(p.missing)) console.warn(`  ! ${p.path}: link to #${id} has no target on any page`);
 }
 if (process.argv.includes("--check") && docPages.some((p) => p.missing?.length)) { console.error("✗ site: dead links (above)"); process.exit(1); }
-// Old single-page links (/#c-button) land on the right page: site.js looks the hash up here.
-writeFileSync(join(out, "anchors.json"), JSON.stringify(Object.fromEntries([...ctx.where].filter(([, path]) => path !== "/").map(([id, path]) => [id, path.replace(/#$/, "")]))));
+// Old single-page links (/#c-button) land on the right page: site.js looks the hash up here. A retired ID that moved
+// (index-ledger.json) lands on its replacement: the value carries the new ID as its own hash (KVL-1.1 → /data/table/#TBL-3.1).
+const ledgerMoved = JSON.parse(readFileSync(join(root, "index-ledger.json"), "utf8")).moved ?? {};
+writeFileSync(join(out, "anchors.json"), JSON.stringify(Object.fromEntries([...ctx.where].filter(([, path]) => path !== "/").map(([id, path]) => [id, ledgerMoved[id] && ctx.where.has(ledgerMoved[id]) ? `${ctx.where.get(ledgerMoved[id]).replace(/#$/, "")}#${ledgerMoved[id]}` : path.replace(/#$/, "")]))));
 cp("site/site.css", "site.css");
 cp("site/site.js", "site.js");
 for (const f of readdirSync(join(root, "site"))) if (/\.(js|css)$/.test(f) && !["site.js", "site.css"].includes(f)) cp(`site/${f}`, f);
-for (const f of ["datatable.js", "audio.js", "sidecar.js", "records.js", "money.js", "tabs-nav.js", "values.js", "value-rules.js", "icons.css", "icons.json"]) cp(`dist/${f}`, f);
+for (const f of [...SITE_MODULES.filter((m) => m !== "firehorse.js"), "icons.css", "icons.json"]) cp(`dist/${f}`, f);
+// Old specimen pages of families that moved (site/moved-pages.json): a page that forwards to the new home.
+const movedPages = JSON.parse(readFileSync(join(root, "site/moved-pages.json"), "utf8")).pages;
+for (const [from, to] of Object.entries(movedPages)) {
+  if (docPages.some((p) => p.path === from)) continue;
+  // A held target (and its old page, held too) is not in the public build.
+  const target = to.split("#")[1];
+  if (!showAll && target && !isPublic(target)) continue;
+  mkdirSync(join(out, from), { recursive: true });
+  writeFileSync(join(out, from, "index.html"), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Moved · Firehorse</title><meta name="robots" content="noindex"><link rel="canonical" href="https://firehorse.rascode.dev${to.split("#")[0]}"><meta http-equiv="refresh" content="0; url=${to}"><script>location.replace(${JSON.stringify(to)} + (location.hash && !${JSON.stringify(to)}.includes("#") ? location.hash : ""))</script></head><body><p>This part moved: <a href="${to}">${to}</a>.</p></body></html>\n`);
+}
 // Integration sheets (reveal.css): the public site serves the ones the public build ships; --all serves every one.
 for (const i of buildPlan.integrations) if (showAll || !i.out) cp(i.out ? `dist/full/${i.name}` : `dist/${i.name}`, i.name);
 cp("dist/full/admin.css", "admin.css");

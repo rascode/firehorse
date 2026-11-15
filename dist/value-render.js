@@ -266,6 +266,8 @@ const entity = {
     return `${rootOpen("span", o.r, "stack", o.opts, { id: o.id })}<span class="fh-avatars" role="group" aria-label="${esc(`${o.label}: ${names}`)}">${shown.map((e) => avatar(e, { alt: e.label }).replace(' aria-hidden="true"', ` role="img" aria-label="${esc(e.label)}"`)).join("")}${rest > 0 ? avatar(`+${rest}`, { more: true }) : ""}</span></span>`;
   },
   ref: each((o) => `${rootOpen("span", o.r, "ref", o.opts, { id: o.id })}${refLink(entityOf(o.value), false, o)}</span>`),
+  // A rich record (an application, an organization, a brand): its square avatar or initials, then its reference.
+  "avatar-ref": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-ref", o.opts, { id: o.id })}${avatar(e, { square: true })}${refLink(e, false, o)}</span>`; }),
   "ref-key": each((o) => `${rootOpen("span", o.r, "ref-key", o.opts, { id: o.id })}${refLink(entityOf(o.value), true, o)}</span>`),
   picker: (o) => {
     const e = entityOf(list(o.value)[0]);

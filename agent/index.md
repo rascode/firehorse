@@ -51,12 +51,11 @@
 | `CRD` | Card in a ruled grid | Content | — | [open](https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/) |
 | `TIL` | Tiles | Content | 1 Index tiles (2) · 2 Launch tiles (3) · 3 Option tiles (4) | [open](https://firehorse.rascode.dev/components/content/tiles/) |
 | `STA` | Stats strip | Content | — | [open](https://firehorse.rascode.dev/components/content/stats-strip/) |
-| `KVL` | Key value list | Content | 1 Key value list (3) · 2 Row spacing (1) | [open](https://firehorse.rascode.dev/components/content/key-value-list/) |
 | `CKL` | Checklist | Content | — | [open](https://firehorse.rascode.dev/components/content/checklist/) |
 | `STP` | Steps | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.rascode.dev/components/content/steps/) |
 | `CAR` | Carousel | Content | — | [open](https://firehorse.rascode.dev/components/content/carousel/) |
 | `LST` | List & timeline | Content | — | [open](https://firehorse.rascode.dev/components/content/list-and-timeline/) |
-| `DET` | Details, code, divider | Content | — | [open](https://firehorse.rascode.dev/components/content/details-code-divider/) |
+| `DET` | Code and divider | Content | — | [open](https://firehorse.rascode.dev/components/content/code-and-divider/) |
 | `TIR` | Pricing tiers | Content | — | [open](https://firehorse.rascode.dev/components/content/pricing-tiers/) |
 | `FEA` | Features | Content | — | [open](https://firehorse.rascode.dev/components/content/features/) |
 | `TST` | Testimonial | Content | — | [open](https://firehorse.rascode.dev/components/content/testimonial/) |
@@ -65,7 +64,7 @@
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/hamburger/) |
 | `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) · 3 Tile panel (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
 | `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/drawer/) |
-| `DRP` | Dropdown menu | Drawers & menus | 1 Default (2) · 2 Tile menu (1) · 3 Context menu (1) · 4 Rich menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
+| `DRP` | Dropdown menu | Drawers & menus | 1 Default (2) · 2 Tile menu (1) · 3 Context menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
 | `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
@@ -77,8 +76,8 @@
 | `CHO` | Choices | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/choices/) |
 | `UPL` | Upload, range, tags, sheet | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/upload-range-tags-sheet/) |
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
-| `DTB` | Datatable | Data | — | [open](https://firehorse.rascode.dev/data/datatable/) |
-| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) | [open](https://firehorse.rascode.dev/data/table/) |
+| `DTB` | Datatable | Data | 1 Datatable (1) | [open](https://firehorse.rascode.dev/data/datatable/) |
+| `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) · 3 Record table (4) · 4 Row spacing (1) | [open](https://firehorse.rascode.dev/data/table/) |
 | `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
 | `THS` | Theme select | Themes | 1 Select (1) · 2 Colour menu (1) | [open](https://firehorse.rascode.dev/theming/theme-select/) |
@@ -1353,61 +1352,6 @@ Classes: `fh-stats`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/stats-strip/.
 
-## KVL · Key value list
-
-Label / value rows on etched rules: label on the left, value on the right. Two columns of rows from 38rem; __full spans both. --fields puts a field beside each label; --single keeps one column. Row spacing is set once for the page with data-fh-rows (sm · md · lg · xl) and applies to every table and key value list; data-fh-rows-select on a segmented switch changes it live.
-
-Classes: `fh-kv` `fh-kv--single` `fh-kv--fields` `fh-input` `fh-kv__full` `fh-textarea` `fh-segmented` `fh-segmented--sm` `fh-sr-only`
-
-### KVL-1 · Key value list
-
-#### KVL-1.1 · Read
-
-```html
-<dl class="fh-kv fh-kv--single" style="max-inline-size: 24rem" data-fh="KVL-1.1">
-  <div><dt>County</dt><dd>Travis</dd></div>
-  <div><dt>Parcel</dt><dd>0219-0402-11</dd></div>
-  <div><dt>Year built</dt><dd>1987</dd></div>
-  <div><dt>Lot</dt><dd>0.21 ac</dd></div>
-</dl>
-```
-
-#### KVL-1.2 · Fields
-
-```html
-<dl class="fh-kv fh-kv--fields" data-fh="KVL-1.2">
-  <div><dt><label for="kv-legal">Legal name</label></dt><dd><input class="fh-input" id="kv-legal" value="Acme Supply Co. LLC"></dd></div>
-  <div><dt><label for="kv-dba">DBA</label></dt><dd><input class="fh-input" id="kv-dba" value="Acme"></dd></div>
-  <div class="fh-kv__full"><dt><label for="kv-about">About</label></dt><dd><textarea class="fh-textarea" id="kv-about" rows="2">Tools and parts for small builders.</textarea></dd></div>
-</dl>
-```
-
-#### KVL-1.3 · Mixed
-
-```html
-<dl class="fh-kv" data-fh="KVL-1.3">
-  <div><dt>Owner</dt><dd>Maple Row Holdings LLC</dd></div>
-  <div><dt>Since</dt><dd>2016</dd></div>
-  <div><dt>Mortgage</dt><dd>$212,400</dd></div>
-  <div><dt>Liens</dt><dd>None found</dd></div>
-  <div class="fh-kv__full"><dt>Legal description</dt><dd>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</dd></div>
-</dl>
-```
-
-### KVL-2 · Row spacing
-
-#### KVL-2.1 · Row spacing
-
-```html
-<fieldset class="fh-segmented fh-segmented--sm" data-fh="KVL-2.1">
-  <legend class="fh-sr-only">Row spacing</legend>
-  <label><input type="radio" name="kv-rows" value="sm" data-fh-rows-select> S</label>
-  <label><input type="radio" name="kv-rows" value="md" data-fh-rows-select checked> M</label>
-  <label><input type="radio" name="kv-rows" value="lg" data-fh-rows-select> L</label>
-  <label><input type="radio" name="kv-rows" value="xl" data-fh-rows-select> XL</label>
-</fieldset>
-```
-
 ## CKL · Checklist
 
 Classes: `fh-checklist`
@@ -1470,11 +1414,13 @@ Classes: `fh-stack` `fh-stack--xl` `fh-list` `fh-avatar` `fh-list__title` `fh-li
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/list-and-timeline/.
 
-## DET · Details, code, divider
+## DET · Code and divider
 
-Classes: `fh-stack` `fh-stack--lg` `fh-dl` `fh-divider` `fh-code` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-small` `fh-muted` `fh-kbd`
+A code block with its copy button, a divider with a word in it, and keyboard keys. The description list that sat here moved to the Record table (TBL-3.5, Stacked).
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/details-code-divider/.
+Classes: `fh-stack` `fh-stack--lg` `fh-divider` `fh-code` `fh-button` `fh-button--sm` `fh-button--ghost` `fh-small` `fh-muted` `fh-kbd`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/code-and-divider/.
 
 ## TIR · Pricing tiers
 
@@ -1785,21 +1731,6 @@ Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--inset`
               <hr>
               <button type="button" role="menuitem" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete<kbd>⌫</kbd></button>
             </div>
-</div>
-```
-
-### DRP-4 · Rich menu
-
-#### DRP-4.1 · Rich menu
-
-```html
-<div class="fh-menu fh-menu--rich" role="menu" aria-label="Firehorse Pro (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 20rem" data-fh="DRP-4.1">
-  <p class="fh-menu__label">Firehorse Pro</p>
-  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-0)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds on top of the free core</small></a>
-  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-3)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Copy-only secrets, reveal, rotation</small></a>
-  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-2)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones, schedules, date pickers</small></a>
-  <hr>
-  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-8)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing &amp; early access</span></a>
 </div>
 ```
 
@@ -2475,15 +2406,23 @@ Classes: `fh-field` `fh-field--optional` `fh-tags` `fh-chip` `fh-chip__remove` `
 
 ## DTB · Datatable
 
-Classes: `fh-dt`
+Fields and rows in, a database out: search, filters, multi-sort, grouping with totals, three views and expandable rows. Every value is drawn by the data display contract (renderValue(), the Values parts): status as dot and word in a cell and a chip on a card or lane, money with its currency, people as avatars. Rest on a header, or press its Display as button, to show that column another way the contract allows; your pick stays in this browser. expand: true opens a row's other fields under it as a record table.
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/data/datatable/.
+Classes: `fh-dt` `fh-dt--records` `fh-dt__scroll` `fh-dt__table` `fh-value` `fh-value--ref-key` `fh-ref` `fh-ref__label` `fh-ref__key` `fh-value--ref` `fh-value--duration` `fh-value--tabular` `fh-value--end` `fh-value--dot` `fh-dot` `fh-ref--gone` `fh-ref__note` `fh-sr-only` `fh-dt__expand` `fh-value--plain` `fh-dt__detail` `fh-panel-section__stage` `fh-button` `fh-button--secondary` `fh-panel-section__caption` `fh-chips` `fh-chips--wrap` `fh-chip` `fh-button--accent` `fh-value--date`
+
+### DTB-1 · Datatable
+
+#### DTB-1.1 · Datatable
+
+```html
+<div class="fh-dt" id="pipeline" style="--fh-dt-height: 36rem" data-tone="sky" aria-label="Client pipeline (sample data)" data-fh="DTB-1.1"></div>
+```
 
 ## TBL · Table
 
-With fh-table--reflow, rows turn into labelled cards when the slot is under 36rem. fh-table__head in the caption is a title with a count chip.
+Static markup, or table.js from the same fields and rows the datatable takes (fields mode, no toolbar): every cell a Values part, each header naming its field and each cell its raw value, so any viewer can re-display a column from its Display as button. With fh-table--reflow, rows turn into labelled cards when the slot is under 36rem. fh-table__head in the caption is a title with a count chip.
 
-Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-table__head` `fh-subheading` `fh-chip`
+Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-table__th` `fh-roll` `fh-colmenu__button` `fh-value` `fh-value--mono` `fh-value--ref` `fh-ref` `fh-ref__label` `fh-value--avatar-name` `fh-avatar` `fh-avatar--circle` `fh-value__name` `fh-value--dot` `fh-dot` `fh-value--overdue` `fh-value__sub` `fh-value--amount` `fh-value--tabular` `fh-value--end` `fh-value--date-relative` `fh-sr-only` `fh-table__head` `fh-subheading` `fh-chip` `fh-record` `fh-record--read` `fh-value--line` `fh-value--copyable` `fh-kbd` `fh-value__action` `fh-icon` `fh-value--plain` `fh-value--unit` `fh-value--chip` `fh-chip--tone` `fh-chip--sm` `fh-record--fields` `fh-value--input` `fh-value--field` `fh-input` `fh-value--email-input` `fh-value--segmented` `fh-segment` `fh-segment--mode` `fh-value--switch` `fh-check` `fh-switch` `fh-record__full` `fh-value--textarea` `fh-textarea` `fh-record--mixed` `fh-value--full` `fh-entity` `fh-entity__sep` `fh-entity__who` `fh-value--amount-code` `fh-value--file-row` `fh-files` `fh-value--prose` `fh-record--review` `fh-action` `fh-record__edit` `fh-value--email` `fh-link` `fh-record--stacked` `fh-value--date` `fh-value--chips-inline` `fh-chips` `fh-segmented` `fh-segmented--sm`
 
 ### TBL-1 · Table
 
@@ -2519,11 +2458,78 @@ Classes: `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-badge` `fh-t
 </div>
 ```
 
+### TBL-3 · Record table
+
+One record as a table turned on its side: a row per field, the label on the left and the value on the right, each value a Values part in the record context. --read is one column; --fields puts a field beside each label (the form context); --mixed runs two columns of rows from 38rem, with long values (fh-record__full) across both; --review adds an Edit action to each row; --stacked puts the label over its value in a narrow slot. record-table.js draws it from fields and a record and puts the display menu on each label. The Key value list (KVL), Review rows (RVW) and the description list moved here; their classes still work. Row spacing is set once for the page with data-fh-rows (sm · md · lg · xl) and applies to every table and record table; data-fh-rows-select on a segmented switch changes it live.
+
+#### TBL-3.1 · Read
+
+```html
+<dl class="fh-record fh-record--read" aria-label="Parcel" data-fh-was="KVL-1.1" data-fh="TBL-3.1">
+  <div data-fh-field="county" data-semantic="short_text"><dt>County</dt><dd data-fh-value="&quot;Travis&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Travis</span></span></dd></div>
+  <div data-fh-field="parcel" data-semantic="external_id"><dt data-fh-colmenu-host><span class="fh-roll">Parcel</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="parcel" aria-label="Display Parcel as" title="Display as"></button></dt><dd data-fh-value="&quot;0219-0402-11&quot;"><span class="fh-value fh-value--copyable" data-fh="VAL-11.8"><code class="fh-kbd" title="0219-0402-11">0219-0402-11</code><button class="fh-value__action" type="button" aria-label="Copy Parcel" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span></dd></div>
+  <div data-fh-field="built" data-fh-field-json="{&quot;shape&quot;:&quot;number&quot;,&quot;kind&quot;:&quot;id&quot;}"><dt>Year built</dt><dd data-fh-value="1987"><span class="fh-value fh-value--plain fh-value--tabular fh-value--end" data-fh="VAL-6.1">1987</span></dd></div>
+  <div data-fh-field="lot" data-fh-field-json="{&quot;shape&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;ac&quot;}"><dt data-fh-colmenu-host><span class="fh-roll">Lot</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="lot" aria-label="Display Lot as" title="Display as"></button></dt><dd data-fh-value="0.21"><span class="fh-value fh-value--unit fh-value--tabular fh-value--end" data-fh="VAL-6.2">0.21<span class="fh-value__sub">ac</span></span></dd></div>
+  <div data-fh-field="zoning" data-fh-field-json="{&quot;shape&quot;:&quot;option&quot;,&quot;options&quot;:[{&quot;value&quot;:&quot;r1&quot;,&quot;label&quot;:&quot;R-1 residential&quot;,&quot;tone&quot;:&quot;teal&quot;},{&quot;value&quot;:&quot;c2&quot;,&quot;label&quot;:&quot;C-2 commercial&quot;,&quot;tone&quot;:&quot;violet&quot;}]}"><dt data-fh-colmenu-host><span class="fh-roll">Zoning</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="zoning" aria-label="Display Zoning as" title="Display as"></button></dt><dd data-fh-value="&quot;r1&quot;"><span class="fh-value fh-value--chip" data-fh="VAL-1.2"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="teal">R-1 residential</span></span></dd></div>
+</dl>
+```
+
+#### TBL-3.2 · Fields
+
+```html
+<dl class="fh-record fh-record--fields" aria-label="Business" data-fh-was="KVL-1.2" data-fh="TBL-3.2">
+  <div data-fh-field="legal" data-semantic="legal_name"><dt><label for="rt-fields-legal">Legal name</label></dt><dd data-fh-value="&quot;Acme Supply Co. LLC&quot;"><div class="fh-value fh-value--input fh-value--field" data-mode="edit" data-fh="VAL-11.6"><input class="fh-input" type="text" value="Acme Supply Co. LLC" name="legal" id="rt-fields-legal" aria-label="Legal name"></div></dd></div>
+  <div data-fh-field="dba" data-semantic="short_text"><dt><label for="rt-fields-dba">DBA</label></dt><dd data-fh-value="&quot;Acme&quot;"><div class="fh-value fh-value--input fh-value--field" data-mode="edit" data-fh="VAL-11.6"><input class="fh-input" type="text" value="Acme" name="dba" id="rt-fields-dba" aria-label="DBA"></div></dd></div>
+  <div data-fh-field="email" data-semantic="email"><dt><label for="rt-fields-email">Billing email</label></dt><dd data-fh-value="&quot;billing@acme.example&quot;"><div class="fh-value fh-value--email-input fh-value--field" data-mode="edit" data-fh="VAL-9.7"><input class="fh-input" type="email" value="billing@acme.example" name="email" id="rt-fields-email" aria-label="Billing email"></div></dd></div>
+  <div data-fh-field="priority" data-semantic="priority"><dt><label for="rt-fields-priority">Priority</label></dt><dd data-fh-value="&quot;medium&quot;"><div class="fh-value fh-value--segmented" data-mode="edit" data-fh="VAL-1.5"><div class="fh-segment fh-segment--mode" role="group" aria-label="Priority" onclick="const b = event.target.closest('button'); if (b &amp;&amp; !b.disabled) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))"><button type="button" value="low" aria-pressed="false">Low</button><button type="button" value="medium" aria-pressed="true">Medium</button><button type="button" value="high" aria-pressed="false">High</button><button type="button" value="urgent" aria-pressed="false">Urgent</button></div></div></dd></div>
+  <div data-fh-field="billable" data-semantic="checkbox"><dt><label for="rt-fields-billable">Billable</label></dt><dd data-fh-value="true"><span class="fh-value fh-value--switch" data-mode="edit" data-fh="VAL-10.4"><label class="fh-check"><input class="fh-switch" role="switch" type="checkbox" checked name="billable" aria-label="Billable"></label></span></dd></div>
+  <div class="fh-record__full" data-fh-field="about" data-semantic="description"><dt><label for="rt-fields-about">About</label></dt><dd data-fh-value="&quot;Tools and parts for small builders.&quot;"><div class="fh-value fh-value--textarea fh-value--field" data-mode="edit" data-fh="VAL-11.4"><textarea class="fh-textarea" rows="4" name="about" id="rt-fields-about" aria-label="About">Tools and parts for small builders.</textarea></div></dd></div>
+</dl>
+```
+
+#### TBL-3.3 · Mixed
+
+```html
+<dl class="fh-record fh-record--mixed" aria-label="Property" data-fh-was="KVL-1.3" data-fh="TBL-3.3">
+  <div class="fh-record__full" data-fh-field="owner" data-semantic="owner_reference"><dt data-fh-colmenu-host><span class="fh-roll">Owner</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="owner" aria-label="Display Owner as" title="Display as"></button></dt><dd data-fh-value="{&quot;label&quot;:&quot;Maple Row Holdings LLC&quot;,&quot;description&quot;:&quot;Owner of record&quot;,&quot;initials&quot;:&quot;MR&quot;,&quot;tone&quot;:&quot;teal&quot;}"><div class="fh-value fh-value--full" data-fh="VAL-3.5"><span class="fh-entity"><span class="fh-avatar fh-avatar--circle" data-tone="teal" aria-hidden="true">MR</span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maple Row Holdings LLC</b><small>Owner of record</small></span></span></div></dd></div>
+  <div data-fh-field="since" data-fh-field-json="{&quot;shape&quot;:&quot;number&quot;,&quot;kind&quot;:&quot;id&quot;}"><dt>Since</dt><dd data-fh-value="2016"><span class="fh-value fh-value--plain fh-value--tabular fh-value--end" data-fh="VAL-6.1">2016</span></dd></div>
+  <div data-fh-field="mortgage" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt data-fh-colmenu-host><span class="fh-roll">Mortgage</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="mortgage" aria-label="Display Mortgage as" title="Display as"></button></dt><dd data-fh-value="212400"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="212400.00">$212,400.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="liens" data-semantic="short_text"><dt>Liens</dt><dd data-fh-value="&quot;None found&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">None found</span></span></dd></div>
+  <div data-fh-field="status" data-semantic="status"><dt data-fh-colmenu-host><span class="fh-roll">Status</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="status" aria-label="Display Status as" title="Display as"></button></dt><dd data-fh-value="&quot;active&quot;"><span class="fh-value fh-value--chip" data-fh="VAL-1.2"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="sky">Active</span></span></dd></div>
+  <div class="fh-record__full" data-fh-field="files" data-semantic="document_file" data-fh-field-json="{&quot;multiple&quot;:true}"><dt data-fh-colmenu-host><span class="fh-roll">Files</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="files" aria-label="Display Files as" title="Display as"></button></dt><dd data-fh-value="[{&quot;name&quot;:&quot;deed.pdf&quot;,&quot;size&quot;:218000},{&quot;name&quot;:&quot;survey.png&quot;,&quot;size&quot;:64000}]"><div class="fh-value fh-value--file-row" data-fh="VAL-8.4"><ul class="fh-files"><li><span><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>deed.pdf</span><small>213 KB</small></span></li><li><span><i class="fh-icon fh-icon--image" aria-hidden="true"></i><span>survey.png</span><small>63 KB</small></span></li></ul></div></dd></div>
+  <div class="fh-record__full" data-fh-field="legal" data-semantic="description"><dt data-fh-colmenu-host><span class="fh-roll">Legal description</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="legal" aria-label="Display Legal description as" title="Display as"></button></dt><dd data-fh-value="&quot;Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas&quot;"><div class="fh-value fh-value--prose" data-fh="VAL-11.3"><p>Lot 4, Block B, Cedar Ridge Section 2, a subdivision in Travis County, Texas</p></div></dd></div>
+</dl>
+```
+
+#### TBL-3.5 · Stacked
+
+```html
+<dl class="fh-record fh-record--stacked" aria-label="Subscription" data-fh="TBL-3.5">
+  <div data-fh-field="plan" data-semantic="short_text"><dt>Plan</dt><dd data-fh-value="&quot;Agents · Monthly&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Agents · Monthly</span></span></dd></div>
+  <div data-fh-field="renews" data-semantic="date"><dt data-fh-colmenu-host><span class="fh-roll">Renews</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="renews" aria-label="Display Renews as" title="Display as"></button></dt><dd data-fh-value="&quot;2026-11-28&quot;"><span class="fh-value fh-value--date" data-fh="VAL-7.1"><time datetime="2026-11-28">Nov 28, 2026</time></span></dd></div>
+  <div data-fh-field="channels" data-fh-field-json="{&quot;shape&quot;:&quot;options&quot;,&quot;options&quot;:[{&quot;value&quot;:&quot;messenger&quot;,&quot;label&quot;:&quot;Messenger&quot;,&quot;tone&quot;:&quot;sky&quot;},{&quot;value&quot;:&quot;whatsapp&quot;,&quot;label&quot;:&quot;WhatsApp&quot;,&quot;tone&quot;:&quot;lime&quot;},{&quot;value&quot;:&quot;sms&quot;,&quot;label&quot;:&quot;SMS&quot;,&quot;tone&quot;:&quot;teal&quot;}]}"><dt data-fh-colmenu-host><span class="fh-roll">Channels</span><button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false" data-fh-colmenu="channels" aria-label="Display Channels as" title="Display as"></button></dt><dd data-fh-value="[&quot;messenger&quot;,&quot;whatsapp&quot;,&quot;sms&quot;]"><span class="fh-value fh-value--chips-inline" data-fh="VAL-2.2"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="sky">Messenger</span><span class="fh-chip fh-chip--sm" data-tone="lime">WhatsApp</span><span class="fh-chip fh-chip--sm" data-tone="teal">SMS</span></span></span></dd></div>
+</dl>
+```
+
+### TBL-4 · Row spacing
+
+#### TBL-4.1 · Row spacing
+
+```html
+<fieldset class="fh-segmented fh-segmented--sm" data-fh-was="KVL-2.1" data-fh="TBL-4.1">
+  <legend class="fh-sr-only">Row spacing</legend>
+  <label><input type="radio" name="rt-rows" value="sm" data-fh-rows-select> S</label>
+  <label><input type="radio" name="rt-rows" value="md" data-fh-rows-select checked> M</label>
+  <label><input type="radio" name="rt-rows" value="lg" data-fh-rows-select> L</label>
+  <label><input type="radio" name="rt-rows" value="xl" data-fh-rows-select> XL</label>
+</fieldset>
+```
+
 ## MET · Metric tiles
 
-One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, counts and chips. __more is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use --full when the detail needs room. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or meter drops in as it is.
+Drawn from data by metrics.js: the figure, its delta, a ratio and the people come from the data display contract's metric context, so an amount reads $48.2K with its change, a share is a ring, a bar or a meter against its target, and a team is a count beside its avatars. One fact per tile: label with an icon, the value, a line under it and where it came from. As many across as fit. Add an fh-progress for a share done, --needed for a fact still to fill in, or make the tile an <a> to open its area. --spread puts the label and description at the top and the value at the bottom, with a wide gap. __row holds avatars, counts and chips. __more is an etched line with a chevron: open, the tile grows in place and shows its detail, so the chevron stays under the pointer; use --full when the detail needs room. __delta shows the change (data-trend; data-good="down" where down is good), and a sparkline, ring or meter drops in as it is.
 
-Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__value` `fh-metric__source` `fh-progress` `fh-metric--needed` `fh-metric--spread` `fh-cube` `fh-cube--sm` `fh-metric__figure` `fh-avatars` `fh-avatar` `fh-avatar--sm` `fh-avatar--square` `fh-avatars__more` `fh-metric__more` `fh-kv` `fh-metric__delta` `fh-sparkline` `fh-gauge` `fh-metric--tinted` `fh-metric--full` `fh-metric--wide` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-chip`
+Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__figure` `fh-metric__value` `fh-value` `fh-value--line` `fh-value__name` `fh-metric__source` `fh-value--text` `fh-value--tabular` `fh-value--bar` `fh-progress` `fh-metric--needed` `fh-value--plain-delta` `fh-metric--spread` `fh-value--plain` `fh-value--stack` `fh-avatars` `fh-avatar` `fh-avatar--circle` `fh-value--compact-delta` `fh-value--mono` `fh-metric__more` `fh-record` `fh-record--read` `fh-value--amount-code` `fh-value--end` `fh-value__sub` `fh-metric__delta` `fh-value--sparkline` `fh-sparkline` `fh-value--meter` `fh-gauge` `fh-metric--tinted` `fh-metric--full` `fh-metric--wide` `fh-table-wrap` `fh-table` `fh-table--reflow` `fh-num` `fh-value--date` `fh-value--amount` `fh-value--dot` `fh-dot`
 
 ### MET-1 · Metric tile
 
@@ -2533,7 +2539,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <article class="fh-metric" data-tone="teal" data-fh="MET-1.1">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
   <p class="fh-metric__sub">Formed 2019 · Delaware</p>
-  <p class="fh-metric__value">LLC</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">LLC</span></span></p></div>
   <p class="fh-metric__source">State records</p>
 </article>
 ```
@@ -2544,8 +2550,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <article class="fh-metric" data-tone="lime" data-fh="MET-1.2">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
   <p class="fh-metric__sub">Next: bank account</p>
-  <p class="fh-metric__value">82%</p>
-  <progress class="fh-progress" value="82" max="100">82%</progress>
+  <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">82%</span></p>
+  <span class="fh-value fh-value--bar" data-tone="lime" data-fh="VAL-5.2"><progress class="fh-progress" value="82" max="100">82%</progress><b>82%</b></span>
 </article>
 ```
 
@@ -2555,7 +2561,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <article class="fh-metric fh-metric--needed" data-fh="MET-1.3">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
   <p class="fh-metric__sub">For Stripe and PayPal</p>
-  <p class="fh-metric__value">Needed</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Needed</span></span></p></div>
 </article>
 ```
 
@@ -2565,7 +2571,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <a class="fh-metric" data-tone="sky" href="#a-metric" data-fh="MET-1.4">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
   <p class="fh-metric__sub">2 public</p>
-  <p class="fh-metric__value">4</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">4</span></p></div>
 </a>
 ```
 
@@ -2575,8 +2581,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <article class="fh-metric fh-metric--spread" data-tone="fuchsia" data-fh="MET-1.5">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i>Payment readiness</p>
   <p class="fh-metric__sub">What Stripe still needs before payouts</p>
-  <p class="fh-metric__value">3 of 11</p>
-  <progress class="fh-progress" value="27" max="100">27%</progress>
+  <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">27%</span></p>
+  <span class="fh-value fh-value--bar" data-tone="fuchsia" data-fh="VAL-5.2"><progress class="fh-progress" value="27" max="100">27%</progress><b>27%</b></span>
 </article>
 ```
 
@@ -2584,13 +2590,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 
 ```html
 <article class="fh-metric" data-tone="violet" data-fh="MET-1.6">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team<span class="fh-cube fh-cube--sm">4</span></p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">4</p><div class="fh-avatars" role="group" aria-label="Team">
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span>
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span>
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span>
-      <span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span>
-    </div></div>
+  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">4</span></p><span class="fh-value fh-value--stack" data-fh="VAL-3.7"><span class="fh-avatars" role="group" aria-label="Team: Ava, Cole, Maya, Ray"><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/cole.webp" alt="Cole Hart"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/maya.webp" alt="Maya Lin"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ray.webp" alt="Ray Okafor"></span></span></span></div>
   <p class="fh-metric__source">People</p>
 </article>
 ```
@@ -2601,15 +2602,14 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <article class="fh-metric" data-tone="sky" data-fh="MET-1.7">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
   <p class="fh-metric__sub">5 invoices · 1 overdue</p>
-  <p class="fh-metric__value">$6,940</p>
-  <details class="fh-metric__more">
-    <summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
-    <dl class="fh-kv">
-      <div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div>
-      <div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div>
-      <div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div>
-      <div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div>
-    </dl>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="6940" title="$6,940.00 USD">$6.9K</data></span></p></div>
+  <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
+    <dl class="fh-record fh-record--read" data-fh="TBL-3.1">
+  <div data-fh-field="bb" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Brightline Builders</dt><dd data-fh-value="2180"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="2180.00">$2,180.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="mh" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Mesa Homes</dt><dd data-fh-value="3420"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="3420.00">$3,420.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="hp" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Harbor &amp; Pine</dt><dd data-fh-value="940"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="940.00">$940.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="cr" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Cobalt Roofing · overdue</dt><dd data-fh-value="400"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="400.00">$400.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+</dl>
   </details>
 </article>
 ```
@@ -2620,7 +2620,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 <article class="fh-metric" data-tone="lime" data-fh="MET-1.8">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
   <p class="fh-metric__sub">vs September</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="48210" title="$48,210.00 USD">$48.2K</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $5.2K">$5.2K</span></span></p></div>
 </article>
 ```
 
@@ -2629,8 +2629,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 ```html
 <article class="fh-metric" data-tone="sky" data-good="down" data-fh="MET-1.9">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
-  <p class="fh-metric__sub">Down is good here</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">2.1%</p><span class="fh-metric__delta" data-trend="down">0.4 pt</span></div>
+  <p class="fh-metric__sub">Percent of accounts, down is good here</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">2.1<span class="fh-metric__delta" data-trend="down" data-good="down" aria-label="Down 0.4, down is good">0.4</span></span></p></div>
 </article>
 ```
 
@@ -2639,7 +2639,7 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 ```html
 <article class="fh-metric" data-tone="teal" data-fh="MET-1.10">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders · 12 wk</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">42<span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span></p><span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="teal" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span></div>
 </article>
 ```
 
@@ -2648,7 +2648,8 @@ Classes: `fh-metric` `fh-metric__label` `fh-icon` `fh-metric__sub` `fh-metric__v
 ```html
 <article class="fh-metric" data-tone="amber" data-fh="MET-1.11">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
-  <div class="fh-gauge" style="--fh-value: 31; --fh-gauge-size: 8rem" role="img" aria-label="31% of the credit line used"><b>31%</b><small>of $40,000</small></div>
+  <p class="fh-metric__sub">Target: under 50% of the line</p>
+  <span class="fh-value fh-value--meter" data-tone="amber" data-fh="VAL-5.4"><span class="fh-gauge" style="--fh-value: 31" role="img" aria-label="31%, target 50%"><b>31%</b><small>of 50%</small></span></span>
 </article>
 ```
 
@@ -2662,8 +2663,8 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread" data-tone="lime" data-fh="MET-2.1">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
   <p class="fh-metric__sub">Next: confirm the payout bank account</p>
-  <p class="fh-metric__value">82%</p>
-  <progress class="fh-progress" value="82" max="100">82%</progress>
+  <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">82%</span></p>
+  <span class="fh-value fh-value--bar" data-tone="lime" data-fh="VAL-5.2"><progress class="fh-progress" value="82" max="100">82%</progress><b>82%</b></span>
   <p class="fh-metric__source">9 of 11 facts</p>
 </article>
 ```
@@ -2674,7 +2675,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread" data-tone="teal" data-fh="MET-2.2">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
   <p class="fh-metric__sub">All brands, after refunds</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">$48,210</p><span class="fh-metric__delta" data-trend="up">12%</span></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="48210" title="$48,210.00 USD">$48.2K</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $5.2K">$5.2K</span></span></p></div>
   <p class="fh-metric__source">vs September</p>
 </article>
 ```
@@ -2685,7 +2686,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread" data-tone="sky" data-fh="MET-2.3">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders</p>
   <p class="fh-metric__sub">Last 12 weeks</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">42</p><span class="fh-metric__delta" data-trend="up">8</span><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">42<span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span></p><span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="sky" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span></div>
   <p class="fh-metric__source">All channels</p>
 </article>
 ```
@@ -2696,7 +2697,7 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread" data-tone="violet" data-fh="MET-2.4">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team</p>
   <p class="fh-metric__sub">Who can sign in and act for the business</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">4</p><div class="fh-avatars" role="group" aria-label="Team"><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square"><img src="/img/avatars/maya.webp" alt="Maya"></span><span class="fh-avatar fh-avatar--sm fh-avatar--square fh-avatars__more">+1</span></div></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">4</span></p><span class="fh-value fh-value--stack" data-fh="VAL-3.7"><span class="fh-avatars" role="group" aria-label="Team: Ava, Cole, Maya, Ray"><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/cole.webp" alt="Cole Hart"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/maya.webp" alt="Maya Lin"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ray.webp" alt="Ray Okafor"></span></span></span></div>
   <p class="fh-metric__source">People</p>
 </article>
 ```
@@ -2707,8 +2708,8 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread fh-metric--tinted" data-tone="orange" data-fh="MET-2.5">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--globe" aria-hidden="true"></i>Google profile</p>
   <p class="fh-metric__sub">Next: opening hours for each location</p>
-  <p class="fh-metric__value">45%</p>
-  <progress class="fh-progress" value="45" max="100">45%</progress>
+  <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">45%</span></p>
+  <span class="fh-value fh-value--bar" data-tone="orange" data-fh="VAL-5.2"><progress class="fh-progress" value="45" max="100">45%</progress><b>45%</b></span>
   <p class="fh-metric__source">5 of 11 facts</p>
 </article>
 ```
@@ -2719,9 +2720,14 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.6">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
   <p class="fh-metric__sub">5 invoices, 1 overdue</p>
-  <p class="fh-metric__value">$6,940</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="6940" title="$6,940.00 USD">$6.9K</data></span></p></div>
   <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
-    <dl class="fh-kv"><div><dt>Brightline Builders</dt><dd>$2,180.00</dd></div><div><dt>Mesa Homes</dt><dd>$3,420.00</dd></div><div><dt>Harbor &amp; Pine</dt><dd>$940.00</dd></div><div><dt>Cobalt Roofing · overdue</dt><dd>$400.00</dd></div></dl>
+    <dl class="fh-record fh-record--read" data-fh="TBL-3.1">
+  <div data-fh-field="bb" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Brightline Builders</dt><dd data-fh-value="2180"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="2180.00">$2,180.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="mh" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Mesa Homes</dt><dd data-fh-value="3420"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="3420.00">$3,420.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="hp" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Harbor &amp; Pine</dt><dd data-fh-value="940"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="940.00">$940.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+  <div data-fh-field="cr" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}"><dt>Cobalt Roofing · overdue</dt><dd data-fh-value="400"><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.2"><data value="400.00">$400.00</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+</dl>
   </details>
 </article>
 ```
@@ -2732,8 +2738,8 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread fh-metric--wide" data-tone="teal" data-fh="MET-2.7">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit line</p>
   <p class="fh-metric__sub">Drawn against $40,000 at Cedar Valley Bank</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">$12,500</p><span class="fh-metric__delta" data-trend="flat">0</span></div>
-  <progress class="fh-progress" value="31" max="100">31%</progress>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="12500" title="$12,500.00 USD">$12.5K</data><span class="fh-metric__delta" data-trend="flat" aria-label="No change">$0</span></span></p></div>
+  <span class="fh-value fh-value--bar" data-tone="teal" data-fh="VAL-5.2"><progress class="fh-progress" value="31" max="100">31%</progress><b>31%</b></span>
   <p class="fh-metric__source">31% drawn · 9.4% rate</p>
 </article>
 ```
@@ -2744,8 +2750,16 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
 <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.8">
   <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
   <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
-  <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>
-  <div class="fh-table-wrap"><table class="fh-table fh-table--reflow"><thead><tr><th>Invoice</th><th>Customer</th><th>Sent</th><th class="fh-num">Amount</th><th>Status</th></tr></thead><tbody><tr><td data-label="Invoice">INV-1042</td><td data-label="Customer">Brightline Builders</td><td data-label="Sent">Oct 30</td><td class="fh-num" data-label="Amount">$2,180.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1041</td><td data-label="Customer">Harbor &amp; Pine</td><td data-label="Sent">Oct 26</td><td class="fh-num" data-label="Amount">$940.00</td><td data-label="Status"><span class="fh-chip" data-tone="lime">Paid</span></td></tr><tr><td data-label="Invoice">INV-1040</td><td data-label="Customer">Mesa Homes</td><td data-label="Sent">Oct 21</td><td class="fh-num" data-label="Amount">$3,420.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1038</td><td data-label="Customer">Cobalt Roofing</td><td data-label="Sent">Oct 9</td><td class="fh-num" data-label="Amount">$400.00</td><td data-label="Status"><span class="fh-chip" data-tone="danger">Overdue</span></td></tr></tbody></table></div>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="6940" title="$6,940.00 USD">$6.9K</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $1.1K">$1.1K</span></span></p></div>
+  <div class="fh-table-wrap"><table class="fh-table fh-table--reflow" aria-label="Invoices this month" data-fh="TBL-1.2">
+    <thead><tr><th scope="col" data-fh-field="inv" data-semantic="external_id">Invoice</th><th scope="col" data-fh-field="cust" data-semantic="short_text">Customer</th><th scope="col" data-fh-field="sent" data-semantic="date" data-fh-field-json="{&quot;display&quot;:{&quot;cell&quot;:&quot;date&quot;}}">Sent</th><th scope="col" data-fh-field="amt" data-semantic="fiat_amount" data-fh-field-json="{&quot;currency&quot;:&quot;USD&quot;}" class="fh-num">Amount</th><th scope="col" data-fh-field="status" data-fh-field-json="{&quot;shape&quot;:&quot;option&quot;,&quot;kind&quot;:&quot;status&quot;,&quot;options&quot;:[{&quot;value&quot;:&quot;paid&quot;,&quot;label&quot;:&quot;Paid&quot;,&quot;state&quot;:&quot;done&quot;},{&quot;value&quot;:&quot;sent&quot;,&quot;label&quot;:&quot;Sent&quot;,&quot;state&quot;:&quot;moving&quot;},{&quot;value&quot;:&quot;overdue&quot;,&quot;label&quot;:&quot;Overdue&quot;,&quot;state&quot;:&quot;failed&quot;},{&quot;value&quot;:&quot;draft&quot;,&quot;label&quot;:&quot;Draft&quot;,&quot;state&quot;:&quot;waiting&quot;}]}">Status</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Invoice" data-fh-value="&quot;INV-1042&quot;"><span class="fh-value fh-value--mono" data-fh="VAL-11.7">INV-1042</span></td><td data-label="Customer" data-fh-value="&quot;Brightline Builders&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Brightline Builders</span></span></td><td data-label="Sent" data-fh-value="&quot;2026-10-30&quot;"><span class="fh-value fh-value--date" data-fh="VAL-7.1"><time datetime="2026-10-30">Oct 30, 2026</time></span></td><td data-label="Amount" data-fh-value="2180" class="fh-num"><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.1"><data value="2180.00">$2,180</data></span></td><td data-label="Status" data-fh-value="&quot;paid&quot;"><span class="fh-value fh-value--dot" data-tone="lime" data-fh="VAL-1.1"><span class="fh-dot"></span>Paid</span></td></tr>
+      <tr><td data-label="Invoice" data-fh-value="&quot;INV-1043&quot;"><span class="fh-value fh-value--mono" data-fh="VAL-11.7">INV-1043</span></td><td data-label="Customer" data-fh-value="&quot;Mesa Homes&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Mesa Homes</span></span></td><td data-label="Sent" data-fh-value="&quot;2026-11-02&quot;"><span class="fh-value fh-value--date" data-fh="VAL-7.1"><time datetime="2026-11-02">Nov 2, 2026</time></span></td><td data-label="Amount" data-fh-value="3420" class="fh-num"><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.1"><data value="3420.00">$3,420</data></span></td><td data-label="Status" data-fh-value="&quot;sent&quot;"><span class="fh-value fh-value--dot" data-tone="sky" data-fh="VAL-1.1"><span class="fh-dot"></span>Sent</span></td></tr>
+      <tr><td data-label="Invoice" data-fh-value="&quot;INV-1044&quot;"><span class="fh-value fh-value--mono" data-fh="VAL-11.7">INV-1044</span></td><td data-label="Customer" data-fh-value="&quot;Harbor &amp; Pine&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Harbor &amp; Pine</span></span></td><td data-label="Sent" data-fh-value="&quot;2026-11-05&quot;"><span class="fh-value fh-value--date" data-fh="VAL-7.1"><time datetime="2026-11-05">Nov 5, 2026</time></span></td><td data-label="Amount" data-fh-value="940" class="fh-num"><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.1"><data value="940.00">$940</data></span></td><td data-label="Status" data-fh-value="&quot;sent&quot;"><span class="fh-value fh-value--dot" data-tone="sky" data-fh="VAL-1.1"><span class="fh-dot"></span>Sent</span></td></tr>
+      <tr><td data-label="Invoice" data-fh-value="&quot;INV-1045&quot;"><span class="fh-value fh-value--mono" data-fh="VAL-11.7">INV-1045</span></td><td data-label="Customer" data-fh-value="&quot;Cobalt Roofing&quot;"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Cobalt Roofing</span></span></td><td data-label="Sent" data-fh-value="&quot;2026-10-12&quot;"><span class="fh-value fh-value--date" data-fh="VAL-7.1"><time datetime="2026-10-12">Oct 12, 2026</time></span></td><td data-label="Amount" data-fh-value="400" class="fh-num"><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono fh-value--end" data-fh="VAL-4.1"><data value="400.00">$400</data></span></td><td data-label="Status" data-fh-value="&quot;overdue&quot;"><span class="fh-value fh-value--dot" data-tone="rose" data-fh="VAL-1.1"><span class="fh-dot"></span>Overdue</span></td></tr>
+    </tbody>
+  </table></div>
 </article>
 ```
 
@@ -3094,14 +3108,23 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `EYE-21` | `EYE-6.3` |
 | `EYE-22` | `EYE-7.1` |
 | `EYE-23` | `EYE-7.2` |
+| `KVL` | `TBL-3` |
+| `KVL-1` | `TBL-3` |
+| `KVL-1.1` | `TBL-3.1` |
+| `KVL-1.2` | `TBL-3.2` |
+| `KVL-1.3` | `TBL-3.3` |
+| `KVL-2` | `TBL-4` |
+| `KVL-2.1` | `TBL-4.1` |
 | `MRK-01` | `EYE` |
 | `MRK-02` | `MRK-1.1` |
 | `MRK-03` | `MRK-1.2` |
-| `PRP` | `KVL` |
-| `PRP-1` | `KVL-1` |
-| `PRP-1.1` | `KVL-1.1` |
-| `PRP-1.2` | `KVL-1.2` |
-| `PRP-1.3` | `KVL-1.3` |
+| `PRP` | `TBL-3` |
+| `PRP-1` | `TBL-3` |
+| `PRP-1.1` | `TBL-3.1` |
+| `PRP-1.2` | `TBL-3.2` |
+| `PRP-1.3` | `TBL-3.3` |
+| `RVW` | `TBL-3` |
+| `RVW-1` | `TBL-3` |
 | `TAG-01` | `TAG-1.1` |
 | `TAG-02` | `TAG-2.1` |
 | `TAG-03` | `TAG-2.2` |

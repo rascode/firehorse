@@ -58,7 +58,9 @@
   if (lost && !/^work/.test(lost) && !document.getElementById(lost) && !document.querySelector(`[data-fh-id="${CSS.escape(lost)}"]`)) {
     fetch("/anchors.json").then((r) => r.json()).then((map) => {
       const to = map[lost];
-      if (to && to !== location.pathname) location.replace(`${to}#${lost}`);
+      // A moved ID carries its replacement as the hash (KVL-1.1 → /data/table/#TBL-3.1).
+      if (to && to.includes("#")) location.replace(to);
+      else if (to && to !== location.pathname) location.replace(`${to}#${lost}`);
     }).catch(() => {});
   }
 
