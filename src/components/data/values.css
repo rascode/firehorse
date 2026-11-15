@@ -64,7 +64,7 @@
   }
 
   /* Block variants fill their slot: a full entity row, a file row, prose, a code block, a field. */
-  .fh-value:is(.fh-value--full, .fh-value--file-row, .fh-value--prose, .fh-value--code-block, .fh-value--field, .fh-value--bar, .fh-value--meter, .fh-value--range) {
+  .fh-value:is(.fh-value--full, .fh-value--file-row, .fh-value--prose, .fh-value--code-block, .fh-value--field, .fh-value--bar, .fh-value--range) {
     display: flex;
     inline-size: 100%;
   }
@@ -151,8 +151,9 @@
     min-inline-size: 3rem;
   }
 
-  .fh-value--bar > b,
-  .fh-value--meter > b {
+  :is(.fh-value--bar, .fh-value--range) > .fh-range { flex: 1 1 auto; min-inline-size: 3rem; }
+
+  :is(.fh-value--bar, .fh-value--range) > :is(b, output) {
     flex: none;
     min-inline-size: 4ch;
     color: var(--fh-color-text-muted);
@@ -163,7 +164,6 @@
     text-align: end;
   }
 
-  .fh-value--meter > .fh-meter { flex: 1 1 auto; min-inline-size: 3rem; }
 
   /* —— VAL-6 Number: a series as a sparkline (the metric tile's) —— */
   .fh-value > .fh-sparkline {
@@ -227,10 +227,7 @@
   }
 
   /* —— Edit (rule 6): the same part, with a chevron or a control —— */
-  .fh-value[data-mode="edit"] {
-    border-radius: var(--fh-radius-sm);
-    cursor: var(--fh-cursor-action);
-  }
+  .fh-value[data-mode="edit"] { border-radius: var(--fh-radius-sm); }
 
   /* The chevron of a value chosen from a list: after the value, or inside its chip. */
   :is(.fh-value--chevron, .fh-value__trigger)::after,
@@ -257,7 +254,7 @@
     font: inherit;
     letter-spacing: inherit;
     text-transform: inherit;
-    cursor: inherit;
+    cursor: var(--fh-cursor-action);
     field-sizing: content;
 
     &:focus-visible { outline: none; }
@@ -315,8 +312,23 @@
   .fh-value[data-mode="edit"]:has(.fh-value__select, .fh-value__trigger):hover .fh-chip,
   .fh-value[data-mode="edit"]:has(.fh-value__select, .fh-value__trigger):hover::after { filter: brightness(1.15); }
 
-  /* An editable variant in read: the same control, read-only. */
+  /* An editable variant in read: the same control, read-only. The picker keeps its row and drops the chevron. */
   .fh-value[data-mode="read"] :is(input, select, textarea, button):disabled { cursor: default; opacity: 1; }
+  .fh-value[data-mode="read"] .fh-entity-picker > .fh-entity { background: none; }
+  .fh-value[data-mode="read"] .fh-entity-picker > .fh-entity::after { content: none; }
+
+  /* Mono values type in mono too. */
+  .fh-value--mono :is(.fh-input, .fh-textarea, .fh-value__input) { font-family: var(--fh-font-mono); }
+
+  /* --lg on a control: a step up in text and height; a check and a switch scale whole, so the knob still lands. */
+  .fh-value--lg :is(.fh-input, .fh-textarea) {
+    min-block-size: 3rem;
+    font-size: var(--fh-text-large);
+  }
+
+  .fh-value--lg .fh-entity-picker { --fh-entity-avatar: 2.4rem; }
+  .fh-value--lg .fh-dropzone__title { font-size: var(--fh-text-large); }
+  .fh-value--lg .fh-check > input { zoom: 1.25; }
 
   /* The list an entity or file trigger opens is the entity picker's list, as it is. */
   .fh-value > .fh-entity-picker__list { inline-size: var(--fh-value-list-width, 18rem); }
