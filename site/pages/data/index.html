@@ -8,7 +8,11 @@
   "headline": "Your data, in tables that feel like a database",
   "lede": "Typed fields, filters, multi-sort, grouping with totals, field visibility, density, column resizing, selection with bulk actions, and three views of the same records. Define the fields once in JSON; the table, the gallery and the board all follow. Click any row to open its record.",
   "scripts": [
-    "data-demo.js"
+    "data-demo.js",
+    "keyfield.js"
+  ],
+  "styles": [
+    "firehorse-pro.css"
   ],
   "icon": "table-2",
   "summary": [
@@ -244,6 +248,537 @@ table.addEventListener(<span class="v">"fh:row-open"</span>, (e) =&gt; drawer.sh
     <div class="fh-metric__figure"><p class="fh-metric__value">$6,940</p><span class="fh-metric__delta" data-trend="up">$1,120</span></div>
     <div class="fh-table-wrap"><table class="fh-table fh-table--reflow"><thead><tr><th>Invoice</th><th>Customer</th><th>Sent</th><th class="fh-num">Amount</th><th>Status</th></tr></thead><tbody><tr><td data-label="Invoice">INV-1042</td><td data-label="Customer">Brightline Builders</td><td data-label="Sent">Oct 30</td><td class="fh-num" data-label="Amount">$2,180.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1041</td><td data-label="Customer">Harbor &amp; Pine</td><td data-label="Sent">Oct 26</td><td class="fh-num" data-label="Amount">$940.00</td><td data-label="Status"><span class="fh-chip" data-tone="lime">Paid</span></td></tr><tr><td data-label="Invoice">INV-1040</td><td data-label="Customer">Mesa Homes</td><td data-label="Sent">Oct 21</td><td class="fh-num" data-label="Amount">$3,420.00</td><td data-label="Status"><span class="fh-chip" data-tone="amber">Due</span></td></tr><tr><td data-label="Invoice">INV-1038</td><td data-label="Customer">Cobalt Roofing</td><td data-label="Sent">Oct 9</td><td class="fh-num" data-label="Amount">$400.00</td><td data-label="Status"><span class="fh-chip" data-tone="danger">Overdue</span></td></tr></tbody></table></div>
   </article>
+</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ VALUES ═══════════════ -->
+    <section id="values" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Values" aria-label="Values" data-fh-id="VAL" data-fh-name="Values" data-fh-summary="One part per way of drawing a value: option, options, entity, money, ratio, number, temporal, file, link, flag, prose, text and code. Each variant shows read, edit and --lg.">
+      <div class="fh-stack fh-stack--xl">
+        <div class="site-demo site-anchor" id="c-values-option" data-fh-id="VAL-1">
+          <div class="site-demo__head"><h3>Option</h3><p>One value from a known set. A status is a dot in a dense cell and a chip everywhere else; editing keeps the part and adds a chevron: the word is a native select whose options carry their tones, and <code>data-tone="option"</code> recolours it as it changes. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-1.1" data-fh-name="Dot and word">
+  <span class="fh-value fh-value--dot" data-tone="sky"><span class="fh-dot"></span>running</span>
+  <span class="fh-value fh-value--dot fh-value--chevron" data-mode="edit" data-tone="option"><span class="fh-dot"></span><select class="fh-value__select" aria-label="Status"><option value="queued" data-tone="amber">queued</option><option value="running" data-tone="sky" selected>running</option><option value="merged" data-tone="lime">merged</option><option value="failed" data-tone="rose">failed</option><option value="archived" data-tone="neutral">archived</option></select></span>
+  <span class="fh-value fh-value--dot fh-value--lg" data-tone="sky"><span class="fh-dot"></span>running</span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-1.2" data-fh-name="Toned chip">
+  <span class="fh-value fh-value--chip"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></span>
+  <span class="fh-value fh-value--chip fh-value--chevron" data-mode="edit" data-tone="option"><span class="fh-chip fh-chip--tone fh-chip--sm"><select class="fh-value__select" aria-label="Status"><option value="queued" data-tone="amber">queued</option><option value="running" data-tone="sky">running</option><option value="merged" data-tone="lime" selected>merged</option><option value="failed" data-tone="rose">failed</option><option value="archived" data-tone="neutral">archived</option></select></span></span>
+  <span class="fh-value fh-value--chip fh-value--lg"><span class="fh-chip fh-chip--tone" data-status="merged">merged</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-1.3" data-fh-name="Solid chip">
+  <span class="fh-value fh-value--chip-solid"><span class="fh-chip fh-chip--solid fh-chip--sm" data-tone="amber">high</span></span>
+  <span class="fh-value fh-value--chip-solid fh-value--chevron" data-mode="edit" data-tone="option"><span class="fh-chip fh-chip--solid fh-chip--sm"><select class="fh-value__select" aria-label="Priority"><option value="low" data-tone="neutral">low</option><option value="medium" data-tone="sky">medium</option><option value="high" data-tone="amber" selected>high</option><option value="urgent" data-tone="rose">urgent</option></select></span></span>
+  <span class="fh-value fh-value--chip-solid fh-value--lg"><span class="fh-chip fh-chip--solid" data-tone="amber">high</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-1.4" data-fh-name="Chip with chevron">
+  <span class="fh-value fh-value--select" data-mode="read"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="sky">medium</span></span>
+  <span class="fh-value fh-value--select fh-value--chevron" data-mode="edit" data-tone="option"><span class="fh-chip fh-chip--tone fh-chip--sm"><select class="fh-value__select" aria-label="Priority"><option value="low" data-tone="neutral">low</option><option value="medium" data-tone="sky" selected>medium</option><option value="high" data-tone="amber">high</option><option value="urgent" data-tone="rose">urgent</option></select></span></span>
+  <span class="fh-value fh-value--select fh-value--chevron fh-value--lg" data-mode="edit" data-tone="option"><span class="fh-chip fh-chip--tone"><select class="fh-value__select" aria-label="Priority"><option value="low" data-tone="neutral">low</option><option value="medium" data-tone="sky" selected>medium</option><option value="high" data-tone="amber">high</option><option value="urgent" data-tone="rose">urgent</option></select></span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-1.5" data-fh-name="Segmented">
+  <div class="fh-value fh-value--segmented" data-mode="read"><div class="fh-segment fh-segment--mode" role="group" aria-label="Billing"><button type="button" aria-pressed="false" disabled>Monthly</button><button type="button" aria-pressed="false" disabled>Quarterly</button><button type="button" aria-pressed="true" disabled>Annual</button></div></div>
+  <div class="fh-value fh-value--segmented" data-mode="edit"><div class="fh-segment fh-segment--mode" role="group" aria-label="Billing" onclick="const b = event.target.closest('button'); if (b && !b.disabled) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))"><button type="button" aria-pressed="false">Monthly</button><button type="button" aria-pressed="false">Quarterly</button><button type="button" aria-pressed="true">Annual</button></div></div>
+  <div class="fh-value fh-value--segmented fh-value--lg" data-mode="edit"><div class="fh-segment fh-segment--mode fh-segment--lg" role="group" aria-label="Billing" onclick="const b = event.target.closest('button'); if (b && !b.disabled) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))"><button type="button" aria-pressed="false">Monthly</button><button type="button" aria-pressed="false">Quarterly</button><button type="button" aria-pressed="true">Annual</button></div></div>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-1.6" data-fh-name="Select with search">
+  <span class="fh-value fh-value--select-search" data-mode="read"><span class="fh-chip fh-chip--sm" data-tone="teal">Healthcare</span></span>
+  <span class="fh-value fh-value--select-search fh-value--chevron" data-mode="edit"><span class="fh-chip fh-chip--sm" data-tone="teal"><input class="fh-value__select" type="search" list="val-dl-1" value="Healthcare" aria-label="Industry"></span><datalist id="val-dl-1"><option value="Agriculture"></option><option value="Construction"></option><option value="Education"></option><option value="Finance"></option><option value="Healthcare"></option><option value="Hospitality"></option><option value="Legal"></option><option value="Logistics"></option><option value="Manufacturing"></option><option value="Media"></option><option value="Nonprofit"></option><option value="Real estate"></option><option value="Retail"></option><option value="Software"></option></datalist></span>
+  <span class="fh-value fh-value--select-search fh-value--chevron fh-value--lg" data-mode="edit"><span class="fh-chip" data-tone="teal"><input class="fh-value__select" type="search" list="val-dl-2" value="Healthcare" aria-label="Industry"></span><datalist id="val-dl-2"><option value="Agriculture"></option><option value="Construction"></option><option value="Education"></option><option value="Finance"></option><option value="Healthcare"></option><option value="Hospitality"></option><option value="Legal"></option><option value="Logistics"></option><option value="Manufacturing"></option><option value="Media"></option><option value="Nonprofit"></option><option value="Real estate"></option><option value="Retail"></option><option value="Software"></option></datalist></span>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-options" data-fh-id="VAL-2">
+          <div class="site-demo__head"><h3>Options</h3><p>Several values from a set: chips with a +N badge after the limit, wrapping chips, a count, or the tag field. In edit the chips gain remove buttons and an add field. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-2.1" data-fh-name="Chips, +N after the limit">
+  <span class="fh-value fh-value--chips"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="sky">Email</span><span class="fh-chip fh-chip--sm" data-tone="teal">SMS</span><span class="fh-chip fh-chip--sm" data-tone="lime">WhatsApp</span></span><span class="fh-badge">+2</span></span>
+  <span class="fh-value fh-value--chips" data-mode="edit"><span class="fh-tags fh-tags--inline"><span class="fh-chip fh-chip--sm" data-tone="sky">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span><span class="fh-chip fh-chip--sm" data-tone="teal">SMS <button class="fh-chip__remove" type="button" aria-label="Remove SMS"></button></span><span class="fh-chip fh-chip--sm" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span><input aria-label="Add a channel" placeholder="Add a channel"></span></span>
+  <span class="fh-value fh-value--chips fh-value--lg"><span class="fh-chips"><span class="fh-chip" data-tone="sky">Email</span><span class="fh-chip" data-tone="teal">SMS</span><span class="fh-chip" data-tone="lime">WhatsApp</span></span><span class="fh-badge">+2</span></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-2.2" data-fh-name="Chips, wrapping">
+  <span class="fh-value fh-value--chips-inline"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="sky">Email</span><span class="fh-chip fh-chip--sm" data-tone="teal">SMS</span><span class="fh-chip fh-chip--sm" data-tone="lime">WhatsApp</span><span class="fh-chip fh-chip--sm" data-tone="violet">Messenger</span><span class="fh-chip fh-chip--sm" data-tone="orange">Voice</span></span></span>
+  <span class="fh-value fh-value--chips-inline" data-mode="edit"><span class="fh-tags fh-tags--inline"><span class="fh-chip fh-chip--sm" data-tone="sky">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span><span class="fh-chip fh-chip--sm" data-tone="teal">SMS <button class="fh-chip__remove" type="button" aria-label="Remove SMS"></button></span><span class="fh-chip fh-chip--sm" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span><span class="fh-chip fh-chip--sm" data-tone="violet">Messenger <button class="fh-chip__remove" type="button" aria-label="Remove Messenger"></button></span><span class="fh-chip fh-chip--sm" data-tone="orange">Voice <button class="fh-chip__remove" type="button" aria-label="Remove Voice"></button></span><input aria-label="Add a channel" placeholder="Add a channel"></span></span>
+  <span class="fh-value fh-value--chips-inline fh-value--lg"><span class="fh-chips"><span class="fh-chip" data-tone="sky">Email</span><span class="fh-chip" data-tone="teal">SMS</span><span class="fh-chip" data-tone="lime">WhatsApp</span><span class="fh-chip" data-tone="violet">Messenger</span><span class="fh-chip" data-tone="orange">Voice</span></span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-2.3" data-fh-name="Count (3 tags)">
+  <span class="fh-value fh-value--count fh-value--tabular">5 channels</span>
+  <span class="fh-value fh-value--count fh-value--tabular" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-3" aria-haspopup="listbox" aria-label="Channels: 5. Change" style="anchor-name: --val-list-3">5 channels</button><div class="fh-entity-picker__list" id="val-list-3" popover role="listbox" aria-label="Channels" aria-multiselectable="true" style="position-anchor: --val-list-3"><fieldset class="fh-entity-picker__group"><legend>Channels</legend><label class="fh-entity"><input type="checkbox" name="val-list-3" value="Email" checked><span class="fh-entity__who"><b>Email</b></span></label><label class="fh-entity"><input type="checkbox" name="val-list-3" value="SMS" checked><span class="fh-entity__who"><b>SMS</b></span></label><label class="fh-entity"><input type="checkbox" name="val-list-3" value="WhatsApp" checked><span class="fh-entity__who"><b>WhatsApp</b></span></label><label class="fh-entity"><input type="checkbox" name="val-list-3" value="Messenger" checked><span class="fh-entity__who"><b>Messenger</b></span></label><label class="fh-entity"><input type="checkbox" name="val-list-3" value="Voice" checked><span class="fh-entity__who"><b>Voice</b></span></label><label class="fh-entity"><input type="checkbox" name="val-list-3" value="Postal"><span class="fh-entity__who"><b>Postal</b></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--count fh-value--tabular fh-value--lg">5 channels</span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-2.4" data-fh-name="Tag field">
+  <div class="fh-value fh-value--tag-field fh-value--field" data-mode="read"><div class="fh-tags"><span class="fh-chip" data-tone="sky">Email</span><span class="fh-chip" data-tone="teal">SMS</span><span class="fh-chip" data-tone="lime">WhatsApp</span></div></div>
+  <div class="fh-value fh-value--tag-field fh-value--field" data-mode="edit"><div class="fh-tags"><span class="fh-chip" data-tone="sky">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span><span class="fh-chip" data-tone="teal">SMS <button class="fh-chip__remove" type="button" aria-label="Remove SMS"></button></span><span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span><input aria-label="Add a channel" placeholder="Add a channel"></div></div>
+  <div class="fh-value fh-value--tag-field fh-value--field fh-value--lg" data-mode="edit"><div class="fh-tags"><span class="fh-chip" data-tone="sky">Email <button class="fh-chip__remove" type="button" aria-label="Remove Email"></button></span><span class="fh-chip" data-tone="teal">SMS <button class="fh-chip__remove" type="button" aria-label="Remove SMS"></button></span><span class="fh-chip" data-tone="lime">WhatsApp <button class="fh-chip__remove" type="button" aria-label="Remove WhatsApp"></button></span><input aria-label="Add a channel" placeholder="Add a channel"></div></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-entity" data-fh-id="VAL-3">
+          <div class="site-demo__head"><h3>Entity</h3><p>A person, an org or a record, from one entity shape. Each read variant becomes a trigger for the entity picker's list in edit; the picker is the form control. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-3.1" data-fh-name="Name">
+  <span class="fh-value fh-value--name"><span class="fh-value__name">Northwind Studio</span></span>
+  <span class="fh-value fh-value--name" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-4" aria-haspopup="listbox" aria-label="Client: Northwind Studio. Change" style="anchor-name: --val-list-4"><span class="fh-value__name">Northwind Studio</span></button><div class="fh-entity-picker__list" id="val-list-4" popover role="listbox" aria-label="Clients" style="position-anchor: --val-list-4"><fieldset class="fh-entity-picker__group"><legend>Clients</legend><label class="fh-entity"><input type="radio" name="val-list-4" value="NW-204" checked><span class="fh-entity__who"><b>Northwind Studio</b><small>NW-204</small></span></label><label class="fh-entity"><input type="radio" name="val-list-4" value="HH-118"><span class="fh-entity__who"><b>Halcyon Health</b><small>HH-118</small></span></label><label class="fh-entity"><input type="radio" name="val-list-4" value="JL-077"><span class="fh-entity__who"><b>Juniper Labs</b><small>JL-077</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--name fh-value--lg"><span class="fh-value__name">Northwind Studio</span></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.2" data-fh-name="Name and key">
+  <span class="fh-value fh-value--name-key"><span class="fh-value__name">Northwind Studio</span><code class="fh-kbd">NW-204</code></span>
+  <span class="fh-value fh-value--name-key" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-5" aria-haspopup="listbox" aria-label="Client: Northwind Studio, NW-204. Change" style="anchor-name: --val-list-5"><span class="fh-value__name">Northwind Studio</span><code class="fh-kbd">NW-204</code></button><div class="fh-entity-picker__list" id="val-list-5" popover role="listbox" aria-label="Clients" style="position-anchor: --val-list-5"><fieldset class="fh-entity-picker__group"><legend>Clients</legend><label class="fh-entity"><input type="radio" name="val-list-5" value="NW-204" checked><span class="fh-entity__who"><b>Northwind Studio</b><small>NW-204</small></span></label><label class="fh-entity"><input type="radio" name="val-list-5" value="HH-118"><span class="fh-entity__who"><b>Halcyon Health</b><small>HH-118</small></span></label><label class="fh-entity"><input type="radio" name="val-list-5" value="JL-077"><span class="fh-entity__who"><b>Juniper Labs</b><small>JL-077</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--name-key fh-value--lg"><span class="fh-value__name">Northwind Studio</span><code class="fh-kbd">NW-204</code></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.3" data-fh-name="Avatar and name">
+  <span class="fh-value fh-value--avatar-name"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-value__name">Ava Mendes</span></span>
+  <span class="fh-value fh-value--avatar-name" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-6" aria-haspopup="listbox" aria-label="Owner: Ava Mendes. Change" style="anchor-name: --val-list-6"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-value__name">Ava Mendes</span></button><div class="fh-entity-picker__list" id="val-list-6" popover role="listbox" aria-label="People" style="position-anchor: --val-list-6"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="radio" name="val-list-6" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="radio" name="val-list-6" value="mateo"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-6" value="eleanor"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-6" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="radio" name="val-list-6" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--avatar-name fh-value--lg"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-value__name">Ava Mendes</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.4" data-fh-name="Avatar, name and description">
+  <span class="fh-value fh-value--avatar-name-description"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></span>
+  <span class="fh-value fh-value--avatar-name-description" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-7" aria-haspopup="listbox" aria-label="Owner: Ava Mendes, Design lead. Change" style="anchor-name: --val-list-7"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></button><div class="fh-entity-picker__list" id="val-list-7" popover role="listbox" aria-label="People" style="position-anchor: --val-list-7"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="radio" name="val-list-7" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="radio" name="val-list-7" value="mateo"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-7" value="eleanor"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-7" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="radio" name="val-list-7" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--avatar-name-description fh-value--lg"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-3.5" data-fh-name="Full row">
+  <div class="fh-value fh-value--full"><span class="fh-entity"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead · Northwind</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span></div>
+  <div class="fh-value fh-value--full" data-mode="edit"><button class="fh-entity fh-value__trigger" type="button" popovertarget="val-list-8" aria-haspopup="listbox" aria-label="Owner: Ava Mendes. Change" style="anchor-name: --val-list-8"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead · Northwind</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></button><div class="fh-entity-picker__list" id="val-list-8" popover role="listbox" aria-label="People" style="position-anchor: --val-list-8"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="radio" name="val-list-8" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="radio" name="val-list-8" value="mateo"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-8" value="eleanor"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-8" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="radio" name="val-list-8" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></div>
+  <div class="fh-value fh-value--full fh-value--lg"><span class="fh-entity"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead · Northwind</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span></div>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.6" data-fh-name="Avatar chip">
+  <span class="fh-value fh-value--chip"><span class="fh-chip fh-chip--sm"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span>Mateo Ruiz</span></span>
+  <span class="fh-value fh-value--chip fh-value--chevron" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-9" aria-haspopup="listbox" aria-label="Assignee: Mateo Ruiz. Change" style="anchor-name: --val-list-9"><span class="fh-chip fh-chip--sm"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span>Mateo Ruiz</span></button><div class="fh-entity-picker__list" id="val-list-9" popover role="listbox" aria-label="People" style="position-anchor: --val-list-9"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="radio" name="val-list-9" value="ava"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="radio" name="val-list-9" value="mateo" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-9" value="eleanor"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-9" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="radio" name="val-list-9" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--chip fh-value--lg"><span class="fh-chip"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span>Mateo Ruiz</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.7" data-fh-name="Avatar stack, +N">
+  <span class="fh-value fh-value--stack"><span class="fh-avatars" role="group" aria-label="Assignees: Ava, Mateo, Eleanor, Ray and 3 more"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatar--circle fh-avatars__more">+3</span></span></span>
+  <span class="fh-value fh-value--stack" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-10" aria-haspopup="listbox" aria-label="Assignees: 7. Change" style="anchor-name: --val-list-10"><span class="fh-avatars" role="group" aria-label="Assignees: Ava, Mateo, Eleanor, Ray and 3 more"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatar--circle fh-avatars__more">+3</span></span></button><div class="fh-entity-picker__list" id="val-list-10" popover role="listbox" aria-label="People" aria-multiselectable="true" style="position-anchor: --val-list-10"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="checkbox" name="val-list-10" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-10" value="mateo" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-10" value="eleanor" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-10" value="ray" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-10" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--stack fh-value--lg"><span class="fh-avatars" role="group" aria-label="Assignees: Ava, Mateo, Eleanor, Ray and 3 more"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatar--circle fh-avatars__more">+3</span></span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.8" data-fh-name="Reference (opens the sidecar)">
+  <span class="fh-value fh-value--ref"><a class="fh-ref" href="#c-values-entity" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span></a></span>
+  <span class="fh-value fh-value--ref fh-value--chevron" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-11" aria-haspopup="listbox" aria-label="Goal: Harbor index refresh. Change" style="anchor-name: --val-list-11"><span class="fh-ref"><span class="fh-ref__label">Harbor index refresh</span></span></button><div class="fh-entity-picker__list" id="val-list-11" popover role="listbox" aria-label="Goals" style="position-anchor: --val-list-11"><fieldset class="fh-entity-picker__group"><legend>Goals</legend><label class="fh-entity"><input type="radio" name="val-list-11" value="goal-harbor" checked><span class="fh-entity__who"><b>Harbor index refresh</b><small>GL-014 · Due Nov 27</small></span></label><label class="fh-entity"><input type="radio" name="val-list-11" value="goal-orchard"><span class="fh-entity__who"><b>Orchard onboarding</b><small>GL-015 · Due Dec 4</small></span></label><label class="fh-entity"><input type="radio" name="val-list-11" value="goal-tide"><span class="fh-entity__who"><b>Tide reporting</b><small>GL-016 · Due Dec 11</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--ref fh-value--lg"><a class="fh-ref" href="#c-values-entity" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span></a></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-3.9" data-fh-name="Reference and key">
+  <span class="fh-value fh-value--ref-key"><a class="fh-ref" href="#c-values-entity" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></span>
+  <span class="fh-value fh-value--ref-key fh-value--chevron" data-mode="edit"><button class="fh-value__trigger" type="button" popovertarget="val-list-12" aria-haspopup="listbox" aria-label="Goal: Harbor index refresh. Change" style="anchor-name: --val-list-12"><span class="fh-ref"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></span></button><div class="fh-entity-picker__list" id="val-list-12" popover role="listbox" aria-label="Goals" style="position-anchor: --val-list-12"><fieldset class="fh-entity-picker__group"><legend>Goals</legend><label class="fh-entity"><input type="radio" name="val-list-12" value="goal-harbor" checked><span class="fh-entity__who"><b>Harbor index refresh</b><small>GL-014 · Due Nov 27</small></span></label><label class="fh-entity"><input type="radio" name="val-list-12" value="goal-orchard"><span class="fh-entity__who"><b>Orchard onboarding</b><small>GL-015 · Due Dec 4</small></span></label><label class="fh-entity"><input type="radio" name="val-list-12" value="goal-tide"><span class="fh-entity__who"><b>Tide reporting</b><small>GL-016 · Due Dec 11</small></span></label></fieldset></div></span>
+  <span class="fh-value fh-value--ref-key fh-value--lg"><a class="fh-ref" href="#c-values-entity" data-sidecar="goal-harbor"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-3.10" data-fh-name="Picker">
+  <div class="fh-value fh-value--picker fh-value--field" data-mode="read"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" popovertarget="val-list-13" aria-haspopup="listbox" aria-label="Owner" style="anchor-name: --val-list-13" disabled><span class="fh-entity__value"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></span></button></div></div>
+  <div class="fh-value fh-value--picker fh-value--field" data-mode="edit"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" popovertarget="val-list-14" aria-haspopup="listbox" aria-label="Owner" style="anchor-name: --val-list-14"><span class="fh-entity__value"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></span></button><div class="fh-entity-picker__list" id="val-list-14" popover role="listbox" aria-label="People" style="position-anchor: --val-list-14"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="radio" name="val-list-14" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="radio" name="val-list-14" value="mateo"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-14" value="eleanor"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-14" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="radio" name="val-list-14" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></div></div>
+  <div class="fh-value fh-value--picker fh-value--field fh-value--lg" data-mode="edit"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" popovertarget="val-list-15" aria-haspopup="listbox" aria-label="Owner" style="anchor-name: --val-list-15"><span class="fh-entity__value"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></span></button><div class="fh-entity-picker__list" id="val-list-15" popover role="listbox" aria-label="People" style="position-anchor: --val-list-15"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="radio" name="val-list-15" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="radio" name="val-list-15" value="mateo"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-15" value="eleanor"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="radio" name="val-list-15" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="radio" name="val-list-15" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></div></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-3.11" data-fh-name="Picker, several">
+  <div class="fh-value fh-value--picker-multi fh-value--field" data-mode="read"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" popovertarget="val-list-16" aria-haspopup="listbox" aria-label="Reviewers" style="anchor-name: --val-list-16" disabled><span class="fh-entity__value"><span class="fh-avatars" aria-hidden="true"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span></span><span class="fh-entity__who"><b>Ava, Mateo, Eleanor</b><small>3 people</small></span></span></button></div></div>
+  <div class="fh-value fh-value--picker-multi fh-value--field" data-mode="edit"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" popovertarget="val-list-17" aria-haspopup="listbox" aria-label="Reviewers" style="anchor-name: --val-list-17"><span class="fh-entity__value"><span class="fh-avatars" aria-hidden="true"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span></span><span class="fh-entity__who"><b>Ava, Mateo, Eleanor</b><small>3 people</small></span></span></button><div class="fh-entity-picker__list" id="val-list-17" popover role="listbox" aria-label="People" aria-multiselectable="true" style="position-anchor: --val-list-17"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="checkbox" name="val-list-17" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-17" value="mateo" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-17" value="eleanor" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-17" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-17" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></div></div>
+  <div class="fh-value fh-value--picker-multi fh-value--field fh-value--lg" data-mode="edit"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" popovertarget="val-list-18" aria-haspopup="listbox" aria-label="Reviewers" style="anchor-name: --val-list-18"><span class="fh-entity__value"><span class="fh-avatars" aria-hidden="true"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span></span><span class="fh-entity__who"><b>Ava, Mateo, Eleanor</b><small>3 people</small></span></span></button><div class="fh-entity-picker__list" id="val-list-18" popover role="listbox" aria-label="People" aria-multiselectable="true" style="position-anchor: --val-list-18"><fieldset class="fh-entity-picker__group"><legend>People</legend><label class="fh-entity"><input type="checkbox" name="val-list-18" value="ava" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ava Mendes</b><small>Design lead</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-18" value="mateo" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Mateo Ruiz</b><small>Engineer</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-18" value="eleanor" checked><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Eleanor Park</b><small>Producer</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-18" value="ray"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Ray Okafor</b><small>Account manager</small></span></label><label class="fh-entity"><input type="checkbox" name="val-list-18" value="isla"><span class="fh-avatar fh-avatar--circle"><img src="img/avatars/isla.webp" alt="Isla Brandt"></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Isla Brandt</b><small>Finance</small></span></label></fieldset></div></div></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-money" data-fh-id="VAL-4">
+          <div class="site-demo__head"><h3>Money</h3><p>An amount always knows its currency (rule 4). Mono, tabular, right-aligned in cells and records (<code>--end</code>). The delta is the metric tile's. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-4.1" data-fh-name="Amount">
+  <span class="fh-value fh-value--amount fh-value--tabular fh-value--mono"><data value="4800.00">$4,800.00</data></span>
+  <span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-mode="edit"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="4,800.00" aria-label="Amount, US dollars" inputmode="decimal"></span>
+  <span class="fh-value fh-value--amount fh-value--tabular fh-value--mono fh-value--lg"><data value="4800.00">$4,800.00</data></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-4.2" data-fh-name="Amount and currency code">
+  <span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono"><data value="4800.00">$4,800.00</data><abbr class="fh-value__sub" title="US dollar">USD</abbr></span>
+  <span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono" data-mode="edit"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="4,800.00" aria-label="Amount, US dollars" inputmode="decimal"><abbr class="fh-value__sub" title="US dollar">USD</abbr></span>
+  <span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono fh-value--lg"><data value="4800.00">$4,800.00</data><abbr class="fh-value__sub" title="US dollar">USD</abbr></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-4.3" data-fh-name="Compact ($1.2M)">
+  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data></span>
+  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono" data-mode="edit"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="1,240,000.00" aria-label="Amount, US dollars" inputmode="decimal"></span>
+  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono fh-value--lg"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-4.4" data-fh-name="Delta">
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono" data-mode="edit" title="Computed: the change stays read-only while editing"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono fh-value--lg"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-4.5" data-fh-name="Compact with delta">
+  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-mode="edit"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="1,240,000.00" aria-label="Amount, US dollars" inputmode="decimal"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono fh-value--lg"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-4.6" data-fh-name="Money input">
+  <div class="fh-value fh-value--money-input fh-value--field" data-mode="read"><div class="fh-field fh-money" data-fh-money data-currency="USD"><div class="fh-input-group"><span class="fh-money__currency">USD</span><input class="fh-input" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="4800" aria-label="Amount" readonly><input type="hidden" data-fh-money-value></div></div></div>
+  <div class="fh-value fh-value--money-input fh-value--field" data-mode="edit"><div class="fh-field fh-money" data-fh-money data-currency="USD"><div class="fh-input-group"><span class="fh-money__currency">USD</span><input class="fh-input" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="4800" aria-label="Amount"><input type="hidden" data-fh-money-value></div></div></div>
+  <div class="fh-value fh-value--money-input fh-value--field fh-value--lg" data-mode="edit"><div class="fh-field fh-money" data-fh-money data-currency="USD"><div class="fh-input-group"><span class="fh-money__currency">USD</span><input class="fh-input" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="4800" aria-label="Amount"><input type="hidden" data-fh-money-value></div></div></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-ratio" data-fh-id="VAL-5">
+          <div class="site-demo__head"><h3>Ratio</h3><p>A part of a whole: the figure, a bar, a ring, a gauge against a target, or the range to set it. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-5.1" data-fh-name="Percent">
+  <span class="fh-value fh-value--text fh-value--tabular">69%</span>
+  <span class="fh-value fh-value--text fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="number" value="69" aria-label="Progress, percent" min="0" max="100"><span class="fh-value__sub">%</span></span>
+  <span class="fh-value fh-value--text fh-value--tabular fh-value--lg">69%</span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-5.2" data-fh-name="Bar">
+  <span class="fh-value fh-value--bar" data-tone="lime"><progress class="fh-progress" value="69" max="100">69%</progress><b>69%</b></span>
+  <span class="fh-value fh-value--bar" data-mode="edit" data-tone="lime"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" oninput="this.nextElementSibling.value = this.value + '%'"><output>69%</output></span>
+  <span class="fh-value fh-value--bar fh-value--lg" data-tone="lime"><progress class="fh-progress" value="69" max="100">69%</progress><b>69%</b></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-5.3" data-fh-name="Ring">
+  <span class="fh-value fh-value--ring" data-tone="teal"><span class="fh-ring" style="--fh-value: 69" role="img" aria-label="69% complete"><b>69%</b></span></span>
+  <span class="fh-value fh-value--ring" data-mode="edit" data-tone="teal"><span class="fh-ring" style="--fh-value: 69" role="img" aria-label="69% complete"><b>69%</b></span><input class="fh-value__input" type="number" value="69" aria-label="Progress, percent" min="0" max="100"><span class="fh-value__sub">%</span></span>
+  <span class="fh-value fh-value--ring fh-value--lg" data-tone="teal"><span class="fh-ring" style="--fh-value: 69" role="img" aria-label="69% complete"><b>69%</b></span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-5.4" data-fh-name="Meter against a target">
+  <span class="fh-value fh-value--meter" data-tone="amber"><span class="fh-gauge" style="--fh-value: 72" role="img" aria-label="72%, target 80%"><b>72%</b><small>of 80%</small></span></span>
+  <span class="fh-value fh-value--meter" data-mode="edit" data-tone="amber"><span class="fh-gauge" style="--fh-value: 72" role="img" aria-label="72%, target 80%"><b>72%</b><small>of 80%</small></span><input class="fh-value__input" type="number" value="72" aria-label="Value, percent" min="0" max="100"><span class="fh-value__sub">% of 80%</span></span>
+  <span class="fh-value fh-value--meter fh-value--lg" data-tone="amber"><span class="fh-gauge" style="--fh-value: 72" role="img" aria-label="72%, target 80%"><b>72%</b><small>of 80%</small></span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-5.5" data-fh-name="Range">
+  <span class="fh-value fh-value--range" data-mode="read" data-tone="sky"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" disabled><output>69%</output></span>
+  <span class="fh-value fh-value--range" data-mode="edit" data-tone="sky"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" oninput="this.nextElementSibling.value = this.value + '%'"><output>69%</output></span>
+  <span class="fh-value fh-value--range fh-value--lg" data-mode="edit" data-tone="sky"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" oninput="this.nextElementSibling.value = this.value + '%'"><output>69%</output></span>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-number" data-fh-id="VAL-6">
+          <div class="site-demo__head"><h3>Number</h3><p>A count or measure, tabular and right-aligned; with a unit, a change, or a series as a sparkline. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-6.1" data-fh-name="Plain">
+  <span class="fh-value fh-value--plain fh-value--tabular">1,284</span>
+  <span class="fh-value fh-value--plain fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="number" value="1284" aria-label="Count"></span>
+  <span class="fh-value fh-value--plain fh-value--tabular fh-value--lg">1,284</span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-6.2" data-fh-name="With unit">
+  <span class="fh-value fh-value--unit fh-value--tabular">12<span class="fh-value__sub">min</span></span>
+  <span class="fh-value fh-value--unit fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="number" value="12" aria-label="Duration, minutes" min="0"><span class="fh-value__sub">min</span></span>
+  <span class="fh-value fh-value--unit fh-value--tabular fh-value--lg">12<span class="fh-value__sub">min</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-6.3" data-fh-name="Delta">
+  <span class="fh-value fh-value--delta fh-value--tabular"><span class="fh-metric__delta" data-trend="down" data-good="down" aria-label="Down 3, down is good">3</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular" data-mode="edit" title="Computed: the change stays read-only while editing"><span class="fh-metric__delta" data-trend="down" data-good="down" aria-label="Down 3, down is good">3</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--lg"><span class="fh-metric__delta" data-trend="down" data-good="down" aria-label="Down 3, down is good">3</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-6.4" data-fh-name="Plain with delta">
+  <span class="fh-value fh-value--plain-delta fh-value--tabular">42<span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span>
+  <span class="fh-value fh-value--plain-delta fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="number" value="42" aria-label="Open relays"><span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span>
+  <span class="fh-value fh-value--plain-delta fh-value--tabular fh-value--lg">42<span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-6.5" data-fh-name="Sparkline">
+  <span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="teal"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"/><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><b>42</b></span>
+  <span class="fh-value fh-value--sparkline fh-value--tabular" data-mode="edit" data-tone="teal" title="A series is computed: it stays read-only while editing"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"/><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><b>42</b></span>
+  <span class="fh-value fh-value--sparkline fh-value--tabular fh-value--lg" data-tone="teal"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"/><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><b>42</b></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-6.6" data-fh-name="Number input">
+  <div class="fh-value fh-value--number-input fh-value--field" data-mode="read"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="12" aria-label="Duration, minutes" readonly><span>min</span></div></div>
+  <div class="fh-value fh-value--number-input fh-value--field" data-mode="edit"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="12" aria-label="Duration, minutes"><span>min</span></div></div>
+  <div class="fh-value fh-value--number-input fh-value--field fh-value--lg" data-mode="edit"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="12" aria-label="Duration, minutes"><span>min</span></div></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-temporal" data-fh-id="VAL-7">
+          <div class="site-demo__head"><h3>Temporal</h3><p>A moment, a span, a time of day or a duration. Overdue says so in words as well as in the danger tone. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-7.1" data-fh-name="Date">
+  <span class="fh-value fh-value--date"><time datetime="2026-11-27">Nov 27, 2026</time></span>
+  <span class="fh-value fh-value--date" data-mode="edit"><input class="fh-value__input" type="date" value="2026-11-27" aria-label="Due date"></span>
+  <span class="fh-value fh-value--date fh-value--lg"><time datetime="2026-11-27">Nov 27, 2026</time></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.2" data-fh-name="Date and relative">
+  <span class="fh-value fh-value--date-relative"><time datetime="2026-11-27">Nov 27</time><span class="fh-value__sub">in 13d</span></span>
+  <span class="fh-value fh-value--date-relative" data-mode="edit"><input class="fh-value__input" type="date" value="2026-11-27" aria-label="Due date"><span class="fh-value__sub">in 13d</span></span>
+  <span class="fh-value fh-value--date-relative fh-value--lg"><time datetime="2026-11-27">Nov 27</time><span class="fh-value__sub">in 13d</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.3" data-fh-name="Relative">
+  <span class="fh-value fh-value--relative"><time datetime="2026-11-12T14:05" title="Nov 12, 2026, 2:05 PM">2 days ago</time></span>
+  <span class="fh-value fh-value--relative" data-mode="edit"><input class="fh-value__input" type="datetime-local" value="2026-11-12T14:05" aria-label="Last run"></span>
+  <span class="fh-value fh-value--relative fh-value--lg"><time datetime="2026-11-12T14:05" title="Nov 12, 2026, 2:05 PM">2 days ago</time></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.4" data-fh-name="Date and time">
+  <span class="fh-value fh-value--datetime"><time datetime="2026-11-12T14:05">Nov 12, 2026 · 2:05 PM</time></span>
+  <span class="fh-value fh-value--datetime" data-mode="edit"><input class="fh-value__input" type="datetime-local" value="2026-11-12T14:05" aria-label="Last run"></span>
+  <span class="fh-value fh-value--datetime fh-value--lg"><time datetime="2026-11-12T14:05">Nov 12, 2026 · 2:05 PM</time></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.5" data-fh-name="Range">
+  <span class="fh-value fh-value--range-dates"><time datetime="2026-11-03">Nov 3</time> – <time datetime="2026-11-27">Nov 27, 2026</time></span>
+  <span class="fh-value fh-value--range-dates" data-mode="edit"><input class="fh-value__input" type="date" value="2026-11-03" aria-label="Starts"> – <input class="fh-value__input" type="date" value="2026-11-27" aria-label="Ends"></span>
+  <span class="fh-value fh-value--range-dates fh-value--lg"><time datetime="2026-11-03">Nov 3</time> – <time datetime="2026-11-27">Nov 27, 2026</time></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.6" data-fh-name="Overdue">
+  <span class="fh-value fh-value--overdue"><time datetime="2026-11-10">Nov 10</time><span class="fh-value__sub">4d overdue</span></span>
+  <span class="fh-value fh-value--overdue" data-mode="edit"><input class="fh-value__input" type="date" value="2026-11-10" aria-label="Due date"><span class="fh-value__sub">4d overdue</span></span>
+  <span class="fh-value fh-value--overdue fh-value--lg"><time datetime="2026-11-10">Nov 10</time><span class="fh-value__sub">4d overdue</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.7" data-fh-name="Time of day">
+  <span class="fh-value fh-value--time fh-value--tabular"><time datetime="14:05">2:05 PM</time></span>
+  <span class="fh-value fh-value--time fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="time" value="14:05" aria-label="Start time"></span>
+  <span class="fh-value fh-value--time fh-value--tabular fh-value--lg"><time datetime="14:05">2:05 PM</time></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-7.8" data-fh-name="Duration">
+  <span class="fh-value fh-value--duration fh-value--tabular"><time datetime="PT1H25M">1h 25m</time></span>
+  <span class="fh-value fh-value--duration fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="number" value="1" aria-label="Hours" min="0"><span class="fh-value__sub">h</span><input class="fh-value__input" type="number" value="25" aria-label="Minutes" min="0" max="59"><span class="fh-value__sub">m</span></span>
+  <span class="fh-value fh-value--duration fh-value--tabular fh-value--lg"><time datetime="PT1H25M">1h 25m</time></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-7.9" data-fh-name="Date picker">
+  <div class="fh-value fh-value--date-picker fh-value--field" data-mode="read"><input class="fh-input" type="date" value="2026-11-27" aria-label="Due date" readonly></div>
+  <div class="fh-value fh-value--date-picker fh-value--field" data-mode="edit"><input class="fh-input" type="date" value="2026-11-27" aria-label="Due date"></div>
+  <div class="fh-value fh-value--date-picker fh-value--field fh-value--lg" data-mode="edit"><input class="fh-input" type="date" value="2026-11-27" aria-label="Due date"></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-7.10" data-fh-name="Time input">
+  <div class="fh-value fh-value--time-input fh-value--field" data-mode="read"><input class="fh-input" type="time" value="14:05" aria-label="Start time" readonly></div>
+  <div class="fh-value fh-value--time-input fh-value--field" data-mode="edit"><input class="fh-input" type="time" value="14:05" aria-label="Start time"></div>
+  <div class="fh-value fh-value--time-input fh-value--field fh-value--lg" data-mode="edit"><input class="fh-input" type="time" value="14:05" aria-label="Start time"></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-7.11" data-fh-name="Duration input">
+  <div class="fh-value fh-value--duration-input fh-value--field" data-mode="read"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours" readonly><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes" readonly><span>m</span></div></div>
+  <div class="fh-value fh-value--duration-input fh-value--field" data-mode="edit"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours"><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes"><span>m</span></div></div>
+  <div class="fh-value fh-value--duration-input fh-value--field fh-value--lg" data-mode="edit"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours"><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes"><span>m</span></div></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-file" data-fh-id="VAL-8">
+          <div class="site-demo__head"><h3>File</h3><p>A stored file: type chips, a thumb (a square avatar frame), thumbs, the Files section's row, a count, or the dropzone. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-8.1" data-fh-name="Type chip (PDF)">
+  <span class="fh-value fh-value--type-chip fh-value--mono"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="rose" title="scope-of-work.pdf · 212 KB">PDF</span><span class="fh-chip fh-chip--sm" data-tone="sky" title="brief.docx · 48 KB">DOCX</span><span class="fh-chip fh-chip--sm" data-tone="violet" title="sections-1440.png · 63 KB">PNG</span></span><span class="fh-badge">+1</span></span>
+  <span class="fh-value fh-value--type-chip fh-value--mono" data-mode="edit"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="rose" title="scope-of-work.pdf · 212 KB">PDF <button class="fh-chip__remove" type="button" aria-label="Remove scope-of-work.pdf"></button></span><span class="fh-chip fh-chip--sm" data-tone="sky" title="brief.docx · 48 KB">DOCX <button class="fh-chip__remove" type="button" aria-label="Remove brief.docx"></button></span><span class="fh-chip fh-chip--sm" data-tone="violet" title="sections-1440.png · 63 KB">PNG <button class="fh-chip__remove" type="button" aria-label="Remove sections-1440.png"></button></span></span><label class="fh-value__action" aria-label="Add a file" title="Add a file"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></span>
+  <span class="fh-value fh-value--type-chip fh-value--mono fh-value--lg"><span class="fh-chips"><span class="fh-chip" data-tone="rose" title="scope-of-work.pdf · 212 KB">PDF</span><span class="fh-chip" data-tone="sky" title="brief.docx · 48 KB">DOCX</span><span class="fh-chip" data-tone="violet" title="sections-1440.png · 63 KB">PNG</span></span><span class="fh-badge">+1</span></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-8.2" data-fh-name="Thumb">
+  <span class="fh-value fh-value--thumb"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span></span>
+  <span class="fh-value fh-value--thumb fh-value--chevron" data-mode="edit"><label class="fh-value__trigger" aria-label="Replace ceramic-jar.svg"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><input type="file" accept="image/*" hidden></label></span>
+  <span class="fh-value fh-value--thumb fh-value--lg"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-8.3" data-fh-name="Thumbs, +N">
+  <span class="fh-value fh-value--thumbs"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
+  <span class="fh-value fh-value--thumbs" data-mode="edit"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span><label class="fh-value__action" aria-label="Add an image" title="Add an image"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></span>
+  <span class="fh-value fh-value--thumbs fh-value--lg"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-8.4" data-fh-name="File row">
+  <div class="fh-value fh-value--file-row"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul></div>
+  <div class="fh-value fh-value--file-row" data-mode="edit"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul><button class="fh-value__action" type="button" aria-label="Remove relay-report.md" title="Remove"><i class="fh-icon fh-icon--x" aria-hidden="true"></i></button><label class="fh-value__action" aria-label="Replace the file" title="Replace the file"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></div>
+  <div class="fh-value fh-value--file-row fh-value--lg"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul></div>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-8.5" data-fh-name="Count">
+  <span class="fh-value fh-value--count fh-value--tabular"><i class="fh-icon fh-icon--paperclip" aria-hidden="true"></i>4 files</span>
+  <span class="fh-value fh-value--count fh-value--tabular" data-mode="edit"><i class="fh-icon fh-icon--paperclip" aria-hidden="true"></i>4 files<label class="fh-value__action" aria-label="Add a file" title="Add a file"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></span>
+  <span class="fh-value fh-value--count fh-value--tabular fh-value--lg"><i class="fh-icon fh-icon--paperclip" aria-hidden="true"></i>4 files</span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-8.6" data-fh-name="Dropzone">
+  <div class="fh-value fh-value--dropzone fh-value--field" data-mode="read"><label class="fh-dropzone" data-tone="sky"><input type="file" multiple disabled><span class="fh-dropzone__title">Drop files or browse</span><span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span></label></div>
+  <div class="fh-value fh-value--dropzone fh-value--field" data-mode="edit"><label class="fh-dropzone" data-tone="sky"><input type="file" multiple><span class="fh-dropzone__title">Drop files or browse</span><span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span></label></div>
+  <div class="fh-value fh-value--dropzone fh-value--field fh-value--lg" data-mode="edit"><label class="fh-dropzone" data-tone="sky"><input type="file" multiple><span class="fh-dropzone__title">Drop files or browse</span><span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span></label></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-link" data-fh-id="VAL-9">
+          <div class="site-demo__head"><h3>Link</h3><p>An address you can open: a trimmed URL, an email, a phone, a link chip, or a computed action; and the field for each. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-9.1" data-fh-name="Link (trimmed URL)">
+  <span class="fh-value fh-value--link"><a class="fh-link" href="https://firehorse.rascode.dev/data/" title="https://firehorse.rascode.dev/data/">firehorse.rascode.dev/data</a></span>
+  <span class="fh-value fh-value--link" data-mode="edit"><input class="fh-value__input" type="url" value="https://firehorse.rascode.dev/data/" aria-label="Website"></span>
+  <span class="fh-value fh-value--link fh-value--lg"><a class="fh-link" href="https://firehorse.rascode.dev/data/" title="https://firehorse.rascode.dev/data/">firehorse.rascode.dev/data</a></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-9.2" data-fh-name="Email">
+  <span class="fh-value fh-value--email"><a class="fh-link" href="mailto:ava@northwind.example">ava@northwind.example</a></span>
+  <span class="fh-value fh-value--email" data-mode="edit"><input class="fh-value__input" type="email" value="ava@northwind.example" aria-label="Email"></span>
+  <span class="fh-value fh-value--email fh-value--lg"><a class="fh-link" href="mailto:ava@northwind.example">ava@northwind.example</a></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-9.3" data-fh-name="Phone">
+  <span class="fh-value fh-value--phone fh-value--tabular"><a class="fh-link" href="tel:+17045550142">+1 704 555 0142</a></span>
+  <span class="fh-value fh-value--phone fh-value--tabular" data-mode="edit"><input class="fh-value__input" type="tel" value="+1 704 555 0142" aria-label="Phone"></span>
+  <span class="fh-value fh-value--phone fh-value--tabular fh-value--lg"><a class="fh-link" href="tel:+17045550142">+1 704 555 0142</a></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-9.4" data-fh-name="Link chip">
+  <span class="fh-value fh-value--link-chip"><a class="fh-chip fh-chip--sm" data-tone="sky" href="https://firehorse.rascode.dev/"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>firehorse.rascode.dev</a></span>
+  <span class="fh-value fh-value--link-chip" data-mode="edit"><span class="fh-chip fh-chip--sm" data-tone="sky"><i class="fh-icon fh-icon--link" aria-hidden="true"></i><input class="fh-value__input" type="url" value="firehorse.rascode.dev" aria-label="Website"></span></span>
+  <span class="fh-value fh-value--link-chip fh-value--lg"><a class="fh-chip" data-tone="sky" href="https://firehorse.rascode.dev/"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>firehorse.rascode.dev</a></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-9.5" data-fh-name="Action">
+  <span class="fh-value fh-value--action"><a class="fh-action" href="#c-values-link">Open invoice</a></span>
+  <span class="fh-value fh-value--action" data-mode="edit" title="An action is computed: it stays as it is while editing"><a class="fh-action" href="#c-values-link">Open invoice</a></span>
+  <span class="fh-value fh-value--action fh-value--lg"><a class="fh-action fh-action--lg" href="#c-values-link">Open invoice</a></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-9.6" data-fh-name="URL input">
+  <div class="fh-value fh-value--url-input fh-value--field" data-mode="read"><div class="fh-input-group"><span>https://</span><input class="fh-input" type="url" value="firehorse.rascode.dev/data" aria-label="Website" readonly></div></div>
+  <div class="fh-value fh-value--url-input fh-value--field" data-mode="edit"><div class="fh-input-group"><span>https://</span><input class="fh-input" type="url" value="firehorse.rascode.dev/data" aria-label="Website"></div></div>
+  <div class="fh-value fh-value--url-input fh-value--field fh-value--lg" data-mode="edit"><div class="fh-input-group"><span>https://</span><input class="fh-input" type="url" value="firehorse.rascode.dev/data" aria-label="Website"></div></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-9.7" data-fh-name="Email input">
+  <div class="fh-value fh-value--email-input fh-value--field" data-mode="read"><input class="fh-input" type="email" value="ava@northwind.example" aria-label="Email" readonly></div>
+  <div class="fh-value fh-value--email-input fh-value--field" data-mode="edit"><input class="fh-input" type="email" value="ava@northwind.example" aria-label="Email"></div>
+  <div class="fh-value fh-value--email-input fh-value--field fh-value--lg" data-mode="edit"><input class="fh-input" type="email" value="ava@northwind.example" aria-label="Email"></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-9.8" data-fh-name="Phone input">
+  <div class="fh-value fh-value--phone-input fh-value--field" data-mode="read"><input class="fh-input" type="tel" value="+1 704 555 0142" aria-label="Phone" readonly></div>
+  <div class="fh-value fh-value--phone-input fh-value--field" data-mode="edit"><input class="fh-input" type="tel" value="+1 704 555 0142" aria-label="Phone"></div>
+  <div class="fh-value fh-value--phone-input fh-value--field fh-value--lg" data-mode="edit"><input class="fh-input" type="tel" value="+1 704 555 0142" aria-label="Phone"></div>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-flag" data-fh-id="VAL-10">
+          <div class="site-demo__head"><h3>Flag</h3><p>Yes or no: a check in a cell, the word in a record, a count in a metric, the switch in a form. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-cluster" data-fh-id="VAL-10.1" data-fh-name="Check">
+  <span class="fh-value fh-value--check" data-mode="read"><label class="fh-check"><input type="checkbox" checked aria-label="Billable" disabled></label></span>
+  <span class="fh-value fh-value--check" data-mode="edit"><label class="fh-check"><input type="checkbox" checked aria-label="Billable"></label></span>
+  <span class="fh-value fh-value--check fh-value--lg" data-mode="read"><label class="fh-check"><input type="checkbox" checked aria-label="Billable" disabled></label></span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-10.2" data-fh-name="Yes or no">
+  <span class="fh-value fh-value--yes-no"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Yes</span> <span class="fh-value fh-value--yes-no fh-value--no">No</span>
+  <span class="fh-value fh-value--yes-no fh-value--chevron" data-mode="edit"><select class="fh-value__select" aria-label="Billable"><option value="yes" selected>Yes</option><option value="no">No</option></select></span>
+  <span class="fh-value fh-value--yes-no fh-value--lg"><i class="fh-icon fh-icon--check" aria-hidden="true"></i>Yes</span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-10.3" data-fh-name="Count">
+  <span class="fh-value fh-value--count fh-value--tabular">4<span class="fh-value__sub">of 12 billable</span></span>
+  <span class="fh-value fh-value--count fh-value--tabular" data-mode="edit" title="A count is computed: it stays read-only while editing">4<span class="fh-value__sub">of 12 billable</span></span>
+  <span class="fh-value fh-value--count fh-value--tabular fh-value--lg">4<span class="fh-value__sub">of 12 billable</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-10.4" data-fh-name="Switch">
+  <span class="fh-value fh-value--switch" data-mode="read"><label class="fh-check"><input class="fh-switch" role="switch" type="checkbox" checked aria-label="Send me a copy" disabled></label></span>
+  <span class="fh-value fh-value--switch" data-mode="edit"><label class="fh-check"><input class="fh-switch" role="switch" type="checkbox" checked aria-label="Send me a copy"></label></span>
+  <span class="fh-value fh-value--switch fh-value--lg" data-mode="edit"><label class="fh-check"><input class="fh-switch" role="switch" type="checkbox" checked aria-label="Send me a copy"></label></span>
+</div>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-values-prose" data-fh-id="VAL-11">
+          <div class="site-demo__head"><h3>Prose, text and code</h3><p>Long words clamp in cells and cards and show in full in a record; short words are a line; identifiers are mono, copyable, masked (a vault reference) or a block; each with its field. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--lg">
+<div class="fh-stack" data-fh-id="VAL-11.1" data-fh-name="Two lines">
+  <span class="fh-value fh-value--clamp-2">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</span>
+  <div class="fh-value fh-value--clamp-2 fh-value--field" data-mode="edit"><textarea class="fh-value__input" rows="2" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+  <span class="fh-value fh-value--clamp-2 fh-value--lg">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</span>
+  <span class="fh-value" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.2" data-fh-name="Three lines">
+  <span class="fh-value fh-value--clamp-3">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</span>
+  <div class="fh-value fh-value--clamp-3 fh-value--field" data-mode="edit"><textarea class="fh-value__input" rows="3" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+  <span class="fh-value fh-value--clamp-3 fh-value--lg">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.3" data-fh-name="Full">
+  <div class="fh-value fh-value--prose"><p>The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</p><p>Owners see the breach in their next relay readout.</p></div>
+  <div class="fh-value fh-value--prose fh-value--field" data-mode="edit"><textarea class="fh-value__input" rows="5" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.
+
+Owners see the breach in their next relay readout.</textarea></div>
+  <div class="fh-value fh-value--prose fh-value--lg"><p>The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</p><p>Owners see the breach in their next relay readout.</p></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.4" data-fh-name="Textarea">
+  <div class="fh-value fh-value--textarea fh-value--field" data-mode="read"><textarea class="fh-textarea" rows="4" aria-label="Summary" readonly>The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+  <div class="fh-value fh-value--textarea fh-value--field" data-mode="edit"><textarea class="fh-textarea" rows="4" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+  <div class="fh-value fh-value--textarea fh-value--field fh-value--lg" data-mode="edit"><textarea class="fh-textarea" rows="4" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.5" data-fh-name="Line">
+  <span class="fh-value fh-value--line"><span class="fh-value__name">Harbor index refresh</span></span>
+  <span class="fh-value fh-value--line" data-mode="edit"><input class="fh-value__input" type="text" value="Harbor index refresh" aria-label="Title"></span>
+  <span class="fh-value fh-value--line fh-value--lg"><span class="fh-value__name">Harbor index refresh</span></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.6" data-fh-name="Input">
+  <div class="fh-value fh-value--input fh-value--field" data-mode="read"><input class="fh-input" type="text" value="Harbor index refresh" aria-label="Title" readonly></div>
+  <div class="fh-value fh-value--input fh-value--field" data-mode="edit"><input class="fh-input" type="text" value="Harbor index refresh" aria-label="Title"></div>
+  <div class="fh-value fh-value--input fh-value--field fh-value--lg" data-mode="edit"><input class="fh-input" type="text" value="Harbor index refresh" aria-label="Title"></div>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.7" data-fh-name="Mono">
+  <span class="fh-value fh-value--mono">rc_01HF3K9ZQ4</span>
+  <span class="fh-value fh-value--mono" data-mode="edit"><input class="fh-value__input" type="text" value="rc_01HF3K9ZQ4" aria-label="System ID"></span>
+  <span class="fh-value fh-value--mono fh-value--lg">rc_01HF3K9ZQ4</span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.8" data-fh-name="Copyable code">
+  <span class="fh-value fh-value--copyable"><code class="fh-kbd" title="0x7a250d5630b4cf539739df2c5dacb4c659f2488d">0x7a25…f3c1</code><button class="fh-value__action" type="button" aria-label="Copy the transaction hash" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+  <span class="fh-value fh-value--copyable fh-value--mono" data-mode="edit"><input class="fh-value__input" type="text" value="0x7a250d5630b4cf539739df2c5dacb4c659f2488d" aria-label="Transaction hash"></span>
+  <span class="fh-value fh-value--copyable fh-value--lg"><code class="fh-kbd" title="0x7a250d5630b4cf539739df2c5dacb4c659f2488d">0x7a25…f3c1</code><button class="fh-value__action" type="button" aria-label="Copy the transaction hash" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.9" data-fh-name="Masked vault reference">
+  <span class="fh-value fh-value--masked"><code class="fh-kbd" aria-label="Secret key ending 4f2a"><span aria-hidden="true">••••••••</span>4f2a</code></span>
+  <span class="fh-value fh-value--masked fh-value--mono" data-mode="edit"><code class="fh-kbd" aria-label="Secret key ending 4f2a"><span aria-hidden="true">••••••••</span>4f2a</code><input class="fh-value__input" type="password" value="" aria-label="Replace the secret key" placeholder="Paste a new key" autocomplete="off" spellcheck="false"></span>
+  <span class="fh-value fh-value--masked fh-value--lg"><code class="fh-kbd" aria-label="Secret key ending 4f2a"><span aria-hidden="true">••••••••</span>4f2a</code></span>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.10" data-fh-name="Code block">
+  <div class="fh-value fh-value--code-block"><figure class="fh-code"><pre><code>{
+  &quot;kind&quot;: &quot;relay&quot;,
+  &quot;turns&quot;: 2,
+  &quot;status&quot;: &quot;merged&quot;
+}</code></pre></figure></div>
+  <div class="fh-value fh-value--code-block fh-value--mono fh-value--field" data-mode="edit"><textarea class="fh-value__input" rows="5" aria-label="Settings, JSON">{
+  &quot;kind&quot;: &quot;relay&quot;,
+  &quot;turns&quot;: 2,
+  &quot;status&quot;: &quot;merged&quot;
+}</textarea></div>
+  <div class="fh-value fh-value--code-block fh-value--lg"><figure class="fh-code"><pre><code>{
+  &quot;kind&quot;: &quot;relay&quot;,
+  &quot;turns&quot;: 2,
+  &quot;status&quot;: &quot;merged&quot;
+}</code></pre></figure></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.11" data-fh-name="Input, mono">
+  <div class="fh-value fh-value--input-mono fh-value--mono fh-value--field" data-mode="read"><input class="fh-input" type="text" value="rc_01HF3K9ZQ4" aria-label="System ID" readonly></div>
+  <div class="fh-value fh-value--input-mono fh-value--mono fh-value--field" data-mode="edit"><input class="fh-input" type="text" value="rc_01HF3K9ZQ4" aria-label="System ID"></div>
+  <div class="fh-value fh-value--input-mono fh-value--mono fh-value--field fh-value--lg" data-mode="edit"><input class="fh-input" type="text" value="rc_01HF3K9ZQ4" aria-label="System ID"></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.12" data-fh-name="Textarea, mono">
+  <div class="fh-value fh-value--textarea-mono fh-value--mono fh-value--field" data-mode="read"><textarea class="fh-textarea" rows="4" aria-label="Settings, JSON" readonly>{
+  &quot;kind&quot;: &quot;relay&quot;,
+  &quot;turns&quot;: 2,
+  &quot;status&quot;: &quot;merged&quot;
+}</textarea></div>
+  <div class="fh-value fh-value--textarea-mono fh-value--mono fh-value--field" data-mode="edit"><textarea class="fh-textarea" rows="4" aria-label="Settings, JSON">{
+  &quot;kind&quot;: &quot;relay&quot;,
+  &quot;turns&quot;: 2,
+  &quot;status&quot;: &quot;merged&quot;
+}</textarea></div>
+  <div class="fh-value fh-value--textarea-mono fh-value--mono fh-value--field fh-value--lg" data-mode="edit"><textarea class="fh-textarea" rows="4" aria-label="Settings, JSON">{
+  &quot;kind&quot;: &quot;relay&quot;,
+  &quot;turns&quot;: 2,
+  &quot;status&quot;: &quot;merged&quot;
+}</textarea></div>
+</div>
+<div class="fh-stack" data-fh-id="VAL-11.13" data-fh-name="Key field">
+  <div class="fh-value fh-value--key-field fh-value--field" data-mode="read"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="set" data-key-id="val-secret-1"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-1">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-1"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy secret key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></div></div></div>
+  <div class="fh-value fh-value--key-field fh-value--field" data-mode="edit"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-key-id="val-secret-2"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-2">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-2"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" aria-label="Replace secret key" title="Replace"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button></div><form class="fh-keyfield__editor" hidden><input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="sk_live_…" aria-label="Secret key"><button class="fh-button fh-button--sm" type="submit">Save</button></form></div></div>
+  <div class="fh-value fh-value--key-field fh-value--field fh-value--lg" data-mode="edit"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-key-id="val-secret-3"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-3">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-3"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" aria-label="Replace secret key" title="Replace"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button></div><form class="fh-keyfield__editor" hidden><input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="sk_live_…" aria-label="Secret key"><button class="fh-button fh-button--sm" type="submit">Save</button></form></div></div>
+</div>
 </div>
           </div>
         </div>
