@@ -243,6 +243,21 @@
     --fh-blur-frost: 32px;
     --fh-opacity-faint: .06;
     --fh-hatch-step: .5625rem;
+    --fh-card-art-from: oklch(27% .005 270);
+    --fh-card-art-to: oklch(15% .003 270);
+    --fh-card-art-mastercard-from: oklch(36% .09 40);
+    --fh-card-art-mastercard-to: oklch(20% .05 20);
+    --fh-card-art-amex-from: oklch(42% .08 200);
+    --fh-card-art-amex-to: oklch(24% .05 230);
+    --fh-card-art-discover-from: oklch(42% .1 60);
+    --fh-card-art-discover-to: oklch(22% .04 40);
+    --fh-card-art-chip-light: oklch(86% .09 85);
+    --fh-card-art-chip-dark: oklch(68% .1 70);
+    --fh-card-art-stripe: oklch(12% 0 0);
+    --fh-card-art-sig-light: oklch(95% 0 0);
+    --fh-card-art-sig-dark: oklch(88% 0 0);
+    --fh-card-art-sig-ink: oklch(20% 0 0);
+    --fh-card-art-shade: oklch(0% 0 0);
     --fh-blueprint-major: 120px;
     --fh-blueprint-minor: 24px;
     --fh-frost: .6;
@@ -297,6 +312,25 @@
     --fh-dock-height: 4.25rem;
     --fh-tap-target: 2.75rem;
     --fh-control-height: 2.25rem;
+    --fh-control-height-lg: 3rem;
+    --fh-avatar-xs: 1.375rem;
+    --fh-avatar-sm: 1.75rem;
+    --fh-avatar-md: 2.25rem;
+    --fh-avatar-lg: 3rem;
+    --fh-avatar-xl: 5.5rem;
+    --fh-avatar-2xl: 7rem;
+    --fh-avatar-inline: var(--fh-avatar-xs);
+    --fh-avatar-identity: var(--fh-avatar-md);
+    --fh-ring-value: 2.5rem;
+    --fh-ring-value-lg: 3.5rem;
+    --fh-gauge-value: 4rem;
+    --fh-gauge-value-lg: 5.6rem;
+    --fh-spark-value: 6rem;
+    --fh-spark-value-lg: 8rem;
+    --fh-track-min: 3rem;
+    --fh-measure-list: 18rem;
+    --fh-measure-card: 22rem;
+    --fh-depth-card: 1200px;
     --fh-icon-arrow-up-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3C/svg%3E");
     --fh-icon-arrow-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3Cpath d='M12 19V5'/%3E%3C/svg%3E");
     --fh-icon-arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m19 12-7 7-7-7'/%3E%3Cpath d='M12 5v14'/%3E%3C/svg%3E");
@@ -10303,17 +10337,6 @@
     }
   }
 
-  :root {
-    --fh-avatar-xs: 1.375rem;
-    --fh-avatar-sm: 1.75rem;
-    --fh-avatar-md: 2.25rem;
-    --fh-avatar-lg: 3rem;
-    --fh-avatar-xl: 5.5rem;
-    --fh-avatar-2xl: 7rem;
-    --fh-avatar-inline: var(--fh-avatar-xs);
-    --fh-avatar-identity: var(--fh-avatar-md);
-  }
-
   .fh-avatar {
     --_size: var(--fh-avatar-size, var(--fh-avatar-md));
     inline-size: var(--_size);
@@ -13466,20 +13489,21 @@
   .fh-value {
     --_text: var(--fh-value-text, var(--fh-type-value));
     --_avatar: var(--fh-value-avatar, var(--fh-avatar-inline));
-    --_ring: var(--fh-value-ring, 2.5rem);
+    --_ring: var(--fh-value-ring, var(--fh-ring-value));
     --_thumb: var(--fh-value-thumb, var(--fh-row-media, var(--fh-avatar-sm)));
-    --_spark: var(--fh-value-spark, 6rem);
+    --_spark: var(--fh-value-spark, var(--fh-spark-value));
+    --_gauge: var(--fh-value-gauge, var(--fh-gauge-value));
     --fh-avatar-size: var(--_avatar);
     --fh-avatar-initials: var(--fh-type-label);
     --fh-avatar-plate-radius: var(--fh-radius-sm);
     --fh-ring-size: var(--_ring);
-    --fh-gauge-size: calc(var(--_ring) * 1.6);
+    --fh-gauge-size: var(--_gauge);
     align-items: center;
     gap: var(--fh-gap-related);
     min-inline-size: 0;
     max-inline-size: 100%;
     color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family);
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
     font-size: var(--_text);
     font-weight: var(--fh-type-value-weight);
     letter-spacing: var(--fh-type-value-tracking);
@@ -13492,9 +13516,10 @@
   .fh-value--lg {
     --_text: var(--fh-value-text-lg, var(--fh-text-body));
     --_avatar: var(--fh-value-avatar-lg, var(--fh-avatar-sm));
-    --_ring: var(--fh-value-ring-lg, 3.5rem);
+    --_ring: var(--fh-value-ring-lg, var(--fh-ring-value-lg));
     --_thumb: var(--fh-value-thumb-lg, var(--fh-avatar-lg));
-    --_spark: var(--fh-value-spark-lg, 8rem);
+    --_spark: var(--fh-value-spark-lg, var(--fh-spark-value-lg));
+    --_gauge: var(--fh-value-gauge-lg, var(--fh-gauge-value-lg));
     gap: var(--fh-gap-grouped);
   }
 
@@ -13514,7 +13539,7 @@
   }
 
   .fh-value--mono {
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     font-variant-numeric: tabular-nums;
     letter-spacing: var(--fh-type-figure-tracking);
   }
@@ -13524,7 +13549,7 @@
   }
 
   .fh-value :is(.fh-num, .fh-ring, .fh-gauge) {
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     letter-spacing: var(--fh-type-figure-tracking);
   }
 
@@ -13534,7 +13559,7 @@
 
   .fh-value .fh-value__sub {
     color: var(--fh-color-text-muted);
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
@@ -13543,7 +13568,7 @@
   }
 
   .fh-value abbr.fh-value__sub, .fh-value .fh-money__currency, .fh-value:is(.fh-value--amount, .fh-value--amount-code, .fh-value--compact, .fh-value--compact-delta, .fh-value--unit, .fh-value--text, .fh-value--ring, .fh-value--meter, .fh-value--duration) .fh-value__sub {
-    font-family: var(--fh-type-label-family);
+    font-family: var(--fh-type-label-family, var(--fh-font-mono));
     font-size: var(--fh-type-label);
     font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-type-label-tracking);
@@ -13552,7 +13577,7 @@
 
   .fh-value .fh-ref__key, .fh-value__code {
     color: var(--fh-color-text-subtle);
-    font-family: var(--fh-type-label-family);
+    font-family: var(--fh-type-label-family, var(--fh-font-mono));
     font-size: var(--fh-type-label);
     font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-tracking-none);
@@ -13571,7 +13596,7 @@
   }
 
   .fh-value .fh-chip {
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
@@ -13579,10 +13604,44 @@
   }
 
   .fh-value .fh-badge {
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
+  }
+
+  .fh-value {
+    --_chip-pad: var(--fh-value-chip-pad, var(--fh-gap-bound));
+  }
+
+  .fh-value--lg {
+    --_chip-pad: var(--fh-value-chip-pad-lg, calc(var(--fh-gap-bound) + var(--fh-border-heavy)));
+  }
+
+  .fh-value :is(.fh-chip, .fh-badge) {
+    box-sizing: border-box;
+    block-size: calc(1lh + 2 * (var(--_chip-pad) + var(--fh-border-thin)));
+    line-height: var(--fh-leading-snug);
+    padding-block: 0;
+  }
+
+  .fh-value .fh-chip > :is(.fh-chip__remove, .fh-icon) {
+    flex: none;
+    block-size: 1lh;
+    inline-size: 1lh;
+  }
+
+  .fh-value .fh-chip > :is(.fh-value__select, .fh-value__input) {
+    block-size: 1lh;
+    line-height: inherit;
+  }
+
+  .fh-value .fh-chip:has( > .fh-avatar:first-child) {
+    padding-inline-start: 0;
+  }
+
+  .fh-value .fh-chip > .fh-avatar {
+    --fh-avatar-size: calc(1lh + 2 * var(--_chip-pad));
   }
 
   .fh-value > .fh-chips {
@@ -13613,7 +13672,7 @@
   }
 
   .fh-value .fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"]) {
-    --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius));
+    --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius, var(--fh-radius-sm)));
     --fh-avatar-ratio: 1;
   }
 
@@ -13722,28 +13781,28 @@
   }
 
   .fh-value .fh-entity__who > b {
-    font-family: var(--fh-type-value-family);
-    font-size: 1em;
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
+    font-size: inherit;
     font-weight: var(--fh-type-name-weight);
     letter-spacing: var(--fh-type-value-tracking);
   }
 
   .fh-value .fh-entity__who > small {
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
   }
 
   .fh-value .fh-entity__stat > b {
-    font-family: var(--fh-type-figure-family);
-    font-size: 1em;
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
+    font-size: inherit;
     font-weight: var(--fh-type-value-weight);
     letter-spacing: var(--fh-type-figure-tracking);
   }
 
   .fh-value .fh-entity__stat > small {
-    font-family: var(--fh-type-label-family);
+    font-family: var(--fh-type-label-family, var(--fh-font-mono));
     font-size: var(--fh-type-label);
     font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-type-label-tracking);
@@ -13756,14 +13815,14 @@
   }
 
   .fh-value .fh-metric__delta {
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
   }
 
   .fh-value :is(.fh-field__hint, .fh-field__error) {
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
@@ -13772,23 +13831,23 @@
 
   .fh-value code {
     font-family: var(--fh-font-mono);
+    font-size: inherit;
     letter-spacing: var(--fh-tracking-none);
-    font-size: 1em;
   }
 
   .fh-value :is(.fh-ring, .fh-gauge) {
-    font-size: 1em;
+    font-size: inherit;
     font-weight: var(--fh-weight-regular);
 
     & > b {
-      font-size: 1em;
+      font-size: inherit;
       font-weight: var(--fh-weight-regular);
       letter-spacing: var(--fh-tracking-mono);
     }
   }
 
   .fh-value .fh-gauge > small {
-    font-family: var(--fh-type-label-family);
+    font-family: var(--fh-type-label-family, var(--fh-font-mono));
     font-size: var(--fh-type-label);
     font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-type-label-tracking);
@@ -13796,14 +13855,14 @@
   }
 
   .fh-value--bar > .fh-progress, :is(.fh-value--bar, .fh-value--range) > .fh-range {
+    min-inline-size: var(--fh-value-track-min, var(--fh-track-min));
     flex: auto;
-    min-inline-size: 3rem;
   }
 
   :is(.fh-value--bar, .fh-value--range) > :is(b, output) {
     min-inline-size: 4ch;
     color: var(--fh-color-text-muted);
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     font-size: var(--fh-type-value);
     font-weight: var(--fh-type-value-weight);
     font-variant-numeric: tabular-nums;
@@ -13850,8 +13909,8 @@
   }
 
   .fh-value--media .fh-card__media {
+    inline-size: var(--fh-value-media, var(--fh-spark-value));
     border-radius: var(--fh-card-radius, var(--fh-radius-md));
-    inline-size: 6rem;
     overflow: hidden;
   }
 
@@ -13861,7 +13920,7 @@
   }
 
   .fh-value--media-badge .fh-card__media {
-    inline-size: 6rem;
+    inline-size: var(--fh-value-media, var(--fh-spark-value));
     margin: 0;
   }
 
@@ -14055,12 +14114,12 @@
   }
 
   .fh-value--mono :is(.fh-input, .fh-textarea, .fh-value__input) {
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     letter-spacing: var(--fh-type-figure-tracking);
   }
 
   .fh-value--lg :is(.fh-input, .fh-textarea) {
-    min-block-size: 3rem;
+    min-block-size: var(--fh-value-control-lg, var(--fh-control-height-lg));
   }
 
   .fh-value--lg .fh-entity-picker {
@@ -14068,7 +14127,7 @@
   }
 
   .fh-value--lg .fh-dropzone__title {
-    font-size: 1em;
+    font-size: inherit;
     font-weight: var(--fh-weight-regular);
   }
 
@@ -14077,7 +14136,7 @@
   }
 
   .fh-value > .fh-entity-picker__list {
-    inline-size: var(--fh-value-list-width, 18rem);
+    inline-size: var(--fh-value-list-width, var(--fh-measure-list));
   }
 
   @media (forced-colors: active) {

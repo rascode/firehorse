@@ -887,6 +887,96 @@ export const tokens = {
     "tier": "primitives",
     "group": "hatch"
   },
+  "--fh-card-art-from": {
+    "$value": "oklch(0.27 0.005 270)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-to": {
+    "$value": "oklch(0.15 0.003 270)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-mastercard-from": {
+    "$value": "oklch(0.36 0.09 40)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-mastercard-to": {
+    "$value": "oklch(0.2 0.05 20)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-amex-from": {
+    "$value": "oklch(0.42 0.08 200)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-amex-to": {
+    "$value": "oklch(0.24 0.05 230)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-discover-from": {
+    "$value": "oklch(0.42 0.1 60)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-discover-to": {
+    "$value": "oklch(0.22 0.04 40)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-chip-light": {
+    "$value": "oklch(0.86 0.09 85)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-chip-dark": {
+    "$value": "oklch(0.68 0.1 70)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-stripe": {
+    "$value": "oklch(0.12 0 0)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-sig-light": {
+    "$value": "oklch(0.95 0 0)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-sig-dark": {
+    "$value": "oklch(0.88 0 0)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-sig-ink": {
+    "$value": "oklch(0.2 0 0)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
+  "--fh-card-art-shade": {
+    "$value": "oklch(0 0 0)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "card"
+  },
   "--fh-blueprint-major": {
     "$value": "120px",
     "$type": "dimension",
@@ -1210,6 +1300,120 @@ export const tokens = {
     "$type": "dimension",
     "tier": "primitives",
     "group": "control"
+  },
+  "--fh-control-height-lg": {
+    "$value": "3rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "control"
+  },
+  "--fh-avatar-xs": {
+    "$value": "1.375rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-sm": {
+    "$value": "1.75rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-md": {
+    "$value": "2.25rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-lg": {
+    "$value": "3rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-xl": {
+    "$value": "5.5rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-2xl": {
+    "$value": "7rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-inline": {
+    "$value": "var(--fh-avatar-xs)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-avatar-identity": {
+    "$value": "var(--fh-avatar-md)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "avatar"
+  },
+  "--fh-ring-value": {
+    "$value": "2.5rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "ring"
+  },
+  "--fh-ring-value-lg": {
+    "$value": "3.5rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "ring"
+  },
+  "--fh-gauge-value": {
+    "$value": "4rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "gauge"
+  },
+  "--fh-gauge-value-lg": {
+    "$value": "5.6rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "gauge"
+  },
+  "--fh-spark-value": {
+    "$value": "6rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "spark"
+  },
+  "--fh-spark-value-lg": {
+    "$value": "8rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "spark"
+  },
+  "--fh-track-min": {
+    "$value": "3rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "track"
+  },
+  "--fh-measure-list": {
+    "$value": "18rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "measure"
+  },
+  "--fh-measure-card": {
+    "$value": "22rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "measure"
+  },
+  "--fh-depth-card": {
+    "$value": "1200px",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "depth"
   },
   "--fh-icon-arrow-up-right": {
     "$value": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3C/svg%3E\")",
