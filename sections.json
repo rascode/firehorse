@@ -4,7 +4,7 @@
   "docs": "/components/sections/",
   "sidecar": {
     "id": "SDC",
-    "members": ["BTN", "CHP", "SCT", "SPR", "KVL", "SFM", "FLD", "FLD-5", "SPM", "STT", "TBL", "SCH", "CHT", "SMT", "TMR", "MET", "SLG", "STL", "TML", "SRC", "ACT", "SLK", "SFL"],
+    "members": ["BTN", "CHP", "SCT", "SPR", "TBL-3", "SFM", "FLD", "FLD-5", "SPM", "STT", "TBL", "SCH", "CHT", "SMT", "TMR", "MET", "SLG", "STL", "TML", "SRC", "ACT", "SLK", "SFL"],
     "class": "fh-sidecar",
     "drawer": "fh-dialog fh-dialog--float fh-sidecar",
     "slots": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"],
@@ -19,7 +19,7 @@
   },
   "shell": {
     "id": "SCT",
-    "members": ["CHP", "KVL"],
+    "members": ["CHP", "TBL-3"],
     "element": "details",
     "class": "fh-panel-section",
     "slots": ["icon", "title", "chips", "body"],
@@ -52,7 +52,7 @@
     },
     "list": {
       "id": "TPL-1.2",
-      "members": ["REC", "TPL-1.6", "TAB", "CLS", "TPL-1.7", "THS", "CHO", "CHP", "RDT", "REF", "SCR-1.1"],
+      "members": ["REC", "TPL-1.6", "TAB", "CLS", "TPL-1.7", "THS", "CHO", "CHP", "DTB-2", "REF", "SCR-1.1"],
       "class": "fh-tpl fh-tpl--list",
       "regions": ["header (fh-record)", "nav (fh-tpl__nav, optional)", "filters (fh-search, fh-select filters (a select names its filter in its first option), fh-chip filters)", "body (fh-dt fh-dt--records)"],
       "use": "A page that is one table of records."
@@ -89,10 +89,10 @@
       "gone": "fh-ref fh-ref--gone with fh-ref__note: not a link, says what happened"
     },
     "datatable": {
-      "id": "RDT",
-      "members": ["REF", "SCR-1.1", "SSG"],
+      "id": "DTB-2",
+      "members": ["REF", "VAL-1.1", "SSG"],
       "class": "fh-dt fh-dt--records",
-      "row": "tr with data-sidecar and tabindex=0; every td has data-label; first cell is fh-ref (second, after the toggle cell, in an expandable row); one status chip per row",
+      "row": "tr with data-sidecar and tabindex=0; every td has data-label; first cell is fh-ref (second, after the toggle cell, in an expandable row); the row's status is the Values dot and word (VAL-1.1, decision 5)",
       "expand": {
         "toggle": "first cell of the row: <td><button class=\"fh-dt__expand\" type=\"button\" aria-expanded=\"false\" aria-controls=\"<detail row id>\" aria-label=\"<what it shows>\"></button></td>, no data-label; the header cell above it is <th scope=\"col\"><span class=\"fh-sr-only\">Open</span></th>. The chevron turns when aria-expanded is true.",
         "detail": "<tr class=\"fh-dt__detail\" id=\"<detail row id>\" hidden><td colspan=\"<every column>\">…</td></tr>, directly after its record row. It holds any content: a stage (div.fh-panel-section__stage, then an optional p.fh-panel-section__caption with the code) or a nested fh-dt fh-dt--records (a list of variants), which indents once, under the reference cell.",
@@ -124,7 +124,7 @@
   "kinds": {
     "properties": {
       "id": "SPR",
-      "members": ["SCT", "CHP", "KVL"],
+      "members": ["SCT", "CHP", "TBL-3"],
       "class": "fh-panel-section fh-panel-section--properties",
       "icon": "list-checks",
       "tone": "sky",
