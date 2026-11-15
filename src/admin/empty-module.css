@@ -1,19 +1,43 @@
 /*
- * Firehorse — Empty module (EMP-2)
+ * Firehorse — Empty module (EMP-3)
  * admin · layer fh.components
  */
 
 @layer fh.components {
-  /* —— Empty module (EMP-2): a section that hasn't been built yet —— */
+  /* —— Empty module (EMP-3.1): a section that hasn't been built yet ——————————————————————————
+   * The Empty state's recipe (EMP-2.1), and it reads the same --fh-empty-* values: the new-look
+   * frame over the hatch, inset-tile padding, gap-related, a bold h4 title. It differs only in
+   * sitting to the start, with no icon.
+   *   <div class="fh-app-empty"><h2>Finance</h2><p>This module is not wired yet.</p></div> */
   .fh-app-empty {
-    display: grid;
-    gap: var(--fh-gap-grouped);
-    max-inline-size: 40rem;
-    padding: var(--fh-inset-card) var(--fh-inset-card);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-    border-radius: var(--fh-radius-lg);
+    --_title: var(--fh-empty-title, var(--fh-text-h4));
+    --_title-weight: var(--fh-empty-title-weight, var(--fh-weight-bold));
+    --_tracking: var(--fh-empty-tracking, var(--fh-tracking-heading));
+    --_leading: var(--fh-empty-leading, var(--fh-leading-heading));
+    --_pad-b: var(--fh-empty-pad-block, var(--fh-inset-tile));
+    --_pad-i: var(--fh-empty-pad-inline, var(--fh-inset-tile));
+    --_gap: var(--fh-empty-gap, var(--fh-gap-related));
+    --_etch: var(--fh-empty-etch, var(--fh-color-etch));
+    --_hatch: var(--fh-empty-hatch, var(--fh-color-border));
+    --_step: var(--fh-empty-hatch-step, var(--fh-hatch-step));
 
-    & h1, & h2 { margin: 0; font-size: clamp(1.4rem, 1.1rem + 1.4cqi, 2rem); font-weight: var(--fh-weight-medium); letter-spacing: var(--fh-tracking-heading); }
-    & p { margin: 0; color: var(--fh-color-text-muted); }
+    display: grid;
+    justify-items: start;
+    gap: var(--_gap);
+    max-inline-size: 40rem;
+    padding: var(--_pad-b) var(--_pad-i);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_etch);
+    border-radius: var(--fh-radius-sm);
+    background-image: repeating-linear-gradient(-45deg, var(--_hatch) 0 var(--fh-border-thin), transparent var(--fh-border-thin) var(--_step));
+    text-align: start;
+
+    & > :is(h1, h2, h3, h4) {
+      margin: 0;
+      font-size: var(--_title);
+      font-weight: var(--_title-weight);
+      letter-spacing: var(--_tracking);
+      line-height: var(--_leading);
+    }
+    & > p { margin: 0; color: var(--fh-color-text-muted); }
   }
 }

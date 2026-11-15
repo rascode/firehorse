@@ -29,7 +29,7 @@ Status: **Done** = a Firehorse part the site now uses. **Exists** = already a Fi
 | 18 | Hero lockup: wordmark, etched line to the edge, headline split by the line, rotating word | Hero | Masthead · new variant (MST) with Word rotator (WRT); both go live (Rascode, 2026-11-14). Word rotator keeps only the home page's rotator and the same rotator inside paragraph text; its other variants are removed | Done (MST-2.1, WRT-1.1, WRT-1.2) |
 | 19 | Lede in heavy mono caps with a down arrow (the page had dropped the underline by 2026-11-14; the part offers it as an option) | Under the logo | Action & link · ACT-3.1 Scroll cue (ACT numbered ACT-1.1 to 2.2) | Done (ACT-3.1) |
 | 20 | Frost: the art blurred and washed below the line | Hero | Backdrop · new option (BKD); goes live (Rascode, 2026-11-14) | Done (BKD-2.1) |
-| 21 | Announcement banner across the top: tag, the news, Read more and Become a Pro cells (Rascode, 2026-11-13) | Top of the concept page | Empty state & banner · EMP-1.3 Announcement banner | Done (EMP-1.3) |
+| 21 | Announcement banner across the top: tag, the news, Read more and Become a Pro cells (Rascode, 2026-11-13) | Top of the concept page | Empty state & banner · EMP-1.2 Announcement banner | Done (EMP-1.3) |
 
 Notes
 - **MEG-3.1 Tile panel is the look to aim for** (Rascode, 2026-11-13: "MEG-3.1 is perfect"). New parts match it: a mono caps head, dashed etch rules, open tiles, large type, the accent for what's picked. The rest of this list ships in v1.1.0 (launch goal objective "New look", due 2026-11-18).

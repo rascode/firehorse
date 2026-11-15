@@ -69,7 +69,7 @@
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
 | `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
-| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner & empty (3) | [open](https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/) |
+| `EMP` | Empty state & banner | Overlays & feedback | 1 Banner (2) · 2 Empty (1) | [open](https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/) |
 | `AVT` | Avatars | Avatars | 1 Shapes (5) · 2 Sizes & presence · 3 Rings & halos · 4 Generated · 5 Groups · 6 Kinds (2) | [open](https://firehorse.rascode.dev/components/avatars/avatars/) |
 | `AUT` | Sign in & sign up | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/sign-in-and-sign-up/) |
 | `FLD` | Fields | Fields & choices | 1 Fields (1) · 2 Dictation (2) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/fields/) |
@@ -2166,11 +2166,13 @@ Classes: `fh-skeleton` `fh-skeleton--block`
 
 ## EMP · Empty state & banner
 
-A banner over the header, an empty state, and the announcement banner: a tag in the tone, the news in bold, and its links as ruled cells down the end, the last filled in the tone.
+Two banners on one recipe, the etched frost at one outer size: a plain line with a link, and the announcement with a tag, the news in bold and its links as ruled cells down the end, the last filled in the tone. Then an empty state on the hatch.
 
-Classes: `fh-banner` `fh-empty` `fh-empty__icon` `fh-button` `fh-button--sm` `fh-button--secondary` `fh-banner--announce` `fh-banner__tag` `fh-banner__text` `fh-banner__actions` `fh-icon` `fh-banner__cta` `fh-app-empty`
+Classes: `fh-banner` `fh-banner--announce` `fh-banner__tag` `fh-banner__text` `fh-banner__actions` `fh-icon` `fh-banner__cta` `fh-empty` `fh-empty__icon` `fh-button` `fh-button--secondary` `fh-app-empty`
 
-### EMP-1 · Banner & empty
+### EMP-1 · Banner
+
+.fh-banner · --announce
 
 #### EMP-1.1 · Banner
 
@@ -2178,25 +2180,29 @@ Classes: `fh-banner` `fh-empty` `fh-empty__icon` `fh-button` `fh-button--sm` `fh
 <div class="fh-banner" data-tone="accent" data-fh="EMP-1.1"><span>Themes now switch with one attribute.</span><a href="#top">Read the notes</a></div>
 ```
 
-#### EMP-1.2 · Empty
+#### EMP-1.2 · Announcement banner
 
 ```html
-<div class="fh-empty" data-tone="violet" data-fh="EMP-1.2">
-  <span class="fh-empty__icon">∅</span>
-  <h4>No leads yet</h4>
-  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
-  <a class="fh-button fh-button--sm fh-button--secondary" href="#c-feedback">Send a test lead</a>
-</div>
-```
-
-#### EMP-1.3 · Announcement banner
-
-```html
-<aside class="fh-banner fh-banner--announce" data-tone="accent" aria-label="Announcement" data-fh="EMP-1.3">
+<aside class="fh-banner fh-banner--announce" data-tone="accent" aria-label="Announcement" data-fh="EMP-1.2">
   <span class="fh-banner__tag">Announcing</span>
   <p class="fh-banner__text"><b>Firehorse v1.1</b><span>The flagship design system from Rascode and Company</span></p>
   <nav class="fh-banner__actions" aria-label="Announcement links"><a href="#top">Read more<i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a><a class="fh-banner__cta" href="#top">Become a Pro<i class="fh-icon fh-icon--arrow-up-right" aria-hidden="true"></i></a></nav>
 </aside>
+```
+
+### EMP-2 · Empty
+
+.fh-empty · __icon
+
+#### EMP-2.1 · Empty
+
+```html
+<div class="fh-empty" data-tone="violet" data-fh="EMP-2.1">
+  <span class="fh-empty__icon">∅</span>
+  <h4>No leads yet</h4>
+  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>
+  <a class="fh-button fh-button--secondary" href="#c-feedback">Send a test lead</a>
+</div>
 ```
 
 ## AVT · Avatars

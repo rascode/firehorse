@@ -242,6 +242,7 @@
     --fh-blur-backdrop: 48px;
     --fh-blur-frost: 32px;
     --fh-opacity-faint: .06;
+    --fh-hatch-step: .5625rem;
     --fh-blueprint-major: 120px;
     --fh-blueprint-minor: 24px;
     --fh-frost: .6;
@@ -10469,78 +10470,95 @@
   }
 
   .fh-banner {
+    --_c: var(--fh-tone, var(--fh-color-accent));
+    --_ink: light-dark(oklch(from var(--_c) min(l, .5) c h), oklch(from var(--_c) max(l, .74) c h));
+    --_text: var(--fh-banner-text, var(--fh-text-small));
+    --_label: var(--fh-banner-label, var(--fh-text-label));
+    --_weight: var(--fh-banner-weight, var(--fh-weight-regular));
+    --_title-weight: var(--fh-banner-title-weight, var(--fh-weight-bold));
+    --_leading: var(--fh-banner-leading, var(--fh-leading-normal));
+    --_height: var(--fh-banner-height, var(--fh-control-height));
+    --_pad-b: var(--fh-banner-pad-block, var(--fh-gap-bound));
+    --_pad-i: var(--fh-banner-pad-inline, var(--fh-inset-control));
+    --_inset: var(--fh-banner-inset, var(--fh-inset-page));
+    --_frame: var(--fh-banner-frame, var(--fh-item-frame));
+    --_gap: var(--fh-banner-gap, var(--fh-gap-related));
+    --_etch: var(--fh-banner-etch, var(--fh-color-etch));
+    --_rule: var(--fh-border-thin) dashed var(--fh-banner-rule, var(--fh-color-etch-soft));
+    --_fill: var(--fh-banner-fill, color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent));
+    --_blur: var(--fh-banner-blur, var(--fh-blur-chrome));
+    --_icon: var(--fh-banner-icon, 1em);
+    --_nudge: var(--fh-banner-nudge, .1em);
     justify-content: center;
     align-items: center;
-    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
-    padding: var(--fh-inset-tight) var(--fh-page-margin);
-    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
-    background-color: color-mix(in oklab, var(--fh-tone) 9%, var(--fh-color-canvas));
+    gap: 0 var(--_pad-i);
+    min-block-size: calc(var(--_height) + 2 * (var(--_frame) + var(--fh-border-thin)));
+    padding: var(--_frame) var(--_inset);
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
+    border-block-end-color: var(--_etch);
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: blur(var(--_blur)) saturate(1.15);
+    backdrop-filter: blur(var(--_blur)) saturate(1.15);
     color: var(--fh-color-text);
-    font-size: var(--fh-text-caption);
+    font-size: var(--_text);
+    line-height: var(--_leading);
     text-align: center;
     flex-wrap: wrap;
     display: flex;
 
-    & a {
-      color: var(--fh-tone);
+    & > a {
+      color: var(--_ink);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      letter-spacing: var(--fh-tracking-wider);
+      font-size: var(--_label);
+      font-weight: var(--_weight);
+      letter-spacing: var(--fh-banner-tracking, var(--fh-tracking-caps));
       text-transform: uppercase;
-      text-underline-offset: .2em;
+      text-underline-offset: var(--fh-banner-underline, .2em);
     }
   }
 
   .fh-banner--announce {
-    --_c: var(--fh-tone, var(--fh-color-accent));
-    --_ink: light-dark(oklch(from var(--_c) min(l, .5) c h), oklch(from var(--_c) max(l, .74) c h));
-    --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
-    min-block-size: var(--fh-banner-height, 2.75rem);
-    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
-    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
-    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
-    font-size: var(--fh-text-small);
     text-align: start;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: stretch;
     gap: 0;
     padding: 0;
-    display: flex;
     container-type: inline-size;
   }
 
   .fh-banner__tag {
     align-items: center;
-    gap: var(--fh-gap-related);
-    padding: 0 var(--fh-inset-tile) 0 var(--fh-inset-page);
+    gap: var(--_gap);
+    padding: var(--_pad-b) var(--_pad-i) var(--_pad-b) var(--_inset);
     color: var(--_ink);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    font-weight: var(--fh-weight-bold);
-    letter-spacing: var(--fh-tracking-caps);
+    font-size: var(--_label);
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-banner-tracking, var(--fh-tracking-caps));
     text-transform: uppercase;
     white-space: nowrap;
+    --_ring: var(--fh-banner-ring, .35em);
     flex: none;
     display: inline-flex;
 
     &:before {
       content: "";
+      inline-size: var(--fh-banner-dot, .65em);
       aspect-ratio: 1;
+      margin-inline: var(--_ring);
       border-radius: var(--fh-radius-round);
       background-color: var(--_c);
-      inline-size: .45rem;
-      box-shadow: 0 0 0 .25rem color-mix(in oklab, var(--_c) 22%, transparent);
+      outline: var(--_ring) solid color-mix(in oklab, var(--_c) 22%, transparent);
     }
   }
 
   .fh-banner__text {
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_gap);
     min-inline-size: 0;
-    padding-inline: var(--fh-inset-tile);
-    border-inline-start: var(--_etch-soft);
+    padding: var(--_pad-b) var(--_pad-i);
+    border-inline-start: var(--_rule);
     white-space: nowrap;
     flex: 1;
     margin: 0;
@@ -10548,7 +10566,7 @@
     overflow: hidden;
 
     & > b {
-      font-weight: var(--fh-weight-bold);
+      font-weight: var(--_title-weight);
       letter-spacing: var(--fh-tracking-heading);
     }
 
@@ -10566,14 +10584,14 @@
 
     & > a {
       align-items: center;
-      gap: var(--fh-gap-related);
-      padding: 0 var(--fh-inset-tile);
-      border-inline-start: var(--_etch-soft);
+      gap: var(--_gap);
+      padding: var(--_pad-b) var(--_pad-i);
+      border-inline-start: var(--_rule);
       color: var(--fh-color-text);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      font-weight: var(--fh-weight-bold);
-      letter-spacing: var(--fh-tracking-caps);
+      font-size: var(--_label);
+      font-weight: var(--_weight);
+      letter-spacing: var(--fh-banner-tracking, var(--fh-tracking-caps));
       text-transform: uppercase;
       white-space: nowrap;
       transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -10582,6 +10600,8 @@
     }
 
     & > a .fh-icon {
+      inline-size: var(--_icon);
+      block-size: var(--_icon);
       color: var(--_ink);
       transition: translate var(--fh-duration-fast) var(--fh-ease-out);
     }
@@ -10591,16 +10611,16 @@
     }
 
     & > a:is(:hover, :focus-visible) .fh-icon {
-      translate: 2px;
+      translate: var(--_nudge) 0;
     }
 
     & > a:focus-visible {
       outline: var(--fh-focus-width) solid var(--fh-color-focus);
-      outline-offset: -2px;
+      outline-offset: calc(-1 * var(--fh-focus-width));
     }
 
     & > a:last-child {
-      padding-inline-end: var(--fh-inset-page);
+      padding-inline-end: var(--_inset);
     }
 
     & > .fh-banner__cta {
@@ -10617,7 +10637,7 @@
     }
 
     & > .fh-banner__cta:is(:hover, :focus-visible) .fh-icon {
-      translate: 2px -2px;
+      translate: var(--_nudge) calc(-1 * var(--_nudge));
     }
   }
 
@@ -10634,18 +10654,19 @@
 
     .fh-banner--announce .fh-banner__text {
       border: 0;
-      padding-inline-start: var(--fh-inset-page);
+      padding-inline-start: var(--_inset);
     }
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-banner__tag:before {
-      animation: fh-banner-breathe 2.4s var(--fh-ease-standard) infinite;
+      animation: fh-banner-breathe var(--fh-duration-pulse) var(--fh-ease-standard) infinite;
     }
 
     @keyframes fh-banner-breathe {
       50% {
-        box-shadow: 0 0 0 .4rem color-mix(in oklab, var(--_c) 8%, transparent);
+        outline-color: color-mix(in oklab, var(--_c) 8%, transparent);
+        outline-width: calc(var(--_ring) + var(--fh-border-heavy));
       }
     }
   }
@@ -10846,18 +10867,30 @@
   }
 
   .fh-empty {
+    --_title: var(--fh-empty-title, var(--fh-text-h4));
+    --_title-weight: var(--fh-empty-title-weight, var(--fh-weight-bold));
+    --_tracking: var(--fh-empty-tracking, var(--fh-tracking-heading));
+    --_leading: var(--fh-empty-leading, var(--fh-leading-heading));
+    --_pad-b: var(--fh-empty-pad-block, var(--fh-inset-tile));
+    --_pad-i: var(--fh-empty-pad-inline, var(--fh-inset-tile));
+    --_gap: var(--fh-empty-gap, var(--fh-gap-related));
+    --_etch: var(--fh-empty-etch, var(--fh-color-etch));
+    --_hatch: var(--fh-empty-hatch, var(--fh-color-border));
+    --_step: var(--fh-empty-hatch-step, var(--fh-hatch-step));
     justify-items: center;
-    gap: var(--fh-gap-grouped);
-    padding: clamp(var(--fh-inset-card), 8cqi, var(--fh-inset-page)) var(--fh-inset-card);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-    border-radius: var(--fh-radius-md);
-    background-image: repeating-linear-gradient(-45deg, var(--fh-color-border) 0 1px, transparent 1px 9px);
+    gap: var(--_gap);
+    padding: var(--_pad-b) var(--_pad-i);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_etch);
+    border-radius: var(--fh-radius-sm);
+    background-image: repeating-linear-gradient(-45deg, var(--_hatch) 0 var(--fh-border-thin), transparent var(--fh-border-thin) var(--_step));
     text-align: center;
     display: grid;
 
     & > :is(h2, h3, h4, .fh-empty__title) {
-      font-size: var(--fh-text-h4);
-      font-weight: var(--fh-weight-medium);
+      font-size: var(--_title);
+      font-weight: var(--_title-weight);
+      letter-spacing: var(--_tracking);
+      line-height: var(--_leading);
       margin: 0;
     }
 
@@ -10869,19 +10902,20 @@
   }
 
   .fh-empty__icon {
+    --_icon: var(--fh-empty-icon, 1em);
+    inline-size: var(--fh-empty-icon-box, var(--fh-control-height));
     aspect-ratio: 1;
-    inline-size: 3rem;
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 55%, transparent);
-    border-radius: var(--fh-radius-md);
+    border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-canvas);
     color: var(--fh-tone);
+    line-height: var(--fh-leading-none);
     place-items: center;
-    margin-block-end: var(--fh-gap-bound);
     display: grid;
 
-    & > svg {
-      block-size: 1.25rem;
-      inline-size: 1.25rem;
+    & > :is(svg, .fh-icon) {
+      inline-size: var(--_icon);
+      block-size: var(--_icon);
     }
   }
 

@@ -881,6 +881,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "opacity"
   },
+  "--fh-hatch-step": {
+    "$value": "0.5625rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "hatch"
+  },
   "--fh-blueprint-major": {
     "$value": "120px",
     "$type": "dimension",

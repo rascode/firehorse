@@ -147,6 +147,7 @@ export type FirehorseToken =
   | "--fh-blur-backdrop"
   | "--fh-blur-frost"
   | "--fh-opacity-faint"
+  | "--fh-hatch-step"
   | "--fh-blueprint-major"
   | "--fh-blueprint-minor"
   | "--fh-frost"

@@ -1,40 +1,91 @@
 /*
- * Firehorse — Banner (EMP)
+ * Firehorse — Banner (EMP-1)
  * components/feedback · layer fh.components · docs /components/overlays/#EMP
  */
 
 @layer fh.components {
-  /* —— Banner: full-width announcement above the header —— */
+  /* —— Banner (EMP-1): a strip across the top of the page ———————————————————————————————————
+   * One recipe for both banners, the new look: the etched frost under the full etch, one outer
+   * size (a control-height row inside the frame ring and the etch, 46px), small text, and mono
+   * labels at caps tracking in the regular weight. The plain Banner (EMP-1.1) centres one line
+   * and a link in the tone; the Announcement banner (EMP-1.2) adds the tag and the ruled cells.
+   *   <div class="fh-banner" data-tone="accent"><span>Themes now switch with one attribute.</span><a href="…">Read the notes</a></div>
+   * Family values, each a public knob set once here:
+   *   --fh-banner-text          the line (small)
+   *   --fh-banner-label         the mono caps labels: the link, the tag, the cells (label)
+   *   --fh-banner-weight        the labels (regular)
+   *   --fh-banner-title-weight  the news in bold (bold)
+   *   --fh-banner-tracking      the labels (caps)
+   *   --fh-banner-leading       line height (normal)
+   *   --fh-banner-height        the row (control-height); the outer size adds the frame and the etch
+   *   --fh-banner-pad-block     a cell's block padding (gap-bound)
+   *   --fh-banner-pad-inline    a cell's inline padding, and the space each side of a rule (inset-control)
+   *   --fh-banner-inset         the ends, in line with the page (inset-page)
+   *   --fh-banner-frame         the ring between the etch and the row (item-frame)
+   *   --fh-banner-gap           between a label and its icon, the bold and the quiet line (gap-related)
+   *   --fh-banner-etch          the frame's etch;  --fh-banner-rule  the soft rules inside (etch-soft)
+   *   --fh-banner-fill          the frost (88% raised surface);  --fh-banner-blur  (blur-chrome)
+   *   --fh-banner-icon          a cell's arrow (1em of the label);  --fh-banner-nudge  hover (0.1em)
+   *   --fh-banner-underline     the link's underline offset (0.2em)
+   *   --fh-banner-dot           the tag's dot (0.65em of the label);  --fh-banner-ring  its ring (0.35em) */
   .fh-banner {
+    --_c: var(--fh-tone, var(--fh-color-accent));
+    --_ink: light-dark(oklch(from var(--_c) min(l, 0.5) c h), oklch(from var(--_c) max(l, 0.74) c h));
+    --_text: var(--fh-banner-text, var(--fh-text-small));
+    --_label: var(--fh-banner-label, var(--fh-text-label));
+    --_weight: var(--fh-banner-weight, var(--fh-weight-regular));
+    --_title-weight: var(--fh-banner-title-weight, var(--fh-weight-bold));
+    --_leading: var(--fh-banner-leading, var(--fh-leading-normal));
+    --_height: var(--fh-banner-height, var(--fh-control-height));
+    --_pad-b: var(--fh-banner-pad-block, var(--fh-gap-bound));
+    --_pad-i: var(--fh-banner-pad-inline, var(--fh-inset-control));
+    --_inset: var(--fh-banner-inset, var(--fh-inset-page));
+    --_frame: var(--fh-banner-frame, var(--fh-item-frame));
+    --_gap: var(--fh-banner-gap, var(--fh-gap-related));
+    --_etch: var(--fh-banner-etch, var(--fh-color-etch));
+    --_rule: var(--fh-border-thin) dashed var(--fh-banner-rule, var(--fh-color-etch-soft));
+    --_fill: var(--fh-banner-fill, color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent));
+    --_blur: var(--fh-banner-blur, var(--fh-blur-chrome));
+    --_icon: var(--fh-banner-icon, 1em);
+    --_nudge: var(--fh-banner-nudge, 0.1em);
+
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
-    padding: var(--fh-inset-tight) var(--fh-page-margin);
-    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
-    background-color: color-mix(in oklab, var(--fh-tone) 9%, var(--fh-color-canvas));
+    gap: 0 var(--_pad-i);
+    min-block-size: calc(var(--_height) + 2 * (var(--_frame) + var(--fh-border-thin)));
+    padding: var(--_frame) var(--_inset);
+    /* the etch closes the strip; a clear thin line on top keeps the outer size the masthead bar's */
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
+    border-block-end-color: var(--_etch);
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: blur(var(--_blur)) saturate(1.15);
+    backdrop-filter: blur(var(--_blur)) saturate(1.15);
     color: var(--fh-color-text);
-    font-size: var(--fh-text-caption);
+    font-size: var(--_text);
+    line-height: var(--_leading);
     text-align: center;
 
-    & a {
-      color: var(--fh-tone);
+    /* the link: a mono caps label in the tone, underlined */
+    & > a {
+      color: var(--_ink);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      letter-spacing: var(--fh-tracking-wider);
+      font-size: var(--_label);
+      font-weight: var(--_weight);
+      letter-spacing: var(--fh-banner-tracking, var(--fh-tracking-caps));
       text-transform: uppercase;
-      text-underline-offset: 0.2em;
+      text-underline-offset: var(--fh-banner-underline, 0.2em);
     }
   }
-
 }
 
 @layer fh.components {
-  /* —— EMP-1.3 Announcement banner ————————————————————————————————————————————
-   * The strip across the top of the page in the new look (the tile panel's, MEG-3.1): a tag in
-   * the tone, the news set bold with a quieter line after it, and the actions as cells down the
-   * end, ruled with the dashed etch: a mono caps link, and a call to action filled in the tone.
+  /* —— EMP-1.2 Announcement banner ————————————————————————————————————————————————————————
+   * The Banner's recipe with parts: a tag in the tone, the news set bold with a quieter line
+   * after it, and the actions as cells down the end, ruled with the soft etch: a mono caps link,
+   * and a call to action filled in the tone. The cells take the row's full height (a rail, as
+   * the mega panel's), so the strip's outer size is the Banner's.
    *   <aside class="fh-banner fh-banner--announce" data-tone="accent" aria-label="Announcement">
    *     <span class="fh-banner__tag">Announcing</span>
    *     <p class="fh-banner__text"><b>Firehorse v1.1</b><span>The flagship design system</span></p>
@@ -43,65 +94,55 @@
    *       <a class="fh-banner__cta" href="…">Become a Pro <i class="fh-icon fh-icon--arrow-up-right"></i></a>
    *     </nav>
    *   </aside>
-   * The quieter line drops out on a narrow banner; the cells keep their place at the end.
-   * Knob: --fh-banner-height (the strip's height, default 2.75rem). */
+   * The quieter line drops out on a narrow banner; the cells keep their place at the end. */
   .fh-banner--announce {
-    --_c: var(--fh-tone, var(--fh-color-accent));
-    --_ink: light-dark(oklch(from var(--_c) min(l, 0.5) c h), oklch(from var(--_c) max(l, 0.74) c h));
-    --_etch-soft: var(--fh-border-thin) dashed var(--fh-color-etch-soft, var(--fh-color-etch));
-
-    display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-    min-block-size: var(--fh-banner-height, 2.75rem);
     padding: 0;
-    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
-    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
-    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     container-type: inline-size;
-    font-size: var(--fh-text-small);
     text-align: start;
   }
   .fh-banner__tag {
     display: inline-flex;
     flex: none;
     align-items: center;
-    gap: var(--fh-gap-related);
-    padding: 0 var(--fh-inset-tile) 0 var(--fh-inset-page);
+    gap: var(--_gap);
+    padding: var(--_pad-b) var(--_pad-i) var(--_pad-b) var(--_inset);
     color: var(--_ink);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    font-weight: var(--fh-weight-bold);
-    letter-spacing: var(--fh-tracking-caps);
+    font-size: var(--_label);
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-banner-tracking, var(--fh-tracking-caps));
     text-transform: uppercase;
     white-space: nowrap;
+    --_ring: var(--fh-banner-ring, 0.35em);
 
-    /* a dot in the tone that breathes, before the tag */
+    /* a dot in the tone with a ring that breathes, before the tag (an outline, not a shadow) */
     &::before {
       content: "";
-      inline-size: 0.45rem;
+      inline-size: var(--fh-banner-dot, 0.65em);
       aspect-ratio: 1;
+      margin-inline: var(--_ring);
       border-radius: var(--fh-radius-round);
       background-color: var(--_c);
-      box-shadow: 0 0 0 0.25rem color-mix(in oklab, var(--_c) 22%, transparent);
+      outline: var(--_ring) solid color-mix(in oklab, var(--_c) 22%, transparent);
     }
   }
   .fh-banner__text {
     display: flex;
     flex: 1;
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_gap);
     min-inline-size: 0;
     margin: 0;
-    padding-inline: var(--fh-inset-tile);
-    border-inline-start: var(--_etch-soft);
+    padding: var(--_pad-b) var(--_pad-i);
+    border-inline-start: var(--_rule);
     overflow: hidden;
     white-space: nowrap;
 
-    & > b { font-weight: var(--fh-weight-bold); letter-spacing: var(--fh-tracking-heading); }
+    & > b { font-weight: var(--_title-weight); letter-spacing: var(--fh-tracking-heading); }
     & > span { overflow: hidden; color: var(--fh-color-text-muted); text-overflow: ellipsis; }
   }
   .fh-banner__actions {
@@ -112,39 +153,39 @@
     & > a {
       display: inline-flex;
       align-items: center;
-      gap: var(--fh-gap-related);
-      padding: 0 var(--fh-inset-tile);
-      border-inline-start: var(--_etch-soft);
+      gap: var(--_gap);
+      padding: var(--_pad-b) var(--_pad-i);
+      border-inline-start: var(--_rule);
       color: var(--fh-color-text);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      font-weight: var(--fh-weight-bold);
-      letter-spacing: var(--fh-tracking-caps);
+      font-size: var(--_label);
+      font-weight: var(--_weight);
+      letter-spacing: var(--fh-banner-tracking, var(--fh-tracking-caps));
       text-decoration: none;
       text-transform: uppercase;
       white-space: nowrap;
       transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
     }
-    & > a .fh-icon { color: var(--_ink); transition: translate var(--fh-duration-fast) var(--fh-ease-out); }
+    & > a .fh-icon { inline-size: var(--_icon); block-size: var(--_icon); color: var(--_ink); transition: translate var(--fh-duration-fast) var(--fh-ease-out); }
     & > a:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 5%, transparent); }
-    & > a:is(:hover, :focus-visible) .fh-icon { translate: 2px 0; }
-    & > a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
-    & > a:last-child { padding-inline-end: var(--fh-inset-page); }
+    & > a:is(:hover, :focus-visible) .fh-icon { translate: var(--_nudge) 0; }
+    & > a:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: calc(-1 * var(--fh-focus-width)); }
+    & > a:last-child { padding-inline-end: var(--_inset); }
     /* the call to action: filled in the tone */
     & > .fh-banner__cta { background-color: var(--_c); color: var(--fh-color-on-accent); }
     & > .fh-banner__cta .fh-icon { color: inherit; }
     & > .fh-banner__cta:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--_c) 86%, var(--fh-color-text)); }
-    & > .fh-banner__cta:is(:hover, :focus-visible) .fh-icon { translate: 2px -2px; }
+    & > .fh-banner__cta:is(:hover, :focus-visible) .fh-icon { translate: var(--_nudge) calc(-1 * var(--_nudge)); }
   }
   @container (inline-size < 48rem) {
     .fh-banner--announce .fh-banner__text > span { display: none; }
   }
   @container (inline-size < 32rem) {
     .fh-banner--announce .fh-banner__tag { display: none; }
-    .fh-banner--announce .fh-banner__text { padding-inline-start: var(--fh-inset-page); border: 0; }
+    .fh-banner--announce .fh-banner__text { padding-inline-start: var(--_inset); border: 0; }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .fh-banner__tag::before { animation: fh-banner-breathe 2.4s var(--fh-ease-standard) infinite; }
-    @keyframes fh-banner-breathe { 50% { box-shadow: 0 0 0 0.4rem color-mix(in oklab, var(--_c) 8%, transparent); } }
+    .fh-banner__tag::before { animation: fh-banner-breathe var(--fh-duration-pulse) var(--fh-ease-standard) infinite; }
+    @keyframes fh-banner-breathe { 50% { outline-color: color-mix(in oklab, var(--_c) 8%, transparent); outline-width: calc(var(--_ring) + var(--fh-border-heavy)); } }
   }
 }

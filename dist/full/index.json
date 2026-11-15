@@ -10265,44 +10265,54 @@
       "anchor": "overlays",
       "page": "/components/overlays/",
       "url": "https://firehorse.rascode.dev/components/overlays/empty-state-and-banner/",
-      "summary": "A banner over the header, an empty state, and the announcement banner: a tag in the tone, the news in bold, and its links as ruled cells down the end, the last filled in the tone.",
+      "summary": "Two banners on one recipe, the etched frost at one outer size: a plain line with a link, and the announcement with a tag, the news in bold and its links as ruled cells down the end, the last filled in the tone. Then an empty state on the hatch.",
       "classes": [
         "fh-banner",
-        "fh-empty",
-        "fh-empty__icon",
-        "fh-button",
-        "fh-button--sm",
-        "fh-button--secondary",
         "fh-banner--announce",
         "fh-banner__tag",
         "fh-banner__text",
         "fh-banner__actions",
         "fh-icon",
         "fh-banner__cta",
+        "fh-empty",
+        "fh-empty__icon",
+        "fh-button",
+        "fh-button--secondary",
         "fh-app-empty"
       ],
       "markup": "<div class=\"fh-banner\" data-tone=\"accent\" data-fh=\"EMP-1.1\"><span>Themes now switch with one attribute.</span><a href=\"#top\">Read the notes</a></div>",
       "groups": [
         {
           "id": "EMP-1",
-          "name": "Banner & empty",
-          "summary": "",
+          "name": "Banner",
+          "summary": ".fh-banner · --announce",
           "variants": [
             "EMP-1.1",
-            "EMP-1.2",
-            "EMP-1.3"
+            "EMP-1.2"
           ],
-          "markup": "<div class=\"fh-banner\" data-tone=\"accent\" data-fh=\"EMP-1.1\"><span>Themes now switch with one attribute.</span><a href=\"#top\">Read the notes</a></div>",
-          "markupFrom": "variant"
+          "markup": "<div><dt>Banner<code>.fh-banner · --announce</code></dt><dd>\n<div class=\"fh-banner\" data-tone=\"accent\" data-fh=\"EMP-1.1\"><span>Themes now switch with one attribute.</span><a href=\"#top\">Read the notes</a></div>\n<aside class=\"fh-banner fh-banner--announce\" data-tone=\"accent\" aria-label=\"Announcement\" data-fh=\"EMP-1.2\">\n  <span class=\"fh-banner__tag\">Announcing</span>\n  <p class=\"fh-banner__text\"><b>Firehorse v1.1</b><span>The flagship design system from Rascode and Company</span></p>\n  <nav class=\"fh-banner__actions\" aria-label=\"Announcement links\"><a href=\"#top\">Read more<i class=\"fh-icon fh-icon--arrow-right\" aria-hidden=\"true\"></i></a><a class=\"fh-banner__cta\" href=\"#top\">Become a Pro<i class=\"fh-icon fh-icon--arrow-up-right\" aria-hidden=\"true\"></i></a></nav>\n</aside></dd></div>",
+          "markupFrom": "group",
+          "anchor": "overlays"
         },
         {
           "id": "EMP-2",
-          "name": "Empty module",
-          "summary": "A section that has not been built yet: dashed outline, title and a short note. Under Empty state & banner (EMP).",
+          "name": "Empty",
+          "summary": ".fh-empty · __icon",
           "variants": [
             "EMP-2.1"
           ],
-          "markup": "<div class=\"fh-app-empty\" data-fh=\"EMP-2.1\">\n  <h2>Finance</h2>\n  <p>This module is not wired yet. Numbers and ledgers will land here.</p>\n</div>",
+          "markup": "<div><dt>Empty<code>.fh-empty · __icon</code></dt><dd>\n<div class=\"fh-empty\" data-tone=\"violet\" data-fh=\"EMP-2.1\">\n  <span class=\"fh-empty__icon\">∅</span>\n  <h4>No leads yet</h4>\n  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>\n  <a class=\"fh-button fh-button--secondary\" href=\"#c-feedback\">Send a test lead</a>\n</div></dd></div>",
+          "markupFrom": "group",
+          "anchor": "overlays"
+        },
+        {
+          "id": "EMP-3",
+          "name": "Empty module",
+          "summary": "A section that has not been built yet: the Empty state's frame over the hatch, a title and a short note, to the start and with no icon. Under Empty state & banner (EMP).",
+          "variants": [
+            "EMP-3.1"
+          ],
+          "markup": "<div class=\"fh-app-empty\" data-fh=\"EMP-3.1\">\n  <h2>Finance</h2>\n  <p>This module is not wired yet. Numbers and ledgers will land here.</p>\n</div>",
           "markupFrom": "group",
           "anchor": "a-empty-module",
           "demo": true
@@ -10324,22 +10334,6 @@
         {
           "id": "EMP-1.2",
           "group": "EMP-1",
-          "name": "Empty",
-          "classes": [
-            "fh-empty",
-            "fh-empty__icon",
-            "fh-button",
-            "fh-button--sm",
-            "fh-button--secondary"
-          ],
-          "config": {},
-          "markup": "<div class=\"fh-empty\" data-tone=\"violet\" data-fh=\"EMP-1.2\">\n  <span class=\"fh-empty__icon\">∅</span>\n  <h4>No leads yet</h4>\n  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>\n  <a class=\"fh-button fh-button--sm fh-button--secondary\" href=\"#c-feedback\">Send a test lead</a>\n</div>",
-          "status": "live",
-          "tier": "free"
-        },
-        {
-          "id": "EMP-1.3",
-          "group": "EMP-1",
           "name": "Announcement banner",
           "classes": [
             "fh-banner",
@@ -10351,38 +10345,51 @@
             "fh-banner__cta"
           ],
           "config": {},
-          "markup": "<aside class=\"fh-banner fh-banner--announce\" data-tone=\"accent\" aria-label=\"Announcement\" data-fh=\"EMP-1.3\">\n  <span class=\"fh-banner__tag\">Announcing</span>\n  <p class=\"fh-banner__text\"><b>Firehorse v1.1</b><span>The flagship design system from Rascode and Company</span></p>\n  <nav class=\"fh-banner__actions\" aria-label=\"Announcement links\"><a href=\"#top\">Read more<i class=\"fh-icon fh-icon--arrow-right\" aria-hidden=\"true\"></i></a><a class=\"fh-banner__cta\" href=\"#top\">Become a Pro<i class=\"fh-icon fh-icon--arrow-up-right\" aria-hidden=\"true\"></i></a></nav>\n</aside>",
+          "markup": "<aside class=\"fh-banner fh-banner--announce\" data-tone=\"accent\" aria-label=\"Announcement\" data-fh=\"EMP-1.2\">\n  <span class=\"fh-banner__tag\">Announcing</span>\n  <p class=\"fh-banner__text\"><b>Firehorse v1.1</b><span>The flagship design system from Rascode and Company</span></p>\n  <nav class=\"fh-banner__actions\" aria-label=\"Announcement links\"><a href=\"#top\">Read more<i class=\"fh-icon fh-icon--arrow-right\" aria-hidden=\"true\"></i></a><a class=\"fh-banner__cta\" href=\"#top\">Become a Pro<i class=\"fh-icon fh-icon--arrow-up-right\" aria-hidden=\"true\"></i></a></nav>\n</aside>",
           "status": "live",
           "tier": "free"
         },
         {
           "id": "EMP-2.1",
           "group": "EMP-2",
+          "name": "Empty",
+          "classes": [
+            "fh-empty",
+            "fh-empty__icon",
+            "fh-button",
+            "fh-button--secondary"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-empty\" data-tone=\"violet\" data-fh=\"EMP-2.1\">\n  <span class=\"fh-empty__icon\">∅</span>\n  <h4>No leads yet</h4>\n  <p>When your agent answers its first inquiry, it will show up here with the transcript and the next step.</p>\n  <a class=\"fh-button fh-button--secondary\" href=\"#c-feedback\">Send a test lead</a>\n</div>",
+          "status": "live",
+          "tier": "free"
+        },
+        {
+          "id": "EMP-3.1",
+          "group": "EMP-3",
           "name": "Empty module",
           "classes": [
             "fh-app-empty"
           ],
           "config": {},
-          "markup": "<div class=\"fh-app-empty\" data-fh=\"EMP-2.1\">\n  <h2>Finance</h2>\n  <p>This module is not wired yet. Numbers and ledgers will land here.</p>\n</div>",
+          "markup": "<div class=\"fh-app-empty\" data-fh=\"EMP-3.1\">\n  <h2>Finance</h2>\n  <p>This module is not wired yet. Numbers and ledgers will land here.</p>\n</div>",
           "status": "hold",
           "tier": "free"
         }
       ],
       "stageClasses": [
-        "fh-stack",
-        "fh-stack--lg",
+        "fh-dl",
         "fh-banner",
-        "fh-empty",
-        "fh-empty__icon",
-        "fh-button",
-        "fh-button--sm",
-        "fh-button--secondary",
         "fh-banner--announce",
         "fh-banner__tag",
         "fh-banner__text",
         "fh-banner__actions",
         "fh-icon",
-        "fh-banner__cta"
+        "fh-banner__cta",
+        "fh-empty",
+        "fh-empty__icon",
+        "fh-button",
+        "fh-button--secondary"
       ],
       "status": "live",
       "tier": "free"
