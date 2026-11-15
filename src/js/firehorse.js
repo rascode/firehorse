@@ -672,55 +672,6 @@ ready(() => {
     if (e.key === "ArrowLeft" && cluster.length > 1) { clusterI = (clusterI - 1 + cluster.length) % cluster.length; mediaImg.src = cluster[clusterI]; }
   });
 
-  /* —— 9. Quantity steppers —— */
-  document.addEventListener("click", (e) => {
-    const b = e.target.closest?.(".fh-qty > button");
-    if (!b) return;
-    const input = b.parentElement.querySelector("input");
-    const step = b === b.parentElement.firstElementChild ? -1 : 1;
-    const min = Number(input.min || 0), max = Number(input.max || Infinity);
-    input.value = Math.min(max, Math.max(min, (Number(input.value) || 0) + step));
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-    input.dispatchEvent(new Event("change", { bubbles: true }));
-  });
-
-  /* —— 10. Payment fields → card preview ——
-   * Inputs marked data-paycard="number|name|expiry|cvc" (inside a form
-   * that also holds a .fh-paycard) format as you type and fill the card. */
-  const brands = [["amex", /^3[47]/, [4, 6, 5]], ["visa", /^4/, [4, 4, 4, 4]], ["mastercard", /^(5[1-5]|2[2-7])/, [4, 4, 4, 4]], ["discover", /^6(011|5)/, [4, 4, 4, 4]]];
-  document.addEventListener("input", (e) => {
-    const t = e.target;
-    if (!t.matches?.("[data-paycard]")) return;
-    const scope = t.closest("form, [data-paycard-scope]") ?? document;
-    const card = scope.querySelector(".fh-paycard");
-    const kind = t.dataset.paycard;
-    if (kind === "number") {
-      const digits = t.value.replace(/\D/g, "").slice(0, 19);
-      const [brand, , groups] = brands.find(([, re]) => re.test(digits)) ?? ["", null, [4, 4, 4, 4]];
-      let out = "", i = 0;
-      for (const g of groups) { if (i >= digits.length) break; out += (out ? " " : "") + digits.slice(i, i + g); i += g; }
-      if (i < digits.length) out += " " + digits.slice(i);
-      t.value = out;
-      const chip = t.parentElement.querySelector("[data-card-brand]");
-      if (chip) chip.textContent = brand;
-      if (card) {
-        card.dataset.brand = brand;
-        const masked = (out || "•••• •••• •••• ••••").replace(/\d(?=(?:\D*\d){4})/g, "•");
-        card.querySelector("[data-paycard-show='number']") && (card.querySelector("[data-paycard-show='number']").textContent = out ? masked : "•••• •••• •••• ••••");
-        card.querySelector("[data-paycard-show='brand']") && (card.querySelector("[data-paycard-show='brand']").textContent = brand || "card");
-      }
-    }
-    if (kind === "expiry") {
-      const d = t.value.replace(/\D/g, "").slice(0, 4);
-      t.value = d.length > 2 ? `${d.slice(0, 2)} / ${d.slice(2)}` : d;
-    }
-    if (kind === "cvc") t.value = t.value.replace(/\D/g, "").slice(0, 4);
-    if (card && kind !== "number") {
-      const show = card.querySelector(`[data-paycard-show="${kind}"]`);
-      if (show) show.textContent = t.value || show.dataset.empty || "";
-    }
-  });
-
   /* —— 11. Command menu: type to filter, arrows to move —— */
   for (const cmd of document.querySelectorAll(".fh-command")) {
     const input = cmd.querySelector(".fh-command__search input");

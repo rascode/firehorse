@@ -80,6 +80,7 @@
 | `DTB` | Datatable | Data | 1 Datatable (1) | [open](https://firehorse.rascode.dev/data/datatable/) |
 | `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) · 3 Record table (4) · 4 Row spacing (1) | [open](https://firehorse.rascode.dev/data/table/) |
 | `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) · 3 Icon looks (4) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
+| `INV` | Invoice | Invoice | 1 Sheet (3) · 2 Pay (1) | [open](https://firehorse.rascode.dev/commerce/invoice/) |
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
 | `THS` | Theme select | Themes | 1 Select (1) · 2 Colour menu (1) | [open](https://firehorse.rascode.dev/theming/theme-select/) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
@@ -3326,6 +3327,149 @@ The tile's icon sits in the Icon cube (CUB-1.5), the same part as the sidebar's 
   <p class="fh-metric__sub">Solid on its own</p>
   <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">7</span></p>
 </article>
+</div>
+```
+
+## INV · Invoice
+
+The sheet: logo and number, title, from and bill-to with the dates, line items, totals, a signature, payment details and notes. __cover adds a picture band; --classic centres the logo and sets a small-caps title. data-fh-scheme="light" keeps it paper on a dark page, and it prints on its own. The pay bar (fh-pay --float) sticks to the bottom; Pay opens the payment panel up out of it.
+
+Classes: `fh-invoice` `fh-invoice__cover` `fh-invoice__head` `fh-invoice__logo` `fh-invoice__number` `fh-invoice__title` `fh-invoice__parties` `fh-invoice__label` `fh-invoice__dates` `fh-invoice__items` `fh-invoice__totals` `fh-invoice__total` `fh-invoice__sign` `fh-invoice__foot` `fh-invoice--classic` `fh-pay` `fh-pay--float` `fh-pay__mark` `fh-pay__doc` `fh-pay__amount` `fh-chip` `fh-chip--tone` `fh-pay__icon` `fh-icon` `fh-button` `fh-button--sm` `fh-pay__panel` `fh-pay__head` `fh-pay__route` `fh-pay__party` `fh-pay__sum` `fh-pay__total` `fh-pay__details` `fh-pay__actions`
+
+### INV-1 · Sheet
+
+#### INV-1.1 · Cover
+
+```html
+<article class="fh-invoice" data-fh-scheme="light" data-fh="INV-1.1">
+  <img class="fh-invoice__cover" src="img/backdrop/firehorse-horse.webp" alt>
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0513-0057</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Maya Okafor</b><br>Northwind Studio<br>maya@northwind.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Firehorse theme<small>Tokens, type and colour for your brand</small></td><td>1</td><td>$2,400.00</td><td>$2,400.00</td></tr>
+      <tr><td>Client portal build<small>Invoices, files and messages</small></td><td>1</td><td>$1,800.00</td><td>$1,800.00</td></tr>
+      <tr><td>Support<small>Per month</small></td><td>3</td><td>$200.00</td><td>$600.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$4,800.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$720.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$5,520.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0513-0057</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+```
+
+#### INV-1.2 · Modern
+
+```html
+<article class="fh-invoice" data-fh-scheme="light" data-fh="INV-1.2">
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0602-0061</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Theo Laurent</b><br>Hexwork<br>theo@hexwork.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Design review<small>Two rounds</small></td><td>1</td><td>$900.00</td><td>$900.00</td></tr>
+      <tr><td>Audit<small>AI visibility audit</small></td><td>1</td><td>$600.00</td><td>$600.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$1,500.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$225.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$1,725.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0602-0061</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+```
+
+#### INV-1.3 · Classic
+
+```html
+<article class="fh-invoice fh-invoice--classic" data-fh-scheme="light" data-fh="INV-1.3">
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0611-0064</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Isla Moreau</b><br>Lumen<br>isla@lumen.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Retainer<small>June</small></td><td>1</td><td>$1,200.00</td><td>$1,200.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$1,200.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$180.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$1,380.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0611-0064</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+```
+
+### INV-2 · Pay
+
+#### INV-2.1 · Pay bar · panel
+
+```html
+<div class="fh-pay fh-pay--float" data-fh-scheme="dark" data-fh="INV-2.1">
+  <span class="fh-pay__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+  <span class="fh-pay__doc"><b>Invoice</b><small>INV-0513-0057</small></span>
+  <b class="fh-pay__amount">$5,520</b>
+  <span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span>
+  <a class="fh-pay__icon" href="#invoice" aria-label="Download PDF"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></a>
+  <button class="fh-button fh-button--sm" type="button" popovertarget="pay-inv-1">Pay</button>
+  <div class="fh-pay__panel" id="pay-inv-1" popover>
+    <header class="fh-pay__head"><span class="fh-pay__doc"><b>Invoice</b><small>INV-0513-0057</small></span><span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span></header>
+    <p class="fh-pay__route"><span class="fh-pay__party"><span class="fh-pay__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>Rascode</span><span aria-hidden="true">→</span><span class="fh-pay__party"><img src="img/avatars/maya.webp" alt>Maya Okafor</span></p>
+    <div class="fh-pay__sum">
+      <p class="fh-pay__total" style="margin: 0"><span>Total</span><b>$5,520</b></p>
+      <dl><div><dt>Issued</dt><dd>May 13</dd></div><div><dt>Due</dt><dd>Jun 12<small>in 30 days</small></dd></div></dl>
+    </div>
+    <details class="fh-pay__details" open>
+      <summary>Payment details</summary>
+      <dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Account</dt><dd>1234 5678 9012</dd></div><div><dt>Reference</dt><dd>INV-0513-0057</dd></div></dl>
+    </details>
+    <footer class="fh-pay__actions">
+      <a class="fh-pay__icon" href="#invoice" aria-label="Download PDF"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></a>
+      <button class="fh-pay__icon" type="button" popovertarget="pay-inv-1" popovertargetaction="hide" aria-label="Close"><i class="fh-icon fh-icon--x" aria-hidden="true"></i></button>
+      <a class="fh-button" href="#invoice">Pay now</a>
+    </footer>
+  </div>
 </div>
 ```
 

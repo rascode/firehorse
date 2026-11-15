@@ -18,6 +18,7 @@
 | Content | `fh-card` (`__meta` `__title` `__body` `__footer` `__price` `--solid`) `fh-stats` `fh-kv` (`__full` `--fields` `--single`) `[data-fh-rows]` `[data-fh-rows-select]` `fh-checklist` `fh-steps` (`--grid`) `fh-quote` `fh-crosses` `fh-table-wrap` `fh-table` (`--reflow`) `fh-matrix` `fh-deck` (`__card` `__card--split` `__media` `__body` `__caption` `__caption--top` `__index` `__title` `__meta` `--hero` `--fade` `--blur` `--lift` `--fan` `--count` `--x` `--reverse` `--flush` `--plain`) `fh-member` (`__art` `__glyphs` `__body` `__name` `__id` `__facts` `__role` `__stamp` `__tagline` `__meta` `__badge` `--glow` `--square` `--plates` `--smear`) `fh-story` (`__head` `__logo` `__tag` `__field` `__field--lines` `__mark` `__figure` `__figure-label` `__ring` `__chart` `__foot` `__quote` `__link` `__media` `--deep` `--ink` `--paper` `--duotone` `--glare`) `fh-speed` (`__smear` `__img` `--orbit` `--still`) `fh-dither` (`__plate` `--paper` `--lines` `--fine` `--coarse`) `fh-glass` (`--dark` `--clear` `--pill` `--prism`) |
 | Metrics | `fh-metrics` `fh-metric` (`__label` `__value` `__sub` `__source` `__row` `__more` `__delta` `__figure` `--needed` `--spread` `--tinted` `--wide` `--full`) |
 | Admin (admin.css) | `fh-app` `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
+| Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` `fh-segment` (`--entities` `--roll` `__roll` `--mode`) |
 | Disclosure | `fh-accordion` `fh-tabs` (`--mono`) `fh-dialog` (`__header` `__body` `__footer`) `fh-menu` `fh-toaster` `fh-toast` |
 | Chrome | `fh-header` (`__bar` `__brand` `__actions` `__toggle`) `fh-nav` `fh-nav__link` `fh-drawer` (`__group`) `fh-mega` (`__grid` `__rail`) `fh-footer` (`__columns` `__column` `__base`) |
@@ -2728,6 +2729,133 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
   <p class="fh-metric__sub">Solid on its own</p>
   <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">7</span></p>
 </article>
+</div>
+```
+
+### INV · Invoice
+
+The sheet: logo and number, title, from and bill-to with the dates, line items, totals, a signature, payment details and notes. `__cover` adds a picture band; `--classic` centres the logo and sets a small-caps title. `data-fh-scheme="light"` keeps it paper on a dark page, and it prints on its own. The pay bar (`fh-pay --float`) sticks to the bottom; Pay opens the payment panel up out of it.
+
+```html
+<!-- INV-1.1 · Sheet › Cover -->
+<article class="fh-invoice" data-fh-scheme="light" data-fh="INV-1.1">
+  <img class="fh-invoice__cover" src="img/backdrop/firehorse-horse.webp" alt>
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0513-0057</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Maya Okafor</b><br>Northwind Studio<br>maya@northwind.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Firehorse theme<small>Tokens, type and colour for your brand</small></td><td>1</td><td>$2,400.00</td><td>$2,400.00</td></tr>
+      <tr><td>Client portal build<small>Invoices, files and messages</small></td><td>1</td><td>$1,800.00</td><td>$1,800.00</td></tr>
+      <tr><td>Support<small>Per month</small></td><td>3</td><td>$200.00</td><td>$600.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$4,800.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$720.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$5,520.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0513-0057</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+
+<!-- INV-1.2 · Sheet › Modern -->
+<article class="fh-invoice" data-fh-scheme="light" data-fh="INV-1.2">
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0602-0061</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Theo Laurent</b><br>Hexwork<br>theo@hexwork.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Design review<small>Two rounds</small></td><td>1</td><td>$900.00</td><td>$900.00</td></tr>
+      <tr><td>Audit<small>AI visibility audit</small></td><td>1</td><td>$600.00</td><td>$600.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$1,500.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$225.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$1,725.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0602-0061</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+
+<!-- INV-1.3 · Sheet › Classic -->
+<article class="fh-invoice fh-invoice--classic" data-fh-scheme="light" data-fh="INV-1.3">
+  <header class="fh-invoice__head">
+    <span class="fh-invoice__logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+    <p class="fh-invoice__number">INV-0611-0064</p>
+    <h2 class="fh-invoice__title">Invoice</h2>
+  </header>
+  <div class="fh-invoice__parties">
+    <div><h3 class="fh-invoice__label">From</h3><address><b>Rascode</b><br>hello@rascode.dev<br>rascode.dev</address></div>
+    <div><h3 class="fh-invoice__label">Bill to</h3><address><b>Isla Moreau</b><br>Lumen<br>isla@lumen.example</address></div>
+    <dl class="fh-invoice__dates"><div><dt>Issued</dt><dd>May 13, 2026</dd></div><div><dt>Due</dt><dd>Jun 12, 2026</dd></div></dl>
+  </div>
+  <table class="fh-invoice__items">
+    <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Retainer<small>June</small></td><td>1</td><td>$1,200.00</td><td>$1,200.00</td></tr>
+    </tbody>
+  </table>
+  <dl class="fh-invoice__totals">
+    <div><dt>Subtotal</dt><dd>$1,200.00</dd></div>
+    <div><dt>Tax (15%)</dt><dd>$180.00</dd></div>
+    <div class="fh-invoice__total"><dt>Total</dt><dd>$1,380.00</dd></div>
+  </dl>
+  <p class="fh-invoice__sign">Rascode</p>
+  <footer class="fh-invoice__foot">
+    <div><h3>Payment details</h3><dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Reference</dt><dd>INV-0611-0064</dd></div></dl></div>
+    <div><h3>Notes</h3><p>Thank you for your business.</p></div>
+  </footer>
+</article>
+
+<!-- INV-2.1 · Pay › Pay bar · panel -->
+<div class="fh-pay fh-pay--float" data-fh-scheme="dark" data-fh="INV-2.1">
+  <span class="fh-pay__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>
+  <span class="fh-pay__doc"><b>Invoice</b><small>INV-0513-0057</small></span>
+  <b class="fh-pay__amount">$5,520</b>
+  <span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span>
+  <a class="fh-pay__icon" href="#invoice" aria-label="Download PDF"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></a>
+  <button class="fh-button fh-button--sm" type="button" popovertarget="pay-inv-1">Pay</button>
+  <div class="fh-pay__panel" id="pay-inv-1" popover>
+    <header class="fh-pay__head"><span class="fh-pay__doc"><b>Invoice</b><small>INV-0513-0057</small></span><span class="fh-chip fh-chip--tone" data-tone="amber">Pending</span></header>
+    <p class="fh-pay__route"><span class="fh-pay__party"><span class="fh-pay__mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h11a8 8 0 0 1 2.2 15.7L26 28h-6l-5.2-7.6H13V28H7zm6 5v6.6h4.6a3.3 3.3 0 0 0 0-6.6z"></path></svg></span>Rascode</span><span aria-hidden="true">→</span><span class="fh-pay__party"><img src="img/avatars/maya.webp" alt>Maya Okafor</span></p>
+    <div class="fh-pay__sum">
+      <p class="fh-pay__total" style="margin: 0"><span>Total</span><b>$5,520</b></p>
+      <dl><div><dt>Issued</dt><dd>May 13</dd></div><div><dt>Due</dt><dd>Jun 12<small>in 30 days</small></dd></div></dl>
+    </div>
+    <details class="fh-pay__details" open>
+      <summary>Payment details</summary>
+      <dl><div><dt>Method</dt><dd>Bank transfer</dd></div><div><dt>Bank</dt><dd>First Example Bank</dd></div><div><dt>Account</dt><dd>1234 5678 9012</dd></div><div><dt>Reference</dt><dd>INV-0513-0057</dd></div></dl>
+    </details>
+    <footer class="fh-pay__actions">
+      <a class="fh-pay__icon" href="#invoice" aria-label="Download PDF"><i class="fh-icon fh-icon--download" aria-hidden="true"></i></a>
+      <button class="fh-pay__icon" type="button" popovertarget="pay-inv-1" popovertargetaction="hide" aria-label="Close"><i class="fh-icon fh-icon--x" aria-hidden="true"></i></button>
+      <a class="fh-button" href="#invoice">Pay now</a>
+    </footer>
+  </div>
 </div>
 ```
 

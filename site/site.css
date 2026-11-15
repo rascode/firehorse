@@ -1304,23 +1304,6 @@ body::before {
 .site-phone__screen { display: grid; align-content: start; gap: var(--fh-space-3); padding: var(--fh-space-6) var(--fh-space-4); }
 
 /* Store: plain Firehorse. Etched frame, mono chrome, tones; follows global config. */
-.site-store { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--fh-space-10); padding: clamp(var(--fh-space-4), 3cqi, var(--fh-space-8)); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); container: fh-store / inline-size; }
-.site-store__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fh-space-4); padding-block-end: var(--fh-space-4); border-block-end: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
-.site-store__brand { font-size: 1.35rem; font-weight: var(--fh-weight-bold); letter-spacing: -0.04em; }
-.site-store__brand > i { color: var(--fh-color-accent-text); font-style: normal; }
-.site-store__promo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-3); margin: calc(var(--fh-space-6) * -1) 0 0; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
-.site-store__promo .fh-icon { font-size: 0.85em; }
-.site-store__collection { display: grid; gap: var(--fh-space-6); }
-@container fh-store (inline-size >= 52rem) { .site-store__collection { grid-template-columns: 12rem minmax(0, 1fr); } }
-.site-store__filters { display: grid; gap: var(--fh-space-5); align-content: start; padding: var(--fh-space-4); border: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
-.site-store__group { display: grid; gap: var(--fh-space-2); margin: 0; padding: 0; border: 0; }
-.site-store__group legend { margin-block-end: var(--fh-space-2); color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-micro); letter-spacing: var(--fh-tracking-wider); text-transform: uppercase; }
-.site-store__hint { margin: 0; color: var(--fh-color-text-subtle); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); }
-.site-store .fh-product-grid { --fh-product-min: 16rem; }
-@container fh-store (inline-size < 32rem) { .site-store .fh-product-grid { --fh-product-min: 9rem; --fh-gap: var(--fh-space-2); } }
-.site-store__pdp { --fh-product-ratio: 1; }
-.site-store__pdp, .site-store__checkout { padding-block-start: var(--fh-space-8); border-block-start: var(--fh-border-thin) dashed var(--fh-color-etch-soft); }
-.site-store__confirm { padding: var(--fh-space-6); border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-tone) 55%, transparent); }
 .site-config-code { color: var(--fh-color-text-muted); font-family: var(--fh-font-mono); font-size: var(--fh-text-label); }
 
 /* Catalog */
@@ -2279,7 +2262,12 @@ figcaption .site-id--end { margin-inline-start: auto; }
 .site-builder__stage { display: grid; gap: var(--fh-space-6); }
 .site-builder__bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fh-space-3); }
 .site-builder__bar .fh-select-wrap { inline-size: 11rem; }
-.site-builder__bar .fh-swatches { --fh-swatch-size: 1.1rem; margin-inline: var(--fh-space-2); }
+/* The slide builder's tone picker: a row of small colour discs (radios), the site's own control. */
+.site-builder__tones { display: flex; flex-wrap: wrap; gap: var(--fh-gap-bound); margin-inline: var(--fh-space-2); }
+.site-builder__tones > label { position: relative; inline-size: 1.1rem; aspect-ratio: 1; border-radius: var(--fh-radius-pill); background: var(--swatch, var(--fh-color-surface-sunken)); box-shadow: inset 0 0 0 var(--fh-border-thin) color-mix(in oklab, var(--fh-color-text) 18%, transparent); cursor: var(--fh-cursor-action); }
+.site-builder__tones > label > input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: inherit; }
+.site-builder__tones > label:has(:checked) { outline: var(--fh-border-heavy) solid var(--fh-color-text); outline-offset: var(--fh-border-heavy); }
+.site-builder__tones > label:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
 .site-builder__spacer { flex: 1 1 0; }
 .site-builder__body { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: var(--fh-space-6); align-items: start; }
 .site-builder__list { display: grid; align-content: start; gap: var(--fh-space-4); max-block-size: 36rem; margin: 0; padding: 2px var(--fh-space-2) 2px 2px; overflow-y: auto; overscroll-behavior: contain; list-style: none; }
@@ -2320,16 +2308,16 @@ figcaption .site-id--end { margin-inline-start: auto; }
   --site-frost: color-mix(in oklab, var(--fh-color-canvas) 62%, transparent);
   --site-frost-blur: 8px;
 }
-main :is(.site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) {
+main :is(.site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) {
   -webkit-backdrop-filter: blur(var(--site-frost-blur));
   backdrop-filter: blur(var(--site-frost-blur));
 }
-:root:not([data-fh-theme]) main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) {
+:root:not([data-fh-theme]) main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) {
   --fh-card-bg: var(--site-frost);
   --fh-chip-bg: var(--site-frost);
 }
-:root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
-main :is(.site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .site-choice, .fh-chip-card, .fh-cube-card, .site-stat):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .site-store, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .fh-pdp, .fh-checkout, .fh-product, .fh-choice-card, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) {
+:root[data-fh-theme] main :is(.fh-card, .fh-chip):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+main :is(.site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, details, .site-choice, .fh-chip-card, .fh-cube-card, .site-stat):not(:is(.site-demo, .site-page-summary, .site-brief, .site-pg-teaser, .site-services__strip, .fh-stats, .fh-grid--ruled, .fh-cta-band, .fh-table-wrap, .fh-accordion, main details, .site-choice, .fh-card, .fh-chip-card, .fh-cube-card, .site-stat, .fh-chip, .site-dock, .fh-dock) *) {
   background-color: var(--site-frost);
 }
 .site-page-summary > .site-stat { background: none; }
