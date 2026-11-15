@@ -4,8 +4,9 @@ One rulebook for drawing a single value (a status, a person, an amount, a file) 
 and from every endpoint. Plan: platform `relay/2026-11-14-data-display-contract-plan.md`.
 
 - **Rules (machine):** `schema/display-rules.json` (`@rascode/firehorse/schema/display-rules.json`)
-- **Function:** `resolveValue(field, context, mode)` in `@rascode/firehorse/values`
-- **Field list:** `schema/semantic-types.json` (published from `devops.semantic_types`; every type has `display.shape`)
+- **Function:** `resolveValue(field, context, mode)` and `textOf(field, value)` in `@rascode/firehorse/values`
+- **Field list:** `schema/semantic-types.json` (published from `devops.semantic_types`; every type has `display.shape`, and `display.optionSet` for options)
+- **Option sets:** `schema/option-sets.json` (published from `devops.option_sets`, migration 435), one entry per set, checked by `schema/option-sets.schema.json`
 - **Shared shapes:** `schema/option-set.schema.json`, `schema/entity.schema.json`
 - **Parts:** the Values family, VAL-1 to VAL-11 (wave W2): one part per variant, `r.id` names it (`VAL-1.1`).
   Specimen: https://firehorse.rascode.dev/data/values/ (held until Helm makes VAL live). CSS: `src/components/data/values.css`.
@@ -19,7 +20,8 @@ endpoint ──► FIELD ──► RULE GRID ──► VALUE PART ──► SURF
 
 1. **Field.** What the data is: a semantic type (or one of the datatable's 22 type names, kept as aliases),
    an option set, an entity kind. Endpoints send `fields` next to `rows`.
-2. **Rule grid.** Shape (13) x context (5) gives a variant. Rows are matched in order; the first fits.
+2. **Rule grid.** Shape (14) x context (6) gives a variant. Rows are matched in order; the first fits. The sixth
+   context, `text`, is never drawn: it names the plain string the value becomes (`textOf`).
 3. **Value part.** One Firehorse part per shape (the Values family, VAL), with read and edit states.
 4. **Surface.** Datatable, table, record table, metric, card, sidecar, form. A surface never decides how a value
    looks; it calls `resolveValue` and draws what it gets.
@@ -39,6 +41,7 @@ const r = resolveValue(field, "cell");           // read in a datatable row
 
 resolveValue(field, "form");                      // { variant: "select", editable: true }
 resolveValue(field, "cell", "edit");              // { variant: "dot", editable: true, control: "select" }
+textOf(field, "active");                          // "Active": CSV export, aria-label, copy and search
 ```
 
 Pick the context by where the value sits, never by how you want it to look:
@@ -50,6 +53,7 @@ Pick the context by where the value sits, never by how you want it to look:
 | `card` | gallery, board, tile |
 | `metric` | the big figure |
 | `form` | editing |
+| `text` | never drawn: the plain string for CSV export, `aria-label`, copy and search. `variant` is a text format (`rules.textFormats`), `null` for a secret, which has no text form, export included |
 
 `variant: null` means the grid leaves that field out of that context (a description is not a metric): skip it.
 Read `warnings`: an unknown semantic type, money without a currency, a refused override.
@@ -57,47 +61,54 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 ## Rules
 
 <!-- rules:start -->
-1. Status is a chip, once per row. The dot is for dense cells and prose only.
+1. Status is dot and word in a table cell, and a chip in a record, card and board.
 2. A value with options never renders as free text. If it has an option set, it gets an Option or Options part.
 3. Numbers align right and use tabular figures in every cell and record row.
 4. Money always knows its currency. Cents show in record and form; cells may round to whole units only when every row in the column does.
 5. The field overrides the grid, the grid overrides the surface. A field may name a variant (display: { cell: "chip" }); a surface never can.
 6. Editable is the same part with a chevron or a control, never a different-looking part. Read and edit share size, colour and position.
 7. Empty is a muted em dash, never a blank cell or null.
+8. An ordinal set sorts by its order, never the alphabet, and draws its tones as a ramp in that order. Status tones are for states only.
+9. Option sets are data: a field points at its set (devops.option_sets, published as schema/option-sets.json). A status option's tone is its state's: done lime, moving sky, waiting amber, failed rose, ended neutral.
+10. Every value has a text form, the plain string for CSV export, aria-label, copy and search. A secret has none, export included.
 <!-- rules:end -->
 
 ## The grid
 
 <!-- grid:start -->
-| Row | cell | record | card | metric | form | Group |
-|---|---|---|---|---|---|---|
-| option, status (toned) (Status is a chip once per row; the dot is for dense cells and prose only) | `dot` | `chip` | `chip` | `chip` | `select` | VAL-1 |
-| option, 2 to 4 values | `chip` | `chip` | `chip` | · | `segmented` | VAL-1 |
-| option, 8 or more values | `chip` | `chip` | `chip` | · | `select-search` | VAL-1 |
-| option, 5 to 7 values (or unknown) (Not in the approved grid: fills the gap between 4 and 8 values) | `chip` | `chip` | `chip` | · | `select` | VAL-1 |
-| options | `chips` +N after 3 | `chips-inline` | `chips` +N after 2 | `count` | `tag-field` | VAL-2 |
-| entities (several) (Record context lists one per line) | `stack` +N after 4 | `avatar-name` | `stack` | `stack` | `picker-multi` | VAL-3 |
-| entity, person or org | `avatar-name` | `full` | `chip` | `stack` | `picker` | VAL-3 |
-| entity, record (The form picker row shows name and description) | `ref` | `ref-key` | `name` | · | `picker` | VAL-3 |
-| money | `amount`, right | `amount-code`, right | `compact` | `compact-delta` | `money-input` | VAL-4 |
-| ratio (Metric uses meter instead of ring when the field has a target) | `bar` | `text` | `ring` | `ring` | `range` | VAL-5 |
-| number, series | `sparkline` | `sparkline` | `sparkline` | `sparkline` | · | VAL-6 |
-| number | `plain`, right | `unit`, right | `plain` | `plain-delta` | `number-input` | VAL-6 |
-| temporal, date | `date-relative` | `date` | `relative` | `relative` | `date-picker` | VAL-7 |
-| temporal, time of day (Not in the approved grid: a time of day has no relative form) | `time` | `time` | `time` | · | `time-input` | VAL-7 |
-| temporal, duration (Not in the approved grid: durations were an open item from the value inventory) | `duration` | `duration` | `duration` | `duration` | `duration-input` | VAL-7 |
-| temporal, moment | `date-relative` | `datetime` | `relative` | `relative` | `date-picker` | VAL-7 |
-| file | `type-chip` +N after 3 | `file-row` | `thumb` | `count` | `dropzone` | VAL-8 |
-| link, email | `email` | `email` | `link-chip` | · | `email-input` | VAL-9 |
-| link, phone | `phone` | `phone` | `link-chip` | · | `phone-input` | VAL-9 |
-| link, action (computed button) (Not in the approved grid: computed_button is an action, not a value) | `action` | `action` | `action` | · | · | VAL-9 |
-| link, URL | `link` | `link` | `link-chip` | · | `url-input` | VAL-9 |
-| flag | `check` | `yes-no` | `yes-no` | `count` | `switch` | VAL-10 |
-| prose | `clamp-2` | `full` | `clamp-3` | · | `textarea` | VAL-11 |
-| code, secret (vault reference) (Not in the approved grid: credential types store a vault reference, never the value) | `masked` | `masked` | `masked` | · | `key-field` | VAL-11 |
-| code, structured (JSON) (Not in the approved grid: JSON needs a block in the record) | `mono` | `code-block` | `mono` | · | `textarea-mono` | VAL-11 |
-| code | `mono` | `copyable` | `mono` | · | `input-mono` | VAL-11 |
-| text (Not in the approved grid (the plan's grid had no text row)) | `line` | `line` | `line` | · | `input` | VAL-11 |
+| Row | cell | record | card | metric | form | text | Group |
+|---|---|---|---|---|---|---|---|
+| option, ordinal, 2 to 4 values (Priority is ordinal: a tone ramp in order, low to urgent, sorted by option order (decision 6)) | `dot` | `chip` | `dot` | `chip` | `segmented` | `label` | VAL-1 |
+| option, ordinal (Priority is ordinal: a tone ramp in order, low to urgent, sorted by option order (decision 6)) | `dot` | `chip` | `dot` | `chip` | `select` | `label` | VAL-1 |
+| option, status (toned) (Dot and word in a table cell; chip in record, card and board (decision 5)) | `dot` | `chip` | `chip` | `chip` | `select` | `label` | VAL-1 |
+| option, generated code set (A code set (countries, currencies, zones) is generated from a standard, so its form always searches (decision 7)) | `chip` | `chip` | `chip` | · | `select-search` | `value` | VAL-1 |
+| option, 2 to 4 values | `chip` | `chip` | `chip` | · | `segmented` | `label` | VAL-1 |
+| option, 8 or more values | `chip` | `chip` | `chip` | · | `select-search` | `label` | VAL-1 |
+| option, 5 to 7 values (or unknown) (Not in the approved grid: fills the gap between 4 and 8 values) | `chip` | `chip` | `chip` | · | `select` | `label` | VAL-1 |
+| options | `chips` +N after 3 | `chips-inline` | `chips` +N after 2 | `count` | `tag-field` | `labels` | VAL-2 |
+| entities (several) (Record context lists one per line) | `stack` +N after 4 | `avatar-name` | `stack` | `stack` | `picker-multi` | `names` | VAL-3 |
+| entity, person or org | `avatar-name` | `full` | `chip` | `stack` | `picker` | `name` | VAL-3 |
+| entity, record (The form picker row shows name and description) | `ref` | `ref-key` | `name` | · | `picker` | `name` | VAL-3 |
+| money | `amount`, right | `amount-code`, right | `compact` | `compact-delta` | `money-input` | `amount-code` | VAL-4 |
+| ratio (Metric uses meter instead of ring when the field has a target) | `bar` | `text` | `ring` | `ring` | `range` | `percent` | VAL-5 |
+| series (Series is the 14th shape: a sparkline, and with its last value in record and metric (decision 4)) | `sparkline` | `sparkline-last` | `sparkline` | `sparkline-last` | · | `last` | VAL-6 |
+| number, duration (Durations are numbers drawn 8h 34m; duration_iso8601 is read as seconds (decision 4)) | `duration`, right | `duration`, right | `duration` | `duration` | `duration-input` | `iso-duration` | VAL-6 |
+| number, identifier (An identifier-like number (chain_id) shows its digits without thousands separators (decision 4)) | `plain`, right | `plain`, right | `plain` | · | `number-input` | `digits` | VAL-6 |
+| number | `plain`, right | `unit`, right | `plain` | `plain-delta` | `number-input` | `number-unit` | VAL-6 |
+| temporal, date | `date-relative` | `date` | `relative` | `relative` | `date-picker` | `iso-date` | VAL-7 |
+| temporal, time of day (Not in the approved grid: a time of day has no relative form) | `time` | `time` | `time` | · | `time-input` | `time` | VAL-7 |
+| temporal, moment | `date-relative` | `datetime` | `relative` | `relative` | `date-picker` | `iso-datetime` | VAL-7 |
+| file | `type-chip` +N after 3 | `file-row` | `thumb` | `count` | `dropzone` | `file-names` | VAL-8 |
+| link, email | `email` | `email` | `link-chip` | · | `email-input` | `value` | VAL-9 |
+| link, phone | `phone` | `phone` | `link-chip` | · | `phone-input` | `value` | VAL-9 |
+| link, URL | `link` | `link` | `link-chip` | · | `url-input` | `value` | VAL-9 |
+| flag | `check` | `yes-no` | `yes-no` | `count` | `switch` | `yes-no` | VAL-10 |
+| prose | `clamp-2` | `full` | `clamp-3` | · | `textarea` | `plain` | VAL-11 |
+| code, secret (vault reference) (Not in the approved grid: credential types store a vault reference, never the value) | `masked` | `masked` | `masked` | · | `key-field` | · | VAL-11 |
+| code, structured (JSON) (Not in the approved grid: JSON needs a block in the record) | `mono` | `code-block` | `mono` | · | `textarea-mono` | `json` | VAL-11 |
+| code | `mono` | `copyable` | `mono` | · | `input-mono` | `value` | VAL-11 |
+| text, action (computed button) (computed_button is text / action: an action renderer, left out of sort, filter and export (decision 4)) | `action` | `action` | `action` | · | · | `label` | VAL-11 |
+| text (Not in the approved grid (the plan's grid had no text row)) | `line` | `line` | `line` | · | `input` | `value` | VAL-11 |
 
 `·` = not shown in that context. Variants and the parts each is built from:
 
@@ -108,13 +119,14 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | VAL-3 Entity | entity | `name` · `name-key` DET · `avatar-name` AVT · `avatar-name-description` AVT, ENT · `full` AVT, ENT · `chip` CHP, AVT · `stack` AVT · `ref` REF · `ref-key` REF · `picker` (edit) ENT · `picker-multi` (edit) ENT |
 | VAL-4 Money | money | `amount` · `amount-code` · `compact` · `delta` · `compact-delta` · `money-input` (edit) FLD |
 | VAL-5 Ratio | ratio | `text` · `bar` MET · `ring` FBK · `meter` MET, GAU · `range` (edit) UPL |
-| VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD |
+| VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD · `duration` · `duration-input` (edit) FLD |
+| VAL-6 Number | series | `sparkline` MET · `sparkline-last` MET |
 | VAL-7 Temporal | temporal | `date` · `date-relative` · `relative` · `datetime` · `range` · `overdue` · `time` · `duration` · `date-picker` (edit) FLD · `time-input` (edit) FLD · `duration-input` (edit) FLD |
 | VAL-8 File | file | `type-chip` CHP · `thumb` THB · `thumbs` THB · `file-row` SFL · `count` · `dropzone` (edit) UPL |
 | VAL-9 Link | link | `link` ACT · `email` ACT · `phone` ACT · `link-chip` CHP · `action` ACT · `url-input` (edit) FLD · `email-input` (edit) FLD · `phone-input` (edit) FLD |
 | VAL-10 Flag | flag | `check` CHO · `yes-no` · `count` · `switch` (edit) CHO |
 | VAL-11 Prose, text and code | prose | `clamp-2` · `clamp-3` · `full` · `textarea` (edit) FLD |
-| VAL-11 Prose, text and code | text | `line` · `input` (edit) FLD |
+| VAL-11 Prose, text and code | text | `line` · `input` (edit) FLD · `action` ACT |
 | VAL-11 Prose, text and code | code | `mono` DET · `copyable` DET · `masked` DET · `code-block` DET · `input-mono` (edit) FLD · `textarea-mono` (edit) FLD · `key-field` (edit) KEY |
 <!-- grid:end -->
 
@@ -131,15 +143,51 @@ everything else narrows it.
 | `entity` | `person`, `org` or `record` for the entity shape |
 | `multiple` | several values: options, entities (stack), files |
 | `optionSet` | a key (`relay.status`) or an option set object; else `options`, else the semantic type's own options |
-| `currency` | always for money (rule 4) |
+| `currency` | for money (rule 4), unless the type names the sibling that holds it (`currencyFrom`: `fiat_currency_code`, `network_name` …) |
+| `resultShape` | for `computed_formula`: the shape its formula returns, set per column (`devops.column_semantic_types.display_result_shape`); text when unset |
 | `unit` | overrides the semantic type's unit |
 | `target` | a ratio with a target is a meter in a metric |
 | `readOnly` | computed and system types are read-only already |
 | `display` | `{ cell: "chip" }`: the field names a variant for a context; it must be a variant of its shape |
 
-An **option set** is `{ key, label?, kind: "status" | "choice", ordinal?, options: [{ value, label?, tone?, icon?, description?, live? }] }`.
-A value with no tone takes the default tone map (the Status chip's words): done lime, moving sky, waiting amber,
-failed rose, finished neutral.
+An **option set** is `{ key, label?, kind: "status" | "choice" | "code", ordinal?, generator?, options: [{ value, label?, tone?, state?, icon?, description?, live? }] }`.
+Sets are data (`devops.option_sets`): a semantic type names its set (`display.optionSet`), a field may name another.
+A status option has a `state` from the five groups and takes its tone: done lime, moving sky, waiting amber,
+failed rose, ended neutral. A choice option has its own tone (teal, violet, fuchsia, orange, accent: hues no
+state uses). A code set (countries, currencies, zones) is generated from a standard (`generator`) and untoned.
+An ordinal choice set (priority) draws as a ramp of one hue in its order: each option gets `ramp` 1 to 4, drawn
+with `data-ramp` (`utilities/tone.css`), and sorts by its order (`r.sort === "order"`). A value with no set and
+no tone takes the default tone map (the Status chip's words).
+
+## Option sets
+
+<!-- option-sets:start -->
+| Set | Kind | Used by | Options (state or tone) |
+|---|---|---|---|
+| `barcode_format` Barcode format | choice | `barcode_format` | `qr` teal, `ean13` violet, `ean8` fuchsia, `code128` orange, `upc` accent |
+| `codec` Codec | choice | `codec` | `h264` teal, `aac` violet, `opus` fuchsia, `vp9` orange, `flac` accent |
+| `crypto_currency` Crypto currency | code, generated (crypto_ticker; samples) | `crypto_currency_code` | `BTC`, `ETH`, `SOL` |
+| `honorific` Honorific | choice | `honorific` | `Mx` teal, `Ms` violet, `Mr` fuchsia, `Dr` orange |
+| `iana_timezone` Timezone | code, generated (iana_tz; samples) | `timezone_id` | `America/New_York`, `America/Los_Angeles`, `Europe/London`, `UTC` |
+| `iso_country` Country | code, generated (iso_3166_1_alpha2; samples) | `country_code`, `nationality_code` | `US`, `GB`, `CA`, `DE`, `FR`, `JP`, `MX`, `BR` |
+| `iso_currency` Currency | code, generated (iso_4217; samples) | `fiat_currency_code` | `USD`, `EUR`, `GBP`, `JPY`, `CAD`, `AUD`, `CHF` |
+| `iso_language` Language | code, generated (iso_639_1; samples) | `language_code` | `en`, `es`, `fr`, `de`, `pt`, `ja` |
+| `key_status` Key status | status | `key_status` | `active` done, `rotated` ended, `revoked` failed |
+| `lifecycle_stage` Lifecycle stage | status, ordinal | `lifecycle_stage` | `idea` waiting, `planned` waiting, `building` moving, `live` done, `sunset` ended |
+| `media_format` Media format | choice | `media_format` | `image` teal, `audio` violet, `video` fuchsia, `document` orange |
+| `mime_type` MIME type | code, generated (iana_media_types; samples) | `mime_type` | `image/jpeg`, `image/png`, `image/webp`, `application/pdf`, `text/plain`, `audio/mpeg`, `video/mp4` |
+| `name_prefix` Name prefix | choice | `name_prefix` | `Mx` teal, `Dr` violet |
+| `name_suffix` Name suffix | choice | `name_suffix` | `Jr` teal, `Sr` violet, `III` fuchsia |
+| `network` Network | choice | `network_name` | `ethereum` teal, `polygon` violet, `solana` fuchsia, `bitcoin` orange |
+| `priority` Priority | choice, ordinal | `priority` | `low` orange, `medium` orange, `high` orange, `urgent` orange · ramp in this order |
+| `pronouns` Pronouns | choice | `pronouns` | `she/her` teal, `he/him` violet, `they/them` fuchsia |
+| `scan_status` Scan status | status | `barcode_scan_status` | `unread` waiting, `read` done, `rejected` failed |
+| `tags` Tags | choice | `tags` | `demo` teal, `featured` violet, `internal` fuchsia |
+| `token_standard` Token standard | choice | `token_standard` | `erc20` teal, `erc721` violet, `erc1155` fuchsia |
+| `transaction_status` Transaction status | status | `transaction_status` | `pending` moving, `confirmed` done, `failed` failed |
+| `us_state` US state | code, generated (usps_state; samples) | `state_region_code` | `OR`, `CA`, `NY`, `TX`, `WA` |
+| `workflow_status` Workflow status | status | `status` | `draft` waiting, `active` moving, `paused` waiting, `archived` ended |
+<!-- option-sets:end -->
 
 An **entity** is `{ id, kind?, label, description?, image?, initials?, tone?, key?, href?, sidecar?, stat? }`.
 Every relation cell and picker row reads this object and shows as much as its variant allows.
@@ -169,8 +217,8 @@ Every relation cell and picker row reads this object and shows as much as its va
 | `phone` | `phone_e164` | link |  |
 | `link` | `entity_reference` | entity, several |  |
 | `attachment` | `document_file` | file, several |  |
-| `formula` | `computed_formula` | number |  |
-| `sparkline` | · | number | No semantic type yet: a list of numbers. |
+| `formula` | `computed_formula` | text |  |
+| `sparkline` | · | series | No semantic type yet: a list of numbers. |
 <!-- aliases:end -->
 
 ## Semantic types by shape
@@ -178,44 +226,44 @@ Every relation cell and picker row reads this object and shows as much as its va
 <!-- types:start -->
 | Shape | Kind | Semantic types |
 |---|---|---|
-| text | · | `city`, `computed_slug`, `display_name`, `family_name`, `first_name`, `full_name`, `given_name`, `initials`, `last_name`, `legal_name`, `middle_name`, `nickname`, `postal_code`, `preferred_name`, `query`, `short_text`, `slug`, `street_address`, `title`, `username` |
-| text | domain | `domain_name` |
+| text | · | `city`, `display_name`, `family_name`, `first_name`, `full_name`, `given_name`, `initials`, `last_name`, `legal_name`, `middle_name`, `nickname`, `postal_code`, `preferred_name`, `query`, `short_text`, `street_address`, `title`, `username` |
+| text | action | `computed_button` |
+| text | formula | `computed_formula` |
 | prose | markdown | `markdown` |
 | prose | plain | `description`, `long_text`, `transcript` |
 | prose | rich | `rich_text` |
 | number | coordinate | `latitude` (°), `longitude` (°) |
 | number | count | `block_number`, `channels`, `gas_used`, `nonce`, `number_(whole)`, `quantity`, `sort_order` |
-| number | duration | `duration_minutes` (min), `duration_seconds` (s) |
-| number | formula | `computed_formula` |
-| number | measure | `bitrate_kbps` (kbps), `gas_price` (gwei), `number_(decimal)`, `sample_rate_hz` (Hz) |
+| number | duration | `duration_iso8601` (s), `duration_minutes` (min), `duration_seconds` (s) |
+| number | id | `chain_id` |
+| number | measure | `bitrate_kbps` (kbps), `number_(decimal)`, `sample_rate_hz` (Hz) |
 | number | rollup | `computed_rollup` |
-| number | series | `waveform_data` |
-| money | crypto | `crypto_amount` |
+| money | crypto | `crypto_amount`, `gas_price` (gwei) |
 | money | fiat | `fiat_amount` |
 | ratio | percent | `percentage` |
 | temporal | date | `date` |
 | temporal | datetime | `created_at`, `deleted_at`, `local_datetime`, `system_created_time`, `system_modified_time`, `timestamp`, `updated_at` |
-| temporal | duration | `duration_iso8601` |
 | temporal | time | `time` |
 | option | choice | `barcode_format`, `codec`, `country_code`, `crypto_currency_code`, `fiat_currency_code`, `honorific`, `language_code`, `media_format`, `mime_type`, `name_prefix`, `name_suffix`, `nationality_code`, `network_name`, `pronouns`, `state_region_code`, `timezone_id`, `token_standard` |
-| option | status | `barcode_scan_status`, `key_status`, `lifecycle_stage`, `priority`, `status`, `transaction_status` |
+| option | ordinal | `priority` |
+| option | status | `barcode_scan_status`, `key_status`, `lifecycle_stage`, `status`, `transaction_status` |
 | options | choice | `tags` |
 | entity | person | `owner_reference` |
 | entity | record | `computed_lookup`, `entity_reference`, `parent_reference` |
 | file | document | `document_file` |
 | file | image | `barcode_image_asset`, `image_asset` |
 | file | media | `media_file` |
-| link | action | `computed_button` |
 | link | email | `email` |
 | link | phone | `phone_e164` |
-| link | url | `url` |
+| link | url | `domain_name`, `url` |
 | flag | · | `checkbox` |
 | code | address | `btc_wallet_address`, `eth_wallet_address`, `public_key`, `smart_contract_address`, `sol_wallet_address`, `token_contract_address`, `wallet_address` |
 | code | hash | `block_hash`, `permaweb_data_hash`, `transaction_hash`, `wallet_signature` |
-| code | id | `assigned_id`, `chain_id`, `external_id`, `qr_payload`, `short_code`, `system_id`, `system_uuid`, `token_id` |
+| code | id | `assigned_id`, `computed_slug`, `external_id`, `qr_payload`, `short_code`, `slug`, `system_id`, `system_uuid`, `token_id` |
 | code | identifier | `barcode_value`, `duns_number`, `ein`, `gtin`, `isbn_10`, `isbn_13`, `tax_id_number`, `vat_number` |
 | code | json | `barcode_metadata`, `json_object` |
 | code | secret | `access_token_ref`, `api_key_secret_ref`, `private_key_ref`, `secret_key_ref` |
+| series | · | `waveform_data` |
 <!-- types:end -->
 
 ## Parts
@@ -473,13 +521,13 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 </div>
 ```
 
-`VAL-4.3` Compact (<!-- parts:start -->.2M) · `money` `compact`
+`VAL-4.3` Compact ($1.2M) · `money` `compact`
 
 ```html
 <div class="fh-cluster">
-  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono" data-fh="VAL-4.3"><data value="1240000" title="<!-- parts:start -->,240,000.00 USD"><!-- parts:start -->.2M</data></span>
+  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono" data-fh="VAL-4.3"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data></span>
   <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono" data-mode="edit" data-fh="VAL-4.3"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="1,240,000.00" aria-label="Amount, US dollars" inputmode="decimal"></span>
-  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono fh-value--lg" data-fh="VAL-4.3"><data value="1240000" title="<!-- parts:start -->,240,000.00 USD"><!-- parts:start -->.2M</data></span>
+  <span class="fh-value fh-value--compact fh-value--tabular fh-value--mono fh-value--lg" data-fh="VAL-4.3"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data></span>
 </div>
 ```
 
@@ -487,9 +535,9 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 
 ```html
 <div class="fh-cluster">
-  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono" data-fh="VAL-4.4"><span class="fh-metric__delta" data-trend="up" aria-label="Up <!-- parts:start -->,250.00"><!-- parts:start -->,250.00</span></span>
-  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono" data-mode="edit" title="Computed: the change stays read-only while editing" data-fh="VAL-4.4"><span class="fh-metric__delta" data-trend="up" aria-label="Up <!-- parts:start -->,250.00"><!-- parts:start -->,250.00</span></span>
-  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono fh-value--lg" data-fh="VAL-4.4"><span class="fh-metric__delta" data-trend="up" aria-label="Up <!-- parts:start -->,250.00"><!-- parts:start -->,250.00</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono" data-fh="VAL-4.4"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono" data-mode="edit" title="Computed: the change stays read-only while editing" data-fh="VAL-4.4"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--delta fh-value--tabular fh-value--mono fh-value--lg" data-fh="VAL-4.4"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
 </div>
 ```
 
@@ -497,9 +545,9 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 
 ```html
 <div class="fh-cluster">
-  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="1240000" title="<!-- parts:start -->,240,000.00 USD"><!-- parts:start -->.2M</data><span class="fh-metric__delta" data-trend="up" aria-label="Up <!-- parts:start -->,250.00"><!-- parts:start -->,250.00</span></span>
-  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-mode="edit" data-fh="VAL-4.5"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="1,240,000.00" aria-label="Amount, US dollars" inputmode="decimal"><span class="fh-metric__delta" data-trend="up" aria-label="Up <!-- parts:start -->,250.00"><!-- parts:start -->,250.00</span></span>
-  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono fh-value--lg" data-fh="VAL-4.5"><data value="1240000" title="<!-- parts:start -->,240,000.00 USD"><!-- parts:start -->.2M</data><span class="fh-metric__delta" data-trend="up" aria-label="Up <!-- parts:start -->,250.00"><!-- parts:start -->,250.00</span></span>
+  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-mode="edit" data-fh="VAL-4.5"><span class="fh-value__sub">$</span><input class="fh-value__input" type="text" value="1,240,000.00" aria-label="Amount, US dollars" inputmode="decimal"><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
+  <span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono fh-value--lg" data-fh="VAL-4.5"><data value="1240000" title="$1,240,000.00 USD">$1.2M</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $1,250.00">$1,250.00</span></span>
 </div>
 ```
 
@@ -626,6 +674,46 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
   <div class="fh-value fh-value--number-input fh-value--field" data-mode="read" data-fh="VAL-6.6"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="12" aria-label="Duration, minutes" readonly><span>min</span></div></div>
   <div class="fh-value fh-value--number-input fh-value--field" data-mode="edit" data-fh="VAL-6.6"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="12" aria-label="Duration, minutes"><span>min</span></div></div>
   <div class="fh-value fh-value--number-input fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-6.6"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="12" aria-label="Duration, minutes"><span>min</span></div></div>
+</div>
+```
+
+`VAL-7.8` Duration · `number` `duration`
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--duration fh-value--tabular" data-fh="VAL-7.8"><time datetime="PT1H25M">1h 25m</time></span>
+  <span class="fh-value fh-value--duration fh-value--tabular" data-mode="edit" data-fh="VAL-7.8"><input class="fh-value__input" type="number" value="1" aria-label="Hours" min="0"><span class="fh-value__sub">h</span><input class="fh-value__input" type="number" value="25" aria-label="Minutes" min="0" max="59"><span class="fh-value__sub">m</span></span>
+  <span class="fh-value fh-value--duration fh-value--tabular fh-value--lg" data-fh="VAL-7.8"><time datetime="PT1H25M">1h 25m</time></span>
+</div>
+```
+
+`VAL-7.11` Duration input · `number` `duration-input` · editable · built from FLD
+
+```html
+<div class="fh-stack">
+  <div class="fh-value fh-value--duration-input fh-value--field" data-mode="read" data-fh="VAL-7.11"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours" readonly><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes" readonly><span>m</span></div></div>
+  <div class="fh-value fh-value--duration-input fh-value--field" data-mode="edit" data-fh="VAL-7.11"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours"><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes"><span>m</span></div></div>
+  <div class="fh-value fh-value--duration-input fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-7.11"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours"><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes"><span>m</span></div></div>
+</div>
+```
+
+`VAL-6.5` Sparkline · `series` `sparkline` · built from MET
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="teal" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg><b>42</b></span>
+  <span class="fh-value fh-value--sparkline fh-value--tabular" data-mode="edit" data-tone="teal" title="A series is computed: it stays read-only while editing" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg><b>42</b></span>
+  <span class="fh-value fh-value--sparkline fh-value--tabular fh-value--lg" data-tone="teal" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg><b>42</b></span>
+</div>
+```
+
+`VAL-6.5` Sparkline and last value · `series` `sparkline-last` · built from MET
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="teal" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg><b>42</b></span>
+  <span class="fh-value fh-value--sparkline fh-value--tabular" data-mode="edit" data-tone="teal" title="A series is computed: it stays read-only while editing" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg><b>42</b></span>
+  <span class="fh-value fh-value--sparkline fh-value--tabular fh-value--lg" data-tone="teal" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 25.3 L21.8 27.7 L32.7 20.7 L43.6 23.0 L54.5 16.0 L65.5 18.3 L76.4 11.3 L87.3 12.5 L98.2 6.7 L109.1 9.0 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg><b>42</b></span>
 </div>
 ```
 
@@ -993,6 +1081,16 @@ Owners see the breach in their next relay readout.</textarea></div>
   <div class="fh-value fh-value--input fh-value--field" data-mode="read" data-fh="VAL-11.6"><input class="fh-input" type="text" value="Harbor index refresh" aria-label="Title" readonly></div>
   <div class="fh-value fh-value--input fh-value--field" data-mode="edit" data-fh="VAL-11.6"><input class="fh-input" type="text" value="Harbor index refresh" aria-label="Title"></div>
   <div class="fh-value fh-value--input fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-11.6"><input class="fh-input" type="text" value="Harbor index refresh" aria-label="Title"></div>
+</div>
+```
+
+`VAL-9.5` Action · `text` `action` · built from ACT
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--action" data-fh="VAL-9.5"><a class="fh-action" href="#c-values-link">Open invoice</a></span>
+  <span class="fh-value fh-value--action" data-mode="edit" title="An action is computed: it stays as it is while editing" data-fh="VAL-9.5"><a class="fh-action" href="#c-values-link">Open invoice</a></span>
+  <span class="fh-value fh-value--action fh-value--lg" data-fh="VAL-9.5"><a class="fh-action fh-action--lg" href="#c-values-link">Open invoice</a></span>
 </div>
 ```
 

@@ -1,10 +1,11 @@
-// Data display contract (W1): resolveValue() and schema/display-rules.json.
+// Data display contract (W1, W2b): resolveValue(), textOf(), schema/display-rules.json and the published option sets.
 //   node test/values.test.mjs
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolveValue, describeField, optionSetFor, toneOf, defaultTone, isEmpty, SHAPES, CONTEXTS, EMPTY, rules } from "../src/js/values.js";
+import Ajv from "ajv/dist/2020.js";
+import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets } from "../src/js/values.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const types = JSON.parse(readFileSync(join(root, "schema/semantic-types.json"), "utf8")).types;
@@ -12,9 +13,10 @@ const ledger = JSON.parse(readFileSync(join(root, "index-ledger.json"), "utf8"))
 let n = 0;
 const t = (name, fn) => { fn(); n++; };
 
-t("thirteen shapes, five contexts", () => {
-  assert.deepEqual([...SHAPES], ["text", "prose", "number", "money", "ratio", "temporal", "option", "options", "entity", "file", "link", "flag", "code"]);
-  assert.deepEqual([...CONTEXTS], ["cell", "record", "card", "metric", "form"]);
+t("fourteen shapes (series is the 14th), six contexts (text is the sixth)", () => {
+  assert.deepEqual([...SHAPES], ["text", "prose", "number", "money", "ratio", "temporal", "option", "options", "entity", "file", "link", "flag", "code", "series"]);
+  assert.deepEqual([...CONTEXTS], ["cell", "record", "card", "metric", "form", "text"]);
+  assert.deepEqual([...DRAWN_CONTEXTS], ["cell", "record", "card", "metric", "form"]);
 });
 
 t("every one of the 127 semantic types has a shape and resolves in every context", () => {
@@ -29,17 +31,23 @@ t("every one of the 127 semantic types has a shape and resolves in every context
       assert.deepEqual(r.warnings, [], `${type.key} in ${c}: ${r.warnings}`);
     }
   }
-  assert.equal(used.size, 13, "all thirteen shapes are used");
+  assert.equal(used.size, 14, "all fourteen shapes are used");
 });
 
 t("the grid only names variants its shape has, and every part is a Firehorse family", () => {
   for (const row of rules.grid) {
     assert.ok(SHAPES.includes(row.shape), row.row);
-    for (const c of CONTEXTS) if (row[c] != null) assert.ok(rules.variants[row.shape].variants[row[c]], `${row.row}.${c} = ${row[c]}`);
+    for (const c of DRAWN_CONTEXTS) if (row[c] != null) assert.ok(rules.variants[row.shape].variants[row[c]], `${row.row}.${c} = ${row[c]}`);
+    assert.ok(Object.hasOwn(row, "text"), `${row.row} names its text form (null for none)`);
+    if (row.text != null) assert.ok(rules.textFormats[row.text], `${row.row}.text = ${row.text}`);
   }
   for (const [shape, fam] of Object.entries(rules.variants)) {
     assert.match(fam.group, /^VAL-\d+$/, shape);
-    for (const [v, meta] of Object.entries(fam.variants)) for (const p of meta.parts) assert.ok(ledger[p], `${shape}.${v} built from unknown ${p}`);
+    for (const [v, meta] of Object.entries(fam.variants)) {
+      for (const p of meta.parts) assert.ok(ledger[p], `${shape}.${v} built from unknown ${p}`);
+      // A shared variant is the same part as its home shape's variant of that ID.
+      if (meta.of) assert.ok(Object.values(rules.variants[meta.of].variants).some((x) => x.id === meta.id && !x.of), `${shape}.${v} (${meta.id}) is not a ${meta.of} part`);
+    }
   }
   for (const s of SHAPES) assert.ok(rules.grid.some((r) => r.shape === s && !r.match), `${s} has a default row`);
 });
@@ -47,7 +55,7 @@ t("the grid only names variants its shape has, and every part is a Firehorse fam
 t("the datatable's 22 types are aliases that resolve", () => {
   const dt = ["text", "long", "number", "currency", "percent", "progress", "select", "status", "multi", "tags", "date", "check", "rating", "user", "users", "url", "email", "phone", "link", "attachment", "formula", "sparkline"];
   assert.deepEqual(Object.keys(rules.aliases).sort(), [...dt].sort());
-  const want = { text: "text", long: "prose", number: "number", currency: "money", percent: "ratio", progress: "ratio", select: "option", status: "option", multi: "options", tags: "options", date: "temporal", check: "flag", rating: "ratio", user: "entity", users: "entity", url: "link", email: "link", phone: "link", link: "entity", attachment: "file", formula: "number", sparkline: "number" };
+  const want = { text: "text", long: "prose", number: "number", currency: "money", percent: "ratio", progress: "ratio", select: "option", status: "option", multi: "options", tags: "options", date: "temporal", check: "flag", rating: "ratio", user: "entity", users: "entity", url: "link", email: "link", phone: "link", link: "entity", attachment: "file", formula: "text", sparkline: "series" };
   for (const type of dt) {
     const d = describeField({ type });
     assert.equal(d.shape, want[type], type);
@@ -84,17 +92,19 @@ t("editing outside a form keeps the read part and adds its control (rule 6)", ()
 t("option form control follows the number of options", () => {
   assert.equal(resolveValue({ semanticType: "pronouns" }, "form").variant, "segmented", "3 options");
   assert.equal(resolveValue({ semanticType: "honorific" }, "form").variant, "segmented", "4 options");
-  assert.equal(resolveValue({ semanticType: "language_code" }, "form").variant, "select", "6 options");
-  assert.equal(resolveValue({ semanticType: "country_code" }, "form").variant, "select-search", "8 options");
+  assert.equal(resolveValue({ semanticType: "barcode_format" }, "form").variant, "select", "5 options");
+  assert.equal(resolveValue({ semanticType: "language_code" }, "form").variant, "select-search", "a generated code set always searches");
+  assert.equal(resolveValue({ semanticType: "country_code" }, "form").row, "option.code");
   assert.equal(resolveValue({ type: "select" }, "form").variant, "select", "no options known");
   assert.equal(resolveValue({ semanticType: "honorific" }, "metric").variant, null, "a choice is not a metric");
 });
 
 t("option sets: tones fall back to the default tone map; a registry key wins over the type's options", () => {
   const set = optionSetFor({ semanticType: "status" });
-  assert.equal(set.key, "semantic.status");
+  assert.equal(set.key, "workflow_status", "the published set (devops.option_sets) wins over the type's own options");
   assert.equal(set.kind, "status");
-  assert.deepEqual(set.options.map((o) => [o.value, o.tone]), [["draft", "amber"], ["active", "lime"], ["paused", "amber"], ["archived", "neutral"]]);
+  assert.deepEqual(set.options.map((o) => [o.value, o.state, o.tone]), [["draft", "waiting", "amber"], ["active", "moving", "sky"], ["paused", "waiting", "amber"], ["archived", "ended", "neutral"]]);
+  assert.equal(set.options[1].label, "Active");
   const reg = { "relay.status": { kind: "status", options: [{ value: "open", tone: "violet" }, "merged"] } };
   const r = resolveValue({ semanticType: "status", optionSet: "relay.status" }, "record", undefined, { optionSets: reg });
   assert.equal(r.optionSet.key, "relay.status");
@@ -139,18 +149,19 @@ t("numbers and money align right with tabular figures; money knows its currency"
   assert.equal(m.mono, true);
   assert.equal(m.currency, "USD");
   assert.deepEqual(m.warnings, []);
-  assert.match(resolveValue({ semanticType: "fiat_amount" }, "cell").warnings[0], /currency/);
+  assert.equal(resolveValue({ semanticType: "fiat_amount" }, "cell").currencyFrom, "fiat_currency_code", "the type names the sibling that holds its currency");
+  assert.match(resolveValue({ shape: "money" }, "cell").warnings[0], /currency/, "money with no currency and no source warns");
   assert.equal(resolveValue({ semanticType: "fiat_amount", currency: "USD" }, "metric").variant, "compact-delta");
-  const q = resolveValue({ semanticType: "duration_minutes" }, "record");
+  const q = resolveValue({ semanticType: "bitrate_kbps" }, "record");
   assert.equal(q.variant, "unit");
-  assert.equal(q.unit, "min");
+  assert.equal(q.unit, "kbps");
   assert.equal(q.align, "end");
   assert.equal(resolveValue({ semanticType: "quantity" }, "card").figures, null);
 });
 
 t("ratio: bar, text, ring; a target makes the metric a meter", () => {
   const f = { semanticType: "percentage" };
-  assert.deepEqual(CONTEXTS.map((c) => resolveValue(f, c).variant), ["bar", "text", "ring", "ring", "range"]);
+  assert.deepEqual(DRAWN_CONTEXTS.map((c) => resolveValue(f, c).variant), ["bar", "text", "ring", "ring", "range"]);
   assert.equal(resolveValue({ ...f, target: 80 }, "metric").variant, "meter");
 });
 
@@ -204,15 +215,133 @@ t("every variant is a Values part: its ID is in the Index, with the same name, i
   const index = JSON.parse(readFileSync(new URL("../dist/full/index.json", import.meta.url), "utf8"));
   const val = index.families.find((f) => f.id === "VAL");
   assert.ok(val, "VAL is in dist/full/index.json (run the build)");
-  const ids = Object.values(rules.variants).flatMap((f) => Object.values(f.variants).map((v) => v.id));
+  // Shared variants (`of`) are the same part as their home shape's, so they are left out of the count.
+  const ids = Object.values(rules.variants).flatMap((f) => Object.values(f.variants).filter((v) => !v.of).map((v) => v.id));
   assert.equal(new Set(ids).size, ids.length, "variant IDs are unique");
   assert.deepEqual(val.variants.map((v) => v.id), ids, "the Index has one part per variant, in display-rules.json order");
-  for (const f of Object.values(rules.variants)) for (const v of Object.values(f.variants)) {
+  for (const f of Object.values(rules.variants)) for (const v of Object.values(f.variants).filter((x) => !x.of)) {
     assert.ok(v.id.startsWith(f.group + "."), `${v.id} is in ${f.group}`);
     assert.equal(val.variants.find((x) => x.id === v.id).name, v.label, `${v.id} is named ${v.label}`);
   }
   assert.equal(resolveValue({ semanticType: "status" }, "cell").id, "VAL-1.1");
   assert.equal(resolveValue({ semanticType: "status" }, "record").id, "VAL-1.2");
+});
+
+t("published option sets: valid against the schema, every option type has one, states carry their tones (decision 7)", () => {
+  const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
+  const one = JSON.parse(readFileSync(join(root, "schema/option-set.schema.json"), "utf8"));
+  ajv.addSchema(one, "option-set.schema.json");
+  const check = (schema, data, what) => {
+    const ok = ajv.validate(schema, data);
+    assert.ok(ok, `${what}: ${ajv.errorsText()}`);
+  };
+  const published = JSON.parse(readFileSync(join(root, "schema/option-sets.json"), "utf8"));
+  check(JSON.parse(readFileSync(join(root, "schema/option-sets.schema.json"), "utf8")), published, "schema/option-sets.json");
+  check(JSON.parse(readFileSync(join(root, "schema/semantic-types.schema.json"), "utf8")), JSON.parse(readFileSync(join(root, "schema/semantic-types.json"), "utf8")), "schema/semantic-types.json");
+  assert.equal(published.sets.length, 23);
+  for (const type of types) if (["option", "options"].includes(type.display.shape)) assert.ok(optionSets[type.display.optionSet], `${type.key} has a published set`);
+  for (const set of published.sets) for (const o of set.options) {
+    if (set.kind === "status") assert.equal(o.tone, STATES[o.state], `${set.key}.${o.value}`);
+    if (set.kind === "choice") assert.ok(o.tone && !["lime", "amber", "rose"].includes(o.tone) || set.ordinal, `${set.key}.${o.value} is toned with a hue no state uses`);
+    if (set.kind === "code") assert.ok(!o.tone && set.generator, `${set.key} is a generated, untoned code set`);
+  }
+  assert.equal(resolveValue({ key: "size", optionSet: { kind: "choice", ordinal: true, options: ["s", "m", "l"] } }, "cell").row, "option.ordinal.few", "a field that brings a set is an option, never text (rule 2)");
+  assert.equal(resolveValue({ key: "region", options: ["a", "b", "c", "d", "e", "f", "g", "h"] }, "form").variant, "select-search");
+  // A status option's tone is its state's even when only the state is given.
+  assert.equal(optionSetFor({ optionSet: { kind: "status", options: [{ value: "x", state: "failed" }] } }).options[0].tone, "rose");
+});
+
+t("priority is ordinal: a ramp in order, sorted by order, never status tones (decision 6)", () => {
+  const cell = resolveValue({ semanticType: "priority" }, "cell");
+  assert.equal(cell.row, "option.ordinal.few");
+  assert.equal(cell.variant, "dot");
+  assert.equal(cell.ramp, true);
+  assert.equal(cell.sort, "order");
+  assert.deepEqual(cell.optionSet.options.map((o) => [o.value, o.ramp, o.tone]), [["low", 1, "orange"], ["medium", 2, "orange"], ["high", 3, "orange"], ["urgent", 4, "orange"]]);
+  assert.equal(rampOf(cell.optionSet, "high"), 3);
+  assert.deepEqual(DRAWN_CONTEXTS.map((c) => resolveValue({ semanticType: "priority" }, c).variant), ["dot", "chip", "dot", "chip", "segmented"]);
+  const life = resolveValue({ semanticType: "lifecycle_stage" }, "cell");
+  assert.equal(life.row, "option.status", "an ordered status set keeps state tones");
+  assert.equal(life.ramp, false);
+  assert.equal(life.sort, "order");
+  assert.equal(toneOf(life.optionSet, "building"), "sky");
+  const css = readFileSync(join(root, "src/utilities/tone.css"), "utf8");
+  for (let i = 1; i <= rules.ramp.steps; i++) assert.ok(css.includes(`[data-ramp="${i}"]`), `tone.css has ramp step ${i}`);
+});
+
+t("the nine types of decision 4 resolve where the Sheet puts them", () => {
+  const sem = (k) => describeField({ semanticType: k });
+  assert.deepEqual([sem("chain_id").shape, sem("chain_id").kind], ["number", "id"]);
+  assert.equal(resolveValue({ semanticType: "chain_id" }, "cell").grouping, false, "chain_id has no thousands separators");
+  assert.equal(resolveValue({ semanticType: "quantity" }, "cell").grouping, true);
+  for (const k of ["slug", "computed_slug"]) assert.deepEqual([sem(k).shape, sem(k).kind], ["code", "id"], k);
+  assert.deepEqual([sem("domain_name").shape, sem("domain_name").kind], ["link", "url"]);
+  assert.equal(resolveValue({ semanticType: "domain_name" }, "cell").variant, "link");
+  const dur = resolveValue({ semanticType: "duration_iso8601" }, "cell");
+  assert.deepEqual([dur.shape, dur.row, dur.variant, dur.id, dur.group, dur.unit], ["number", "number.duration", "duration", "VAL-7.8", "VAL-7", "s"]);
+  assert.equal(resolveValue({ semanticType: "duration_minutes" }, "form").variant, "duration-input");
+  const gas = resolveValue({ semanticType: "gas_price" }, "record");
+  assert.deepEqual([gas.shape, gas.kind, gas.unit, gas.currencyFrom, gas.warnings.length], ["money", "crypto", "gwei", "network_name", 0]);
+  const btn = resolveValue({ semanticType: "computed_button" }, "cell");
+  assert.deepEqual([btn.shape, btn.row, btn.variant, btn.id, btn.group], ["text", "text.action", "action", "VAL-9.5", "VAL-9"]);
+  assert.deepEqual(btn.excluded, ["sort", "filter", "export"]);
+  assert.equal(resolveValue({ semanticType: "computed_formula" }, "cell").shape, "text", "a formula with no result shape is text");
+  const f = resolveValue({ semanticType: "computed_formula", resultShape: "money", currency: "USD" }, "cell");
+  assert.deepEqual([f.shape, f.variant, f.formula, f.readOnly], ["money", "amount", true, true]);
+  assert.match(resolveValue({ semanticType: "computed_formula", resultShape: "nope" }, "cell").warnings[0], /unknown result shape/);
+  const wave = DRAWN_CONTEXTS.map((c) => resolveValue({ semanticType: "waveform_data" }, c));
+  assert.deepEqual(wave.map((r) => r.variant), ["sparkline", "sparkline-last", "sparkline", "sparkline-last", "sparkline-last"], "a series is computed: the form shows its record variant");
+  assert.equal(wave[4].readOnly, true);
+  assert.deepEqual(wave.slice(0, 2).map((r) => [r.id, r.last]), [["VAL-6.5", false], ["VAL-6.5", true]]);
+});
+
+t("status in a table cell is dot and word; chip in record, card and board (decision 5)", () => {
+  for (const k of ["status", "key_status", "transaction_status", "barcode_scan_status", "lifecycle_stage"]) {
+    assert.equal(resolveValue({ semanticType: k }, "cell").variant, "dot", k);
+    assert.equal(resolveValue({ semanticType: k }, "card").variant, "chip", k);
+  }
+  assert.match(rules.rules[0], /dot and word in a table cell/);
+});
+
+t("the text context: one plain string per value, none for a secret (decision 8)", () => {
+  for (const type of types) {
+    const r = resolveValue({ semanticType: type.key, currency: "USD" }, "text");
+    assert.equal(r.id, null, type.key);
+    if (type.display.kind === "secret") assert.equal(r.variant, null, `${type.key} has no text form`);
+    else assert.ok(rules.textFormats[r.variant], `${type.key} text = ${r.variant}`);
+  }
+  assert.equal(resolveValue({ semanticType: "status" }, "text", "edit").mode, "read", "text is never edited");
+  const cases = [
+    [{ semanticType: "status" }, "active", "Active"],
+    [{ semanticType: "tags" }, ["demo", "internal"], "demo, internal"],
+    [{ semanticType: "priority" }, "urgent", "Urgent"],
+    [{ semanticType: "fiat_amount", currency: "USD" }, 1250, "1,250.00 USD"],
+    [{ semanticType: "fiat_amount" }, { amount: 12.5, currency: "EUR" }, "12.50 EUR"],
+    [{ semanticType: "crypto_amount" }, { amount: 0.12345678, currency: "ETH" }, "0.12345678 ETH"],
+    [{ semanticType: "gas_price" }, 31.5, "31.50 gwei"],
+    [{ semanticType: "percentage" }, 42.5, "42.5%"],
+    [{ semanticType: "duration_minutes" }, 514, "PT8H34M"],
+    [{ semanticType: "duration_seconds" }, 90, "PT1M30S"],
+    [{ semanticType: "duration_iso8601" }, 30840, "PT8H34M"],
+    [{ semanticType: "duration_iso8601" }, "PT2H", "PT2H"],
+    [{ semanticType: "chain_id" }, 11155111, "11155111"],
+    [{ semanticType: "bitrate_kbps" }, 320, "320 kbps"],
+    [{ semanticType: "date" }, "2026-11-27", "2026-11-27"],
+    [{ semanticType: "time" }, "09:27:00", "09:27"],
+    [{ semanticType: "updated_at" }, new Date("2026-11-14T22:01:00Z"), "2026-11-14T22:01:00Z"],
+    [{ semanticType: "checkbox" }, false, "No"],
+    [{ semanticType: "owner_reference", multiple: true }, [{ id: 1, label: "Maya Chen" }, { id: 2, label: "Sam Hale" }], "Maya Chen, Sam Hale"],
+    [{ semanticType: "document_file", multiple: true }, [{ name: "Brief.pdf" }, { name: "Plan.docx" }], "Brief.pdf, Plan.docx"],
+    [{ semanticType: "markdown" }, "**Ship** it, see [notes](https://example.com)", "Ship it, see notes"],
+    [{ semanticType: "json_object" }, { a: 1 }, '{"a":1}'],
+    [{ semanticType: "waveform_data" }, [3, 5, 8], "8"],
+    [{ semanticType: "computed_button" }, "Open", "Open"],
+    [{ semanticType: "title" }, null, ""],
+  ];
+  for (const [field, value, want] of cases) assert.equal(textOf(field, value), want, `${field.semanticType} ${JSON.stringify(value)}`);
+  assert.equal(textOf({ semanticType: "api_key_secret_ref" }, "vault:abc"), null, "a secret has no text, export included");
+  assert.equal(isoDuration(0), "PT0S");
+  assert.equal(isoDuration(90061), "P1DT1H1M1S");
 });
 
 console.log(`values: ${n} checks passed`);
