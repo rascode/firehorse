@@ -425,8 +425,8 @@ t("renderValue(): the empty dash, a viewer's pick only when allowed, escaping, a
 });
 
 t("a rich record (application, organization, brand) draws its avatar beside its reference (VAL-3.12, decision 10)", () => {
-  const shape = { application: "record", organization: "org", brand: "org", model: "agent" };
-  for (const entity of ["application", "organization", "brand", "model"]) {
+  const shape = { application: "record", organization: "org", brand: "org", model: "agent", agent: "agent" };
+  for (const entity of ["application", "organization", "brand", "model", "agent"]) {
     const f = { key: "r", label: "Record", semanticType: "entity_reference", entity };
     assert.equal(resolveValue(f, "cell").variant, "avatar-ref", entity);
     const html = renderValue(f, { label: "Helm", initials: "HM", sidecar: "app-helm", href: "/apps/helm" }, "cell");

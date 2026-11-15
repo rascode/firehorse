@@ -38,7 +38,7 @@ export function entityOf(e) {
 const initialsOf = (n = "") => n.split(/\s+/).filter((w) => /\p{L}/u.test(w)).map((p) => p.match(/\p{L}/u)[0]).slice(0, 2).join("").toUpperCase();
 // The avatar's shape comes from what it stands for (DR2): data-kind, from the entity's kind. A rich record's kind
 // (an application, an organization, a brand, a model) maps onto the avatar system's rounded kinds.
-const RICH_KIND = { application: "record", organization: "org", brand: "org", model: "agent", user: "person", owner: "person" };
+const RICH_KIND = { application: "record", organization: "org", brand: "org", model: "agent", agent: "agent", user: "person", owner: "person" };
 const kindOf = (e, fallback = "person") => avatarOf(RICH_KIND[e?.kind] ?? e?.kind ?? fallback).kind ?? avatarOf(fallback).kind;
 function avatar(e, { kind = "person", alt = "", more = false } = {}) {
   const k = more ? kind : kindOf(e, kind);
