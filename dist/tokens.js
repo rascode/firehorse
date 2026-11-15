@@ -845,6 +845,42 @@ export const tokens = {
     "tier": "primitives",
     "group": "frost"
   },
+  "--fh-frost-panel-f": {
+    "$value": "clamp(0, var(--fh-frost, 0.45), 1)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "frost"
+  },
+  "--fh-frost-panel-fill": {
+    "$value": "color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "frost"
+  },
+  "--fh-frost-panel-filter": {
+    "$value": "blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * 0.35))",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "frost"
+  },
+  "--fh-tile-cube-size": {
+    "$value": "1.5rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "tile"
+  },
+  "--fh-tile-cube-radius": {
+    "$value": "var(--fh-radius-sm)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "tile"
+  },
+  "--fh-tile-cube-icon": {
+    "$value": "0.95rem",
+    "$type": "asset",
+    "tier": "primitives",
+    "group": "tile"
+  },
   "--fh-float-gap": {
     "$value": "0.75rem",
     "$type": "dimension",

@@ -437,7 +437,7 @@ The grid itself. `data-cols="16"` for the finer one; a child `.fh-cols[data-subg
 
 ### MST · Masthead
 
-The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. Shown over a picture so the frost reads.
+The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. --app is the app bar on the sidebar's frost panel: a lead with the sidebar cube, summary chips with cards, and tools. Three layouts of it share that panel and content: centred (as is), --app-inline (a one-line readout after the lead, etched rules between items) and --app-tiles (each item a sidebar row tile with its cube, the tools past an etched rule). Shown over a picture so the frost reads.
 
 ```html
 <!-- MST-1.1 · Header › Bar -->
@@ -478,6 +478,206 @@ The head of a page or app. The header is a glass panel with a large caption: num
   <p class="fh-masthead__headline"><span class="fh-masthead__top">The design system</span> <span class="fh-masthead__turn">that <em><span class="fh-rotator fh-rotator--walk"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span>.</em></span></p>
   <div class="fh-masthead__below"><p class="fh-lede">Built for modern workflows</p></div>
 </header>
+
+<!-- MST-3.1 · App bar › Lead -->
+<header class="fh-masthead fh-masthead--app" data-fh="MST-3.1">
+  <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span><span class="fh-masthead__crumb">› Morning plan</span></div>
+  <div class="fh-masthead__summary" aria-hidden="true"></div>
+  <div class="fh-masthead__tools" aria-hidden="true"></div>
+</header>
+
+<!-- MST-3.2 · App bar › Summary -->
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-cluster" style="align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; min-block-size: 0; grid-template-rows: auto; margin: 0">
+      <div class="fh-sidebar__head">
+        <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
+        <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
+      </div>
+    </nav>
+    <header class="fh-masthead fh-masthead--app" style="flex: 1; min-inline-size: 16rem" data-fh="MST-3.2">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" popovertarget="mst-32-dt" aria-label="Saturday 14 November, 11:15 PM Eastern." style="anchor-name: --mst-32-dt"><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" popovertarget="mst-32-cy" aria-label="Cycle 5, Year 4, Chapter 3." style="anchor-name: --mst-32-cy"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" popovertarget="mst-32-prf" aria-label="Justin Rascoe" style="anchor-name: --mst-32-prf"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header>
+  </div>
+  <div id="mst-32-dt" popover class="fh-menu" aria-label="Today" style="position-anchor: --mst-32-dt" data-fh="MST-3.2"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div><div><dt>Days left in 2026</dt><dd>47</dd></div></dl></div>
+  <div id="mst-32-cy" popover class="fh-menu" aria-label="Cycle" style="position-anchor: --mst-32-cy" data-fh="MST-3.2"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div><div><dt>Age number</dt><dd>4</dd></div><div><dt>Chapter 3</dt><dd>Saturn</dd></div><div><dt>Days left</dt><dd>112</dd></div></dl><div class="fh-menu__foot"><a class="fh-link" href="#l-masthead">Open year</a><a class="fh-link" href="#l-masthead">Open cycle</a></div></div>
+  <div id="mst-32-prf" popover class="fh-menu fh-profile-menu" role="menu" aria-label="Account" style="position-anchor: --mst-32-prf" data-fh="MST-3.2"><div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span></div></div>
+  <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
+    <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-3.2"></div>
+    <header class="fh-masthead fh-masthead--app" style="position: relative; z-index: 1" data-fh="MST-3.2">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" popovertarget="mst-32b-dt" aria-label="Saturday 14 November, 11:15 PM Eastern." style="anchor-name: --mst-32b-dt"><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" popovertarget="mst-32b-cy" aria-label="Cycle 5, Year 4, Chapter 3." style="anchor-name: --mst-32b-cy"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" popovertarget="mst-32b-prf" aria-label="Justin Rascoe" style="anchor-name: --mst-32b-prf"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header>
+  </div>
+  <div id="mst-32b-dt" popover class="fh-menu" aria-label="Today" style="position-anchor: --mst-32b-dt" data-fh="MST-3.2"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div><div><dt>Days left in 2026</dt><dd>47</dd></div></dl></div>
+  <div id="mst-32b-cy" popover class="fh-menu" aria-label="Cycle" style="position-anchor: --mst-32b-cy" data-fh="MST-3.2"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div><div><dt>Age number</dt><dd>4</dd></div><div><dt>Chapter 3</dt><dd>Saturn</dd></div><div><dt>Days left</dt><dd>112</dd></div></dl><div class="fh-menu__foot"><a class="fh-link" href="#l-masthead">Open year</a><a class="fh-link" href="#l-masthead">Open cycle</a></div></div>
+  <div id="mst-32b-prf" popover class="fh-menu fh-profile-menu" role="menu" aria-label="Account" style="position-anchor: --mst-32b-prf" data-fh="MST-3.2"><div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span></div></div>
+</div>
+
+<!-- MST-3.3 · App bar › Tools -->
+<div class="fh-stack fh-stack--md">
+  <p class="fh-small fh-muted">Container width steps (64rem, 50rem, 36rem, 24rem).</p>
+  <div style="inline-size: 64rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app" data-fh="MST-3.3"><div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div><div class="fh-masthead__summary"><button class="fh-summary-chip" type="button" aria-label="Now"><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button><button class="fh-summary-chip" type="button" aria-label="Cycle"><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button></div><div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div></header></div>
+  <div style="inline-size: 50rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app" data-fh="MST-3.3"><div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div><div class="fh-masthead__summary"><button class="fh-summary-chip" type="button" aria-label="Now"><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button><button class="fh-summary-chip" type="button" aria-label="Cycle"><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span></button></div><div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div></header></div>
+  <div style="inline-size: 36rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app" data-fh="MST-3.3"><div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div><div class="fh-masthead__summary"><button class="fh-summary-chip" type="button" aria-label="Now"><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button><button class="fh-summary-chip" type="button" aria-label="Cycle"><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span></button></div><div class="fh-masthead__tools"><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div></header></div>
+  <div style="inline-size: 24rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app" data-fh="MST-3.3"><div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div><div class="fh-masthead__summary"></div><div class="fh-masthead__tools"><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div></header></div>
+</div>
+
+<!-- MST-3.4 · App bar › Summary chip -->
+<div class="fh-cluster" style="flex-wrap: wrap; justify-content: center; gap: var(--fh-gap-sectioned); align-items: start">
+  <div class="fh-stack fh-stack--sm" style="align-items: center">
+    <button class="fh-summary-chip" type="button" popovertarget="mst-34-closed" aria-label="Saturday 14 November, 11:15 PM Eastern" style="anchor-name: --mst-34-closed" data-fh="MST-3.4"><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span></button>
+    <div id="mst-34-closed" popover class="fh-menu" aria-label="Now" style="position-anchor: --mst-34-closed" data-fh="MST-3.4"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div></dl></div>
+  </div>
+  <div class="fh-stack fh-stack--sm" style="align-items: center">
+    <button class="fh-summary-chip" type="button" aria-label="Cycle 5, Year 4" data-fh="MST-3.4"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span></button>
+  </div>
+  <div class="fh-stack fh-stack--sm" style="align-items: center">
+    <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5 with progress" data-fh="MST-3.4"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+  </div>
+  <div class="fh-stack fh-stack--sm" style="align-items: center">
+    <button class="fh-summary-chip" type="button" data-tone="lime" aria-label="Synced sample with open card" data-fh="MST-3.4"><span class="fh-summary-chip__label">Sync</span><span class="fh-summary-chip__value"><span class="fh-num">All clear</span></span></button>
+    <div class="fh-menu" role="presentation" aria-label="Sample card open" style="opacity: 1; translate: 0 0" data-fh="MST-3.4"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div></dl></div>
+  </div>
+</div>
+
+<!-- MST-4.1 · App bar layouts › Centered -->
+<div class="fh-stack fh-stack--lg">
+  <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
+    <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.1"></div>
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
+      <div class="fh-sidebar__head">
+        <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
+        <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
+      </div>
+    </nav>
+    <header class="fh-masthead fh-masthead--app" style="flex: 1; min-inline-size: 16rem" data-fh="MST-4.1">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" popovertarget="mst-41-dt" style="anchor-name: --mst-41-dt" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" popovertarget="mst-41-cy" style="anchor-name: --mst-41-cy" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" popovertarget="mst-41-prf" style="anchor-name: --mst-41-prf" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header>
+    </div>
+  </div>
+  <div id="mst-41-dt" popover class="fh-menu" aria-label="Today" style="position-anchor: --mst-41-dt" data-fh="MST-4.1"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div><div><dt>Days left in 2026</dt><dd>47</dd></div></dl></div>
+  <div id="mst-41-cy" popover class="fh-menu" aria-label="Cycle" style="position-anchor: --mst-41-cy" data-fh="MST-4.1"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div><div><dt>Age number</dt><dd>4</dd></div><div><dt>Chapter 3</dt><dd>Saturn</dd></div><div><dt>Days left</dt><dd>112</dd></div></dl><div class="fh-menu__foot"><a class="fh-link" href="#l-masthead">Open year</a><a class="fh-link" href="#l-masthead">Open cycle</a></div></div>
+  <div id="mst-41-prf" popover class="fh-menu fh-profile-menu" role="menu" aria-label="Account" style="position-anchor: --mst-41-prf" data-fh="MST-4.1"><div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span></div></div>
+  <p class="fh-small fh-muted">Centered at 50rem and 24rem.</p>
+  <div style="inline-size: 50rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app" data-fh="MST-4.1">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header></div>
+  <div style="inline-size: 24rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app" data-fh="MST-4.1">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header></div>
+</div>
+
+<!-- MST-4.2 · App bar layouts › Inline readout -->
+<div class="fh-stack fh-stack--lg">
+  <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
+    <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.2"></div>
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
+      <div class="fh-sidebar__head">
+        <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
+        <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
+      </div>
+    </nav>
+    <header class="fh-masthead fh-masthead--app fh-masthead--app-inline" style="flex: 1; min-inline-size: 16rem" data-fh="MST-4.2">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" popovertarget="mst-42-dt" style="anchor-name: --mst-42-dt" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" popovertarget="mst-42-cy" style="anchor-name: --mst-42-cy" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" popovertarget="mst-42-prf" style="anchor-name: --mst-42-prf" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header>
+    </div>
+  </div>
+  <div id="mst-42-dt" popover class="fh-menu" aria-label="Today" style="position-anchor: --mst-42-dt" data-fh="MST-4.2"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div><div><dt>Days left in 2026</dt><dd>47</dd></div></dl></div>
+  <div id="mst-42-cy" popover class="fh-menu" aria-label="Cycle" style="position-anchor: --mst-42-cy" data-fh="MST-4.2"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div><div><dt>Age number</dt><dd>4</dd></div><div><dt>Chapter 3</dt><dd>Saturn</dd></div><div><dt>Days left</dt><dd>112</dd></div></dl><div class="fh-menu__foot"><a class="fh-link" href="#l-masthead">Open year</a><a class="fh-link" href="#l-masthead">Open cycle</a></div></div>
+  <div id="mst-42-prf" popover class="fh-menu fh-profile-menu" role="menu" aria-label="Account" style="position-anchor: --mst-42-prf" data-fh="MST-4.2"><div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span></div></div>
+  <p class="fh-small fh-muted">Inline readout at 50rem and 24rem.</p>
+  <div style="inline-size: 50rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app fh-masthead--app-inline" data-fh="MST-4.2">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header></div>
+  <div style="inline-size: 24rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app fh-masthead--app-inline" data-fh="MST-4.2">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header></div>
+</div>
+
+<!-- MST-4.3 · App bar layouts › Tiles -->
+<div class="fh-stack fh-stack--lg">
+  <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
+    <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.3"></div>
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
+      <div class="fh-sidebar__head">
+        <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
+        <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
+      </div>
+    </nav>
+    <header class="fh-masthead fh-masthead--app fh-masthead--app-tiles" style="flex: 1; min-inline-size: 16rem" data-fh="MST-4.3">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" popovertarget="mst-43-dt" style="anchor-name: --mst-43-dt" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" popovertarget="mst-43-cy" style="anchor-name: --mst-43-cy" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" popovertarget="mst-43-prf" style="anchor-name: --mst-43-prf" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header>
+    </div>
+  </div>
+  <div id="mst-43-dt" popover class="fh-menu" aria-label="Today" style="position-anchor: --mst-43-dt" data-fh="MST-4.3"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div><div><dt>Days left in 2026</dt><dd>47</dd></div></dl></div>
+  <div id="mst-43-cy" popover class="fh-menu" aria-label="Cycle" style="position-anchor: --mst-43-cy" data-fh="MST-4.3"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div><div><dt>Age number</dt><dd>4</dd></div><div><dt>Chapter 3</dt><dd>Saturn</dd></div><div><dt>Days left</dt><dd>112</dd></div></dl><div class="fh-menu__foot"><a class="fh-link" href="#l-masthead">Open year</a><a class="fh-link" href="#l-masthead">Open cycle</a></div></div>
+  <div id="mst-43-prf" popover class="fh-menu fh-profile-menu" role="menu" aria-label="Account" style="position-anchor: --mst-43-prf" data-fh="MST-4.3"><div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span></div></div>
+  <p class="fh-small fh-muted">Tiles at 50rem and 24rem.</p>
+  <div style="inline-size: 50rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app fh-masthead--app-tiles" data-fh="MST-4.3">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header></div>
+  <div style="inline-size: 24rem; max-inline-size: 100%; margin-inline: auto"><header class="fh-masthead fh-masthead--app fh-masthead--app-tiles" data-fh="MST-4.3">
+      <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
+      <div class="fh-masthead__summary">
+        <button class="fh-summary-chip" type="button" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+        <button class="fh-summary-chip" type="button" data-tone="violet" aria-label="Cycle 5, Year 4, Chapter 3."><span class="fh-sidebar__cube" data-tone="violet" aria-hidden="true"><i class="fh-icon fh-icon--map"></i></span><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+      </div>
+      <div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" aria-label="Justin Rascoe"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button></div>
+    </header></div>
+</div>
 ```
 
 ### BKD · Backdrop

@@ -45,21 +45,30 @@
   .fh-cube--outline { border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone)); background-color: color-mix(in oklab, var(--_cube, var(--fh-tone)) 8%, transparent); color: var(--_cube, var(--fh-tone)); }
 
   /* —— Icon cube (CUB-1.5) ——
-   * A square tone block holding one icon: the sidebar's rows (SHL) and the metric tiles' heads (MET) draw the same
-   * part, so one change reaches both. Solid by default; fh-cube--soft is the tint with no frame (CUB-1.6),
+   * A square tone block holding one icon: the sidebar's rows (SHL), the App bar's lead and summary chips (MST) and the
+   * metric tiles' heads (MET) draw the same part, so one change reaches all of them. A bare .fh-sidebar__cube (the
+   * App bar's markup) is the same part. Solid by default; fh-cube--soft is the tint with no frame (CUB-1.6),
    * fh-cube--outline the etched dashed frame (CUB-1.4).
    *   <span class="fh-cube fh-cube--icon" data-tone="sky"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>
    * A parent sets the look for every icon cube inside it: data-fh-cube="soft" | "outline" (a modifier on the cube
    * still wins; fh-cube--solid brings one back to the fill).
-   * Knobs: --fh-cube-size (the square, default 1.5rem), --_cube (its colour, default the tone). */
-  .fh-cube--icon {
-    inline-size: var(--fh-cube-size, 1.5rem);
-    block-size: var(--fh-cube-size, 1.5rem);
+   * Knobs: --fh-cube-size (the square; default the primitive --fh-tile-cube-size, 1.5rem), --fh-tile-cube-radius,
+   * --fh-tile-cube-icon, --_cube (its colour; default the row's --_c, then the tone). */
+  :is(.fh-cube--icon, .fh-sidebar__cube) {
+    --_ic: var(--_cube, var(--_c, var(--fh-tone, var(--fh-color-accent))));
+    --_ic-size: var(--fh-cube-size, var(--fh-tile-cube-size, 1.5rem));
+
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--_ic-size);
+    block-size: var(--_ic-size);
     min-inline-size: 0;
     max-inline-size: none;
     padding: 0;
-    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    color: oklch(from var(--_ic) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+    background-color: var(--_ic);
     font-family: inherit;
     font-size: var(--fh-text-caption);
     font-weight: var(--fh-display-weight);
@@ -67,28 +76,28 @@
     line-height: 1;
 
     & > .fh-icon {
-      --fh-icon-size: calc(var(--fh-cube-size, 1.5rem) * 0.63);
+      --fh-icon-size: var(--fh-tile-cube-icon, calc(var(--_ic-size) * 0.63));
       font-size: var(--fh-text-caption);
     }
   }
 
-  :where([data-fh-cube="soft"]) .fh-cube--icon,
+  :where([data-fh-cube="soft"]) :is(.fh-cube--icon, .fh-sidebar__cube),
   .fh-cube--icon.fh-cube--soft {
-    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 16%, transparent);
-    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    background-color: color-mix(in oklab, var(--_ic) 16%, transparent);
+    color: var(--_ic);
   }
 
-  :where([data-fh-cube="outline"]) .fh-cube--icon,
+  :where([data-fh-cube="outline"]) :is(.fh-cube--icon, .fh-sidebar__cube),
   .fh-cube--icon.fh-cube--outline {
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone, var(--fh-color-accent)));
-    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 8%, transparent);
-    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_ic);
+    background-color: color-mix(in oklab, var(--_ic) 8%, transparent);
+    color: var(--_ic);
   }
 
   .fh-cube--icon.fh-cube--solid {
     border: 0;
-    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
-    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+    background-color: var(--_ic);
+    color: oklch(from var(--_ic) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
   }
 
   .fh-cubes {

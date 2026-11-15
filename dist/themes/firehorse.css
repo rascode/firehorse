@@ -111,6 +111,12 @@
     --fh-shadow-panel: 0 6px 24px #00000029;
     --fh-blur-chrome: 10px;
     --fh-frost: .6;
+    --fh-frost-panel-f: clamp(0, var(--fh-frost, .45), 1);
+    --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
+    --fh-frost-panel-filter: blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * .35));
+    --fh-tile-cube-size: 1.5rem;
+    --fh-tile-cube-radius: var(--fh-radius-sm);
+    --fh-tile-cube-icon: .95rem;
     --fh-float-gap: .75rem;
     --fh-duration-instant: 80ms;
     --fh-duration-fast: .15s;
