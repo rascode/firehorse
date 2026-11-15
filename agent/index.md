@@ -713,14 +713,14 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 <div class="fh-stack fh-stack--lg">
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.1"></div>
-    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: nowrap">
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
         <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
       </div>
     </nav>
-    <header class="fh-masthead fh-masthead--app" style="flex: 1; min-inline-size: 0" data-fh="MST-4.1">
+    <header class="fh-masthead fh-masthead--app" style="flex: 1; min-inline-size: 16rem" data-fh="MST-4.1">
       <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
       <div class="fh-masthead__summary">
         <button class="fh-summary-chip" type="button" popovertarget="mst-41-dt" style="anchor-name: --mst-41-dt" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
@@ -759,14 +759,14 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 <div class="fh-stack fh-stack--lg">
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.2"></div>
-    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: nowrap">
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
         <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
       </div>
     </nav>
-    <header class="fh-masthead fh-masthead--app fh-masthead--app-inline" style="flex: 1; min-inline-size: 0" data-fh="MST-4.2">
+    <header class="fh-masthead fh-masthead--app fh-masthead--app-inline" style="flex: 1; min-inline-size: 16rem" data-fh="MST-4.2">
       <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
       <div class="fh-masthead__summary">
         <button class="fh-summary-chip" type="button" popovertarget="mst-42-dt" style="anchor-name: --mst-42-dt" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
@@ -805,14 +805,14 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 <div class="fh-stack fh-stack--lg">
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.3"></div>
-    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: nowrap">
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
         <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>
       </div>
     </nav>
-    <header class="fh-masthead fh-masthead--app fh-masthead--app-tiles" style="flex: 1; min-inline-size: 0" data-fh="MST-4.3">
+    <header class="fh-masthead fh-masthead--app fh-masthead--app-tiles" style="flex: 1; min-inline-size: 16rem" data-fh="MST-4.3">
       <div class="fh-masthead__lead" data-tone="sky"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span></div>
       <div class="fh-masthead__summary">
         <button class="fh-summary-chip" type="button" popovertarget="mst-43-dt" style="anchor-name: --mst-43-dt" aria-label="Saturday 14 November, 11:15 PM Eastern."><span class="fh-sidebar__cube" data-tone="amber" aria-hidden="true"><i class="fh-icon fh-icon--calendar"></i></span><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
