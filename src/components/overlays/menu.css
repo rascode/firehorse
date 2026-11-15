@@ -18,6 +18,9 @@
    *     <button class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2"></i>Delete view</button>
    *   </div>
    * DRP-1.2 Inset: fh-menu--inset sets the rows in from the frame, each rounded.
+   * DRP-4.1 Rich menu: fh-menu--rich, the site header's short menus. Each item is a tinted tile, a title
+   *   and a quiet line; the tiles walk the root's colours, one step per row (--_w: var(--fh-walk-N)).
+   *   See DRP-4 below.
    * DRP-3.1 Context menu: the same menu, opened at the pointer (right-click, a long press on
    *   touch, Shift+F10 or the menu key) on any element that names it with data-fh-context.
    *   firehorse.js opens and places it, keeps it in the window, moves focus with the arrow keys
@@ -349,5 +352,106 @@
       transition-delay: 0s, calc(var(--_i, 0) * 22ms), calc(var(--_i, 0) * 22ms);
       @starting-style { opacity: 0; translate: 0 var(--_gap); }
     }
+  }
+}
+
+@layer fh.components {
+  /* —— DRP-4 Rich menu ————————————————————————————————————————————————————————
+   * The site header's short menus (Pro, Rascode) and every table's column display menu: an etched
+   * frame with large corners, each item a dashed icon tile, a title that rolls (TXL) and a quiet line
+   * under it. Each tile is tinted with one step of the root's walk (--fh-walk-0 … 8, utilities/harmony.css),
+   * set per item with --_w, so the menu re-tints with the root colour; the row's hover wash is 9% of it.
+   *   <div id="m4" popover class="fh-menu fh-menu--rich" role="menu" aria-label="Firehorse Pro">
+   *     <p class="fh-menu__label">Firehorse Pro</p>
+   *     <a class="fh-menu__item" role="menuitem" href="/pro/" style="--_w: var(--fh-walk-0)">
+   *       <span class="fh-menu__tile"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span>
+   *       <span class="fh-roll">Pro overview</span><small>What Pro adds on top of the free core</small></a>
+   *     <hr>
+   *   </div>
+   * A pick from a set (menuitemradio): the chosen row's tile turns solid and a check sits at the end;
+   * fh-menu__suffix is a quiet word after the title (Default). In place of the line, fh-menu__line can
+   * hold any small preview (the column display menu draws the column's own value there).
+   * fh-menu__item and fh-menu__tile also work outside a menu (the docs mega panel, a drawer).
+   * Knobs: --fh-menu-tile (the tile, 2rem), --fh-menu-min (17rem here). */
+  .fh-menu--rich {
+    --_frame: var(--fh-menu-frame, var(--fh-space-2));
+    min-inline-size: var(--fh-menu-min, 17rem);
+    border-radius: var(--fh-menu-radius, var(--fh-radius-lg));
+  }
+
+  .fh-menu__item,
+  .fh-menu__tile {
+    --_t: light-dark(oklch(from var(--_w, var(--fh-walk-0, var(--fh-color-accent))) min(l, 0.5) c h), oklch(from var(--_w, var(--fh-walk-0, var(--fh-color-accent))) max(l, 0.76) c h));
+  }
+
+  .fh-menu__item,
+  .fh-menu > .fh-menu__item {
+    --_tile: var(--fh-menu-tile, 2rem);
+    display: grid;
+    grid-template-columns: var(--_tile) minmax(0, 1fr);
+    column-gap: var(--fh-space-3);
+    row-gap: 0.05rem;
+    align-items: center;
+    inline-size: 100%;
+    padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) var(--fh-space-2);
+    border: 0;
+    border-radius: var(--fh-radius-md);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    font-size: var(--fh-menu-text, var(--fh-text-small));
+    text-align: start;
+    text-decoration: none;
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--_t) 9%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+
+  .fh-menu__tile {
+    display: grid;
+    place-items: center;
+    inline-size: var(--fh-menu-tile, 2rem);
+    block-size: var(--fh-menu-tile, 2rem);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_t) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--_t) 12%, transparent);
+    color: var(--_t);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    & > .fh-icon { --fh-icon-size: 1rem; }
+  }
+
+  .fh-menu__item:has(> :is(small, .fh-menu__line)) > .fh-menu__tile { grid-row: span 2; }
+
+  .fh-menu__item > :is(small, .fh-menu__line) {
+    grid-column: 2;
+    min-inline-size: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+    line-height: 1.35;
+  }
+
+  .fh-menu__line { display: flex; align-items: center; min-block-size: 1.5rem; overflow: hidden; color: var(--fh-color-text); }
+
+  .fh-menu__suffix {
+    margin-inline-start: var(--fh-gap-related);
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+  }
+
+  /* A pick from a set: the check at the end, the chosen tile solid. */
+  .fh-menu > .fh-menu__item[role="menuitemradio"] {
+    grid-template-columns: var(--_tile) minmax(0, 1fr) auto;
+
+    &::after { grid-column: 3; grid-row: 1 / span 2; margin-inline-start: 0; background-color: var(--_t); }
+    & > .fh-menu__tile { grid-row: 1 / span 2; }
+    &[aria-checked="true"] > .fh-menu__tile { border-style: solid; border-color: var(--_t); background-color: var(--_t); color: var(--fh-color-canvas); }
+  }
+
+  @media (forced-colors: active) {
+    .fh-menu__tile { border-color: ButtonText; }
+    .fh-menu > .fh-menu__item[role="menuitemradio"][aria-checked="true"] > .fh-menu__tile { background-color: Highlight; color: HighlightText; }
   }
 }

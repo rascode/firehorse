@@ -15,6 +15,8 @@
 import { rules, semanticTypes, optionSets } from "./value-rules.js";
 
 export { rules, semanticTypes, optionSets };
+// The Values parts as markup (W3): renderValue(field, value, context, opts), and the shapes it reads.
+export { renderValue, entityOf, fileOf, sparkline } from "./value-render.js";
 
 /** The fourteen shapes, in display-rules.json order (series is the 14th). */
 export const SHAPES = Object.freeze(Object.keys(rules.shapes));
@@ -349,4 +351,30 @@ export function textOf(field = {}, value, opts = {}) {
     case "json": return typeof value === "string" ? value : JSON.stringify(value);
     default: return value && typeof value === "object" ? JSON.stringify(value) : String(value);
   }
+}
+
+/** The contexts a viewer may re-display a value in (the column display menu): cell, record and card. */
+export const CHOICE_CONTEXTS = Object.freeze(["cell", "record", "card"]);
+
+/**
+ * The variants a viewer may pick for a field in a context (decision 9, the column display menu), the field's own
+ * first: [{ variant, id, label, default }]. From the grid row's `choices` (display-rules.json version 3); a secret
+ * offers none, a meter needs the field's target, and the metric and form contexts offer no choice (empty list).
+ * A list of one means there is nothing to choose: a surface shows no menu.
+ */
+export function variants(field = {}, context = "cell", opts = {}) {
+  if (!CHOICE_CONTEXTS.includes(context)) return [];
+  const r = resolveValue(field, context, "read", opts);
+  if (!r.variant) return [];
+  const row = rules.grid.find((g) => g.row === r.row);
+  let list = [...(row?.choices?.[context] ?? [r.variant])];
+  if (r.shape === "ratio" && field.target == null) list = list.filter((v) => v !== "meter");
+  if (!list.length) return [];
+  if (!list.includes(r.variant)) list.unshift(r.variant);
+  else list = [r.variant, ...list.filter((v) => v !== r.variant)];
+  const family = rules.variants[r.shape];
+  return list.map((v) => {
+    const { meta } = variantMeta(r.shape, v);
+    return { variant: v, id: meta?.id ?? null, label: meta?.label ?? v, default: v === r.variant };
+  });
 }

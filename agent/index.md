@@ -65,7 +65,7 @@
 | `BRG` | Hamburger | Drawers & menus | — | [open](https://firehorse.rascode.dev/components/navigation/hamburger/) |
 | `MEG` | Mega panel | Drawers & menus | 1 Default (1) · 2 Headed (1) · 3 Tile panel (1) | [open](https://firehorse.rascode.dev/components/navigation/mega-panel/) |
 | `DRW` | Drawer | Drawers & menus | 1 Drawer (1) | [open](https://firehorse.rascode.dev/components/navigation/drawer/) |
-| `DRP` | Dropdown menu | Drawers & menus | 1 Default (2) · 2 Tile menu (1) · 3 Context menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
+| `DRP` | Dropdown menu | Drawers & menus | 1 Default (2) · 2 Tile menu (1) · 3 Context menu (1) · 4 Rich menu (1) | [open](https://firehorse.rascode.dev/components/navigation/dropdown-menu/) |
 | `ACC` | Accordion | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/accordion/) |
 | `DLG` | Dialog, menu, toast | Overlays & feedback | — | [open](https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/) |
 | `FBK` | Feedback | Overlays & feedback | 1 Feedback (1) | [open](https://firehorse.rascode.dev/components/overlays/feedback/) |
@@ -1678,9 +1678,9 @@ Classes: `fh-drawer` `fh-drawer__group` `fh-label`
 
 ## DRP · Dropdown menu
 
-On the etched frost: quiet mono labels, sans items in rows that run the menu's width, shortcuts, checkable items, soft rules between groups and a danger zone. --inset sets the rows in from the frame, each rounded. Positioned with CSS anchor positioning. --context is the same menu opened at the pointer (right-click, long press, Shift+F10) on whatever names it with data-fh-context, with submenus. --tiles is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
+--rich is the site header's short menus and every table's column display menu: a tinted tile per row, walking the root's colours (--fh-walk-0 … 8). On the etched frost: quiet mono labels, sans items in rows that run the menu's width, shortcuts, checkable items, soft rules between groups and a danger zone. --inset sets the rows in from the frame, each rounded. Positioned with CSS anchor positioning. --context is the same menu opened at the pointer (right-click, long press, Shift+F10) on whatever names it with data-fh-context, with submenus. --tiles is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
 
-Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--inset` `fh-menu--tiles` `fh-menu__head` `fh-menu__title` `fh-menu__status` `fh-tiles` `fh-tiles--launch` `fh-tile` `fh-tile__cube` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--command` `fh-menu__foot` `fh-menu__pill` `fh-menu__ask` `fh-menu__ask-q` `fh-field` `fh-input` `fh-field--optional` `fh-button` `fh-button--sm` `fh-cluster` `fh-card` `fh-label` `fh-muted` `fh-menu--context` `fh-menu__sub`
+Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--inset` `fh-menu--tiles` `fh-menu__head` `fh-menu__title` `fh-menu__status` `fh-tiles` `fh-tiles--launch` `fh-tile` `fh-tile__cube` `fh-tile__eyebrow` `fh-tile__title` `fh-tile__note` `fh-tile__go` `fh-tile--command` `fh-menu__foot` `fh-menu__pill` `fh-menu__ask` `fh-menu__ask-q` `fh-field` `fh-input` `fh-field--optional` `fh-button` `fh-button--sm` `fh-cluster` `fh-card` `fh-label` `fh-muted` `fh-menu--context` `fh-menu__sub` `fh-menu--rich` `fh-menu__item` `fh-menu__tile` `fh-roll`
 
 ### DRP-1 · Default
 
@@ -1785,6 +1785,21 @@ Classes: `fh-menu` `fh-menu__label` `fh-icon` `fh-menu__danger` `fh-menu--inset`
               <hr>
               <button type="button" role="menuitem" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete<kbd>⌫</kbd></button>
             </div>
+</div>
+```
+
+### DRP-4 · Rich menu
+
+#### DRP-4.1 · Rich menu
+
+```html
+<div class="fh-menu fh-menu--rich" role="menu" aria-label="Firehorse Pro (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 20rem" data-fh="DRP-4.1">
+  <p class="fh-menu__label">Firehorse Pro</p>
+  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-0)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><span class="fh-roll">Pro overview</span><small>What Pro adds on top of the free core</small></a>
+  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-3)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--vault" aria-hidden="true"></i></span><span class="fh-roll">Key fields</span><small>Copy-only secrets, reveal, rotation</small></a>
+  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-2)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--kanban" aria-hidden="true"></i></span><span class="fh-roll">Project management</span><small>Milestones, schedules, date pickers</small></a>
+  <hr>
+  <a class="fh-menu__item" role="menuitem" href="#c-dropdown" style="--_w: var(--fh-walk-8)"><span class="fh-menu__tile"><i class="fh-icon fh-icon--badge-percent" aria-hidden="true"></i></span><span class="fh-roll">Pricing &amp; early access</span></a>
 </div>
 ```
 

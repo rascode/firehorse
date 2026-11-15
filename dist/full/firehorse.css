@@ -4238,6 +4238,120 @@
     }
   }
 
+  .fh-menu--rich {
+    --_frame: var(--fh-menu-frame, var(--fh-space-2));
+    min-inline-size: var(--fh-menu-min, 17rem);
+    border-radius: var(--fh-menu-radius, var(--fh-radius-lg));
+  }
+
+  .fh-menu__item, .fh-menu__tile {
+    --_t: light-dark(oklch(from var(--_w, var(--fh-walk-0, var(--fh-color-accent))) min(l, .5) c h), oklch(from var(--_w, var(--fh-walk-0, var(--fh-color-accent))) max(l, .76) c h));
+  }
+
+  .fh-menu__item, .fh-menu > .fh-menu__item {
+    --_tile: var(--fh-menu-tile, 2rem);
+    grid-template-columns: var(--_tile) minmax(0, 1fr);
+    column-gap: var(--fh-space-3);
+    inline-size: 100%;
+    padding: var(--fh-space-2) var(--fh-space-3) var(--fh-space-2) var(--fh-space-2);
+    border-radius: var(--fh-radius-md);
+    color: var(--fh-color-text);
+    font: inherit;
+    font-size: var(--fh-menu-text, var(--fh-text-small));
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+    background: none;
+    border: 0;
+    align-items: center;
+    row-gap: .05rem;
+    text-decoration: none;
+    display: grid;
+
+    &:is(:hover, :focus-visible) {
+      background-color: color-mix(in oklab, var(--_t) 9%, transparent);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: -2px;
+    }
+  }
+
+  .fh-menu__tile {
+    inline-size: var(--fh-menu-tile, 2rem);
+    block-size: var(--fh-menu-tile, 2rem);
+    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_t) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--_t) 12%, transparent);
+    color: var(--_t);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard);
+    place-items: center;
+    display: grid;
+
+    & > .fh-icon {
+      --fh-icon-size: 1rem;
+    }
+  }
+
+  .fh-menu__item:has( > :is(small, .fh-menu__line)) > .fh-menu__tile {
+    grid-row: span 2;
+  }
+
+  .fh-menu__item > :is(small, .fh-menu__line) {
+    min-inline-size: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+    grid-column: 2;
+    line-height: 1.35;
+  }
+
+  .fh-menu__line {
+    min-block-size: 1.5rem;
+    color: var(--fh-color-text);
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .fh-menu__suffix {
+    color: var(--fh-color-text-subtle);
+    font-size: var(--fh-text-caption);
+    margin-inline-start: var(--fh-gap-related);
+  }
+
+  .fh-menu > .fh-menu__item[role="menuitemradio"] {
+    grid-template-columns: var(--_tile) minmax(0, 1fr) auto;
+
+    &:after {
+      background-color: var(--_t);
+      grid-area: 1 / 3 / span 2;
+      margin-inline-start: 0;
+    }
+
+    & > .fh-menu__tile {
+      grid-row: 1 / span 2;
+    }
+
+    &[aria-checked="true"] > .fh-menu__tile {
+      border-style: solid;
+      border-color: var(--_t);
+      background-color: var(--_t);
+      color: var(--fh-color-canvas);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .fh-menu__tile {
+      border-color: buttontext;
+    }
+
+    .fh-menu > .fh-menu__item[role="menuitemradio"][aria-checked="true"] > .fh-menu__tile {
+      color: highlighttext;
+      background-color: highlight;
+    }
+  }
+
   .fh-toaster {
     z-index: var(--fh-z-toast);
     gap: var(--fh-gap-grouped);
@@ -22275,6 +22389,15 @@
     --fh-root-muted: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * .3) h);
     --fh-root-wash: color-mix(in oklch, var(--fh-root, var(--fh-color-accent)) 10%, transparent);
     --fh-root-on: oklch(from var(--fh-root, var(--fh-color-accent)) clamp(0, calc((.62 - l) * 1000), 1) 0 h);
+    --fh-walk-0: var(--fh-root, var(--fh-color-accent));
+    --fh-walk-1: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + .04) min(c, .2) calc(h + 20));
+    --fh-walk-2: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + .06) min(calc(c * .92), .19) calc(h + 40));
+    --fh-walk-3: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + .05) min(calc(c * .78), .16) calc(h + 150));
+    --fh-walk-4: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + (1 - l) * .35) calc(c * .7) h);
+    --fh-walk-5: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + .05) min(calc(c * .78), .16) calc(h + 210));
+    --fh-walk-6: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + .06) min(calc(c * .92), .19) calc(h - 40));
+    --fh-walk-7: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + .04) min(c, .2) calc(h - 20));
+    --fh-walk-8: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l * .9) min(calc(c * 1.05), .2) h);
   }
 
   [data-fh-root="tone"] {

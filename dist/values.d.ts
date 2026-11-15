@@ -95,3 +95,50 @@ export function defaultTone(value: unknown): Tone;
 export function isReadOnly(semanticType?: string | null): boolean;
 export function isEmpty(value: unknown): boolean;
 export function gridRow(described: DescribedField, count?: number | null, set?: OptionSet | null): Record<string, any>;
+
+/** The contexts a viewer may re-display a value in (the column display menu). */
+export declare const CHOICE_CONTEXTS: readonly ["cell", "record", "card"];
+
+/** One variant a viewer may pick for a column (the column display menu), the field's own first. */
+export interface ValueChoice { variant: string; id: string | null; label: string; default: boolean }
+
+/** The variants a viewer may pick for a field in a context: the grid row's `choices`; empty for a secret, the metric and the form. */
+export declare function variants(field?: ValueField, context?: Context, opts?: { optionSets?: Record<string, unknown> }): ValueChoice[];
+
+export interface RenderValueOptions {
+  mode?: "read" | "edit";
+  /** A viewer's pick; kept only when variants() allows it for the field and context. */
+  variant?: string;
+  size?: "lg";
+  locale?: string;
+  currency?: string;
+  /** The record, so money can read its currency from a sibling (field.currencyFrom). */
+  row?: Record<string, unknown>;
+  /** The value before, for a delta. */
+  previous?: number;
+  /** Now, for relative dates (tests and static pages). */
+  now?: Date;
+  /** false: whole units (a cell column where every row is whole, rule 4). */
+  cents?: boolean;
+  /** A check in a cell takes clicks; editKey names the field it changes (data-edit). */
+  edit?: boolean;
+  editKey?: string;
+  name?: string;
+  id?: string;
+  label?: string;
+  href?: string;
+  /** The +N limit, over the grid's. */
+  max?: number;
+  align?: boolean;
+  good?: "up" | "down";
+  optionSets?: Record<string, unknown>;
+}
+
+/** A value as its Values (VAL) part: the markup agent/components/values.md shows. "" when the grid leaves it out. */
+export declare function renderValue(field: ValueField, value: unknown, context?: Context, opts?: RenderValueOptions): string;
+/** An entity from a string or an object: { label, … }. */
+export declare function entityOf(e: unknown): { label: string; [k: string]: unknown } | null;
+/** A file from a string or an object: { name, … }. */
+export declare function fileOf(f: unknown): { name: string; [k: string]: unknown } | null;
+/** The metric tile's sparkline (120 × 32) for a list of numbers. */
+export declare function sparkline(values: number[]): string;

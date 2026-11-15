@@ -57,6 +57,20 @@
     --fh-root-muted: oklch(from var(--fh-root, var(--fh-color-accent)) l calc(c * 0.3) h);
     --fh-root-wash: color-mix(in oklch, var(--fh-root, var(--fh-color-accent)) 10%, transparent);
     --fh-root-on: oklch(from var(--fh-root, var(--fh-color-accent)) clamp(0, calc((0.62 - l) * 1000), 1) 0 h);
+    /* The walk: nine steps round the root, the way a painter balances one colour. Mostly analogous
+     * (±20°, ±40°), tone steps of the root, and two softer split complements (150°, 210°), chroma
+     * capped so no stop clips out of sRGB. The rich menu's tiles (DRP-4) take one step each, in order,
+     * so every menu re-tints with the root. 0 root · 1, 2 the warm side · 3 a far accent · 4 a tint ·
+     * 5 the other accent · 6, 7 the cool side · 8 a deep root. */
+    --fh-walk-0: var(--fh-root, var(--fh-color-accent));
+    --fh-walk-1: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + 0.04) min(c, 0.2) calc(h + 20));
+    --fh-walk-2: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + 0.06) min(calc(c * 0.92), 0.19) calc(h + 40));
+    --fh-walk-3: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + 0.05) min(calc(c * 0.78), 0.16) calc(h + 150));
+    --fh-walk-4: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + (1 - l) * 0.35) calc(c * 0.7) h);
+    --fh-walk-5: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + 0.05) min(calc(c * 0.78), 0.16) calc(h + 210));
+    --fh-walk-6: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + 0.06) min(calc(c * 0.92), 0.19) calc(h - 40));
+    --fh-walk-7: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l + 0.04) min(c, 0.2) calc(h - 20));
+    --fh-walk-8: oklch(from var(--fh-root, var(--fh-color-accent)) calc(l * 0.9) min(calc(c * 1.05), 0.2) h);
   }
   /* The element's own tone becomes its root: data-tone="teal" data-fh-root="tone". */
   [data-fh-root="tone"] { --fh-root: var(--fh-tone); }

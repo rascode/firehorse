@@ -287,7 +287,7 @@ const navParts = (all) => {
   const walk = [0, 3, 1, 5, 6, 2]; // root, a split complement, warm, the other complement, cool, warm-far
   // "Firehorse forms: fields and…" reads as "Fields and…" under the title that already says Forms.
   const blurb = (d) => { const t = d.replace(/^(The )?Firehorse [^:]{1,40}:\s*/, ""); return t.charAt(0).toUpperCase() + t.slice(1); };
-  const item = (x, pre) => `${pre}<li><a class="site-nav-item" href="${x.path}"><span class="site-nav-ico"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span><span class="fh-roll">${escHtml(x.meta.name)}</span>${x.meta.description ? `<small>${escHtml(blurb(x.meta.description))}</small>` : ""}</a></li>`;
+  const item = (x, pre) => `${pre}<li><a class="fh-menu__item" href="${x.path}"><span class="fh-menu__tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span><span class="fh-roll">${escHtml(x.meta.name)}</span>${x.meta.description ? `<small>${escHtml(blurb(x.meta.description))}</small>` : ""}</a></li>`;
   const mega = `    <div class="fh-mega__grid">
 ${MEGA.map((col, i) => {
     const items = (col.parent ? [by(col.parent), ...list.filter((x) => x.meta.parent === col.parent)] : col.paths.map((p) => (typeof p === "string" ? by(p) : by(p.path.split("#")[0]) && { path: p.path, meta: { name: p.name, icon: p.icon, description: p.description } }))).filter(Boolean);
