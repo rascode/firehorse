@@ -4264,7 +4264,7 @@
     background: none;
     border: 0;
     align-items: center;
-    row-gap: .05rem;
+    row-gap: 0;
     text-decoration: none;
     display: grid;
 
@@ -4281,7 +4281,7 @@
   .fh-menu__tile {
     inline-size: var(--fh-menu-tile, 2rem);
     block-size: var(--fh-menu-tile, 2rem);
-    border: var(--fh-border-thin) dashed color-mix(in oklab, var(--_t) 40%, transparent);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_t) 40%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--_t) 12%, transparent);
     color: var(--_t);
@@ -4334,7 +4334,6 @@
     }
 
     &[aria-checked="true"] > .fh-menu__tile {
-      border-style: solid;
       border-color: var(--_t);
       background-color: var(--_t);
       color: var(--fh-color-canvas);
@@ -7159,12 +7158,12 @@
     }
 
     & > div > dd {
+      gap: calc(var(--fh-gap-bound) / 2);
       color: var(--fh-color-text);
       font-size: var(--fh-text-small);
       line-height: var(--fh-leading-normal);
       overflow-wrap: anywhere;
       grid-column: 1;
-      gap: .15rem;
       margin: 0;
       display: grid;
     }
@@ -7190,7 +7189,7 @@
     }
 
     :is(.fh-record--review, .fh-review) > div > dt {
-      padding-block-start: .1rem;
+      padding-block-start: calc(var(--fh-gap-bound) / 2);
     }
 
     :is(.fh-record--review, .fh-review) > div > dd {
@@ -8090,7 +8089,7 @@
     }
 
     & tr.fh-dt__detail > td {
-      padding-inline-start: calc(4.6rem + var(--_pad));
+      padding-inline-start: calc(var(--fh-dt-primary-offset) + var(--_pad));
     }
   }
 

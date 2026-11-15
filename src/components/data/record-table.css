@@ -134,7 +134,7 @@
     & > div > dd {
       display: grid;
       grid-column: 1;
-      gap: 0.15rem;
+      gap: calc(var(--fh-gap-bound) / 2);
       margin: 0;
       color: var(--fh-color-text);
       font-size: var(--fh-text-small);
@@ -154,7 +154,7 @@
 
   @container fh-review (inline-size >= 36rem) {
     :is(.fh-record--review, .fh-review) > div { grid-template-columns: 9rem minmax(0, 1fr) auto; }
-    :is(.fh-record--review, .fh-review) > div > dt { padding-block-start: 0.1rem; }
+    :is(.fh-record--review, .fh-review) > div > dt { padding-block-start: calc(var(--fh-gap-bound) / 2); }
     :is(.fh-record--review, .fh-review) > div > dd { grid-column: 2; }
     :is(.fh-record__edit, .fh-review__edit) { grid-column: 3; grid-row: 1; }
   }
