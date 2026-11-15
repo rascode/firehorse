@@ -27,6 +27,19 @@
         "label": { "type": "string" },
         "tone": { "enum": ["neutral", "accent", "lime", "sky", "amber", "rose", "teal", "violet", "fuchsia", "orange"] }
       }
+    },
+    "fallback": { "$ref": "#/$defs/fallback" }
+  },
+  "$defs": {
+    "fallback": {
+      "description": "The avatar cascade: the mark drawn when the entity has no image of its own. A model names its family, and the family names its platform; the first image down the chain is drawn, else the initials.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "image": { "description": "The family's or platform's mark.", "type": "string" },
+        "label": { "description": "Whose mark it is: Claude, Claude Code CLI.", "type": "string" },
+        "fallback": { "$ref": "#/$defs/fallback" }
+      }
     }
   }
 }

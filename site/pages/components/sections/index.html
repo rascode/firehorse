@@ -28,7 +28,7 @@
     <section id="sections" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Sections" aria-label="Sections">
       <div class="fh-stack fh-stack--xl">
 
-        <div class="site-demo site-anchor" id="c-sidecar" data-fh-id="SDC" data-fh-groups="Sidecar">
+        <div class="site-demo site-anchor" id="c-sidecar" data-fh-id="SDC" data-fh-groups="Sidecar|Relay record">
           <div class="site-demo__head"><h3>Record sidecar</h3><p>One drawer for every record. A fixed header (eyebrow with the record kind, mark, title, one chip row, actions, one close control), then the sections, then the linked records. Body text steps down through the public text tokens, so every component inside follows. Open the whole stack from the first section or collapse them all.</p></div>
           <div class="site-demo__stage" data-demo>
 <aside class="fh-sidecar" style="--fh-sidecar-height: 44rem" aria-label="Record" data-fh-id="SDC-1.1" data-fh-name="Sidecar">
@@ -428,6 +428,191 @@
           </div>
         </div>
 
+        <!-- Relay record (SDC-2, RS1 #200): the record sidecar for one relay, built only from SDC parts, for Rascode to
+             approve before Helm uses it. Every value is renderValue() markup in the record context (cells: cell); the
+             drawer is the dialog sidecar, open in place. It sits after the drawer demo, so #sidecar-demo stays the
+             page's first dialog.fh-sidecar and every reference in it opens that sidecar. Sample data. -->
+        <div class="site-demo site-anchor" id="c-sidecar-relay" data-fh-id="SDC-2">
+          <div class="site-demo__head"><h3>Relay record (SDC)</h3><p>One relay in the record sidecar, open in place: the header (eyebrow, mark, title, the slug in mono, status, merge state and kind), then Summary, Settings, Prompts, Timetable, Replies, Tokens, Commits and References. Every value is drawn by <code>renderValue()</code> in the record context, so Summary lines up on one grid and the Settings Model row is the Summary Target model row. Claude Opus 5.5 has no mark of its own and its family has none, so its avatar is its platform's (the avatar cascade); Claude Fable 5.1 draws its family's.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" open aria-labelledby="rs1-title" style="--fh-dialog-size: 34rem; position: relative; inset: auto; inline-size: 100%; block-size: 60rem; margin: 0" data-fh-id="SDC-2.1" data-fh-name="Relay record (SDC)">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Relay</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark" data-tone="sky"><i class="fh-icon fh-icon--send" aria-hidden="true"></i></span>
+      <div>
+        <h2 class="fh-sidecar__title" id="rs1-title">Firehorse parts for the relay record sidecar</h2>
+        <p class="fh-sidecar__sub"><code>rs1-fh-relay-sidecar-parts</code> · dispatch 1</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="lime">done</span><span class="fh-chip" data-tone="amber">not merged</span><span class="fh-chip" data-tone="sky">screen relay</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+    <details class="fh-panel-section fh-panel-section--properties" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--list-checks fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Summary</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="lime">done</span><span class="fh-chip" data-tone="sky">Claude Code CLI</span><span class="fh-chip" data-tone="amber">47 min</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <dl class="fh-kv fh-kv--single">
+          <div><dt>Sender platform</dt><dd><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-family-mark.svg" alt=""></span><a class="fh-ref" href="#c-sidecar-relay" data-sidecar="platform-claude-desktop"><span class="fh-ref__label" title="Claude Desktop">Claude Desktop</span></a></span></dd></div>
+          <div><dt>Sender model</dt><dd><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-family-mark.svg" alt=""></span><a class="fh-ref" href="#c-sidecar-relay" data-sidecar="model-claude-fable-5-1"><span class="fh-ref__label" title="Claude Fable 5.1">Claude Fable 5.1</span></a></span></dd></div>
+          <div><dt>Target platform</dt><dd><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-platform-mark.svg" alt=""></span><a class="fh-ref" href="#c-sidecar-relay" data-sidecar="platform-claude-cli"><span class="fh-ref__label" title="Claude Code CLI">Claude Code CLI</span></a></span></dd></div>
+          <div><dt>Target model</dt><dd><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-platform-mark.svg" alt=""></span><a class="fh-ref" href="#c-sidecar-relay" data-sidecar="model-claude-opus-5-5"><span class="fh-ref__label" title="Claude Opus 5.5">Claude Opus 5.5</span></a></span></dd></div>
+          <div><dt>Endpoint</dt><dd><span class="fh-value fh-value--link" data-fh="VAL-9.1"><a class="fh-link" href="https://api.anthropic.com/v1/messages" title="https://api.anthropic.com/v1/messages">api.anthropic.com/v1/messages</a></span></dd></div>
+          <div><dt>Branch</dt><dd><span class="fh-value fh-value--branch fh-value--mono" data-fh="VAL-11.14"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span class="fh-value__name" title="relay/rs1-fh-relay-sidecar-parts">relay/rs1-fh-relay-sidecar-parts</span></span></dd></div>
+          <div><dt>Worktree</dt><dd><span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="~/Dev/packages/rs1-fh-relay-sidecar-parts">…/packages/rs1-fh-relay-sidecar-parts</span><button class="fh-value__action" type="button" aria-label="Copy Worktree" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span></dd></div>
+          <div><dt>Duration</dt><dd><span class="fh-value fh-value--duration fh-value--tabular" data-fh="VAL-7.8"><time datetime="PT47M">47m</time></span></dd></div>
+          <div><dt>Rounds</dt><dd><span class="fh-value fh-value--unit fh-value--tabular" data-fh="VAL-6.2">2</span></dd></div>
+          <div><dt>Commits</dt><dd><span class="fh-value fh-value--unit fh-value--tabular" data-fh="VAL-6.2">3</span></dd></div>
+          <div><dt>Effective tokens</dt><dd><span class="fh-value fh-value--unit fh-value--tabular" data-fh="VAL-6.2">1,156,325</span></dd></div>
+          <div><dt>Cost</dt><dd><span class="fh-value fh-value--amount-code fh-value--tabular fh-value--mono" data-fh="VAL-4.2"><data value="7.24">$7.24</data><abbr class="fh-value__sub" title="US Dollar">USD</abbr></span></dd></div>
+        </dl>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--form" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--square-pen fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Settings</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 fields</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <form>
+          <fieldset>
+            <dl class="fh-kv fh-kv--single">
+              <div><dt>Model</dt><dd><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-platform-mark.svg" alt=""></span><a class="fh-ref" href="#c-sidecar-relay" data-sidecar="model-claude-opus-5-5"><span class="fh-ref__label" title="Claude Opus 5.5">Claude Opus 5.5</span></a></span><p class="fh-field__hint">From the relay's settings, set by Rascode at 15:58</p></dd></div>
+              <div><dt>Fallback model</dt><dd><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-family-mark.svg" alt=""></span><a class="fh-ref" href="#c-sidecar-relay" data-sidecar="model-claude-sonnet-5-5"><span class="fh-ref__label" title="Claude Sonnet 5.5">Claude Sonnet 5.5</span></a></span><p class="fh-field__hint">From the Claude Code CLI platform default</p></dd></div>
+            </dl>
+            <div class="fh-field">
+              <span class="fh-field__label">Mode</span>
+              <div class="fh-value fh-value--segmented" data-mode="edit" data-fh="VAL-1.5"><div class="fh-segment fh-segment--mode" role="group" aria-label="Mode" onclick="const b = event.target.closest('button'); if (b &amp;&amp; !b.disabled) for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b))"><button type="button" value="headless" aria-pressed="true">Headless</button><button type="button" value="interactive" aria-pressed="false">Interactive</button><button type="button" value="cloud" aria-pressed="false">Cloud</button></div></div>
+            </div>
+            <div class="fh-field">
+              <span class="fh-field__label">Model</span>
+              <div class="fh-value fh-value--picker fh-value--field" data-mode="edit" data-fh="VAL-3.10"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="Model"><span class="fh-entity__value"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-platform-mark.svg" alt=""></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b title="Claude Opus 5.5">Claude Opus 5.5</b><small title="claude-opus-5-5">claude-opus-5-5</small></span></span></button></div></div>
+            </div>
+            <div class="fh-field">
+              <span class="fh-field__label">Fallback model</span>
+              <div class="fh-value fh-value--picker fh-value--field" data-mode="edit" data-fh="VAL-3.10"><div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="Fallback model"><span class="fh-entity__value"><span class="fh-avatar" data-kind="agent"><img src="/img/samples/rs1-family-mark.svg" alt=""></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b title="Claude Sonnet 5.5">Claude Sonnet 5.5</b><small title="claude-sonnet-5-5">claude-sonnet-5-5</small></span></span></button></div></div>
+            </div>
+          </fieldset>
+          <div class="fh-panel-section__actions">
+            <button class="fh-button fh-button--sm" type="submit">Save</button><span class="fh-status" data-tone="lime" role="status">Saved at 15:58</span>
+          </div>
+        </form>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--prompts" data-tone="teal" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--sparkles fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Prompts</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">3 prompts</span><span class="fh-chip" data-tone="sky">dispatch 1</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul class="fh-prompts">
+          <li><a class="fh-prompt" href="#c-sidecar-relay" data-sidecar="prompt-relay-preamble-claude-cli"><code class="fh-prompt__key">relay.preamble.claude-cli</code><b class="fh-prompt__version">v4</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span><span class="fh-prompt__meta">Dispatch 1 · Nov 14, 23:05</span></a></li>
+          <li><a class="fh-prompt" href="#c-sidecar-relay" data-sidecar="prompt-relay-spec-rs1"><code class="fh-prompt__key">relay.spec.rs1-fh-relay-sidecar-parts</code><b class="fh-prompt__version">v1</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">current</span><span class="fh-prompt__meta">Dispatch 1 · Nov 14, 23:05</span></a></li>
+          <li><a class="fh-prompt" href="#c-sidecar-relay" data-sidecar="prompt-relay-followup-claude-cli"><code class="fh-prompt__key">relay.followup.claude-cli</code><b class="fh-prompt__version">v2</b><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">draft</span><span class="fh-prompt__meta">Round 2 · Nov 15, 08:52</span></a></li>
+        </ul>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Timetable</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">6 steps</span><span class="fh-chip" data-tone="sky">Fri 22:48 to Sat 09:20</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+          <tbody>
+            <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+            <tr><td>22:48</td><td>Wrote the spec</td><td>Plan section 2, gaps G1 to G4</td></tr>
+            <tr><td>23:05</td><td>Dispatched</td><td>Claude Code CLI, headless, screen tier</td></tr>
+            <tr><td>23:41</td><td>Ran the tests</td><td>2 failed: the index check and one shot</td></tr>
+            <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+            <tr><td>08:52</td><td>Follow-up sent</td><td>Round 2: fix the index, take the 375 shot again</td></tr>
+            <tr><td>09:14</td><td>Committed</td><td>3 commits, all checks passed</td></tr>
+            <tr><td>09:20</td><td>Wrote the report</td><td>REPORT COMPLETE</td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--chat" data-tone="fuchsia" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--message-square fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Replies</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="fuchsia">2 messages</span><span class="fh-chip" data-tone="sky">last 09:22</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-chat">
+          <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Claude Opus 5.5</span><time class="fh-message__time">09:20</time></p><p>Round 2 is in. The index check passes now: the three new code variants were missing from the ledger, and the day mark had no slot in sections.json. I took the 375 shot again; the Tokens table scrolls inside its frame and the page no longer scrolls sideways. Three commits on the relay branch, none pushed. The report is at relay/runs/rs1-fh-relay-sidecar-parts.report.md, with the timetable and the last lines of every check.</p></div></div>
+          <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Claude Fable 5.1</span><time class="fh-message__time">09:22</time></p><p>Thanks. Holding it for Rascode's review.</p></div></div>
+        </div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--records" data-tone="teal" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--table-2 fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Tokens</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">4 rows</span><span class="fh-chip" data-tone="amber">1 estimate</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Round</th><th scope="col">Layer</th><th scope="col">Share</th><th scope="col">In</th><th scope="col">Out</th><th scope="col">Cache read</th><th scope="col">Cache write</th><th scope="col">Effective</th><th scope="col">Cost</th><th scope="col">Precision</th></tr></thead>
+          <tbody>
+            <tr><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">1</span></td><td>Sender</td><td><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">9.4%</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">38,420</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">9,860</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">212,300</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">31,800</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">109,260</span></td><td><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-fh="VAL-4.1"><data value="0.74">$0.74</data></span></td><td>Exact</td></tr>
+            <tr><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">1</span></td><td>Target</td><td><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">60.2%</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">126,900</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">41,250</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">2,930,000</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">188,400</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">696,650</span></td><td><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-fh="VAL-4.1"><data value="4.31">$4.31</data></span></td><td>Exact</td></tr>
+            <tr><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">2</span></td><td>Sender</td><td><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">3.1%</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">12,300</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">3,140</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">96,500</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">8,200</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">35,340</span></td><td><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-fh="VAL-4.1"><data value="0.24">$0.24</data></span></td><td>Exact</td></tr>
+            <tr><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">2</span></td><td>Target</td><td><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">27.2%</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">64,800</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">18,700</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">1,412,000</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">72,300</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">315,075</span></td><td><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-fh="VAL-4.1"><data value="1.95">$1.95</data></span></td><td>Estimate</td></tr>
+            <tr><th scope="row">Total</th><td>All</td><td><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">100%</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">242,420</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">72,950</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">4,650,800</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">300,700</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">1,156,325</span></td><td><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-fh="VAL-4.1"><data value="7.24">$7.24</data></span></td><td>Mixed</td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--links" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--git-branch fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Commits</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">3 linked</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul class="fh-links">
+          <li><a href="#c-sidecar-relay" data-sidecar="commit-4e1c9a2"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Relay record sidecar parts: field types, day mark, specimen</span><small>4e1c9a2</small></a></li>
+          <li><a href="#c-sidecar-relay" data-sidecar="commit-b07d3f5"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Index: ledger entries for VAL-11.14 to VAL-11.16</span><small>b07d3f5</small></a></li>
+          <li><a href="#c-sidecar-relay" data-sidecar="commit-e93a610"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span>Shots: the 375 specimen again <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">not pushed</span></span><small>e93a610</small></a></li>
+        </ul>
+        </div>
+      </details>
+    <details class="fh-panel-section fh-panel-section--links" data-tone="sky" open>
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--link fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">References</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">4 linked</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul class="fh-links">
+          <li><a href="#c-sidecar-relay" data-sidecar="chat-relay-sidecar-plan"><i class="fh-icon fh-icon--message-square" aria-hidden="true"></i><span>Relay sidecar plan</span><small>chat</small></a></li>
+          <li><a href="#c-sidecar-relay" data-sidecar="run-rs1-dispatch-1"><i class="fh-icon fh-icon--terminal" aria-hidden="true"></i><span>rs1-fh-relay-sidecar-parts, dispatch 1</span><small>run log</small></a></li>
+          <li><a href="#c-sidecar-relay" data-sidecar="spec-rs1"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay/2026-11-15-rs1-fh-relay-sidecar-parts.md</span><small>spec</small></a></li>
+          <li><a href="#c-sidecar-relay" data-sidecar="page-helm-relays"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm · Relays</span><small>Helm page</small></a></li>
+        </ul>
+        </div>
+      </details>
+  </div>
+</dialog>
+</div>
+          </div>
+        </div>
+
         <div class="site-demo site-anchor" id="c-sec" data-fh-id="SCT" data-fh-groups="Section shell">
           <div class="site-demo__head"><h3>Section shell</h3><p>The header every section shares: an icon, a title larger than body text in the strongest text role, and a collapse control. Collapsed, it shows summary chips for what it holds; open, the chips are gone. Chips live only here and in the sidecar header.</p></div>
           <div class="site-demo__stage" data-demo>
@@ -547,7 +732,7 @@
         </div>
 
         <div class="site-demo site-anchor" id="c-sec-timetable" data-fh-id="STT" data-fh-groups="Timetable section">
-          <div class="site-demo__head"><h3>Timetable section</h3><p><code>fh-panel-section--timetable</code>. A real table: time, step, detail. Never a list that only looks like one.</p></div>
+          <div class="site-demo__head"><h3>Timetable section</h3><p><code>fh-panel-section--timetable</code>. A real table: time, step, detail. Never a list that only looks like one. When the steps run over more than one day, a day mark row (<code>tr.fh-panel-section__day</code>, one <code>th colspan="3" scope="colgroup"</code>) comes before the first step of each day.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-stack" style="max-inline-size: 34rem">
       <details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open data-fh-id="STT-1.1" data-fh-name="Open">
@@ -582,6 +767,26 @@
             <tr><td>15:14</td><td>Built the CSS</td><td>Three files, lint clean</td></tr>
             <tr><td>15:31</td><td>Ran the tests</td><td>All checks passed</td></tr>
             <tr><td>15:45</td><td>Wrote the report</td><td>Committed locally</td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open data-fh-id="STT-1.3" data-fh-name="Day marks">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Timetable</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">4 steps</span><span class="fh-chip" data-tone="sky">Fri 23:40 to Sat 09:12</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-table-wrap"><table class="fh-table">
+          <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+          <tbody>
+            <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+            <tr><td>23:40</td><td>Dispatched</td><td>Claude Code CLI, headless</td></tr>
+            <tr><td>23:58</td><td>Ran the tests</td><td>2 failed, left for the morning</td></tr>
+            <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+            <tr><td>08:47</td><td>Follow-up sent</td><td>Fix the two failing tests</td></tr>
+            <tr><td>09:12</td><td>Committed</td><td>All checks passed</td></tr>
           </tbody>
         </table></div>
         </div>

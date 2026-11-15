@@ -10,7 +10,7 @@
    * the kind to this class, its slots and its chip rule.
    *   properties  fh-panel-section--properties   fh-kv
    *   records     fh-panel-section--records      fh-table
-   *   timetable   fh-panel-section--timetable    fh-table (time, step, detail)
+   *   timetable   fh-panel-section--timetable    fh-table (time, step, detail; a day mark row per day)
    *   timeline    fh-panel-section--timeline     fh-timeline
    *   chat        fh-panel-section--chat         fh-chat + fh-message__time
    *   log         fh-panel-section--log          fh-log
@@ -31,6 +31,20 @@
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     white-space: nowrap;
+  }
+
+  /* Day mark: one row before the first row of each day, the day at the Label tier. No details, no control.
+   *   <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr> */
+  .fh-panel-section--timetable .fh-table .fh-panel-section__day > th {
+    inline-size: auto;
+    padding-block: var(--fh-inset-control) var(--fh-inset-tight);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-type-label-family);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-type-label-weight);
+    letter-spacing: var(--fh-type-label-tracking);
+    text-align: start;
+    text-transform: var(--fh-type-label-case);
   }
 
   .fh-panel-section--properties .fh-kv {

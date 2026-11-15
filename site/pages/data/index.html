@@ -43,7 +43,7 @@
       <p class="site-note">Sample data. Try: <kbd class="fh-kbd">Filter</kbd> Stage is any of Proposal, Won · <kbd class="fh-kbd">Group</kbd> by Owner · shift-click two headers · drag a card on the board · select rows for the bulk bar · drag a column edge to resize.</p>
 
       <div class="fh-grid site-dt-types" style="--fh-grid-min: 10rem; --fh-grid-max-cols: 6">
-        <div class="site-type" data-tone="sky"><i class="fh-icon fh-icon--type" aria-hidden="true"></i><b>text</b><span>long · url · email · phone</span></div>
+        <div class="site-type" data-tone="sky"><i class="fh-icon fh-icon--type" aria-hidden="true"></i><b>text</b><span>long · url · email · phone · branch · path</span></div>
         <div class="site-type" data-tone="teal"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i><b>number</b><span>currency · percent · rating</span></div>
         <div class="site-type" data-tone="lime"><i class="fh-icon fh-icon--circle-dot" aria-hidden="true"></i><b>select</b><span>status · multi · tags</span></div>
         <div class="site-type" data-tone="amber"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i><b>date</b><span>relative · overdue</span></div>
@@ -915,7 +915,7 @@ table.addEventListener(<span class="v">"fh:row-open"</span>, (e) =&gt; drawer.sh
         </div>
 
         <div class="site-demo site-anchor" id="c-values-prose" data-fh-id="VAL-11">
-          <div class="site-demo__head"><h3>Prose, text and code</h3><p>Long words clamp in cells and cards and show in full in a record; short words are a line; identifiers are mono, copyable, masked (a vault reference) or a block; each with its field. Read, edit and <code>--lg</code>, in that order.</p></div>
+          <div class="site-demo__head"><h3>Prose, text and code</h3><p>Long words clamp in cells and cards and show in full in a record; short words are a line; identifiers are mono, copyable, masked (a vault reference) or a block; a git branch shows its icon and name, a file path its last two segments (the full path is the title); each with its field. Read, edit and <code>--lg</code>, in that order.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-stack fh-stack--lg">
 <div class="fh-stack" data-fh-id="VAL-11.1" data-fh-name="Two lines">
@@ -1009,6 +1009,21 @@ Owners see the breach in their next relay readout.</textarea></div>
   <div class="fh-value fh-value--key-field fh-value--field" data-mode="read"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="set" data-key-id="val-secret-1"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-1">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-1"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy secret key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></div></div></div>
   <div class="fh-value fh-value--key-field fh-value--field" data-mode="edit"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-key-id="val-secret-2"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-2">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-2"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" aria-label="Replace secret key" title="Replace"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button></div><form class="fh-keyfield__editor" hidden><input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="sk_live_…" aria-label="Secret key"><button class="fh-button fh-button--sm" type="submit">Save</button></form></div></div>
   <div class="fh-value fh-value--key-field fh-value--field fh-value--lg" data-mode="edit"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-key-id="val-secret-3"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-3">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-3"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" aria-label="Replace secret key" title="Replace"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button></div><form class="fh-keyfield__editor" hidden><input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="sk_live_…" aria-label="Secret key"><button class="fh-button fh-button--sm" type="submit">Save</button></form></div></div>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.14" data-fh-name="Git branch">
+  <span class="fh-value fh-value--branch fh-value--mono"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span class="fh-value__name" title="relay/rs1-fh-relay-sidecar-parts">relay/rs1-fh-relay-sidecar-parts</span></span>
+  <span class="fh-value fh-value--branch fh-value--mono" data-mode="edit"><input class="fh-value__input" type="text" value="relay/rs1-fh-relay-sidecar-parts" aria-label="Branch" spellcheck="false"></span>
+  <span class="fh-value fh-value--branch fh-value--mono fh-value--lg"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span class="fh-value__name" title="relay/rs1-fh-relay-sidecar-parts">relay/rs1-fh-relay-sidecar-parts</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.15" data-fh-name="File path, last two segments">
+  <span class="fh-value fh-value--path fh-value--mono"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span></span>
+  <span class="fh-value fh-value--path fh-value--mono" data-mode="edit"><input class="fh-value__input" type="text" value="apps/helm/scripts/relay-audit.mts" aria-label="Path" spellcheck="false"></span>
+  <span class="fh-value fh-value--path fh-value--mono fh-value--lg"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span></span>
+</div>
+<div class="fh-cluster" data-fh-id="VAL-11.16" data-fh-name="File path with copy">
+  <span class="fh-value fh-value--path-copy fh-value--mono"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span><button class="fh-value__action" type="button" aria-label="Copy the path" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+  <span class="fh-value fh-value--path-copy fh-value--mono" data-mode="edit"><input class="fh-value__input" type="text" value="apps/helm/scripts/relay-audit.mts" aria-label="Path" spellcheck="false"></span>
+  <span class="fh-value fh-value--path-copy fh-value--mono fh-value--lg"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span><button class="fh-value__action" type="button" aria-label="Copy the path" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
 </div>
 </div>
           </div>

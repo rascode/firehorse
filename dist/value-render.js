@@ -10,7 +10,7 @@
 // exactly as agent/components/values.md shows it. A viewer's own pick (the column display menu) comes in as
 // opts.variant and is used only when variants() allows it for the field and context.
 // Data display contract W3 (platform relay/2026-11-14-dc-w3-surfaces.md).
-import { rules, resolveValue, variants, textOf, isEmpty, toneOf, rampOf, isoDuration, avatarOf, thumbMarkup, thumbClusterMarkup, formatBytes } from "./values.js";
+import { rules, resolveValue, variants, textOf, isEmpty, toneOf, rampOf, isoDuration, avatarOf, avatarImageOf, thumbMarkup, thumbClusterMarkup, formatBytes } from "./values.js";
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const attr = (name, v) => (v == null || v === false ? "" : v === true ? ` ${name}` : ` ${name}="${esc(v)}"`);
@@ -45,7 +45,8 @@ function avatar(e, { kind = "person", alt = "", more = false } = {}) {
   const cls = `fh-avatar${k === "person" ? " fh-avatar--circle" : ""}${more ? " fh-avatars__more" : ""}`;
   const dk = attr("data-kind", k);
   if (more) return `<span class="${cls}"${dk} aria-hidden="true">${esc(e)}</span>`;
-  if (e.image) return `<span class="${cls}"${dk}${attr("data-tone", e.tone)}><img src="${esc(e.image)}" alt="${esc(alt)}"></span>`;
+  const img = avatarImageOf(e);
+  if (img) return `<span class="${cls}"${dk}${attr("data-tone", e.tone)}><img src="${esc(img.image)}" alt="${esc(alt)}"></span>`;
   return `<span class="${cls}"${dk}${attr("data-tone", e.tone)} aria-hidden="true">${esc(String(e.initials ?? initialsOf(e.label)).slice(0, rules.avatars?.initials ?? 2))}</span>`;
 }
 
@@ -136,7 +137,7 @@ function rootOpen(tag, r, variant, opts, extra = {}) {
   if (extra.cls) cls.push(...[].concat(extra.cls));
   const numeric = ["number", "money", "series"].includes(r.shape) || (r.shape === "ratio" && variant === "text") || ["time", "duration", "count", "phone"].includes(variant);
   if (numeric) cls.push("fh-value--tabular");
-  if (r.shape === "money" || (r.shape === "code" && ["mono", "input-mono", "textarea-mono"].includes(variant)) || (r.shape === "file" && variant === "type-chip")) if (!cls.includes("fh-value--mono")) cls.push("fh-value--mono");
+  if (r.shape === "money" || (r.shape === "code" && ["mono", "input-mono", "textarea-mono", "branch", "path", "path-copy"].includes(variant)) || (r.shape === "file" && variant === "type-chip")) if (!cls.includes("fh-value--mono")) cls.push("fh-value--mono");
   if (opts.align ?? r.align === "end") cls.push("fh-value--end");
   if (opts.size === "lg") cls.push("fh-value--lg");
   return `<${tag} class="${cls.join(" ")}"${extra.mode ? ` data-mode="${extra.mode}"` : ""}${attr("data-tone", extra.tone)}${attr("data-ramp", extra.ramp)}${attr("title", extra.title)}${extra.empty ? " data-empty" : ""} data-fh="${esc(extra.id)}">`;
@@ -248,11 +249,11 @@ const options = {
   },
 };
 
-const entityName = (e) => `<span class="fh-value__name">${esc(e.label)}</span>`;
-const who = (e, desc = e.description) => `<span class="fh-entity__who"><b>${esc(e.label)}</b>${desc ? `<small>${esc(desc)}</small>` : ""}</span>`;
+const entityName = (e) => `<span class="fh-value__name" title="${esc(e.label)}">${esc(e.label)}</span>`;
+const who = (e, desc = e.description) => `<span class="fh-entity__who"><b title="${esc(e.label)}">${esc(e.label)}</b>${desc ? `<small title="${esc(desc)}">${esc(desc)}</small>` : ""}</span>`;
 const refLink = (e, key, o) => {
   const href = e.href ?? o.opts.href ?? null;
-  const inner = `<span class="fh-ref__label">${esc(e.label)}</span>${key && e.key ? `<code class="fh-ref__key">${esc(e.key)}</code>` : ""}`;
+  const inner = `<span class="fh-ref__label" title="${esc(e.label)}">${esc(e.label)}</span>${key && e.key ? `<code class="fh-ref__key">${esc(e.key)}</code>` : ""}`;
   if (e.gone) return `<span class="fh-ref fh-ref--gone" title="This record was removed">${inner}<span class="fh-ref__note">removed</span></span>`;
   return href || e.sidecar ? `<a class="fh-ref"${attr("href", href ?? "#")}${attr("data-sidecar", e.sidecar)}>${inner}</a>` : `<span class="fh-ref">${inner}</span>`;
 };
@@ -273,7 +274,7 @@ const entity = {
     const stat = e.stat ? `<span class="fh-entity__stat"${attr("data-tone", e.stat.tone)}><b>${esc(e.stat.value)}</b>${e.stat.label ? `<small>${esc(e.stat.label)}</small>` : ""}</span>` : "";
     return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}${stat}</span></div>`;
   }),
-  chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
+  chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm fh-chip--avatar">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
   stack: (o) => {
     const items = list(o.value).map(entityOf).filter(Boolean), n = maxOf(o.r, o.opts, o.context, rules.avatars?.max ?? 3);
     const shown = items.slice(0, n), rest = items.length - shown.length;
@@ -433,13 +434,24 @@ const text = {
 const shortCode = (s) => (s.length > 14 ? `${s.slice(0, 6)}…${s.slice(-4)}` : s);
 const code = {
   mono: (o) => `${rootOpen("span", o.r, "mono", o.opts, { id: o.id })}${esc(plainText(o.value))}</span>`.replace("fh-value--mono fh-value--mono", "fh-value--mono"),
-  copyable: (o) => { const s = plainText(o.value); return `${rootOpen("span", o.r, "copyable", o.opts, { id: o.id })}<code class="fh-kbd" title="${esc(s)}">${esc(shortCode(s))}</code><button class="fh-value__action" type="button" aria-label="${esc(`Copy ${o.label}`.trim())}" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)">${icon("copy")}</button></span>`; },
+  copyable: (o) => { const s = plainText(o.value); return `${rootOpen("span", o.r, "copyable", o.opts, { id: o.id })}<code class="fh-kbd" title="${esc(s)}">${esc(shortCode(s))}</code>${copyButton(o)}</span>`; },
   masked: (o) => { const last = String(o.value?.last4 ?? plainText(o.value).slice(-4)); return `${rootOpen("span", o.r, "masked", o.opts, { id: o.id })}<code class="fh-kbd" aria-label="${esc(`${o.label} ending ${last}`.trim())}"><span aria-hidden="true">••••••••</span>${esc(last)}</code></span>`; },
   "code-block": (o) => `${rootOpen("div", o.r, "code-block", o.opts, { id: o.id })}<figure class="fh-code"><pre><code>${esc(typeof o.value === "string" ? o.value : JSON.stringify(o.value, null, 2))}</code></pre></figure></div>`,
   "input-mono": (o) => field(o, `<input class="fh-input" type="text"${isEmpty(o.value) ? "" : ` value="${esc(plainText(o.value))}"`}${inputAttrs(o, o.label)}>`, ["fh-value--mono"]),
   "textarea-mono": (o) => field(o, `<textarea class="fh-textarea" rows="4"${inputAttrs(o, o.label)}>${esc(isEmpty(o.value) ? "" : typeof o.value === "string" ? o.value : JSON.stringify(o.value, null, 2))}</textarea>`, ["fh-value--mono"]),
   "key-field": (o) => code.masked(o),
+  // A branch: the git-branch icon, then the name on one line; the full name is the title.
+  branch: (o) => { const s = plainText(o.value); return `${rootOpen("span", o.r, "branch", o.opts, { id: o.id })}${icon("git-branch")}<span class="fh-value__name" title="${esc(s)}">${esc(s)}</span></span>`; },
+  // A path: its last two segments after …/, the full path the title. path-copy adds the copyable's copy control.
+  path: (o) => `${rootOpen("span", o.r, "path", o.opts, { id: o.id })}${pathName(plainText(o.value))}</span>`,
+  "path-copy": (o) => `${rootOpen("span", o.r, "path-copy", o.opts, { id: o.id })}${pathName(plainText(o.value))}${copyButton(o)}</span>`,
 };
+function pathName(s) {
+  const parts = s.split("/").filter(Boolean);
+  const short = parts.length > 2 ? `…/${parts.slice(-2).join("/")}` : s;
+  return `<span class="fh-value__name" title="${esc(s)}">${esc(short)}</span>`;
+}
+function copyButton(o) { return `<button class="fh-value__action" type="button" aria-label="${esc(`Copy ${o.label}`.trim())}" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)">${icon("copy")}</button>`; }
 
 const series = { sparkline: number.sparkline, "sparkline-last": number["sparkline-last"] };
 

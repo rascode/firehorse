@@ -50,6 +50,8 @@ const prose = "Kickoff went well. The client wants the design system first, then
 function draw(row, variant, max, r, context) {
   // One entity (#199): the contract draws it, renderValue() in the context, so the page shows what a surface gets.
   if (entitySample[row]) return renderValue(sampleField[row], entitySample[row], context, { href: "#dr-grid" });
+  // Branches and paths (RS1) are drawn by the contract too: the icon, the mono name, the path's last two segments.
+  if (row === "code.branch" || row === "code.path") return renderValue(sampleField[row], sampleValue[row], context);
   const opt = (v) => r?.optionSet?.options.find((o) => o.value === v) ?? { value: v, label: v, tone: "neutral" };
   switch (`${row}:${variant}`) {
     case "option.ordinal.few:dot": case "option.ordinal:dot": return dot(opt(row === "option.ordinal" ? "l" : "high"));
@@ -173,7 +175,8 @@ const sampleField = {
   file: { semanticType: "media_file", multiple: true }, "link.email": { semanticType: "email" },
   "link.phone": { semanticType: "phone_e164" }, link: { semanticType: "url" },
   flag: { semanticType: "checkbox" }, prose: { semanticType: "description" }, "code.secret": { semanticType: "api_key_secret_ref" },
-  "code.json": { semanticType: "barcode_metadata", readOnly: false }, code: { semanticType: "transaction_hash" }, "text.action": { semanticType: "computed_button" },
+  "code.json": { semanticType: "barcode_metadata", readOnly: false }, "code.branch": { semanticType: "git_branch", label: "Branch" },
+  "code.path": { semanticType: "file_path", label: "Path" }, code: { semanticType: "transaction_hash" }, "text.action": { semanticType: "computed_button" },
   text: { semanticType: "title" },
 };
 const sampleValue = {
@@ -186,6 +189,7 @@ const sampleValue = {
   image: imgOf("a"), images: imgSamples, document: docPreview,
   "link.email": "maya.chen@example.com", "link.phone": "+14005222613", link: "https://example.com/demo", flag: true,
   prose: "Kickoff went **well**. See [the brief](https://example.com).", "code.secret": "vault:7f3a", "code.json": { format: "ean13" },
+  "code.branch": "relay/rs1-fh-relay-sidecar-parts", "code.path": "apps/helm/scripts/relay-audit.mts",
   code: "0xef111265ee51e58e6709", "text.action": "Open", text: "Weekly review",
 };
 const nameOf = (field) => field.semanticType ?? field.optionSet?.key ?? field.key;
@@ -252,6 +256,17 @@ fill("dr-rules-list", rules.rules.map((r) => `<li>${esc(r)}</li>`).join(""));
 fill("dr-count-rows", String(rules.grid.length));
 fill("dr-count-new", String(rules.grid.filter((r) => /^Not in the approved grid/.test(r.note ?? "")).length));
 fill("dr-count-types", String(Object.keys(semanticTypes).length));
+
+// The avatar cascade (RS1, G4): a model with no image draws its family's mark, then its platform's, then initials.
+const family = { label: "Claude", image: "/img/samples/rs1-family-mark.svg" };
+const platform = { label: "Claude Code CLI", image: "/img/samples/rs1-platform-mark.svg" };
+const cascade = [
+  ["its own", { id: "cli", label: "Claude Code CLI", kind: "agent", image: platform.image }],
+  ["its family's", { id: "fable", label: "Claude Fable 5.1", kind: "model", fallback: family }],
+  ["its platform's", { id: "opus", label: "Claude Opus 5.5", kind: "model", fallback: { label: "Claude 5", fallback: platform } }],
+  ["initials", { id: "local", label: "Local Model", kind: "model", fallback: { label: "Local" } }],
+];
+fill("dr-cascade", cascade.map(([how, e]) => `<span class="site-dr__row">${renderValue(sampleField["entity.rich"], e, "record", { href: "#dr-cascade" })}<span class="site-dr__muted">${esc(how)}</span></span>`).join(""));
 
 // Dark / light: one Mode toggle for the grid and the types. The choice is remembered on this browser only.
 const frames = [...document.querySelectorAll("[data-dr-frame]")];

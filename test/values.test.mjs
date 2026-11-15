@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv/dist/2020.js";
-import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets, renderValue, variants, CHOICE_CONTEXTS, avatarOf, initialsOf, avatarMarkup, stackMarkup, AVATAR_KINDS } from "../src/js/values.js";
+import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets, renderValue, variants, CHOICE_CONTEXTS, avatarOf, initialsOf, avatarMarkup, avatarImageOf, stackMarkup, AVATAR_KINDS } from "../src/js/values.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const types = JSON.parse(readFileSync(join(root, "schema/semantic-types.json"), "utf8")).types;
@@ -19,8 +19,8 @@ t("fourteen shapes (series is the 14th), six contexts (text is the sixth)", () =
   assert.deepEqual([...DRAWN_CONTEXTS], ["cell", "record", "card", "metric", "form"]);
 });
 
-t("every one of the 127 semantic types has a shape and resolves in every context", () => {
-  assert.equal(types.length, 127);
+t("every one of the 129 semantic types has a shape and resolves in every context", () => {
+  assert.equal(types.length, 129);
   const used = new Set();
   for (const type of types) {
     assert.ok(SHAPES.includes(type.display?.shape), `${type.key} has no valid shape`);
@@ -445,6 +445,28 @@ t("a value can draw as a Cube: option, entity, money and number (VAL-1.7, 3.13, 
   assert.match(renderValue({ type: "number", tone: "sky" }, 1250, "cell", { variant: "cube" }), /data-fh="VAL-6\.7"><b class="fh-cube" data-tone="sky">1,250<\/b>/);
   for (const f of [status, { type: "currency" }, { type: "number" }, { semanticType: "entity_reference", entity: "brand" }]) assert.ok(variants(f, "cell").some((v) => v.variant === "cube"), JSON.stringify(f));
   assert.ok(!variants({ type: "currency" }, "cell").length || variants({ type: "currency" }, "cell")[0].variant !== "cube", "a cube is never the default");
+});
+
+t("a branch and a path draw in mono with the full value as their title (VAL-11.14 to 11.16, RS1)", () => {
+  const branch = { semanticType: "git_branch", label: "Branch" }, path = { semanticType: "file_path", label: "Path" };
+  assert.deepEqual(["cell", "record", "card", "form"].map((c) => resolveValue(branch, c).variant), ["branch", "branch", "branch", "input-mono"]);
+  assert.deepEqual(["cell", "record", "card", "form"].map((c) => resolveValue(path, c).variant), ["path", "path-copy", "path", "input-mono"]);
+  assert.match(renderValue(branch, "relay/rs1", "cell"), /fh-value--branch fh-value--mono" data-fh="VAL-11\.14"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"><\/i><span class="fh-value__name" title="relay\/rs1">relay\/rs1<\/span>/);
+  assert.match(renderValue(path, "apps/helm/scripts/claim.mts", "cell"), /data-fh="VAL-11\.15"><span class="fh-value__name" title="apps\/helm\/scripts\/claim\.mts">…\/scripts\/claim\.mts<\/span>/);
+  assert.match(renderValue(path, "README.md", "cell"), /title="README\.md">README\.md</, "a short path is shown whole");
+  assert.match(renderValue(path, "a/b/c.md", "record"), /data-fh="VAL-11\.16">.*…\/b\/c\.md<\/span><button class="fh-value__action" type="button" aria-label="Copy Path"/);
+  assert.equal(textOf(path, "a/b/c.md"), "a/b/c.md", "the text form is the full path");
+});
+
+t("the avatar cascade: own image, then the family's, then the platform's, then initials (G4, RS1)", () => {
+  const plat = { label: "CLI", image: "/p.svg" };
+  assert.equal(avatarImageOf({ label: "M", image: "/m.svg", fallback: plat })?.image, "/m.svg");
+  assert.equal(avatarImageOf({ label: "M", fallback: { label: "F", image: "/f.svg", fallback: plat } })?.image, "/f.svg");
+  assert.equal(avatarImageOf({ label: "M", fallback: { label: "F", fallback: plat } })?.image, "/p.svg");
+  assert.equal(avatarImageOf({ label: "M", fallback: { label: "F" } }), null);
+  assert.match(avatarMarkup({ label: "Claude Opus 5.5", kind: "agent", fallback: { label: "F", fallback: plat } }), /<img src="\/p\.svg"/);
+  assert.match(renderValue({ semanticType: "entity_reference", entity: "model" }, { id: 1, label: "Claude Opus 5.5", kind: "model", fallback: { label: "F", fallback: plat } }, "record"), /data-fh="VAL-3\.12"><span class="fh-avatar" data-kind="agent"><img src="\/p\.svg"/);
+  assert.match(renderValue({ semanticType: "entity_reference", entity: "model" }, { id: 1, label: "Local Model", kind: "model" }, "record"), />LM<\/span>/);
 });
 
 console.log(`values: ${n} checks passed`);

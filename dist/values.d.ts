@@ -22,7 +22,10 @@ export interface Avatar { kind: AvatarKind | null; shape: "circle" | "rounded" |
 export interface Entity {
   id: string | number; kind?: AvatarKind; label: string; description?: string; image?: string; initials?: string;
   tone?: Tone; key?: string; href?: string; sidecar?: string; stat?: { value: string | number; label?: string; tone?: Tone };
+  /** The mark to draw when the entity has no image of its own: a model's family, whose own fallback is its platform. */
+  fallback?: EntityFallback;
 }
+export interface EntityFallback { image?: string; label?: string; fallback?: EntityFallback }
 
 /** A field as an endpoint sends it next to its rows. */
 export interface ValueField {
@@ -102,6 +105,8 @@ export function avatarOf(kind?: string | null, variant?: string | null): Avatar;
 /** At most two letters: "Maya Chen" gives "MC". */
 export function initialsOf(name: string): string;
 /** One avatar with data-kind from the entity kind. */
+/** The image an entity's avatar shows: its own, else the first in its fallback chain (family, then platform); null for initials. */
+export function avatarImageOf(entity: Partial<Entity> | null | undefined): { image: string; label: string } | null;
 export function avatarMarkup(entity: Partial<Entity> & { name?: string }, opts?: { kind?: string; alt?: boolean }): string;
 /** At most three faces, then +N at the same size and shape. */
 export function stackMarkup(list: (Partial<Entity> & { name?: string })[], opts?: { kind?: string; max?: number }): string;

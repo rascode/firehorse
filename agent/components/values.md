@@ -112,6 +112,8 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | prose | `clamp-2` | `full` | `clamp-3` | · | `textarea` | `plain` | VAL-11 |
 | code, secret (vault reference) (Not in the approved grid: credential types store a vault reference, never the value) | `masked` | `masked` | `masked` | · | `key-field` | · | VAL-11 |
 | code, structured (JSON) (Not in the approved grid: JSON needs a block in the record) | `mono` | `code-block` | `mono` | · | `textarea-mono` | `json` | VAL-11 |
+| code, git branch | `branch` | `branch` | `branch` | · | `input-mono` | `value` | VAL-11 |
+| code, file path | `path` | `path-copy` | `path` | · | `input-mono` | `value` | VAL-11 |
 | code | `mono` | `copyable` | `mono` | · | `input-mono` | `value` | VAL-11 |
 | text, action (computed button) (computed_button is text / action: an action renderer, left out of sort, filter and export (decision 4)) | `action` | `action` | `action` | · | · | `label` | VAL-11 |
 | text (Not in the approved grid (the plan's grid had no text row)) | `line` | `line` | `line` | · | `input` | `value` | VAL-11 |
@@ -133,7 +135,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | VAL-10 Flag | flag | `check` CHO · `yes-no` · `count` · `switch` (edit) CHO |
 | VAL-11 Prose, text and code | prose | `clamp-2` · `clamp-3` · `full` · `textarea` (edit) FLD |
 | VAL-11 Prose, text and code | text | `line` · `input` (edit) FLD · `action` ACT |
-| VAL-11 Prose, text and code | code | `mono` DET · `copyable` DET · `masked` DET · `code-block` DET · `input-mono` (edit) FLD · `textarea-mono` (edit) FLD · `key-field` (edit) KEY |
+| VAL-11 Prose, text and code | code | `mono` DET · `copyable` DET · `masked` DET · `code-block` DET · `input-mono` (edit) FLD · `textarea-mono` (edit) FLD · `key-field` (edit) KEY · `branch` DET · `path` DET · `path-copy` DET |
 <!-- grid:end -->
 
 ## Fields
@@ -146,7 +148,7 @@ everything else narrows it.
 | `semanticType` | a `devops.semantic_types` key; decides the shape |
 | `type` | one of the datatable's 22 names; an alias for a semantic type (see below) |
 | `shape`, `kind` | set only when no semantic type fits |
-| `entity` | `person`, `org` or `record` for the entity shape |
+| `entity` | `person`, `org` or `record` for the entity shape; `application`, `organization`, `brand`, `model` or `agent` for a rich record |
 | `multiple` | several values: options, entities (stack), files |
 | `optionSet` | a key (`relay.status`) or an option set object; else `options`, else the semantic type's own options |
 | `currency` | for money (rule 4), unless the type names the sibling that holds it (`currencyFrom`: `fiat_currency_code`, `network_name` …) |
@@ -155,6 +157,18 @@ everything else narrows it.
 | `target` | a ratio with a target is a meter in a metric |
 | `readOnly` | computed and system types are read-only already |
 | `display` | `{ cell: "chip" }`: the field names a variant for a context; it must be a variant of its shape |
+
+An **entity** is `{ id, label, kind?, description?, image?, initials?, tone?, key?, href?, sidecar?, stat?, fallback? }`.
+`fallback` is the avatar cascade: `{ image?, label?, fallback? }`. An entity with no `image` draws the first image
+down its fallback chain, then its initials. A model with no mark of its own names its family, and the family names
+its platform: `{ label: "Claude Opus 5.5", kind: "model", fallback: { label: "Claude", fallback: { label: "Claude Code CLI", image: "/marks/cli.svg" } } }`
+draws the platform's mark. `avatarImageOf(entity)` returns the image the avatar shows (`{ image, label }`, or
+`null` for initials); `avatarMarkup()` and every VAL-3 variant use it.
+
+**Branches and paths** (`code.branch`, `code.path`): a `git_branch` value draws the `git-branch` icon and the name
+on one line (VAL-11.14 `branch`; it ends in an ellipsis, the full name is its title). A `file_path` value draws its
+last two segments after `…/` (VAL-11.15 `path`, the full path is its title); in a record it adds the copyable's copy
+control (VAL-11.16 `path-copy`), which copies the full path. Both are mono at the Value tier and type in `input-mono`.
 
 An **option set** is `{ key, label?, kind: "status" | "choice" | "code", ordinal?, generator?, options: [{ value, label?, tone?, state?, icon?, description?, live? }] }`.
 Sets are data (`devops.option_sets`): a semantic type names its set (`display.optionSet`), a field may name another.
@@ -267,10 +281,12 @@ Every relation cell and picker row reads this object and shows as much as its va
 | link | url | `domain_name`, `url` |
 | flag | · | `checkbox` |
 | code | address | `btc_wallet_address`, `eth_wallet_address`, `public_key`, `smart_contract_address`, `sol_wallet_address`, `token_contract_address`, `wallet_address` |
+| code | branch | `git_branch` |
 | code | hash | `block_hash`, `permaweb_data_hash`, `transaction_hash`, `wallet_signature` |
 | code | id | `assigned_id`, `computed_slug`, `external_id`, `qr_payload`, `short_code`, `slug`, `system_id`, `system_uuid`, `token_id` |
 | code | identifier | `barcode_value`, `duns_number`, `ein`, `gtin`, `isbn_10`, `isbn_13`, `tax_id_number`, `vat_number` |
 | code | json | `barcode_metadata`, `json_object` |
+| code | path | `file_path` |
 | code | secret | `access_token_ref`, `api_key_secret_ref`, `private_key_ref`, `secret_key_ref` |
 | series | · | `waveform_data` |
 <!-- types:end -->
@@ -1307,6 +1323,36 @@ Owners see the breach in their next relay readout.</textarea></div>
   <div class="fh-value fh-value--key-field fh-value--field" data-mode="read" data-fh="VAL-11.13"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="set" data-key-id="val-secret-1"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-1">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-1"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" data-keyfield-copy aria-label="Copy secret key" title="Copy"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></div></div></div>
   <div class="fh-value fh-value--key-field fh-value--field" data-mode="edit" data-fh="VAL-11.13"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-key-id="val-secret-2"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-2">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-2"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" aria-label="Replace secret key" title="Replace"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button></div><form class="fh-keyfield__editor" hidden><input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="sk_live_…" aria-label="Secret key"><button class="fh-button fh-button--sm" type="submit">Save</button></form></div></div>
   <div class="fh-value fh-value--key-field fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-11.13"><div class="fh-keyfield" data-fh-keyfield data-kind="credential" data-state="empty" data-key-id="val-secret-3"><div class="fh-keyfield__head"><span class="fh-keyfield__label" id="val-kf-3">Secret key</span><span class="fh-keyfield__type" data-kind="credential">Stripe secret</span></div><code class="fh-keyfield__name">ACME__STRIPE_SECRET_KEY</code><div class="fh-keyfield__value"><output class="fh-keyfield__mask" aria-labelledby="val-kf-3"><span class="fh-keyfield__dots" aria-hidden="true"></span><span class="fh-keyfield__last">4f2a</span></output><button class="fh-keyfield__action" type="button" aria-label="Replace secret key" title="Replace"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i></button></div><form class="fh-keyfield__editor" hidden><input class="fh-input" type="password" autocomplete="off" spellcheck="false" placeholder="sk_live_…" aria-label="Secret key"><button class="fh-button fh-button--sm" type="submit">Save</button></form></div></div>
+</div>
+```
+
+`VAL-11.14` Git branch · `code` `branch` · built from DET
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--branch fh-value--mono" data-fh="VAL-11.14"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span class="fh-value__name" title="relay/rs1-fh-relay-sidecar-parts">relay/rs1-fh-relay-sidecar-parts</span></span>
+  <span class="fh-value fh-value--branch fh-value--mono" data-mode="edit" data-fh="VAL-11.14"><input class="fh-value__input" type="text" value="relay/rs1-fh-relay-sidecar-parts" aria-label="Branch" spellcheck="false"></span>
+  <span class="fh-value fh-value--branch fh-value--mono fh-value--lg" data-fh="VAL-11.14"><i class="fh-icon fh-icon--git-branch" aria-hidden="true"></i><span class="fh-value__name" title="relay/rs1-fh-relay-sidecar-parts">relay/rs1-fh-relay-sidecar-parts</span></span>
+</div>
+```
+
+`VAL-11.15` File path, last two segments · `code` `path` · built from DET
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--path fh-value--mono" data-fh="VAL-11.15"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span></span>
+  <span class="fh-value fh-value--path fh-value--mono" data-mode="edit" data-fh="VAL-11.15"><input class="fh-value__input" type="text" value="apps/helm/scripts/relay-audit.mts" aria-label="Path" spellcheck="false"></span>
+  <span class="fh-value fh-value--path fh-value--mono fh-value--lg" data-fh="VAL-11.15"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span></span>
+</div>
+```
+
+`VAL-11.16` File path with copy · `code` `path-copy` · built from DET
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span><button class="fh-value__action" type="button" aria-label="Copy the path" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+  <span class="fh-value fh-value--path-copy fh-value--mono" data-mode="edit" data-fh="VAL-11.16"><input class="fh-value__input" type="text" value="apps/helm/scripts/relay-audit.mts" aria-label="Path" spellcheck="false"></span>
+  <span class="fh-value fh-value--path-copy fh-value--mono fh-value--lg" data-fh="VAL-11.16"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span><button class="fh-value__action" type="button" aria-label="Copy the path" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
 </div>
 ```
 <!-- parts:end -->

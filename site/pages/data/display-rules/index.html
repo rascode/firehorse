@@ -5,7 +5,7 @@
   "name": "Display rules",
   "tone": "sky",
   "title": "Display rules · Firehorse",
-  "description": "The data display contract's rule grid: every shape in every context, the text form of each value, every option set, and all 127 semantic types as resolveValue() resolves them.",
+  "description": "The data display contract's rule grid: every shape in every context, the text form of each value, every option set, and all 129 semantic types as resolveValue() resolves them.",
   "headline": "Display rules: one way to show a value",
   "lede": "Every shape in every context, read live from schema/display-rules.json, with the option sets the platform publishes from devops.option_sets. Updated for the merged plan (section 7): series, the text context, option sets and priority's ramp.",
   "styles": ["/display-rules.css"],
@@ -45,6 +45,8 @@
           <div class="site-dr__type-rows" id="dr-type-rows" aria-live="polite"></div>
         </div>
         <p>Avatars: inline 1.375rem, identity 2.25rem; circle for people, rounded square for orgs, agents and records; one hairline; stacks of 3 + N.</p>
+        <p>The avatar cascade: an entity with no <code>image</code> draws the first image down its <code>fallback</code> chain (a model's family, then its platform), then its initials. Drawn by <code>renderValue()</code> in the record context:</p>
+        <div class="site-dr__wrap" id="dr-cascade"></div>
         <p>The <b id="dr-count-w2b">7</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="violet">Section 7</span> come from the merged plan (Rascode, 2026-11-14 20:08 ET; the Sheet wins over migration 434): priority as an ordinal ramp, generated code sets, series as the 14th shape, durations and identifier-like numbers as numbers, and the computed button as an action. Status in a table cell is dot and word; chip in record, card and board. The <code>text</code> column is the sixth context: the plain string each value becomes for CSV export, <code>aria-label</code>, copy and search. A secret has none.</p>
         <p>The Values family (VAL-1 to VAL-11) is built (W2). Next, wave W3 puts the surfaces on it.</p>
       </div>
@@ -68,7 +70,7 @@
     </section>
 
     <section id="dr-types" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-types-title" data-fh-label="Semantic types">
-      <h2 id="dr-types-title">All <span id="dr-count-types">127</span> semantic types</h2>
+      <h2 id="dr-types-title">All <span id="dr-count-types">129</span> semantic types</h2>
       <p>Each type's display shape comes from the platform database (<code>devops.semantic_types</code>, migrations 434 and 435), published to <code>schema/semantic-types.json</code>. The variant in each column is what <code>resolveValue()</code> returns for that type alone.</p>
       <div class="site-dr__frame" id="dr-types-table" data-dr-frame data-fh-scheme="dark"><p class="site-dr__muted">Loading the types…</p></div>
     </section>

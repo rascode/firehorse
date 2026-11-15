@@ -78,15 +78,27 @@ const entityName = (e) => (e && typeof e === "object" ? String(e.label ?? e.name
 const kindAttr = (k) => (k ? ` data-kind="${k}"` : "");
 
 /**
+ * The image an entity's avatar shows (the avatar cascade): its own image, else the first image down its fallback
+ * chain, { image, label, fallback? } (a model with no mark draws its family's, then its platform's). null: initials.
+ */
+export function avatarImageOf(entity) {
+  for (let e = entity, n = 0; e && typeof e === "object" && n < 4; e = e.fallback, n++) {
+    if (e.image) return { image: String(e.image), label: String(e.label ?? e.name ?? "") };
+  }
+  return null;
+}
+
+/**
  * One avatar as markup, with data-kind written from the entity's kind (DR2). Its size comes from the context
  * (components/data/values.css), never from a size class here.
- *   entity  { label | name, image?, initials?, kind? } (the Entity of values.d.ts)
+ *   entity  { label | name, image?, initials?, kind?, fallback? } (the Entity of values.d.ts)
  *   opts    { kind (when the entity carries none), alt (true: the image names the entity; default "", the name is beside it) }
  */
 export function avatarMarkup(entity, opts = {}) {
   const { kind } = avatarOf(entity?.kind ?? opts.kind);
   const name = entityName(entity);
-  const face = entity?.image ? `<img src="${escHtml(entity.image)}" alt="${opts.alt ? escHtml(name) : ""}">` : escHtml(String(entity?.initials ?? initialsOf(name)).slice(0, rules.avatars.initials));
+  const img = avatarImageOf(entity);
+  const face = img ? `<img src="${escHtml(img.image)}" alt="${opts.alt ? escHtml(name) : ""}">` : escHtml(String(entity?.initials ?? initialsOf(name)).slice(0, rules.avatars.initials));
   return `<span class="fh-avatar"${kindAttr(kind)} title="${escHtml(name)}">${face}</span>`;
 }
 
