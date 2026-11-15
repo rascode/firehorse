@@ -255,8 +255,8 @@
           </div>
         </div>
 
-        <div class="site-demo site-anchor" id="c-sidebar" data-fh-id="SBR" data-fh-groups="Sidebar|States">
-          <div class="site-demo__head"><h3>Sidebar</h3><p>The app shell sidebar with tile rows, etched panel and frost: three levels, a sliding area window and a rail of cubes. <code>data-fh-side</code> is open or rail. Metrics use <code>fh-sidebar__metric</code> with <code>data-kind</code> count, ratio or dot.</p></div>
+        <div class="site-demo site-anchor" id="c-sidebar" data-fh-id="SBR" data-fh-groups="Sidebar|States|Metric">
+          <div class="site-demo__head"><h3>Sidebar</h3><p>The app shell sidebar with tile rows, etched panel and frost: three levels, a sliding area window, a drag handle with snap-to-rail, and a rail of cubes. <code>data-fh-side</code> is open or rail. Metrics use <code>fh-sidebar__metric</code> with <code>data-kind</code> count, ratio, dot or percent and <code>data-display</code> bubble, bar or dot.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-stack fh-stack--lg">
 <nav class="fh-sidebar" aria-label="Helm" data-fh-side="open" data-fh-id="SBR-1.1" data-fh-name="Open" style="container: fh-sidebar-host / inline-size">
@@ -268,7 +268,7 @@
     <ul class="fh-sidebar__list">
       <li><a class="fh-sidebar__item" href="#c-sidebar" aria-current="page" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-sidebar__label">Overview</span></a></li>
       <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span><span class="fh-sidebar__label">Today</span></a></li>
-      <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Goals</span><span class="fh-sidebar__metric" data-kind="ratio">3<span class="fh-sidebar__metric-denom">/5</span></span></a></li>
+      <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Goals</span><span class="fh-sidebar__metric" data-kind="ratio" data-display="bar" style="--fh-metric-value: 60%" aria-label="3 of 5"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">3<span class="fh-sidebar__metric-denom">/5</span></span></span></a></li>
       <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="violet"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--smartphone" aria-hidden="true"></i></span><span class="fh-sidebar__label">Native</span></a></li>
     </ul>
     <section class="fh-sidebar__group">
@@ -276,8 +276,8 @@
       <ul class="fh-sidebar__list">
         <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="teal"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--map" aria-hidden="true"></i></span><span class="fh-sidebar__label">Roadmap</span></a></li>
         <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="violet"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--workflow" aria-hidden="true"></i></span><span class="fh-sidebar__label">Flow</span></a></li>
-        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--zap" aria-hidden="true"></i></span><span class="fh-sidebar__label">Actions</span><span class="fh-sidebar__metric" data-kind="count">7</span></a></li>
-        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--repeat" aria-hidden="true"></i></span><span class="fh-sidebar__label">Relays</span><span class="fh-sidebar__metric" data-kind="count">2</span></a></li>
+        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--zap" aria-hidden="true"></i></span><span class="fh-sidebar__label">Actions</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" aria-label="7 actions">7</span></a></li>
+        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--repeat" aria-hidden="true"></i></span><span class="fh-sidebar__label">Relays</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" aria-label="2 relays">2</span></a></li>
       </ul>
     </section>
     <section class="fh-sidebar__group">
@@ -297,7 +297,7 @@
     <section class="fh-sidebar__group">
       <button class="fh-sidebar__group-head" type="button" aria-expanded="true"><span class="fh-sidebar__index">08</span><span>Security</span><i class="fh-icon fh-icon--chevron-down fh-sidebar__chevron" aria-hidden="true"></i></button>
       <ul class="fh-sidebar__list">
-        <li><button class="fh-sidebar__item" type="button" aria-expanded="false" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--lock" aria-hidden="true"></i></span><span class="fh-sidebar__label">Keys</span><span class="fh-sidebar__metric" data-kind="count" data-tone="danger">4</span></button></li>
+        <li><button class="fh-sidebar__item" type="button" aria-expanded="false" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--lock" aria-hidden="true"></i></span><span class="fh-sidebar__label">Keys</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" data-tone="danger" aria-label="4 keys">4</span></button></li>
         <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="teal"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--lock-open" aria-hidden="true"></i></span><span class="fh-sidebar__label">Access</span></a></li>
         <li><span class="fh-sidebar__item fh-sidebar__item--soon" data-tone="violet"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span><span class="fh-sidebar__label">IAM</span><span class="fh-badge">Soon</span></span></li>
       </ul>
@@ -313,6 +313,7 @@
       </span>
     </span>
   </div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
 </nav>
 
 <nav class="fh-sidebar" aria-label="Helm" data-fh-side="rail" data-fh-id="SBR-1.2" data-fh-name="Rail" style="container: fh-sidebar-host / inline-size">
@@ -332,8 +333,8 @@
       <ul class="fh-sidebar__list">
         <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="teal"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--map" aria-hidden="true"></i></span><span class="fh-sidebar__label">Roadmap</span></a></li>
         <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="violet"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--workflow" aria-hidden="true"></i></span><span class="fh-sidebar__label">Flow</span></a></li>
-        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--zap" aria-hidden="true"></i></span><span class="fh-sidebar__label">Actions</span><span class="fh-sidebar__metric" data-kind="count">7</span></a></li>
-        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--repeat" aria-hidden="true"></i></span><span class="fh-sidebar__label">Relays</span><span class="fh-sidebar__metric" data-kind="count">2</span></a></li>
+        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--zap" aria-hidden="true"></i></span><span class="fh-sidebar__label">Actions</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" aria-label="7 actions">7</span></a></li>
+        <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--repeat" aria-hidden="true"></i></span><span class="fh-sidebar__label">Relays</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" aria-label="2 relays">2</span></a></li>
       </ul>
     </section>
     <section class="fh-sidebar__group">
@@ -353,6 +354,7 @@
     </section>
   </div>
   <div class="fh-sidebar__foot"><span class="fh-avatar fh-avatar--xs fh-avatar--circle" aria-hidden="true">R</span></div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
 </nav>
 
 <nav class="fh-sidebar" aria-label="Helm keys" data-fh-side="open" data-fh-id="SBR-1.3" data-fh-name="Window" style="container: fh-sidebar-host / inline-size; min-block-size: 22rem">
@@ -364,7 +366,7 @@
     <ul class="fh-sidebar__list" inert>
       <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-sidebar__label">Overview</span></a></li>
       <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span><span class="fh-sidebar__label">Today</span></a></li>
-      <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Goals</span><span class="fh-sidebar__metric" data-kind="ratio">3<span class="fh-sidebar__metric-denom">/5</span></span></a></li>
+      <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Goals</span><span class="fh-sidebar__metric" data-kind="ratio" data-display="bar" style="--fh-metric-value: 60%" aria-label="3 of 5"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">3<span class="fh-sidebar__metric-denom">/5</span></span></span></a></li>
     </ul>
     <section class="fh-sidebar__group" inert>
       <button class="fh-sidebar__group-head" type="button" aria-expanded="true"><span class="fh-sidebar__index">08</span><span>Security</span><i class="fh-icon fh-icon--chevron-down fh-sidebar__chevron" aria-hidden="true"></i></button>
@@ -414,6 +416,24 @@
   </div>
 </nav>
 
+<div class="fh-cluster" style="flex-wrap: wrap; gap: var(--fh-gap-sectioned); align-items: flex-start" data-fh-id="SBR-1.4" data-fh-name="Resize">
+<nav class="fh-sidebar" aria-label="13rem" data-fh-side="open" style="container: fh-sidebar-host / inline-size; --fh-sidebar-width: 13rem">
+  <div class="fh-sidebar__head"><span class="fh-sidebar__index">13</span><button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list"><li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-sidebar__label">Min width</span></a></li></ul></div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
+</nav>
+<nav class="fh-sidebar" aria-label="15rem snap preview" data-fh-side="open" data-fh-snap style="container: fh-sidebar-host / inline-size; --fh-sidebar-width: 15rem">
+  <div class="fh-sidebar__head"><span class="fh-sidebar__index">15</span><button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list"><li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span><span class="fh-sidebar__label">Default</span></a></li></ul></div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
+</nav>
+<nav class="fh-sidebar" aria-label="24rem" data-fh-side="open" style="container: fh-sidebar-host / inline-size; --fh-sidebar-width: 24rem">
+  <div class="fh-sidebar__head"><span class="fh-sidebar__index">24</span><button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list"><li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="violet"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--workflow" aria-hidden="true"></i></span><span class="fh-sidebar__label">Max width</span></a></li></ul></div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
+</nav>
+</div>
+
 <div class="fh-cluster" style="flex-wrap: wrap; gap: var(--fh-gap-related); align-items: stretch" data-fh-id="SBR-2.1" data-fh-name="States">
   <a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber" style="inline-size: 12rem"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span><span class="fh-sidebar__label">Default</span></a>
   <a class="fh-sidebar__item" href="#c-sidebar" data-tone="teal" data-contains-active="true" style="inline-size: 12rem"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--map" aria-hidden="true"></i></span><span class="fh-sidebar__label">Contains active</span></a>
@@ -421,6 +441,47 @@
   <span class="fh-sidebar__item fh-sidebar__item--soon" data-tone="violet" style="inline-size: 12rem"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span><span class="fh-sidebar__label">IAM</span><span class="fh-badge">Soon</span></span>
   <a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky" style="inline-size: 12rem"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--lock" aria-hidden="true"></i></span><span class="fh-sidebar__label">Count</span><span class="fh-sidebar__metric" data-kind="count" data-tone="danger">4</span></a>
   <a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime" style="inline-size: 12rem"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Ratio</span><span class="fh-sidebar__metric" data-kind="ratio">3<span class="fh-sidebar__metric-denom">/5</span></span></a>
+</div>
+
+<div class="fh-stack fh-stack--lg" data-fh-id="SBR-3" data-fh-name="Metric">
+<div class="fh-cluster" style="flex-wrap: wrap; gap: var(--fh-gap-sectioned); align-items: flex-start" data-fh-id="SBR-3.1" data-fh-name="Bubble">
+<nav class="fh-sidebar" aria-label="Bubble open" data-fh-side="open" style="container: fh-sidebar-host / inline-size">
+  <div class="fh-sidebar__head"><span class="fh-sidebar__index">Open</span></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list">
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i></span><span class="fh-sidebar__label">Count</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" aria-label="12 items">12</span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Ratio</span><span class="fh-sidebar__metric" data-kind="ratio" data-display="bubble" aria-label="3 of 5">3<span class="fh-sidebar__metric-denom">/5</span></span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--alert-triangle" aria-hidden="true"></i></span><span class="fh-sidebar__label">Warn</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" data-tone="warn" aria-label="3 warnings">3</span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="rose"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--lock" aria-hidden="true"></i></span><span class="fh-sidebar__label">Danger</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" data-tone="danger" aria-label="9 alerts">9</span></a></li>
+  </ul></div>
+</nav>
+<nav class="fh-sidebar" aria-label="Bubble rail" data-fh-side="rail" style="container: fh-sidebar-host / inline-size">
+  <div class="fh-sidebar__head"><button class="fh-sidebar__toggle" type="button" aria-expanded="false" aria-label="Expand sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list">
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="sky"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--hash" aria-hidden="true"></i></span><span class="fh-sidebar__label">Count</span><span class="fh-sidebar__metric" data-kind="count" data-display="bubble" aria-label="99 plus items">100</span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Ratio</span><span class="fh-sidebar__metric" data-kind="ratio" data-display="bubble" aria-label="3 of 5">3<span class="fh-sidebar__metric-denom">/5</span></span></a></li>
+  </ul></div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
+</nav>
+</div>
+<div class="fh-cluster" style="flex-wrap: wrap; gap: var(--fh-gap-sectioned); align-items: flex-start" data-fh-id="SBR-3.2" data-fh-name="Bar">
+<nav class="fh-sidebar" aria-label="Bar open" data-fh-side="open" style="container: fh-sidebar-host / inline-size">
+  <div class="fh-sidebar__head"><span class="fh-sidebar__index">Open</span></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list">
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="neutral"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--activity" aria-hidden="true"></i></span><span class="fh-sidebar__label">Empty</span><span class="fh-sidebar__metric" data-kind="percent" data-display="bar" style="--fh-metric-value: 0%" aria-label="0 percent"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">0%</span></span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Goals</span><span class="fh-sidebar__metric" data-kind="ratio" data-display="bar" style="--fh-metric-value: 60%" aria-label="3 of 5"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">3<span class="fh-sidebar__metric-denom">/5</span></span></span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="amber"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i></span><span class="fh-sidebar__label">Warn</span><span class="fh-sidebar__metric" data-kind="percent" data-display="bar" data-tone="warn" style="--fh-metric-value: 80%" aria-label="80 percent"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">80%</span></span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="rose"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i></span><span class="fh-sidebar__label">Danger</span><span class="fh-sidebar__metric" data-kind="percent" data-display="bar" data-tone="danger" style="--fh-metric-value: 100%" aria-label="100 percent"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">100%</span></span></a></li>
+  </ul></div>
+</nav>
+<nav class="fh-sidebar" aria-label="Bar rail" data-fh-side="rail" style="container: fh-sidebar-host / inline-size">
+  <div class="fh-sidebar__head"><button class="fh-sidebar__toggle" type="button" aria-expanded="false" aria-label="Expand sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button></div>
+  <div class="fh-sidebar__body"><ul class="fh-sidebar__list">
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="lime"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><span class="fh-sidebar__label">Goals</span><span class="fh-sidebar__metric" data-kind="ratio" data-display="bar" style="--fh-metric-value: 60%" aria-label="3 of 5"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">3/5</span></span></a></li>
+    <li><a class="fh-sidebar__item" href="#c-sidebar" data-tone="rose"><span class="fh-sidebar__cube"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i></span><span class="fh-sidebar__label">Full</span><span class="fh-sidebar__metric" data-kind="percent" data-display="bar" data-tone="danger" style="--fh-metric-value: 100%" aria-label="100 percent"><span class="fh-sidebar__metric-track" aria-hidden="true"><span class="fh-sidebar__metric-fill"></span></span><span class="fh-sidebar__metric-bubble">100%</span></span></a></li>
+  </ul></div>
+  <div class="fh-sidebar__resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize sidebar"></div>
+</nav>
+</div>
 </div>
 </div>
           </div>
