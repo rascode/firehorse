@@ -43,8 +43,8 @@ function docCell(v) {
   const f = asFiles(v)[0];
   if (!f) return "";
   const prev = f.preview ? furl(f) : "";
-  if (prev) return `<span class="fh-cell__file">${thumbMarkup(f, { portrait: true })}<span>${esc(fname(f))}</span></span>`;
-  return `<span class="fh-pill fh-pill--link" title="${esc(fname(f))}">${esc(fext(fname(f)))}</span> <span>${esc(fname(f))}</span>`;
+  if (prev) return `<span class="fh-cell__file">${thumbMarkup({ ...f, url: prev, image: prev }, { portrait: true })}<span>${esc(fname(f))}</span></span>`;
+  return `<span class="fh-cell__file"><span class="fh-thumb fh-thumb--tile">${esc(fext(fname(f)))}</span><span>${esc(fname(f))}</span></span>`;
 }
 
 function fileUploadCell(table, f, row, v) {

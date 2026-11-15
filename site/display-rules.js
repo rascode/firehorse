@@ -4,7 +4,7 @@
 // resolveValue() resolves them. Everything on this page is read from the contract at load: change
 // display-rules.json (or publish the platform's option sets), run node scripts/value-rules.mjs, reload.
 // Sample data only: people and figures are invented.
-import { resolveValue, textOf, avatarMarkup, stackMarkup, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
+import { resolveValue, textOf, avatarMarkup, stackMarkup, thumbMarkup, thumbClusterMarkup, formatBytes, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
 
 const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const icon = (n) => `<i class="fh-icon fh-icon--${n}" aria-hidden="true"></i>`;
@@ -31,6 +31,13 @@ const spark = (values) => {
 };
 const tags = ["demo", "featured", "internal", "beta", "q4"];
 const files = [["Proposal.pdf", "PDF", "412 KB"], ["Brief.docx", "DOCX", "38 KB"], ["Hero.png", "PNG", "1.2 MB"], ["Budget.xlsx", "XLSX", "64 KB"]];
+const imgOf = (n, alt) => ({ name: `dr4-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp`, alt: alt ?? `Sample ${n.toUpperCase()}`, bytes: 42000 + n.charCodeAt(0) * 100 });
+const imgSamples = ["a", "b", "c", "d", "e"].map((n) => imgOf(n));
+const docPreview = { name: "scope-of-work.pdf", preview: "/img/samples/dr4-a.webp", bytes: 212000 };
+const docPlain = { name: "brief.docx", bytes: 48000 };
+const mediaFrame = (file) => `<figure class="fh-card__media"><img src="${esc(fileUrl(file))}" alt="${esc(fileName(file))}"></figure>`;
+const fileUrl = (f) => (f?.url ?? f?.image ?? f?.preview ?? "");
+const fileName = (f) => (f?.name ?? "");
 const prose = "Kickoff went well. The client wants the design system first, then the marketing site on top of it, with a review every Friday and a shared board for open questions.";
 
 /** Markup for one variant of one row, for the row's sample field r (what resolveValue() returned). */
@@ -98,15 +105,25 @@ function draw(row, variant, max, r) {
     case "temporal:date-picker": return input("2026-11-14T17:01", "datetime-local");
     case "file:type-chip": return files.slice(0, max).map((f) => chip(f[1])).join(" ") + (files.length > max ? ` ${chip(`+${files.length - max}`)}` : "");
     case "file:file-row": return `<span class="site-dr__row">${icon("file-text")}<b>Proposal.pdf</b><span class="site-dr__muted">412 KB</span></span>`;
-    case "file:thumb": return `<span class="fh-thumb fh-thumb--tile">PNG</span>`;
-    case "file:thumbs": return `<span class="fh-thumbs-row"><span class="fh-thumb fh-thumb--tile">A</span><span class="fh-thumb fh-thumb--tile">B</span><span class="fh-thumb fh-thumb--tile fh-thumb--more">+2</span></span>`;
-    case "file:preview": return `<span class="site-dr__row"><span class="fh-thumb fh-thumb--lg fh-thumb--tile">IMG</span><span><b>hero.webp</b><span class="site-dr__muted">48 KB</span></span></span>`;
-    case "file:gallery": return `<span class="fh-thumb-gallery"><span class="fh-thumb fh-thumb--tile">A</span><span class="fh-thumb fh-thumb--tile">B</span><span class="fh-thumb fh-thumb--tile">C</span></span>`;
+    case "file:thumb": return thumbMarkup(imgOf("a"));
+    case "file:thumbs": return thumbClusterMarkup(imgSamples, { max });
+    case "file:preview": return `<span class="site-dr__row">${thumbMarkup(imgOf("a"), { lg: true })}<span><b>dr4-a.webp</b><span class="site-dr__muted">${formatBytes(imgOf("a").bytes)}</span></span></span>`;
+    case "file:gallery": return `<span class="fh-thumb-gallery">${imgSamples.slice(0, 3).map((f) => thumbMarkup(f)).join("")}</span>`;
     case "file:count": return num("4 files");
     case "file:dropzone": return `<div class="fh-dropzone fh-dropzone--compact"><span class="fh-dropzone__title">Drop files or browse</span></div>`;
-    case "image:thumb": case "image:preview": case "image:dropzone": case "images:thumbs": case "images:gallery": case "images:dropzone":
-    case "document:type-chip": case "document:preview": case "document:dropzone": case "document:thumb": case "document:count":
-      return draw("file", variant.split(":")[1], max, r);
+    case "image:thumb": return thumbMarkup(imgOf("a"));
+    case "image:preview": return `<span class="site-dr__row">${thumbMarkup(imgOf("a"), { lg: true })}<span><b>dr4-a.webp</b><span class="site-dr__muted">${formatBytes(imgOf("a").bytes)}</span></span></span>`;
+    case "image:media": return mediaFrame(imgOf("a"));
+    case "image:dropzone": return `<label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><span class="fh-dropzone__title">Replace or remove</span>${thumbMarkup(imgOf("a"), { open: false })}</label>`;
+    case "images:thumbs": return thumbClusterMarkup(imgSamples, { max });
+    case "images:gallery": return `<span class="fh-thumb-gallery">${imgSamples.map((f) => thumbMarkup(f)).join("")}</span>`;
+    case "images:media-badge": return `<span class="fh-value fh-value--media-badge">${mediaFrame(imgOf("a"))}<span class="fh-badge">+2</span></span>`;
+    case "images:dropzone": return `<label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><span class="fh-dropzone__title">Add images</span><span class="fh-thumb-gallery">${imgSamples.slice(0, 2).map((f) => thumbMarkup(f, { open: false })).join("")}</span></label>`;
+    case "images:count": return num(`${imgSamples.length} files`);
+    case "document:doc-cell": return `<span class="site-dr__stack"><span class="site-dr__row">${thumbMarkup({ ...docPreview, url: docPreview.preview }, { portrait: true })}<b>${esc(docPreview.name)}</b></span><span class="site-dr__row">${chip("DOCX")} <b>${esc(docPlain.name)}</b></span></span>`;
+    case "document:doc-portrait": return `<span class="site-dr__row">${thumbMarkup({ ...docPreview, url: docPreview.preview }, { portrait: true, lg: true })}<span><b>${esc(docPreview.name)}</b><span class="site-dr__muted">${formatBytes(docPreview.bytes)} · PDF</span></span></span>`;
+    case "document:dropzone": return `<div class="fh-dropzone fh-dropzone--compact"><span class="fh-dropzone__title">Drop a document</span></div>`;
+    case "document:count": return num("2 files");
     case "link.email:email": return `<a href="mailto:maya.chen@example.com">maya.chen@example.com</a>`;
     case "link.email:link-chip": return chip("maya.chen@example.com", "sky", `${icon("at-sign")} `);
     case "link.email:email-input": return input("maya.chen@example.com", "email");
@@ -164,7 +181,9 @@ const sampleValue = {
   option: "ean13", options: ["demo", "featured", "internal"], entities: people.slice(0, 3).map(([label], id) => ({ id, label })), "entity.person": { id: 1, label: "Maya Chen" },
   "entity.record": { id: 14, label: "Harbor index refresh" }, money: 12480.5, ratio: 69, series: [4, 7, 5, 9, 8, 12, 10, 14], "number.duration": 30840,
   "number.id": 11155111, number: 1411, "temporal.date": "2026-11-27", "temporal.time": "09:27:00", temporal: "2026-11-14T22:01:00Z",
-  file: files.map(([name]) => ({ name })), "link.email": "maya.chen@example.com", "link.phone": "+14005222613", link: "https://example.com/demo", flag: true,
+  file: files.map(([name]) => ({ name })),
+  image: imgOf("a"), images: imgSamples, document: docPreview,
+  "link.email": "maya.chen@example.com", "link.phone": "+14005222613", link: "https://example.com/demo", flag: true,
   prose: "Kickoff went **well**. See [the brief](https://example.com).", "code.secret": "vault:7f3a", "code.json": { format: "ean13" },
   code: "0xef111265ee51e58e6709", "text.action": "Open", text: "Weekly review",
 };

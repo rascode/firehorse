@@ -110,9 +110,9 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | temporal, date | `date-relative` | `date` | `relative` | `relative` | `date-picker` | `iso-date` | VAL-7 |
 | temporal, time of day (Not in the approved grid: a time of day has no relative form) | `time` | `time` | `time` | · | `time-input` | `time` | VAL-7 |
 | temporal, moment | `date-relative` | `datetime` | `relative` | `relative` | `date-picker` | `iso-datetime` | VAL-7 |
-| images, several | `thumbs` +N after 3 | `gallery` | `thumbs` | `count` | `dropzone` | `file-names` | VAL-8 |
-| image | `thumb` | `preview` | `thumb` | `thumb` | `dropzone` | `file-names` | VAL-8 |
-| document | `type-chip` | `preview` | `thumb` | `count` | `dropzone` | `file-names` | VAL-8 |
+| images, several | `thumbs` +N after 3 | `gallery` | `media-badge` | `count` | `dropzone` | `file-names` | VAL-8 |
+| image | `thumb` | `preview` | `media` | `thumb` | `dropzone` | `file-names` | VAL-8 |
+| document | `doc-cell` | `doc-portrait` | `doc-portrait` | `count` | `dropzone` | `file-names` | VAL-8 |
 | file | `type-chip` +N after 3 | `file-row` | `thumb` | `count` | `dropzone` | `file-names` | VAL-8 |
 | link, email | `email` | `email` | `link-chip` | · | `email-input` | `value` | VAL-9 |
 | link, phone | `phone` | `phone` | `link-chip` | · | `phone-input` | `value` | VAL-9 |
@@ -137,7 +137,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD · `duration` · `duration-input` (edit) FLD |
 | VAL-6 Number | series | `sparkline` MET · `sparkline-last` MET |
 | VAL-7 Temporal | temporal | `date` · `date-relative` · `relative` · `datetime` · `range` · `overdue` · `time` · `duration` · `date-picker` (edit) FLD · `time-input` (edit) FLD · `duration-input` (edit) FLD |
-| VAL-8 File | file | `type-chip` CHP · `thumb` THB · `thumbs` THB · `file-row` SFL · `count` · `dropzone` (edit) UPL · `preview` THB, SFL · `gallery` THB |
+| VAL-8 File | file | `type-chip` CHP · `thumb` THB · `thumbs` THB · `file-row` SFL · `count` · `dropzone` (edit) UPL · `preview` THB, SFL · `gallery` THB · `media` THB · `media-badge` THB · `doc-cell` CHP, THB · `doc-portrait` THB |
 | VAL-9 Link | link | `link` ACT · `email` ACT · `phone` ACT · `link-chip` CHP · `action` ACT · `url-input` (edit) FLD · `email-input` (edit) FLD · `phone-input` (edit) FLD |
 | VAL-10 Flag | flag | `check` CHO · `yes-no` · `count` · `switch` (edit) CHO |
 | VAL-11 Prose, text and code | prose | `clamp-2` · `clamp-3` · `full` · `textarea` (edit) FLD |
@@ -928,6 +928,46 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
   <span class="fh-value fh-value--thumbs" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
   <span class="fh-value fh-value--thumbs" data-mode="edit" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span><label class="fh-value__action" aria-label="Add an image" title="Add an image"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></span>
   <span class="fh-value fh-value--thumbs fh-value--lg" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
+</div>
+```
+
+`VAL-8.2` Media frame · `file` `media` · built from THB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--thumb" data-fh="VAL-8.2"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span></span>
+  <span class="fh-value fh-value--thumb fh-value--chevron" data-mode="edit" data-fh="VAL-8.2"><label class="fh-value__trigger" aria-label="Replace ceramic-jar.svg"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><input type="file" accept="image/*" hidden></label></span>
+  <span class="fh-value fh-value--thumb fh-value--lg" data-fh="VAL-8.2"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span></span>
+</div>
+```
+
+`VAL-8.3` Media frame, +N · `file` `media-badge` · built from THB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--thumbs" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
+  <span class="fh-value fh-value--thumbs" data-mode="edit" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span><label class="fh-value__action" aria-label="Add an image" title="Add an image"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></span>
+  <span class="fh-value fh-value--thumbs fh-value--lg" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
+</div>
+```
+
+`VAL-8.4` Document cell · `file` `doc-cell` · built from CHP, THB
+
+```html
+<div class="fh-stack">
+  <div class="fh-value fh-value--file-row" data-fh="VAL-8.4"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul></div>
+  <div class="fh-value fh-value--file-row" data-mode="edit" data-fh="VAL-8.4"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul><button class="fh-value__action" type="button" aria-label="Remove relay-report.md" title="Remove"><i class="fh-icon fh-icon--x" aria-hidden="true"></i></button><label class="fh-value__action" aria-label="Replace the file" title="Replace the file"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></div>
+  <div class="fh-value fh-value--file-row fh-value--lg" data-fh="VAL-8.4"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul></div>
+</div>
+```
+
+`VAL-8.2` Portrait preview · `file` `doc-portrait` · built from THB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--thumb" data-fh="VAL-8.2"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span></span>
+  <span class="fh-value fh-value--thumb fh-value--chevron" data-mode="edit" data-fh="VAL-8.2"><label class="fh-value__trigger" aria-label="Replace ceramic-jar.svg"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><input type="file" accept="image/*" hidden></label></span>
+  <span class="fh-value fh-value--thumb fh-value--lg" data-fh="VAL-8.2"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span></span>
 </div>
 ```
 

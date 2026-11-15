@@ -640,28 +640,29 @@ ready(() => {
   const mediaImg = mediaDlg.querySelector(".fh-media-view");
   let cluster = [];
   let clusterI = 0;
-  const showMedia = (url, alt, list) => {
+  let mediaOpener = null;
+  const showMedia = (url, alt, list, opener) => {
+    mediaOpener = opener ?? null;
     cluster = list?.length ? list : [url];
     clusterI = Math.max(0, cluster.indexOf(url));
     mediaImg.src = cluster[clusterI];
     mediaImg.alt = alt || "";
     if (!mediaDlg.open) mediaDlg.showModal();
   };
+  mediaDlg.addEventListener("close", () => { mediaOpener?.focus?.(); mediaOpener = null; });
   document.addEventListener("click", (e) => {
     const thumb = e.target.closest?.("[data-media-open]");
-    if (thumb) { e.preventDefault(); showMedia(thumb.dataset.mediaUrl, thumb.dataset.mediaAlt); return; }
-    const row = e.target.closest?.("[data-media-cluster]");
-    if (row) {
+    if (thumb) {
       e.preventDefault();
-      const list = row.dataset.mediaCluster.split("|").filter(Boolean);
-      const first = row.querySelector("[data-media-url]") || row.querySelector("img");
-      const url = first?.dataset?.mediaUrl || first?.src;
-      showMedia(url, first?.alt, list);
+      const row = thumb.closest?.("[data-media-cluster]");
+      const list = row?.dataset.mediaCluster?.split("|").filter(Boolean);
+      showMedia(thumb.dataset.mediaUrl, thumb.dataset.mediaAlt, list, thumb);
+      return;
     }
   });
   document.addEventListener("keydown", (e) => {
     if (!mediaDlg.open) return;
-    if (e.key === "Escape") { mediaDlg.close(); return; }
+    if (e.key === "Escape") { e.preventDefault(); mediaDlg.close(); return; }
     if (e.key === "ArrowRight" && cluster.length > 1) { clusterI = (clusterI + 1) % cluster.length; mediaImg.src = cluster[clusterI]; }
     if (e.key === "ArrowLeft" && cluster.length > 1) { clusterI = (clusterI - 1 + cluster.length) % cluster.length; mediaImg.src = cluster[clusterI]; }
   });

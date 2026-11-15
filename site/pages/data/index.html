@@ -78,8 +78,13 @@ table.addEventListener(<span class="v">"fh:row-open"</span>, (e) =&gt; drawer.sh
 
     <section id="upload-rows" class="fh-section fh-section--ruled site-anchor" data-tone="violet" data-fh-label="Upload" aria-labelledby="upload-rows-title">
       <h2 id="upload-rows-title">Upload in the datatable</h2>
-      <p>Columns with <code>upload: true</code> on image, images, document and file types: dashed add slot, replace on hover, progress from <code>setFileState</code>, and <code>fh:file-add</code> / <code>fh:file-remove</code> for the app. One row is pinned in the error state. Toggle row height with <code>data-fh-rows</code> (sm to xl) on the section wrapper in your own page; here each row is labelled by size.</p>
-      <div class="fh-dt site-dt" data-tone="violet" id="upload-rows-dt" aria-label="Upload demo"></div>
+      <p>Columns with <code>upload: true</code> on image, images, document and file types: dashed add slot, replace on hover, progress from <code>setFileState</code>, and <code>fh:file-add</code> / <code>fh:file-remove</code> for the app. Four tables, one per <code>data-fh-rows</code> step; thumb size follows <code>--fh-row-media</code> (1.5, 2, 2.75, 3.5rem).</p>
+      <div class="fh-stack fh-stack--lg" id="upload-row-heights">
+        <div data-fh-rows="sm" data-fh-scheme="dark"><div class="fh-dt site-dt site-dt--rows" data-tone="violet" id="upload-rows-sm" aria-label="Upload demo, row spacing sm"></div></div>
+        <div data-fh-rows="md" data-fh-scheme="dark"><div class="fh-dt site-dt site-dt--rows" data-tone="violet" id="upload-rows-md" aria-label="Upload demo, row spacing md"></div></div>
+        <div data-fh-rows="lg" data-fh-scheme="dark"><div class="fh-dt site-dt site-dt--rows" data-tone="violet" id="upload-rows-lg" aria-label="Upload demo, row spacing lg"></div></div>
+        <div data-fh-rows="xl" data-fh-scheme="dark"><div class="fh-dt site-dt site-dt--rows" data-tone="violet" id="upload-rows-xl" aria-label="Upload demo, row spacing xl"></div></div>
+      </div>
     </section>
 
     <section id="tables" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Table" aria-label="Table">

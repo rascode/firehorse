@@ -132,7 +132,7 @@ export function thumbClusterMarkup(files = [], opts = {}) {
   const label = rest > 0 ? `${names.slice(0, max).join(", ")} and ${rest} more` : names.join(", ");
   const urls = list.map((f) => fileUrlOf(f)).filter(Boolean);
   const open = urls.length ? ` data-media-cluster="${escHtml(urls.join("|"))}"` : "";
-  const faces = list.slice(0, max).map((f) => thumbMarkup(f, { open: false })).join("");
+  const faces = list.slice(0, max).map((f) => thumbMarkup(f, { open: true })).join("");
   const more = rest > 0 ? `<span class="fh-thumb fh-thumb--tile fh-thumb--more" aria-hidden="true">+${rest}</span>` : "";
   return `<span class="fh-thumbs-row" role="group" aria-label="${escHtml(label)}"${open}>${faces}${more}</span>`;
 }

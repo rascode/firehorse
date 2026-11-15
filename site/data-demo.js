@@ -159,37 +159,34 @@ if (el) {
   });
 }
 
-const uploadEl = document.getElementById("upload-rows-dt");
-if (uploadEl) {
-  const sample = (n) => ({ name: `sample-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp` });
-  const uploadRows = [
-    { id: "u1", label: "sm", photo: sample("a") },
-    { id: "u2", label: "md", photo: sample("b") },
-    { id: "u3", label: "lg", photo: sample("c") },
-    { id: "u4", label: "xl", photo: sample("d") },
-    { id: "u5", label: "error", photo: null },
+const sample = (n) => ({ name: `dr4-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp` });
+for (const size of ["sm", "md", "lg", "xl"]) {
+  const mount = document.getElementById(`upload-rows-${size}`);
+  if (!mount) continue;
+  const rows = [
+    { id: `${size}-filled`, slot: "Filled", photo: sample("a") },
+    { id: `${size}-empty`, slot: "Add", photo: null },
+    { id: `${size}-busy`, slot: "Uploading", photo: sample("b") },
   ];
-  const uploadTable = new FirehorseTable(uploadEl, {
-    title: "Upload by row height",
+  if (size === "xl") rows.push({ id: `${size}-error`, slot: "Error", photo: null });
+  const table = new FirehorseTable(mount, {
+    title: `data-fh-rows=${size}`,
     icon: "upload",
     tone: "violet",
-    primary: "label",
+    primary: "slot",
     pageSize: 10,
-    fields: [
-      { key: "label", label: "Rows", type: "text", width: "6rem" },
-      { key: "photo", label: "Photo", type: "image", upload: true, accept: "image/*", maxBytes: 2_000_000 },
-    ],
-    rows: uploadRows,
+    fields: [{ key: "slot", label: "State", type: "text", width: "7rem" }, { key: "photo", label: "Photo", type: "image", upload: true, accept: "image/*", maxBytes: 2_000_000 }],
+    rows,
   });
-  uploadTable.setFileState("u5", "photo", { error: "Use an image file", progress: null });
-  uploadEl.addEventListener("fh:file-add", (e) => {
+  table.setFileState(`${size}-busy`, "photo", { progress: 0.6, url: sample("b").url, error: null });
+  if (size === "xl") table.setFileState(`${size}-error`, "photo", { error: "Use an image file", progress: null });
+  mount.addEventListener("fh:file-add", (e) => {
     const { row, column, files } = e.detail;
     let p = 0;
     const tick = () => {
-      p = Math.min(1, p + 0.18);
-      uploadTable.setFileState(row.id, column, { progress: p, error: null });
-      if (p < 1) requestAnimationFrame(() => setTimeout(tick, 120));
-      else uploadTable.setFileState(row.id, column, { progress: 1, url: URL.createObjectURL(files[0]), error: null });
+      p = Math.min(1, p + 0.22);
+      table.setFileState(row.id, column, { progress: p, error: null, url: URL.createObjectURL(files[0]) });
+      if (p < 1) setTimeout(tick, 100);
     };
     tick();
   });
