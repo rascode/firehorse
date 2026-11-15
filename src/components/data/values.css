@@ -1,0 +1,328 @@
+/*
+ * Firehorse — Values (VAL)
+ * components/data · layer fh.components · docs /data/values/
+ *
+ * One part per way of drawing a single value, so a status, a person, an amount or a file looks the same on
+ * every surface (datatable, table, record table, metric, card, sidecar, form). Which variant a surface draws
+ * is never its own choice: resolveValue() (src/js/values.js) reads schema/display-rules.json and returns it.
+ * Values are built from the system's existing parts (chips, dots, avatars, entity rows, references, progress,
+ * ring, meter, sparkline, fields, tag field, checks and switches, range, dropzone, files, key fields); this
+ * file only lays them out and adds what no part has: alignment, figures, the empty dash, the edit affordance
+ * and the one size step. Agent doc: agent/components/values.md.
+ *
+ *   <span class="fh-value fh-value--dot" data-tone="sky" data-fh="VAL-1.1"><span class="fh-dot"></span>running</span>
+ *
+ * Groups: VAL-1 Option · VAL-2 Options · VAL-3 Entity · VAL-4 Money · VAL-5 Ratio · VAL-6 Number ·
+ * VAL-7 Temporal · VAL-8 File · VAL-9 Link · VAL-10 Flag · VAL-11 Prose, text and code.
+ *
+ * Read and edit (rule 6). Every variant has both states, at the same size, colour and position:
+ *   read   the value as it is drawn.
+ *   edit   data-mode="edit" on the root. A value chosen from a list gains a chevron and a real control
+ *          (a native <select class="fh-value__select"> that shows the chosen word, or a trigger
+ *          .fh-value__trigger that opens a list); a value you type becomes .fh-value__input, the same
+ *          text with an etched underline. An editable variant (select, picker, inputs, switch) is the
+ *          live control in edit and the same control, read-only, in read.
+ *   data-tone="option" on an edit root: its tone follows the chosen option's data-tone (utilities/tone.css),
+ *   so a status changes colour as it changes word, with no script.
+ *
+ * Shared modifiers: --end (numbers, right-aligned), --tabular (tabular figures), --mono (identifiers and
+ * money), --lg (the family's one size step). Empty is the root with data-empty holding an em dash (rule 7).
+ * Knobs: --fh-value-text, --fh-value-text-lg, --fh-value-avatar, --fh-value-avatar-lg, --fh-value-ring,
+ * --fh-value-ring-lg, --fh-value-thumb, --fh-value-thumb-lg, --fh-value-spark (the sparkline width).
+ */
+
+@layer fh.components {
+  /* —— Root: one set of measures for the whole family —— */
+  .fh-value {
+    --_text: var(--fh-value-text, var(--fh-text-small));
+    --_avatar: var(--fh-value-avatar, 1.5rem);
+    --_ring: var(--fh-value-ring, 2.5rem);
+    --_thumb: var(--fh-value-thumb, 2rem);
+    --_spark: var(--fh-value-spark, 6rem);
+    --fh-avatar-size: var(--_avatar);
+    --fh-ring-size: var(--_ring);
+    --fh-gauge-size: calc(var(--_ring) * 1.6);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: var(--fh-color-text);
+    font-size: var(--_text);
+    line-height: var(--fh-leading-snug);
+    vertical-align: middle;
+  }
+
+  .fh-value--lg {
+    --_text: var(--fh-value-text-lg, var(--fh-text-body));
+    --_avatar: var(--fh-value-avatar-lg, 2rem);
+    --_ring: var(--fh-value-ring-lg, 3.5rem);
+    --_thumb: var(--fh-value-thumb-lg, 2.75rem);
+    --_spark: var(--fh-value-spark-lg, 8rem);
+    gap: var(--fh-gap-grouped);
+  }
+
+  /* Block variants fill their slot: a full entity row, a file row, prose, a code block, a field. */
+  .fh-value:is(.fh-value--full, .fh-value--file-row, .fh-value--prose, .fh-value--code-block, .fh-value--field, .fh-value--bar, .fh-value--meter, .fh-value--range) {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  /* —— Shared modifiers —— */
+  .fh-value--end {
+    display: flex;
+    justify-content: flex-end;
+    text-align: end;
+  }
+
+  .fh-value--tabular { font-variant-numeric: tabular-nums; }
+
+  .fh-value--mono {
+    font-family: var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-none);
+  }
+
+  /* Rule 7: empty is a muted em dash, never a blank cell or null. */
+  .fh-value[data-empty] { color: var(--fh-color-text-muted); }
+
+  /* A value's quiet second part: a currency code, a unit, a relative date, a count. */
+  .fh-value__sub {
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+    white-space: nowrap;
+  }
+
+  .fh-value--lg .fh-value__sub { font-size: var(--fh-text-small); }
+
+  .fh-value__code {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    letter-spacing: var(--fh-tracking-mono);
+  }
+
+  .fh-value__name {
+    overflow: hidden;
+    min-inline-size: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* —— VAL-1 Option, VAL-2 Options: chips at the family's size —— */
+  .fh-value > .fh-dot { --fh-dot-size: 0.45em; }
+
+  .fh-value .fh-chip { font-size: var(--fh-text-label); }
+  .fh-value--lg .fh-chip { font-size: var(--fh-text-small); }
+
+  .fh-value > .fh-chips { flex-wrap: nowrap; }
+  .fh-value--chips-inline > .fh-chips { flex-wrap: wrap; }
+
+  /* The +N after the limit: a count, so a badge (the chip rules). */
+  .fh-value .fh-badge { font-variant-numeric: tabular-nums; }
+
+  /* —— VAL-3 Entity —— */
+  .fh-value > .fh-avatar,
+  .fh-value .fh-avatars > .fh-avatar { --fh-avatar-size: var(--_avatar); }
+
+  /* An avatar inside a chip sits at the chip's own height. */
+  .fh-value .fh-chip > .fh-avatar {
+    --fh-avatar-size: 1.4em;
+    margin-inline-start: calc(var(--fh-gap-bound) * -1);
+  }
+
+  /* The full row and the picker rows read the entity row (fh-entity) as it is; in read it is no control. */
+  .fh-value > .fh-entity {
+    --fh-avatar-size: var(--_avatar);
+    flex: 1 1 auto;
+    min-block-size: 0;
+    cursor: inherit;
+  }
+
+  .fh-value--lg .fh-entity__who > b { font-size: var(--fh-text-body); }
+  .fh-value--lg .fh-entity__who > small { font-size: var(--fh-text-small); }
+
+  /* —— VAL-4 Money, VAL-6 Number: the change beside the figure is the metric tile's delta —— */
+  .fh-value .fh-metric__delta { font-size: var(--fh-text-caption); }
+
+  /* —— VAL-5 Ratio —— */
+  .fh-value--bar > .fh-progress {
+    flex: 1 1 auto;
+    min-inline-size: 3rem;
+  }
+
+  .fh-value--bar > b,
+  .fh-value--meter > b {
+    flex: none;
+    min-inline-size: 4ch;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-weight-medium);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  .fh-value--meter > .fh-meter { flex: 1 1 auto; min-inline-size: 3rem; }
+
+  /* —— VAL-6 Number: a series as a sparkline (the metric tile's) —— */
+  .fh-value > .fh-sparkline {
+    flex: none;
+    inline-size: var(--_spark);
+    block-size: 1.5em;
+    color: var(--fh-tone, var(--fh-color-text-muted));
+  }
+
+  /* —— VAL-7 Temporal: overdue takes the danger tone, and says so in words too —— */
+  .fh-value--overdue { color: var(--fh-color-danger); }
+  .fh-value--overdue .fh-value__sub { color: inherit; }
+
+  /* —— VAL-8 File: a thumb is a square avatar frame holding the image —— */
+  .fh-value .fh-avatar--square { --fh-avatar-size: var(--_thumb); }
+  .fh-value--file-row > .fh-files { flex: 1 1 auto; }
+
+  /* —— VAL-10 Flag —— */
+  .fh-value--no { color: var(--fh-color-text-muted); }
+
+  /* —— VAL-11 Prose and code —— */
+  .fh-value--clamp-2,
+  .fh-value--clamp-3 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  .fh-value--clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+  .fh-value--clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+
+  .fh-value--prose {
+    display: block;
+    line-height: var(--fh-leading-normal);
+  }
+
+  .fh-value--code-block > .fh-code { flex: 1 1 auto; min-inline-size: 0; margin: 0; }
+
+  /* Copy and reveal sit after the code as a quiet icon button. */
+  .fh-value__action {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: 1.75em;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-subtle);
+    font: inherit;
+    cursor: var(--fh-cursor-action);
+    transition: color var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover { background-color: var(--fh-color-field-hover); color: var(--fh-color-text); }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  /* —— Edit (rule 6): the same part, with a chevron or a control —— */
+  .fh-value[data-mode="edit"] {
+    border-radius: var(--fh-radius-sm);
+    cursor: var(--fh-cursor-action);
+  }
+
+  /* The chevron of a value chosen from a list: after the value, or inside its chip. */
+  :is(.fh-value--chevron, .fh-value__trigger)::after,
+  .fh-value--chevron > .fh-chip::after {
+    content: "";
+    flex: none;
+    inline-size: 0.8em;
+    aspect-ratio: 1;
+    background-color: var(--fh-color-text-subtle);
+    mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+  }
+
+  .fh-value--chevron:has(> .fh-chip)::after { content: none; }
+
+  /* A native select that is the value's word: no box of its own, so it reads as the value. */
+  .fh-value__select {
+    appearance: none;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: inherit;
+    field-sizing: content;
+
+    &:focus-visible { outline: none; }
+  }
+
+  /* A value you type: the same text, with an etched underline that turns solid while you type. */
+  :is(input, textarea).fh-value__input {
+    min-inline-size: 2ch;
+    max-inline-size: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-radius: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    field-sizing: content;
+
+    &:hover { border-block-end-color: var(--fh-color-border-strong); }
+    &:focus { border-block-end-style: solid; border-block-end-color: var(--fh-color-focus); outline: none; }
+    &::placeholder { color: var(--fh-color-text-placeholder); }
+  }
+
+  textarea.fh-value__input {
+    inline-size: 100%;
+    resize: vertical;
+    line-height: inherit;
+  }
+
+  /* A trigger that opens a list (an entity, a file): the read look, as a button. */
+  .fh-value__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: inherit;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+  }
+
+  /* One focus ring for every edit root, round the whole value. */
+  .fh-value[data-mode="edit"]:has(:is(.fh-value__select, .fh-value__trigger):focus-visible) {
+    outline: var(--fh-focus-width) solid var(--fh-color-focus);
+    outline-offset: var(--fh-focus-offset);
+  }
+
+  .fh-value[data-mode="edit"]:has(.fh-value__select, .fh-value__trigger):hover .fh-chip,
+  .fh-value[data-mode="edit"]:has(.fh-value__select, .fh-value__trigger):hover::after { filter: brightness(1.15); }
+
+  /* An editable variant in read: the same control, read-only. */
+  .fh-value[data-mode="read"] :is(input, select, textarea, button):disabled { cursor: default; opacity: 1; }
+
+  /* The list an entity or file trigger opens is the entity picker's list, as it is. */
+  .fh-value > .fh-entity-picker__list { inline-size: var(--fh-value-list-width, 18rem); }
+
+  @media (forced-colors: active) {
+    :is(.fh-value--chevron, .fh-value__trigger)::after,
+    .fh-value--chevron > .fh-chip::after { background-color: ButtonText; }
+  }
+}

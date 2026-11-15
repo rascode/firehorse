@@ -31,6 +31,22 @@
   [data-tone="live"] { --fh-tone: var(--fh-color-live); }
   [data-tone="danger"] { --fh-tone: var(--fh-color-danger); }
 
+  /* The tone of the chosen option: data-tone="option" on an element whose select options or radios carry
+   * data-tone takes the tone of the one that is checked, so a status changes colour as it changes word,
+   * with no script (the Values edit state, VAL-1).
+   *   <span class="fh-value fh-value--dot" data-mode="edit" data-tone="option">…<select><option data-tone="lime">done</option>…</select></span> */
+  [data-tone="option"] { --fh-tone: var(--fh-tone-neutral); }
+  [data-tone="option"]:has(:checked[data-tone="neutral"]) { --fh-tone: var(--fh-tone-neutral); }
+  [data-tone="option"]:has(:checked[data-tone="sky"]) { --fh-tone: var(--fh-tone-sky); }
+  [data-tone="option"]:has(:checked[data-tone="lime"]) { --fh-tone: var(--fh-tone-lime); }
+  [data-tone="option"]:has(:checked[data-tone="orange"]) { --fh-tone: var(--fh-tone-orange); }
+  [data-tone="option"]:has(:checked[data-tone="teal"]) { --fh-tone: var(--fh-tone-teal); }
+  [data-tone="option"]:has(:checked[data-tone="fuchsia"]) { --fh-tone: var(--fh-tone-fuchsia); }
+  [data-tone="option"]:has(:checked[data-tone="violet"]) { --fh-tone: var(--fh-tone-violet); }
+  [data-tone="option"]:has(:checked[data-tone="rose"]) { --fh-tone: var(--fh-tone-rose); }
+  [data-tone="option"]:has(:checked[data-tone="amber"]) { --fh-tone: var(--fh-tone-amber); }
+  [data-tone="option"]:has(:checked[data-tone="accent"]) { --fh-tone: var(--fh-tone-accent); }
+
   .fh-tone-text {
     color: var(--fh-tone);
   }
