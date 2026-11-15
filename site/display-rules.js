@@ -247,16 +247,16 @@ setMode(start === "light" ? "light" : "dark");
   if (rowsEl) {
     const scopeBtns = [...document.querySelectorAll("#dr-type-scope button[data-scope]")];
     const sizes = [
-      ["0.6875rem", "--fh-text-micro"],
-      ["0.72rem", "--fh-text-label"],
-      ["0.78rem", "--fh-text-caption"],
-      ["0.88rem", "--fh-text-small"],
-      ["1rem", "--fh-text-body"],
-      ["1.05rem", "--fh-text-lede"],
-      ["1.15rem", "--fh-text-large"],
+      ["0.6875rem (micro)", "0.6875rem"],
+      ["0.72rem (label)", "0.72rem"],
+      ["0.78rem (caption)", "0.78rem"],
+      ["0.88rem (small)", "0.88rem"],
+      ["1rem (body)", "1rem"],
+      ["1.05rem (lede)", "1.05rem"],
+      ["1.15rem (large)", "1.15rem"],
     ];
-    const weights = [["300", "--fh-weight-light"], ["400", "--fh-weight-regular"], ["500", "--fh-weight-medium"], ["600", "--fh-weight-bold"]];
-    const tracks = [["-0.02em", "tightest"], ["-0.01em", "body"], ["0", "none"], ["0.02em", "mono"], ["0.04em", "snug"], ["0.06em", "wide"], ["0.08em", "wider"]];
+    const weights = [["300 light", "300"], ["400 regular", "400"], ["500 medium", "500"], ["600 bold", "600"]];
+    const tracks = [["-0.02em", "-0.02em"], ["-0.01em", "-0.01em"], ["0", "0"], ["0.02em", "0.02em"], ["0.04em", "0.04em"], ["0.06em", "0.06em"], ["0.08em", "0.08em"]];
     const sansFamilies = [
       ["Inter", '"Inter", ui-sans-serif, system-ui, sans-serif'],
       ["Geist", '"Geist", ui-sans-serif, system-ui, sans-serif'],
@@ -322,14 +322,16 @@ setMode(start === "light" ? "light" : "dark");
       const t = target();
       for (const row of TIER_ROWS) for (const f of row.fields) {
         const v = state[f.key];
-        if (v != null && v !== defaults[f.key]) t.style.setProperty(f.prop, v);
+        if (v != null && v !== "" && v !== defaults[f.key]) t.style.setProperty(f.prop, v);
         else t.style.removeProperty(f.prop);
       }
     };
     const persist = () => { try { localStorage.setItem(STORAGE, JSON.stringify(state)); } catch {} };
     const select = (id, label, key, options, val) => {
       const cur = val ?? state[key] ?? defaults[key];
-      const opts = options.map(([text, value]) => `<option value="${esc(value)}"${cur === value ? " selected" : ""}>${esc(text)}</option>`).join("");
+      const norm = (v) => String(v ?? "").replace(/\s+/g, " ").trim().replace(/^(-?)0\./, "$1.").replace(/^0em$/, "0");
+      const hit = options.some(([, value]) => norm(value) === norm(cur));
+      const opts = (hit ? "" : `<option value="" selected>Theme default</option>`) + options.map(([text, value]) => `<option value="${esc(value)}"${hit && norm(cur) === norm(value) ? " selected" : ""}>${esc(text)}</option>`).join("");
       return `<motionless-wrap class="fh-field"><label for="${id}">${esc(label)}</label><span class="fh-select-wrap"><select class="fh-select" id="${id}" data-type-key="${key}">${opts}</select></span></motionless-wrap>`;
     };
     rowsEl.innerHTML = TIER_ROWS.map((row) => `<fieldset class="site-dr__type-tier"><legend>${esc(row.legend)}</legend><div class="site-dr__type-sample-row" aria-hidden="true">${row.sample}</div><div class="site-dr__type-controls fh-cluster">${row.fields.map((f) => select(`dr-type-${f.key}`, f.label, f.key, f.options)).join("")}</div></fieldset>`).join("").replace(/motionless-wrap/g, "div");
