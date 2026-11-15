@@ -636,7 +636,7 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 
 ```html
 <div class="fh-stack fh-stack--lg">
-  <div class="fh-cluster" style="align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+  <div class="fh-cluster" style="align-items: start; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
@@ -713,7 +713,7 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 <div class="fh-stack fh-stack--lg">
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.1"></div>
-    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: start; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
@@ -759,7 +759,7 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 <div class="fh-stack fh-stack--lg">
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.2"></div>
-    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: start; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
@@ -805,7 +805,7 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
 <div class="fh-stack fh-stack--lg">
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.3"></div>
-    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: stretch; gap: var(--fh-gap-grouped); flex-wrap: wrap">
+    <div class="fh-cluster" style="position: relative; z-index: 1; align-items: start; gap: var(--fh-gap-grouped); flex-wrap: wrap">
     <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>

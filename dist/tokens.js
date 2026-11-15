@@ -509,6 +509,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "text"
   },
+  "--fh-text-hero": {
+    "$value": "clamp(2.6rem, 1rem + 5cqi, 5.6rem)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "text"
+  },
   "--fh-text-stat": {
     "$value": "clamp(2rem, 1.4rem + 3cqi, 3rem)",
     "$type": "dimension",

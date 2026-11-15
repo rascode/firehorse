@@ -17,11 +17,9 @@
   }
 
   /* —— Masthead ——
-   * A glass header: an etched edge, see-through fill with a blur behind
-   * it, and the stacking deck's caption inside (number on the left,
-   * title on the right, an etched rule under both; the number carries
-   * the tone, the rule stays grey). A backdrop behind the
-   * page shows through it, frosted.
+   * A frosted header: the new-look etched frost (raised surface at 88%, chrome blur), the etch
+   * through --fh-card-border-style, and the stacking deck's caption inside (number on the left,
+   * title on the right, a soft rule under both; the number carries the tone).
    *   <header class="fh-masthead" data-tone="amber">
    *     <p class="fh-masthead__caption"><span class="fh-masthead__index">07</span><span class="fh-masthead__title">Business</span></p>
    *     <div class="fh-masthead__foot">
@@ -29,22 +27,54 @@
    *       <div class="fh-masthead__tools">…chips, switches, buttons…</div>
    *     </div>
    *   </header>
-   * fh-masthead--bar is the one-line form for an app's top bar: smaller
-   * caption with no rule, an optional round mark first (the client's
-   * logo: <span class="fh-avatar fh-avatar--circle fh-masthead__mark">),
-   * tools on the same line, sticky. Fill and blur follow --fh-frost.
-   * fh-masthead--split (with --bar) puts the caption and the tools in two
-   * separate pills with the page showing between them.
-   * Knobs: --fh-masthead-fill, --fh-masthead-blur. */
+   * fh-masthead--bar is the one-line form for an app's top bar: the caption at the family text
+   * size with no rule, an optional round mark first (the client's logo:
+   * <span class="fh-avatar fh-avatar--circle fh-masthead__mark">), tools on the same line, sticky.
+   * fh-masthead--split (with --bar) puts the caption and the tools in two separate pills with the
+   * page showing between them.
+   *
+   * One set of values for every variant (Header, App bar, Summary chip), set once here, on the
+   * Segment recipe:
+   * --fh-masthead-text (h4, the bar's caption), --fh-masthead-caption-text (display, the Page's
+   * caption), --fh-masthead-small-text (caption, a qualifier after the title),
+   * --fh-masthead-value-text (type-value: the lead's title, crumb, chip values),
+   * --fh-masthead-label (label: meta, chip labels; mono caps), --fh-masthead-label-tracking (caps),
+   * --fh-masthead-label-weight (regular), --fh-masthead-weight (regular, the captions),
+   * --fh-masthead-tracking (heading, the captions), --fh-masthead-leading (snug),
+   * --fh-masthead-height (control-height: every bar's row, every chip), --fh-masthead-pad-block
+   * (gap-bound), --fh-masthead-pad-inline (inset-control), --fh-masthead-frame (item-frame: the ring
+   * round a bar's row, and the space between items in a row), --fh-masthead-gap (gap-related),
+   * --fh-masthead-inset (inset-tile, the Page's padding), --fh-masthead-etch (etch, the frame),
+   * --fh-masthead-rule (etch-soft, the rules inside), --fh-masthead-fill (the frost),
+   * --fh-masthead-blur (blur-chrome), --fh-masthead-icon (60%, the mark's glyph),
+   * --fh-masthead-z (raised, the sticky bars).
+   * Every bar is one outer size: a control-height row inside the frame ring and the etch (46px),
+   * whether it is the Bar, either Split pill or any App bar layout. Inside, every division keeps
+   * the family gap on both sides. */
   .fh-masthead {
-    --_fill: var(--fh-masthead-fill, calc(15% + clamp(0, var(--fh-frost, 0.6), 1) * 75%));
+    --_text: var(--fh-masthead-text, var(--fh-text-h4));
+    --_value: var(--fh-masthead-value-text, var(--fh-type-value));
+    --_label: var(--fh-masthead-label, var(--fh-text-label));
+    --_weight: var(--fh-masthead-weight, var(--fh-weight-regular));
+    --_leading: var(--fh-masthead-leading, var(--fh-leading-snug));
+    --_height: var(--fh-masthead-height, var(--fh-control-height));
+    --_pad-b: var(--fh-masthead-pad-block, var(--fh-gap-bound));
+    --_pad-i: var(--fh-masthead-pad-inline, var(--fh-inset-control));
+    --_frame: var(--fh-masthead-frame, var(--fh-item-frame));
+    --_gap: var(--fh-masthead-gap, var(--fh-gap-related));
+    --_line: var(--fh-masthead-etch, var(--fh-color-etch));
+    --_rule: var(--fh-masthead-rule, var(--fh-color-etch-soft));
+    --_fill: var(--fh-masthead-fill, color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent));
+    --_blur: var(--fh-masthead-blur, var(--fh-blur-chrome));
+
     display: grid;
-    gap: var(--fh-gap-grouped-wide);
-    padding: var(--fh-inset-card);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
-    border-radius: var(--fh-radius-lg);
-    background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
-    backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, 0.6), 1) * 32px))) saturate(1.4);
+    gap: var(--_gap);
+    padding: var(--fh-masthead-inset, var(--fh-inset-tile));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_line);
+    border-radius: var(--fh-radius-sm);
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: blur(var(--_blur)) saturate(1.15);
+    backdrop-filter: blur(var(--_blur)) saturate(1.15);
     container: fh-masthead / inline-size;
 
     & > * { margin: 0; min-inline-size: 0; }
@@ -54,14 +84,14 @@
     display: flex;
     align-items: end;
     justify-content: space-between;
-    gap: var(--fh-gap-grouped-wide);
-    padding-block-end: var(--fh-inset-control);
-    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    gap: var(--_gap);
+    padding-block-end: var(--_gap);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     font-family: var(--fh-font-display);
-    font-size: clamp(1.75rem, 6cqi, 4rem);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-heading);
-    line-height: 1;
+    font-size: var(--fh-masthead-caption-text, var(--fh-text-display));
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-masthead-tracking, var(--fh-tracking-heading));
+    line-height: var(--fh-leading-none);
   }
 
   .fh-masthead__index {
@@ -72,10 +102,10 @@
   .fh-masthead__title { text-align: end; text-wrap: balance; }
 
   .fh-masthead__mark {
-    --fh-avatar-size: var(--fh-avatar-md);
+    --fh-avatar-size: var(--_height);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 14%, var(--fh-color-surface));
     color: var(--fh-tone, var(--fh-color-text));
-    & > svg { inline-size: 60%; block-size: 60%; }
+    & > svg { inline-size: var(--fh-masthead-icon, 60%); block-size: var(--fh-masthead-icon, 60%); }
   }
 
   .fh-masthead__foot {
@@ -83,15 +113,17 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
+    gap: var(--_gap);
   }
 
   .fh-masthead__meta {
     margin: 0;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    letter-spacing: var(--fh-tracking-wider);
+    font-size: var(--_label);
+    font-weight: var(--fh-masthead-label-weight, var(--fh-weight-regular));
+    letter-spacing: var(--fh-masthead-label-tracking, var(--fh-tracking-caps));
+    line-height: var(--_leading);
     text-transform: uppercase;
   }
 
@@ -99,24 +131,26 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_frame);
     margin-inline-start: auto;
   }
 
-  /* Bar: one line, for an app's top bar. */
+  /* Bar: one line, for an app's top bar. The row is control-height inside the frame ring; the
+     caption's text sits the inline padding in from the etch, a mark sits in the ring. */
   .fh-masthead--bar {
     position: sticky;
     inset-block-start: var(--fh-gap-grouped);
-    z-index: 2;
+    z-index: var(--fh-masthead-z, var(--fh-z-raised));
     grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: var(--_height);
     align-items: center;
-    column-gap: var(--fh-gap-grouped);
-    padding: var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-tight) var(--fh-inset-card);
+    gap: var(--_gap);
+    padding: var(--_frame) var(--_frame) var(--_frame) calc(var(--_frame) + var(--_pad-i));
     border-radius: var(--fh-radius-pill);
 
     &:has(> .fh-masthead__mark) {
       grid-template-columns: auto minmax(0, 1fr) auto;
-      padding-inline-start: var(--fh-inset-tight);
+      padding-inline-start: var(--_frame);
     }
 
     & .fh-masthead__caption {
@@ -124,38 +158,42 @@
       align-items: baseline;
       padding-block-end: 0;
       border-block-end: 0;
-      font-size: var(--fh-text-h4);
+      font-size: var(--_text);
     }
     & .fh-masthead__title { text-align: start; }
     /* A qualifier after the title (a date, a count), smaller and quieter. */
-    & .fh-masthead__title > small { margin-inline-start: var(--fh-gap-bound); color: var(--fh-color-text-muted); font-size: 0.62em; font-variant-numeric: tabular-nums; }
+    & .fh-masthead__title > small { margin-inline-start: var(--_gap); color: var(--fh-color-text-muted); font-size: var(--fh-masthead-small-text, var(--fh-text-caption)); font-variant-numeric: tabular-nums; }
     & .fh-masthead__foot { display: contents; }
     & .fh-masthead__meta { display: none; }
   }
 
-  /* Split bar: the caption and the tools each in their own pill, with the
-     page showing between them, instead of one bar edge to edge. Each pill
-     takes the masthead's etch, fill and blur. */
+  /* Split bar: the caption and the tools each in their own pill, with the page showing between
+     them. Each pill takes the family etch, frost and outer size (the row in the frame ring). */
   .fh-masthead--split {
+    grid-template-rows: calc(var(--_height) + 2 * (var(--_frame) + var(--fh-border-thin)));
     padding: 0;
     border: 0;
     background: none;
+    -webkit-backdrop-filter: none;
     backdrop-filter: none;
 
+    &:has(> .fh-masthead__mark) { padding-inline-start: 0; }
+
     & :is(.fh-masthead__caption, .fh-masthead__tools) {
-      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+      align-self: stretch;
+      align-items: center;
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_line);
       border-radius: var(--fh-radius-pill);
-      background-color: color-mix(in oklab, var(--fh-color-canvas) var(--_fill), transparent);
-      backdrop-filter: blur(var(--fh-masthead-blur, calc(clamp(0, var(--fh-frost, 0.6), 1) * 32px))) saturate(1.4);
+      background-color: var(--_fill);
+      -webkit-backdrop-filter: blur(var(--_blur)) saturate(1.15);
+      backdrop-filter: blur(var(--_blur)) saturate(1.15);
     }
     & .fh-masthead__caption {
       justify-self: start;
       max-inline-size: 100%;
-      padding: var(--fh-inset-tight) var(--fh-inset-card);
-      border-block-end-style: var(--fh-card-border-style, dashed);
+      padding: 0 calc(var(--_frame) + var(--_pad-i));
     }
-    & .fh-masthead__tools { justify-self: end; padding: var(--fh-inset-tight); }
-    &:has(> .fh-masthead__mark) .fh-masthead__caption { padding-inline-start: var(--fh-inset-tight); }
+    & .fh-masthead__tools { justify-self: end; flex-wrap: nowrap; padding: var(--_frame); }
   }
 
   /* —— Lockup (MST-2.1) ——
@@ -174,16 +212,29 @@
    *   </header>
    * The headline's sizes follow the masthead's width. The words after the
    * em are quiet (muted); a Word rotator (WRT) inside rolls in its own colours.
-   * The etch is the root's split complement (hue + 150°), vivid, with a soft
+   * The line is the root's split complement (hue + 150°), vivid, with a soft
    * glow, so it pops and still belongs to the theme.
-   * Knobs: --fh-masthead-mark-size (the wordmark, h2), --fh-masthead-headline-size,
-   * --fh-masthead-etch (its colour), --fh-masthead-turn-row (auto; 0 lets the lower
+   * The lockup keeps its own display scale; the bar and app values don't apply. Its offsets are
+   * em of the wordmark (the root sets its font size to the mark), so they follow it.
+   * Knobs: --fh-masthead-mark-size (the wordmark, h2), --fh-masthead-headline-size (hero),
+   * --fh-masthead-line (the line's colour), --fh-masthead-lift (0.215em, the line above the
+   * wordmark's foot, about its baseline), --fh-masthead-line-inset (0.08em, its start past the
+   * wordmark), --fh-masthead-slot-text (body, the above and below slots),
+   * --fh-masthead-turn-row (auto; 0 lets the lower
    * half and the below slot hang under the box, so a lockup placed by its foot
    * keeps its line where it is). */
+  @property --_mst-lift {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+  }
+
   .fh-masthead--lockup {
     --_mark: var(--fh-masthead-mark-size, var(--fh-text-h2));
-    --_lift: calc(var(--_mark) * 0.215); /* the etch, above the wordmark's foot (about its baseline) */
-    --_etch: var(--fh-masthead-etch, light-dark(
+    /* Registered, so the em resolves here, against the mark, and children inherit the length. */
+    --_mst-lift: var(--fh-masthead-lift, 0.215em);
+    --_lift: var(--_mst-lift);
+    --_etch: var(--fh-masthead-line, light-dark(
       oklch(from var(--fh-root, var(--fh-color-accent)) 0.64 max(c, 0.19) calc(h + 150)),
       oklch(from var(--fh-root, var(--fh-color-accent)) 0.82 max(c, 0.16) calc(h + 150))
     ));
@@ -196,7 +247,9 @@
     border: 0;
     border-radius: 0;
     background: none;
+    -webkit-backdrop-filter: none;
     backdrop-filter: none;
+    font-size: var(--_mark);
   }
   .fh-masthead__wordmark {
     grid-area: 2 / 1;
@@ -214,13 +267,13 @@
     grid-area: 2 / 2;
     align-self: end;
     margin-block-end: var(--_lift);
-    margin-inline-start: calc(var(--_mark) * 0.08);
+    margin-inline-start: var(--fh-masthead-line-inset, 0.08em);
     border-block-end: var(--fh-border-heavy) var(--fh-card-border-style, dashed) var(--_etch);
     filter: drop-shadow(0 0 5px color-mix(in oklab, var(--_etch) 45%, transparent));
   }
   .fh-masthead__headline {
     display: contents;
-    font-size: var(--fh-masthead-headline-size, clamp(2.6rem, 1rem + 5cqi, 5.6rem));
+    font-size: var(--fh-masthead-headline-size, var(--fh-text-hero));
     font-weight: var(--fh-display-weight);
     letter-spacing: var(--fh-tracking-wordmark);
     line-height: 0.96;
@@ -238,6 +291,8 @@
   .fh-masthead__turn { grid-row: 3; align-self: start; margin-block-start: calc(var(--fh-gap-grouped) - var(--_lift)); }
   .fh-masthead__turn em { font-style: normal; color: var(--fh-color-text-muted); }
   /* Above: its top on the top of the headline's first part; below: just under the line. */
+  /* No specificity: a part placed in a slot (an eyebrow pill) keeps its own size. */
+  :where(.fh-masthead--lockup) > :where(.fh-masthead__above, .fh-masthead__below) { font-size: var(--fh-masthead-slot-text, var(--fh-text-body)); }
   .fh-masthead__above { grid-area: 1 / 1; align-self: start; justify-self: start; margin-block-end: var(--fh-gap-grouped-wide); }
   .fh-masthead__below { grid-area: 3 / 1; align-self: start; margin-block-start: var(--fh-gap-related); }
 
@@ -248,7 +303,10 @@
    *     <div class="fh-masthead__summary">…fh-summary-chip…</div>
    *     <div class="fh-masthead__tools">…</div>
    *   </header>
-   * Knobs: --fh-app-bar-edge (opt-in border, like --fh-sidebar-edge). */
+   * It reads the family values: the control-height row in the frame ring, chips at that height,
+   * the family gap between lead, summary and tools, the frame between items in a row.
+   * Knobs: --fh-app-bar-edge (opt-in border colour line, like --fh-sidebar-edge; the default is a
+   * transparent thin line, so every bar keeps one outer size). */
   .fh-masthead--app {
     --_f: var(--fh-frost-panel-f);
     --_fill: var(--fh-frost-panel-fill);
@@ -256,29 +314,32 @@
 
     position: sticky;
     inset-block-start: var(--fh-gap-grouped);
-    z-index: 2;
+    z-index: var(--fh-masthead-z, var(--fh-z-raised));
     display: grid;
     grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+    grid-template-rows: var(--_height);
     align-items: center;
-    gap: var(--fh-gap-grouped);
-    min-block-size: calc(var(--fh-tile-cube-size, var(--fh-sidebar-cube, 1.5rem)) + 2 * var(--fh-inset-tight));
-    padding: var(--fh-inset-tight);
-    border: var(--fh-app-bar-edge, 0);
+    align-content: center;
+    gap: var(--_gap);
+    padding: var(--_frame);
+    border: var(--fh-app-bar-edge, var(--fh-border-thin) solid transparent);
     border-radius: var(--fh-radius-lg);
     background-color: var(--_fill);
     box-shadow: var(--fh-sidebar-shadow, var(--fh-shadow-panel));
+    -webkit-backdrop-filter: var(--_filter);
     backdrop-filter: var(--_filter);
     container: fh-masthead / inline-size;
 
     & > * { margin: 0; min-inline-size: 0; }
   }
 
+  /* The cube sits as far from the ring's start as from its top and bottom. */
   .fh-masthead__lead {
     display: flex;
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_gap);
     min-inline-size: 0;
-    padding-inline-end: var(--fh-inset-control);
+    padding-inline: calc((var(--_height) - var(--fh-tile-cube-size, 1.5rem)) / 2) var(--_pad-i);
   }
 
   .fh-masthead__lead[data-tone] {
@@ -288,10 +349,10 @@
   .fh-masthead__lead > .fh-masthead__title {
     overflow: hidden;
     font-family: var(--fh-type-value-family);
-    font-size: var(--fh-type-value);
+    font-size: var(--_value);
     font-weight: var(--fh-type-value-weight);
     letter-spacing: var(--fh-type-value-tracking);
-    line-height: var(--fh-leading-snug);
+    line-height: var(--_leading);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -301,8 +362,8 @@
     flex: none;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-type-value-family);
-    font-size: var(--fh-type-value);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--_value);
+    line-height: var(--_leading);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -312,7 +373,7 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_frame);
     min-inline-size: 0;
   }
 
@@ -334,15 +395,11 @@
   /* Inline readout (MST-4.2): the summary follows the lead as one quiet strip, label and value on
      one line, short etched rules between items, the bar a 2px line under its value only. */
   .fh-masthead--app-inline {
-    & .fh-masthead__summary {
-      justify-content: start;
-      gap: var(--fh-gap-grouped);
-    }
+    & .fh-masthead__summary { justify-content: start; }
     & .fh-summary-chip {
       position: relative;
       grid-template-columns: auto minmax(0, auto);
       align-items: baseline;
-      column-gap: var(--fh-gap-related);
       text-align: start;
     }
     & .fh-summary-chip__label { grid-area: 1 / 1; }
@@ -350,14 +407,15 @@
     & .fh-summary-chip__bar {
       grid-area: 1 / 2;
       align-self: end;
-      translate: 0 var(--fh-gap-bound);
+      margin-block-start: 0;
+      translate: 0 var(--_pad-b);
     }
     & .fh-summary-chip + .fh-summary-chip::after {
       content: "";
       position: absolute;
       inset-block: 25%;
-      inset-inline-start: calc(var(--fh-gap-grouped) / -2);
-      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      inset-inline-start: calc(var(--_frame) / -2);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     }
   }
 
@@ -367,21 +425,18 @@
     & .fh-masthead__summary { justify-content: start; }
     & .fh-summary-chip {
       grid-template-columns: auto minmax(0, auto);
-      align-items: center;
-      column-gap: var(--fh-gap-grouped);
-      row-gap: var(--fh-gap-bound);
-      padding: var(--fh-inset-tight) var(--fh-inset-control);
       text-align: start;
     }
     & .fh-summary-chip > .fh-sidebar__cube {
       display: inline-grid;
       grid-area: 1 / 1 / span 3;
+      align-self: center;
     }
     & .fh-summary-chip__label { grid-column: 2; }
     & :is(.fh-summary-chip__value, .fh-summary-chip__short, .fh-summary-chip__bar) { grid-column: 2; }
     & .fh-masthead__tools {
-      padding-inline-start: var(--fh-gap-grouped);
-      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      padding-inline-start: var(--_gap);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     }
   }
 

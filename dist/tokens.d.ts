@@ -85,6 +85,7 @@ export type FirehorseToken =
   | "--fh-text-h2"
   | "--fh-text-h1"
   | "--fh-text-display"
+  | "--fh-text-hero"
   | "--fh-text-stat"
   | "--fh-leading-none"
   | "--fh-leading-tight"

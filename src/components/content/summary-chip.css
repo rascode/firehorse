@@ -17,15 +17,22 @@
    * Optional first child: a tile cube (<span class="fh-sidebar__cube" data-tone="…">…icon…</span>),
    * shown only in the tiles App bar layout (MST-4.3); the inline readout (MST-4.2) sets label and
    * value on one line. Both layouts live in masthead.css.
+   * It reads the Masthead family values (masthead.css), so it is the same in the bar and on its
+   * own: control height (--fh-masthead-height), no block padding, the inline padding
+   * (--fh-masthead-pad-inline), the mono caps label (--fh-masthead-label, -label-tracking,
+   * -label-weight), the value size (--fh-masthead-value-text); the bar sits the block padding
+   * under the value.
    * Knob: --fh-summary-value (the bar fill, a percentage). */
   .fh-summary-chip {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    align-content: center;
     align-items: start;
-    gap: var(--fh-gap-bound);
+    gap: 0 var(--fh-masthead-gap, var(--fh-gap-related));
     min-inline-size: 0;
     max-inline-size: 24rem;
-    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    block-size: var(--fh-masthead-height, var(--fh-control-height));
+    padding: 0 var(--fh-masthead-pad-inline, var(--fh-inset-control));
     border: 0;
     border-radius: var(--fh-radius-sm);
     background: none;
@@ -46,20 +53,20 @@
   .fh-summary-chip__label {
     color: var(--fh-color-text-muted);
     font-family: var(--fh-type-label-family, var(--fh-font-mono));
-    font-size: var(--fh-type-label);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-wider);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--fh-masthead-label, var(--fh-text-label));
+    font-weight: var(--fh-masthead-label-weight, var(--fh-weight-regular));
+    letter-spacing: var(--fh-masthead-label-tracking, var(--fh-tracking-caps));
+    line-height: var(--fh-masthead-leading, var(--fh-leading-snug));
     text-transform: uppercase;
   }
 
   .fh-summary-chip__value {
     overflow: hidden;
     font-family: var(--fh-type-value-family);
-    font-size: var(--fh-type-value);
+    font-size: var(--fh-masthead-value-text, var(--fh-type-value));
     font-weight: var(--fh-type-value-weight);
     letter-spacing: var(--fh-type-value-tracking);
-    line-height: var(--fh-leading-snug);
+    line-height: var(--fh-masthead-leading, var(--fh-leading-snug));
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -73,10 +80,10 @@
   .fh-summary-chip__short {
     display: none;
     font-family: var(--fh-type-figure-family);
-    font-size: var(--fh-type-value);
+    font-size: var(--fh-masthead-value-text, var(--fh-type-value));
     font-variant-numeric: tabular-nums;
     letter-spacing: var(--fh-type-figure-tracking);
-    line-height: var(--fh-leading-snug);
+    line-height: var(--fh-masthead-leading, var(--fh-leading-snug));
     white-space: nowrap;
   }
 
@@ -84,6 +91,7 @@
     display: block;
     inline-size: 100%;
     block-size: 2px;
+    margin-block-start: var(--fh-masthead-pad-block, var(--fh-gap-bound));
     overflow: hidden;
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
@@ -99,7 +107,4 @@
     }
   }
 
-  .fh-summary-chip:not(:has(.fh-summary-chip__bar)) {
-    gap: var(--fh-gap-bound);
-  }
 }
