@@ -1,4 +1,4 @@
-// Firehorse site: the display rules specimen (data display contract W1), for Rascode's approval.
+// Firehorse site: the display rules specimen (data display contract W1), approved by Rascode 2026-11-14.
 // Every row of schema/display-rules.json in every context, drawn with today's parts (the Values family, VAL,
 // is wave W2), then all 127 semantic types as resolveValue() resolves them. Everything on this page is read
 // from the contract at load: change display-rules.json, run node scripts/value-rules.mjs, reload.
@@ -143,7 +143,7 @@ function gridTable() {
       if (!r.variant) return `<td class="site-dr__cell site-dr__none"><span class="site-dr__muted" aria-label="Not shown">·</span></td>`;
       return `<td class="site-dr__cell"${r.align === "end" ? ' data-align="end"' : ""}><div class="site-dr__sample">${draw(row.row, r.variant, r.max)}</div><code class="site-dr__name">${esc(r.variant)}${r.max ? ` +N after ${r.max}` : ""}</code></td>`;
     }).join("");
-    return `<tr${isNew ? " data-new" : ""}><th scope="row"><b>${esc(row.label)}</b><small>${esc(rules.variants[row.shape].group)} ${esc(rules.variants[row.shape].name)} · <code>${esc(field.semanticType)}</code></small>${isNew ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Needs your OK</span>` : ""}${row.note ? `<small class="site-dr__note">${esc(row.note)}</small>` : ""}</th>${cells}</tr>`;
+    return `<tr${isNew ? " data-new" : ""}><th scope="row"><b>${esc(row.label)}</b><small>${esc(rules.variants[row.shape].group)} ${esc(rules.variants[row.shape].name)} · <code>${esc(field.semanticType)}</code></small>${isNew ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span>` : ""}${row.note ? `<small class="site-dr__note">${esc(row.note)}</small>` : ""}</th>${cells}</tr>`;
   }).join("");
   const empty = `<tr><th scope="row"><b>Empty (any shape)</b><small>Rule 7</small></th>${CONTEXTS.map(() => `<td class="site-dr__cell"><div class="site-dr__sample site-dr__muted">${EMPTY.text}</div><code class="site-dr__name">empty</code></td>`).join("")}</tr>`;
   return `<div class="fh-table-wrap site-dr__scroll"><table class="fh-table site-dr__grid">${head}<tbody>${body}${empty}</tbody></table></div>`;
@@ -163,6 +163,7 @@ function typesTable() {
   return `<div class="fh-table-wrap site-dr__scroll"><table class="fh-table site-dr__types"><thead><tr><th scope="col">Semantic type</th><th scope="col">Grid row</th>${CONTEXTS.map((c) => `<th scope="col">${c}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
+
 const fill = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
 fill("dr-grid-table", gridTable());
 fill("dr-types-table", typesTable());
@@ -170,3 +171,16 @@ fill("dr-rules-list", rules.rules.map((r) => `<li>${esc(r)}</li>`).join(""));
 fill("dr-count-rows", String(rules.grid.length));
 fill("dr-count-new", String(rules.grid.filter((r) => /^Not in the approved grid/.test(r.note ?? "")).length));
 fill("dr-count-types", String(Object.keys(semanticTypes).length));
+
+// Dark / light: one Mode toggle for the grid and the types. The choice is remembered on this browser only.
+const frames = [...document.querySelectorAll("[data-dr-frame]")];
+const buttons = [...document.querySelectorAll("#dr-mode button[data-mode]")];
+const setMode = (mode) => {
+  for (const f of frames) f.dataset.fhScheme = mode;
+  for (const b of buttons) b.setAttribute("aria-pressed", String(b.dataset.mode === mode));
+  try { localStorage.setItem("fh-dr-mode", mode); } catch {}
+};
+let start = "dark";
+try { start = localStorage.getItem("fh-dr-mode") ?? (getComputedStyle(document.documentElement).colorScheme === "light" ? "light" : "dark"); } catch {}
+for (const b of buttons) b.addEventListener("click", () => setMode(b.dataset.mode));
+setMode(start === "light" ? "light" : "dark");

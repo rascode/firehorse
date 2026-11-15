@@ -4,7 +4,7 @@
 .site-dr__grid, .site-dr__types { min-width: 60rem; width: 100%; }
 .site-dr__grid { table-layout: fixed; }
 .site-dr__grid col.site-dr__label, .site-dr__grid thead th:first-child { width: 13rem; }
-.site-dr__grid th[scope="col"] small, .site-dr__grid th[scope="row"] small { display: block; color: var(--fh-text-muted); font-weight: 400; }
+.site-dr__grid th[scope="col"] small, .site-dr__grid th[scope="row"] small { display: block; color: var(--fh-color-text-muted); font-weight: 400; }
 .site-dr__grid th[scope="row"] { vertical-align: top; }
 .site-dr__grid th[scope="row"] .fh-chip { margin-block-start: .35rem; }
 .site-dr__note { margin-block-start: .35rem; max-width: 18rem; }
@@ -13,8 +13,8 @@
 .site-dr__cell[data-align="end"] .site-dr__sample { justify-content: flex-end; text-align: end; }
 .site-dr__cell[data-mismatch] { color: var(--fh-tone-rose); }
 .site-dr__sample { display: flex; align-items: center; flex-wrap: wrap; gap: .3rem; min-height: 2rem; }
-.site-dr__name { display: block; margin-block-start: .4rem; font-size: var(--fh-text-micro, .72rem); color: var(--fh-text-muted); }
-.site-dr__muted { color: var(--fh-text-muted); }
+.site-dr__name { display: block; margin-block-start: .4rem; font-size: var(--fh-text-micro, .72rem); color: var(--fh-color-text-muted); }
+.site-dr__muted { color: var(--fh-color-text-muted); }
 .site-dr__num { font-variant-numeric: tabular-nums; }
 .site-dr__delta { font-size: var(--fh-text-micro, .72rem); color: var(--fh-tone); }
 .site-dr__tone { color: var(--fh-tone); }
@@ -30,10 +30,17 @@
 .site-dr__ring { --fh-ring-size: 2.75rem; }
 .site-dr__block { margin: 0; }
 .site-dr__clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--lines); overflow: hidden; max-width: 16rem; }
-.site-dr__thumb { display: inline-grid; place-items: center; inline-size: 2.5rem; block-size: 3rem; border: 1px solid var(--fh-border); border-radius: var(--fh-radius-sm, 4px); font: 600 var(--fh-text-micro, .72rem) var(--fh-font-mono); color: var(--fh-text-muted); }
+.site-dr__thumb { display: inline-grid; place-items: center; inline-size: 2.5rem; block-size: 3rem; border: 1px solid var(--fh-color-border); border-radius: var(--fh-radius-sm, 4px); font: 600 var(--fh-text-micro, .72rem) var(--fh-font-mono); color: var(--fh-color-text-muted); }
 .site-dr__types td, .site-dr__types th { vertical-align: top; }
-.site-dr__types th[scope="row"] small { display: block; color: var(--fh-text-muted); font-weight: 400; }
+.site-dr__types th[scope="row"] small { display: block; color: var(--fh-color-text-muted); font-weight: 400; }
 .site-dr__group th { padding-block-start: 1.25rem; text-transform: capitalize; }
-.site-dr__group small { text-transform: none; color: var(--fh-text-muted); font-weight: 400; }
+.site-dr__group small { text-transform: none; color: var(--fh-color-text-muted); font-weight: 400; }
 .site-dr__ask { display: grid; gap: .5rem; max-width: 46rem; }
 .site-dr__grid thead th { white-space: normal; overflow-wrap: anywhere; vertical-align: top; }
+/* Dark / light: the Mode toggle (SEG-2.3) at the top of the page sets data-fh-scheme on each frame, so the grid
+   and the types switch while the page around them stays as it is. Not sticky: in this page layout a sticky bar
+   stops taking clicks. */
+.site-dr__modebar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: .25rem 1rem; }
+.site-dr__modebar .fh-segment { flex: none; }
+.site-dr__frame { padding: .5rem; border: 1px solid var(--fh-color-border); border-radius: var(--fh-radius-sm, 4px); background: var(--fh-color-canvas); color: var(--fh-color-text); }
+.site-dr__frame .fh-table { background: var(--fh-color-surface); }
