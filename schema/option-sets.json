@@ -1,0 +1,666 @@
+{
+  "publishedFrom": "devops.option_sets",
+  "sets": [
+    {
+      "key": "barcode_format",
+      "label": "Barcode format",
+      "kind": "choice",
+      "description": "The symbology of a barcode.",
+      "options": [
+        {
+          "value": "qr",
+          "label": "QR code",
+          "tone": "teal"
+        },
+        {
+          "value": "ean13",
+          "label": "EAN-13",
+          "tone": "violet"
+        },
+        {
+          "value": "ean8",
+          "label": "EAN-8",
+          "tone": "fuchsia"
+        },
+        {
+          "value": "code128",
+          "label": "Code 128",
+          "tone": "orange"
+        },
+        {
+          "value": "upc",
+          "label": "UPC",
+          "tone": "accent"
+        }
+      ]
+    },
+    {
+      "key": "codec",
+      "label": "Codec",
+      "kind": "choice",
+      "description": "The codec of an audio or video stream.",
+      "options": [
+        {
+          "value": "h264",
+          "label": "H.264",
+          "tone": "teal"
+        },
+        {
+          "value": "aac",
+          "label": "AAC",
+          "tone": "violet"
+        },
+        {
+          "value": "opus",
+          "label": "Opus",
+          "tone": "fuchsia"
+        },
+        {
+          "value": "vp9",
+          "label": "VP9",
+          "tone": "orange"
+        },
+        {
+          "value": "flac",
+          "label": "FLAC",
+          "tone": "accent"
+        }
+      ]
+    },
+    {
+      "key": "crypto_currency",
+      "label": "Crypto currency",
+      "kind": "code",
+      "generator": "crypto_ticker",
+      "description": "Crypto assets by ticker.",
+      "options": [
+        {
+          "value": "BTC",
+          "label": "Bitcoin"
+        },
+        {
+          "value": "ETH",
+          "label": "Ether"
+        },
+        {
+          "value": "SOL",
+          "label": "Solana"
+        }
+      ]
+    },
+    {
+      "key": "honorific",
+      "label": "Honorific",
+      "kind": "choice",
+      "description": "A title used before a name.",
+      "options": [
+        {
+          "value": "Mx",
+          "label": "Mx",
+          "tone": "teal"
+        },
+        {
+          "value": "Ms",
+          "label": "Ms",
+          "tone": "violet"
+        },
+        {
+          "value": "Mr",
+          "label": "Mr",
+          "tone": "fuchsia"
+        },
+        {
+          "value": "Dr",
+          "label": "Dr",
+          "tone": "orange"
+        }
+      ]
+    },
+    {
+      "key": "iana_timezone",
+      "label": "Timezone",
+      "kind": "code",
+      "generator": "iana_tz",
+      "description": "Time zones by their IANA id.",
+      "options": [
+        {
+          "value": "America/New_York",
+          "label": "New York (Eastern)"
+        },
+        {
+          "value": "America/Los_Angeles",
+          "label": "Los Angeles (Pacific)"
+        },
+        {
+          "value": "Europe/London",
+          "label": "London"
+        },
+        {
+          "value": "UTC",
+          "label": "UTC"
+        }
+      ]
+    },
+    {
+      "key": "iso_country",
+      "label": "Country",
+      "kind": "code",
+      "generator": "iso_3166_1_alpha2",
+      "description": "Countries by their ISO 3166-1 alpha-2 code.",
+      "options": [
+        {
+          "value": "US",
+          "label": "United States"
+        },
+        {
+          "value": "GB",
+          "label": "United Kingdom"
+        },
+        {
+          "value": "CA",
+          "label": "Canada"
+        },
+        {
+          "value": "DE",
+          "label": "Germany"
+        },
+        {
+          "value": "FR",
+          "label": "France"
+        },
+        {
+          "value": "JP",
+          "label": "Japan"
+        },
+        {
+          "value": "MX",
+          "label": "Mexico"
+        },
+        {
+          "value": "BR",
+          "label": "Brazil"
+        }
+      ]
+    },
+    {
+      "key": "iso_currency",
+      "label": "Currency",
+      "kind": "code",
+      "generator": "iso_4217",
+      "description": "Currencies by their ISO 4217 code.",
+      "options": [
+        {
+          "value": "USD",
+          "label": "US Dollar"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro"
+        },
+        {
+          "value": "GBP",
+          "label": "Pound Sterling"
+        },
+        {
+          "value": "JPY",
+          "label": "Yen"
+        },
+        {
+          "value": "CAD",
+          "label": "Canadian Dollar"
+        },
+        {
+          "value": "AUD",
+          "label": "Australian Dollar"
+        },
+        {
+          "value": "CHF",
+          "label": "Swiss Franc"
+        }
+      ]
+    },
+    {
+      "key": "iso_language",
+      "label": "Language",
+      "kind": "code",
+      "generator": "iso_639_1",
+      "description": "Languages by their ISO 639-1 code.",
+      "options": [
+        {
+          "value": "en",
+          "label": "English"
+        },
+        {
+          "value": "es",
+          "label": "Spanish"
+        },
+        {
+          "value": "fr",
+          "label": "French"
+        },
+        {
+          "value": "de",
+          "label": "German"
+        },
+        {
+          "value": "pt",
+          "label": "Portuguese"
+        },
+        {
+          "value": "ja",
+          "label": "Japanese"
+        }
+      ]
+    },
+    {
+      "key": "key_status",
+      "label": "Key status",
+      "kind": "status",
+      "description": "Whether a key is in use.",
+      "options": [
+        {
+          "value": "active",
+          "label": "Active",
+          "tone": "lime",
+          "state": "done"
+        },
+        {
+          "value": "rotated",
+          "label": "Rotated",
+          "tone": "neutral",
+          "state": "ended"
+        },
+        {
+          "value": "revoked",
+          "label": "Revoked",
+          "tone": "rose",
+          "state": "failed"
+        }
+      ]
+    },
+    {
+      "key": "lifecycle_stage",
+      "label": "Lifecycle stage",
+      "kind": "status",
+      "ordinal": true,
+      "description": "Where a product is in its life, in order.",
+      "options": [
+        {
+          "value": "idea",
+          "label": "Idea",
+          "tone": "amber",
+          "state": "waiting"
+        },
+        {
+          "value": "planned",
+          "label": "Planned",
+          "tone": "amber",
+          "state": "waiting"
+        },
+        {
+          "value": "building",
+          "label": "Building",
+          "tone": "sky",
+          "state": "moving"
+        },
+        {
+          "value": "live",
+          "label": "Live",
+          "tone": "lime",
+          "state": "done"
+        },
+        {
+          "value": "sunset",
+          "label": "Sunset",
+          "tone": "neutral",
+          "state": "ended"
+        }
+      ]
+    },
+    {
+      "key": "media_format",
+      "label": "Media format",
+      "kind": "choice",
+      "description": "The family of a media file; also gives the file glyph its tone.",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image",
+          "tone": "teal"
+        },
+        {
+          "value": "audio",
+          "label": "Audio",
+          "tone": "violet"
+        },
+        {
+          "value": "video",
+          "label": "Video",
+          "tone": "fuchsia"
+        },
+        {
+          "value": "document",
+          "label": "Document",
+          "tone": "orange"
+        }
+      ]
+    },
+    {
+      "key": "mime_type",
+      "label": "MIME type",
+      "kind": "code",
+      "generator": "iana_media_types",
+      "description": "File types by their IANA media type.",
+      "options": [
+        {
+          "value": "image/jpeg",
+          "label": "JPEG image"
+        },
+        {
+          "value": "image/png",
+          "label": "PNG image"
+        },
+        {
+          "value": "image/webp",
+          "label": "WebP image"
+        },
+        {
+          "value": "application/pdf",
+          "label": "PDF document"
+        },
+        {
+          "value": "text/plain",
+          "label": "Plain text"
+        },
+        {
+          "value": "audio/mpeg",
+          "label": "MP3 audio"
+        },
+        {
+          "value": "video/mp4",
+          "label": "MP4 video"
+        }
+      ]
+    },
+    {
+      "key": "name_prefix",
+      "label": "Name prefix",
+      "kind": "choice",
+      "description": "A prefix before a name.",
+      "options": [
+        {
+          "value": "Mx",
+          "label": "Mx",
+          "tone": "teal"
+        },
+        {
+          "value": "Dr",
+          "label": "Dr",
+          "tone": "violet"
+        }
+      ]
+    },
+    {
+      "key": "name_suffix",
+      "label": "Name suffix",
+      "kind": "choice",
+      "description": "A suffix after a name.",
+      "options": [
+        {
+          "value": "Jr",
+          "label": "Jr",
+          "tone": "teal"
+        },
+        {
+          "value": "Sr",
+          "label": "Sr",
+          "tone": "violet"
+        },
+        {
+          "value": "III",
+          "label": "III",
+          "tone": "fuchsia"
+        }
+      ]
+    },
+    {
+      "key": "network",
+      "label": "Network",
+      "kind": "choice",
+      "description": "A blockchain network.",
+      "options": [
+        {
+          "value": "ethereum",
+          "label": "Ethereum",
+          "tone": "teal"
+        },
+        {
+          "value": "polygon",
+          "label": "Polygon",
+          "tone": "violet"
+        },
+        {
+          "value": "solana",
+          "label": "Solana",
+          "tone": "fuchsia"
+        },
+        {
+          "value": "bitcoin",
+          "label": "Bitcoin",
+          "tone": "orange"
+        }
+      ]
+    },
+    {
+      "key": "priority",
+      "label": "Priority",
+      "kind": "choice",
+      "ordinal": true,
+      "description": "How urgent, low to urgent.",
+      "options": [
+        {
+          "value": "low",
+          "label": "Low",
+          "tone": "orange"
+        },
+        {
+          "value": "medium",
+          "label": "Medium",
+          "tone": "orange"
+        },
+        {
+          "value": "high",
+          "label": "High",
+          "tone": "orange"
+        },
+        {
+          "value": "urgent",
+          "label": "Urgent",
+          "tone": "orange"
+        }
+      ]
+    },
+    {
+      "key": "pronouns",
+      "label": "Pronouns",
+      "kind": "choice",
+      "description": "How a person is referred to.",
+      "options": [
+        {
+          "value": "she/her",
+          "label": "she/her",
+          "tone": "teal"
+        },
+        {
+          "value": "he/him",
+          "label": "he/him",
+          "tone": "violet"
+        },
+        {
+          "value": "they/them",
+          "label": "they/them",
+          "tone": "fuchsia"
+        }
+      ]
+    },
+    {
+      "key": "scan_status",
+      "label": "Scan status",
+      "kind": "status",
+      "description": "Whether a barcode scan was read.",
+      "options": [
+        {
+          "value": "unread",
+          "label": "Unread",
+          "tone": "amber",
+          "state": "waiting"
+        },
+        {
+          "value": "read",
+          "label": "Read",
+          "tone": "lime",
+          "state": "done"
+        },
+        {
+          "value": "rejected",
+          "label": "Rejected",
+          "tone": "rose",
+          "state": "failed"
+        }
+      ]
+    },
+    {
+      "key": "tags",
+      "label": "Tags",
+      "kind": "choice",
+      "description": "Free labels on a record.",
+      "options": [
+        {
+          "value": "demo",
+          "label": "demo",
+          "tone": "teal"
+        },
+        {
+          "value": "featured",
+          "label": "featured",
+          "tone": "violet"
+        },
+        {
+          "value": "internal",
+          "label": "internal",
+          "tone": "fuchsia"
+        }
+      ]
+    },
+    {
+      "key": "token_standard",
+      "label": "Token standard",
+      "kind": "choice",
+      "description": "The token interface a contract implements.",
+      "options": [
+        {
+          "value": "erc20",
+          "label": "ERC-20",
+          "tone": "teal"
+        },
+        {
+          "value": "erc721",
+          "label": "ERC-721",
+          "tone": "violet"
+        },
+        {
+          "value": "erc1155",
+          "label": "ERC-1155",
+          "tone": "fuchsia"
+        }
+      ]
+    },
+    {
+      "key": "transaction_status",
+      "label": "Transaction status",
+      "kind": "status",
+      "description": "Whether a transaction has settled.",
+      "options": [
+        {
+          "value": "pending",
+          "label": "Pending",
+          "tone": "sky",
+          "state": "moving"
+        },
+        {
+          "value": "confirmed",
+          "label": "Confirmed",
+          "tone": "lime",
+          "state": "done"
+        },
+        {
+          "value": "failed",
+          "label": "Failed",
+          "tone": "rose",
+          "state": "failed"
+        }
+      ]
+    },
+    {
+      "key": "us_state",
+      "label": "US state",
+      "kind": "code",
+      "generator": "usps_state",
+      "description": "US states by their USPS code.",
+      "options": [
+        {
+          "value": "OR",
+          "label": "Oregon"
+        },
+        {
+          "value": "CA",
+          "label": "California"
+        },
+        {
+          "value": "NY",
+          "label": "New York"
+        },
+        {
+          "value": "TX",
+          "label": "Texas"
+        },
+        {
+          "value": "WA",
+          "label": "Washington"
+        }
+      ]
+    },
+    {
+      "key": "workflow_status",
+      "label": "Workflow status",
+      "kind": "status",
+      "description": "Where a record is in its workflow.",
+      "options": [
+        {
+          "value": "draft",
+          "label": "Draft",
+          "tone": "amber",
+          "state": "waiting"
+        },
+        {
+          "value": "active",
+          "label": "Active",
+          "tone": "sky",
+          "state": "moving"
+        },
+        {
+          "value": "paused",
+          "label": "Paused",
+          "tone": "amber",
+          "state": "waiting"
+        },
+        {
+          "value": "archived",
+          "label": "Archived",
+          "tone": "neutral",
+          "state": "ended"
+        }
+      ]
+    }
+  ]
+}

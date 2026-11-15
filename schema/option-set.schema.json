@@ -2,27 +2,44 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://firehorse.rascode.dev/schema/option-set.schema.json",
   "title": "Option set",
-  "description": "One known list of values, shared by every field that points at it (field.optionSet), so every endpoint draws the same value with the same label, tone and order. Data display contract, layer 1. A value with no tone falls back to the default tone map in display-rules.json (toneMap).",
+  "description": "One known list of values, shared by every field that points at it (field.optionSet, or a semantic type's display.optionSet), so every endpoint draws the same value with the same label, tone and order. Data display contract, layer 1; the sets themselves are data in devops.option_sets (migration 435), published as schema/option-sets.json. A status option takes its state's tone; a value with no tone falls back to the default tone map in display-rules.json (toneMap).",
   "type": "object",
   "required": ["key", "options"],
   "additionalProperties": false,
   "properties": {
     "key": {
-      "description": "Dotted key: <owner>.<field>, e.g. relay.status, goal.priority. Sets derived from a semantic type's own options are semantic.<type>.",
+      "description": "The set's key: a shared set is one word (workflow_status, iso_country); a set owned by one field is <owner>.<field> (relay.status, goal.priority). Sets derived from a semantic type's own options are semantic.<type>.",
       "type": "string",
-      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
     },
-    "label": { "description": "What the set is, for people: 'Relay status'.", "type": "string" },
+    "label": {
+      "description": "What the set is, for people: 'Relay status'.",
+      "type": "string"
+    },
     "kind": {
-      "description": "status: values are states with a tone (drawn as dot or chip). choice: plain categories (chip, segmented or select by count).",
-      "enum": ["status", "choice"],
+      "description": "status: values are states, each with a state and its tone (dot in a cell, chip elsewhere). choice: categories, each toned (chip, segmented or select by count). code: a generated list of codes from a standard (generator), untoned, picked with search.",
+      "enum": ["status", "choice", "code"],
       "default": "choice"
     },
-    "ordinal": { "description": "The order means something (low < high), so sorting follows the list, not the alphabet.", "type": "boolean", "default": false },
+    "ordinal": {
+      "description": "The order means something (low < urgent), so sorting follows the list, not the alphabet. An ordinal choice set draws its tones as a ramp in that order (display-rules.json ramp).",
+      "type": "boolean",
+      "default": false
+    },
+    "generator": {
+      "description": "For a code set: the standard its full list comes from (iso_3166_1_alpha2, iso_4217, iana_tz …). Until it is generated the set holds samples.",
+      "type": "string"
+    },
+    "description": {
+      "description": "One line on what the set is for.",
+      "type": "string"
+    },
     "options": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/option" }
+      "items": {
+        "$ref": "#/$defs/option"
+      }
     }
   },
   "$defs": {
@@ -35,13 +52,70 @@
       "required": ["value"],
       "additionalProperties": false,
       "properties": {
-        "value": { "description": "What is stored.", "type": ["string", "number", "boolean"] },
-        "label": { "description": "What is shown. Defaults to the value.", "type": "string" },
-        "tone": { "$ref": "#/$defs/tone" },
-        "icon": { "description": "A Firehorse icon name (fh-icon--<name>).", "type": "string" },
-        "description": { "description": "One line shown in pickers and tooltips.", "type": "string" },
-        "live": { "description": "The state is in motion (running, syncing): the dot pulses.", "type": "boolean" }
+        "value": {
+          "description": "What is stored.",
+          "type": ["string", "number", "boolean"]
+        },
+        "label": {
+          "description": "What is shown. Defaults to the value.",
+          "type": "string"
+        },
+        "tone": {
+          "$ref": "#/$defs/tone"
+        },
+        "state": {
+          "description": "For a status set: which of the five groups the option is in. Its tone is the state's: done lime, moving sky, waiting amber, failed rose, ended neutral.",
+          "enum": ["done", "moving", "waiting", "failed", "ended"]
+        },
+        "icon": {
+          "description": "A Firehorse icon name (fh-icon--<name>).",
+          "type": "string"
+        },
+        "description": {
+          "description": "One line shown in pickers and tooltips.",
+          "type": "string"
+        },
+        "live": {
+          "description": "The state is in motion (running, syncing): the dot pulses.",
+          "type": "boolean"
+        }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "status"
+          }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "properties": {
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["value", "state"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "code"
+          }
+        },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["generator"]
+      }
+    }
+  ]
 }

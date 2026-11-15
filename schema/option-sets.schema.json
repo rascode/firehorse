@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firehorse.rascode.dev/schema/option-sets.schema.json",
+  "title": "Option sets",
+  "description": "Every option set, as published from devops.option_sets (migration 435) by the platform's publish-firehorse-codex.mts into schema/option-sets.json. Sorted by key; options in their order.",
+  "type": "object",
+  "required": ["publishedFrom", "sets"],
+  "additionalProperties": false,
+  "properties": {
+    "publishedFrom": {
+      "const": "devops.option_sets"
+    },
+    "sets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "option-set.schema.json"
+      }
+    }
+  }
+}
