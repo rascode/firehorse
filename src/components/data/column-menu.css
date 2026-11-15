@@ -1,0 +1,78 @@
+/*
+ * Firehorse — Column display menu (DTB, TBL)
+ * components/data · layer fh.components · docs /data/datatable/, /data/table/
+ *
+ * Any viewer can re-display a column with the variants the data display contract allows for it
+ * (decision 9). The menu is the Rich menu (DRP-4.1, the header's short menus); this file is the
+ * trigger: a 1.5rem button at the end of a header cell or a record row's label, shown on hover and
+ * on focus, and always on touch. The label of a column you can re-display rolls (TXL) like a header
+ * nav link. Script: column-menu.js (the datatable, table.js and record-table.js wire it).
+ *   <th data-fh-colmenu-host><span class="fh-roll">Status</span>
+ *     <button class="fh-colmenu__button" type="button" aria-haspopup="menu" aria-expanded="false"
+ *       data-fh-colmenu="status" aria-label="Display Status as"></button></th>
+ */
+@layer fh.components {
+  .fh-colmenu__button {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin: 0;
+    margin-inline-start: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text-subtle);
+    vertical-align: middle;
+    cursor: var(--fh-cursor-action);
+    opacity: 0;
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &::before {
+      content: "";
+      inline-size: 0.85rem;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: var(--fh-icon-chevron-down) center / contain no-repeat;
+    }
+
+    &:hover,
+    &[aria-expanded="true"] { background-color: var(--fh-color-field-hover); color: var(--fh-color-text); }
+
+    &:focus-visible {
+      opacity: 1;
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  :is([data-fh-colmenu-host]:is(:hover, :focus-within)) .fh-colmenu__button,
+  .fh-colmenu__button[aria-expanded="true"] { opacity: 1; }
+
+  @media (hover: none) {
+    .fh-colmenu__button { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-fh-colmenu-host]:has(.fh-colmenu__button):is(:hover, :focus-within) .fh-roll {
+      translate: 0 calc(-1 * var(--_line));
+      clip-path: inset(var(--_line) -0.25em calc(-1 * var(--_line)) -0.25em);
+    }
+  }
+
+  /* The menu: the Rich menu, a little wider for the previews. Previews are drawings, not controls. */
+  .fh-colmenu__menu {
+    --fh-menu-min: 16rem;
+    --fh-menu-max: min(28rem, 70dvh);
+  }
+
+  .fh-colmenu__menu .fh-menu__line { pointer-events: none; }
+  .fh-colmenu__menu .fh-menu__line > .fh-value { max-inline-size: 13rem; }
+  .fh-colmenu__menu .fh-menu__item[aria-disabled="true"] { opacity: 0.55; cursor: default; }
+
+  @media (forced-colors: active) {
+    .fh-colmenu__button::before { background-color: ButtonText; }
+  }
+}
