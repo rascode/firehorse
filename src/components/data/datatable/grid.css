@@ -36,7 +36,7 @@
     & thead th {
       position: sticky;
       inset-block-start: 0;
-      z-index: 3;
+      z-index: var(--fh-z-cell-head);
       /* Firehorse label voice: mono, uppercase, tracked, subtle. */
       block-size: 2.25rem;
       border-block-end-color: var(--fh-color-border-strong);
@@ -65,10 +65,10 @@
     /* Sticky leading columns: selection + primary field. */
     & [data-sticky] {
       position: sticky;
-      z-index: 2;
+      z-index: var(--fh-z-cell-pinned);
       background-color: var(--fh-color-surface);
     }
-    & thead [data-sticky] { z-index: 4; background-color: var(--_head); }
+    & thead [data-sticky] { z-index: var(--fh-z-cell-corner); background-color: var(--_head); }
     & [data-sticky="select"] { inset-inline-start: 0; inline-size: 2.6rem; padding-inline: 0; text-align: center; }
     & [data-sticky="primary"] {
       inset-inline-start: var(--fh-dt-primary-offset, 2.6rem);
@@ -79,7 +79,7 @@
     & tfoot td {
       position: sticky;
       inset-block-end: 0;
-      z-index: 2;
+      z-index: var(--fh-z-cell-pinned);
       border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
       border-block-end: 0;
       background-color: var(--_head);
@@ -106,7 +106,7 @@
     text-align: start;
     cursor: var(--fh-cursor-action);
 
-    & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); font-size: 1.05em; opacity: 0.75; }
+    & > .fh-icon { flex: none; color: var(--fh-color-text-subtle); --_icon: calc(var(--fh-leading-snug) * 1em); inline-size: var(--_icon); block-size: var(--_icon); opacity: 0.75; }
     & > span { flex: 1; overflow: hidden; text-overflow: ellipsis; }
 
     /* Sort indicator from aria-sort on the <th>. */
@@ -138,8 +138,8 @@
     position: absolute;
     inset-block: 0;
     inset-inline-end: calc(-1 * var(--fh-gap-bound));
-    z-index: 5;
-    inline-size: 8px;
+    z-index: var(--fh-z-cell-handle);
+    inline-size: var(--fh-gap-related);
     cursor: col-resize;
     touch-action: none;
 
@@ -148,8 +148,8 @@
       position: absolute;
       inset-block: 25%;
       inset-inline-start: var(--fh-gap-bound);
-      inline-size: 2px;
-      border-radius: 1px;
+      inline-size: var(--fh-border-heavy);
+      border-radius: var(--fh-radius-pill);
       background-color: var(--fh-tone);
       opacity: 0;
     }

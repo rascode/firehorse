@@ -34,9 +34,18 @@
    *   parts      __tagline (a mono line under the name) · __meta (a quiet
    *              row: ID left, role right) · __badge (a holographic tile
    *              holding a mark, in place of the stamp)
+   * The card is a picture, so its measures are proportions of its own width (container units,
+   * as em is of text), on the new-look frame: radius-sm and the etch through the card border
+   * style, no ring shadow. Labels are mono caps in the regular weight at caps tracking. The stamp's
+   * text size is set on its <text font-size="8.4"> in the viewBox's own units.
    *   knobs      --fh-member-width (22rem) · --fh-member-art-ratio (16 / 10)
-   *              --fh-member-radius · --fh-member-glitch (time per hop, 2.8s)
-   *              --fh-member-turn (one stamp turn, 28s) */
+   *              --fh-member-radius (radius-sm) · --fh-member-etch (the frame's etch)
+   *              --fh-member-pad (6cqi, at least inset-tile, at most inset-card)
+   *              --fh-member-name-text (12cqi) · --fh-member-stamp (22cqi) · --fh-member-badge (14cqi)
+   *              --fh-member-glyph-text (2.6cqi) · --fh-member-rule-gap (above the facts, 9cqi)
+   *              --fh-member-frost-offset (where a frosted body starts, 46cqi)
+   *              --fh-member-glitch (time per hop, 2.8s) · --fh-member-turn (one stamp turn, 28s)
+   *              --fh-member-sheen (the badge's drift, --fh-duration-sheen) */
   .fh-member {
     --_tone: var(--fh-tone, var(--fh-color-accent));
     display: grid;
@@ -45,16 +54,15 @@
     max-inline-size: var(--fh-member-width, 22rem);
     overflow: clip;
     container: fh-member / inline-size;
-    border-radius: var(--fh-member-radius, var(--fh-radius-lg));
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-member-etch, var(--fh-color-etch));
+    border-radius: var(--fh-member-radius, var(--fh-radius-sm));
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
-    box-shadow: 0 0 0 1px var(--fh-color-border);
   }
 
+  /* The glow asks for its shadow by name: a soft halo in the tone under the card. */
   .fh-member--glow {
-    box-shadow:
-      0 0 0 1px var(--fh-color-border),
-      0 1.5rem 5rem -1rem color-mix(in oklab, var(--_tone) 55%, transparent);
+    box-shadow: var(--fh-shadow-glow) color-mix(in oklab, var(--_tone) 55%, transparent);
   }
   .fh-member--square { border-radius: 0; }
 
@@ -91,8 +99,8 @@
     position: absolute;
     color: var(--fh-color-on-ink);
     font-family: var(--fh-font-mono);
-    font-size: clamp(0.4rem, 2.6cqi, 0.6rem);
-    line-height: 1.05;
+    font-size: var(--fh-member-glyph-text, 2.6cqi);
+    line-height: var(--fh-leading-tight);
     white-space: pre;
     text-shadow: 0 0 0.4em color-mix(in oklab, var(--fh-color-ink) 40%, transparent);
   }
@@ -112,29 +120,30 @@
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-rows: repeat(5, auto) 1fr;
     column-gap: var(--fh-gap-grouped-wide);
-    padding: clamp(var(--fh-inset-tile), 6cqi, var(--fh-inset-card));
+    padding: clamp(var(--fh-inset-tile), var(--fh-member-pad, 6cqi), var(--fh-inset-card));
   }
 
   .fh-member__name {
     grid-column: 1;
     margin: 0;
     font-family: var(--fh-font-display);
-    font-size: clamp(1.75rem, 12cqi, 2.75rem);
+    align-self: first baseline;
+    font-size: var(--fh-member-name-text, 12cqi);
     font-weight: var(--fh-weight-regular);
-    line-height: 1.02;
+    line-height: var(--fh-leading-tight);
     letter-spacing: var(--fh-tracking-snug);
     text-wrap: balance;
   }
   .fh-member__id {
     grid-column: 2;
     grid-row: 1;
-    align-self: start;
-    padding-block-start: 0.35em;
+    align-self: first baseline;
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
+    font-weight: var(--fh-weight-regular);
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.04em;
+    letter-spacing: var(--fh-tracking-caps);
   }
 
   .fh-member__facts {
@@ -142,7 +151,7 @@
     display: flex;
     justify-content: space-between;
     gap: var(--fh-gap-grouped-wide);
-    margin: clamp(var(--fh-gap-sectioned), 9cqi, var(--fh-gap-sectioned)) 0 0;
+    margin: max(var(--fh-gap-sectioned), var(--fh-member-rule-gap, 9cqi)) 0 0;
     padding-block-start: var(--fh-inset-tile);
     border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dotted) var(--fh-color-text-subtle);
   }
@@ -152,8 +161,9 @@
     margin: 0;
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    line-height: 1.6;
-    letter-spacing: 0.04em;
+    font-weight: var(--fh-weight-regular);
+    line-height: var(--fh-leading-relaxed);
+    letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
   }
 
@@ -168,7 +178,7 @@
     grid-column: 2;
     grid-row: 6;
     align-self: end;
-    inline-size: clamp(3.25rem, 22cqi, 4.5rem);
+    inline-size: var(--fh-member-stamp, 22cqi);
     block-size: auto;
     margin-block-start: var(--fh-gap-sectioned);
     color: var(--_tone);
@@ -179,7 +189,6 @@
   .fh-member__stamp text {
     stroke: none;
     font-family: var(--fh-font-mono);
-    font-size: calc(8.4 * 1px); /* SVG user units in the stamp viewBox, not a reading size */
     letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
     transform-box: view-box;
@@ -195,11 +204,14 @@
     box-shadow: none;
   }
   .fh-member--plates > :is(.fh-member__art, .fh-member__body) {
-    border-radius: var(--fh-member-radius, var(--fh-radius-lg));
+    border-radius: var(--fh-member-radius, var(--fh-radius-sm));
+  }
+  .fh-member--plates {
+    border: 0;
   }
   .fh-member--plates > .fh-member__body {
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-member-etch, var(--fh-color-etch));
     background-color: var(--fh-color-surface-raised);
-    box-shadow: 0 0 0 1px var(--fh-color-border);
   }
   /* —— data-fh-card-content="frost" ——
    * The art runs the full card and the body floats over its lower part on
@@ -220,14 +232,14 @@
     .fh-member > .fh-member__art { aspect-ratio: auto; }
     .fh-member > .fh-member__body {
       align-self: end;
-      margin: 46cqi var(--fh-card-content-inset, 0px) var(--fh-card-content-inset, 0px);
+      margin: var(--fh-member-frost-offset, 46cqi) var(--fh-card-content-inset, 0px) var(--fh-card-content-inset, 0px);
       padding: var(--fh-card-content-pad, var(--fh-inset-tile));
     }
-    .fh-member--plates > .fh-member__body { box-shadow: none; }
   }
 
+  .fh-member--plates.fh-member--glow { box-shadow: none; }
   .fh-member--plates.fh-member--glow > .fh-member__art {
-    box-shadow: 0 1.5rem 5rem -1rem color-mix(in oklab, var(--_tone) 55%, transparent);
+    box-shadow: var(--fh-shadow-glow) color-mix(in oklab, var(--_tone) 55%, transparent);
   }
 
   .fh-member__tagline {
@@ -235,7 +247,8 @@
     margin: var(--fh-gap-grouped-wide) 0 0;
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-small);
-    letter-spacing: 0.04em;
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
   }
 
@@ -246,11 +259,12 @@
     gap: var(--fh-gap-grouped-wide);
     margin: var(--fh-gap-grouped-wide) 0 0;
     padding-block-start: var(--fh-inset-tile);
-    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
-    letter-spacing: 0.04em;
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-caps);
     text-transform: uppercase;
   }
 
@@ -261,15 +275,15 @@
     align-self: end;
     display: grid;
     place-items: center;
-    inline-size: clamp(2.25rem, 14cqi, 2.75rem);
+    inline-size: var(--fh-member-badge, 14cqi);
     aspect-ratio: 1;
     margin-block-start: var(--fh-gap-sectioned);
-    border-radius: 28%;
+    border-radius: var(--fh-radius-md);
     background:
       radial-gradient(circle at 30% 20%, color-mix(in oklab, var(--fh-color-on-ink) 70%, transparent), transparent 55%),
-      conic-gradient(from 200deg, oklch(0.9 0.09 200), oklch(0.93 0.1 120), oklch(0.92 0.08 60), oklch(0.88 0.1 330), oklch(0.9 0.09 260), oklch(0.9 0.09 200));
+      conic-gradient(from 200deg, var(--fh-holo-1), var(--fh-holo-2), var(--fh-holo-3), var(--fh-holo-4), var(--fh-holo-5), var(--fh-holo-1));
     color: color-mix(in oklab, var(--fh-color-ink) 80%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fh-color-on-ink) 55%, transparent);
+    box-shadow: inset 0 0 0 var(--fh-border-thin) color-mix(in oklab, var(--fh-color-on-ink) 55%, transparent);
   }
   .fh-member__badge > svg {
     inline-size: 55%;
@@ -304,7 +318,7 @@
       animation-name: fh-member-smear;
     }
     .fh-member__badge {
-      animation: fh-member-sheen 9s var(--fh-ease-in-out) infinite alternate;
+      animation: fh-member-sheen var(--fh-member-sheen, var(--fh-duration-sheen)) var(--fh-ease-in-out) infinite alternate;
     }
     .fh-member__glyphs::after {
       animation: fh-member-glyphs-b calc(var(--fh-member-glitch, 2.8s) * 3) steps(1, end) infinite;

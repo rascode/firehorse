@@ -857,6 +857,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "shadow"
   },
+  "--fh-shadow-glow": {
+    "$value": "0 1.5rem 5rem -1rem",
+    "$type": "shadow",
+    "tier": "primitives",
+    "group": "shadow"
+  },
   "--fh-blur-chrome": {
     "$value": "10px",
     "$type": "dimension",
@@ -977,6 +983,36 @@ export const tokens = {
     "tier": "primitives",
     "group": "card"
   },
+  "--fh-holo-1": {
+    "$value": "oklch(0.9 0.09 200)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "holo"
+  },
+  "--fh-holo-2": {
+    "$value": "oklch(0.93 0.1 120)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "holo"
+  },
+  "--fh-holo-3": {
+    "$value": "oklch(0.92 0.08 60)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "holo"
+  },
+  "--fh-holo-4": {
+    "$value": "oklch(0.88 0.1 330)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "holo"
+  },
+  "--fh-holo-5": {
+    "$value": "oklch(0.9 0.09 260)",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "holo"
+  },
   "--fh-blueprint-major": {
     "$value": "120px",
     "$type": "dimension",
@@ -1079,6 +1115,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "duration"
   },
+  "--fh-duration-sheen": {
+    "$value": "9s",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
   "--fh-ease-standard": {
     "$value": "ease",
     "$type": "cubicBezier",
@@ -1177,6 +1219,42 @@ export const tokens = {
   },
   "--fh-z-raised": {
     "$value": "1",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-cell-pinned": {
+    "$value": "2",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-cell-head": {
+    "$value": "3",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-cell-corner": {
+    "$value": "4",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-cell-handle": {
+    "$value": "5",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-cell-bar": {
+    "$value": "6",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-under": {
+    "$value": "-1",
     "$type": "number",
     "tier": "primitives",
     "group": "z"

@@ -19,6 +19,15 @@
     --fh-canvas-title: 84;
     --fh-canvas-sub: 30;
     --fh-canvas-small: 20;
+    /* The parts' recipes at canvas scale (frame units): the Eyebrow pill's padding, frame and gap, and
+     * the Cube's text and padding, scaled from their families' values to the canvas's small text. */
+    --fh-canvas-pad-block: 7;
+    --fh-canvas-pad-inline: 22;
+    --fh-canvas-ring: 7; /* the item frame: a lone pill adds it to its padding */
+    --fh-canvas-gap: 15;
+    --fh-canvas-cube: 24;
+    --fh-canvas-cube-pad-block: 12;
+    --fh-canvas-cube-pad-inline: 17;
     --fh-canvas-measure: 15ch;
     --fh-canvas-art: none;
     /* The canvas's root colour: its glow and accents are built from it (root, two split
@@ -48,7 +57,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      z-index: -1;
+      z-index: var(--fh-z-under);
       pointer-events: none;
       background:
         var(--_guide),
@@ -68,7 +77,7 @@
       content: "";
       position: absolute;
       inset: calc(var(--fh-canvas-frame, 24) * var(--_u)) 0;
-      z-index: -1;
+      z-index: var(--fh-z-under);
       pointer-events: none;
       border-block: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     }

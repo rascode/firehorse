@@ -32,18 +32,19 @@
   .fh-canvas__eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.6em;
+    gap: calc(var(--fh-canvas-gap, 15) * var(--_u));
     inline-size: fit-content;
     margin: 0;
-    padding: 0.6em 1em 0.6em 0.8em;
-    border: var(--_hair) var(--fh-card-border-style, solid) var(--fh-color-rule);
+    /* The Eyebrow pill (EYE) at canvas scale: the etched frost, regular labels at caps tracking. */
+    padding: calc((var(--fh-canvas-pad-block, 7) + var(--fh-canvas-ring, 7)) * var(--_u)) calc((var(--fh-canvas-pad-inline, 22) + var(--fh-canvas-ring, 7)) * var(--_u));
+    border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-pill);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
     font-size: calc(var(--fh-canvas-small, 20) * var(--_u));
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-widest);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-caps);
     line-height: 1;
     text-transform: uppercase;
     white-space: nowrap;
@@ -76,14 +77,15 @@
   .fh-canvas__badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.4em;
+    gap: calc(var(--fh-canvas-gap, 15) * var(--_u));
     inline-size: fit-content;
-    padding: 0.45em 0.65em;
+    /* The Cube (CUB) at canvas scale. */
+    padding: calc(var(--fh-canvas-cube-pad-block, 12) * var(--_u)) calc(var(--fh-canvas-cube-pad-inline, 17) * var(--_u));
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--fh-canvas-small, 20) * 1.2 * var(--_u));
+    font-size: calc(var(--fh-canvas-cube, 24) * var(--_u));
     font-weight: var(--fh-weight-heavy);
     letter-spacing: var(--fh-tracking-mono);
     line-height: 1;
@@ -117,12 +119,12 @@
     & > li {
       display: inline-flex;
       align-items: center;
-      gap: 0.6em;
+      gap: calc(var(--fh-canvas-gap, 15) * var(--_u));
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
       font-size: calc(var(--fh-canvas-small, 20) * var(--_u));
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-wider);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-caps);
       text-transform: uppercase;
       white-space: nowrap;
     }
@@ -132,11 +134,11 @@
       align-items: center;
       justify-content: center;
       min-inline-size: 2.2em;
-      padding: 0.45em 0.55em;
+      padding: calc(var(--fh-canvas-cube-pad-block, 12) * var(--_u)) calc(var(--fh-canvas-cube-pad-inline, 17) * var(--_u));
       border-radius: var(--fh-radius-sm);
       background-color: var(--_cube, var(--fh-tone));
       color: var(--fh-color-on-tone);
-      font-size: 1.25em;
+      font-size: calc(var(--fh-canvas-cube, 24) * var(--_u));
       font-weight: var(--fh-weight-heavy);
       font-variant-numeric: tabular-nums;
       letter-spacing: var(--fh-tracking-mono);

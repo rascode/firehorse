@@ -1,7 +1,8 @@
 /*
- * Firehorse — Thumbs (THB)
- * components/media · layer fh.components
- * Row-height thumbs for datatable cells and value previews (DR4).
+ * Firehorse — Thumbs (VAL-8)
+ * components/media · layer fh.components · docs /data/values/
+ * Row-height thumbs for file values (VAL-8.2 Thumb, VAL-8.3 Thumbs, +N), in datatable cells and
+ * value previews (DR4). Part of Values (VAL); the canvas pictures are Thumbnails & link cards (THB).
  */
 
 @layer fh.components {
@@ -13,7 +14,7 @@
     inline-size: var(--_size);
     block-size: var(--_size);
     padding: 0;
-    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-avatar-entity-radius, var(--fh-radius-md));
     background: var(--fh-color-surface-sunken);
     overflow: hidden;
@@ -33,7 +34,7 @@
   }
 
   .fh-thumb--tile {
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     font-size: var(--fh-type-label);
     font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-type-label-tracking);
@@ -43,9 +44,9 @@
   }
 
   .fh-thumb--portrait {
-  aspect-ratio: 3 / 4;
-    block-size: auto;
-    inline-size: calc(var(--_size) * 0.75);
+    aspect-ratio: 3 / 4;
+    inline-size: auto;
+    block-size: var(--_size);
   }
 
   .fh-thumb--lg {
@@ -59,7 +60,7 @@
     vertical-align: middle;
 
     & > .fh-thumb--more {
-      font-family: var(--fh-type-figure-family);
+      font-family: var(--fh-type-figure-family, var(--fh-font-mono));
       font-size: var(--fh-type-label);
       font-variant-numeric: tabular-nums;
       letter-spacing: var(--fh-type-figure-tracking);
@@ -122,7 +123,7 @@
     inline-size: var(--fh-row-media, 2rem);
     block-size: var(--fh-row-media, 2rem);
     padding: 0;
-    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-avatar-entity-radius, var(--fh-radius-md));
     background: transparent;
     color: var(--fh-color-text-subtle);

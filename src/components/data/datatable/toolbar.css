@@ -6,7 +6,8 @@
 @layer fh.components {
   /* —— Toolbar —— */
   /* One quiet row: identity (title · count · views) on the left, tools on
-   * the right. Every control shares one height (--fh-dt-control). */
+   * the right. Every control shares one height (--fh-dt-control, control height: 36px), and the
+   * view and density switches are the Segment switch's recipe at that outer size. */
   .fh-dt__toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -19,35 +20,41 @@
   .fh-dt__tools {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: var(--fh-item-frame);
   }
 
-  /* Toolbar segmented controls: square-shouldered, sans, no white fill. */
+  /* Toolbar segmented controls: the Segment switch's recipe (SEG-1.1, its --fh-segment-* values),
+   * at the toolbar's control height: the etched pill, the frame ring round the options and between
+   * them, the options in the meta tier at inset-control, the chosen one washed in the tone. */
   .fh-dt__toolbar .fh-segmented {
+    --_frame: var(--fh-segment-frame, var(--fh-item-frame));
     flex-direction: row;
-    gap: 0;
-    padding: 2px;
-    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
-    border-radius: var(--fh-radius-sm);
+    gap: var(--_frame);
+    box-sizing: border-box;
+    block-size: var(--_ctl);
+    padding: var(--_frame);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
 
     & > label {
-      min-block-size: calc(var(--_ctl) - 6px);
-      padding: 0 var(--fh-inset-tight);
-      border-radius: calc(var(--fh-radius-sm) - 2px);
-      font-family: var(--fh-font-sans);
-      font-size: var(--fh-text-caption);
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-body);
+      min-block-size: calc(var(--_ctl) - 2 * (var(--_frame) + var(--fh-border-thin)));
+      padding: 0 var(--fh-segment-pad-inline, var(--fh-inset-control));
+      border-radius: var(--fh-radius-pill);
+      font-family: var(--fh-type-meta-family, var(--fh-font-sans));
+      font-size: var(--fh-type-meta);
+      font-weight: var(--fh-type-meta-weight);
+      letter-spacing: var(--fh-type-meta-tracking);
+      line-height: var(--fh-leading-snug);
       text-transform: none;
 
-      & .fh-icon { font-size: 0.9em; opacity: 0.8; }
+      & .fh-icon { --_icon: calc(var(--fh-leading-snug) * 1em); inline-size: var(--_icon); block-size: var(--_icon); }
     }
     & > label:has(:checked) {
-      background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 14%, transparent);
       color: var(--fh-color-text);
     }
   }
-  .fh-dt__density > label { min-inline-size: 1.6rem; font-family: var(--fh-font-mono); }
+  .fh-dt__density > label { min-inline-size: calc(var(--_ctl) - 2 * (var(--_frame) + var(--fh-border-thin))); font-family: var(--fh-font-mono); }
 
   .fh-dt__title {
     display: flex;
@@ -64,7 +71,7 @@
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-label);
-    letter-spacing: var(--fh-tracking-wide);
+    letter-spacing: var(--fh-tracking-caps);
     white-space: nowrap;
   }
 
@@ -114,7 +121,7 @@
     &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent); color: var(--fh-color-text); }
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 1px; }
     &:disabled { opacity: 0.4; cursor: default; background: none; }
-    & > .fh-icon { font-size: 0.95em; }
+    & > .fh-icon { --_icon: calc(var(--fh-leading-snug) * 1em); inline-size: var(--_icon); block-size: var(--_icon); }
     &[aria-pressed="true"],
     &[data-active] {
       background-color: color-mix(in oklab, var(--fh-tone) 10%, transparent);

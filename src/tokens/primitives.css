@@ -207,6 +207,8 @@
     --fh-shadow-edge: 0 0 transparent;
     /* Elevation asked for by name (the elevated card), outside the preset. */
     --fh-shadow-elevated: 0 18px 40px rgb(0 0 0 / 0.45);
+    /* A glow asked for by name (the member card's --glow): the shape; the colour is the tone. */
+    --fh-shadow-glow: 0 1.5rem 5rem -1rem;
 
     --fh-blur-chrome: 10px;
     --fh-blur-backdrop: 48px; /* a backdrop's tone fields, soft enough to read as light (BKD-1.1) */
@@ -230,6 +232,12 @@
     --fh-card-art-sig-dark: oklch(0.88 0 0);
     --fh-card-art-sig-ink: oklch(0.2 0 0);
     --fh-card-art-shade: oklch(0 0 0); /* the chip's contacts and the number's engraving */
+    /* A holographic sheen (the member card's badge): five stops round a conic gradient. */
+    --fh-holo-1: oklch(0.9 0.09 200);
+    --fh-holo-2: oklch(0.93 0.1 120);
+    --fh-holo-3: oklch(0.92 0.08 60);
+    --fh-holo-4: oklch(0.88 0.1 330);
+    --fh-holo-5: oklch(0.9 0.09 260);
     /* A drafting sheet's cells (the Blueprint backdrop, BKD-3.1): major, and the minor grid inside it (a fifth). */
     --fh-blueprint-major: 120px;
     --fh-blueprint-minor: 24px;
@@ -254,6 +262,7 @@
     --fh-duration-pulse: 1.8s;
     --fh-duration-roll: 0.5s; /* a word rolling into place (the Word rotator) */
     --fh-duration-dwell: 2.6s; /* time a rotating word stays (the Word rotator's step) */
+    --fh-duration-sheen: 9s; /* a slow colour drift (the member card's holographic badge) */
     --fh-ease-standard: ease;
     --fh-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     --fh-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -275,6 +284,14 @@
 
     /* —— Stacking —— */
     --fh-z-raised: 1;
+    /* Inside a table's own stack (the datatable): pinned cells and the footer, the head, the pinned
+       head cell, a column's resize handle, the bulk bar floating over the rows. All under sticky. */
+    --fh-z-cell-pinned: 2;
+    --fh-z-cell-head: 3;
+    --fh-z-cell-corner: 4;
+    --fh-z-cell-handle: 5;
+    --fh-z-cell-bar: 6;
+    --fh-z-under: -1; /* a picture layer drawn behind its own box's content (the canvas sheet) */
     --fh-z-sticky: 20;
     --fh-z-drawer: 25;
     --fh-z-dropdown: 30;
