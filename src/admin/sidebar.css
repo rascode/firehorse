@@ -471,6 +471,23 @@
     inline-size: var(--fh-sidebar-rail);
   }
 
+  /* Rail: the column of cubes owns the whole width. No side padding, no horizontal overflow,
+     and no scroll bar at all (the list still scrolls), so a cube is never clipped or crowded. */
+  .fh-sidebar[data-fh-side="rail"] :is(.fh-sidebar__body, .fh-sidebar__window-body) {
+    padding-inline: 0;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] :is(.fh-sidebar__body, .fh-sidebar__window-body)::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__head {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__toggle .fh-icon {
     rotate: 180deg;
   }
@@ -504,7 +521,8 @@
     position: relative;
     grid-template-columns: 1fr;
     justify-items: center;
-    padding-inline: var(--fh-inset-tight);
+    inline-size: 100%;
+    padding-inline: 0;
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__cube {

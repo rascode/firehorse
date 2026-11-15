@@ -1116,6 +1116,21 @@
     inline-size: var(--fh-sidebar-rail);
   }
 
+  .fh-sidebar[data-fh-side="rail"] :is(.fh-sidebar__body, .fh-sidebar__window-body) {
+    scrollbar-width: none;
+    padding-inline: 0;
+    overflow-x: hidden;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] :is(.fh-sidebar__body, .fh-sidebar__window-body)::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__head {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__toggle .fh-icon {
     rotate: 180deg;
   }
@@ -1133,9 +1148,10 @@
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__item {
-    padding-inline: var(--fh-inset-tight);
     grid-template-columns: 1fr;
     justify-items: center;
+    inline-size: 100%;
+    padding-inline: 0;
     position: relative;
   }
 

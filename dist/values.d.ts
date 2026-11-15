@@ -39,7 +39,7 @@ export interface ValueField {
 export interface ResolvedValue {
   shape: Shape; kind: string | null; semanticType: string | null; row: string; context: Context; mode: Mode;
   /** The variant to draw, or null when the grid leaves the field out of this context. */
-  variant: string | null; label: string | null; group: string; parts: string[];
+  variant: string | null; /** The variant's Firehorse Index ID (VAL-1.1), the part to draw. */ id: string | null; label: string | null; group: string; parts: string[];
   editable: boolean; control: string | null; readOnly: boolean;
   align: "start" | "end"; figures: "tabular" | null; mono: boolean; max: number | null; multiple: boolean;
   unit: string | null; currency: string | null; optionSet: OptionSet | null;
