@@ -824,17 +824,35 @@ export const tokens = {
   "--fh-shadow-overlay": {
     "$value": "0 18px 40px rgb(0 0 0 / 0.45)",
     "$type": "shadow",
-    "tier": "primitives",
+    "tier": "config",
     "group": "shadow"
   },
   "--fh-shadow-menu": {
     "$value": "0 12px 32px rgb(0 0 0 / 0.5)",
     "$type": "shadow",
-    "tier": "primitives",
+    "tier": "config",
     "group": "shadow"
   },
   "--fh-shadow-panel": {
     "$value": "0 6px 24px rgb(0 0 0 / 0.16)",
+    "$type": "shadow",
+    "tier": "config",
+    "group": "shadow"
+  },
+  "--fh-shadow-lift": {
+    "$value": "0 1px 2px rgb(0 0 0 / 0.3), 0 3px 8px rgb(0 0 0 / 0.16)",
+    "$type": "shadow",
+    "tier": "config",
+    "group": "shadow"
+  },
+  "--fh-shadow-edge": {
+    "$value": "8px 0 12px -10px var(--fh-color-scrim)",
+    "$type": "shadow",
+    "tier": "config",
+    "group": "shadow"
+  },
+  "--fh-shadow-elevated": {
+    "$value": "0 18px 40px rgb(0 0 0 / 0.45)",
     "$type": "shadow",
     "tier": "primitives",
     "group": "shadow"

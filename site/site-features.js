@@ -124,7 +124,7 @@ const base = manifest.find((t) => t.base);
 export const BASE_THEME = { ...(base ?? { label: "Firehorse", tagline: "The base system.", config: {} }), name: "", scope: base?.name ?? "" };
 export const THEMES = [BASE_THEME, ...manifest.filter((t) => !t.base)];
 const themeOf = (name) => THEMES.find((t) => t.name === (name || "")) ?? BASE_THEME;
-const LABELS = { avatar: "Avatar", avatarPerson: "Avatar (person)", avatarEntity: "Avatar (entity)", card: "Card", cardMedia: "Card media", cardContent: "Card content", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table", type: "Type preset" };
+const LABELS = { avatar: "Avatar", avatarPerson: "Avatar (person)", avatarEntity: "Avatar (entity)", card: "Card", cardMedia: "Card media", cardContent: "Card content", button: "Button", shadow: "Shadow", chip: "Chip", radius: "Radius", density: "Density", table: "Table", type: "Type preset" };
 const escHtml = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 export const themeSelect = (attrs = "") =>

@@ -52,6 +52,7 @@ const CONFIG_KEYS = {
   cardMedia: "card-media",
   cardContent: "card-content",
   button: "button",
+  shadow: "shadow",
   chip: "chip",
   radius: "radius",
   density: "density",

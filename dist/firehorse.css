@@ -232,9 +232,12 @@
       inset 0 -1px 0 #0003,
       0 1px 2px #0000004d,
       0 3px 8px #00000029;
-    --fh-shadow-overlay: 0 18px 40px #00000073;
-    --fh-shadow-menu: 0 12px 32px #00000080;
-    --fh-shadow-panel: 0 6px 24px #00000029;
+    --fh-shadow-overlay: 0 1px 3px #0000000f, 0 8px 20px #00000014;
+    --fh-shadow-menu: 0 1px 2px #0000000d, 0 4px 12px #0000000f;
+    --fh-shadow-panel: 0 0 transparent;
+    --fh-shadow-lift: 0 0 transparent;
+    --fh-shadow-edge: 0 0 transparent;
+    --fh-shadow-elevated: 0 18px 40px #00000073;
     --fh-blur-chrome: 10px;
     --fh-frost: .6;
     --fh-frost-panel-f: clamp(0, var(--fh-frost, .45), 1);
@@ -7698,7 +7701,7 @@
     }
 
     & [data-sticky="primary"] {
-      box-shadow: 1px 0 0 var(--_rule), 8px 0 12px -10px var(--fh-color-scrim);
+      box-shadow: 1px 0 0 var(--_rule), var(--fh-shadow-edge, 0 0 transparent);
       font-weight: var(--fh-weight-medium);
       inset-inline-start: var(--fh-dt-primary-offset, 2.6rem);
     }
@@ -7973,7 +7976,7 @@
 
     &:hover {
       border-color: color-mix(in oklab, var(--fh-tone) 45%, transparent);
-      box-shadow: var(--fh-shadow-raised);
+      box-shadow: var(--fh-shadow-lift, 0 0 transparent);
       translate: 0 -1px;
     }
 
@@ -11142,7 +11145,7 @@
     padding: var(--fh-inset-control);
     border-radius: var(--fh-radius-md);
     background: var(--fh-color-surface-menu, var(--fh-color-surface-raised));
-    box-shadow: var(--fh-shadow-elevated, 0 8px 28px color-mix(in oklab, var(--fh-color-text) 18%, transparent));
+    box-shadow: var(--fh-shadow-menu, 0 0 transparent);
     border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-etch) 60%, transparent);
     position: fixed;
   }
@@ -15622,7 +15625,7 @@
     --fh-card-border-style: solid;
     --fh-card-border-color: var(--fh-color-border);
     --fh-card-bg: var(--fh-color-surface-raised);
-    --fh-card-shadow: var(--fh-shadow-overlay);
+    --fh-card-shadow: var(--fh-shadow-elevated);
     --fh-card-radius: var(--fh-radius-lg);
   }
 
@@ -15657,6 +15660,38 @@
     --fh-card-bg: color-mix(in oklab, var(--fh-tone) 8%, transparent);
     --fh-card-shadow: none;
     --fh-card-radius: var(--fh-radius-md);
+  }
+
+  [data-fh-shadow="none"] {
+    --fh-shadow-menu: 0 0 transparent;
+    --fh-shadow-overlay: 0 0 transparent;
+    --fh-shadow-panel: 0 0 transparent;
+    --fh-shadow-lift: 0 0 transparent;
+    --fh-shadow-edge: 0 0 transparent;
+  }
+
+  [data-fh-shadow="hint"] {
+    --fh-shadow-menu: 0 1px 2px #0000000d, 0 4px 12px #0000000f;
+    --fh-shadow-overlay: 0 1px 3px #0000000f, 0 8px 20px #00000014;
+    --fh-shadow-panel: 0 0 transparent;
+    --fh-shadow-lift: 0 0 transparent;
+    --fh-shadow-edge: 0 0 transparent;
+  }
+
+  [data-fh-shadow="soft"] {
+    --fh-shadow-menu: 0 4px 14px #00000029;
+    --fh-shadow-overlay: 0 8px 24px #0003;
+    --fh-shadow-panel: 0 2px 10px #00000014;
+    --fh-shadow-lift: 0 2px 6px #0000001f;
+    --fh-shadow-edge: 6px 0 10px -8px var(--fh-color-scrim);
+  }
+
+  [data-fh-shadow="full"] {
+    --fh-shadow-menu: 0 12px 32px #00000080;
+    --fh-shadow-overlay: 0 18px 40px #00000073;
+    --fh-shadow-panel: 0 6px 24px #00000029;
+    --fh-shadow-lift: 0 1px 2px #0000004d, 0 3px 8px #00000029;
+    --fh-shadow-edge: 8px 0 12px -10px var(--fh-color-scrim);
   }
 
   [data-fh-card-media="wide"] {

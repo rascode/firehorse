@@ -154,7 +154,7 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## ELV · Elevation
 
-The convex button style (data-fh-button="convex"): bends out at rest, the shadow inverts on hover, it sinks on press.
+Drop shadows are a theme setting, data-fh-shadow (or "shadow" in a theme's config): none, hint (the default: no shadow on panels, bars, cards and rows, a barely visible one under menus and overlays), soft or full. A style that asks for a shadow keeps it, like the convex button (data-fh-button="convex"): bends out at rest, the shadow inverts on hover, it sinks on press.
 
 Classes: `fh-cluster` `fh-button`
 

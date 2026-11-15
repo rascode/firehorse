@@ -197,9 +197,16 @@
       inset 0 -1px 0 rgb(0 0 0 / 0.2),
       0 1px 2px rgb(0 0 0 / 0.3),
       0 3px 8px rgb(0 0 0 / 0.16);
-    --fh-shadow-overlay: 0 18px 40px rgb(0 0 0 / 0.45);
-    --fh-shadow-menu: 0 12px 32px rgb(0 0 0 / 0.5);
-    --fh-shadow-panel: 0 6px 24px rgb(0 0 0 / 0.16);
+    /* The shadow preset (data-fh-shadow, config.css) sets these; the default is hint: no shadow on
+       panels, bars, cards or rows, and a barely visible one under menus and overlays. Off is a
+       transparent shadow, not none, so a token can sit in a list beside an inset. */
+    --fh-shadow-overlay: 0 1px 3px rgb(0 0 0 / 0.06), 0 8px 20px rgb(0 0 0 / 0.08);
+    --fh-shadow-menu: 0 1px 2px rgb(0 0 0 / 0.05), 0 4px 12px rgb(0 0 0 / 0.06);
+    --fh-shadow-panel: 0 0 transparent;
+    --fh-shadow-lift: 0 0 transparent;
+    --fh-shadow-edge: 0 0 transparent;
+    /* Elevation asked for by name (the elevated card), outside the preset. */
+    --fh-shadow-elevated: 0 18px 40px rgb(0 0 0 / 0.45);
 
     --fh-blur-chrome: 10px;
     /* Frost over a backdrop: 0 is clear glass, 1 is nearly solid. */

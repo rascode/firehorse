@@ -183,7 +183,7 @@ Inter, Geist Mono and Caveat in the Rascode theme; system stacks in core. Fluid 
 
 ### ELV · Elevation
 
-The convex button style (data-fh-button="convex"): bends out at rest, the shadow inverts on hover, it sinks on press.
+Drop shadows are a theme setting, data-fh-shadow (or "shadow" in a theme's config): none, hint (the default: no shadow on panels, bars, cards and rows, a barely visible one under menus and overlays), soft or full. A style that asks for a shadow keeps it, like the convex button (data-fh-button="convex"): bends out at rest, the shadow inverts on hover, it sinks on press.
 
 ```html
 <div class="fh-cluster" style="--fh-gap: var(--fh-space-6)">
