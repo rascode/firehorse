@@ -2,7 +2,7 @@
 //
 //   import { resolveValue } from "@rascode/firehorse/values";
 //   resolveValue({ key: "state", semanticType: "status" }, "cell");
-//   // → { shape: "option", row: "option.status", variant: "dot", group: "VAL-1", ... }
+//   // → { shape: "option", row: "option.status", variant: "dot", id: "VAL-1.1", group: "VAL-1", ... }
 //
 // A surface (datatable, table, record table, metric, card, sidecar, form) never decides how a value looks:
 // it hands the field to resolveValue() with its context, and draws the variant it gets back.
@@ -135,7 +135,7 @@ export function gridRow(d, count = null) {
  *   context  "cell" | "record" | "card" | "metric" | "form"
  *   mode     "read" | "edit" (default: edit in a form, read elsewhere)
  *   opts     { optionSets } a registry of option sets by key
- * Returns { shape, kind, row, context, mode, variant, label, group, parts, editable, control, readOnly, align,
+ * Returns { shape, kind, row, context, mode, variant, id (the variant's Index ID, VAL-1.1), label, group, parts, editable, control, readOnly, align,
  *   figures, mono, max, unit, currency, optionSet, empty, source, warnings }.
  * variant is null when the grid leaves the field out of that context (metric for prose, say): the surface skips it.
  * In edit mode outside a form, the read variant stays and gains its control (rule 6): editable + control.
@@ -185,6 +185,7 @@ export function resolveValue(field = {}, context = "cell", mode, opts = {}) {
     context,
     mode,
     variant,
+    id: meta?.id ?? null,
     label: meta?.label ?? null,
     group: family.group,
     parts: meta?.parts ?? [],

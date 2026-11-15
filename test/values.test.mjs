@@ -200,4 +200,19 @@ t("specific kinds: secrets masked, JSON as a block, time and duration, actions",
   assert.equal(resolveValue({ semanticType: "timestamp" }, "record").variant, "datetime");
 });
 
+t("every variant is a Values part: its ID is in the Index, with the same name, in grid order", () => {
+  const index = JSON.parse(readFileSync(new URL("../dist/full/index.json", import.meta.url), "utf8"));
+  const val = index.families.find((f) => f.id === "VAL");
+  assert.ok(val, "VAL is in dist/full/index.json (run the build)");
+  const ids = Object.values(rules.variants).flatMap((f) => Object.values(f.variants).map((v) => v.id));
+  assert.equal(new Set(ids).size, ids.length, "variant IDs are unique");
+  assert.deepEqual(val.variants.map((v) => v.id), ids, "the Index has one part per variant, in display-rules.json order");
+  for (const f of Object.values(rules.variants)) for (const v of Object.values(f.variants)) {
+    assert.ok(v.id.startsWith(f.group + "."), `${v.id} is in ${f.group}`);
+    assert.equal(val.variants.find((x) => x.id === v.id).name, v.label, `${v.id} is named ${v.label}`);
+  }
+  assert.equal(resolveValue({ semanticType: "status" }, "cell").id, "VAL-1.1");
+  assert.equal(resolveValue({ semanticType: "status" }, "record").id, "VAL-1.2");
+});
+
 console.log(`values: ${n} checks passed`);

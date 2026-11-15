@@ -1,5 +1,5 @@
 {
-  "$comment": "Firehorse data display contract: how a value is drawn, everywhere. Source of truth for src/js/values.js (resolveValue, via scripts/value-rules.mjs), agent/components/values.md and the UI audit. Plan: platform relay/2026-11-14-data-display-contract-plan.md. Rows of the grid are matched in order; the first row whose shape and match fit the field wins.",
+  "$comment": "Firehorse data display contract: how a value is drawn, everywhere. Source of truth for src/js/values.js (resolveValue, via scripts/value-rules.mjs), agent/components/values.md and the UI audit. Plan: platform relay/2026-11-14-data-display-contract-plan.md. Rows of the grid are matched in order; the first row whose shape and match fit the field wins. Every variant carries its Firehorse Index ID (VAL-1.1 …), the part drawn at /data/values/.",
   "version": 1,
   "shapes": {
     "text": "short words",
@@ -409,12 +409,14 @@
       "name": "Option",
       "variants": {
         "dot": {
+          "id": "VAL-1.1",
           "label": "Dot and word",
           "parts": [
             "MRK"
           ]
         },
         "chip": {
+          "id": "VAL-1.2",
           "label": "Toned chip",
           "parts": [
             "CHP",
@@ -422,12 +424,14 @@
           ]
         },
         "chip-solid": {
+          "id": "VAL-1.3",
           "label": "Solid chip",
           "parts": [
             "CHP"
           ]
         },
         "select": {
+          "id": "VAL-1.4",
           "label": "Chip with chevron",
           "parts": [
             "CHP",
@@ -436,6 +440,7 @@
           "editable": true
         },
         "segmented": {
+          "id": "VAL-1.5",
           "label": "Segmented",
           "parts": [
             "SEG"
@@ -443,6 +448,7 @@
           "editable": true
         },
         "select-search": {
+          "id": "VAL-1.6",
           "label": "Select with search",
           "parts": [
             "CHP",
@@ -457,22 +463,26 @@
       "name": "Options",
       "variants": {
         "chips": {
+          "id": "VAL-2.1",
           "label": "Chips, +N after the limit",
           "parts": [
             "CHP"
           ]
         },
         "chips-inline": {
+          "id": "VAL-2.2",
           "label": "Chips, wrapping",
           "parts": [
             "CHP"
           ]
         },
         "count": {
+          "id": "VAL-2.3",
           "label": "Count (3 tags)",
           "parts": []
         },
         "tag-field": {
+          "id": "VAL-2.4",
           "label": "Tag field",
           "parts": [
             "TAG"
@@ -486,22 +496,26 @@
       "name": "Entity",
       "variants": {
         "name": {
+          "id": "VAL-3.1",
           "label": "Name",
           "parts": []
         },
         "name-key": {
+          "id": "VAL-3.2",
           "label": "Name and key",
           "parts": [
             "DET"
           ]
         },
         "avatar-name": {
+          "id": "VAL-3.3",
           "label": "Avatar and name",
           "parts": [
             "AVT"
           ]
         },
         "avatar-name-description": {
+          "id": "VAL-3.4",
           "label": "Avatar, name and description",
           "parts": [
             "AVT",
@@ -509,6 +523,7 @@
           ]
         },
         "full": {
+          "id": "VAL-3.5",
           "label": "Full row",
           "parts": [
             "AVT",
@@ -516,6 +531,7 @@
           ]
         },
         "chip": {
+          "id": "VAL-3.6",
           "label": "Avatar chip",
           "parts": [
             "CHP",
@@ -523,24 +539,28 @@
           ]
         },
         "stack": {
+          "id": "VAL-3.7",
           "label": "Avatar stack, +N",
           "parts": [
             "AVT"
           ]
         },
         "ref": {
+          "id": "VAL-3.8",
           "label": "Reference (opens the sidecar)",
           "parts": [
             "REF"
           ]
         },
         "ref-key": {
+          "id": "VAL-3.9",
           "label": "Reference and key",
           "parts": [
             "REF"
           ]
         },
         "picker": {
+          "id": "VAL-3.10",
           "label": "Picker",
           "parts": [
             "ENT"
@@ -548,6 +568,7 @@
           "editable": true
         },
         "picker-multi": {
+          "id": "VAL-3.11",
           "label": "Picker, several",
           "parts": [
             "ENT"
@@ -561,26 +582,32 @@
       "name": "Money",
       "variants": {
         "amount": {
+          "id": "VAL-4.1",
           "label": "Amount",
           "parts": []
         },
         "amount-code": {
+          "id": "VAL-4.2",
           "label": "Amount and currency code",
           "parts": []
         },
         "compact": {
+          "id": "VAL-4.3",
           "label": "Compact ($1.2M)",
           "parts": []
         },
         "delta": {
+          "id": "VAL-4.4",
           "label": "Delta",
           "parts": []
         },
         "compact-delta": {
+          "id": "VAL-4.5",
           "label": "Compact with delta",
           "parts": []
         },
         "money-input": {
+          "id": "VAL-4.6",
           "label": "Money input",
           "parts": [
             "FLD"
@@ -594,22 +621,26 @@
       "name": "Ratio",
       "variants": {
         "text": {
+          "id": "VAL-5.1",
           "label": "Percent",
           "parts": []
         },
         "bar": {
+          "id": "VAL-5.2",
           "label": "Bar",
           "parts": [
             "MET"
           ]
         },
         "ring": {
+          "id": "VAL-5.3",
           "label": "Ring",
           "parts": [
             "FBK"
           ]
         },
         "meter": {
+          "id": "VAL-5.4",
           "label": "Meter against a target",
           "parts": [
             "MET",
@@ -617,6 +648,7 @@
           ]
         },
         "range": {
+          "id": "VAL-5.5",
           "label": "Range",
           "parts": [
             "UPL"
@@ -630,28 +662,34 @@
       "name": "Number",
       "variants": {
         "plain": {
+          "id": "VAL-6.1",
           "label": "Plain",
           "parts": []
         },
         "unit": {
+          "id": "VAL-6.2",
           "label": "With unit",
           "parts": []
         },
         "delta": {
+          "id": "VAL-6.3",
           "label": "Delta",
           "parts": []
         },
         "plain-delta": {
+          "id": "VAL-6.4",
           "label": "Plain with delta",
           "parts": []
         },
         "sparkline": {
+          "id": "VAL-6.5",
           "label": "Sparkline",
           "parts": [
             "MET"
           ]
         },
         "number-input": {
+          "id": "VAL-6.6",
           "label": "Number input",
           "parts": [
             "FLD"
@@ -665,38 +703,47 @@
       "name": "Temporal",
       "variants": {
         "date": {
+          "id": "VAL-7.1",
           "label": "Date",
           "parts": []
         },
         "date-relative": {
+          "id": "VAL-7.2",
           "label": "Date and relative",
           "parts": []
         },
         "relative": {
+          "id": "VAL-7.3",
           "label": "Relative",
           "parts": []
         },
         "datetime": {
+          "id": "VAL-7.4",
           "label": "Date and time",
           "parts": []
         },
         "range": {
+          "id": "VAL-7.5",
           "label": "Range",
           "parts": []
         },
         "overdue": {
+          "id": "VAL-7.6",
           "label": "Overdue",
           "parts": []
         },
         "time": {
+          "id": "VAL-7.7",
           "label": "Time of day",
           "parts": []
         },
         "duration": {
+          "id": "VAL-7.8",
           "label": "Duration",
           "parts": []
         },
         "date-picker": {
+          "id": "VAL-7.9",
           "label": "Date picker",
           "parts": [
             "FLD"
@@ -704,6 +751,7 @@
           "editable": true
         },
         "time-input": {
+          "id": "VAL-7.10",
           "label": "Time input",
           "parts": [
             "FLD"
@@ -711,6 +759,7 @@
           "editable": true
         },
         "duration-input": {
+          "id": "VAL-7.11",
           "label": "Duration input",
           "parts": [
             "FLD"
@@ -724,34 +773,40 @@
       "name": "File",
       "variants": {
         "type-chip": {
+          "id": "VAL-8.1",
           "label": "Type chip (PDF)",
           "parts": [
             "CHP"
           ]
         },
         "thumb": {
+          "id": "VAL-8.2",
           "label": "Thumb",
           "parts": [
             "THB"
           ]
         },
         "thumbs": {
+          "id": "VAL-8.3",
           "label": "Thumbs, +N",
           "parts": [
             "THB"
           ]
         },
         "file-row": {
+          "id": "VAL-8.4",
           "label": "File row",
           "parts": [
             "SFL"
           ]
         },
         "count": {
+          "id": "VAL-8.5",
           "label": "Count",
           "parts": []
         },
         "dropzone": {
+          "id": "VAL-8.6",
           "label": "Dropzone",
           "parts": [
             "UPL"
@@ -765,36 +820,42 @@
       "name": "Link",
       "variants": {
         "link": {
+          "id": "VAL-9.1",
           "label": "Link (trimmed URL)",
           "parts": [
             "ACT"
           ]
         },
         "email": {
+          "id": "VAL-9.2",
           "label": "Email",
           "parts": [
             "ACT"
           ]
         },
         "phone": {
+          "id": "VAL-9.3",
           "label": "Phone",
           "parts": [
             "ACT"
           ]
         },
         "link-chip": {
+          "id": "VAL-9.4",
           "label": "Link chip",
           "parts": [
             "CHP"
           ]
         },
         "action": {
+          "id": "VAL-9.5",
           "label": "Action",
           "parts": [
             "ACT"
           ]
         },
         "url-input": {
+          "id": "VAL-9.6",
           "label": "URL input",
           "parts": [
             "FLD"
@@ -802,6 +863,7 @@
           "editable": true
         },
         "email-input": {
+          "id": "VAL-9.7",
           "label": "Email input",
           "parts": [
             "FLD"
@@ -809,6 +871,7 @@
           "editable": true
         },
         "phone-input": {
+          "id": "VAL-9.8",
           "label": "Phone input",
           "parts": [
             "FLD"
@@ -822,20 +885,24 @@
       "name": "Flag",
       "variants": {
         "check": {
+          "id": "VAL-10.1",
           "label": "Check",
           "parts": [
             "CHO"
           ]
         },
         "yes-no": {
+          "id": "VAL-10.2",
           "label": "Yes or no",
           "parts": []
         },
         "count": {
+          "id": "VAL-10.3",
           "label": "Count",
           "parts": []
         },
         "switch": {
+          "id": "VAL-10.4",
           "label": "Switch",
           "parts": [
             "CHO"
@@ -849,18 +916,22 @@
       "name": "Prose, text and code",
       "variants": {
         "clamp-2": {
+          "id": "VAL-11.1",
           "label": "Two lines",
           "parts": []
         },
         "clamp-3": {
+          "id": "VAL-11.2",
           "label": "Three lines",
           "parts": []
         },
         "full": {
+          "id": "VAL-11.3",
           "label": "Full",
           "parts": []
         },
         "textarea": {
+          "id": "VAL-11.4",
           "label": "Textarea",
           "parts": [
             "FLD"
@@ -874,10 +945,12 @@
       "name": "Prose, text and code",
       "variants": {
         "line": {
+          "id": "VAL-11.5",
           "label": "Line",
           "parts": []
         },
         "input": {
+          "id": "VAL-11.6",
           "label": "Input",
           "parts": [
             "FLD"
@@ -891,30 +964,35 @@
       "name": "Prose, text and code",
       "variants": {
         "mono": {
+          "id": "VAL-11.7",
           "label": "Mono",
           "parts": [
             "DET"
           ]
         },
         "copyable": {
+          "id": "VAL-11.8",
           "label": "Copyable code",
           "parts": [
             "DET"
           ]
         },
         "masked": {
+          "id": "VAL-11.9",
           "label": "Masked vault reference",
           "parts": [
             "DET"
           ]
         },
         "code-block": {
+          "id": "VAL-11.10",
           "label": "Code block",
           "parts": [
             "DET"
           ]
         },
         "input-mono": {
+          "id": "VAL-11.11",
           "label": "Input, mono",
           "parts": [
             "FLD"
@@ -922,6 +1000,7 @@
           "editable": true
         },
         "textarea-mono": {
+          "id": "VAL-11.12",
           "label": "Textarea, mono",
           "parts": [
             "FLD"
@@ -929,6 +1008,7 @@
           "editable": true
         },
         "key-field": {
+          "id": "VAL-11.13",
           "label": "Key field",
           "parts": [
             "KEY"
