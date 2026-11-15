@@ -110,7 +110,7 @@ export const rootTags = (markup) => {
 
 /** "inline" when every root is an inline tag, otherwise "fill". Written as data-stage. */
 // Block roots that are a fixed-size object, not a layout: shown at their own size, centred (Motion's entrance tile, the colour menu).
-const INLINE_CLASSES = /^\s*<[a-z][\w-]*\b[^>]*\bclass="[^"]*\b(?:fh-motion-tile|fh-theme-menu|fh-segment|fh-action--cue)\b/i;
+const INLINE_CLASSES = /^\s*<[a-z][\w-]*\b[^>]*\bclass="[^"]*\b(?:fh-motion-tile|fh-theme-menu|fh-segment|fh-action--cue|fh-eyebrow-pill)\b/i;
 export const stageMode = (markup) => {
   const tags = rootTags(markup);
   if (INLINE_CLASSES.test(String(markup))) return "inline";

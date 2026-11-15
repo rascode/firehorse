@@ -31,7 +31,7 @@
    * A standalone pill adds the frame to its padding (block and start), so it is as tall as a
    * framed group; parts (count, avatar, kbd) sit one line plus the block padding tall, inside
    * that frame, so a pill with parts is as tall as a plain one. Every shape and line keeps
-   * that outer size.
+   * that outer size. Inside, every division sits the family gap from its rule on both sides.
    */
   @property --_eye-part {
     syntax: "<length>";
@@ -253,7 +253,7 @@
       margin-block: calc(-1 * var(--_edge));
       margin-inline-end: calc(-1 * var(--_pad-i));
       padding-block: var(--_edge);
-      padding-inline: var(--_pad-b) var(--_pad-i);
+      padding-inline: var(--_pad-i);
       border-inline-start: 0;
       border-start-end-radius: inherit;
       border-end-end-radius: inherit;
@@ -268,7 +268,10 @@
     }
   }
 
-  /* Parts: soft rules inside, the full etch on the frame. */
+  /* Parts: soft rules inside, the full etch on the frame. Every inner division (segment,
+     index, action) keeps the family gap on both sides of its rule: the pill's flex gap before
+     it, the same gap as padding after it. A filled end pads its text by the pill's end padding
+     on both sides. */
   .fh-eyebrow-pill__seg {
     display: inline-flex;
     align-items: center;
@@ -276,13 +279,13 @@
     white-space: nowrap;
 
     & + & {
-      padding-inline-start: var(--_pad-b);
+      padding-inline-start: var(--_gap);
       border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     }
   }
 
   .fh-eyebrow-pill__index {
-    padding-inline-end: var(--_pad-b);
+    padding-inline-end: var(--_gap);
     border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     color: var(--fh-tone);
     font-variant-numeric: tabular-nums;
@@ -318,8 +321,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-bound);
-    margin-inline-start: var(--fh-gap-bound);
-    padding-inline-start: var(--_pad-b);
+    padding-inline-start: var(--_gap);
     border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     color: var(--fh-color-text);
     font-weight: var(--_strong);
