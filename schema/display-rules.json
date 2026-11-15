@@ -360,6 +360,43 @@
       }
     },
     {
+      "row": "entity.rich",
+      "label": "entity, rich record (application, organization, brand)",
+      "shape": "entity",
+      "match": {
+        "kind": [
+          "application",
+          "organization",
+          "brand"
+        ]
+      },
+      "cell": "avatar-ref",
+      "record": "avatar-ref",
+      "card": "avatar-ref",
+      "metric": null,
+      "form": "picker",
+      "text": "name",
+      "note": "A record with its own logo draws its avatar (or initials) beside its reference, in every context (decision 10, Rascode 2026-11-14).",
+      "choices": {
+        "cell": [
+          "avatar-ref",
+          "ref",
+          "ref-key",
+          "name"
+        ],
+        "record": [
+          "avatar-ref",
+          "ref-key",
+          "full"
+        ],
+        "card": [
+          "avatar-ref",
+          "name",
+          "chip"
+        ]
+      }
+    },
+    {
       "row": "entity.record",
       "label": "entity, record",
       "shape": "entity",
@@ -1138,6 +1175,14 @@
             "ENT"
           ],
           "editable": true
+        },
+        "avatar-ref": {
+          "id": "VAL-3.12",
+          "label": "Avatar and reference",
+          "parts": [
+            "AVT",
+            "REF"
+          ]
         }
       }
     },
@@ -1820,6 +1865,7 @@
     "An ordinal set sorts by its order, never the alphabet, and draws its tones as a ramp in that order. Status tones are for states only.",
     "Option sets are data: a field points at its set (devops.option_sets, published as schema/option-sets.json). A status option's tone is its state's: done lime, moving sky, waiting amber, failed rose, ended neutral.",
     "Every value has a text form, the plain string for CSV export, aria-label, copy and search. A secret has none, export included.",
-    "A viewer may re-display a column with the variants its grid row lists under choices, and nothing else; a secret offers none. The metric and form contexts offer no choice."
+    "A viewer may re-display a column with the variants its grid row lists under choices, and nothing else; a secret offers none. The metric and form contexts offer no choice.",
+    "A record with its own logo (an application, an organization, a brand) draws its avatar beside its reference: the square avatar, or its initials, then the link that opens it."
   ]
 }

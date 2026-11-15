@@ -401,4 +401,15 @@ t("renderValue(): the empty dash, a viewer's pick only when allowed, escaping, a
   assert.equal(renderValue({ semanticType: "api_key_secret_ref" }, "vault:abcd", "text"), "");
 });
 
+t("a rich record (application, organization, brand) draws its avatar beside its reference (VAL-3.12, decision 10)", () => {
+  for (const entity of ["application", "organization", "brand"]) {
+    const f = { key: "r", label: "Record", semanticType: "entity_reference", entity };
+    assert.equal(resolveValue(f, "cell").variant, "avatar-ref", entity);
+    const html = renderValue(f, { label: "Helm", initials: "HM", sidecar: "app-helm", href: "/apps/helm" }, "cell");
+    assert.match(html, /data-fh="VAL-3\.12"><span class="fh-avatar fh-avatar--square"[^>]*>HM<\/span><a class="fh-ref" href="\/apps\/helm" data-sidecar="app-helm">/);
+  }
+  assert.equal(resolveValue({ semanticType: "entity_reference" }, "cell").variant, "ref", "a plain record stays a reference");
+  assert.deepEqual(variants({ semanticType: "entity_reference", entity: "brand" }, "cell").map((v) => v.variant), ["avatar-ref", "ref", "ref-key", "name"]);
+});
+
 console.log(`values: ${n} checks passed`);
