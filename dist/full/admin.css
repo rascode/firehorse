@@ -683,9 +683,10 @@
     max-inline-size: 100%;
     margin: var(--fh-inset-tight);
     padding: var(--fh-inset-tight);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border: var(--fh-sidebar-edge, 0);
     border-radius: var(--fh-radius-lg);
     background-color: var(--_fill);
+    box-shadow: var(--fh-sidebar-shadow, var(--fh-shadow-panel));
     -webkit-backdrop-filter: var(--_filter);
     backdrop-filter: var(--_filter);
     color: var(--fh-color-text);
@@ -1215,6 +1216,28 @@
     padding: 0;
     position: absolute;
     overflow: hidden;
+  }
+
+  @property --fh-sidebar-thumb {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+  }
+
+  :is(.fh-sidebar__body, .fh-sidebar__window-body) {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--fh-color-text) var(--fh-sidebar-thumb, 0%), transparent) transparent;
+    transition: --fh-sidebar-thumb var(--fh-duration-slow) var(--fh-ease-standard);
+
+    &:is(:hover, :focus-within, [data-scrolling]) {
+      --fh-sidebar-thumb: 32%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is(.fh-sidebar__body, .fh-sidebar__window-body) {
+      transition: none;
+    }
   }
 
   @container fh-sidebar-host (inline-size < 20rem) {

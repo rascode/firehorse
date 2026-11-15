@@ -119,6 +119,7 @@ export type FirehorseToken =
   | "--fh-shadow-raised"
   | "--fh-shadow-overlay"
   | "--fh-shadow-menu"
+  | "--fh-shadow-panel"
   | "--fh-blur-chrome"
   | "--fh-frost"
   | "--fh-float-gap"

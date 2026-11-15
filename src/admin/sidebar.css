@@ -6,7 +6,10 @@
 
 @layer fh.components {
   /* —— Sidebar (SBR) ——
-   * App navigation with tile rows inside a soft etched panel.
+   * App navigation with tile rows on a floating frosted panel: inset from the window's edges,
+   * rounded on every corner, a soft shadow and no etched edge (--fh-sidebar-edge brings one back,
+   * --fh-sidebar-shadow sets the shadow). The scrollbar stays hidden at rest and fades in on hover,
+   * focus or while scrolling (data-scrolling, set by firehorse.js and the React Sidebar).
    *   <nav class="fh-sidebar" aria-label="Helm" data-fh-side="open|rail">
    *     <div class="fh-sidebar__head">…brand… <button class="fh-sidebar__toggle" type="button" aria-expanded="true">…</button></div>
    *     <div class="fh-sidebar__body">
@@ -33,9 +36,10 @@
     min-block-size: 18rem;
     margin: var(--fh-inset-tight);
     padding: var(--fh-inset-tight);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border: var(--fh-sidebar-edge, 0);
     border-radius: var(--fh-radius-lg);
     background-color: var(--_fill);
+    box-shadow: var(--fh-sidebar-shadow, var(--fh-shadow-panel));
     backdrop-filter: var(--_filter);
     color: var(--fh-color-text);
     list-style: none;
@@ -583,6 +587,24 @@
     clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
+  }
+
+  /* The scrollbar: hidden at rest, fading in on hover, focus or while scrolling (only where there is
+     something to scroll; with reduced motion it shows and hides without the fade). */
+  @property --fh-sidebar-thumb {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+  }
+  :is(.fh-sidebar__body, .fh-sidebar__window-body) {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--fh-color-text) var(--fh-sidebar-thumb, 0%), transparent) transparent;
+    transition: --fh-sidebar-thumb var(--fh-duration-slow) var(--fh-ease-standard);
+
+    &:is(:hover, :focus-within, [data-scrolling]) { --fh-sidebar-thumb: 32%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :is(.fh-sidebar__body, .fh-sidebar__window-body) { transition: none; }
   }
 
   /* Sheet on a narrow host */

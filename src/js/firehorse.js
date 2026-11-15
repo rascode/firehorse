@@ -38,6 +38,8 @@
  *      the pointer on right-click, a long press or Shift+F10 / the menu key,
  *      kept in the window, closed on a pick or a scroll. Arrow keys, Home and
  *      End in any open menu; submenus (.fh-menu__sub) open to the side.
+ *  17. Sidebar scrollbars: data-scrolling on a Sidebar's body while it
+ *      scrolls, so the scrollbar fades in only then (or on hover).
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -1293,4 +1295,18 @@ ready(() => {
       trigger.focus({ preventScroll: true });
     }
   });
+});
+
+/* —— 17. Sidebar scrollbars ——
+ * A Sidebar's body (and its window) marks itself data-scrolling while it
+ * scrolls and a moment after, so its scrollbar fades in only then (or on hover). */
+ready(() => {
+  const timers = new WeakMap();
+  addEventListener("scroll", (e) => {
+    const el = e.target;
+    if (!(el instanceof Element) || !el.matches(".fh-sidebar__body, .fh-sidebar__window-body")) return;
+    el.setAttribute("data-scrolling", "");
+    clearTimeout(timers.get(el));
+    timers.set(el, setTimeout(() => el.removeAttribute("data-scrolling"), 900));
+  }, { capture: true, passive: true });
 });

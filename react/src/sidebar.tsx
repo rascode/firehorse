@@ -236,6 +236,14 @@ export function Sidebar({
   const visibleKeysRef = React.useRef<string[]>([]);
   const flyoutHostRef = React.useRef<HTMLDivElement>(null);
   const leaveTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The scrollbar fades in while the body scrolls (data-scrolling) and out a moment after.
+  const scrollTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const markScrolling = React.useCallback((e: React.UIEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    el.setAttribute("data-scrolling", "");
+    if (scrollTimer.current) clearTimeout(scrollTimer.current);
+    scrollTimer.current = setTimeout(() => el.removeAttribute("data-scrolling"), 900);
+  }, []);
   const pendingFocus = React.useRef<string | null>(null);
   const groupsRef = React.useRef(groups);
   groupsRef.current = groups;
@@ -769,7 +777,7 @@ export function Sidebar({
           <i className="fh-icon fh-icon--panel-left" aria-hidden="true" />
         </button>
       </div>
-      <div className="fh-sidebar__body">
+      <div className="fh-sidebar__body" onScroll={markScrolling}>
         {groups.map((group) => renderGroup(group))}
         {windowShown && windowArea ? (
           <div className="fh-sidebar__window" data-open="">

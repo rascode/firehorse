@@ -713,6 +713,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "shadow"
   },
+  "--fh-shadow-panel": {
+    "$value": "0 6px 24px rgb(0 0 0 / 0.16)",
+    "$type": "shadow",
+    "tier": "primitives",
+    "group": "shadow"
+  },
   "--fh-blur-chrome": {
     "$value": "10px",
     "$type": "dimension",
