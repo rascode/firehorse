@@ -158,4 +158,16 @@
     }
   }
 
+  /* —— TBL-1.2 Fields mode (table.js): every cell a Values part, drawn from fields + rows ——
+   * A header that offers the column display menu holds its label and the button (column-menu.css). */
+  .fh-table__th {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    inline-size: 100%;
+  }
+
+  .fh-table th.fh-num .fh-table__th { justify-content: flex-end; }
+  .fh-table td > .fh-value { max-inline-size: 100%; vertical-align: middle; }
+  .fh-table td.fh-num > .fh-value { justify-content: flex-end; }
 }
