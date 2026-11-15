@@ -6,11 +6,12 @@
 
 @layer fh.components {
   /* —— THS-2 Colour menu ————————————————————————————————————————————————————————
-   * A small list of colours to pick from, in the look of the tile panel (MEG-3.1) but never
-   * full width: a mono caps head over the dashed etch, then a dot and a mono caps label per
-   * colour. The picked dot is ringed in its own colour, its label goes heavy and a check in the
-   * accent closes the row. On a frost, ruled with the dashed etch, rounded to sit under a round
-   * trigger.
+   * A small list of colours to pick from: the Menu's inset recipe (DRP-1.2), never full width.
+   * It reads the menu's values (--fh-menu-*, set on it in overlays/menu.css): the etched frost
+   * with the menu shadow, a mono caps head over the etch, then rows in from the frame, each a dot
+   * (the row's icon) and the colour's name. The picked dot is ringed in its own colour and a check
+   * in that colour closes the row. As a popover it hangs from its trigger, flush with the
+   * trigger's end edge.
    *   <button popovertarget="c1" aria-label="Theme colour">…</button>
    *   <div id="c1" popover class="fh-theme-menu" aria-label="Theme colour">
    *     <header class="fh-theme-menu__head"><span class="fh-theme-menu__title">Theme colour</span><span class="fh-theme-menu__count">5</span></header>
@@ -20,28 +21,32 @@
    *   </div>
    * An item is a button with aria-pressed, or a label around a radio: give the radio
    * data-fh-theme-select and firehorse.js switches data-fh-theme. __dot--auto marks a colour that
-   * follows something else (a dashed ring). As a popover it hangs from its trigger, flush with the
-   * trigger's end edge. Knobs --fh-theme-dot (per item), --fh-theme-menu-width. */
+   * follows something else (a dashed ring). Knobs: --fh-theme-dot (per item), --fh-theme-menu-width
+   * (max-content), and every --fh-menu-* value (--fh-menu-frame defaults to the item frame here). */
   .fh-theme-menu {
-    --_etch: var(--fh-border-thin) dashed var(--fh-color-etch);
+    --_frame: var(--fh-menu-frame, var(--fh-item-frame));
+    --_ring-gap: var(--fh-focus-offset);
+    --_ring: calc(var(--fh-focus-offset) + var(--fh-border-thin));
 
     inline-size: var(--fh-theme-menu-width, max-content);
-    max-inline-size: calc(100vi - 2rem);
+    max-inline-size: calc(100vi - 2 * var(--fh-inset-tile));
     margin: 0;
     padding: 0;
     overflow: hidden;
     border: var(--_etch);
-    border-radius: calc(var(--fh-radius-xl) + var(--fh-item-frame));
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 82%, transparent);
+    border-radius: var(--_radius);
+    background-color: var(--fh-color-surface-menu);
     -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     color: var(--fh-color-text);
-    box-shadow: none;
+    line-height: var(--_leading);
+    text-align: start;
+    box-shadow: var(--fh-shadow-menu);
   }
 
   .fh-theme-menu[popover] {
     opacity: 0;
-    translate: 0 -0.25rem;
+    translate: 0 calc(-1 * var(--_drop));
     transition:
       opacity var(--fh-duration-fast) var(--fh-ease-out),
       translate var(--fh-duration-fast) var(--fh-ease-out),
@@ -54,7 +59,7 @@
 
       @starting-style {
         opacity: 0;
-        translate: 0 -0.25rem;
+        translate: 0 calc(-1 * var(--_drop));
       }
     }
   }
@@ -64,52 +69,53 @@
       inset: auto;
       position-area: block-end span-inline-start;
       position-try-fallbacks: flip-block, flip-inline;
-      margin-block-start: var(--fh-gap-related);
+      margin-block-start: var(--fh-gap-bound);
     }
   }
 
-  /* Head: the title in mono caps, a count at the end, the etch under them. */
+  /* Head: the menu's head. The title bold at full ink, the count quiet, both mono caps; the etch under them. */
   .fh-theme-menu__head {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    gap: var(--fh-gap-grouped);
-    padding: var(--fh-inset-tight) var(--fh-inset-control);
-    border-block-end: var(--_etch, var(--fh-border-thin) dashed var(--fh-color-etch));
+    gap: var(--_gap);
+    padding: var(--_pad-b) var(--_pad-i);
+    border-block-end: var(--_etch);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    letter-spacing: var(--fh-tracking-caps);
+    font-size: var(--_label);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-menu-tracking, var(--fh-tracking-caps));
+    line-height: var(--_leading);
     text-transform: uppercase;
   }
-  .fh-theme-menu__title { color: var(--fh-color-text); font-weight: var(--fh-weight-bold); }
+  .fh-theme-menu__title { color: var(--fh-color-text); font-weight: var(--_strong); }
   .fh-theme-menu__count { color: var(--fh-color-text-subtle); }
 
   .fh-theme-menu__list {
     display: grid;
-    gap: 2px;
     margin: 0;
-    padding: calc(var(--fh-item-frame) * 1.5);
+    padding: var(--_frame);
     list-style: none;
   }
 
-  /* An item: the dot, the name in mono caps, and (when picked) a check at the end. */
+  /* An item: the menu's inset row. The dot, the name, and (when picked) a check at the end. */
   .fh-theme-menu__item {
     --_c: var(--fh-theme-dot, var(--fh-color-accent));
 
     position: relative;
     display: flex;
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_gap);
     inline-size: 100%;
-    padding: calc(var(--fh-item-block) * 0.75) var(--fh-item-inline) calc(var(--fh-item-block) * 0.75) calc(var(--fh-gap-bound) * 1.6);
+    padding: var(--_item-b) calc(var(--_pad-i) - var(--_frame));
     border: 0;
-    border-radius: var(--fh-radius-pill);
+    border-radius: var(--fh-radius-sm);
     background: none;
     color: inherit;
-    font: var(--fh-weight-medium) var(--fh-text-label) / 1.2 var(--fh-font-mono);
-    letter-spacing: var(--fh-tracking-caps);
+    font: inherit;
+    font-size: var(--_text);
+    line-height: var(--_leading);
     text-align: start;
-    text-transform: uppercase;
     white-space: nowrap;
     cursor: var(--fh-cursor-action, pointer);
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -126,45 +132,44 @@
     &::after {
       content: "";
       flex: none;
-      inline-size: 0.8rem;
+      inline-size: var(--_icon);
       aspect-ratio: 1;
       margin-inline-start: auto;
-      background-color: var(--fh-color-accent-text, var(--fh-color-accent));
+      background-color: var(--_c);
       mask: var(--fh-icon-check) center / contain no-repeat;
       opacity: 0;
     }
 
     &:is(:hover, :focus-visible, :has(> input:focus-visible)) {
-      background-color: color-mix(in oklab, var(--_c) 12%, transparent);
+      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
     }
     &:is(:focus-visible, :has(> input:focus-visible)) {
       outline: var(--fh-focus-width) solid var(--fh-color-focus);
-      outline-offset: -2px;
+      outline-offset: calc(-1 * var(--fh-focus-width));
     }
   }
 
+  /* The dot: the row's icon, one em of the row. */
   .fh-theme-menu__dot {
     flex: none;
-    inline-size: 0.85rem;
+    inline-size: var(--_icon, 1em);
     aspect-ratio: 1;
     border-radius: var(--fh-radius-round);
     background: var(--_c, var(--fh-color-accent));
   }
 
-  /* Picked: the dot ringed in its colour, the name heavy, the check showing. */
+  /* Picked: the dot ringed in its colour and the check showing; the name keeps its weight, so the row keeps its width. */
   .fh-theme-menu__item:is([aria-pressed="true"], [aria-checked="true"], :has(> input:checked)) {
-    font-weight: var(--fh-weight-heavy);
-
     &::after { opacity: 1; }
-    & > .fh-theme-menu__dot { box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--_c); }
+    & > .fh-theme-menu__dot { box-shadow: 0 0 0 var(--_ring-gap) var(--fh-color-surface-raised), 0 0 0 var(--_ring) var(--_c); }
   }
 
   /* A colour that follows something else (a backdrop, the system): a dashed ring round its dot,
      in its colour once picked. */
   .fh-theme-menu__dot--auto {
-    box-shadow: 0 0 0 2px var(--fh-color-canvas), 0 0 0 3px var(--fh-color-text-subtle);
+    box-shadow: 0 0 0 var(--_ring-gap) var(--fh-color-surface-raised), 0 0 0 var(--_ring) var(--fh-color-text-subtle);
     outline: var(--fh-border-thin) dashed var(--fh-color-text-subtle);
-    outline-offset: 3px;
+    outline-offset: var(--_ring);
   }
   .fh-theme-menu__item:is([aria-pressed="true"], [aria-checked="true"], :has(> input:checked)) > .fh-theme-menu__dot--auto {
     outline-color: var(--_c);
