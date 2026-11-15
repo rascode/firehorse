@@ -181,4 +181,12 @@
     text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
   }
 
+  /* A record with no logo yet (data-kind org, agent or record, with its tone): its initials on the tone, the
+   * Icon cube's fill (CUB-1.5), so an organization reads in its own colour until its logo arrives. */
+  .fh-avatar:where([data-kind="org"], [data-kind="agent"], [data-kind="record"])[data-tone]:not(:has(> img)) {
+    border-color: transparent;
+    background-color: var(--fh-tone);
+    color: oklch(from var(--fh-tone) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+  }
+
 }

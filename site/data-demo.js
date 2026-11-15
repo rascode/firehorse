@@ -5,10 +5,14 @@ import { renderValue } from "./values.js";
 
 const people = ["ava", "cole", "eleanor", "isla", "mateo", "maya", "ray", "reginald", "ruth", "sam", "wes"];
 const person = (n) => ({ name: n[0].toUpperCase() + n.slice(1), image: `/img/avatars/${n}.webp` });
-const team = ["ava", "mateo", "ruth", "sam"].map(person);
+const team = ["ava", "mateo", "ruth", "sam", "cole", "isla", "wes"].map(person);
 const companies = ["Northwind Labs", "Halcyon Health", "Tastin & Co", "Brennan Landscapes", "Oak & Ember", "Juniper Dental", "Kestrel Freight", "Marigold Studio", "Lumen Legal", "Cobalt Analytics", "Saltwater Supply", "Pioneer Roofing", "Atlas Wealth", "Verdant Farms", "Quill & Ink", "Summit Physio", "Harbor Coffee", "Nimbus Air", "Fernwood Realty", "Copperline Electric", "Bluebird Bakery", "Granite Works", "Meridian Clinic", "Wildflower Events", "Ironclad Security", "Lighthouse Learning", "Redwood Dental", "Sable & Stone", "Orbit Logistics", "Thistle Botanicals", "Vantage Capital", "Willow Pet Care", "Ember Hospitality", "Keystone Builders", "Lark Audio", "Mosaic Media", "Prairie Supply", "Riverbend Vet", "Solstice Yoga", "Tidewater Marine", "Upland Outfitters", "Zephyr Wind"];
 const stages = [{ value: "Lead", tone: "sky" }, { value: "Qualified", tone: "teal" }, { value: "Proposal", tone: "amber" }, { value: "Won", tone: "lime" }, { value: "Lost", tone: "rose" }];
 const services = [{ value: "Design system", tone: "fuchsia" }, { value: "Website", tone: "violet" }, { value: "AI agents", tone: "sky" }, { value: "Automation", tone: "orange" }, { value: "Consulting", tone: "teal" }];
+const orgTones = ["sky", "teal", "violet", "amber", "lime", "fuchsia", "orange", "rose"];
+// Images and documents (DR4): the sample photos, a cluster per row, and a proposal with a page preview.
+const photo = (n) => ({ name: `site-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp`, alt: `Site photo ${n.toUpperCase()}` });
+const photoSet = ["a", "b", "d", "e", "c"];
 const sources = [{ value: "Referral", tone: "lime" }, { value: "Firehorse", tone: "accent" }, { value: "Upwork", tone: "teal" }, { value: "LinkedIn", tone: "sky" }, { value: "Event", tone: "amber" }];
 
 // Deterministic pseudo-random, so the demo looks the same on every load.
@@ -25,9 +29,16 @@ const rows = companies.map((company, i) => {
   if (!svc.length) svc.push(pick(services).value);
   const value = Math.round((1200 + rnd() * 38000) / 50) * 50;
   const prob = { Lead: 10, Qualified: 30, Proposal: 60, Won: 100, Lost: 0 }[stage] + (stage === "Won" || stage === "Lost" ? 0 : Math.round(rnd() * 15));
+  // A company is a rich record (decision 10): its logo or initials beside the link that opens it.
+  const org = { id: slug, label: company, kind: "organization", tone: orgTones[i % orgTones.length], href: `#${slug}` };
+  const photos = photoSet.slice(0, Math.floor(rnd() * 6)).map(photo);
+  const proposal = stage === "Lead" ? null : { name: `${slug}-proposal.pdf`, preview: rnd() > 0.35 ? `/img/samples/dr4-${pick(photoSet)}.webp` : null, bytes: 120000 + Math.round(rnd() * 400000) };
   return {
     id: `r${i + 1}`,
     company,
+    org,
+    photos,
+    proposal,
     contact,
     stage,
     services: svc,
@@ -36,7 +47,7 @@ const rows = companies.map((company, i) => {
     weighted: Math.round((value * prob) / 100),
     next: day(Math.round(rnd() * 30) - 8),
     owner: pick(team),
-    watchers: team.filter(() => rnd() > 0.5),
+    watchers: team.filter(() => rnd() > 0.35),
     priority: 1 + Math.floor(rnd() * 5),
     source: pick(sources).value,
     website: `https://${slug}.example`,
@@ -53,30 +64,32 @@ const config = {
   title: "Client pipeline",
   icon: "briefcase",
   tone: "sky",
-  primary: "company",
+  primary: "org",
   action: "New record",
   pageSize: 15,
   sort: [{ key: "value", dir: "desc" }],
-  hidden: ["email", "phone", "website", "watchers", "weighted"],
+  hidden: ["email", "phone", "website", "weighted"],
   footnote: "Sample data",
-  // A row opens its hidden fields (email, phone, website, watchers, weighted) as a record table under it.
+  // A row opens its hidden fields (email, phone, website, weighted) as a record table under it.
   expand: true,
   fields: [
-    { key: "company", label: "Company", type: "text", width: "13rem" },
+    { key: "org", label: "Company", semanticType: "entity_reference", entity: "organization", width: "14rem" },
     { key: "contact", label: "Contact", type: "user" },
     { key: "stage", label: "Stage", type: "status", options: stages },
+    { key: "photos", label: "Site photos", type: "images", width: "9rem" },
+    { key: "watchers", label: "Watchers", type: "users", width: "8rem" },
     { key: "services", label: "Services", type: "multi", options: services },
     { key: "value", label: "Value", type: "currency", width: "8rem" },
+    { key: "proposal", label: "Proposal", type: "document", width: "15rem" },
     { key: "probability", label: "Probability", type: "percent", tone: "teal", width: "9rem" },
     { key: "weighted", label: "Weighted", type: "currency", width: "8rem" },
     { key: "next", label: "Next step", type: "date", overdue: true, width: "9rem" },
     { key: "owner", label: "Owner", type: "user", width: "9rem" },
-    { key: "watchers", label: "Watchers", type: "users" },
     { key: "priority", label: "Priority", type: "rating" },
     { key: "source", label: "Source", type: "select", options: sources, width: "8rem" },
     { key: "health", label: "Health", type: "sparkline", tone: "lime" },
     { key: "signed", label: "Signed", type: "check" },
-    { key: "files", label: "Files", type: "attachment" },
+    { key: "files", label: "Files", semanticType: "media_file", multiple: true },
     { key: "website", label: "Website", type: "url" },
     { key: "email", label: "Email", type: "email" },
     { key: "phone", label: "Phone", type: "phone" },

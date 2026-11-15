@@ -9096,6 +9096,43 @@
     color: var(--_cube, var(--fh-tone));
   }
 
+  .fh-cube--icon {
+    inline-size: var(--fh-cube-size, 1.5rem);
+    block-size: var(--fh-cube-size, 1.5rem);
+    min-inline-size: 0;
+    max-inline-size: none;
+    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    font-family: inherit;
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-display-weight);
+    letter-spacing: normal;
+    padding: 0;
+    line-height: 1;
+
+    & > .fh-icon {
+      --fh-icon-size: calc(var(--fh-cube-size, 1.5rem) * .63);
+      font-size: var(--fh-text-caption);
+    }
+  }
+
+  :where([data-fh-cube="soft"]) .fh-cube--icon, .fh-cube--icon.fh-cube--soft {
+    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 16%, transparent);
+    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+  }
+
+  :where([data-fh-cube="outline"]) .fh-cube--icon, .fh-cube--icon.fh-cube--outline {
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 8%, transparent);
+    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+  }
+
+  .fh-cube--icon.fh-cube--solid {
+    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+    border: 0;
+  }
+
   .fh-cubes {
     align-items: center;
     gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
@@ -9455,6 +9492,134 @@
       text-transform: uppercase;
       white-space: nowrap;
       overflow: hidden;
+    }
+  }
+
+  .fh-cube-cards {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--fh-cube-card-min, 13rem)), 1fr));
+    gap: var(--fh-gap, var(--fh-gap-grouped));
+    display: grid;
+
+    & > :nth-child(3n+2) {
+      --_cube: oklch(from var(--fh-tone) l c calc(h + 28));
+    }
+
+    & > :nth-child(3n+3) {
+      --_cube: oklch(from var(--fh-tone) l c calc(h + 56));
+    }
+  }
+
+  .fh-cube-card {
+    --_c: var(--_cube, var(--fh-tone));
+    align-items: flex-start;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    padding: var(--fh-inset-control);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 40%, transparent);
+    border-radius: var(--fh-radius-md);
+    background-color: color-mix(in oklab, var(--_c) 5%, transparent);
+    color: var(--fh-color-text);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
+    text-decoration: none;
+    display: flex;
+    position: relative;
+
+    & > .fh-cube {
+      --_cube: var(--_c);
+    }
+
+    &:is(a, button, label):hover {
+      border-color: color-mix(in oklab, var(--_c) 70%, transparent);
+      background-color: color-mix(in oklab, var(--_c) 10%, transparent);
+    }
+
+    &:is(a, button, label):focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .fh-cube-card__text {
+    gap: .15rem;
+    min-inline-size: 0;
+    display: grid;
+
+    & b {
+      font-weight: var(--fh-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    & small {
+      color: var(--fh-color-text-subtle);
+      font-size: var(--fh-text-caption);
+      line-height: var(--fh-leading-snug);
+    }
+  }
+
+  .fh-cube-card__trend {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    white-space: nowrap;
+    margin-inline-start: auto;
+  }
+
+  .fh-cube-card__trend[data-dir="up"] {
+    color: var(--fh-color-success);
+  }
+
+  .fh-cube-card__trend[data-dir="down"] {
+    color: var(--fh-color-danger);
+  }
+
+  .fh-cube-cards--strip {
+    --fh-cube-card-min: 14rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-cube-card-min, 14rem)), 1fr));
+    border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    border-radius: var(--fh-radius-md);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+
+    & > .fh-cube-card {
+      --_c: var(--fh-tone);
+      padding: var(--fh-inset-tile) var(--fh-inset-card);
+      border: 0;
+      border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+      border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+      background: none;
+      border-radius: 0;
+      align-items: flex-start;
+    }
+
+    & .fh-cube {
+      --_cube: var(--_c);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      color: var(--_c);
+      background: none;
+    }
+
+    & .fh-cube-card__text b {
+      color: var(--fh-color-text-strong);
+    }
+  }
+
+  .fh-cube-card--stack {
+    align-items: start;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tile);
+    flex-direction: column;
+
+    & > .fh-cubes {
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 30%, transparent);
+      inline-size: 100%;
+      margin-block-start: auto;
+      padding-block-start: var(--fh-gap-grouped);
     }
   }
 
@@ -10157,6 +10322,12 @@
     color: var(--fh-color-on-tone);
     text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
     border: 0;
+  }
+
+  .fh-avatar:where([data-kind="org"], [data-kind="agent"], [data-kind="record"])[data-tone]:not(:has( > img)) {
+    background-color: var(--fh-tone);
+    color: oklch(from var(--fh-tone) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+    border-color: #0000;
   }
 
   .fh-list {
@@ -12580,6 +12751,11 @@
     & > .fh-icon {
       color: var(--fh-tone, var(--fh-color-text-muted));
       flex: none;
+    }
+
+    & > .fh-cube--icon {
+      --_cube: var(--fh-tone, var(--fh-color-text-muted));
+      --fh-cube-size: var(--fh-metric-cube, 1.5rem);
     }
   }
 

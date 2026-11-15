@@ -9363,6 +9363,43 @@
     color: var(--_cube, var(--fh-tone));
   }
 
+  .fh-cube--icon {
+    inline-size: var(--fh-cube-size, 1.5rem);
+    block-size: var(--fh-cube-size, 1.5rem);
+    min-inline-size: 0;
+    max-inline-size: none;
+    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    font-family: inherit;
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-display-weight);
+    letter-spacing: normal;
+    padding: 0;
+    line-height: 1;
+
+    & > .fh-icon {
+      --fh-icon-size: calc(var(--fh-cube-size, 1.5rem) * .63);
+      font-size: var(--fh-text-caption);
+    }
+  }
+
+  :where([data-fh-cube="soft"]) .fh-cube--icon, .fh-cube--icon.fh-cube--soft {
+    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 16%, transparent);
+    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+  }
+
+  :where([data-fh-cube="outline"]) .fh-cube--icon, .fh-cube--icon.fh-cube--outline {
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 8%, transparent);
+    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+  }
+
+  .fh-cube--icon.fh-cube--solid {
+    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+    border: 0;
+  }
+
   .fh-cubes {
     align-items: center;
     gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
@@ -10945,6 +10982,12 @@
     color: var(--fh-color-on-tone);
     text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
     border: 0;
+  }
+
+  .fh-avatar:where([data-kind="org"], [data-kind="agent"], [data-kind="record"])[data-tone]:not(:has( > img)) {
+    background-color: var(--fh-tone);
+    color: oklch(from var(--fh-tone) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
+    border-color: #0000;
   }
 
   .fh-list {
@@ -20243,6 +20286,11 @@
     & > .fh-icon {
       color: var(--fh-tone, var(--fh-color-text-muted));
       flex: none;
+    }
+
+    & > .fh-cube--icon {
+      --_cube: var(--fh-tone, var(--fh-color-text-muted));
+      --fh-cube-size: var(--fh-metric-cube, 1.5rem);
     }
   }
 

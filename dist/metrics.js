@@ -16,7 +16,7 @@
  *     { label: "Revenue · 30 d", icon: "dollar-sign", tone: "lime", previous: 43000, sub: "vs September" });
  *   <div data-fh-metric><script type="application/json">{ "field": {…}, "value": 48210, "label": "Revenue" }</script></div>
  *
- * Options: label, icon, sub, source, tone, previous, good ("down" when falling is good), series (numbers for a
+ * Options: label, icon, iconStyle ("soft" | "outline"; default the solid Icon cube), sub, source, tone, previous, good ("down" when falling is good), series (numbers for a
  * sparkline), target (a ratio's target), href (the tile opens it), modifiers (["spread", "tinted", "wide", "full",
  * "needed"]), badge (html at the end of the label), below (html under the figure), more ({ summary, html }), id (the
  * tile's Index ID), locale, now.
@@ -25,6 +25,8 @@ import { renderValue, resolveValue, isEmpty } from "./values.js";
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const icon = (n) => (n ? `<i class="fh-icon fh-icon--${esc(n)}" aria-hidden="true"></i>` : "");
+// The tile's icon sits in the Icon cube (CUB-1.5), the sidebar's part: solid, or iconStyle "soft" | "outline".
+const cube = (n, look) => (n ? `<span class="fh-cube fh-cube--icon${look === "soft" || look === "outline" ? ` fh-cube--${look}` : ""}">${icon(n)}</span>` : "");
 
 /** The figure (and what sits beside or under it) for a value in the metric context. */
 export function metricFigure(field = {}, value, o = {}) {
@@ -51,7 +53,7 @@ export function metricTile(field = {}, value, o = {}) {
   const cls = ["fh-metric", ...(o.modifiers ?? []).map((m) => `fh-metric--${m}`)].join(" ");
   const more = o.more ? `\n  <details class="fh-metric__more"><summary>${esc(o.more.summary ?? "Breakdown")} ${icon("chevron-down")}</summary>\n    ${o.more.html}\n  </details>` : "";
   return `<${tag} class="${cls}"${o.tone ? ` data-tone="${esc(o.tone)}"` : ""}${o.good ? ` data-good="${esc(o.good)}"` : ""}${o.href ? ` href="${esc(o.href)}"` : ""}${o.id ? ` data-fh-id="${esc(o.id)}"` : ""}${o.name ? ` data-fh-name="${esc(o.name)}"` : ""}>
-  <p class="fh-metric__label">${icon(o.icon)}${esc(o.label ?? field.label ?? field.key)}${o.badge ?? ""}</p>${o.sub ? `\n  <p class="fh-metric__sub">${esc(o.sub)}</p>` : ""}
+  <p class="fh-metric__label">${cube(o.icon, o.iconStyle)}${esc(o.label ?? field.label ?? field.key)}${o.badge ?? ""}</p>${o.sub ? `\n  <p class="fh-metric__sub">${esc(o.sub)}</p>` : ""}
   ${figure}${below ? `\n  ${below}` : ""}${o.below ? `\n  ${o.below}` : ""}${o.source ? `\n  <p class="fh-metric__source">${esc(o.source)}</p>` : ""}${more}
 </${tag}>`;
 }

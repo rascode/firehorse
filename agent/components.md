@@ -916,6 +916,80 @@ Chips filter or jump; the selected one fills with its tone. Icons replace the do
 <a class="fh-chip-card" data-tone="rose" href="#c-chip-cards" data-fh="CHP-3.4"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a>
 ```
 
+### CUB · Cubes
+
+Tone blocks that carry one value. In a row they walk the hue wheel by 28°, so three facts read as one family.
+
+```html
+<!-- CUB-1.1 · Cubes › Facts -->
+<ul class="fh-cubes" data-tone="teal" data-fh="CUB-1.1">
+  <li><b class="fh-cube">$1,250</b> fixed</li>
+  <li><b class="fh-cube">14</b> days</li>
+  <li><b class="fh-cube">4</b> deliverables</li>
+</ul>
+
+<!-- CUB-1.2 · Cubes › Large -->
+<ul class="fh-cubes" data-tone="fuchsia" data-fh="CUB-1.2">
+  <li><b class="fh-cube fh-cube--lg">98</b> score</li>
+  <li><b class="fh-cube fh-cube--lg">A+</b> grade</li>
+  <li><b class="fh-cube fh-cube--lg">12</b> fixes</li>
+</ul>
+
+<!-- CUB-1.3 · Cubes › Icons -->
+<ul class="fh-cubes" data-tone="sky" data-fh="CUB-1.3">
+  <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--clock" aria-hidden="true"></i></b> 30 min</li>
+  <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--video" aria-hidden="true"></i></b> Video call</li>
+  <li><b class="fh-cube fh-cube--sm"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></b> This week</li>
+</ul>
+
+<!-- CUB-1.4 · Cubes › Outline -->
+<ul class="fh-cubes" data-tone="amber" data-fh="CUB-1.4">
+  <li><b class="fh-cube fh-cube--outline">v1.1</b> release</li>
+  <li><b class="fh-cube fh-cube--outline">MIT</b> license</li>
+  <li><b class="fh-cube fh-cube--outline">183</b> icons</li>
+</ul>
+
+<!-- CUB-1.5 · Cubes › Icon -->
+<ul class="fh-cubes" data-tone="sky" data-fh="CUB-1.5">
+  <li><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i></span> Overview</li>
+  <li><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span> Today</li>
+  <li><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span> Goals</li>
+</ul>
+
+<!-- CUB-1.6 · Cubes › Soft -->
+<ul class="fh-cubes" data-tone="violet" data-fh="CUB-1.6">
+  <li><span class="fh-cube fh-cube--icon fh-cube--soft"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span> Relays</li>
+  <li><span class="fh-cube fh-cube--icon fh-cube--soft"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span> People</li>
+  <li><span class="fh-cube fh-cube--icon fh-cube--outline"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span> Outline</li>
+</ul>
+
+<!-- CUB-2.1 · Cube cards › Row -->
+<div class="fh-cube-cards" data-tone="lime" style="--fh-cube-card-min: 12rem" data-fh="CUB-2.1">
+  <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">14</b><div class="fh-cube-card__text"><b>Days</b><small>Kickoff to handoff</small></div></article>
+  <article class="fh-cube-card"><b class="fh-cube fh-cube--xl">4</b><div class="fh-cube-card__text"><b>Deliverables</b><small>Docs you keep</small></div></article>
+  <a class="fh-cube-card" href="#c-cube-cards"><b class="fh-cube fh-cube--xl"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></b><div class="fh-cube-card__text"><b>Book a call</b><small>30 min, this week</small></div></a>
+</div>
+
+<!-- CUB-2.2 · Cube cards › Trend -->
+<div class="fh-cube-cards" data-tone="orange" style="--fh-cube-card-min: 12rem" data-fh="CUB-2.2">
+  <article class="fh-cube-card"><b class="fh-cube fh-cube--lg">$184k</b><div class="fh-cube-card__text"><b>Pipeline</b><small>Open deals · sample</small></div><span class="fh-cube-card__trend" data-dir="up">▲ 12%</span></article>
+  <article class="fh-cube-card"><b class="fh-cube fh-cube--lg">2.4h</b><div class="fh-cube-card__text"><b>First reply</b><small>Median · sample</small></div><span class="fh-cube-card__trend" data-dir="down">▼ 8%</span></article>
+</div>
+
+<!-- CUB-2.3 · Cube cards › Stacked -->
+<div class="fh-cube-cards" data-tone="violet" style="--fh-cube-card-min: 14rem" data-fh="CUB-2.3">
+  <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">$1,695</b><div class="fh-cube-card__text"><b>AI agent</b><small>Per month, after setup</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">24/7</b> coverage</li><li><b class="fh-cube fh-cube--sm">3</b> channels</li></ul></article>
+  <article class="fh-cube-card fh-cube-card--stack"><b class="fh-cube fh-cube--xl">1,284</b><div class="fh-cube-card__text"><b>Inquiries</b><small>Last 30 days · sample</small></div><ul class="fh-cubes"><li><b class="fh-cube fh-cube--sm">+12%</b> vs last</li><li><b class="fh-cube fh-cube--sm">64%</b> booked</li></ul></article>
+</div>
+
+<!-- CUB-2.4 · Cube cards › Strip -->
+<ul class="fh-cube-cards fh-cube-cards--strip" data-tone="sky" data-fh="CUB-2.4">
+  <li class="fh-cube-card" data-tone="amber"><b class="fh-cube fh-cube--xl">3</b><div class="fh-cube-card__text"><b>Tasks today</b><small>2 overdue</small></div></li>
+  <li class="fh-cube-card" data-tone="lime"><b class="fh-cube fh-cube--xl">5/8</b><div class="fh-cube-card__text"><b>Habits</b><small>Done so far</small></div></li>
+  <li class="fh-cube-card" data-tone="sky"><b class="fh-cube fh-cube--xl">2</b><div class="fh-cube-card__text"><b>Meetings</b><small>Next at 2:30 PM</small></div></li>
+</ul>
+```
+
 ### LGS · Logo strip
 
 Grayscale marks that come to full colour on hover. Add `fh-logos--marquee` for an endless scroll (duplicate the list once). Only show logos you have permission to use.
@@ -2218,7 +2292,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 ```html
 <!-- MET-1.1 · Metric tile › Metric -->
 <article class="fh-metric" data-tone="teal" data-fh="MET-1.1">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i>Structure</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--building-2" aria-hidden="true"></i></span>Structure</p>
   <p class="fh-metric__sub">Formed 2019 · Delaware</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">LLC</span></span></p></div>
   <p class="fh-metric__source">State records</p>
@@ -2226,7 +2300,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-1.2 · Metric tile › Progress -->
 <article class="fh-metric" data-tone="lime" data-fh="MET-1.2">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i></span>Stripe</p>
   <p class="fh-metric__sub">Next: bank account</p>
   <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">82%</span></p>
   <span class="fh-value fh-value--bar" data-tone="lime" data-fh="VAL-5.2"><progress class="fh-progress" value="82" max="100">82%</progress><b>82%</b></span>
@@ -2234,21 +2308,21 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-1.3 · Metric tile › Needed -->
 <article class="fh-metric fh-metric--needed" data-fh="MET-1.3">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>EIN</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i></span>EIN</p>
   <p class="fh-metric__sub">For Stripe and PayPal</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--line" data-fh="VAL-11.5"><span class="fh-value__name">Needed</span></span></p></div>
 </article>
 
 <!-- MET-1.4 · Metric tile › Link -->
 <a class="fh-metric" data-tone="sky" href="#a-metric" data-fh="MET-1.4">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Faces</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>Faces</p>
   <p class="fh-metric__sub">2 public</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">4</span></p></div>
 </a>
 
 <!-- MET-1.5 · Metric tile › Spread -->
 <article class="fh-metric fh-metric--spread" data-tone="fuchsia" data-fh="MET-1.5">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i>Payment readiness</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span>Payment readiness</p>
   <p class="fh-metric__sub">What Stripe still needs before payouts</p>
   <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">27%</span></p>
   <span class="fh-value fh-value--bar" data-tone="fuchsia" data-fh="VAL-5.2"><progress class="fh-progress" value="27" max="100">27%</progress><b>27%</b></span>
@@ -2256,14 +2330,14 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-1.6 · Metric tile › People -->
 <article class="fh-metric" data-tone="violet" data-fh="MET-1.6">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>Team</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">4</span></p><span class="fh-value fh-value--stack" data-fh="VAL-3.7"><span class="fh-avatars" role="group" aria-label="Team: Ava, Cole, Maya, Ray"><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/cole.webp" alt="Cole Hart"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/maya.webp" alt="Maya Lin"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ray.webp" alt="Ray Okafor"></span></span></span></div>
   <p class="fh-metric__source">People</p>
 </article>
 
 <!-- MET-1.7 · Metric tile › Expand -->
 <article class="fh-metric" data-tone="sky" data-fh="MET-1.7">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i></span>Open invoices</p>
   <p class="fh-metric__sub">5 invoices · 1 overdue</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="6940" title="$6,940.00 USD">$6.9K</data></span></p></div>
   <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
@@ -2278,34 +2352,34 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-1.8 · Metric tile › Trend -->
 <article class="fh-metric" data-tone="lime" data-fh="MET-1.8">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i></span>Revenue · 30 d</p>
   <p class="fh-metric__sub">vs September</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="48210" title="$48,210.00 USD">$48.2K</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $5.2K">$5.2K</span></span></p></div>
 </article>
 
 <!-- MET-1.9 · Metric tile › Trend · down is good -->
 <article class="fh-metric" data-tone="sky" data-good="down" data-fh="MET-1.9">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i>Churn</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--trending-down" aria-hidden="true"></i></span>Churn</p>
   <p class="fh-metric__sub">Percent of accounts, down is good here</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">2.1<span class="fh-metric__delta" data-trend="down" data-good="down" aria-label="Down 0.4, down is good">0.4</span></span></p></div>
 </article>
 
 <!-- MET-1.10 · Metric tile › Sparkline -->
 <article class="fh-metric" data-tone="teal" data-fh="MET-1.10">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders · 12 wk</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i></span>Orders · 12 wk</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">42<span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span></p><span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="teal" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span></div>
 </article>
 
 <!-- MET-1.11 · Metric tile › Gauge -->
 <article class="fh-metric" data-tone="amber" data-fh="MET-1.11">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit used</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i></span>Credit used</p>
   <p class="fh-metric__sub">Target: under 50% of the line</p>
   <span class="fh-value fh-value--meter" data-tone="amber" data-fh="VAL-5.4"><span class="fh-gauge" style="--fh-value: 31" role="img" aria-label="31%, target 50%"><b>31%</b><small>of 50%</small></span></span>
 </article>
 
 <!-- MET-2.1 · Spread tiles › Progress -->
 <article class="fh-metric fh-metric--spread" data-tone="lime" data-fh="MET-2.1">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i>Stripe</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--credit-card" aria-hidden="true"></i></span>Stripe</p>
   <p class="fh-metric__sub">Next: confirm the payout bank account</p>
   <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">82%</span></p>
   <span class="fh-value fh-value--bar" data-tone="lime" data-fh="VAL-5.2"><progress class="fh-progress" value="82" max="100">82%</progress><b>82%</b></span>
@@ -2314,7 +2388,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.2 · Spread tiles › Trend -->
 <article class="fh-metric fh-metric--spread" data-tone="teal" data-fh="MET-2.2">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i>Revenue · 30 d</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i></span>Revenue · 30 d</p>
   <p class="fh-metric__sub">All brands, after refunds</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="48210" title="$48,210.00 USD">$48.2K</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $5.2K">$5.2K</span></span></p></div>
   <p class="fh-metric__source">vs September</p>
@@ -2322,7 +2396,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.3 · Spread tiles › Sparkline -->
 <article class="fh-metric fh-metric--spread" data-tone="sky" data-fh="MET-2.3">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i>Orders</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--chart-line" aria-hidden="true"></i></span>Orders</p>
   <p class="fh-metric__sub">Last 12 weeks</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain-delta fh-value--tabular" data-fh="VAL-6.4">42<span class="fh-metric__delta" data-trend="up" aria-label="Up 8">8</span></span></p><span class="fh-value fh-value--sparkline fh-value--tabular" data-tone="sky" data-fh="VAL-6.5"><svg class="fh-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0 L120 32 L0 32Z" fill="currentColor" opacity=".12"></path><path d="M0.0 30.0 L10.9 24.9 L21.8 27.5 L32.7 19.8 L43.6 22.4 L54.5 14.7 L65.5 17.3 L76.4 9.6 L87.3 12.2 L98.2 4.5 L109.1 7.1 L120.0 2.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></span></div>
   <p class="fh-metric__source">All channels</p>
@@ -2330,7 +2404,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.4 · Spread tiles › People -->
 <article class="fh-metric fh-metric--spread" data-tone="violet" data-fh="MET-2.4">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--users" aria-hidden="true"></i>Team</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>Team</p>
   <p class="fh-metric__sub">Who can sign in and act for the business</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">4</span></p><span class="fh-value fh-value--stack" data-fh="VAL-3.7"><span class="fh-avatars" role="group" aria-label="Team: Ava, Cole, Maya, Ray"><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ava.webp" alt="Ava Mendes"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/cole.webp" alt="Cole Hart"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/maya.webp" alt="Maya Lin"></span><span class="fh-avatar fh-avatar--circle"><img src="/img/avatars/ray.webp" alt="Ray Okafor"></span></span></span></div>
   <p class="fh-metric__source">People</p>
@@ -2338,7 +2412,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.5 · Spread tiles › Tinted -->
 <article class="fh-metric fh-metric--spread fh-metric--tinted" data-tone="orange" data-fh="MET-2.5">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--globe" aria-hidden="true"></i>Google profile</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--globe" aria-hidden="true"></i></span>Google profile</p>
   <p class="fh-metric__sub">Next: opening hours for each location</p>
   <p class="fh-metric__value"><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1">45%</span></p>
   <span class="fh-value fh-value--bar" data-tone="orange" data-fh="VAL-5.2"><progress class="fh-progress" value="45" max="100">45%</progress><b>45%</b></span>
@@ -2347,7 +2421,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.6 · Spread tiles › Expand -->
 <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.6">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Open invoices</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i></span>Open invoices</p>
   <p class="fh-metric__sub">5 invoices, 1 overdue</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="6940" title="$6,940.00 USD">$6.9K</data></span></p></div>
   <details class="fh-metric__more"><summary>Breakdown <i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary>
@@ -2362,7 +2436,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.7 · Spread tiles › Wide -->
 <article class="fh-metric fh-metric--spread fh-metric--wide" data-tone="teal" data-fh="MET-2.7">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i>Credit line</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--gauge" aria-hidden="true"></i></span>Credit line</p>
   <p class="fh-metric__sub">Drawn against $40,000 at Cedar Valley Bank</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="12500" title="$12,500.00 USD">$12.5K</data><span class="fh-metric__delta" data-trend="flat" aria-label="No change">$0</span></span></p></div>
   <span class="fh-value fh-value--bar" data-tone="teal" data-fh="VAL-5.2"><progress class="fh-progress" value="31" max="100">31%</progress><b>31%</b></span>
@@ -2371,7 +2445,7 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
 
 <!-- MET-2.8 · Spread tiles › Full -->
 <article class="fh-metric fh-metric--spread fh-metric--full" data-tone="sky" data-fh="MET-2.8">
-  <p class="fh-metric__label"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i>Invoices this month</p>
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--receipt" aria-hidden="true"></i></span>Invoices this month</p>
   <p class="fh-metric__sub">Sent from all brands; amounts before card fees</p>
   <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--compact-delta fh-value--tabular fh-value--mono" data-fh="VAL-4.5"><data value="6940" title="$6,940.00 USD">$6.9K</data><span class="fh-metric__delta" data-trend="up" aria-label="Up $1.1K">$1.1K</span></span></p></div>
   <div class="fh-table-wrap"><table class="fh-table fh-table--reflow" aria-label="Invoices this month" data-fh="TBL-1.2">

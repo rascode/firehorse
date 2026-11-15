@@ -34,7 +34,8 @@ export function entityOf(e) {
   if (typeof e !== "object") return { label: String(e) };
   return { ...e, label: String(e.label ?? e.name ?? e.title ?? e.id ?? "") };
 }
-const initialsOf = (n = "") => n.split(/\s+/).filter(Boolean).map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+// Initials skip words with no letter ("Oak & Ember" is OE, not O&).
+const initialsOf = (n = "") => n.split(/\s+/).filter((w) => /\p{L}/u.test(w)).map((p) => p.match(/\p{L}/u)[0]).slice(0, 2).join("").toUpperCase();
 // The avatar's shape comes from what it stands for (DR2): data-kind, from the entity's kind. A rich record's kind
 // (an application, an organization, a brand, a model) maps onto the avatar system's rounded kinds.
 const RICH_KIND = { application: "record", organization: "org", brand: "org", model: "agent", user: "person", owner: "person" };
