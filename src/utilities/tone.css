@@ -11,6 +11,7 @@
  *
  * Available: neutral sky lime orange teal fuchsia violet rose amber
  * accent. Map product categories to tones in your app, not in CSS.
+ * An ordered set (priority) uses data-ramp="1"…"4" instead: steps of one hue.
  */
 
 @layer fh.utilities {
@@ -46,6 +47,17 @@
   [data-tone="option"]:has(:checked[data-tone="rose"]) { --fh-tone: var(--fh-tone-rose); }
   [data-tone="option"]:has(:checked[data-tone="amber"]) { --fh-tone: var(--fh-tone-amber); }
   [data-tone="option"]:has(:checked[data-tone="accent"]) { --fh-tone: var(--fh-tone-accent); }
+
+  /* An ordinal set's tone ramp (data display contract, decision 6): one hue, stepped in the set's order, so
+   * low to urgent reads as more of the same colour, never as a status. resolveValue() gives each option its
+   * step (r.optionSet.options[].ramp, 1 to 4). The hue is --fh-ramp-hue (orange by default, display-rules.json
+   * ramp.hue); step 4 also takes a heavier weight.
+   *   <span class="fh-value fh-value--dot" data-ramp="3" data-fh="VAL-1.1"><span class="fh-dot"></span>High</span> */
+  [data-ramp] { --fh-tone: color-mix(in oklab, var(--fh-ramp-hue, var(--fh-tone-orange)) var(--_ramp, 100%), var(--fh-tone-neutral)); }
+  [data-ramp="1"] { --_ramp: 30%; }
+  [data-ramp="2"] { --_ramp: 60%; }
+  [data-ramp="3"] { --_ramp: 85%; }
+  [data-ramp="4"] { --_ramp: 100%; font-weight: var(--fh-weight-semibold); }
 
   .fh-tone-text {
     color: var(--fh-tone);

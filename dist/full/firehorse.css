@@ -22232,6 +22232,27 @@
     --fh-tone: var(--fh-tone-accent);
   }
 
+  [data-ramp] {
+    --fh-tone: color-mix(in oklab, var(--fh-ramp-hue, var(--fh-tone-orange)) var(--_ramp, 100%), var(--fh-tone-neutral));
+  }
+
+  [data-ramp="1"] {
+    --_ramp: 30%;
+  }
+
+  [data-ramp="2"] {
+    --_ramp: 60%;
+  }
+
+  [data-ramp="3"] {
+    --_ramp: 85%;
+  }
+
+  [data-ramp="4"] {
+    --_ramp: 100%;
+    font-weight: var(--fh-weight-semibold);
+  }
+
   .fh-tone-text {
     color: var(--fh-tone);
   }
