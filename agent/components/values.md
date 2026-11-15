@@ -71,6 +71,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 8. An ordinal set sorts by its order, never the alphabet, and draws its tones as a ramp in that order. Status tones are for states only.
 9. Option sets are data: a field points at its set (devops.option_sets, published as schema/option-sets.json). A status option's tone is its state's: done lime, moving sky, waiting amber, failed rose, ended neutral.
 10. Every value has a text form, the plain string for CSV export, aria-label, copy and search. A secret has none, export included.
+11. A viewer may re-display a column with the variants its grid row lists under choices, and nothing else; a secret offers none. The metric and form contexts offer no choice.
 <!-- rules:end -->
 
 ## The grid
