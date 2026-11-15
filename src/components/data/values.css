@@ -34,7 +34,7 @@
 @layer fh.components {
   /* —— Root: one set of measures for the whole family —— */
   .fh-value {
-    --_text: var(--fh-value-text, var(--fh-text-small));
+    --_text: var(--fh-value-text, var(--fh-type-value));
     --_avatar: var(--fh-value-avatar, 1.5rem);
     --_ring: var(--fh-value-ring, 2.5rem);
     --_thumb: var(--fh-value-thumb, 2rem);
@@ -50,6 +50,8 @@
     max-inline-size: 100%;
     color: var(--fh-color-text);
     font-size: var(--_text);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
     line-height: var(--fh-leading-snug);
     vertical-align: middle;
   }
@@ -80,26 +82,50 @@
 
   .fh-value--mono {
     font-family: var(--fh-font-mono);
-    letter-spacing: var(--fh-tracking-none);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--fh-tracking-mono);
+  }
+
+  .fh-value :is(.fh-num, data, time) { font-variant-numeric: tabular-nums; }
+
+  .fh-value :is(.fh-num, .fh-ring, .fh-gauge) {
+    font-family: var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-mono);
   }
 
   /* Rule 7: empty is a muted em dash, never a blank cell or null. */
   .fh-value[data-empty] { color: var(--fh-color-text-muted); }
 
-  /* A value's quiet second part: a currency code, a unit, a relative date, a count. */
-  .fh-value__sub {
+  /* Meta: sublines, chips, helper text, deltas. */
+  .fh-value .fh-value__sub {
     color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-caption);
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
+    text-transform: none;
     white-space: nowrap;
   }
 
-  .fh-value--lg .fh-value__sub { font-size: var(--fh-text-small); }
+  /* Label: currency and unit markers on money, ratio and duration variants. */
+  .fh-value abbr.fh-value__sub,
+  .fh-value .fh-money__currency,
+  .fh-value:is(.fh-value--amount, .fh-value--amount-code, .fh-value--compact, .fh-value--compact-delta, .fh-value--unit, .fh-value--text, .fh-value--ring, .fh-value--meter, .fh-value--duration) .fh-value__sub {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+  }
 
+  .fh-value .fh-ref__key,
   .fh-value__code {
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-caption);
-    letter-spacing: var(--fh-tracking-mono);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-none);
+    text-transform: none;
   }
 
   .fh-value__name {
@@ -112,14 +138,24 @@
   /* —— VAL-1 Option, VAL-2 Options: chips at the family's size —— */
   .fh-value > .fh-dot { --fh-dot-size: 0.45em; }
 
-  .fh-value .fh-chip { font-size: var(--fh-text-label); }
-  .fh-value--lg .fh-chip { font-size: var(--fh-text-small); }
+  .fh-value .fh-chip {
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
+    text-transform: none;
+  }
+
+  .fh-value .fh-badge {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-mono);
+  }
 
   .fh-value > .fh-chips { flex-wrap: nowrap; }
   .fh-value--chips-inline > .fh-chips { flex-wrap: wrap; }
 
-  /* The +N after the limit: a count, so a badge (the chip rules). */
-  .fh-value .fh-badge { font-variant-numeric: tabular-nums; }
 
   /* —— VAL-3 Entity —— */
   .fh-value > .fh-avatar,
@@ -139,11 +175,77 @@
     cursor: inherit;
   }
 
-  .fh-value--lg .fh-entity__who > b { font-size: var(--fh-text-body); }
-  .fh-value--lg .fh-entity__who > small { font-size: var(--fh-text-small); }
+  .fh-value .fh-entity__who > b {
+    font-family: var(--fh-font-sans);
+    font-size: 1em;
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-body);
+  }
+
+  .fh-value .fh-entity__who > small {
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
+  }
+
+  .fh-value .fh-entity__stat > b {
+    font-family: var(--fh-font-mono);
+    font-size: 1em;
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-mono);
+  }
+
+  .fh-value .fh-entity__stat > small {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+  }
 
   /* —— VAL-4 Money, VAL-6 Number: the change beside the figure is the metric tile's delta —— */
-  .fh-value .fh-metric__delta { font-size: var(--fh-text-caption); }
+  .fh-value .fh-metric__delta {
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
+  }
+
+  .fh-value .fh-field > :is(label, .fh-field__label, legend) { font-size: var(--fh-type-label); }
+
+  .fh-value :is(.fh-field__hint, .fh-field__error) {
+    font-family: var(--fh-font-sans);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-body);
+    text-transform: none;
+  }
+
+  .fh-value code {
+    font-family: var(--fh-font-mono);
+    font-size: 1em;
+    letter-spacing: var(--fh-tracking-none);
+  }
+
+  .fh-value :is(.fh-ring, .fh-gauge) {
+    font-size: 1em;
+    font-weight: var(--fh-weight-regular);
+
+    & > b {
+      font-size: 1em;
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-mono);
+    }
+  }
+
+  .fh-value .fh-gauge > small {
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-weight-medium);
+    letter-spacing: var(--fh-tracking-wide);
+    text-transform: uppercase;
+  }
 
   /* —— VAL-5 Ratio —— */
   .fh-value--bar > .fh-progress {
@@ -158,9 +260,10 @@
     min-inline-size: 4ch;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-caption);
-    font-weight: var(--fh-weight-medium);
+    font-size: var(--fh-type-value);
+    font-weight: var(--fh-weight-regular);
     font-variant-numeric: tabular-nums;
+    letter-spacing: var(--fh-tracking-mono);
     text-align: end;
   }
 
@@ -318,16 +421,30 @@
   .fh-value[data-mode="read"] .fh-entity-picker > .fh-entity::after { content: none; }
 
   /* Mono values type in mono too. */
-  .fh-value--mono :is(.fh-input, .fh-textarea, .fh-value__input) { font-family: var(--fh-font-mono); }
+  .fh-value--mono :is(.fh-input, .fh-textarea, .fh-value__input) {
+    font-family: var(--fh-font-mono);
+    letter-spacing: var(--fh-tracking-mono);
+  }
 
-  /* --lg on a control: a step up in text and height; a check and a switch scale whole, so the knob still lands. */
+  .fh-value :is(.fh-input, .fh-select, .fh-textarea, .fh-value__input, .fh-value__select, option) {
+    font-size: var(--fh-type-value);
+    font-weight: var(--fh-weight-regular);
+  }
+
+  @media (pointer: coarse) {
+    .fh-value :is(.fh-input, .fh-select, .fh-textarea, .fh-value__input, .fh-value__select) {
+      font-size: max(1rem, var(--fh-type-value));
+    }
+  }
+
+  /* --lg on a control: a step up in text scale and height; a check and a switch scale whole, so the knob still lands. */
   .fh-value--lg :is(.fh-input, .fh-textarea) {
     min-block-size: 3rem;
-    font-size: var(--fh-text-large);
+    font-size: var(--fh-type-value);
   }
 
   .fh-value--lg .fh-entity-picker { --fh-entity-avatar: 2.4rem; }
-  .fh-value--lg .fh-dropzone__title { font-size: var(--fh-text-large); }
+  .fh-value--lg .fh-dropzone__title { font-size: 1em; font-weight: var(--fh-weight-regular); }
   .fh-value--lg .fh-check > input { zoom: 1.25; }
 
   /* The list an entity or file trigger opens is the entity picker's list, as it is. */

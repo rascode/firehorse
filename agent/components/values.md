@@ -44,6 +44,18 @@ resolveValue(field, "cell", "edit");              // { variant: "dot", editable:
 textOf(field, "active");                          // "Active": CSV export, aria-label, copy and search
 ```
 
+## Type tiers
+
+Every `.fh-value` renderer uses three type tiers only (tokens `--fh-type-value`, `--fh-type-meta`, `--fh-type-label` on primitives, wired in `src/components/data/values.css`):
+
+| Tier | Token | Use |
+|---|---|---|
+| Value | `--fh-type-value` (`--fh-text-small`) | The value in cell, record, card, metric and form: words in sans at 400 (entity names and record titles at 500); figures (`.fh-num`, money, times, counts, IDs) in mono with tabular figures. Sans −0.01em; mono 0.02em. Reference: temporal, moment, Card `relative` (`2 hours ago`) and temporal, time of day, Cell `time` (`9:27 AM`). |
+| Meta | `--fh-type-meta` (`--fh-text-caption`) | Sublines (`.fh-value__sub` relative text, `.fh-entity__who > small`, deltas, field hints), chips inside a value and the +N badge, all at 400. |
+| Label | `--fh-type-label` (`--fh-text-label`) | Currency and unit markers, uppercase form captions, keys (`.fh-ref__key`, as written). UI labels uppercase at 0.06em tracking; identifiers at 0. |
+
+`.fh-value--lg` keeps a larger value scale (`--fh-text-body`) but the same faces, weights and tracking. Form controls inside a value use the value size; on coarse pointers they use `max(1rem, var(--fh-type-value))` so iOS does not zoom.
+
 Pick the context by where the value sits, never by how you want it to look:
 
 | Context | Where |
