@@ -1409,7 +1409,7 @@ The mobile menu: a full-width popover under the header with grouped links. Open 
 
 ### DRP · Dropdown menu
 
-On the etched frost: quiet mono labels, sans items in rows that run the menu's width, shortcuts, checkable items, soft rules between groups and a danger zone. `--inset` sets the rows in from the frame, each rounded. Positioned with CSS anchor positioning. `--tiles` is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
+On the etched frost: quiet mono labels, sans items in rows that run the menu's width, shortcuts, checkable items, soft rules between groups and a danger zone. `--inset` sets the rows in from the frame, each rounded. Positioned with CSS anchor positioning. `--context` is the same menu opened at the pointer (right-click, long press, Shift+F10) on whatever names it with `data-fh-context`, with submenus. `--tiles` is a wide menu of tiles: a mono caps head with a status pill, labelled tile grids run edge to edge, an etched pill action and an ask row that opens into a short form.
 
 ```html
 <!-- DRP-1.1 · Default › Default -->
@@ -1454,6 +1454,50 @@ On the etched frost: quiet mono labels, sans items in rows that run the menu's w
       <button class="fh-button fh-button--sm" type="submit">Send request</button>
     </form>
   </details>
+</div>
+
+<!-- DRP-3.1 · Context menu › Context menu -->
+<div class="fh-cluster" style="align-items: start">
+            <div class="fh-card" tabindex="0" data-fh-context="drp-context-live" aria-label="Q3 report: right-click, long press or Shift+F10 for its menu" style="inline-size: min(20rem, 100%)" data-fh="DRP-3.1">
+              <p class="fh-label">Q3 report.pdf</p>
+              <p class="fh-muted">Right-click, long press or Shift+F10 here.</p>
+            </div>
+            <div class="fh-menu fh-menu--context" role="menu" aria-label="Sample context menu (static)" style="position: static; display: block; margin: 0; opacity: 1; translate: none; max-inline-size: 16rem" data-fh="DRP-3.1">
+              <p class="fh-menu__label">File</p>
+              <button type="button" role="menuitem"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i>Rename<kbd>F2</kbd></button>
+              <button type="button" role="menuitem"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Duplicate<kbd>D</kbd></button>
+              <div class="fh-menu__sub">
+                <button type="button" role="menuitem" aria-haspopup="menu" aria-expanded="false"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Move to</button>
+                <div popover class="fh-menu" role="menu" aria-label="Move to">
+                  <button type="button" role="menuitem"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Drafts</button>
+                  <button type="button" role="menuitem"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Shared</button>
+                  <button type="button" role="menuitem"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Archive</button>
+                </div>
+              </div>
+              <hr>
+              <p class="fh-menu__label">Show</p>
+              <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--eye" aria-hidden="true"></i>Preview</button>
+              <hr>
+              <button type="button" role="menuitem" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete<kbd>⌫</kbd></button>
+            </div>
+            <div id="drp-context-live" popover class="fh-menu fh-menu--context" role="menu" aria-label="Q3 report" data-fh="DRP-3.1">
+              <p class="fh-menu__label">File</p>
+              <button type="button" role="menuitem"><i class="fh-icon fh-icon--pencil" aria-hidden="true"></i>Rename<kbd>F2</kbd></button>
+              <button type="button" role="menuitem"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i>Duplicate<kbd>D</kbd></button>
+              <div class="fh-menu__sub">
+                <button type="button" role="menuitem" aria-haspopup="menu" aria-expanded="false"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Move to</button>
+                <div popover class="fh-menu" role="menu" aria-label="Move to">
+                  <button type="button" role="menuitem"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Drafts</button>
+                  <button type="button" role="menuitem"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Shared</button>
+                  <button type="button" role="menuitem"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i>Archive</button>
+                </div>
+              </div>
+              <hr>
+              <p class="fh-menu__label">Show</p>
+              <button type="button" role="menuitemcheckbox" aria-checked="true"><i class="fh-icon fh-icon--eye" aria-hidden="true"></i>Preview</button>
+              <hr>
+              <button type="button" role="menuitem" class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2" aria-hidden="true"></i>Delete<kbd>⌫</kbd></button>
+            </div>
 </div>
 ```
 

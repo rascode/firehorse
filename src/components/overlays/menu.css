@@ -18,6 +18,20 @@
    *     <button class="fh-menu__danger"><i class="fh-icon fh-icon--trash-2"></i>Delete view</button>
    *   </div>
    * DRP-1.2 Inset: fh-menu--inset sets the rows in from the frame, each rounded.
+   * DRP-3.1 Context menu: the same menu, opened at the pointer (right-click, a long press on
+   *   touch, Shift+F10 or the menu key) on any element that names it with data-fh-context.
+   *   firehorse.js opens and places it, keeps it in the window, moves focus with the arrow keys
+   *   and closes it on a pick, Escape, a click outside or a scroll.
+   *     <div class="fh-card" tabindex="0" data-fh-context="file-menu">…</div>
+   *     <div id="file-menu" popover class="fh-menu fh-menu--context" role="menu" aria-label="File">…</div>
+   * Submenus (any menu, one level): an item and a second menu in .fh-menu__sub. The item takes a
+   *   chevron; the menu opens to its side on hover, a click, Enter or the right arrow, and flips
+   *   to the other side at the window's edge.
+   *     <div class="fh-menu__sub">
+   *       <button type="button" role="menuitem" aria-haspopup="menu" aria-expanded="false">Move to</button>
+   *       <div popover class="fh-menu" role="menu" aria-label="Move to">…</div>
+   *     </div>
+   * Items are links, buttons or anything with a menuitem role (the React wrappers' rows).
    *
    * One set of values for every menu (the Tile menu too), set once on .fh-menu:
    *   --fh-menu-text            an item's text (small)
@@ -84,7 +98,8 @@
 
     /* Rows: the menu's width, the standard's side padding less any frame inset, so every row's
      * text lines up with the labels. */
-    & > :is(a, button) {
+    & > :is(a, button, [role^="menuitem"]),
+    & > .fh-menu__sub > :is(a, button, [role^="menuitem"]) {
       display: flex;
       align-items: center;
       gap: var(--_gap);
@@ -116,7 +131,7 @@
   }
 
   /* DRP-1.2 Inset: the rows sit in from the frame, each rounded. */
-  .fh-menu--inset {
+  :is(.fh-menu--inset, .fh-menu--inset .fh-menu__sub > .fh-menu) {
     --_frame: var(--fh-menu-frame, var(--fh-item-frame));
     --_row-radius: var(--fh-radius-sm);
   }
@@ -129,12 +144,37 @@
     }
   }
 
+  /* DRP-3.1 Context menu, and every submenu: placed by firehorse.js at --fh-menu-x / --fh-menu-y
+     (the pointer, or beside the item that opened it). The React wrappers place their own. */
+  :is(.fh-menu.fh-menu--context, .fh-menu__sub > .fh-menu):not(.fh-rx-menu) {
+    position: fixed;
+    inset: auto;
+    inset-inline-start: var(--fh-menu-x, 0px);
+    inset-block-start: var(--fh-menu-y, 0px);
+    margin: 0;
+    position-area: none;
+  }
+
+  /* A submenu's item: a chevron at the end, the wash while its menu is open. */
+  .fh-menu__sub > :is(a, button, [role^="menuitem"]) {
+    &::after {
+      content: "";
+      flex: none;
+      inline-size: var(--_icon);
+      aspect-ratio: 1;
+      margin-inline-start: auto;
+      background-color: var(--fh-color-text-subtle);
+      mask: var(--fh-icon-chevron-right) center / contain no-repeat;
+    }
+    &:is([aria-expanded="true"], [data-state="open"]) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+  }
+
 }
 
 @layer fh.components {
   /* —— Menu extras: labels, icons, shortcuts, checks, danger —— */
   /* The mono caps lines: quiet for labels and shortcuts, bold and full ink for the head's title. */
-  :is(.fh-menu__label, .fh-menu__title, .fh-menu__kbd, .fh-menu > :is(a, button) > kbd) {
+  :is(.fh-menu__label, .fh-menu__title, .fh-menu__kbd, .fh-menu > :is(a, button, [role^="menuitem"]) > kbd) {
     margin: 0;
     color: var(--fh-color-text-subtle);
     font-family: var(--fh-font-mono);
@@ -146,8 +186,8 @@
   }
   .fh-menu__label { padding: var(--_pad-b) calc(var(--_pad-i) - var(--_frame)) var(--_gap); }
   .fh-menu__head .fh-menu__title { color: var(--fh-color-text); font-weight: var(--_strong); }
-  .fh-menu > :is(a, button) > .fh-icon { --fh-icon-size: var(--_icon); color: var(--fh-color-text-subtle); }
-  .fh-menu > :is(a, button) > kbd,
+  :is(.fh-menu, .fh-menu__sub) > :is(a, button, [role^="menuitem"]) > .fh-icon { --fh-icon-size: var(--_icon); color: var(--fh-color-text-subtle); }
+  .fh-menu > :is(a, button, [role^="menuitem"]) > kbd,
   .fh-menu__kbd { margin-inline-start: auto; }
   .fh-menu > [role="menuitemcheckbox"],
   .fh-menu > [role="menuitemradio"] {

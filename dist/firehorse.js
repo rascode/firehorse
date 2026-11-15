@@ -32,6 +32,10 @@
  *  15. Entity pickers ([data-fh-entity]): the chosen option's row is
  *      mirrored into the trigger, the list closes on a pick, and
  *      fh:entity fires. The radios submit without this.
+ *  16. Context menus ([data-fh-context] names a .fh-menu popover): open at
+ *      the pointer on right-click, a long press or Shift+F10 / the menu key,
+ *      kept in the window, closed on a pick or a scroll. Arrow keys, Home and
+ *      End in any open menu; submenus (.fh-menu__sub) open to the side.
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -1058,3 +1062,153 @@ ready(() => {
     Promise.race([whenReady().then(() => new Promise((r) => requestAnimationFrame(r))).then(intros), new Promise((r) => setTimeout(r, 6000))]).then(() => requestAnimationFrame(start));
   }
 }
+
+/* —— 16. Context menus and submenus ——————————————————————————
+ * [data-fh-context="id"] on any element opens the menu #id at the pointer:
+ * right-click, a long press on touch, or Shift+F10 / the menu key when the
+ * element has focus. The menu is a popover (light dismiss closes it on a
+ * click outside or Escape); a scroll or a pick closes it too, and focus goes
+ * back to the element. In any open menu the arrow keys, Home and End move
+ * between items. A submenu (.fh-menu__sub: an item, then a menu) opens to
+ * the item's side on hover, a click, Enter, Space or the right arrow, and
+ * flips at the window's edge; the left arrow closes it. */
+ready(() => {
+  const EDGE = 8, HOLD = 500, SLOP = 10;
+  const ITEM = ':is(a, button, [role^="menuitem"])';
+  const items = (menu) => [...menu.querySelectorAll(`:scope > ${ITEM}, :scope > .fh-menu__sub > ${ITEM}`)].filter((i) => !i.hidden && !i.disabled && i.getAttribute("aria-disabled") !== "true");
+  const isOpen = (m) => m.matches(":popover-open");
+  const keep = (v, lo, hi) => Math.max(lo, Math.min(v, hi));
+
+  // Place a fixed menu at (x, y), inside the window. alt is where to go when it
+  // would run past the right edge (a submenu flips to its item's other side).
+  const place = (menu, x, y, alt) => {
+    menu.style.setProperty("--fh-menu-x", "0px");
+    menu.style.setProperty("--fh-menu-y", "0px");
+    const r = menu.getBoundingClientRect();
+    let nx = x + r.width > innerWidth - EDGE && alt != null ? alt - r.width : x;
+    nx = keep(nx, EDGE, innerWidth - r.width - EDGE);
+    const ny = y + r.height > innerHeight - EDGE ? keep(y - (alt == null ? r.height : r.height - EDGE * 0), EDGE, innerHeight - r.height - EDGE) : y;
+    menu.style.setProperty("--fh-menu-x", `${Math.round(nx)}px`);
+    menu.style.setProperty("--fh-menu-y", `${Math.round(keep(ny, EDGE, innerHeight - r.height - EDGE))}px`);
+  };
+
+  const closeSubs = (menu) => {
+    for (const sub of menu.querySelectorAll(":scope > .fh-menu__sub")) {
+      const panel = sub.querySelector(":scope > .fh-menu[popover]");
+      if (panel && isOpen(panel)) panel.hidePopover();
+      sub.firstElementChild?.setAttribute("aria-expanded", "false");
+    }
+  };
+  const openSub = (sub, focus) => {
+    const trigger = sub.firstElementChild, panel = sub.querySelector(":scope > .fh-menu[popover]");
+    if (!panel) return;
+    closeSubs(sub.parentElement);
+    if (!isOpen(panel)) panel.showPopover();
+    trigger.setAttribute("aria-expanded", "true");
+    const t = trigger.getBoundingClientRect(), m = sub.parentElement.getBoundingClientRect();
+    const lift = parseFloat(getComputedStyle(panel).paddingTop) + parseFloat(getComputedStyle(panel).borderTopWidth);
+    place(panel, m.right, t.top - lift, m.left);
+    if (focus) items(panel)[0]?.focus({ preventScroll: true });
+  };
+
+  // Context menus remember what opened them, to give focus back on close.
+  const from = new WeakMap();
+  const open = (menu, x, y, source) => {
+    if (isOpen(menu)) menu.hidePopover();
+    from.set(menu, source);
+    if (!menu.dataset.fhContextWired) {
+      menu.dataset.fhContextWired = "";
+      menu.addEventListener("toggle", (e) => {
+        if (e.newState !== "closed") return;
+        closeSubs(menu);
+        const back = from.get(menu);
+        if (back && (menu.contains(document.activeElement) || document.activeElement === document.body)) back.focus({ preventScroll: true });
+      });
+    }
+    menu.showPopover();
+    place(menu, x, y);
+    items(menu)[0]?.focus({ preventScroll: true });
+  };
+  const menuFor = (el) => {
+    const zone = el?.closest?.("[data-fh-context]");
+    const menu = zone && document.getElementById(zone.dataset.fhContext);
+    return menu?.popover ? { zone, menu } : null;
+  };
+
+  document.addEventListener("contextmenu", (e) => {
+    const hit = menuFor(e.target);
+    if (!hit) return;
+    e.preventDefault();
+    // The menu key and Shift+F10 fire contextmenu with no pointer position: open at the element.
+    if (e.button === -1 || (e.clientX === 0 && e.clientY === 0)) {
+      const r = hit.zone.getBoundingClientRect();
+      open(hit.menu, r.left + EDGE * 2, r.top + Math.min(r.height, EDGE * 4), hit.zone);
+    } else open(hit.menu, e.clientX, e.clientY, hit.zone);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!(e.key === "F10" && e.shiftKey)) return;
+    const hit = menuFor(document.activeElement);
+    if (!hit) return;
+    e.preventDefault();
+    const r = hit.zone.getBoundingClientRect();
+    open(hit.menu, r.left + EDGE * 2, r.top + Math.min(r.height, EDGE * 4), hit.zone);
+  });
+
+  // Long press on touch (iOS sends no contextmenu event).
+  let hold = 0, hx = 0, hy = 0, held = false;
+  document.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "touch") return;
+    const hit = menuFor(e.target);
+    if (!hit) return;
+    hx = e.clientX; hy = e.clientY; held = false;
+    clearTimeout(hold);
+    hold = setTimeout(() => { held = true; open(hit.menu, hx, hy, hit.zone); }, HOLD);
+  }, { passive: true });
+  document.addEventListener("pointermove", (e) => { if (hold && Math.hypot(e.clientX - hx, e.clientY - hy) > SLOP) { clearTimeout(hold); hold = 0; } }, { passive: true });
+  for (const type of ["pointerup", "pointercancel"]) document.addEventListener(type, () => { clearTimeout(hold); hold = 0; }, { passive: true });
+  document.addEventListener("click", (e) => { if (held) { held = false; e.preventDefault(); e.stopPropagation(); } }, true);
+
+  // A scroll anywhere but inside a menu closes the context menus.
+  addEventListener("scroll", (e) => {
+    if (e.target instanceof Element && e.target.closest(".fh-menu")) return;
+    for (const m of document.querySelectorAll(".fh-menu--context:popover-open")) m.hidePopover();
+  }, { capture: true, passive: true });
+
+  // Submenus: hover, click and keys.
+  document.addEventListener("pointerover", (e) => {
+    const item = e.target.closest?.(`.fh-menu ${ITEM}`);
+    if (!item || e.pointerType === "touch") return;
+    const sub = item.parentElement.matches(".fh-menu__sub") && item.parentElement.firstElementChild === item ? item.parentElement : null;
+    if (sub) openSub(sub, false);
+    else if (item.parentElement.matches(".fh-menu")) closeSubs(item.parentElement);
+  });
+  document.addEventListener("click", (e) => {
+    const item = e.target.closest?.(`.fh-menu ${ITEM}`);
+    if (!item) return;
+    const sub = item.parentElement.matches(".fh-menu__sub") && item.parentElement.firstElementChild === item ? item.parentElement : null;
+    if (sub) { e.preventDefault(); openSub(sub, e.detail === 0); return; }
+    // A pick in a context menu or a submenu closes it (checkable items stay, so a set can change).
+    if (/^menuitem(checkbox|radio)$/.test(item.getAttribute("role") || "")) return;
+    const root = item.closest(".fh-menu--context") || item.closest(".fh-menu__sub")?.closest(".fh-menu[popover]");
+    if (root && isOpen(root)) root.hidePopover();
+  });
+  document.addEventListener("keydown", (e) => {
+    const menu = document.activeElement?.closest?.(".fh-menu");
+    if (!menu || !menu.matches(":popover-open, [role='menu']")) return;
+    const list = items(menu), at = list.indexOf(document.activeElement);
+    const go = (i) => { e.preventDefault(); list[(i + list.length) % list.length]?.focus({ preventScroll: true }); };
+    const here = document.activeElement, sub = here.parentElement?.matches(".fh-menu__sub") && here.parentElement.firstElementChild === here ? here.parentElement : null;
+    if (e.key === "ArrowDown") go(at + 1);
+    else if (e.key === "ArrowUp") go(at - 1);
+    else if (e.key === "Home") go(0);
+    else if (e.key === "End") go(list.length - 1);
+    else if (sub && (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSub(sub, true); }
+    else if (e.key === "ArrowLeft" && menu.parentElement?.matches(".fh-menu__sub")) {
+      e.preventDefault();
+      menu.hidePopover();
+      const trigger = menu.parentElement.firstElementChild;
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.focus({ preventScroll: true });
+    }
+  });
+});

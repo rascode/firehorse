@@ -6,11 +6,11 @@
  * behaviors (comboboxes, menus with typeahead, toasts with swipe) done for them.
  *
  *   import "@rascode/firehorse";
- *   import { Button, Dialog, DropdownMenu, EntityPicker, Select, Tabs, SideNav } from "@rascode/firehorse-react";
+ *   import { Button, Dialog, DropdownMenu, ContextMenu, EntityPicker, Select, Tabs, SideNav } from "@rascode/firehorse-react";
  */
 import * as React from "react";
 import { digitsFor, marksFor, formatTyped, parseMinor, formatMinor } from "@rascode/firehorse/money";
-import { Dialog as D, DropdownMenu as M, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C, Toast as To } from "radix-ui";
+import { Dialog as D, DropdownMenu as M, ContextMenu as CM, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C, Toast as To } from "radix-ui";
 
 export {
   SideNav,
@@ -76,6 +76,33 @@ export const DropdownMenuItem = ({ icon, shortcut, danger, children, className, 
 export const DropdownMenuCheckboxItem = ({ children, ...p }: React.ComponentProps<typeof M.CheckboxItem>) => <M.CheckboxItem {...p}>{children}</M.CheckboxItem>;
 export const DropdownMenuLabel = (p: React.ComponentProps<typeof M.Label>) => <M.Label className="fh-menu__label" {...p} />;
 export const DropdownMenuSeparator = () => <M.Separator asChild><hr /></M.Separator>;
+export const DropdownMenuSub = M.Sub;
+export const DropdownMenuSubTrigger = ({ icon, children, ...p }: React.ComponentProps<typeof M.SubTrigger> & { icon?: string }) => (
+  <M.SubTrigger {...p}>{icon && <Icon name={icon} />}{children}</M.SubTrigger>
+);
+export function DropdownMenuSubContent({ className, ...p }: React.ComponentProps<typeof M.SubContent>) {
+  return <M.Portal><M.SubContent data-fh="DRP" sideOffset={4} className={cx("fh-menu", "fh-rx-menu", "fh-rx-menu--sub", className)} {...p} /></M.Portal>;
+}
+
+/* —— Context menu (DRP-3.1): the dropdown menu, opened at the pointer —— */
+export const ContextMenu = CM.Root;
+export const ContextMenuTrigger = CM.Trigger;
+export function ContextMenuContent({ className, ...p }: React.ComponentProps<typeof CM.Content>) {
+  return <CM.Portal><CM.Content data-fh="DRP-3.1" className={cx("fh-menu", "fh-menu--context", "fh-rx-menu", className)} {...p} /></CM.Portal>;
+}
+export const ContextMenuItem = ({ icon, shortcut, danger, children, className, ...p }: React.ComponentProps<typeof CM.Item> & { icon?: string; shortcut?: string; danger?: boolean }) => (
+  <CM.Item className={cx(danger && "fh-menu__danger", className)} {...p}>{icon && <Icon name={icon} />}{children}{shortcut && <kbd>{shortcut}</kbd>}</CM.Item>
+);
+export const ContextMenuCheckboxItem = ({ children, ...p }: React.ComponentProps<typeof CM.CheckboxItem>) => <CM.CheckboxItem {...p}>{children}</CM.CheckboxItem>;
+export const ContextMenuLabel = (p: React.ComponentProps<typeof CM.Label>) => <CM.Label className="fh-menu__label" {...p} />;
+export const ContextMenuSeparator = () => <CM.Separator asChild><hr /></CM.Separator>;
+export const ContextMenuSub = CM.Sub;
+export const ContextMenuSubTrigger = ({ icon, children, ...p }: React.ComponentProps<typeof CM.SubTrigger> & { icon?: string }) => (
+  <CM.SubTrigger {...p}>{icon && <Icon name={icon} />}{children}</CM.SubTrigger>
+);
+export function ContextMenuSubContent({ className, ...p }: React.ComponentProps<typeof CM.SubContent>) {
+  return <CM.Portal><CM.SubContent data-fh="DRP-3.1" sideOffset={4} className={cx("fh-menu", "fh-rx-menu", "fh-rx-menu--sub", className)} {...p} /></CM.Portal>;
+}
 
 /* —— Popover & tooltip —— */
 export const Popover = P.Root;
