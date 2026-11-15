@@ -20,6 +20,8 @@
  *
  *   Attribute            Values
  *   data-fh-avatar       rounded · circle · square · squircle · oval
+ *   data-fh-avatar-person   circle · rounded · square · squircle
+ *   data-fh-avatar-entity   rounded · circle · square · squircle
  *   data-fh-card         etched · solid · elevated · outline · glass · minimal · tonal
  *   data-fh-card-media   wide · classic · square · portrait
  *   data-fh-card-content plain · frost
@@ -46,6 +48,15 @@
   [data-fh-avatar="squircle"] { --fh-avatar-radius: 32%; --fh-avatar-ratio: 1; --fh-avatar-corner-shape: squircle; }
   /* Oval: a portrait rectangle with a full half circle at the top and bottom. */
   [data-fh-avatar="oval"] { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 3 / 4; }
+
+  [data-fh-avatar-person="circle"] { --fh-avatar-person-radius: var(--fh-radius-pill); }
+  [data-fh-avatar-person="rounded"] { --fh-avatar-person-radius: var(--fh-radius-md); }
+  [data-fh-avatar-person="square"] { --fh-avatar-person-radius: var(--fh-radius-sm); }
+  [data-fh-avatar-person="squircle"] { --fh-avatar-person-radius: 32%; --fh-avatar-corner-shape: squircle; }
+  [data-fh-avatar-entity="rounded"] { --fh-avatar-entity-radius: var(--fh-radius-md); }
+  [data-fh-avatar-entity="circle"] { --fh-avatar-entity-radius: var(--fh-radius-pill); }
+  [data-fh-avatar-entity="square"] { --fh-avatar-entity-radius: var(--fh-radius-sm); }
+  [data-fh-avatar-entity="squircle"] { --fh-avatar-entity-radius: 32%; --fh-avatar-corner-shape: squircle; }
 
   /* —— Cards —— */
   [data-fh-card="etched"] {

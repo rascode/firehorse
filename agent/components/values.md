@@ -46,7 +46,7 @@ textOf(field, "active");                          // "Active": CSV export, aria-
 
 ## Type tiers
 
-Every `.fh-value` renderer uses three type tiers only (tokens `--fh-type-value`, `--fh-type-meta`, `--fh-type-label` on primitives, wired in `src/components/data/values.css`):
+Every `.fh-value` renderer uses three type tiers only. Sizes live on `--fh-type-value`, `--fh-type-meta`, `--fh-type-label`; family, weight, tracking and label case live on the matching `--fh-type-*` tokens on primitives (set per theme in the `type` block). Rules are in `src/components/data/values.css`; form controls read the same value tier from `src/components/forms/`:
 
 | Tier | Token | Use |
 |---|---|---|

@@ -237,3 +237,153 @@ let start = "dark";
 try { start = localStorage.getItem("fh-dr-mode") ?? (getComputedStyle(document.documentElement).colorScheme === "light" ? "light" : "dark"); } catch {}
 for (const b of buttons) b.addEventListener("click", () => setMode(b.dataset.mode));
 setMode(start === "light" ? "light" : "dark");
+
+// Type tier playground (DR3): sets --fh-type-* on the grid frame or :root.
+{
+  const STORAGE = "fh-type-tiers";
+  const root = document.documentElement;
+  const frame = document.getElementById("dr-grid-table");
+  const rowsEl = document.getElementById("dr-type-rows");
+  if (rowsEl) {
+    const scopeBtns = [...document.querySelectorAll("#dr-type-scope button[data-scope]")];
+    const sizes = [
+      ["0.6875rem", "--fh-text-micro"],
+      ["0.72rem", "--fh-text-label"],
+      ["0.78rem", "--fh-text-caption"],
+      ["0.88rem", "--fh-text-small"],
+      ["1rem", "--fh-text-body"],
+      ["1.05rem", "--fh-text-lede"],
+      ["1.15rem", "--fh-text-large"],
+    ];
+    const weights = [["300", "--fh-weight-light"], ["400", "--fh-weight-regular"], ["500", "--fh-weight-medium"], ["600", "--fh-weight-bold"]];
+    const tracks = [["-0.02em", "tightest"], ["-0.01em", "body"], ["0", "none"], ["0.02em", "mono"], ["0.04em", "snug"], ["0.06em", "wide"], ["0.08em", "wider"]];
+    const sansFamilies = [
+      ["Inter", '"Inter", ui-sans-serif, system-ui, sans-serif'],
+      ["Geist", '"Geist", ui-sans-serif, system-ui, sans-serif'],
+      ["Hanken Grotesk", '"Hanken Grotesk", ui-sans-serif, system-ui, sans-serif'],
+      ["Archivo", '"Archivo", ui-sans-serif, system-ui, sans-serif'],
+      ["System", "ui-sans-serif, system-ui, -apple-system, sans-serif"],
+    ];
+    const monoFamilies = [
+      ["Geist Mono", '"Geist Mono", ui-monospace, monospace'],
+      ["System mono", 'ui-monospace, "SF Mono", monospace'],
+    ];
+    const TIER_ROWS = [
+      {
+        id: "value",
+        legend: "Value tier",
+        sample: '<span class="site-dr__type-sample site-dr__type-sample--value">2 hours ago</span> <span class="site-dr__type-sample site-dr__type-sample--value"><span class="fh-num">9:27 AM</span></span>',
+        fields: [
+          { key: "valueFamily", prop: "--fh-type-value-family", label: "Family", options: sansFamilies },
+          { key: "figureFamily", prop: "--fh-type-figure-family", label: "Figures", options: monoFamilies },
+          { key: "valueSize", prop: "--fh-type-value", label: "Size", options: sizes },
+          { key: "valueWeight", prop: "--fh-type-value-weight", label: "Weight", options: weights },
+          { key: "valueTracking", prop: "--fh-type-value-tracking", label: "Tracking", options: tracks },
+        ],
+      },
+      {
+        id: "meta",
+        legend: "Meta tier",
+        sample: '<span class="site-dr__type-sample site-dr__type-sample--meta">Owner · Goal Q4</span>',
+        fields: [
+          { key: "metaFamily", prop: "--fh-type-meta-family", label: "Family", options: sansFamilies },
+          { key: "metaSize", prop: "--fh-type-meta", label: "Size", options: sizes },
+          { key: "metaWeight", prop: "--fh-type-meta-weight", label: "Weight", options: weights },
+          { key: "metaTracking", prop: "--fh-type-meta-tracking", label: "Tracking", options: tracks },
+        ],
+      },
+      {
+        id: "label",
+        legend: "Label tier",
+        sample: '<span class="site-dr__type-sample site-dr__type-sample--label">AMOUNT · GL-814</span>',
+        fields: [
+          { key: "labelFamily", prop: "--fh-type-label-family", label: "Family", options: monoFamilies },
+          { key: "labelSize", prop: "--fh-type-label", label: "Size", options: sizes },
+          { key: "labelWeight", prop: "--fh-type-label-weight", label: "Weight", options: weights },
+          { key: "labelTracking", prop: "--fh-type-label-tracking", label: "Tracking", options: tracks },
+          { key: "labelCase", prop: "--fh-type-label-case", label: "Case", options: [["none", "none"], ["uppercase", "uppercase"]] },
+        ],
+      },
+    ];
+    const defaults = {};
+    const readDefaults = () => {
+      const cs = getComputedStyle(root);
+      for (const row of TIER_ROWS) for (const f of row.fields) defaults[f.key] = cs.getPropertyValue(f.prop).trim();
+    };
+    readDefaults();
+    let scope = "frame";
+    let state = {};
+    try {
+      const saved = localStorage.getItem(STORAGE);
+      if (saved) state = JSON.parse(saved);
+    } catch {}
+    const target = () => (scope === "root" ? root : frame ?? root);
+    const applyAll = () => {
+      const t = target();
+      for (const row of TIER_ROWS) for (const f of row.fields) {
+        const v = state[f.key];
+        if (v != null && v !== defaults[f.key]) t.style.setProperty(f.prop, v);
+        else t.style.removeProperty(f.prop);
+      }
+    };
+    const persist = () => { try { localStorage.setItem(STORAGE, JSON.stringify(state)); } catch {} };
+    const select = (id, label, key, options, val) => {
+      const cur = val ?? state[key] ?? defaults[key];
+      const opts = options.map(([text, value]) => `<option value="${esc(value)}"${cur === value ? " selected" : ""}>${esc(text)}</option>`).join("");
+      return `<motionless-wrap class="fh-field"><label for="${id}">${esc(label)}</label><span class="fh-select-wrap"><select class="fh-select" id="${id}" data-type-key="${key}">${opts}</select></span></motionless-wrap>`;
+    };
+    rowsEl.innerHTML = TIER_ROWS.map((row) => `<fieldset class="site-dr__type-tier"><legend>${esc(row.legend)}</legend><div class="site-dr__type-sample-row" aria-hidden="true">${row.sample}</div><div class="site-dr__type-controls fh-cluster">${row.fields.map((f) => select(`dr-type-${f.key}`, f.label, f.key, f.options)).join("")}</div></fieldset>`).join("").replace(/motionless-wrap/g, "div");
+    rowsEl.addEventListener("change", (e) => {
+      const sel = e.target.closest("select[data-type-key]");
+      if (!sel) return;
+      state[sel.dataset.typeKey] = sel.value;
+      applyAll();
+      persist();
+    });
+    const setScope = (next) => {
+      scope = next;
+      for (const b of scopeBtns) b.setAttribute("aria-pressed", String(b.dataset.scope === scope));
+      applyAll();
+    };
+    for (const b of scopeBtns) b.addEventListener("click", () => setScope(b.dataset.scope));
+    document.getElementById("dr-type-reset")?.addEventListener("click", () => {
+      state = {};
+      persist();
+      applyAll();
+      for (const sel of rowsEl.querySelectorAll("select[data-type-key]")) {
+        const key = sel.dataset.typeKey;
+        sel.value = defaults[key] ?? "";
+      }
+    });
+    const changedProps = () => {
+      const out = [];
+      for (const row of TIER_ROWS) for (const f of row.fields) {
+        const v = state[f.key];
+        if (v != null && v !== defaults[f.key]) out.push([f.prop, v]);
+      }
+      return out;
+    };
+    document.getElementById("dr-type-copy-css")?.addEventListener("click", async () => {
+      const lines = changedProps();
+      const text = lines.length ? `:root {\n${lines.map(([n, v]) => `  ${n}: ${v};`).join("\n")}\n}` : ":root { /* matches defaults */ }";
+      try { await navigator.clipboard.writeText(text); } catch {}
+    });
+    document.getElementById("dr-type-copy-json")?.addEventListener("click", async () => {
+      const pick = (prop) => getComputedStyle(target()).getPropertyValue(prop).trim();
+      const block = {
+        value: { size: pick("--fh-type-value"), weight: pick("--fh-type-value-weight"), tracking: pick("--fh-type-value-tracking") },
+        figure: { tracking: pick("--fh-type-figure-tracking") },
+        name: { weight: pick("--fh-type-name-weight") },
+        meta: { size: pick("--fh-type-meta"), weight: pick("--fh-type-meta-weight"), tracking: pick("--fh-type-meta-tracking") },
+        label: { size: pick("--fh-type-label"), weight: pick("--fh-type-label-weight"), tracking: pick("--fh-type-label-tracking"), case: pick("--fh-type-label-case") },
+        fieldFloor: pick("--fh-type-field-floor") || "1rem",
+      };
+      try { await navigator.clipboard.writeText(JSON.stringify({ type: block }, null, 2)); } catch {}
+    });
+    applyAll();
+    for (const sel of rowsEl.querySelectorAll("select[data-type-key]")) {
+      const key = sel.dataset.typeKey;
+      if (state[key]) sel.value = state[key];
+    }
+  }
+}

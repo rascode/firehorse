@@ -85,8 +85,8 @@
 
   /* Shape by kind. Low specificity, so a shape modifier still wins outside
    * a value; inside .fh-value the kind wins (components/data/values.css). */
-  .fh-avatar:where([data-kind="person"]) { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
-  .fh-avatar:where([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-plate-radius, var(--fh-radius-md)); --fh-avatar-ratio: 1; }
+  .fh-avatar:where([data-kind="person"]) { --fh-avatar-radius: var(--fh-avatar-person-radius, var(--fh-radius-pill)); --fh-avatar-ratio: 1; }
+  .fh-avatar:where([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius, var(--fh-radius-md))); --fh-avatar-ratio: 1; }
 
   /* Overlapping stack: at most three faces, then "+N" (avatar-group.css).
    *   <div class="fh-avatars">…avatars… <span class="fh-avatar fh-avatars__more">+4</span></div>

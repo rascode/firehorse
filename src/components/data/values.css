@@ -51,9 +51,10 @@
     min-inline-size: 0;
     max-inline-size: 100%;
     color: var(--fh-color-text);
+    font-family: var(--fh-type-value-family);
     font-size: var(--_text);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-value-weight);
+    letter-spacing: var(--fh-type-value-tracking);
     line-height: var(--fh-leading-snug);
     vertical-align: middle;
   }
@@ -83,16 +84,16 @@
   .fh-value--tabular { font-variant-numeric: tabular-nums; }
 
   .fh-value--mono {
-    font-family: var(--fh-font-mono);
+    font-family: var(--fh-type-figure-family);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-mono);
+    letter-spacing: var(--fh-type-figure-tracking);
   }
 
   .fh-value :is(.fh-num, data, time) { font-variant-numeric: tabular-nums; }
 
   .fh-value :is(.fh-num, .fh-ring, .fh-gauge) {
-    font-family: var(--fh-font-mono);
-    letter-spacing: var(--fh-tracking-mono);
+    font-family: var(--fh-type-figure-family);
+    letter-spacing: var(--fh-type-figure-tracking);
   }
 
   /* Rule 7: empty is a muted em dash, never a blank cell or null. */
@@ -101,10 +102,10 @@
   /* Meta: sublines, chips, helper text, deltas. */
   .fh-value .fh-value__sub {
     color: var(--fh-color-text-muted);
-    font-family: var(--fh-font-sans);
+    font-family: var(--fh-type-meta-family);
     font-size: var(--fh-type-meta);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
     text-transform: none;
     white-space: nowrap;
   }
@@ -113,19 +114,19 @@
   .fh-value abbr.fh-value__sub,
   .fh-value .fh-money__currency,
   .fh-value:is(.fh-value--amount, .fh-value--amount-code, .fh-value--compact, .fh-value--compact-delta, .fh-value--unit, .fh-value--text, .fh-value--ring, .fh-value--meter, .fh-value--duration) .fh-value__sub {
-    font-family: var(--fh-font-mono);
+    font-family: var(--fh-type-label-family);
     font-size: var(--fh-type-label);
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-wide);
-    text-transform: uppercase;
+    font-weight: var(--fh-type-label-weight);
+    letter-spacing: var(--fh-type-label-tracking);
+    text-transform: var(--fh-type-label-case);
   }
 
   .fh-value .fh-ref__key,
   .fh-value__code {
     color: var(--fh-color-text-subtle);
-    font-family: var(--fh-font-mono);
+    font-family: var(--fh-type-label-family);
     font-size: var(--fh-type-label);
-    font-weight: var(--fh-weight-medium);
+    font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-tracking-none);
     text-transform: none;
   }
@@ -141,18 +142,18 @@
   .fh-value > .fh-dot { --fh-dot-size: 0.45em; }
 
   .fh-value .fh-chip {
-    font-family: var(--fh-font-sans);
+    font-family: var(--fh-type-meta-family);
     font-size: var(--fh-type-meta);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
     text-transform: none;
   }
 
   .fh-value .fh-badge {
-    font-family: var(--fh-font-mono);
+    font-family: var(--fh-type-meta-family);
     font-size: var(--fh-type-meta);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-mono);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
   }
 
   .fh-value > .fh-chips { flex-wrap: nowrap; }
@@ -176,8 +177,26 @@
   /* A picker trigger draws its avatar at the value size; its list keeps the picker row size. */
   .fh-value .fh-entity-picker > .fh-entity { --fh-avatar-size: var(--_avatar); }
 
-  .fh-value .fh-avatar[data-kind="person"] { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
-  .fh-value .fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-plate-radius); --fh-avatar-ratio: 1; }
+  .fh-value .fh-avatar[data-kind="person"] { --fh-avatar-radius: var(--fh-avatar-person-radius, var(--fh-radius-pill)); --fh-avatar-ratio: 1; }
+  .fh-value .fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius)); --fh-avatar-ratio: 1; }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) > .fh-entity,
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity-picker > .fh-entity {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    row-gap: var(--fh-gap-bound);
+  }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who > :is(b, small) {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .fh-value--full .fh-entity__stat {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
 
   /* An avatar inside a chip sits at the inline size, tucked into the chip's start. */
   .fh-value .fh-chip > .fh-avatar { margin-inline-start: calc(var(--fh-gap-bound) * -1); }
@@ -197,49 +216,47 @@
   }
 
   .fh-value .fh-entity__who > b {
-    font-family: var(--fh-font-sans);
+    font-family: var(--fh-type-value-family);
     font-size: 1em;
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-name-weight);
+    letter-spacing: var(--fh-type-value-tracking);
   }
 
   .fh-value .fh-entity__who > small {
-    font-family: var(--fh-font-sans);
+    font-family: var(--fh-type-meta-family);
     font-size: var(--fh-type-meta);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
   }
 
   .fh-value .fh-entity__stat > b {
-    font-family: var(--fh-font-mono);
+    font-family: var(--fh-type-figure-family);
     font-size: 1em;
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-mono);
+    font-weight: var(--fh-type-value-weight);
+    letter-spacing: var(--fh-type-figure-tracking);
   }
 
   .fh-value .fh-entity__stat > small {
-    font-family: var(--fh-font-mono);
+    font-family: var(--fh-type-label-family);
     font-size: var(--fh-type-label);
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-wide);
-    text-transform: uppercase;
+    font-weight: var(--fh-type-label-weight);
+    letter-spacing: var(--fh-type-label-tracking);
+    text-transform: var(--fh-type-label-case);
   }
 
   /* —— VAL-4 Money, VAL-6 Number: the change beside the figure is the metric tile's delta —— */
   .fh-value .fh-metric__delta {
-    font-family: var(--fh-font-sans);
+    font-family: var(--fh-type-meta-family);
     font-size: var(--fh-type-meta);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
   }
 
-  .fh-value .fh-field > :is(label, .fh-field__label, legend) { font-size: var(--fh-type-label); }
-
   .fh-value :is(.fh-field__hint, .fh-field__error) {
-    font-family: var(--fh-font-sans);
+    font-family: var(--fh-type-meta-family);
     font-size: var(--fh-type-meta);
-    font-weight: var(--fh-weight-regular);
-    letter-spacing: var(--fh-tracking-body);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
     text-transform: none;
   }
 
@@ -443,25 +460,13 @@
 
   /* Mono values type in mono too. */
   .fh-value--mono :is(.fh-input, .fh-textarea, .fh-value__input) {
-    font-family: var(--fh-font-mono);
-    letter-spacing: var(--fh-tracking-mono);
-  }
-
-  .fh-value :is(.fh-input, .fh-select, .fh-textarea, .fh-value__input, .fh-value__select, option) {
-    font-size: var(--fh-type-value);
-    font-weight: var(--fh-weight-regular);
-  }
-
-  @media (pointer: coarse) {
-    .fh-value :is(.fh-input, .fh-select, .fh-textarea, .fh-value__input, .fh-value__select) {
-      font-size: max(1rem, var(--fh-type-value));
-    }
+    font-family: var(--fh-type-figure-family);
+    letter-spacing: var(--fh-type-figure-tracking);
   }
 
   /* --lg on a control: a step up in text scale and height; a check and a switch scale whole, so the knob still lands. */
   .fh-value--lg :is(.fh-input, .fh-textarea) {
     min-block-size: 3rem;
-    font-size: var(--fh-type-value);
   }
 
   .fh-value--lg .fh-entity-picker { --fh-entity-avatar: var(--fh-avatar-md); }

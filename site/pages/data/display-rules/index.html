@@ -29,42 +29,20 @@
         <p>Rascode approved the grid on 2026-11-14. The <b id="dr-count-new">7</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span> were not in the plan's grid: they fill gaps found while giving all 127 types a shape (text, time of day, 5 to 7 options, secrets, JSON), and were approved with it. Durations and actions, added then too, now come from section 7.</p>
         <p>Use the Dark / Light toggle at the top to check every variant in both modes.</p>
         <h3>Type tiers</h3>
-        <p>Every value renderer uses three type tiers only. Reference samples on the grid: temporal, moment, Card (<code>relative</code>, the string <code>2 hours ago</code>) and temporal, time of day, Cell (<code>time</code>, <code>9:27 AM</code> in the cell column).</p>
-        <div class="fh-table-wrap site-dr__scroll site-dr__tiers">
-          <table class="fh-table">
-            <thead>
-              <tr>
-                <th scope="col">Tier</th>
-                <th scope="col">Size</th>
-                <th scope="col">Face</th>
-                <th scope="col">Weight</th>
-                <th scope="col">Tracking</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Value</th>
-                <td><code>--fh-type-value</code> (<code>--fh-text-small</code>)</td>
-                <td>Words in sans; figures (<code>.fh-num</code>, money, times, counts, IDs) in mono with tabular figures</td>
-                <td>400; entity names and record titles 500</td>
-                <td>Sans −0.01em; mono 0.02em</td>
-              </tr>
-              <tr>
-                <th scope="row">Meta</th>
-                <td><code>--fh-type-meta</code> (<code>--fh-text-caption</code>)</td>
-                <td>Sans, muted colour</td>
-                <td>400</td>
-                <td>−0.01em</td>
-              </tr>
-              <tr>
-                <th scope="row">Label</th>
-                <td><code>--fh-type-label</code> (<code>--fh-text-label</code>)</td>
-                <td>Mono</td>
-                <td>500</td>
-                <td>UI labels uppercase 0.06em; identifiers as written, 0</td>
-              </tr>
-            </tbody>
-          </table>
+        <p>Every value renderer uses three type tiers only. Change a control to set the matching custom property on the page; the grid, form column and tables below follow. Reference samples: <span class="site-dr__type-sample site-dr__type-sample--value">2 hours ago</span>, <span class="site-dr__type-sample site-dr__type-sample--value"><span class="fh-num">9:27 AM</span></span>, <span class="site-dr__type-sample site-dr__type-sample--meta">Owner · Goal Q4</span>, <span class="site-dr__type-sample site-dr__type-sample--label">AMOUNT · GL-814</span>.</p>
+        <div class="site-dr__type-panel" id="dr-type-panel">
+          <div class="site-dr__type-toolbar fh-cluster">
+            <div class="fh-field"><span class="fh-field__label" id="dr-type-scope-label">Scope</span>
+              <nav class="fh-segment fh-segment--mode site-dr__type-scope" id="dr-type-scope" role="group" aria-labelledby="dr-type-scope-label">
+                <button type="button" data-scope="frame" aria-pressed="true">Grid</button>
+                <button type="button" data-scope="root" aria-pressed="false">Whole page</button>
+              </nav>
+            </div>
+            <button type="button" class="fh-button fh-button--sm fh-button--secondary" id="dr-type-reset">Reset</button>
+            <button type="button" class="fh-button fh-button--sm fh-button--secondary" id="dr-type-copy-css">Copy CSS</button>
+            <button type="button" class="fh-button fh-button--sm fh-button--secondary" id="dr-type-copy-json">Copy as theme JSON</button>
+          </div>
+          <div class="site-dr__type-rows" id="dr-type-rows" aria-live="polite"></div>
         </div>
         <p>Avatars: inline 1.375rem, identity 2.25rem; circle for people, rounded square for orgs, agents and records; one hairline; stacks of 3 + N.</p>
         <p>The <b id="dr-count-w2b">7</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="violet">Section 7</span> come from the merged plan (Rascode, 2026-11-14 20:08 ET; the Sheet wins over migration 434): priority as an ordinal ramp, generated code sets, series as the 14th shape, durations and identifier-like numbers as numbers, and the computed button as an action. Status in a table cell is dot and word; chip in record, card and board. The <code>text</code> column is the sixth context: the plain string each value becomes for CSV export, <code>aria-label</code>, copy and search. A secret has none.</p>

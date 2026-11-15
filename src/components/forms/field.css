@@ -36,12 +36,12 @@
       align-items: center;
       gap: var(--fh-gap-related);
       padding: 0;
-      font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-wider);
+      font-family: var(--fh-type-label-family);
+      font-size: var(--fh-type-label);
+      font-weight: var(--fh-type-label-weight);
+      letter-spacing: var(--fh-type-label-tracking);
       line-height: var(--fh-leading-snug);
-      text-transform: uppercase;
+      text-transform: var(--fh-type-label-case);
       color: var(--fh-color-text-muted);
     }
 
@@ -77,9 +77,13 @@
   .fh-field__hint,
   .fh-field__error {
     margin: 0;
-    font-size: var(--fh-text-caption);
+    font-family: var(--fh-type-meta-family);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
     line-height: var(--fh-leading-normal);
     color: var(--fh-color-text-subtle);
+    text-transform: none;
   }
 
   .fh-field__error {
