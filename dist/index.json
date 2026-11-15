@@ -6365,6 +6365,21 @@
           "markupFrom": "group",
           "anchor": "a-metric-spread",
           "demo": true
+        },
+        {
+          "id": "MET-3",
+          "name": "Icon looks",
+          "summary": "The tile's icon sits in the Icon cube (CUB-1.5), the same part as the sidebar's rows, so the two read as one system. Solid is the default; fh-cube--soft is the tint with no frame and fh-cube--outline the etched frame. Set data-fh-cube=\"soft\" or \"outline\" on a row of tiles (or a whole page) and every icon cube inside follows; a modifier on one cube still wins.",
+          "variants": [
+            "MET-3.1",
+            "MET-3.2",
+            "MET-3.3",
+            "MET-3.4"
+          ],
+          "markup": "<div class=\"fh-metrics\">\n<article class=\"fh-metric\" data-tone=\"sky\" data-fh=\"MET-3.1\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--calendar\" aria-hidden=\"true\"></i></span>Solid</p>\n  <p class=\"fh-metric__sub\">Meetings this week</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">12</span></p>\n</article>\n<article class=\"fh-metric\" data-tone=\"violet\" data-fh=\"MET-3.2\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon fh-cube--soft\"><i class=\"fh-icon fh-icon--layers\" aria-hidden=\"true\"></i></span>Soft</p>\n  <p class=\"fh-metric__sub\">Open relays</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">48</span></p>\n</article>\n<article class=\"fh-metric\" data-tone=\"amber\" data-fh=\"MET-3.3\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon fh-cube--outline\"><i class=\"fh-icon fh-icon--shield-check\" aria-hidden=\"true\"></i></span>Outline</p>\n  <p class=\"fh-metric__sub\">Checks waiting</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">3</span></p>\n</article>\n</div>\n<div class=\"fh-metrics\" data-fh-cube=\"outline\" style=\"margin-block-start: var(--fh-gap-grouped)\" data-fh=\"MET-3.4\">\n<article class=\"fh-metric\" data-tone=\"lime\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--dollar-sign\" aria-hidden=\"true\"></i></span>Revenue</p>\n  <p class=\"fh-metric__sub\">Set by the row</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">$48.2K</span></p>\n</article>\n<article class=\"fh-metric\" data-tone=\"teal\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--users\" aria-hidden=\"true\"></i></span>Customers</p>\n  <p class=\"fh-metric__sub\">Set by the row</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">312</span></p>\n</article>\n<article class=\"fh-metric\" data-tone=\"fuchsia\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon fh-cube--solid\"><i class=\"fh-icon fh-icon--target\" aria-hidden=\"true\"></i></span>Goals</p>\n  <p class=\"fh-metric__sub\">Solid on its own</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">7</span></p>\n</article>\n</div>",
+          "markupFrom": "group",
+          "anchor": "a-metric-icon",
+          "demo": true
         }
       ],
       "variants": [
@@ -6834,6 +6849,90 @@
           ],
           "config": {},
           "markup": "<article class=\"fh-metric fh-metric--spread fh-metric--full\" data-tone=\"sky\" data-fh=\"MET-2.8\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--receipt\" aria-hidden=\"true\"></i></span>Invoices this month</p>\n  <p class=\"fh-metric__sub\">Sent from all brands; amounts before card fees</p>\n  <div class=\"fh-metric__figure\"><p class=\"fh-metric__value\"><span class=\"fh-value fh-value--compact-delta fh-value--tabular fh-value--mono\" data-fh=\"VAL-4.5\"><data value=\"6940\" title=\"$6,940.00 USD\">$6.9K</data><span class=\"fh-metric__delta\" data-trend=\"up\" aria-label=\"Up $1.1K\">$1.1K</span></span></p></div>\n  <div class=\"fh-table-wrap\"><table class=\"fh-table fh-table--reflow\" aria-label=\"Invoices this month\" data-fh=\"TBL-1.2\">\n    <thead><tr><th scope=\"col\" data-fh-field=\"inv\" data-semantic=\"external_id\">Invoice</th><th scope=\"col\" data-fh-field=\"cust\" data-semantic=\"short_text\">Customer</th><th scope=\"col\" data-fh-field=\"sent\" data-semantic=\"date\" data-fh-field-json=\"{&quot;display&quot;:{&quot;cell&quot;:&quot;date&quot;}}\">Sent</th><th scope=\"col\" data-fh-field=\"amt\" data-semantic=\"fiat_amount\" data-fh-field-json=\"{&quot;currency&quot;:&quot;USD&quot;}\" class=\"fh-num\">Amount</th><th scope=\"col\" data-fh-field=\"status\" data-fh-field-json=\"{&quot;shape&quot;:&quot;option&quot;,&quot;kind&quot;:&quot;status&quot;,&quot;options&quot;:[{&quot;value&quot;:&quot;paid&quot;,&quot;label&quot;:&quot;Paid&quot;,&quot;state&quot;:&quot;done&quot;},{&quot;value&quot;:&quot;sent&quot;,&quot;label&quot;:&quot;Sent&quot;,&quot;state&quot;:&quot;moving&quot;},{&quot;value&quot;:&quot;overdue&quot;,&quot;label&quot;:&quot;Overdue&quot;,&quot;state&quot;:&quot;failed&quot;},{&quot;value&quot;:&quot;draft&quot;,&quot;label&quot;:&quot;Draft&quot;,&quot;state&quot;:&quot;waiting&quot;}]}\">Status</th></tr></thead>\n    <tbody>\n      <tr><td data-label=\"Invoice\" data-fh-value=\"&quot;INV-1042&quot;\"><span class=\"fh-value fh-value--mono\" data-fh=\"VAL-11.7\">INV-1042</span></td><td data-label=\"Customer\" data-fh-value=\"&quot;Brightline Builders&quot;\"><span class=\"fh-value fh-value--line\" data-fh=\"VAL-11.5\"><span class=\"fh-value__name\">Brightline Builders</span></span></td><td data-label=\"Sent\" data-fh-value=\"&quot;2026-10-30&quot;\"><span class=\"fh-value fh-value--date\" data-fh=\"VAL-7.1\"><time datetime=\"2026-10-30\">Oct 30, 2026</time></span></td><td data-label=\"Amount\" data-fh-value=\"2180\" class=\"fh-num\"><span class=\"fh-value fh-value--amount fh-value--tabular fh-value--mono\" data-fh=\"VAL-4.1\"><data value=\"2180.00\">$2,180</data></span></td><td data-label=\"Status\" data-fh-value=\"&quot;paid&quot;\"><span class=\"fh-value fh-value--dot\" data-tone=\"lime\" data-fh=\"VAL-1.1\"><span class=\"fh-dot\"></span>Paid</span></td></tr>\n      <tr><td data-label=\"Invoice\" data-fh-value=\"&quot;INV-1043&quot;\"><span class=\"fh-value fh-value--mono\" data-fh=\"VAL-11.7\">INV-1043</span></td><td data-label=\"Customer\" data-fh-value=\"&quot;Mesa Homes&quot;\"><span class=\"fh-value fh-value--line\" data-fh=\"VAL-11.5\"><span class=\"fh-value__name\">Mesa Homes</span></span></td><td data-label=\"Sent\" data-fh-value=\"&quot;2026-11-02&quot;\"><span class=\"fh-value fh-value--date\" data-fh=\"VAL-7.1\"><time datetime=\"2026-11-02\">Nov 2, 2026</time></span></td><td data-label=\"Amount\" data-fh-value=\"3420\" class=\"fh-num\"><span class=\"fh-value fh-value--amount fh-value--tabular fh-value--mono\" data-fh=\"VAL-4.1\"><data value=\"3420.00\">$3,420</data></span></td><td data-label=\"Status\" data-fh-value=\"&quot;sent&quot;\"><span class=\"fh-value fh-value--dot\" data-tone=\"sky\" data-fh=\"VAL-1.1\"><span class=\"fh-dot\"></span>Sent</span></td></tr>\n      <tr><td data-label=\"Invoice\" data-fh-value=\"&quot;INV-1044&quot;\"><span class=\"fh-value fh-value--mono\" data-fh=\"VAL-11.7\">INV-1044</span></td><td data-label=\"Customer\" data-fh-value=\"&quot;Harbor &amp; Pine&quot;\"><span class=\"fh-value fh-value--line\" data-fh=\"VAL-11.5\"><span class=\"fh-value__name\">Harbor &amp; Pine</span></span></td><td data-label=\"Sent\" data-fh-value=\"&quot;2026-11-05&quot;\"><span class=\"fh-value fh-value--date\" data-fh=\"VAL-7.1\"><time datetime=\"2026-11-05\">Nov 5, 2026</time></span></td><td data-label=\"Amount\" data-fh-value=\"940\" class=\"fh-num\"><span class=\"fh-value fh-value--amount fh-value--tabular fh-value--mono\" data-fh=\"VAL-4.1\"><data value=\"940.00\">$940</data></span></td><td data-label=\"Status\" data-fh-value=\"&quot;sent&quot;\"><span class=\"fh-value fh-value--dot\" data-tone=\"sky\" data-fh=\"VAL-1.1\"><span class=\"fh-dot\"></span>Sent</span></td></tr>\n      <tr><td data-label=\"Invoice\" data-fh-value=\"&quot;INV-1045&quot;\"><span class=\"fh-value fh-value--mono\" data-fh=\"VAL-11.7\">INV-1045</span></td><td data-label=\"Customer\" data-fh-value=\"&quot;Cobalt Roofing&quot;\"><span class=\"fh-value fh-value--line\" data-fh=\"VAL-11.5\"><span class=\"fh-value__name\">Cobalt Roofing</span></span></td><td data-label=\"Sent\" data-fh-value=\"&quot;2026-10-12&quot;\"><span class=\"fh-value fh-value--date\" data-fh=\"VAL-7.1\"><time datetime=\"2026-10-12\">Oct 12, 2026</time></span></td><td data-label=\"Amount\" data-fh-value=\"400\" class=\"fh-num\"><span class=\"fh-value fh-value--amount fh-value--tabular fh-value--mono\" data-fh=\"VAL-4.1\"><data value=\"400.00\">$400</data></span></td><td data-label=\"Status\" data-fh-value=\"&quot;overdue&quot;\"><span class=\"fh-value fh-value--dot\" data-tone=\"rose\" data-fh=\"VAL-1.1\"><span class=\"fh-dot\"></span>Overdue</span></td></tr>\n    </tbody>\n  </table></div>\n</article>",
+          "tier": "free"
+        },
+        {
+          "id": "MET-3.1",
+          "group": "MET-3",
+          "name": "Solid",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-cube",
+            "fh-cube--icon",
+            "fh-icon",
+            "fh-metric__sub",
+            "fh-metric__value",
+            "fh-value",
+            "fh-value--plain",
+            "fh-value--tabular"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"sky\" data-fh=\"MET-3.1\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--calendar\" aria-hidden=\"true\"></i></span>Solid</p>\n  <p class=\"fh-metric__sub\">Meetings this week</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">12</span></p>\n</article>",
+          "tier": "free"
+        },
+        {
+          "id": "MET-3.2",
+          "group": "MET-3",
+          "name": "Soft",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-cube",
+            "fh-cube--icon",
+            "fh-cube--soft",
+            "fh-icon",
+            "fh-metric__sub",
+            "fh-metric__value",
+            "fh-value",
+            "fh-value--plain",
+            "fh-value--tabular"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"violet\" data-fh=\"MET-3.2\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon fh-cube--soft\"><i class=\"fh-icon fh-icon--layers\" aria-hidden=\"true\"></i></span>Soft</p>\n  <p class=\"fh-metric__sub\">Open relays</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">48</span></p>\n</article>",
+          "tier": "free"
+        },
+        {
+          "id": "MET-3.3",
+          "group": "MET-3",
+          "name": "Outline",
+          "classes": [
+            "fh-metric",
+            "fh-metric__label",
+            "fh-cube",
+            "fh-cube--icon",
+            "fh-cube--outline",
+            "fh-icon",
+            "fh-metric__sub",
+            "fh-metric__value",
+            "fh-value",
+            "fh-value--plain",
+            "fh-value--tabular"
+          ],
+          "config": {},
+          "markup": "<article class=\"fh-metric\" data-tone=\"amber\" data-fh=\"MET-3.3\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon fh-cube--outline\"><i class=\"fh-icon fh-icon--shield-check\" aria-hidden=\"true\"></i></span>Outline</p>\n  <p class=\"fh-metric__sub\">Checks waiting</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">3</span></p>\n</article>",
+          "tier": "free"
+        },
+        {
+          "id": "MET-3.4",
+          "group": "MET-3",
+          "name": "Row look",
+          "classes": [
+            "fh-metrics",
+            "fh-metric",
+            "fh-metric__label",
+            "fh-cube",
+            "fh-cube--icon",
+            "fh-icon",
+            "fh-metric__sub",
+            "fh-metric__value",
+            "fh-value",
+            "fh-value--plain",
+            "fh-value--tabular",
+            "fh-cube--solid"
+          ],
+          "config": {},
+          "markup": "<div class=\"fh-metrics\" data-fh-cube=\"outline\" style=\"margin-block-start: var(--fh-gap-grouped)\" data-fh=\"MET-3.4\">\n<article class=\"fh-metric\" data-tone=\"lime\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--dollar-sign\" aria-hidden=\"true\"></i></span>Revenue</p>\n  <p class=\"fh-metric__sub\">Set by the row</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">$48.2K</span></p>\n</article>\n<article class=\"fh-metric\" data-tone=\"teal\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon\"><i class=\"fh-icon fh-icon--users\" aria-hidden=\"true\"></i></span>Customers</p>\n  <p class=\"fh-metric__sub\">Set by the row</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">312</span></p>\n</article>\n<article class=\"fh-metric\" data-tone=\"fuchsia\">\n  <p class=\"fh-metric__label\"><span class=\"fh-cube fh-cube--icon fh-cube--solid\"><i class=\"fh-icon fh-icon--target\" aria-hidden=\"true\"></i></span>Goals</p>\n  <p class=\"fh-metric__sub\">Solid on its own</p>\n  <p class=\"fh-metric__value\"><span class=\"fh-value fh-value--plain fh-value--tabular\" data-fh=\"VAL-6.1\">7</span></p>\n</article>\n</div>",
           "tier": "free"
         }
       ],

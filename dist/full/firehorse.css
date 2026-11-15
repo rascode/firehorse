@@ -7077,7 +7077,7 @@
     display: grid;
 
     & > div {
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: baseline;
       gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       min-inline-size: 0;
@@ -7089,6 +7089,7 @@
     }
 
     & dt {
+      flex: 0 0 var(--fh-record-table-label, var(--fh-kv-label, 11rem));
       align-items: center;
       gap: var(--fh-gap-bound);
       color: var(--fh-color-text-muted);
@@ -7096,7 +7097,6 @@
       font-size: var(--fh-text-label);
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
-      flex: none;
       display: inline-flex;
     }
 
@@ -7110,14 +7110,10 @@
       color: var(--fh-color-text);
       font-size: var(--fh-text-small);
       font-variant-numeric: tabular-nums;
-      text-align: end;
+      text-align: start;
       text-wrap: pretty;
       flex: 12ch;
       margin: 0;
-    }
-
-    & dd > .fh-value:not(.fh-value--field, .fh-value--full, .fh-value--prose, .fh-value--file-row, .fh-value--code-block) {
-      justify-content: flex-end;
     }
 
     & dd:empty:before {

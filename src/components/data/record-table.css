@@ -20,7 +20,7 @@
  *   fh-record-table--stacked  TBL-3.5  the label over its value in a narrow slot, beside it from 28rem
  * A row narrower than 18rem stacks in Read, Fields and Mixed: the value goes under its label, flush left.
  * Row spacing (TBL-4.1) comes from data-fh-rows on the page (--fh-row-pad), as for every table.
- * Knobs: --fh-record-table-label (the label column in Fields and Stacked, 11rem), --fh-kv-label (its old name).
+ * Knobs: --fh-record-table-label (the label column, 11rem), --fh-kv-label (its old name).
  */
 @layer fh.components {
   .fh-record-table,
@@ -28,7 +28,8 @@
   .fh-review,
   .fh-dl { margin: 0; }
 
-  /* —— Read, Fields and Mixed: label left, value right, on etched rules —— */
+  /* —— Read, Fields and Mixed: the label, then the value just after it in one column, on etched rules (values align
+   * left like every other value, Rascode 2026-11-15) —— */
   :is(.fh-record-table--read, .fh-record-table--fields, .fh-record-table--mixed, .fh-kv) {
     --_gap: var(--fh-gap-sectioned);
 
@@ -41,7 +42,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: var(--fh-gap-bound) var(--fh-gap-grouped-wide);
       min-inline-size: 0;
       padding-block: var(--fh-row-pad, var(--fh-inset-control));
@@ -52,7 +53,7 @@
 
     & dt {
       display: inline-flex;
-      flex: none;
+      flex: 0 0 var(--fh-record-table-label, var(--fh-kv-label, 11rem));
       align-items: center;
       gap: var(--fh-gap-bound);
       color: var(--fh-color-text-muted);
@@ -73,12 +74,10 @@
       color: var(--fh-color-text);
       font-size: var(--fh-text-small);
       font-variant-numeric: tabular-nums;
-      text-align: end;
+      text-align: start;
       text-wrap: pretty;
     }
 
-    /* A Values part sits at the end of its row, as plain text did. */
-    & dd > .fh-value:not(.fh-value--field, .fh-value--full, .fh-value--prose, .fh-value--file-row, .fh-value--code-block) { justify-content: flex-end; }
     & dd:empty::before { content: "—"; color: var(--fh-color-text-subtle); }
 
     /* Restricted room: the value sits under its label, flush left. */

@@ -79,7 +79,7 @@
 | `TAG` | Tag field | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
 | `DTB` | Datatable | Data | 1 Datatable (1) | [open](https://firehorse.rascode.dev/data/datatable/) |
 | `TBL` | Table | Table | 1 Table (1) · 2 Caption head (1) · 3 Record table (4) · 4 Row spacing (1) | [open](https://firehorse.rascode.dev/data/table/) |
-| `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
+| `MET` | Metric tiles | Metrics | 1 Metric tile (11) · 2 Spread tiles (8) · 3 Icon looks (4) | [open](https://firehorse.rascode.dev/data/metric-tiles/) |
 | `THM` | Brand theme file | Theming | — | [open](https://firehorse.rascode.dev/theming/brand-theme-file/) |
 | `THS` | Theme select | Themes | 1 Select (1) · 2 Colour menu (1) | [open](https://firehorse.rascode.dev/theming/theme-select/) |
 | `TML` | Timelines | Timelines | 1 Timelines (4) | [open](https://firehorse.rascode.dev/pro/project-management/#TML) |
@@ -2976,6 +2976,62 @@ The flagship tile: a bold title and its line at the top, a wide gap, the figure 
     </tbody>
   </table></div>
 </article>
+```
+
+### MET-3 · Icon looks
+
+The tile's icon sits in the Icon cube (CUB-1.5), the same part as the sidebar's rows, so the two read as one system. Solid is the default; fh-cube--soft is the tint with no frame and fh-cube--outline the etched frame. Set data-fh-cube="soft" or "outline" on a row of tiles (or a whole page) and every icon cube inside follows; a modifier on one cube still wins.
+
+#### MET-3.1 · Solid
+
+```html
+<article class="fh-metric" data-tone="sky" data-fh="MET-3.1">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>Solid</p>
+  <p class="fh-metric__sub">Meetings this week</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">12</span></p>
+</article>
+```
+
+#### MET-3.2 · Soft
+
+```html
+<article class="fh-metric" data-tone="violet" data-fh="MET-3.2">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon fh-cube--soft"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span>Soft</p>
+  <p class="fh-metric__sub">Open relays</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">48</span></p>
+</article>
+```
+
+#### MET-3.3 · Outline
+
+```html
+<article class="fh-metric" data-tone="amber" data-fh="MET-3.3">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon fh-cube--outline"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span>Outline</p>
+  <p class="fh-metric__sub">Checks waiting</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">3</span></p>
+</article>
+```
+
+#### MET-3.4 · Row look
+
+```html
+<div class="fh-metrics" data-fh-cube="outline" style="margin-block-start: var(--fh-gap-grouped)" data-fh="MET-3.4">
+<article class="fh-metric" data-tone="lime">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i></span>Revenue</p>
+  <p class="fh-metric__sub">Set by the row</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">$48.2K</span></p>
+</article>
+<article class="fh-metric" data-tone="teal">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>Customers</p>
+  <p class="fh-metric__sub">Set by the row</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">312</span></p>
+</article>
+<article class="fh-metric" data-tone="fuchsia">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon fh-cube--solid"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>Goals</p>
+  <p class="fh-metric__sub">Solid on its own</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">7</span></p>
+</article>
+</div>
 ```
 
 ## THM · Brand theme file

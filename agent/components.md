@@ -2458,6 +2458,46 @@ Drawn from data by `metrics.js`: the figure, its delta, a ratio and the people c
     </tbody>
   </table></div>
 </article>
+
+<!-- MET-3.1 · Icon looks › Solid -->
+<article class="fh-metric" data-tone="sky" data-fh="MET-3.1">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>Solid</p>
+  <p class="fh-metric__sub">Meetings this week</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">12</span></p>
+</article>
+
+<!-- MET-3.2 · Icon looks › Soft -->
+<article class="fh-metric" data-tone="violet" data-fh="MET-3.2">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon fh-cube--soft"><i class="fh-icon fh-icon--layers" aria-hidden="true"></i></span>Soft</p>
+  <p class="fh-metric__sub">Open relays</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">48</span></p>
+</article>
+
+<!-- MET-3.3 · Icon looks › Outline -->
+<article class="fh-metric" data-tone="amber" data-fh="MET-3.3">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon fh-cube--outline"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span>Outline</p>
+  <p class="fh-metric__sub">Checks waiting</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">3</span></p>
+</article>
+
+<!-- MET-3.4 · Icon looks › Row look -->
+<div class="fh-metrics" data-fh-cube="outline" style="margin-block-start: var(--fh-gap-grouped)" data-fh="MET-3.4">
+<article class="fh-metric" data-tone="lime">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--dollar-sign" aria-hidden="true"></i></span>Revenue</p>
+  <p class="fh-metric__sub">Set by the row</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">$48.2K</span></p>
+</article>
+<article class="fh-metric" data-tone="teal">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>Customers</p>
+  <p class="fh-metric__sub">Set by the row</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">312</span></p>
+</article>
+<article class="fh-metric" data-tone="fuchsia">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon fh-cube--solid"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>Goals</p>
+  <p class="fh-metric__sub">Solid on its own</p>
+  <p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">7</span></p>
+</article>
+</div>
 ```
 
 ### THM · Brand theme file
