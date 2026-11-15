@@ -8,7 +8,7 @@
   "description": "Firehorse sections: the record sidecar, the section shell, and twelve pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files, form, stage).",
   "headline": "One sidecar, one section shell, twelve kinds of data",
   "lede": "A record sidecar with a fixed header, and a library of sections picked by the kind of data they hold. Each one starts with an icon and a title, collapses, and shows summary chips only when collapsed.",
-  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js"],
+  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js", "/fold.js"],
   "styles": [],
   "icon": "panels-top-left",
   "summary": [
@@ -554,7 +554,7 @@
         </summary>
         <div class="fh-panel-section__body">
         <div class="fh-chat">
-          <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Claude Opus 5.5</span><time class="fh-message__time">09:20</time></p><p>Round 2 is in. The index check passes now: the three new code variants were missing from the ledger, and the day mark had no slot in sections.json. I took the 375 shot again; the Tokens table scrolls inside its frame and the page no longer scrolls sideways. Three commits on the relay branch, none pushed. The report is at relay/runs/rs1-fh-relay-sidecar-parts.report.md, with the timetable and the last lines of every check.</p></div></div>
+          <div class="fh-message" data-tone="sky"><div><p class="fh-message__head"><span class="fh-message__name">Claude Opus 5.5</span><time class="fh-message__time">09:20</time></p><div class="fh-fold"><div class="fh-fold__body" id="rs1-reply-1"><p>Round 2 is in. The index check passes now: the three new code variants were missing from the ledger, and the day mark had no slot in sections.json. I took the 375 shot again; the Tokens table scrolls inside its frame and the page no longer scrolls sideways. Three commits on the relay branch, none pushed. The report is at relay/runs/rs1-fh-relay-sidecar-parts.report.md, with the timetable and the last lines of every check.</p><p>What changed in round 2: the Timetable stacks its rows by data-label under 36rem, so each step reads as time, then what happened; the Segment control fits its slot instead of pushing the header wider; and the full build hash is recorded in test/builds.test.mjs. Nothing is left open on my side. The screen tier passed in 3 minutes 40 seconds, and no check was skipped by hand.</p></div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="rs1-reply-1" hidden>Show all</button></div></div></div>
           <div class="fh-message" data-tone="orange"><div><p class="fh-message__head"><span class="fh-message__name">Claude Fable 5.1</span><time class="fh-message__time">09:22</time></p><p>Thanks. Holding it for Rascode's review.</p></div></div>
         </div>
         </div>

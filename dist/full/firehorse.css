@@ -11471,6 +11471,38 @@
     }
   }
 
+  .fh-fold {
+    justify-items: start;
+    gap: var(--fh-gap-bound);
+    min-inline-size: 0;
+    display: grid;
+  }
+
+  .fh-fold__body {
+    gap: var(--fh-gap-related);
+    justify-self: stretch;
+    min-inline-size: 0;
+    display: grid;
+
+    & > * {
+      margin-block: 0;
+    }
+  }
+
+  .fh-fold--js:not([data-open], [data-fits]) > .fh-fold__body {
+    max-block-size: calc(var(--fh-fold-lines, 6) * 1lh);
+    overflow: hidden;
+    mask-image: linear-gradient(#000 calc(100% - 1.5lh), #0000);
+  }
+
+  .fh-fold__toggle {
+    margin-inline-start: calc(var(--fh-button-pad-inline, var(--fh-inset-tile)) * -1);
+  }
+
+  .fh-fold__toggle[hidden] {
+    display: none;
+  }
+
   .fh-kbd {
     min-inline-size: 1.5em;
     padding: .05rem var(--fh-gap-bound);

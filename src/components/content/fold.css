@@ -1,0 +1,54 @@
+/*
+ * Firehorse — Text fold (FOL)
+ * components/content · layer fh.components · docs /components/content/#FOL
+ */
+
+@layer fh.components {
+  /* —— Text fold ——
+   * Long text (a chat message, a long reply, a note) folds to a few lines with a
+   * Show all / Show less control. Without fold.js it is plain full text: the clamp
+   * only applies once the script sets .fh-fold--js, and the toggle stays hidden.
+   *   <div class="fh-fold" style="--fh-fold-lines: 6">
+   *     <div class="fh-fold__body" id="reply-1"><p>…</p></div>
+   *     <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button"
+   *       aria-expanded="false" aria-controls="reply-1" hidden>Show all</button>
+   *   </div>
+   * Open: data-open on .fh-fold (fold.js sets it, with aria-expanded and the label).
+   * Short text: fold.js sets data-fits and keeps the toggle hidden. */
+  .fh-fold {
+    display: grid;
+    justify-items: start;
+    gap: var(--fh-gap-bound);
+    min-inline-size: 0;
+  }
+
+  /* Paragraphs space by the family gap, so a fold reads the same in a bubble
+   * (which zeroes p margins) and on a page. */
+  .fh-fold__body {
+    display: grid;
+    gap: var(--fh-gap-related);
+    justify-self: stretch;
+    min-inline-size: 0;
+
+    & > * { margin-block: 0; }
+  }
+
+  /* Closed: N lines of the body's own line height, the last line fading out. A mask,
+   * not an overlay, so the fade is always the surface the fold sits on (a bubble,
+   * a card, a self message in the primary colour). */
+  .fh-fold--js:not([data-open], [data-fits]) > .fh-fold__body {
+    max-block-size: calc(var(--fh-fold-lines, 6) * 1lh);
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, black calc(100% - 1.5lh), transparent);
+  }
+
+  /* The ghost small button (BTN) already draws the toggle; its label lines up with the
+   * text, the button's own inline padding (--fh-button-pad-inline) pulled back. */
+  .fh-fold__toggle {
+    margin-inline-start: calc(var(--fh-button-pad-inline, var(--fh-inset-tile)) * -1);
+  }
+
+  .fh-fold__toggle[hidden] {
+    display: none;
+  }
+}

@@ -72,6 +72,7 @@ import { tokens } from "@rascode/firehorse/tokens";
 | `dist/themes.json` | Theme list with labels, descriptions, swatches and decisions |
 | `dist/themes/rascode.css` | Rascode brand layer (Inter, Geist Mono, Caveat) |
 | `dist/tokens.json` · `tokens.js` · `tokens.d.ts` | Every token with value, type, tier and group |
+| `dist/fold.js` · `fold.d.ts` | Optional text fold script (`@rascode/firehorse/fold`, FOL): folds long text to a few lines with Show all / Show less; without it the text shows in full |
 | `src/` | Source, one file per concern, native CSS nesting |
 | `agent/` | Agent contract and canonical component markup |
 | `site/` | The firehorse.rascode.dev documentation site |
