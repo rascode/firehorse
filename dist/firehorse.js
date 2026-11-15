@@ -1344,7 +1344,8 @@ ready(() => {
     handle.setAttribute("aria-valuemin", px(minW));
     handle.setAttribute("aria-valuemax", px(maxW));
     const side = nav.getAttribute("data-fh-side");
-    const w = side === "rail" ? snapW : readW(nav);
+    const railW = parseFloat(getComputedStyle(nav).getPropertyValue("--fh-sidebar-rail")) || 3.5;
+    const w = side === "rail" ? railW : readW(nav);
     handle.setAttribute("aria-valuenow", px(w));
   };
 
@@ -1399,6 +1400,11 @@ ready(() => {
 
     const preview = (remW) => {
       nav.setAttribute("data-fh-resizing", "");
+      // The rail stays locked until the drag passes the snap point (same as the React Sidebar).
+      if (nav.getAttribute("data-fh-side") === "rail") {
+        if (remW < snapW) return;
+        setSide(nav, "open", clampW(remW));
+      }
       if (remW < snapW) {
         nav.setAttribute("data-fh-snap", "");
         writeW(nav, remW);
@@ -1424,6 +1430,10 @@ ready(() => {
       if (!dragging) return;
       dragging = false;
       handle.releasePointerCapture(e.pointerId);
+      if (nav.getAttribute("data-fh-side") === "rail") {
+        nav.removeAttribute("data-fh-resizing");
+        return;
+      }
       const w = readW(nav);
       finish(w);
     };
@@ -1433,10 +1443,6 @@ ready(() => {
       dragging = true;
       startX = e.clientX;
       startW = nav.getAttribute("data-fh-side") === "rail" ? snapW : readW(nav);
-      if (nav.getAttribute("data-fh-side") === "rail") {
-        setSide(nav, "open", Math.max(minW, lastOpenW));
-        startW = readW(nav);
-      }
       handle.setPointerCapture(e.pointerId);
       e.preventDefault();
     });
