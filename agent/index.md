@@ -870,7 +870,8 @@ Classes: `fh-backdrop` `fh-field` `fh-field__label` `fh-range` `fh-backdrop--fro
 #### BKD-2.1 · Frost line
 
 ```html
-<div style="position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-lg); background: url(/img/backdrop/firehorse-horse.webp) center 30% / cover">
+<div style="position: relative; overflow: hidden; contain: paint; min-block-size: 16rem; margin-block-start: var(--fh-space-6); border-radius: var(--fh-radius-sm); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch)">
+  <div style="position: absolute; inset: 0; background-color: var(--fh-color-text); mask: url(/img/backdrop/firehorse-horse.webp) center 30% / cover no-repeat" aria-hidden="true"></div>
   <div class="fh-backdrop fh-backdrop--frost" style="--fh-backdrop-frost-from: 55%" aria-hidden="true" data-fh="BKD-2.1"></div>
 </div>
 ```
@@ -881,10 +882,10 @@ Classes: `fh-backdrop` `fh-field` `fh-field__label` `fh-range` `fh-backdrop--fro
 
 ```html
 <div class="fh-grid" data-cols="2" style="--fh-grid-min: 10rem; --fh-gap: var(--fh-space-4); position: relative; z-index: 1; margin-block-start: var(--fh-space-6)">
-  <div data-fh-scheme="light" style="position: relative; overflow: hidden; contain: paint; min-block-size: 11rem; border-radius: var(--fh-radius-lg); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft, var(--fh-color-etch))">
+  <div data-fh-scheme="light" style="position: relative; overflow: hidden; contain: paint; min-block-size: 11rem; border-radius: var(--fh-radius-sm); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" style="position: absolute" aria-hidden="true" data-fh="BKD-3.1"></div>
   </div>
-  <div data-fh-scheme="dark" style="position: relative; overflow: hidden; contain: paint; min-block-size: 11rem; border-radius: var(--fh-radius-lg); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft, var(--fh-color-etch))">
+  <div data-fh-scheme="dark" style="position: relative; overflow: hidden; contain: paint; min-block-size: 11rem; border-radius: var(--fh-radius-sm); border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" style="position: absolute" aria-hidden="true" data-fh="BKD-3.1"></div>
   </div>
 </div>

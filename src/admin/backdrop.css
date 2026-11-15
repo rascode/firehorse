@@ -9,7 +9,7 @@
   .fh-app:has(> .fh-backdrop) {
     --_f: clamp(0, var(--fh-frost, 0.6), 1);
     --fh-frost-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
-    --fh-frost-filter: blur(calc(var(--_f) * 32px)) saturate(calc(1 + var(--_f) * 0.4));
+    --fh-frost-filter: blur(calc(var(--_f) * var(--fh-blur-frost))) saturate(calc(1 + var(--_f) * 0.4));
   }
 
   .fh-app:has(> .fh-backdrop) {
@@ -24,7 +24,7 @@
     & :is(.fh-app__side, .fh-section-card, .fh-table-wrap, .fh-dt, .fh-card, .fh-accordion, .fh-empty, .fh-stats, .fh-overview, .fh-code,
           .fh-metric, .fh-cube-card, .fh-quick, .fh-check-card, .fh-tracker__log, .fh-entity-picker > .fh-entity, .fh-cube-cards--strip) {
       background-color: var(--fh-frost-fill, color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost, 0.6) * 75%), transparent));
-      backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, 0.6) * 32px)) saturate(calc(1 + var(--fh-frost, 0.6) * 0.4)));
+      backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, 0.6) * var(--fh-blur-frost))) saturate(calc(1 + var(--fh-frost, 0.6) * 0.4)));
     }
 
     & .fh-app__bar { background-color: var(--fh-frost-fill, color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost, 0.6) * 75%), transparent)); }

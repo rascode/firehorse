@@ -863,6 +863,36 @@ export const tokens = {
     "tier": "primitives",
     "group": "blur"
   },
+  "--fh-blur-backdrop": {
+    "$value": "48px",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "blur"
+  },
+  "--fh-blur-frost": {
+    "$value": "32px",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "blur"
+  },
+  "--fh-opacity-faint": {
+    "$value": "0.06",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "opacity"
+  },
+  "--fh-blueprint-major": {
+    "$value": "120px",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "blueprint"
+  },
+  "--fh-blueprint-minor": {
+    "$value": "24px",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "blueprint"
+  },
   "--fh-frost": {
     "$value": "0.6",
     "$type": "dimension",
@@ -1594,6 +1624,42 @@ export const tokens = {
     "$type": "dimension",
     "tier": "semantic",
     "group": "focus"
+  },
+  "--fh-wash-tone-1": {
+    "$value": "var(--fh-tone-sky)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "wash"
+  },
+  "--fh-wash-tone-2": {
+    "$value": "var(--fh-tone-violet)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "wash"
+  },
+  "--fh-wash-tone-3": {
+    "$value": "var(--fh-tone-teal)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "wash"
+  },
+  "--fh-wash-tone-4": {
+    "$value": "var(--fh-tone-amber)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "wash"
+  },
+  "--fh-blueprint-ink": {
+    "$value": "light-dark(var(--fh-tone-sky), var(--fh-color-text))",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "blueprint"
+  },
+  "--fh-blueprint-ground": {
+    "$value": "light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky)))",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "blueprint"
   },
   "--fh-gap-bound": {
     "$value": "var(--fh-space-1)",

@@ -239,6 +239,11 @@
     --fh-shadow-edge: 0 0 transparent;
     --fh-shadow-elevated: 0 18px 40px #00000073;
     --fh-blur-chrome: 10px;
+    --fh-blur-backdrop: 48px;
+    --fh-blur-frost: 32px;
+    --fh-opacity-faint: .06;
+    --fh-blueprint-major: 120px;
+    --fh-blueprint-minor: 24px;
     --fh-frost: .6;
     --fh-frost-panel-f: clamp(0, var(--fh-frost, .45), 1);
     --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
@@ -376,6 +381,15 @@
     --fh-color-on-tone: light-dark(var(--fh-gray-0), var(--fh-gray-950));
     --fh-focus-width: 2px;
     --fh-focus-offset: 2px;
+  }
+
+  :root, [data-fh-theme], [data-fh-scheme], [data-fh-surface] {
+    --fh-wash-tone-1: var(--fh-tone-sky);
+    --fh-wash-tone-2: var(--fh-tone-violet);
+    --fh-wash-tone-3: var(--fh-tone-teal);
+    --fh-wash-tone-4: var(--fh-tone-amber);
+    --fh-blueprint-ink: light-dark(var(--fh-tone-sky), var(--fh-color-text));
+    --fh-blueprint-ground: light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky)));
   }
 
   :root, [data-fh-density] {
@@ -15054,6 +15068,16 @@
 
   .fh-backdrop {
     --_k: var(--fh-backdrop-strength, 1);
+    --_t1: var(--fh-backdrop-tone-1, var(--fh-wash-tone-1));
+    --_t2: var(--fh-backdrop-tone-2, var(--fh-wash-tone-2));
+    --_t3: var(--fh-backdrop-tone-3, var(--fh-wash-tone-3));
+    --_t4: var(--fh-backdrop-tone-4, var(--fh-wash-tone-4));
+    --_blur: var(--fh-backdrop-blur, var(--fh-blur-backdrop));
+    --_art-op: var(--fh-backdrop-art-opacity, var(--fh-opacity-faint));
+    --_ink: var(--fh-backdrop-ink, var(--fh-blueprint-ink));
+    --_cell: var(--fh-backdrop-grid, var(--fh-blueprint-major));
+    --_cell-min: var(--fh-backdrop-grid-minor, var(--fh-blueprint-minor));
+    --_line: var(--fh-backdrop-line, var(--fh-border-thin));
     z-index: 0;
     pointer-events: none;
     background-color: var(--fh-color-canvas);
@@ -15068,27 +15092,27 @@
     }
 
     &:before {
-      background: radial-gradient(40% 45% at 12% 18%, color-mix(in oklab, var(--fh-tone-sky) calc(var(--_k) * 22%), transparent), transparent 70%),
-        radial-gradient(35% 40% at 88% 12%, color-mix(in oklab, var(--fh-tone-violet) calc(var(--_k) * 18%), transparent), transparent 70%),
-        radial-gradient(45% 40% at 78% 86%, color-mix(in oklab, var(--fh-tone-teal) calc(var(--_k) * 16%), transparent), transparent 70%),
-        radial-gradient(30% 35% at 22% 92%, color-mix(in oklab, var(--fh-tone-amber) calc(var(--_k) * 12%), transparent), transparent 70%);
-      filter: blur(48px);
+      background: radial-gradient(40% 45% at 12% 18%, color-mix(in oklab, var(--_t1) calc(var(--_k) * 22%), transparent), transparent 70%),
+        radial-gradient(35% 40% at 88% 12%, color-mix(in oklab, var(--_t2) calc(var(--_k) * 18%), transparent), transparent 70%),
+        radial-gradient(45% 40% at 78% 86%, color-mix(in oklab, var(--_t3) calc(var(--_k) * 16%), transparent), transparent 70%),
+        radial-gradient(30% 35% at 22% 92%, color-mix(in oklab, var(--_t4) calc(var(--_k) * 12%), transparent), transparent 70%);
+      filter: blur(var(--_blur));
     }
 
     &:after {
       background-color: var(--fh-color-text);
       mask: var(--fh-backdrop-art, url("art/etch-contours.svg")) center / cover no-repeat;
-      opacity: .06;
+      opacity: var(--_art-op);
     }
   }
 
   .fh-frost {
     --_f: clamp(0, var(--fh-frost, .6), 1);
     --fh-frost-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
-    --fh-frost-filter: blur(calc(var(--_f) * 32px)) saturate(calc(1 + var(--_f) * .4));
+    --fh-frost-filter: blur(calc(var(--_f) * var(--fh-blur-frost))) saturate(calc(1 + var(--_f) * .4));
     background-color: var(--fh-frost-fill, color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost, .6) * 75%), transparent));
-    -webkit-backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, .6) * 32px)) saturate(calc(1 + var(--fh-frost, .6) * .4)));
-    backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, .6) * 32px)) saturate(calc(1 + var(--fh-frost, .6) * .4)));
+    -webkit-backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, .6) * var(--fh-blur-frost))) saturate(calc(1 + var(--fh-frost, .6) * .4)));
+    backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, .6) * var(--fh-blur-frost))) saturate(calc(1 + var(--fh-frost, .6) * .4)));
   }
 
   .fh-backdrop--frost {
@@ -15106,19 +15130,18 @@
   }
 
   .fh-backdrop[data-fh-backdrop="blueprint"] {
-    --_bp-ink: light-dark(var(--fh-tone-sky), var(--fh-color-text));
-    --_maj: color-mix(in oklab, var(--_bp-ink) calc(26% * var(--_k)), transparent);
-    --_min: color-mix(in oklab, var(--_bp-ink) calc(11% * var(--_k)), transparent);
-    --_reg: color-mix(in oklab, var(--_bp-ink) calc(18% * var(--_k)), transparent);
-    background-color: light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky)));
-    background-image: linear-gradient(var(--_reg) 1px, transparent 1px),
-      linear-gradient(90deg, var(--_reg) 1px, transparent 1px),
-      linear-gradient(var(--_maj) 1px, transparent 1px),
-      linear-gradient(90deg, var(--_maj) 1px, transparent 1px),
-      linear-gradient(var(--_min) 1px, transparent 1px),
-      linear-gradient(90deg, var(--_min) 1px, transparent 1px);
-    background-position: 0 59.5px, 59.5px 0, 0 0, 0 0, 0 0, 0 0;
-    background-size: 120px 120px, 120px 120px, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+    --_maj: color-mix(in oklab, var(--_ink) calc(26% * var(--_k)), transparent);
+    --_min: color-mix(in oklab, var(--_ink) calc(11% * var(--_k)), transparent);
+    --_reg: color-mix(in oklab, var(--_ink) calc(18% * var(--_k)), transparent);
+    background-color: var(--fh-blueprint-ground);
+    background-image: linear-gradient(var(--_reg) var(--_line), transparent var(--_line)),
+      linear-gradient(90deg, var(--_reg) var(--_line), transparent var(--_line)),
+      linear-gradient(var(--_maj) var(--_line), transparent var(--_line)),
+      linear-gradient(90deg, var(--_maj) var(--_line), transparent var(--_line)),
+      linear-gradient(var(--_min) var(--_line), transparent var(--_line)),
+      linear-gradient(90deg, var(--_min) var(--_line), transparent var(--_line));
+    background-position: 0 calc(var(--_cell) / 2 - var(--_line) / 2), calc(var(--_cell) / 2 - var(--_line) / 2) 0, 0 0, 0 0, 0 0, 0 0;
+    background-size: var(--_cell) var(--_cell), var(--_cell) var(--_cell), var(--_cell) var(--_cell), var(--_cell) var(--_cell), var(--_cell-min) var(--_cell-min), var(--_cell-min) var(--_cell-min);
     mask-image: radial-gradient(130% 120% at 50% 45%, #000 58%, #0000 100%);
 
     &:before, &:after {

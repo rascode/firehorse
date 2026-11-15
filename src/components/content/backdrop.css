@@ -15,10 +15,26 @@
    * enough to read text over. It is fixed to the viewport and sits under
    * everything; put it first in the page or the app.
    *   <div class="fh-backdrop" aria-hidden="true"></div>
-   * Knobs: --fh-backdrop-strength (how much tone shows, 1), --fh-backdrop-art
-   * (the line art; none to drop it). */
+   * One set of values for every backdrop, set once on .fh-backdrop:
+   * --fh-backdrop-strength (how much tone or grid shows, 1), --fh-backdrop-tone-1..4
+   * (the four tone fields, top left, top right, bottom right, bottom left; --fh-wash-tone-1..4:
+   * sky, violet, teal, amber), --fh-backdrop-blur (how soft the fields are, --fh-blur-backdrop),
+   * --fh-backdrop-art (the line art; none to drop it), --fh-backdrop-art-opacity (how faint,
+   * --fh-opacity-faint), --fh-backdrop-ink (the Blueprint's lines, --fh-blueprint-ink),
+   * --fh-backdrop-grid and --fh-backdrop-grid-minor (the Blueprint's cells, --fh-blueprint-major
+   * and --fh-blueprint-minor), --fh-backdrop-line (the Blueprint's line width, border-thin). */
   .fh-backdrop {
     --_k: var(--fh-backdrop-strength, 1);
+    --_t1: var(--fh-backdrop-tone-1, var(--fh-wash-tone-1));
+    --_t2: var(--fh-backdrop-tone-2, var(--fh-wash-tone-2));
+    --_t3: var(--fh-backdrop-tone-3, var(--fh-wash-tone-3));
+    --_t4: var(--fh-backdrop-tone-4, var(--fh-wash-tone-4));
+    --_blur: var(--fh-backdrop-blur, var(--fh-blur-backdrop));
+    --_art-op: var(--fh-backdrop-art-opacity, var(--fh-opacity-faint));
+    --_ink: var(--fh-backdrop-ink, var(--fh-blueprint-ink));
+    --_cell: var(--fh-backdrop-grid, var(--fh-blueprint-major));
+    --_cell-min: var(--fh-backdrop-grid-minor, var(--fh-blueprint-minor));
+    --_line: var(--fh-backdrop-line, var(--fh-border-thin));
     position: fixed;
     inset: 0;
     z-index: 0;
@@ -36,18 +52,18 @@
     /* Tone fields, blurred so they read as light, not shapes. */
     &::before {
       background:
-        radial-gradient(40% 45% at 12% 18%, color-mix(in oklab, var(--fh-tone-sky) calc(var(--_k) * 22%), transparent), transparent 70%),
-        radial-gradient(35% 40% at 88% 12%, color-mix(in oklab, var(--fh-tone-violet) calc(var(--_k) * 18%), transparent), transparent 70%),
-        radial-gradient(45% 40% at 78% 86%, color-mix(in oklab, var(--fh-tone-teal) calc(var(--_k) * 16%), transparent), transparent 70%),
-        radial-gradient(30% 35% at 22% 92%, color-mix(in oklab, var(--fh-tone-amber) calc(var(--_k) * 12%), transparent), transparent 70%);
-      filter: blur(48px);
+        radial-gradient(40% 45% at 12% 18%, color-mix(in oklab, var(--_t1) calc(var(--_k) * 22%), transparent), transparent 70%),
+        radial-gradient(35% 40% at 88% 12%, color-mix(in oklab, var(--_t2) calc(var(--_k) * 18%), transparent), transparent 70%),
+        radial-gradient(45% 40% at 78% 86%, color-mix(in oklab, var(--_t3) calc(var(--_k) * 16%), transparent), transparent 70%),
+        radial-gradient(30% 35% at 22% 92%, color-mix(in oklab, var(--_t4) calc(var(--_k) * 12%), transparent), transparent 70%);
+      filter: blur(var(--_blur));
     }
 
     /* The etched contours, very faint. */
     &::after {
       background-color: var(--fh-color-text);
       mask: var(--fh-backdrop-art, url("art/etch-contours.svg")) center / cover no-repeat;
-      opacity: 0.06;
+      opacity: var(--_art-op);
     }
   }
 
@@ -58,12 +74,12 @@
   .fh-frost {
     --_f: clamp(0, var(--fh-frost, 0.6), 1);
     --fh-frost-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
-    --fh-frost-filter: blur(calc(var(--_f) * 32px)) saturate(calc(1 + var(--_f) * 0.4));
+    --fh-frost-filter: blur(calc(var(--_f) * var(--fh-blur-frost))) saturate(calc(1 + var(--_f) * 0.4));
   }
 
   .fh-frost {
     background-color: var(--fh-frost-fill, color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost, 0.6) * 75%), transparent));
-    backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, 0.6) * 32px)) saturate(calc(1 + var(--fh-frost, 0.6) * 0.4)));
+    backdrop-filter: var(--fh-frost-filter, blur(calc(var(--fh-frost, 0.6) * var(--fh-blur-frost))) saturate(calc(1 + var(--fh-frost, 0.6) * 0.4)));
   }
 
   /* —— Frost line (BKD-2.1) ——
@@ -94,27 +110,25 @@
    * at the centre of each major cell, and a soft vignette. Light: pale paper and
    * ink-blue lines; dark: deep blueprint ground and pale lines.
    *   <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true"></div>
-   * Knobs: --fh-backdrop-strength (line contrast, 1), same as the default backdrop.
+   * Knobs: --fh-backdrop-strength (line contrast, 1), --fh-backdrop-ink, --fh-backdrop-grid,
+   * --fh-backdrop-grid-minor and --fh-backdrop-line, on .fh-backdrop.
    * An image backdrop uses data-fh-backdrop="image" and --fh-backdrop-image. */
   .fh-backdrop[data-fh-backdrop="blueprint"] {
-    --_bp-ink: light-dark(var(--fh-tone-sky), var(--fh-color-text));
-    --_maj: color-mix(in oklab, var(--_bp-ink) calc(26% * var(--_k)), transparent);
-    --_min: color-mix(in oklab, var(--_bp-ink) calc(11% * var(--_k)), transparent);
-    --_reg: color-mix(in oklab, var(--_bp-ink) calc(18% * var(--_k)), transparent);
-    background-color: light-dark(
-      color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)),
-      color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky))
-    );
+    --_maj: color-mix(in oklab, var(--_ink) calc(26% * var(--_k)), transparent);
+    --_min: color-mix(in oklab, var(--_ink) calc(11% * var(--_k)), transparent);
+    --_reg: color-mix(in oklab, var(--_ink) calc(18% * var(--_k)), transparent);
+    background-color: var(--fh-blueprint-ground);
     /* Each layer's place and size go in their own lists: background-image takes images only. */
     background-image:
-      linear-gradient(var(--_reg) 1px, transparent 1px),
-      linear-gradient(90deg, var(--_reg) 1px, transparent 1px),
-      linear-gradient(var(--_maj) 1px, transparent 1px),
-      linear-gradient(90deg, var(--_maj) 1px, transparent 1px),
-      linear-gradient(var(--_min) 1px, transparent 1px),
-      linear-gradient(90deg, var(--_min) 1px, transparent 1px);
-    background-position: 0 calc(60px - 0.5px), calc(60px - 0.5px) 0, 0 0, 0 0, 0 0, 0 0;
-    background-size: 120px 120px, 120px 120px, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+      linear-gradient(var(--_reg) var(--_line), transparent var(--_line)),
+      linear-gradient(90deg, var(--_reg) var(--_line), transparent var(--_line)),
+      linear-gradient(var(--_maj) var(--_line), transparent var(--_line)),
+      linear-gradient(90deg, var(--_maj) var(--_line), transparent var(--_line)),
+      linear-gradient(var(--_min) var(--_line), transparent var(--_line)),
+      linear-gradient(90deg, var(--_min) var(--_line), transparent var(--_line));
+    /* Registration marks on the centre line of each major cell. */
+    background-position: 0 calc(var(--_cell) / 2 - var(--_line) / 2), calc(var(--_cell) / 2 - var(--_line) / 2) 0, 0 0, 0 0, 0 0, 0 0;
+    background-size: var(--_cell) var(--_cell), var(--_cell) var(--_cell), var(--_cell) var(--_cell), var(--_cell) var(--_cell), var(--_cell-min) var(--_cell-min), var(--_cell-min) var(--_cell-min);
     mask-image: radial-gradient(130% 120% at 50% 45%, black 58%, transparent 100%);
 
     &::before,

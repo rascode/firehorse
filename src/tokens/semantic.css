@@ -107,6 +107,22 @@
     --fh-focus-offset: 2px;
   }
 
+  /* Backdrop tones (BKD): re-resolved wherever the tones are (adaptive.css), so a surface,
+     theme or scheme inside the page gets its own. */
+  :root,
+  [data-fh-theme],
+  [data-fh-scheme],
+  [data-fh-surface] {
+    /* A backdrop's wash: the four tone fields, top left, top right, bottom right, bottom left (BKD-1.1). */
+    --fh-wash-tone-1: var(--fh-tone-sky);
+    --fh-wash-tone-2: var(--fh-tone-violet);
+    --fh-wash-tone-3: var(--fh-tone-teal);
+    --fh-wash-tone-4: var(--fh-tone-amber);
+    /* The Blueprint backdrop (BKD-3.1): ink-blue lines on pale paper in light, pale lines on deep blueprint in dark. */
+    --fh-blueprint-ink: light-dark(var(--fh-tone-sky), var(--fh-color-text));
+    --fh-blueprint-ground: light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky)));
+  }
+
 }
 
 /*
