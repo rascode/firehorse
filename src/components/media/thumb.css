@@ -68,8 +68,15 @@
 
   .fh-thumb-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--fh-media-lg, 5rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--fh-media-gallery, 2.75rem), 1fr));
     gap: var(--fh-gap-bound);
+    inline-size: 100%;
+
+    & > .fh-thumb {
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 1;
+    }
   }
 
   .fh-cell__file {
@@ -79,14 +86,25 @@
     gap: var(--fh-gap-bound);
     min-block-size: var(--fh-row-media, 2rem);
 
+    &[data-uploading]::before,
     &[data-uploading]::after {
       content: "";
       position: absolute;
-      inset-inline: 0;
+      inset-inline-start: 0;
       inset-block-end: 0;
       block-size: 2px;
       border-radius: var(--fh-radius-pill);
-      background: linear-gradient(var(--fh-tone, var(--fh-color-accent)), var(--fh-tone, var(--fh-color-accent))) 0 / calc(var(--fh-upload-progress, 0) * 1%) 100% no-repeat, color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+    }
+
+    /* Track, then the fill at the reported progress: two flat layers, no gradient. */
+    &[data-uploading]::before {
+      inline-size: 100%;
+      background: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+    }
+
+    &[data-uploading]::after {
+      inline-size: calc(var(--fh-upload-progress, 0) * 1%);
+      background: var(--fh-tone, var(--fh-color-accent));
     }
 
     &[data-error] .fh-cell__file-error {
@@ -103,9 +121,12 @@
     place-items: center;
     inline-size: var(--fh-row-media, 2rem);
     block-size: var(--fh-row-media, 2rem);
+    padding: 0;
     border: var(--fh-border-thin) dashed var(--fh-color-etch);
     border-radius: var(--fh-avatar-entity-radius, var(--fh-radius-md));
+    background: transparent;
     color: var(--fh-color-text-subtle);
+    font: inherit;
     cursor: var(--fh-cursor-action);
 
     &:hover,
