@@ -77,8 +77,8 @@
     /* Figures sit on the bottom of their shared row, so a row of tiles
        reads along one line; a gauge or ring is the figure of its tile. */
     & > :is(.fh-metric__value, .fh-metric__figure) { grid-row: 4; align-self: end; }
-    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
-    & > :is(.fh-gauge, .fh-ring) { grid-row: 4; align-self: end; }
+    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl, .fh-record, .fh-value--bar) { grid-row: 5; margin-block-start: var(--fh-gap-related); }
+    & > :is(.fh-gauge, .fh-ring, .fh-value--ring, .fh-value--meter) { grid-row: 4; align-self: end; }
     /* A picker is the figure of a tile whose value can be changed (a manager, an owner). */
     & > .fh-entity-picker { grid-row: 4; align-self: end; }
     & > .fh-metric__source { grid-row: 6; margin-block-start: var(--fh-gap-bound); }
@@ -86,7 +86,7 @@
     /* The source stays bound to what is above it (4px). With no chart,
        progress or people row under the figure, it moves up into that row,
        right under the figure, instead of leaving the row's height between. */
-    &:not(:has(> :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__source { grid-row: 5; }
+    &:not(:has(> :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl, .fh-record, .fh-value--bar))) > .fh-metric__source { grid-row: 5; }
 
     /* A tile with a detail and no source puts the detail on the source
        line: "Breakdown" reads level with "People" and "State records",
@@ -101,7 +101,7 @@
       &[open] { border-block-start-color: var(--fh-color-etch-soft); }
       &[open] > summary { padding-block-start: var(--fh-gap-related); }
     }
-    &:not(:has(> .fh-metric__source, > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl))) > .fh-metric__more { grid-row: 5; }
+    &:not(:has(> .fh-metric__source, > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-kv, .fh-dl, .fh-record, .fh-value--bar))) > .fh-metric__more { grid-row: 5; }
   }
 
   .fh-metric__label {
@@ -283,4 +283,25 @@
 
   .fh-metric > .fh-sparkline { inline-size: 100%; block-size: 2.5rem; color: var(--fh-tone, var(--fh-color-text-muted)); }
   .fh-metric > :is(.fh-gauge, .fh-ring) { justify-self: center; }
+
+  /* —— Values in a tile (the metric context, metrics.js) ——
+   * The figure is a Values part at the tile's figure size: an amount and its delta, a count, a duration. The
+   * delta keeps its own size; a ring or meter is the figure itself; a bar sits under the figure (its own
+   * percent is the figure, so the bar's label hides); a stack and a sparkline sit at the figure's end. */
+  .fh-metric__value > .fh-value {
+    gap: var(--fh-gap-related);
+    align-items: center;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+  }
+
+  .fh-metric__value > .fh-value > .fh-metric__delta { align-self: center; }
+  .fh-metric__figure > .fh-value:is(.fh-value--stack, .fh-value--sparkline) { margin-inline-start: auto; }
+  .fh-metric__figure > .fh-value--sparkline { --fh-value-spark: min(7rem, 45%); }
+  .fh-metric > .fh-value:is(.fh-value--ring, .fh-value--meter) { --fh-value-ring: 5rem; justify-self: center; }
+  .fh-metric > .fh-value--bar { display: block; }
+  .fh-metric > .fh-value--bar > .fh-progress { inline-size: 100%; }
+  .fh-metric > .fh-value--bar > b { display: none; }
 }
