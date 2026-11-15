@@ -12105,6 +12105,48 @@
     }
   }
 
+  .fh-backdrop[data-fh-backdrop="blueprint"] {
+    --_bp-ink: light-dark(var(--fh-tone-sky), var(--fh-color-text));
+    --_maj: color-mix(in oklab, var(--_bp-ink) calc(26% * var(--_k)), transparent);
+    --_min: color-mix(in oklab, var(--_bp-ink) calc(11% * var(--_k)), transparent);
+    --_reg: color-mix(in oklab, var(--_bp-ink) calc(18% * var(--_k)), transparent);
+    background-color: light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky)));
+    background-image: linear-gradient(var(--_reg) 1px, transparent 1px),
+      linear-gradient(90deg, var(--_reg) 1px, transparent 1px),
+      linear-gradient(var(--_maj) 1px, transparent 1px),
+      linear-gradient(90deg, var(--_maj) 1px, transparent 1px),
+      linear-gradient(var(--_min) 1px, transparent 1px),
+      linear-gradient(90deg, var(--_min) 1px, transparent 1px);
+    background-position: 0 59.5px, 59.5px 0, 0 0, 0 0, 0 0, 0 0;
+    background-size: 120px 120px, 120px 120px, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+    mask-image: radial-gradient(130% 120% at 50% 45%, #000 58%, #0000 100%);
+
+    &:before, &:after {
+      content: none;
+    }
+  }
+
+  .fh-backdrop[data-fh-backdrop="image"] {
+    background-color: var(--fh-color-canvas);
+    background-image: var(--fh-backdrop-image, none);
+    background-position: center;
+    background-size: cover;
+    mask-image: radial-gradient(130% 120% at 50% 45%, #000 58%, #0000 100%);
+
+    &:before, &:after {
+      content: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .fh-backdrop:is([data-fh-backdrop="blueprint"], [data-fh-backdrop="image"]) {
+      forced-color-adjust: none;
+      background-color: canvas;
+      background-image: none;
+      mask-image: none;
+    }
+  }
+
   @container fh-tpl (inline-size < 36rem) {
     
   }
