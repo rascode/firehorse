@@ -26,6 +26,8 @@ export {
 } from "./sidenav";
 export {
   Sidebar,
+  resolveMetricDisplay,
+  metricTone,
   type SidebarProps,
   type SidebarMetric,
   type SidebarPage,

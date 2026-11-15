@@ -40,6 +40,8 @@
  *      End in any open menu; submenus (.fh-menu__sub) open to the side.
  *  17. Sidebar scrollbars: data-scrolling on a Sidebar's body while it
  *      scrolls, so the scrollbar fades in only then (or on hover).
+ *  18. Sidebar resize and rail: the toggle, drag handle, snap-to-rail lock
+ *      and keyboard steps on .fh-sidebar demos.
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -1348,4 +1350,175 @@ ready(() => {
     clearTimeout(timers.get(el));
     timers.set(el, setTimeout(() => el.removeAttribute("data-scrolling"), 900));
   }, { capture: true, passive: true });
+});
+
+/* —— 18. Sidebar resize and rail ——
+ * Demo sidebars with .fh-sidebar__resize: drag to width, snap below 9rem
+ * locks rail, toggle restores the last open width. */
+ready(() => {
+  const rootRem = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  const minW = 13;
+  const maxW = 24;
+  const defaultW = 15;
+  const snapW = 9;
+  const clampW = (w) => Math.min(maxW, Math.max(0, w));
+
+  const readW = (nav) => {
+    const v = nav.style.getPropertyValue("--fh-sidebar-width") || getComputedStyle(nav).getPropertyValue("--fh-sidebar-width");
+    const n = parseFloat(v);
+    return Number.isFinite(n) ? n : defaultW;
+  };
+
+  const writeW = (nav, remW) => {
+    nav.style.setProperty("--fh-sidebar-width", `${remW}rem`);
+    const handle = nav.querySelector(".fh-sidebar__resize");
+    const px = Math.round(remW * rootRem());
+    handle?.setAttribute("aria-valuenow", String(px));
+  };
+
+  const syncAria = (nav) => {
+    const handle = nav.querySelector(".fh-sidebar__resize");
+    if (!handle) return;
+    const px = (n) => String(Math.round(n * rootRem()));
+    handle.setAttribute("aria-valuemin", px(minW));
+    handle.setAttribute("aria-valuemax", px(maxW));
+    const side = nav.getAttribute("data-fh-side");
+    const railW = parseFloat(getComputedStyle(nav).getPropertyValue("--fh-sidebar-rail")) || 3.5;
+    const w = side === "rail" ? railW : readW(nav);
+    handle.setAttribute("aria-valuenow", px(w));
+  };
+
+  const setSide = (nav, side, lastW) => {
+    const toggle = nav.querySelector(".fh-sidebar__toggle");
+    nav.setAttribute("data-fh-side", side);
+    nav.toggleAttribute("data-fh-snap", false);
+    if (side === "rail") {
+      toggle?.setAttribute("aria-expanded", "false");
+      toggle?.setAttribute("aria-label", "Expand sidebar");
+    } else {
+      if (lastW != null) writeW(nav, lastW);
+      toggle?.setAttribute("aria-expanded", "true");
+      toggle?.setAttribute("aria-label", "Collapse sidebar");
+    }
+    syncAria(nav);
+  };
+
+  for (const nav of document.querySelectorAll(".fh-sidebar")) {
+    if (nav.dataset.fhSidebarReady != null) continue;
+    nav.dataset.fhSidebarReady = "";
+    const handle = nav.querySelector(".fh-sidebar__resize");
+    const toggle = nav.querySelector(".fh-sidebar__toggle");
+    let lastOpenW = readW(nav);
+    syncAria(nav);
+
+    toggle?.addEventListener("click", () => {
+      const rail = nav.getAttribute("data-fh-side") === "rail";
+      if (rail) setSide(nav, "open", lastOpenW);
+      else {
+        lastOpenW = readW(nav);
+        setSide(nav, "rail");
+      }
+    });
+
+    if (!handle) continue;
+
+    const finish = (remW) => {
+      nav.removeAttribute("data-fh-resizing");
+      nav.toggleAttribute("data-fh-snap", false);
+      if (remW < snapW) {
+        lastOpenW = clampW(Math.max(remW, minW) === remW ? remW : lastOpenW) || lastOpenW;
+        setSide(nav, "rail");
+        return;
+      }
+      const settled = remW < minW ? minW : clampW(remW);
+      lastOpenW = settled;
+      writeW(nav, settled);
+      if (nav.getAttribute("data-fh-side") === "rail") setSide(nav, "open", settled);
+      syncAria(nav);
+    };
+
+    const preview = (remW) => {
+      nav.setAttribute("data-fh-resizing", "");
+      // The rail stays locked until the drag passes the snap point (same as the React Sidebar).
+      if (nav.getAttribute("data-fh-side") === "rail") {
+        if (remW < snapW) return;
+        setSide(nav, "open", clampW(remW));
+      }
+      if (remW < snapW) {
+        nav.setAttribute("data-fh-snap", "");
+        writeW(nav, remW);
+      } else {
+        nav.removeAttribute("data-fh-snap");
+        writeW(nav, clampW(remW));
+      }
+      syncAria(nav);
+    };
+
+    let startX = 0;
+    let startW = 0;
+    let dragging = false;
+
+    const onMove = (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      const dir = document.documentElement.dir === "rtl" ? -1 : 1;
+      preview(startW + (dx / rootRem()) * dir);
+    };
+
+    const onUp = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      handle.releasePointerCapture(e.pointerId);
+      if (nav.getAttribute("data-fh-side") === "rail") {
+        nav.removeAttribute("data-fh-resizing");
+        return;
+      }
+      const w = readW(nav);
+      finish(w);
+    };
+
+    handle.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      dragging = true;
+      startX = e.clientX;
+      startW = nav.getAttribute("data-fh-side") === "rail" ? snapW : readW(nav);
+      handle.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    handle.addEventListener("pointermove", onMove);
+    handle.addEventListener("pointerup", onUp);
+    handle.addEventListener("pointercancel", onUp);
+
+    handle.addEventListener("dblclick", () => {
+      lastOpenW = defaultW;
+      setSide(nav, "open", defaultW);
+    });
+
+    handle.addEventListener("keydown", (e) => {
+      const rail = nav.getAttribute("data-fh-side") === "rail";
+      let w = rail ? minW : readW(nav);
+      if (e.key === "ArrowLeft") w = clampW(w - 1);
+      else if (e.key === "ArrowRight") w = clampW(w + 1);
+      else if (e.key === "Home") {
+        setSide(nav, "rail");
+        e.preventDefault();
+        return;
+      } else if (e.key === "End") {
+        lastOpenW = maxW;
+        setSide(nav, "open", maxW);
+        e.preventDefault();
+        return;
+      } else if (e.key === "Enter" || e.key === " ") {
+        toggle?.click();
+        e.preventDefault();
+        return;
+      } else return;
+      e.preventDefault();
+      if (w < snapW) setSide(nav, "rail");
+      else {
+        lastOpenW = w < minW ? minW : w;
+        setSide(nav, "open", lastOpenW);
+      }
+    });
+  }
 });

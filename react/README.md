@@ -60,7 +60,19 @@ import { Sidebar } from "@rascode/firehorse-react";
 />
 ```
 
-`side` is `"open"` or `"rail"` (`defaultSide`, or `side` with `onSideChange`). An area with `pages` expands under the row. `window: true` opens those pages in the area window, grouped by `subgroup`. Spread `renderLink` props onto your own link, for example `renderLink={(props) => <Link {...props} />}`. In the rail, an area's pages open in a flyout on hover or focus.
+`side` is `"open"` or `"rail"` (`defaultSide`, or `side` with `onSideChange`). Width is rem, the same way: `width` with `onWidthChange`, or `defaultWidth` (15). The range is 13 to 24 (`minWidth`, `maxWidth`) and the snap is 9 (`snapAt`). Dragging below the snap locks the rail and keeps the last open width; the toggle and Enter on the handle open that width again. Double-click on the handle resets to `defaultWidth`. `resizable={false}` hides the handle.
+
+```tsx
+<Sidebar label="Helm" width={width} onWidthChange={setWidth} groups={groups} />
+```
+
+An area with `pages` expands under the row. `window: true` opens those pages in the area window, grouped by `subgroup`. Spread `renderLink` props onto your own link, for example `renderLink={(props) => <Link {...props} />}`. In the rail, an area's pages open in a flyout on hover or focus.
+
+`display` on a metric is `"auto"` (the default), `"bubble"`, `"bar"` or `"dot"`. Auto is a dot for `kind: "dot"`, a bar for `kind: "percent"` and for a ratio that has `max`, and a bubble otherwise. A bar with no share (a count, or a ratio with no max) falls back to a bubble. Counts above 99 draw `99+`. `label` is the noun in the name (`"7 actions"`, `"3 of 5 goals"`), and `cap` sets warn at 80% and danger at full when `tone` is omitted. A percent reads as `"60%"`. `resolveMetricDisplay` and `metricTone` export those rules.
+
+```tsx
+metric={{ value: 3, max: 5, kind: "ratio", label: "goals", cap: true }}
+```
 
 Themes:
 
