@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv/dist/2020.js";
-import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets } from "../src/js/values.js";
+import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets, renderValue, variants, CHOICE_CONTEXTS } from "../src/js/values.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const types = JSON.parse(readFileSync(join(root, "schema/semantic-types.json"), "utf8")).types;
@@ -342,6 +342,63 @@ t("the text context: one plain string per value, none for a secret (decision 8)"
   assert.equal(textOf({ semanticType: "api_key_secret_ref" }, "vault:abc"), null, "a secret has no text, export included");
   assert.equal(isoDuration(0), "PT0S");
   assert.equal(isoDuration(90061), "P1DT1H1M1S");
+});
+
+// —— W3: renderValue() and variants() (the surfaces draw from the contract) ——
+t("every grid row lists choices for cell, record and card, the grid's own first, all of them its shape's variants", () => {
+  for (const row of rules.grid) {
+    for (const c of CHOICE_CONTEXTS) {
+      const list = row.choices?.[c];
+      assert.ok(Array.isArray(list), `${row.row} has choices.${c}`);
+      if (list.length) assert.equal(list[0], row[c], `${row.row} ${c}: the grid's own variant comes first`);
+      for (const v of list) assert.ok(rules.variants[row.shape].variants[v], `${row.row} ${c}: ${v} is a ${row.shape} variant`);
+      for (const v of list) assert.ok(!rules.variants[row.shape].variants[v].editable, `${row.row} ${c}: ${v} is a read variant`);
+    }
+  }
+});
+
+t("variants(): the default first, none for a secret, none in metric or form, a meter only with a target", () => {
+  const s = variants({ semanticType: "status" }, "cell");
+  assert.deepEqual(s.map((v) => v.variant), ["dot", "chip"]);
+  assert.ok(s[0].default && !s[1].default);
+  assert.deepEqual(variants({ semanticType: "api_key_secret_ref" }, "cell"), []);
+  assert.deepEqual(variants({ semanticType: "status" }, "metric"), []);
+  assert.deepEqual(variants({ semanticType: "status" }, "form"), []);
+  assert.ok(!variants({ semanticType: "percentage" }, "card").some((v) => v.variant === "meter"));
+  const own = variants({ semanticType: "status", display: { cell: "chip" } }, "cell");
+  assert.equal(own[0].variant, "chip", "a field's own variant is the default");
+  for (const type of types) for (const c of CHOICE_CONTEXTS) for (const v of variants({ semanticType: type.key, currency: "USD" }, c)) assert.match(v.id ?? "", /^VAL-\d+\.\d+$/, `${type.key} ${c} ${v.variant}`);
+});
+
+t("renderValue(): every semantic type draws in every drawn context as the part resolveValue() names", () => {
+  const sample = { option: "active", options: ["demo"], entity: { label: "Ava Mendes", key: "AM-1" }, money: 1250, ratio: 42, number: 12, series: [1, 3, 2], temporal: "2026-11-27", file: [{ name: "brief.pdf" }], link: "https://example.com", flag: true, prose: "Two\n\nparagraphs", text: "Line", code: "rc_01HF3K9ZQ4" };
+  for (const type of types) {
+    for (const c of DRAWN_CONTEXTS) {
+      const field = { key: "f", label: "F", semanticType: type.key, currency: "USD" };
+      const r = resolveValue(field, c);
+      const html = renderValue(field, sample[type.display.shape], c, { now: new Date("2026-11-14T12:00") });
+      if (!r.variant) { assert.equal(html, "", `${type.key} ${c} is left out`); continue; }
+      const id = html.match(/data-fh="([^"]+)"/)?.[1];
+      assert.equal(id, r.id ?? rules.variants[r.shape].variants[r.variant]?.id, `${type.key} ${c} draws ${r.variant}`);
+      assert.ok(html.startsWith("<span class=\"fh-value") || html.startsWith("<div class=\"fh-value") || html.startsWith("<span class=\"fh-stack"), `${type.key} ${c} is a Values part`);
+      assert.ok(!/fh-pill|fh-status\b/.test(html), `${type.key} ${c}: no private pill or status`);
+    }
+  }
+});
+
+t("renderValue(): the empty dash, a viewer's pick only when allowed, escaping, and the form's live controls", () => {
+  const empty = renderValue({ semanticType: "status" }, null, "cell");
+  assert.match(empty, /data-empty/);
+  assert.match(empty, /—/);
+  assert.match(renderValue({ semanticType: "status" }, "active", "cell", { variant: "chip" }), /data-fh="VAL-1\.2"/);
+  assert.match(renderValue({ semanticType: "status" }, "active", "cell", { variant: "amount" }), /data-fh="VAL-1\.1"/, "a variant the grid does not allow is ignored");
+  assert.ok(!renderValue({ semanticType: "short_text" }, "<b>x</b>", "cell").includes("<b>x</b>"), "values are escaped");
+  assert.match(renderValue({ semanticType: "email", label: "Email" }, "a@b.co", "form"), /<input class="fh-input" type="email" value="a@b.co" name="undefined"|<input class="fh-input" type="email"/);
+  assert.match(renderValue({ semanticType: "status", key: "s", label: "Status" }, "active", "form"), /<select class="fh-value__select" name="s" aria-label="Status">/);
+  assert.match(renderValue({ semanticType: "date", overdue: true }, "2026-11-10", "cell", { now: new Date("2026-11-14T12:00") }), /data-fh="VAL-7\.6"[^>]*>.*4d overdue/);
+  assert.match(renderValue({ type: "currency", currency: "USD" }, 4800, "cell", { cents: false }), />\$4,800</);
+  assert.match(renderValue({ semanticType: "fiat_amount", currency: "USD" }, 4800, "record"), /\$4,800\.00<\/data><abbr class="fh-value__sub" title="US Dollar">USD/);
+  assert.equal(renderValue({ semanticType: "api_key_secret_ref" }, "vault:abcd", "text"), "");
 });
 
 console.log(`values: ${n} checks passed`);
