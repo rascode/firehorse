@@ -72,7 +72,7 @@ for (const m of components.matchAll(/\sclass="([^"]*)"/g)) for (const c of m[1].
 
 // The description and lede of a live page in site/dist name no held family (names from the full Index and
 // release.json). ALLOW: held family names that are also plain words in a sentence.
-const ALLOW = new Set(["Guides", "Captions"]);
+const ALLOW = new Set(["Guides", "Captions", "Values"]);
 const heldNames = new Map([...full.families.filter((f) => !isPublic(f.id)).map((f) => [f.name, f.id]),
   ...JSON.parse(readFileSync(join(root, "release.json"), "utf8")).components.filter((c) => c.name && !isPublic(c.id)).map((c) => [c.name, c.id])]);
 const wordRe = (name) => { const l = name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); return new RegExp(`\\b(?:${l}|${l.endsWith("s") ? l.slice(0, -1) : l + "s"})\\b`, "i"); };
