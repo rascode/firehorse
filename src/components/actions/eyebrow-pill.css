@@ -8,24 +8,74 @@
    *   <p class="fh-eyebrow-pill" data-tone="sky">
    *     <span class="fh-dot fh-dot--live"></span> Data architecture
    *   </p>
+   *
+   * One component, many treatments. Combine one shape, one line and any content parts.
+   *
+   * Shape:   (pill)  --rounded  --sharp  --oval  --tab
+   * Line:    (solid) --etched  --dotted  --double  --ghost  --underline
+   *          --bracket  --tone  --solid  --gradient  --glass
+   * Size:    --lg (the text, nothing else). --sm is retired: the label has no smaller step;
+   *          the class stays and does nothing.
+   * Parts:   __seg (split segments)  __index  __count  __action  .fh-avatar  .fh-kbd
+   *          --filled-end (last __seg solid in the tone, on-tone text)
+   *
+   * One set of values for every pill, set once on .fh-eyebrow-pill, on the Segment recipe:
+   * --fh-eyebrow-text (label; --lg caption), --fh-eyebrow-sentence-text (caption, the sans
+   * --sentence), --fh-eyebrow-weight (regular, the quiet label), --fh-eyebrow-title-weight
+   * (bold, strong / current at full ink), --fh-eyebrow-tracking (caps), --fh-eyebrow-leading
+   * (snug), --fh-eyebrow-pad-block (gap-bound), --fh-eyebrow-pad-inline (inset-control, the
+   * end), --fh-eyebrow-frame (item-frame), --fh-eyebrow-gap (gap-related), --fh-eyebrow-etch
+   * (etch), --fh-eyebrow-rule (etch-soft, the rules inside), --fh-eyebrow-fill (the frost),
+   * --fh-eyebrow-icon (0.75em, the action's arrow), --fh-eyebrow-nudge (0.1em, the way it points),
+   * --fh-eyebrow-tick (0.5em, the bracket's corners).
+   * A standalone pill adds the frame to its padding (block and start), so it is as tall as a
+   * framed group; parts (count, avatar, kbd) sit one line plus the block padding tall, inside
+   * that frame, so a pill with parts is as tall as a plain one. Every shape and line keeps
+   * that outer size.
    */
+  @property --_eye-part {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+  }
+
   .fh-eyebrow-pill {
+    --_text: var(--fh-eyebrow-text, var(--fh-text-label));
+    --_weight: var(--fh-eyebrow-weight, var(--fh-weight-regular));
+    --_strong: var(--fh-eyebrow-title-weight, var(--fh-weight-bold));
+    --_leading: var(--fh-eyebrow-leading, var(--fh-leading-snug));
+    --_pad-b: var(--fh-eyebrow-pad-block, var(--fh-gap-bound));
+    --_pad-i: var(--fh-eyebrow-pad-inline, var(--fh-inset-control));
+    --_frame: var(--fh-eyebrow-frame, var(--fh-item-frame));
+    --_gap: var(--fh-eyebrow-gap, var(--fh-gap-related));
+    --_line: var(--fh-eyebrow-etch, var(--fh-color-etch));
+    --_rule: var(--fh-eyebrow-rule, var(--fh-color-etch-soft));
+    --_fill: var(--fh-eyebrow-fill, color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent));
+    --_icon: var(--fh-eyebrow-icon, 0.75em);
+    --_nudge: var(--fh-eyebrow-nudge, 0.1em);
+    --_tick: var(--fh-eyebrow-tick, 0.5em);
+    --_edge: calc(var(--_pad-b) + var(--_frame));
+    /* A part's block size, computed here (registered) so a part with its own font size keeps it. */
+    --_eye-part: calc(var(--_leading) * 1em + 2 * var(--_pad-b));
+
     display: flex;
     inline-size: fit-content;
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_gap);
     max-inline-size: 100%;
     margin: 0;
-    padding: 0.35rem var(--fh-inset-control) 0.35rem var(--fh-inset-tight);
-    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-rule);
+    padding: var(--_edge) var(--_pad-i) var(--_edge) var(--_edge);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_line);
     border-radius: var(--fh-radius-pill);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-widest);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--_text);
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-eyebrow-tracking, var(--fh-tracking-caps));
+    line-height: var(--_leading);
     text-transform: uppercase;
 
     & a {
@@ -42,104 +92,93 @@
     & [aria-current] {
       overflow: hidden;
       color: var(--fh-color-text);
-      font-weight: var(--fh-weight-bold);
-      letter-spacing: var(--fh-tracking-wider);
+      font-weight: var(--_strong);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
   }
 
-  /* Same pill, sentence case — announcements ("Now accepting…"). */
+  /* Same pill, sentence case — announcements ("Now accepting…"): sans at its own text size. */
   .fh-eyebrow-pill--sentence {
+    --_text: var(--fh-eyebrow-sentence-text, var(--fh-text-caption));
+
     font-family: var(--fh-font-sans);
-    font-size: var(--fh-text-caption);
     letter-spacing: var(--fh-tracking-body);
     text-transform: none;
   }
 
-  /* —— Eyebrow pill variants ——
-   * One component, many treatments. Combine one shape, one line and
-   * any content parts.
-   *
-   * Shape:   (pill)  --rounded  --sharp  --oval  --tab
-   * Line:    (solid) --etched  --dotted  --double  --ghost  --underline
-   *          --bracket  --tone  --solid  --gradient  --glass
-   * Size:    --sm  --lg
-   * Parts:   __seg (split segments)  __index  __count  __action  .fh-avatar  .fh-kbd
-   *          --filled-end (last __seg solid in the tone, on-tone text)
-   */
-  .fh-eyebrow-pill {
-    --_line: var(--fh-color-rule);
-    --_fill: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
-  }
+  /* Size: the text, nothing else. */
+  .fh-eyebrow-pill--lg { --_text: var(--fh-eyebrow-text, var(--fh-text-caption)); }
 
-  /* Shapes */
+  /* Shapes: the corners, nothing else. */
   .fh-eyebrow-pill--rounded { border-radius: var(--fh-radius-md); }
   .fh-eyebrow-pill--sharp { border-radius: var(--fh-radius-sm); }
+  .fh-eyebrow-pill--oval { border-radius: var(--fh-radius-round) / 100%; }
 
-  .fh-eyebrow-pill--oval {
-    padding: 0.6rem var(--fh-inset-tile) 0.6rem 0.85rem;
-    border-radius: var(--fh-radius-round) / 100%;
-  }
-
+  /* Open at the foot: the missing border goes to the padding, so the outer size holds. */
   .fh-eyebrow-pill--tab {
+    padding-block-end: calc(var(--_edge) + var(--fh-border-thin));
     border-block-end: 0;
     border-radius: var(--fh-radius-md) var(--fh-radius-md) 0 0;
-    padding-block-end: var(--fh-inset-tight);
-    box-shadow: 0 1px 0 var(--fh-color-canvas);
+    box-shadow: 0 var(--fh-border-thin) 0 var(--fh-color-canvas);
   }
 
   /* Lines */
   .fh-eyebrow-pill--etched {
     border-style: var(--fh-card-border-style, dashed);
-    border-color: var(--fh-color-etch);
     background-color: transparent;
   }
 
+  /* Heavier dots; the extra width comes out of the padding. */
   .fh-eyebrow-pill--dotted {
+    padding-block: calc(var(--_edge) - (var(--fh-border-heavy) - var(--fh-border-thin)));
     border-style: var(--fh-card-border-style, dotted);
-    border-width: var(--fh-border-thick);
-    border-color: var(--fh-color-etch);
+    border-width: var(--fh-border-heavy);
     background-color: transparent;
   }
 
+  /* Two thin lines: the frame's line and a second one drawn just inside it. */
   .fh-eyebrow-pill--double {
-    border-style: var(--fh-card-border-style, double);
-    border-width: 3px;
-    border-color: var(--fh-color-etch);
+    box-shadow:
+      inset 0 0 0 var(--fh-border-heavy) var(--fh-color-canvas),
+      inset 0 0 0 calc(var(--fh-border-heavy) + var(--fh-border-thin)) var(--_line);
   }
 
   .fh-eyebrow-pill--ghost {
     padding-inline: 0;
     border-color: transparent;
     background-color: transparent;
+    backdrop-filter: none;
   }
 
   .fh-eyebrow-pill--underline {
-    padding-inline: 0 var(--fh-inset-tight);
+    padding-block-start: calc(var(--_edge) + var(--fh-border-thin));
+    padding-inline: 0 var(--_pad-b);
     border-width: 0 0 var(--fh-border-thin);
     border-style: var(--fh-card-border-style, dashed);
-    border-color: var(--fh-color-etch);
     border-radius: 0;
     background-color: transparent;
+    backdrop-filter: none;
   }
 
   /* Registration-mark corners, no box. */
   .fh-eyebrow-pill--bracket {
     --_c: var(--fh-color-cross);
+    --_w: var(--fh-border-thin);
 
     border-color: transparent;
     border-radius: 0;
     background:
-      linear-gradient(var(--_c), var(--_c)) 0 0 / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 0 0 / 1px 6px,
-      linear-gradient(var(--_c), var(--_c)) 100% 0 / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 100% 0 / 1px 6px,
-      linear-gradient(var(--_c), var(--_c)) 0 100% / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 0 100% / 1px 6px,
-      linear-gradient(var(--_c), var(--_c)) 100% 100% / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 100% 100% / 1px 6px;
+      linear-gradient(var(--_c), var(--_c)) 0 0 / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 0 0 / var(--_w) var(--_tick),
+      linear-gradient(var(--_c), var(--_c)) 100% 0 / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 100% 0 / var(--_w) var(--_tick),
+      linear-gradient(var(--_c), var(--_c)) 0 100% / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 0 100% / var(--_w) var(--_tick),
+      linear-gradient(var(--_c), var(--_c)) 100% 100% / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 100% 100% / var(--_w) var(--_tick);
     background-repeat: no-repeat;
+    backdrop-filter: none;
   }
 
   .fh-eyebrow-pill--tone {
@@ -199,40 +238,22 @@
   .fh-eyebrow-pill--glass {
     border-color: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 45%, transparent);
-    backdrop-filter: blur(10px) saturate(1.4);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.4);
     box-shadow:
-      inset 0 1px 0 color-mix(in oklab, var(--fh-color-on-ink) 10%, transparent),
-      0 6px 18px -8px color-mix(in oklab, var(--fh-color-ink) 60%, transparent);
-  }
-
-  /* Sizes */
-  .fh-eyebrow-pill--sm {
-    gap: var(--fh-gap-bound);
-    padding: var(--fh-item-frame) var(--fh-inset-tight) var(--fh-item-frame) 0.4rem;
-    font-size: var(--fh-text-micro);
-  }
-
-  .fh-eyebrow-pill--lg {
-    gap: var(--fh-gap-related);
-    padding: var(--fh-inset-tight) var(--fh-inset-tile) var(--fh-inset-tight) var(--fh-inset-control);
-    font-size: var(--fh-text-caption);
+      inset 0 var(--fh-border-thin) 0 color-mix(in oklab, var(--fh-color-on-ink) 10%, transparent),
+      var(--fh-shadow-menu);
   }
 
   /* Filled end (EYE-5.4): the last segment is a solid block of the pill's tone, the dot's
-     colour, running to the pill's right edge, held to a legible lightness, its text flipped
-     dark or light to read on it.
-     For the segmented pill (__seg); --_pb / --_pe are the pill's block and end padding it
-     fills out to (the default shape's; shapes with other padding set their own). */
+     colour, running to the pill's edge (through the frame), held to a legible lightness, its
+     text flipped dark or light to read on it. For the segmented pill (__seg). */
   .fh-eyebrow-pill--filled-end {
-    --_pb: 0.35rem;
-    --_pe: var(--fh-inset-control);
-
     & > .fh-eyebrow-pill__seg:last-child {
       align-self: stretch;
-      margin-block: calc(-1 * var(--_pb));
-      margin-inline-end: calc(-1 * var(--_pe));
-      padding-block: var(--_pb);
-      padding-inline: var(--fh-inset-tight) var(--_pe);
+      margin-block: calc(-1 * var(--_edge));
+      margin-inline-end: calc(-1 * var(--_pad-i));
+      padding-block: var(--_edge);
+      padding-inline: var(--_pad-b) var(--_pad-i);
       border-inline-start: 0;
       border-start-end-radius: inherit;
       border-end-end-radius: inherit;
@@ -247,7 +268,7 @@
     }
   }
 
-  /* Parts */
+  /* Parts: soft rules inside, the full etch on the frame. */
   .fh-eyebrow-pill__seg {
     display: inline-flex;
     align-items: center;
@@ -255,29 +276,42 @@
     white-space: nowrap;
 
     & + & {
-      padding-inline-start: var(--fh-inset-tight);
-      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      padding-inline-start: var(--_pad-b);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     }
   }
 
   .fh-eyebrow-pill__index {
-    padding-inline-end: var(--fh-inset-tight);
-    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    padding-inline-end: var(--_pad-b);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     color: var(--fh-tone);
     font-variant-numeric: tabular-nums;
   }
 
-  .fh-eyebrow-pill__count {
+  /* Parts that carry their own box sit one line plus the block padding tall, inside the frame. */
+  .fh-eyebrow-pill__count,
+  .fh-eyebrow-pill > .fh-kbd {
     display: inline-grid;
     place-items: center;
-    min-inline-size: 1.15rem;
-    padding: 0.08rem var(--fh-item-frame);
+    box-sizing: border-box;
+    block-size: var(--_eye-part);
+    min-inline-size: var(--_eye-part);
+    margin-block: calc(-1 * var(--_pad-b));
+    line-height: 1;
+  }
+
+  .fh-eyebrow-pill__count {
+    padding-inline: var(--_frame);
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: 0;
+    font-weight: var(--_strong);
+    letter-spacing: var(--fh-tracking-none);
     font-variant-numeric: tabular-nums;
+  }
+
+  .fh-eyebrow-pill > .fh-kbd {
+    padding-block: 0;
   }
 
   .fh-eyebrow-pill .fh-eyebrow-pill__action {
@@ -285,15 +319,15 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     margin-inline-start: var(--fh-gap-bound);
-    padding-inline-start: var(--fh-inset-tight);
-    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    padding-inline-start: var(--_pad-b);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     color: var(--fh-color-text);
-    font-weight: var(--fh-weight-bold);
+    font-weight: var(--_strong);
     text-decoration: none;
 
     &::after {
       content: "";
-      inline-size: 0.75em;
+      inline-size: var(--_icon);
       aspect-ratio: 1;
       background-color: currentColor;
       mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
@@ -301,14 +335,15 @@
     }
 
     &:hover::after {
-      translate: 0.1rem -0.1rem;
+      translate: var(--_nudge) calc(-1 * var(--_nudge));
     }
   }
 
   .fh-eyebrow-pill > .fh-avatar {
-    --fh-avatar-size: 1.25rem;
+    --fh-avatar-size: var(--_eye-part);
 
-    margin-inline-start: calc(-1 * var(--fh-gap-bound));
+    margin-block: calc(-1 * var(--_pad-b));
+    margin-inline-start: calc(-1 * var(--_pad-b));
   }
 
   /* Dot variants */

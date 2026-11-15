@@ -13,7 +13,7 @@ const expect = (ok, msg) => { if (!ok) errors.push(msg); };
 
 const r = JSON.parse(run(fixture, "--json").out);
 const by = (k) => r.findings.filter((f) => f.kind === k);
-expect(by("untagged").some((f) => f.suggest === "EYE-1.2"), "etched eyebrow pill → EYE-1.2");
+expect(by("untagged").some((f) => f.suggest === "EYE-1.5"), "etched eyebrow pill → EYE-1.5");
 expect(by("untagged").some((f) => f.suggest === "BTN-2.1"), "outline button → BTN-2.1");
 expect(by("retired").some((f) => f.id === "EYE-18" && f.fix === "EYE-5.2"), "EYE-18 retired → EYE-5.2");
 expect(by("mismatch").some((f) => f.id === "EYE-1.1"), "chips tagged EYE-1.1 is a mismatch");
@@ -30,7 +30,7 @@ const copy = join(dir, "page.html");
 writeFileSync(copy, readFileSync(fixture, "utf8"));
 run(copy, "--fix");
 const fixed = readFileSync(copy, "utf8");
-expect(/data-fh="EYE-1.2" class="fh-eyebrow-pill fh-eyebrow-pill--etched"/.test(fixed), "--fix tags the etched pill");
+expect(/data-fh="EYE-1.5" class="fh-eyebrow-pill fh-eyebrow-pill--etched"/.test(fixed), "--fix tags the etched pill");
 expect(fixed.includes('data-fh="EYE-5.2"') && !fixed.includes('data-fh="EYE-18"'), "--fix rewrites EYE-18");
 // A page that declares the design system gets no Declare action.
 const declaredPage = join(dir, "declared.html");

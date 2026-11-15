@@ -1,7 +1,7 @@
 // Release manifest: release.json (repo root) decides what the public site, the Index and the agent files show.
 // Every category, family, field group, field type and page has a status: live, hold or draft.
 //   - Not listed means held (default deny). draft is treated like hold in the public build.
-//   - A variant (or group) has its family's status unless the family lists it under "variants" ({"EYE-7.1": "hold"}).
+//   - A variant (or group) has its family's status unless the family lists it under "variants" ({"EYE-6.3": "hold"}).
 //   - A family is public only if it is live and its category is live. tier is free or pro.
 //   - A docs page is live when "pages" says so; if it is not listed, when it shows at least one public family.
 // showAll (--all on the command line, or FH_RELEASE=all) builds everything, with a Held / Draft / Pro chip.

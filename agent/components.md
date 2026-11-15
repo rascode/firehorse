@@ -979,14 +979,23 @@ The Doppler pill as a full component: a dot and a short label that sit above a h
 <!-- EYE-1.1 · Lines › Solid line -->
 <p class="fh-eyebrow-pill" data-tone="sky" data-fh="EYE-1.1"><span class="fh-dot fh-dot--live"></span>Solid line</p>
 
-<!-- EYE-1.2 · Lines › Etched line -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-1.2"><span class="fh-dot fh-dot--live"></span>Etched line</p>
+<!-- EYE-1.2 · Lines › Tone tinted -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh="EYE-1.2"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
 
-<!-- EYE-1.3 · Lines › Dotted line -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh="EYE-1.3"><span class="fh-dot"></span>Dotted line</p>
+<!-- EYE-1.3 · Lines › Large -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--lg" data-tone="accent" data-fh="EYE-1.3"><span class="fh-dot fh-dot--live"></span>Large</p>
 
-<!-- EYE-1.4 · Lines › Double line -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh="EYE-1.4"><span class="fh-dot fh-dot--square"></span>Double line</p>
+<!-- EYE-1.4 · Lines › Large, toned -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--tone" data-tone="amber" data-fh="EYE-1.4"><span class="fh-dot fh-dot--live"></span>Large, toned</p>
+
+<!-- EYE-1.5 · Lines › Etched line -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-1.5"><span class="fh-dot fh-dot--live"></span>Etched line</p>
+
+<!-- EYE-1.6 · Lines › Dotted line -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh="EYE-1.6"><span class="fh-dot"></span>Dotted line</p>
+
+<!-- EYE-1.7 · Lines › Double line -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh="EYE-1.7"><span class="fh-dot fh-dot--square"></span>Double line</p>
 
 <!-- EYE-2.1 · Shapes › Rounded -->
 <p class="fh-eyebrow-pill fh-eyebrow-pill--rounded" data-tone="orange" data-fh="EYE-2.1"><span class="fh-dot"></span>Rounded</p>
@@ -1000,20 +1009,17 @@ The Doppler pill as a full component: a dot and a short label that sit above a h
 <!-- EYE-2.4 · Shapes › Tab -->
 <p class="fh-eyebrow-pill fh-eyebrow-pill--tab fh-eyebrow-pill--etched" data-tone="sky" data-fh="EYE-2.4"><span class="fh-dot"></span>Tab</p>
 
-<!-- EYE-3.1 · Fills › Tone tinted -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh="EYE-3.1"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
+<!-- EYE-3.1 · Fills › Solid tone -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh="EYE-3.1"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
 
-<!-- EYE-3.2 · Fills › Solid tone -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh="EYE-3.2"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
+<!-- EYE-3.2 · Fills › Gradient sweep -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh="EYE-3.2"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
 
-<!-- EYE-3.3 · Fills › Gradient sweep -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh="EYE-3.3"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
+<!-- EYE-3.3 · Fills › Glass -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh="EYE-3.3"><span class="fh-dot fh-dot--ring"></span>Glass</p>
 
-<!-- EYE-3.4 · Fills › Glass -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh="EYE-3.4"><span class="fh-dot fh-dot--ring"></span>Glass</p>
-
-<!-- EYE-3.5 · Fills › Ghost -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh="EYE-3.5"><span class="fh-dot fh-dot--live"></span>Ghost</p>
+<!-- EYE-3.4 · Fills › Ghost -->
+<p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh="EYE-3.4"><span class="fh-dot fh-dot--live"></span>Ghost</p>
 
 <!-- EYE-4.1 · Edges › Bracketed -->
 <p class="fh-eyebrow-pill fh-eyebrow-pill--bracket" data-tone="amber" data-fh="EYE-4.1"><span class="fh-dot fh-dot--bar"></span>Bracketed</p>
@@ -1041,12 +1047,6 @@ The Doppler pill as a full component: a dot and a short label that sit above a h
 
 <!-- EYE-6.3 · Sentences › Search · shortcut -->
 <p class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sentence" data-tone="neutral" data-fh="EYE-6.3"><span>Search the docs</span><kbd class="fh-kbd">⌘K</kbd></p>
-
-<!-- EYE-7.1 · Sizes › Small -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--sm" data-tone="lime" data-fh="EYE-7.1"><span class="fh-dot"></span>Small</p>
-
-<!-- EYE-7.2 · Sizes › Large -->
-<p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--etched" data-tone="accent" data-fh="EYE-7.2"><span class="fh-dot fh-dot--live"></span>Large</p>
 ```
 
 ### CHP · Chips

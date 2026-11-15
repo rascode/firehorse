@@ -12,7 +12,7 @@
  *
  *   connected    a Firehorse component root tagged with a live ID whose classes agree
  *   untagged     a Firehorse component root with no data-fh. The audit names the ID
- *                from its classes (EYE-1.2) and --fix writes it in.
+ *                from its classes (EYE-1.5) and --fix writes it in.
  *   mismatch     data-fh says one thing, the classes say another (drift)
  *   retired      data-fh uses an old ID; --fix rewrites it to the replacement
  *   unknown      data-fh names an ID the Index doesn't have

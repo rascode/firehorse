@@ -2053,21 +2053,45 @@
     }
   }
 
+  @property --_eye-part {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0;
+  }
+
   .fh-eyebrow-pill {
+    --_text: var(--fh-eyebrow-text, var(--fh-text-label));
+    --_weight: var(--fh-eyebrow-weight, var(--fh-weight-regular));
+    --_strong: var(--fh-eyebrow-title-weight, var(--fh-weight-bold));
+    --_leading: var(--fh-eyebrow-leading, var(--fh-leading-snug));
+    --_pad-b: var(--fh-eyebrow-pad-block, var(--fh-gap-bound));
+    --_pad-i: var(--fh-eyebrow-pad-inline, var(--fh-inset-control));
+    --_frame: var(--fh-eyebrow-frame, var(--fh-item-frame));
+    --_gap: var(--fh-eyebrow-gap, var(--fh-gap-related));
+    --_line: var(--fh-eyebrow-etch, var(--fh-color-etch));
+    --_rule: var(--fh-eyebrow-rule, var(--fh-color-etch-soft));
+    --_fill: var(--fh-eyebrow-fill, color-mix(in oklab, var(--fh-color-surface-raised) 88%, transparent));
+    --_icon: var(--fh-eyebrow-icon, .75em);
+    --_nudge: var(--fh-eyebrow-nudge, .1em);
+    --_tick: var(--fh-eyebrow-tick, .5em);
+    --_edge: calc(var(--_pad-b) + var(--_frame));
+    --_eye-part: calc(var(--_leading) * 1em + 2 * var(--_pad-b));
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--_gap);
     inline-size: fit-content;
     max-inline-size: 100%;
-    padding: .35rem var(--fh-inset-control) .35rem var(--fh-inset-tight);
-    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-rule);
+    padding: var(--_edge) var(--_pad-i) var(--_edge) var(--_edge);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_line);
     border-radius: var(--fh-radius-pill);
-    background-color: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    font-weight: var(--fh-weight-medium);
-    letter-spacing: var(--fh-tracking-widest);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--_text);
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-eyebrow-tracking, var(--fh-tracking-caps));
+    line-height: var(--_leading);
     text-transform: uppercase;
     margin: 0;
     display: flex;
@@ -2084,8 +2108,7 @@
 
     & strong, & [aria-current] {
       color: var(--fh-color-text);
-      font-weight: var(--fh-weight-bold);
-      letter-spacing: var(--fh-tracking-wider);
+      font-weight: var(--_strong);
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -2093,15 +2116,14 @@
   }
 
   .fh-eyebrow-pill--sentence {
+    --_text: var(--fh-eyebrow-sentence-text, var(--fh-text-caption));
     font-family: var(--fh-font-sans);
-    font-size: var(--fh-text-caption);
     letter-spacing: var(--fh-tracking-body);
     text-transform: none;
   }
 
-  .fh-eyebrow-pill {
-    --_line: var(--fh-color-rule);
-    --_fill: color-mix(in oklab, var(--fh-color-surface-raised) 70%, transparent);
+  .fh-eyebrow-pill--lg {
+    --_text: var(--fh-eyebrow-text, var(--fh-text-caption));
   }
 
   .fh-eyebrow-pill--rounded {
@@ -2113,61 +2135,65 @@
   }
 
   .fh-eyebrow-pill--oval {
-    padding: .6rem var(--fh-inset-tile) .6rem .85rem;
     border-radius: var(--fh-radius-round) / 100%;
   }
 
   .fh-eyebrow-pill--tab {
     border-radius: var(--fh-radius-md) var(--fh-radius-md) 0 0;
-    box-shadow: 0 1px 0 var(--fh-color-canvas);
+    box-shadow: 0 var(--fh-border-thin) 0 var(--fh-color-canvas);
     border-block-end: 0;
-    padding-block-end: var(--fh-inset-tight);
+    padding-block-end: calc(var(--_edge) + var(--fh-border-thin));
   }
 
   .fh-eyebrow-pill--etched {
     border-style: var(--fh-card-border-style, dashed);
-    border-color: var(--fh-color-etch);
     background-color: #0000;
   }
 
   .fh-eyebrow-pill--dotted {
+    padding-block: calc(var(--_edge) - (var(--fh-border-heavy) - var(--fh-border-thin)));
     border-style: var(--fh-card-border-style, dotted);
-    border-width: var(--fh-border-thick);
-    border-color: var(--fh-color-etch);
+    border-width: var(--fh-border-heavy);
     background-color: #0000;
   }
 
   .fh-eyebrow-pill--double {
-    border-style: var(--fh-card-border-style, double);
-    border-width: 3px;
-    border-color: var(--fh-color-etch);
+    box-shadow: inset 0 0 0 var(--fh-border-heavy) var(--fh-color-canvas),
+      inset 0 0 0 calc(var(--fh-border-heavy) + var(--fh-border-thin)) var(--_line);
   }
 
   .fh-eyebrow-pill--ghost {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     background-color: #0000;
     border-color: #0000;
     padding-inline: 0;
   }
 
   .fh-eyebrow-pill--underline {
-    padding-inline: 0 var(--fh-inset-tight);
+    padding-block-start: calc(var(--_edge) + var(--fh-border-thin));
+    padding-inline: 0 var(--_pad-b);
     border-width: 0 0 var(--fh-border-thin);
     border-style: var(--fh-card-border-style, dashed);
-    border-color: var(--fh-color-etch);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     background-color: #0000;
     border-radius: 0;
   }
 
   .fh-eyebrow-pill--bracket {
     --_c: var(--fh-color-cross);
-    background: linear-gradient(var(--_c), var(--_c)) 0 0 / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 0 0 / 1px 6px,
-      linear-gradient(var(--_c), var(--_c)) 100% 0 / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 100% 0 / 1px 6px,
-      linear-gradient(var(--_c), var(--_c)) 0 100% / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 0 100% / 1px 6px,
-      linear-gradient(var(--_c), var(--_c)) 100% 100% / 6px 1px,
-      linear-gradient(var(--_c), var(--_c)) 100% 100% / 1px 6px;
+    --_w: var(--fh-border-thin);
+    background: linear-gradient(var(--_c), var(--_c)) 0 0 / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 0 0 / var(--_w) var(--_tick),
+      linear-gradient(var(--_c), var(--_c)) 100% 0 / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 100% 0 / var(--_w) var(--_tick),
+      linear-gradient(var(--_c), var(--_c)) 0 100% / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 0 100% / var(--_w) var(--_tick),
+      linear-gradient(var(--_c), var(--_c)) 100% 100% / var(--_tick) var(--_w),
+      linear-gradient(var(--_c), var(--_c)) 100% 100% / var(--_w) var(--_tick);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     background-repeat: no-repeat;
     border-color: #0000;
     border-radius: 0;
@@ -2226,32 +2252,17 @@
   .fh-eyebrow-pill--glass {
     border-color: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 45%, transparent);
-    -webkit-backdrop-filter: blur(10px) saturate(1.4);
-    backdrop-filter: blur(10px) saturate(1.4);
-    box-shadow: inset 0 1px 0 color-mix(in oklab, var(--fh-color-on-ink) 10%, transparent),
-      0 6px 18px -8px color-mix(in oklab, var(--fh-color-ink) 60%, transparent);
-  }
-
-  .fh-eyebrow-pill--sm {
-    gap: var(--fh-gap-bound);
-    padding: var(--fh-item-frame) var(--fh-inset-tight) var(--fh-item-frame) .4rem;
-    font-size: var(--fh-text-micro);
-  }
-
-  .fh-eyebrow-pill--lg {
-    gap: var(--fh-gap-related);
-    padding: var(--fh-inset-tight) var(--fh-inset-tile) var(--fh-inset-tight) var(--fh-inset-control);
-    font-size: var(--fh-text-caption);
+    -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.4);
+    backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.4);
+    box-shadow: inset 0 var(--fh-border-thin) 0 color-mix(in oklab, var(--fh-color-on-ink) 10%, transparent),
+      var(--fh-shadow-menu);
   }
 
   .fh-eyebrow-pill--filled-end {
-    --_pb: .35rem;
-    --_pe: var(--fh-inset-control);
-
     & > .fh-eyebrow-pill__seg:last-child {
-      margin-block: calc(-1 * var(--_pb));
-      padding-block: var(--_pb);
-      padding-inline: var(--fh-inset-tight) var(--_pe);
+      margin-block: calc(-1 * var(--_edge));
+      padding-block: var(--_edge);
+      padding-inline: var(--_pad-b) var(--_pad-i);
       --_end: light-dark(oklch(from var(--fh-tone) min(l, .52) c h), oklch(from var(--fh-tone) max(l, .74) c h));
       background-color: var(--_end);
       color: oklch(from var(--_end) clamp(.16, (.64 - l) * 100, .99) calc(c * .2) h);
@@ -2259,7 +2270,7 @@
       border-start-end-radius: inherit;
       border-end-end-radius: inherit;
       align-self: stretch;
-      margin-inline-end: calc(-1 * var(--_pe));
+      margin-inline-end: calc(-1 * var(--_pad-i));
 
       & :is(strong, b) {
         color: inherit;
@@ -2274,59 +2285,71 @@
     display: inline-flex;
 
     & + & {
-      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
-      padding-inline-start: var(--fh-inset-tight);
+      border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
+      padding-inline-start: var(--_pad-b);
     }
   }
 
   .fh-eyebrow-pill__index {
-    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     color: var(--fh-tone);
     font-variant-numeric: tabular-nums;
-    padding-inline-end: var(--fh-inset-tight);
+    padding-inline-end: var(--_pad-b);
+  }
+
+  .fh-eyebrow-pill__count, .fh-eyebrow-pill > .fh-kbd {
+    box-sizing: border-box;
+    block-size: var(--_eye-part);
+    min-inline-size: var(--_eye-part);
+    margin-block: calc(-1 * var(--_pad-b));
+    place-items: center;
+    line-height: 1;
+    display: inline-grid;
   }
 
   .fh-eyebrow-pill__count {
-    min-inline-size: 1.15rem;
-    padding: .08rem var(--fh-item-frame);
+    padding-inline: var(--_frame);
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-tone);
     color: var(--fh-color-on-tone);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: 0;
+    font-weight: var(--_strong);
+    letter-spacing: var(--fh-tracking-none);
     font-variant-numeric: tabular-nums;
-    place-items: center;
-    display: inline-grid;
+  }
+
+  .fh-eyebrow-pill > .fh-kbd {
+    padding-block: 0;
   }
 
   .fh-eyebrow-pill .fh-eyebrow-pill__action {
     align-items: center;
     gap: var(--fh-gap-bound);
-    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_rule);
     color: var(--fh-color-text);
-    font-weight: var(--fh-weight-bold);
+    font-weight: var(--_strong);
     margin-inline-start: var(--fh-gap-bound);
-    padding-inline-start: var(--fh-inset-tight);
+    padding-inline-start: var(--_pad-b);
     text-decoration: none;
     display: inline-flex;
 
     &:after {
       content: "";
+      inline-size: var(--_icon);
       aspect-ratio: 1;
-      inline-size: .75em;
       mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
       transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
       background-color: currentColor;
     }
 
     &:hover:after {
-      translate: .1rem -.1rem;
+      translate: var(--_nudge) calc(-1 * var(--_nudge));
     }
   }
 
   .fh-eyebrow-pill > .fh-avatar {
-    --fh-avatar-size: 1.25rem;
-    margin-inline-start: calc(-1 * var(--fh-gap-bound));
+    --fh-avatar-size: var(--_eye-part);
+    margin-block: calc(-1 * var(--_pad-b));
+    margin-inline-start: calc(-1 * var(--_pad-b));
   }
 
   .fh-dot--ring {
@@ -9345,6 +9368,14 @@
     content: none;
   }
 
+  .fh-chip--avatar {
+    color: var(--fh-color-text);
+  }
+
+  .fh-chip--avatar:before {
+    content: none;
+  }
+
   .fh-chip--solid {
     border-style: var(--fh-card-border-style, solid);
     border-color: var(--fh-tone);
@@ -13526,21 +13557,86 @@
     --fh-avatar-ratio: 1;
   }
 
+  .fh-value:is(.fh-value--full, .fh-value--picker) {
+    inline-size: 100%;
+    min-inline-size: 0;
+    container: fh-entity / inline-size;
+  }
+
   .fh-value:is(.fh-value--full, .fh-value--picker) > .fh-entity, .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity-picker > .fh-entity {
-    align-items: flex-start;
-    row-gap: var(--fh-gap-bound);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__value {
+    min-inline-size: 0;
+  }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who {
+    flex: auto;
+    min-inline-size: 3ch;
   }
 
   .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who > :is(b, small) {
-    text-overflow: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who > b {
     white-space: normal;
-    overflow: visible;
+    overflow-wrap: normal;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+
+  .fh-value--full > .fh-entity {
+    padding-inline-end: 0;
   }
 
   .fh-value--full .fh-entity__stat {
-    flex: 100%;
-    justify-content: flex-start;
+    flex: none;
+  }
+
+  @container fh-entity (width <= 14rem) {
+    .fh-value .fh-entity {
+      --_avatar: var(--fh-value-avatar-inline, var(--fh-avatar-inline));
+      --fh-avatar-initials: var(--fh-type-label);
+      gap: var(--fh-gap-related);
+      padding-inline-start: var(--fh-gap-bound);
+    }
+
+    .fh-value .fh-entity-picker > .fh-entity {
+      padding-inline-end: var(--fh-gap-related);
+    }
+
+    .fh-value .fh-entity__sep {
+      margin-inline-end: calc(var(--fh-gap-related) * -1);
+    }
+
+    .fh-value .fh-entity__stat {
+      padding-inline-start: var(--fh-gap-related);
+    }
+
+    .fh-value .fh-entity__stat > small {
+      display: none;
+    }
+  }
+
+  .fh-value--ref-key .fh-ref {
+    align-items: baseline;
+    row-gap: var(--fh-gap-bound);
+    flex-wrap: wrap;
+    min-inline-size: 0;
+  }
+
+  .fh-value--ref-key .fh-ref__label {
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
   }
 
   .fh-value .fh-chip > .fh-avatar {

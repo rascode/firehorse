@@ -45,7 +45,7 @@
 | `BTN` | Button | Actions | 1 Solid (7) · 2 Line (2) · 3 States (2) · 4 Round icon (2) · 5 Etched pill (1) | [open](https://firehorse.rascode.dev/components/actions/button/) |
 | `ACT` | Action & link | Actions | 1 Action (4) · 2 Link (2) · 3 Cue (4) | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
-| `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
+| `EYE` | Eyebrow pill | Actions | 1 Lines (7) · 2 Shapes (4) · 3 Fills (4) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
 | `CHP` | Chips | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
 | `CUB` | Cubes | Actions | 1 Cubes (6) · 2 Cube cards (4) | [open](https://firehorse.rascode.dev/components/actions/cubes/) |
 | `LGS` | Logo strip | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/logo-strip/) |
@@ -1150,11 +1150,11 @@ Classes: `fh-breadcrumb` `fh-breadcrumb__back` `fh-dot` `fh-dot--live` `fh-clust
 
 The Doppler pill as a full component: a dot and a short label that sit above a heading. Combine a shape, a line and any of the parts. Every variant takes the tone from data-tone.
 
-Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh-eyebrow-pill--dotted` `fh-eyebrow-pill--double` `fh-dot--square` `fh-eyebrow-pill--rounded` `fh-eyebrow-pill--sharp` `fh-dot--diamond` `fh-eyebrow-pill--oval` `fh-eyebrow-pill--tab` `fh-eyebrow-pill--tone` `fh-eyebrow-pill--solid` `fh-dot--blink` `fh-eyebrow-pill--gradient` `fh-eyebrow-pill--glass` `fh-dot--ring` `fh-eyebrow-pill--ghost` `fh-eyebrow-pill--bracket` `fh-dot--bar` `fh-eyebrow-pill--underline` `fh-eyebrow-pill__index` `fh-eyebrow-pill__seg` `fh-eyebrow-pill__count` `fh-eyebrow-pill--filled-end` `fh-eyebrow-pill--sentence` `fh-avatar` `fh-avatar--circle` `fh-eyebrow-pill__action` `fh-kbd` `fh-eyebrow-pill--sm` `fh-eyebrow-pill--lg`
+Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--tone` `fh-eyebrow-pill--lg` `fh-eyebrow-pill--etched` `fh-eyebrow-pill--dotted` `fh-eyebrow-pill--double` `fh-dot--square` `fh-eyebrow-pill--rounded` `fh-eyebrow-pill--sharp` `fh-dot--diamond` `fh-eyebrow-pill--oval` `fh-eyebrow-pill--tab` `fh-eyebrow-pill--solid` `fh-dot--blink` `fh-eyebrow-pill--gradient` `fh-eyebrow-pill--glass` `fh-dot--ring` `fh-eyebrow-pill--ghost` `fh-eyebrow-pill--bracket` `fh-dot--bar` `fh-eyebrow-pill--underline` `fh-eyebrow-pill__index` `fh-eyebrow-pill__seg` `fh-eyebrow-pill__count` `fh-eyebrow-pill--filled-end` `fh-eyebrow-pill--sentence` `fh-avatar` `fh-avatar--circle` `fh-eyebrow-pill__action` `fh-kbd`
 
 ### EYE-1 · Lines
 
-.fh-eyebrow-pill · --etched · --dotted · --double
+.fh-eyebrow-pill · --tone · --lg · --etched · --dotted · --double
 
 #### EYE-1.1 · Solid line
 
@@ -1162,22 +1162,40 @@ Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh
 <p class="fh-eyebrow-pill" data-tone="sky" data-fh="EYE-1.1"><span class="fh-dot fh-dot--live"></span>Solid line</p>
 ```
 
-#### EYE-1.2 · Etched line
+#### EYE-1.2 · Tone tinted
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-1.2"><span class="fh-dot fh-dot--live"></span>Etched line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh="EYE-1.2"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
 ```
 
-#### EYE-1.3 · Dotted line
+#### EYE-1.3 · Large
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh="EYE-1.3"><span class="fh-dot"></span>Dotted line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--lg" data-tone="accent" data-fh="EYE-1.3"><span class="fh-dot fh-dot--live"></span>Large</p>
 ```
 
-#### EYE-1.4 · Double line
+#### EYE-1.4 · Large, toned
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh="EYE-1.4"><span class="fh-dot fh-dot--square"></span>Double line</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--tone" data-tone="amber" data-fh="EYE-1.4"><span class="fh-dot fh-dot--live"></span>Large, toned</p>
+```
+
+#### EYE-1.5 · Etched line
+
+```html
+<p class="fh-eyebrow-pill fh-eyebrow-pill--etched" data-tone="teal" data-fh="EYE-1.5"><span class="fh-dot fh-dot--live"></span>Etched line</p>
+```
+
+#### EYE-1.6 · Dotted line
+
+```html
+<p class="fh-eyebrow-pill fh-eyebrow-pill--dotted" data-tone="lime" data-fh="EYE-1.6"><span class="fh-dot"></span>Dotted line</p>
+```
+
+#### EYE-1.7 · Double line
+
+```html
+<p class="fh-eyebrow-pill fh-eyebrow-pill--double" data-tone="amber" data-fh="EYE-1.7"><span class="fh-dot fh-dot--square"></span>Double line</p>
 ```
 
 ### EYE-2 · Shapes
@@ -1210,36 +1228,30 @@ Classes: `fh-eyebrow-pill` `fh-dot` `fh-dot--live` `fh-eyebrow-pill--etched` `fh
 
 ### EYE-3 · Fills
 
---tone · --solid · --gradient · --glass · --ghost
+--solid · --gradient · --glass · --ghost
 
-#### EYE-3.1 · Tone tinted
+#### EYE-3.1 · Solid tone
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--tone" data-tone="violet" data-fh="EYE-3.1"><span class="fh-dot fh-dot--live"></span>Tone tinted</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh="EYE-3.1"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
 ```
 
-#### EYE-3.2 · Solid tone
+#### EYE-3.2 · Gradient sweep
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--solid" data-tone="sky" data-fh="EYE-3.2"><span class="fh-dot fh-dot--blink"></span>Solid tone</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh="EYE-3.2"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
 ```
 
-#### EYE-3.3 · Gradient sweep
+#### EYE-3.3 · Glass
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--gradient" data-tone="fuchsia" data-fh="EYE-3.3"><span class="fh-dot fh-dot--live"></span>Gradient sweep</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh="EYE-3.3"><span class="fh-dot fh-dot--ring"></span>Glass</p>
 ```
 
-#### EYE-3.4 · Glass
+#### EYE-3.4 · Ghost
 
 ```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--glass" data-tone="teal" data-fh="EYE-3.4"><span class="fh-dot fh-dot--ring"></span>Glass</p>
-```
-
-#### EYE-3.5 · Ghost
-
-```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh="EYE-3.5"><span class="fh-dot fh-dot--live"></span>Ghost</p>
+<p class="fh-eyebrow-pill fh-eyebrow-pill--ghost" data-tone="lime" data-fh="EYE-3.4"><span class="fh-dot fh-dot--live"></span>Ghost</p>
 ```
 
 ### EYE-4 · Edges
@@ -1306,22 +1318,6 @@ __index · __seg · __count · --filled-end
 
 ```html
 <p class="fh-eyebrow-pill fh-eyebrow-pill--etched fh-eyebrow-pill--sentence" data-tone="neutral" data-fh="EYE-6.3"><span>Search the docs</span><kbd class="fh-kbd">⌘K</kbd></p>
-```
-
-### EYE-7 · Sizes
-
---sm · --lg
-
-#### EYE-7.1 · Small
-
-```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--sm" data-tone="lime" data-fh="EYE-7.1"><span class="fh-dot"></span>Small</p>
-```
-
-#### EYE-7.2 · Large
-
-```html
-<p class="fh-eyebrow-pill fh-eyebrow-pill--lg fh-eyebrow-pill--etched" data-tone="accent" data-fh="EYE-7.2"><span class="fh-dot fh-dot--live"></span>Large</p>
 ```
 
 ## CHP · Chips
@@ -3591,27 +3587,27 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `CUC-03` | `CUB-2.3` |
 | `EYE-01` | `EYE-6.1` |
 | `EYE-02` | `EYE-1.1` |
-| `EYE-03` | `EYE-1.2` |
-| `EYE-04` | `EYE-1.3` |
-| `EYE-05` | `EYE-1.4` |
+| `EYE-03` | `EYE-1.5` |
+| `EYE-04` | `EYE-1.6` |
+| `EYE-05` | `EYE-1.7` |
 | `EYE-06` | `EYE-2.1` |
 | `EYE-07` | `EYE-2.2` |
 | `EYE-08` | `EYE-2.3` |
-| `EYE-09` | `EYE-3.1` |
-| `EYE-10` | `EYE-3.2` |
-| `EYE-11` | `EYE-3.3` |
-| `EYE-12` | `EYE-3.4` |
+| `EYE-09` | `EYE-1.2` |
+| `EYE-10` | `EYE-3.1` |
+| `EYE-11` | `EYE-3.2` |
+| `EYE-12` | `EYE-3.3` |
 | `EYE-13` | `EYE-4.1` |
 | `EYE-14` | `EYE-4.2` |
-| `EYE-15` | `EYE-3.5` |
+| `EYE-15` | `EYE-3.4` |
 | `EYE-16` | `EYE-2.4` |
 | `EYE-17` | `EYE-5.1` |
 | `EYE-18` | `EYE-5.2` |
 | `EYE-19` | `EYE-5.3` |
 | `EYE-20` | `EYE-6.2` |
 | `EYE-21` | `EYE-6.3` |
-| `EYE-22` | `EYE-7.1` |
-| `EYE-23` | `EYE-7.2` |
+| `EYE-22` | `EYE-1.1` |
+| `EYE-23` | `EYE-1.3` |
 | `KVL` | `TBL-3` |
 | `KVL-1` | `TBL-3` |
 | `KVL-1.1` | `TBL-3.1` |
