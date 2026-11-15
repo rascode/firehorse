@@ -194,7 +194,8 @@
     container-type: inline-size;
     scrollbar-width: thin;
 
-    & > .fh-tiles { --fh-tiles-min: var(--fh-menu-tiles-min, 8rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min, 8rem)), 1fr)); border-block-start: var(--_etch-soft); }
+    & > .fh-tiles { --fh-tiles-min: var(--fh-menu-tiles-min, 8rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiles-min, 8rem)), 1fr)); border-block: var(--_etch-soft); }
+    /* (a tile grid closes on its own soft rule: the cells' bottom rules are pulled 1px and the last row's is clipped) */
     & > .fh-tiles:has(> .fh-tile--command, > li > .fh-tile--command) { --fh-tiles-min: var(--fh-menu-command-min, 12rem); }
   }
 
