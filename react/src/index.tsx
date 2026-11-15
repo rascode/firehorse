@@ -24,6 +24,17 @@ export {
   type SideNavFlyoutProps,
   type NavBadgeProps,
 } from "./sidenav";
+export {
+  Sidebar,
+  type SidebarProps,
+  type SidebarMetric,
+  type SidebarPage,
+  type SidebarArea,
+  type SidebarGroup,
+  type SidebarSide,
+  type SidebarRenderLink,
+  type SidebarLinkProps,
+} from "./sidebar";
 
 type Tone = "sky" | "teal" | "lime" | "amber" | "orange" | "accent" | "rose" | "fuchsia" | "violet" | "neutral";
 const cx = (...c: Array<string | false | undefined | null>) => c.filter(Boolean).join(" ");

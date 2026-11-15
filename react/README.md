@@ -20,7 +20,47 @@ import { Button, Dialog, DialogTrigger, DialogContent, DropdownMenu, DropdownMen
 </Dialog>
 ```
 
-Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2), PasswordInput, **MoneyInput**.
+Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2), **Sidebar** (admin sidebar, SBR), PasswordInput, **MoneyInput**.
+
+Sidebar (SBR):
+
+```tsx
+import { Sidebar } from "@rascode/firehorse-react";
+
+<Sidebar
+  label="Helm"
+  activeId="components"
+  groups={[
+    {
+      id: "pinned",
+      areas: [
+        { id: "overview", label: "Overview", href: "/overview", icon: "layout-grid", tone: "amber" },
+        { id: "goals", label: "Goals", href: "/goals", icon: "target", tone: "lime", metric: { value: 3, max: 5, kind: "ratio" } },
+      ],
+    },
+    {
+      id: "brands",
+      label: "Brands",
+      index: "02",
+      areas: [
+        {
+          id: "firehorse",
+          label: "Firehorse",
+          href: "/firehorse",
+          icon: "flame",
+          tone: "rose",
+          pages: [
+            { id: "components", label: "Components", href: "/firehorse/components" },
+            { id: "releases", label: "Releases", href: "/firehorse/releases" },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+```
+
+`side` is `"open"` or `"rail"` (`defaultSide`, or `side` with `onSideChange`). An area with `pages` expands under the row. `window: true` opens those pages in the area window, grouped by `subgroup`. Spread `renderLink` props onto your own link, for example `renderLink={(props) => <Link {...props} />}`. In the rail, an area's pages open in a flyout on hover or focus.
 
 Themes:
 
