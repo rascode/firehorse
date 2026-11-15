@@ -634,7 +634,7 @@
      and no scroll bar at all (the list still scrolls), so a cube is never clipped or crowded. */
   .fh-sidebar[data-fh-side="rail"] :is(.fh-sidebar__body, .fh-sidebar__window-body) {
     padding-inline: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
     scrollbar-width: none;
   }
 
@@ -678,6 +678,7 @@
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__list {
     gap: var(--fh-gap-grouped);
+    overflow: visible;
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__item {
@@ -688,34 +689,63 @@
     min-block-size: 2.5rem;
     padding-inline: 0;
     padding-block: var(--fh-inset-tight);
+    overflow: visible;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__item .fh-badge {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__cube {
     position: relative;
+    overflow: visible;
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"],
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"]:not([data-display]),
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="dot"]:not([data-display]) {
     position: absolute;
-    inset-block-start: 0;
-    inset-inline-end: calc(50% - var(--fh-sidebar-cube) / 2 - 0.35rem);
+    z-index: 1;
+    inset-block-start: calc(50% - var(--fh-sidebar-cube) * 0.55);
+    inset-inline-start: calc(50% + var(--fh-sidebar-cube) * 0.12);
+    inset-inline-end: auto;
+    translate: 0 0;
     clip-path: none;
     inline-size: auto;
-    block-size: auto;
+    block-size: 1.15rem;
+    min-inline-size: 1.15rem;
     margin: 0;
-    min-inline-size: 0;
+    padding-inline: var(--fh-gap-bound);
     padding-block: 0;
-    padding-inline: 0.2rem;
+    display: inline-grid;
+    place-items: center;
     border-radius: var(--fh-radius-pill);
-    background: var(--_fill);
-    box-shadow: 0 0 0 var(--fh-border-thin) var(--_fill);
+    background-color: color-mix(in oklab, var(--_c) 10%, transparent);
+    box-shadow: 0 0 0 var(--fh-border-heavy) var(--_fill);
     border: 0;
     font-size: var(--fh-text-micro);
-    line-height: 1.2;
+    line-height: 1;
     overflow: visible;
     white-space: nowrap;
     color: var(--fh-color-text);
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"][data-tone="warn"],
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"][data-tone="warn"]:not([data-display]) {
+    background-color: color-mix(in oklab, var(--fh-tone-amber) 22%, transparent);
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"][data-tone="danger"],
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"][data-tone="danger"]:not([data-display]) {
+    background-color: color-mix(in oklab, var(--fh-color-danger) 22%, transparent);
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"] .fh-sidebar__metric-denom,
@@ -725,11 +755,12 @@
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bar"] {
     position: absolute;
-    inset-block-end: calc(50% - var(--fh-sidebar-cube) / 2 - 0.55rem);
-    inset-inline: calc(50% - var(--fh-sidebar-cube) / 2);
+    inset-block-start: calc(50% + var(--fh-sidebar-cube) / 2 + var(--fh-gap-bound));
+    inset-inline-start: 50%;
+    translate: -50% 0;
     clip-path: none;
     inline-size: var(--fh-sidebar-cube);
-    block-size: auto;
+    block-size: var(--fh-border-heavy);
     margin: 0;
     padding: 0;
     display: block;
@@ -744,23 +775,21 @@
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bar"]::before {
     content: "";
-    display: block;
-    block-size: 2px;
+    position: absolute;
+    inset: 0;
     border-radius: var(--fh-radius-sm);
     background: color-mix(in oklab, var(--fh-color-etch) 55%, transparent);
-    overflow: hidden;
-    position: relative;
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bar"]::after {
     content: "";
     position: absolute;
-    inset-block-end: 0;
+    inset-block: 0;
     inset-inline-start: 0;
-    block-size: 2px;
     inline-size: var(--fh-metric-value, 0%);
+    block-size: 100%;
     border-radius: var(--fh-radius-sm);
-    background: var(--fh-color-text-subtle);
+    background: var(--_c);
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bar"][data-tone="warn"]::after {
