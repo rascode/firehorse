@@ -469,10 +469,6 @@
       "card": "compact",
       "metric": "compact-delta",
       "form": "money-input",
-      "align": {
-        "cell": "end",
-        "record": "end"
-      },
       "mono": true,
       "text": "amount-code",
       "choices": {
@@ -565,10 +561,6 @@
       "card": "duration",
       "metric": "duration",
       "form": "duration-input",
-      "align": {
-        "cell": "end",
-        "record": "end"
-      },
       "text": "iso-duration",
       "note": "Durations are numbers drawn 8h 34m; duration_iso8601 is read as seconds (decision 4).",
       "choices": {
@@ -597,10 +589,6 @@
       "card": "plain",
       "metric": null,
       "form": "number-input",
-      "align": {
-        "cell": "end",
-        "record": "end"
-      },
       "grouping": false,
       "text": "digits",
       "note": "An identifier-like number (chain_id) shows its digits without thousands separators (decision 4).",
@@ -625,10 +613,6 @@
       "card": "plain",
       "metric": "plain-delta",
       "form": "number-input",
-      "align": {
-        "cell": "end",
-        "record": "end"
-      },
       "text": "number-unit",
       "choices": {
         "cell": [
@@ -2113,7 +2097,7 @@
   "rules": [
     "Status is dot and word in a table cell, and a chip in a record, card and board.",
     "A value with options never renders as free text. If it has an option set, it gets an Option or Options part.",
-    "Numbers align right and use tabular figures in every cell and record row.",
+    "Numbers align left like every other value (Rascode 2026-11-15) and use tabular figures in every cell and record row.",
     "Money always knows its currency. Cents show in record and form; cells may round to whole units only when every row in the column does.",
     "The field overrides the grid, the grid overrides the surface. A field may name a variant (display: { cell: \"chip\" }); a surface never can.",
     "Editable is the same part with a chevron or a control, never a different-looking part. Read and edit share size, colour and position.",

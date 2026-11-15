@@ -63,7 +63,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 <!-- rules:start -->
 1. Status is dot and word in a table cell, and a chip in a record, card and board.
 2. A value with options never renders as free text. If it has an option set, it gets an Option or Options part.
-3. Numbers align right and use tabular figures in every cell and record row.
+3. Numbers align left like every other value (Rascode 2026-11-15) and use tabular figures in every cell and record row.
 4. Money always knows its currency. Cents show in record and form; cells may round to whole units only when every row in the column does.
 5. The field overrides the grid, the grid overrides the surface. A field may name a variant (display: { cell: "chip" }); a surface never can.
 6. Editable is the same part with a chevron or a control, never a different-looking part. Read and edit share size, colour and position.
@@ -92,12 +92,12 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | entity, person or org (One person is one face: avatar and name in a metric, never a stack (DR2)) | `avatar-name` | `full` | `chip` | `avatar-name` | `picker` | `name` | VAL-3 |
 | entity, rich record (application, organization, brand, AI model) (A record with its own logo or icon (an application, an organization such as Claude's maker, a brand, an AI model) draws its avatar (or initials) beside its reference in every context, summary tiles included (decision 10, Rascode 2026-11-14)) | `avatar-ref` | `avatar-ref` | `avatar-ref` | `avatar-ref` | `picker` | `name` | VAL-3 |
 | entity, record (The form picker row shows name and description) | `ref` | `ref-key` | `name` | · | `picker` | `name` | VAL-3 |
-| money | `amount`, right | `amount-code`, right | `compact` | `compact-delta` | `money-input` | `amount-code` | VAL-4 |
+| money | `amount` | `amount-code` | `compact` | `compact-delta` | `money-input` | `amount-code` | VAL-4 |
 | ratio (Metric uses meter instead of ring when the field has a target) | `bar` | `text` | `ring` | `ring` | `range` | `percent` | VAL-5 |
 | series (Series is the 14th shape: a sparkline, and with its last value in record and metric (decision 4)) | `sparkline` | `sparkline-last` | `sparkline` | `sparkline-last` | · | `last` | VAL-6 |
-| number, duration (Durations are numbers drawn 8h 34m; duration_iso8601 is read as seconds (decision 4)) | `duration`, right | `duration`, right | `duration` | `duration` | `duration-input` | `iso-duration` | VAL-6 |
-| number, identifier (An identifier-like number (chain_id) shows its digits without thousands separators (decision 4)) | `plain`, right | `plain`, right | `plain` | · | `number-input` | `digits` | VAL-6 |
-| number | `plain`, right | `unit`, right | `plain` | `plain-delta` | `number-input` | `number-unit` | VAL-6 |
+| number, duration (Durations are numbers drawn 8h 34m; duration_iso8601 is read as seconds (decision 4)) | `duration` | `duration` | `duration` | `duration` | `duration-input` | `iso-duration` | VAL-6 |
+| number, identifier (An identifier-like number (chain_id) shows its digits without thousands separators (decision 4)) | `plain` | `plain` | `plain` | · | `number-input` | `digits` | VAL-6 |
+| number | `plain` | `unit` | `plain` | `plain-delta` | `number-input` | `number-unit` | VAL-6 |
 | temporal, date | `date-relative` | `date` | `relative` | `relative` | `date-picker` | `iso-date` | VAL-7 |
 | temporal, time of day (Not in the approved grid: a time of day has no relative form) | `time` | `time` | `time` | · | `time-input` | `time` | VAL-7 |
 | temporal, moment | `date-relative` | `datetime` | `relative` | `relative` | `date-picker` | `iso-datetime` | VAL-7 |
@@ -607,9 +607,9 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 
 ```html
 <div class="fh-cluster">
-  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-4.7"><b class="fh-cube" data-tone="teal" title="$48,200.00 USD">$48.2K</b></span>
-  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-4.7"><b class="fh-cube" data-tone="violet" title="$1,250,000.00 USD">$1.3M</b></span>
-  <span class="fh-value fh-value--cube fh-value--end fh-value--lg" data-fh="VAL-4.7"><b class="fh-cube" data-tone="teal" title="$48,200.00 USD">$48.2K</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-4.7"><b class="fh-cube" data-tone="teal" title="$48,200.00 USD">$48.2K</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-4.7"><b class="fh-cube" data-tone="violet" title="$1,250,000.00 USD">$1.3M</b></span>
+  <span class="fh-value fh-value--cube fh-value--lg" data-fh="VAL-4.7"><b class="fh-cube" data-tone="teal" title="$48,200.00 USD">$48.2K</b></span>
 </div>
 ```
 
@@ -753,9 +753,9 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 
 ```html
 <div class="fh-cluster">
-  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-6.7"><b class="fh-cube" data-tone="sky">1,250</b></span>
-  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-6.7"><b class="fh-cube" data-tone="lime">42</b></span>
-  <span class="fh-value fh-value--cube fh-value--end fh-value--lg" data-fh="VAL-6.7"><b class="fh-cube" data-tone="sky">1,250</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-6.7"><b class="fh-cube" data-tone="sky">1,250</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-6.7"><b class="fh-cube" data-tone="lime">42</b></span>
+  <span class="fh-value fh-value--cube fh-value--lg" data-fh="VAL-6.7"><b class="fh-cube" data-tone="sky">1,250</b></span>
 </div>
 ```
 

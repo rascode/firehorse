@@ -164,10 +164,10 @@ t("avatars (DR2): shape by kind, inline and identity sizes, stacks of 3 + N, two
   assert.match(stack, /aria-label="Ava, Mateo, Eleanor and 3 more"/);
 });
 
-t("numbers and money align right with tabular figures; money knows its currency", () => {
+t("numbers and money align left like every other value, with tabular figures; money knows its currency", () => {
   const m = resolveValue({ semanticType: "fiat_amount", currency: "USD" }, "cell");
   assert.equal(m.variant, "amount");
-  assert.equal(m.align, "end");
+  assert.equal(m.align, "start");
   assert.equal(m.figures, "tabular");
   assert.equal(m.mono, true);
   assert.equal(m.currency, "USD");
@@ -178,7 +178,7 @@ t("numbers and money align right with tabular figures; money knows its currency"
   const q = resolveValue({ semanticType: "bitrate_kbps" }, "record");
   assert.equal(q.variant, "unit");
   assert.equal(q.unit, "kbps");
-  assert.equal(q.align, "end");
+  assert.equal(q.align, "start");
   assert.equal(resolveValue({ semanticType: "quantity" }, "card").figures, null);
 });
 

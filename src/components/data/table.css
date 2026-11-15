@@ -111,8 +111,9 @@
     & tbody tr[data-depth="1"] :is(td, th) { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
     & tbody tr[data-depth="1"] :is(td, th) { border-block-start-color: transparent; }
 
+    /* Figures align left like every other value (Rascode 2026-11-15); fh-num keeps them mono and tabular. */
     & .fh-num {
-      text-align: end;
+      font-variant-numeric: tabular-nums;
       font-family: var(--fh-font-mono);
       letter-spacing: var(--fh-tracking-mono);
     }
@@ -167,7 +168,5 @@
     inline-size: 100%;
   }
 
-  .fh-table th.fh-num .fh-table__th { justify-content: flex-end; }
   .fh-table td > .fh-value { max-inline-size: 100%; vertical-align: middle; }
-  .fh-table td.fh-num > .fh-value { justify-content: flex-end; }
 }
