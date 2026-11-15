@@ -666,7 +666,7 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 
 ### BTN · Button
 
-Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge. `--flat` is solid black with white text in every scheme. `--disc` is one glyph on a round disc, in the text colour or, with `data-tone`, in a tone. `--etched` is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.
+Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled one). Primary buttons get an arrow; `data-tone` lights the top edge; `--lg` is the one size step (the text, nothing else). `--flat` is solid black with white text in every scheme. `--disc` is one glyph on a round disc, in the text colour or, with `data-tone`, in a tone. `--etched` is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.
 
 ```html
 <!-- BTN-1.1 · Solid › Primary -->
@@ -675,14 +675,20 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 <!-- BTN-1.2 · Solid › Tone edge -->
 <a class="fh-button" href="#c-button" data-tone="sky" data-fh="BTN-1.2">Tone edge</a>
 
-<!-- BTN-1.3 · Solid › Secondary -->
-<button class="fh-button fh-button--secondary" type="button" data-fh="BTN-1.3">Secondary</button>
+<!-- BTN-1.3 · Solid › Large -->
+<a class="fh-button fh-button--lg" href="#c-button" data-fh="BTN-1.3">Discuss a project</a>
 
-<!-- BTN-1.4 · Solid › Accent -->
-<button class="fh-button fh-button--accent" type="button" data-fh="BTN-1.4">Accent</button>
+<!-- BTN-1.4 · Solid › Large, toned -->
+<a class="fh-button fh-button--lg" href="#c-button" data-tone="sky" data-fh="BTN-1.4">Tone edge</a>
 
-<!-- BTN-1.5 · Solid › Flat -->
-<button class="fh-button fh-button--flat" type="button" data-fh="BTN-1.5">Flat</button>
+<!-- BTN-1.5 · Solid › Secondary -->
+<button class="fh-button fh-button--secondary" type="button" data-fh="BTN-1.5">Secondary</button>
+
+<!-- BTN-1.6 · Solid › Accent -->
+<button class="fh-button fh-button--accent" type="button" data-fh="BTN-1.6">Accent</button>
+
+<!-- BTN-1.7 · Solid › Flat -->
+<button class="fh-button fh-button--flat" type="button" data-fh="BTN-1.7">Flat</button>
 
 <!-- BTN-2.1 · Line › Outline -->
 <button class="fh-button fh-button--outline" type="button" data-fh="BTN-2.1">Outline</button>
@@ -693,8 +699,8 @@ Flat 3px rect, mono caps, solid fill (`data-fh-button="convex"` for the bevelled
 <!-- BTN-3.1 · States › Busy -->
 <button class="fh-button" type="button" aria-busy="true" data-fh="BTN-3.1">Saving</button>
 
-<!-- BTN-3.2 · States › Small, disabled -->
-<button class="fh-button fh-button--sm" type="button" disabled data-fh="BTN-3.2">Disabled</button>
+<!-- BTN-3.2 · States › Disabled -->
+<button class="fh-button" type="button" disabled data-fh="BTN-3.2">Disabled</button>
 
 <!-- BTN-4.1 · Round icon › Disc -->
 <button class="fh-button fh-button--disc" type="button" aria-label="Typeface" data-fh="BTN-4.1"><i class="fh-icon fh-icon--type" aria-hidden="true"></i></button>

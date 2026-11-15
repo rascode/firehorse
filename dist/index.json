@@ -1728,16 +1728,16 @@
       "anchor": "c-button",
       "page": "/components/actions/",
       "url": "https://firehorse.rascode.dev/components/actions/button/",
-      "summary": "Flat 3px rect, mono caps, solid fill (data-fh-button=\"convex\" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge. --flat is solid black with white text in every scheme. --disc is one glyph on a round disc, in the text colour or, with data-tone, in a tone. --etched is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.",
+      "summary": "Flat 3px rect, mono caps, solid fill (data-fh-button=\"convex\" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge; --lg is the one size step (the text, nothing else). --flat is solid black with white text in every scheme. --disc is one glyph on a round disc, in the text colour or, with data-tone, in a tone. --etched is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.",
       "classes": [
         "fh-button",
         "fh-roll",
+        "fh-button--lg",
         "fh-button--secondary",
         "fh-button--accent",
         "fh-button--flat",
         "fh-button--outline",
         "fh-button--ghost",
-        "fh-button--sm",
         "fh-button--disc",
         "fh-icon",
         "fh-button--etched"
@@ -1753,7 +1753,9 @@
             "BTN-1.2",
             "BTN-1.3",
             "BTN-1.4",
-            "BTN-1.5"
+            "BTN-1.5",
+            "BTN-1.6",
+            "BTN-1.7"
           ],
           "markup": "<a class=\"fh-button\" href=\"#c-button\" data-fh=\"BTN-1.1\"><span class=\"fh-roll\">Discuss a project</span></a>",
           "markupFrom": "variant"
@@ -1829,17 +1831,41 @@
         {
           "id": "BTN-1.3",
           "group": "BTN-1",
+          "name": "Large",
+          "classes": [
+            "fh-button",
+            "fh-button--lg"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-button fh-button--lg\" href=\"#c-button\" data-fh=\"BTN-1.3\">Discuss a project</a>",
+          "tier": "free"
+        },
+        {
+          "id": "BTN-1.4",
+          "group": "BTN-1",
+          "name": "Large, toned",
+          "classes": [
+            "fh-button",
+            "fh-button--lg"
+          ],
+          "config": {},
+          "markup": "<a class=\"fh-button fh-button--lg\" href=\"#c-button\" data-tone=\"sky\" data-fh=\"BTN-1.4\">Tone edge</a>",
+          "tier": "free"
+        },
+        {
+          "id": "BTN-1.5",
+          "group": "BTN-1",
           "name": "Secondary",
           "classes": [
             "fh-button",
             "fh-button--secondary"
           ],
           "config": {},
-          "markup": "<button class=\"fh-button fh-button--secondary\" type=\"button\" data-fh=\"BTN-1.3\">Secondary</button>",
+          "markup": "<button class=\"fh-button fh-button--secondary\" type=\"button\" data-fh=\"BTN-1.5\">Secondary</button>",
           "tier": "free"
         },
         {
-          "id": "BTN-1.4",
+          "id": "BTN-1.6",
           "group": "BTN-1",
           "name": "Accent",
           "classes": [
@@ -1847,11 +1873,11 @@
             "fh-button--accent"
           ],
           "config": {},
-          "markup": "<button class=\"fh-button fh-button--accent\" type=\"button\" data-fh=\"BTN-1.4\">Accent</button>",
+          "markup": "<button class=\"fh-button fh-button--accent\" type=\"button\" data-fh=\"BTN-1.6\">Accent</button>",
           "tier": "free"
         },
         {
-          "id": "BTN-1.5",
+          "id": "BTN-1.7",
           "group": "BTN-1",
           "name": "Flat",
           "classes": [
@@ -1859,7 +1885,7 @@
             "fh-button--flat"
           ],
           "config": {},
-          "markup": "<button class=\"fh-button fh-button--flat\" type=\"button\" data-fh=\"BTN-1.5\">Flat</button>",
+          "markup": "<button class=\"fh-button fh-button--flat\" type=\"button\" data-fh=\"BTN-1.7\">Flat</button>",
           "tier": "free"
         },
         {
@@ -1900,13 +1926,12 @@
         {
           "id": "BTN-3.2",
           "group": "BTN-3",
-          "name": "Small, disabled",
+          "name": "Disabled",
           "classes": [
-            "fh-button",
-            "fh-button--sm"
+            "fh-button"
           ],
           "config": {},
-          "markup": "<button class=\"fh-button fh-button--sm\" type=\"button\" disabled data-fh=\"BTN-3.2\">Disabled</button>",
+          "markup": "<button class=\"fh-button\" type=\"button\" disabled data-fh=\"BTN-3.2\">Disabled</button>",
           "tier": "free"
         },
         {
@@ -1952,12 +1977,12 @@
         "fh-dl",
         "fh-button",
         "fh-roll",
+        "fh-button--lg",
         "fh-button--secondary",
         "fh-button--accent",
         "fh-button--flat",
         "fh-button--outline",
         "fh-button--ghost",
-        "fh-button--sm",
         "fh-button--disc",
         "fh-icon",
         "fh-button--etched"
@@ -6862,13 +6887,13 @@
     "AVZ": "AVT-2",
     "BTN-01": "BTN-1.1",
     "BTN-02": "BTN-1.2",
-    "BTN-03": "BTN-1.3",
+    "BTN-03": "BTN-1.5",
     "BTN-04": "BTN-2.1",
     "BTN-05": "BTN-2.2",
-    "BTN-06": "BTN-1.4",
+    "BTN-06": "BTN-1.6",
     "BTN-07": "BTN-3.1",
     "BTN-08": "BTN-3.2",
-    "BTN-09": "BTN-1.5",
+    "BTN-09": "BTN-1.7",
     "CAL-01": "CAL-1.1",
     "CAL-02": "CAL-1.3",
     "CAL-03": "CAL-1.2",

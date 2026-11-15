@@ -19,6 +19,14 @@
  * `fh-button--flat` is solid black with white text in every scheme and
  * theme: no sheen, shadow or press. A command in `<code>` keeps its case.
  *
+ * One set of values for every button, set once on .fh-button: --fh-button-text (micro; --lg
+ * caption, the only size step), --fh-button-weight (bold), --fh-button-tracking (widest),
+ * --fh-button-leading (snug), --fh-button-pad-block (inset-tight), --fh-button-pad-inline
+ * (inset-tile), --fh-button-height (control height), --fh-button-arrow (0.85em) and
+ * --fh-button-nudge (0.1em, the way the arrow points), --fh-button-glyph (a disc's glyph, body).
+ * --sm is retired: it changed height and padding, not the text, and the text has no smaller step;
+ * the class stays and does nothing.
+ *
  * Public knobs: --fh-button-bg, --fh-button-fg, --fh-button-border,
  * --fh-button-radius, --fh-button-font. Depth (set by data-fh-button):
  * --fh-button-sheen, --fh-button-shadow, --fh-button-shadow-hover,
@@ -35,14 +43,22 @@
     --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
     --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
     --_lift: var(--fh-button-lift, 0px);
+    --_text: var(--fh-button-text, var(--fh-text-micro));
+    --_weight: var(--fh-button-weight, var(--fh-weight-bold));
+    --_leading: var(--fh-button-leading, var(--fh-leading-snug));
+    --_pad-b: var(--fh-button-pad-block, var(--fh-inset-tight));
+    --_pad-i: var(--fh-button-pad-inline, var(--fh-inset-tile));
+    --_height: var(--fh-button-height, var(--fh-control-height));
+    --_arrow: var(--fh-button-arrow, 0.85em);
+    --_nudge: var(--fh-button-nudge, 0.1em);
 
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--fh-gap-related);
-    min-block-size: 2.25rem;
-    padding: var(--fh-inset-tight) var(--fh-inset-tile);
+    min-block-size: var(--_height);
+    padding: var(--_pad-b) var(--_pad-i);
     border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_border);
     border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     background-color: var(--_bg);
@@ -54,10 +70,10 @@
     );
     color: var(--_fg);
     font-family: var(--fh-button-font, var(--fh-font-mono));
-    font-size: var(--fh-text-micro);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: var(--fh-tracking-widest);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--_text);
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-button-tracking, var(--fh-tracking-widest));
+    line-height: var(--_leading);
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
@@ -92,8 +108,8 @@
     /* Auto arrow on primary CTAs */
     &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc, .fh-button--etched)::after {
       content: "";
-      inline-size: 0.85em;
-      block-size: 0.85em;
+      inline-size: var(--_arrow);
+      block-size: var(--_arrow);
       flex: none;
       background-color: currentColor;
       mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
@@ -101,7 +117,7 @@
     }
 
     &:hover::after {
-      translate: 0.1rem -0.1rem;
+      translate: var(--_nudge) calc(-1 * var(--_nudge));
     }
 
     /* A command or path inside a button keeps its case. */
@@ -210,18 +226,8 @@
     --_fg: var(--fh-color-on-accent);
   }
 
-  /* —— Sizes —— */
-  .fh-button--sm {
-    min-block-size: 2rem;
-    padding: 0.42rem var(--fh-inset-control);
-    font-size: var(--fh-text-micro);
-  }
-
-  .fh-button--lg {
-    min-block-size: 2.75rem;
-    padding: var(--fh-inset-control) 1.35rem;
-    font-size: var(--fh-text-caption);
-  }
+  /* —— Size: one step, the text only —— */
+  .fh-button--lg { --_text: var(--fh-button-text, var(--fh-text-caption)); }
 
   .fh-button--block {
     display: flex;
@@ -229,7 +235,7 @@
   }
 
   .fh-button--icon {
-    inline-size: 2.25rem;
+    inline-size: var(--_height);
     padding: 0;
     aspect-ratio: 1;
   }
@@ -297,6 +303,7 @@
     --_bg: var(--fh-button-bg, var(--fh-color-text));
     --_fg: var(--fh-button-fg, var(--fh-color-canvas));
     --_s: var(--fh-button-disc, 2rem);
+    --_glyph: var(--fh-button-glyph, var(--fh-text-body));
 
     inline-size: var(--_s);
     block-size: var(--_s);
@@ -307,17 +314,16 @@
     border-radius: var(--fh-radius-round);
     background-image: none;
     font-family: var(--fh-font-sans);
-    font-size: calc(var(--_s) * 0.48);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: 0;
-    line-height: 1;
+    font-size: var(--_glyph);
+    letter-spacing: var(--fh-tracking-none);
+    line-height: var(--fh-leading-none);
     text-transform: none;
     transition:
       scale var(--fh-duration-fast) var(--fh-ease-out),
       background-color var(--fh-duration-base) var(--fh-ease-standard),
       color var(--fh-duration-base) var(--fh-ease-standard);
 
-    & > :is(.fh-icon, svg) { --fh-icon-size: calc(var(--_s) * 0.52); inline-size: calc(var(--_s) * 0.52); block-size: calc(var(--_s) * 0.52); margin: 0; }
+    & > :is(.fh-icon, svg) { --fh-icon-size: var(--_glyph); inline-size: var(--_glyph); block-size: var(--_glyph); margin: 0; }
     &:is(:hover, [aria-expanded="true"]) { scale: 1.06; }
     &:active { --_lift: 0px; scale: 0.97; }
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
@@ -352,8 +358,8 @@
    * colour and an ↑ in the accent. On hover the frost firms up, the edge darkens and the ↑ lifts.
    * fh-button--plain drops the ↑. No primary arrow, no tone edge.
    *   <button class="fh-button fh-button--etched" type="button" popovertarget="share">Send to an agent</button>
-   * Knobs: --fh-button-bg (the frost), --fh-button-fg, --fh-button-border (the etch),
-   * --fh-button-etched-height (2.5rem). */
+   * It takes the family's size and text; only the pill, the etch, the frost and the ↑ are its own.
+   * Knobs: --fh-button-bg (the frost), --fh-button-fg, --fh-button-border (the etch). */
   .fh-button--etched {
     --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 90%, transparent));
     --_fg: var(--fh-button-fg, var(--fh-color-text));
@@ -362,13 +368,9 @@
     --_shadow-hover: none;
     --_shadow-active: none;
 
-    min-block-size: var(--fh-button-etched-height, 2.5rem);
-    padding-block: 0;
-    padding-inline: var(--fh-inset-tile);
     border-style: var(--fh-card-border-style, dashed);
     border-radius: var(--fh-radius-pill);
     background-image: none;
-    font-size: calc(var(--fh-text-label) * 1.1);
 
     &:hover {
       --_bg: var(--fh-button-bg, color-mix(in oklab, var(--fh-color-canvas) 97%, transparent));
@@ -378,14 +380,14 @@
 
     &:not(.fh-button--plain)::after {
       content: "";
-      inline-size: 1em;
-      block-size: 1em;
+      inline-size: var(--_arrow);
+      block-size: var(--_arrow);
       flex: none;
       background-color: var(--fh-color-accent);
       mask: var(--fh-icon-arrow-up) center / contain no-repeat;
       transition: translate var(--fh-duration-fast) var(--fh-ease-out), rotate var(--fh-duration-slow) var(--fh-ease-out);
     }
-    &:hover::after { translate: 0 -2px; }
+    &:hover::after { translate: 0 calc(-1 * var(--_nudge)); }
   }
   @media (prefers-reduced-motion: reduce) {
     .fh-button--etched::after { transition: none; }

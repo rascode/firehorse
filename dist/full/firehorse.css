@@ -259,6 +259,7 @@
     --fh-header-height: 4.25rem;
     --fh-dock-height: 4.25rem;
     --fh-tap-target: 2.75rem;
+    --fh-control-height: 2.25rem;
     --fh-icon-arrow-up-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3C/svg%3E");
     --fh-icon-arrow-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7'/%3E%3Cpath d='M12 19V5'/%3E%3C/svg%3E");
     --fh-icon-arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m19 12-7 7-7-7'/%3E%3Cpath d='M12 5v14'/%3E%3C/svg%3E");
@@ -1501,11 +1502,19 @@
     --_shadow-hover: var(--fh-button-shadow-hover, var(--_shadow));
     --_shadow-active: var(--fh-button-shadow-active, var(--_shadow));
     --_lift: var(--fh-button-lift, 0px);
+    --_text: var(--fh-button-text, var(--fh-text-micro));
+    --_weight: var(--fh-button-weight, var(--fh-weight-bold));
+    --_leading: var(--fh-button-leading, var(--fh-leading-snug));
+    --_pad-b: var(--fh-button-pad-block, var(--fh-inset-tight));
+    --_pad-i: var(--fh-button-pad-inline, var(--fh-inset-tile));
+    --_height: var(--fh-button-height, var(--fh-control-height));
+    --_arrow: var(--fh-button-arrow, .85em);
+    --_nudge: var(--fh-button-nudge, .1em);
     justify-content: center;
     align-items: center;
     gap: var(--fh-gap-related);
-    min-block-size: 2.25rem;
-    padding: var(--fh-inset-tight) var(--fh-inset-tile);
+    min-block-size: var(--_height);
+    padding: var(--_pad-b) var(--_pad-i);
     border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--_border);
     border-radius: var(--fh-button-radius, var(--fh-radius-sm));
     background-color: var(--_bg);
@@ -1515,10 +1524,10 @@
       color-mix(in oklab, var(--_bg) calc(100% - 16% * var(--_sheen)), var(--fh-color-ink)));
     color: var(--_fg);
     font-family: var(--fh-button-font, var(--fh-font-mono));
-    font-size: var(--fh-text-micro);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: var(--fh-tracking-widest);
-    line-height: var(--fh-leading-snug);
+    font-size: var(--_text);
+    font-weight: var(--_weight);
+    letter-spacing: var(--fh-button-tracking, var(--fh-tracking-widest));
+    line-height: var(--_leading);
     text-transform: uppercase;
     white-space: nowrap;
     cursor: var(--fh-cursor-action);
@@ -1553,8 +1562,8 @@
 
     &:not(.fh-button--plain, .fh-button--secondary, .fh-button--ghost, .fh-button--icon, .fh-button--disc, .fh-button--etched):after {
       content: "";
-      block-size: .85em;
-      inline-size: .85em;
+      inline-size: var(--_arrow);
+      block-size: var(--_arrow);
       mask: var(--fh-icon-arrow-up-right) center / contain no-repeat;
       transition: translate var(--fh-duration-fast) var(--fh-ease-standard);
       background-color: currentColor;
@@ -1562,7 +1571,7 @@
     }
 
     &:hover:after {
-      translate: .1rem -.1rem;
+      translate: var(--_nudge) calc(-1 * var(--_nudge));
     }
 
     & code {
@@ -1657,16 +1666,8 @@
     --_fg: var(--fh-color-on-accent);
   }
 
-  .fh-button--sm {
-    min-block-size: 2rem;
-    padding: .42rem var(--fh-inset-control);
-    font-size: var(--fh-text-micro);
-  }
-
   .fh-button--lg {
-    min-block-size: 2.75rem;
-    padding: var(--fh-inset-control) 1.35rem;
-    font-size: var(--fh-text-caption);
+    --_text: var(--fh-button-text, var(--fh-text-caption));
   }
 
   .fh-button--block {
@@ -1675,8 +1676,8 @@
   }
 
   .fh-button--icon {
+    inline-size: var(--_height);
     aspect-ratio: 1;
-    inline-size: 2.25rem;
     padding: 0;
   }
 
@@ -1727,14 +1728,15 @@
     --_bg: var(--fh-button-bg, var(--fh-color-text));
     --_fg: var(--fh-button-fg, var(--fh-color-canvas));
     --_s: var(--fh-button-disc, 2rem);
+    --_glyph: var(--fh-button-glyph, var(--fh-text-body));
     inline-size: var(--_s);
     block-size: var(--_s);
     min-block-size: var(--_s);
     border-radius: var(--fh-radius-round);
     font-family: var(--fh-font-sans);
-    font-size: calc(var(--_s) * .48);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: 0;
+    font-size: var(--_glyph);
+    letter-spacing: var(--fh-tracking-none);
+    line-height: var(--fh-leading-none);
     text-transform: none;
     transition: scale var(--fh-duration-fast) var(--fh-ease-out),
       background-color var(--fh-duration-base) var(--fh-ease-standard),
@@ -1742,13 +1744,12 @@
     background-image: none;
     border: 0;
     padding: 0;
-    line-height: 1;
     overflow: hidden;
 
     & > :is(.fh-icon, svg) {
-      --fh-icon-size: calc(var(--_s) * .52);
-      inline-size: calc(var(--_s) * .52);
-      block-size: calc(var(--_s) * .52);
+      --fh-icon-size: var(--_glyph);
+      inline-size: var(--_glyph);
+      block-size: var(--_glyph);
       margin: 0;
     }
 
@@ -1811,12 +1812,8 @@
     --_shadow: none;
     --_shadow-hover: none;
     --_shadow-active: none;
-    min-block-size: var(--fh-button-etched-height, 2.5rem);
-    padding-block: 0;
-    padding-inline: var(--fh-inset-tile);
     border-style: var(--fh-card-border-style, dashed);
     border-radius: var(--fh-radius-pill);
-    font-size: calc(var(--fh-text-label) * 1.1);
     background-image: none;
 
     &:hover {
@@ -1831,16 +1828,16 @@
 
     &:not(.fh-button--plain):after {
       content: "";
+      inline-size: var(--_arrow);
+      block-size: var(--_arrow);
       background-color: var(--fh-color-accent);
-      block-size: 1em;
-      inline-size: 1em;
       mask: var(--fh-icon-arrow-up) center / contain no-repeat;
       transition: translate var(--fh-duration-fast) var(--fh-ease-out), rotate var(--fh-duration-slow) var(--fh-ease-out);
       flex: none;
     }
 
     &:hover:after {
-      translate: 0 -2px;
+      translate: 0 calc(-1 * var(--_nudge));
     }
   }
 

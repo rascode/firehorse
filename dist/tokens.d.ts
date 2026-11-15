@@ -164,6 +164,7 @@ export type FirehorseToken =
   | "--fh-header-height"
   | "--fh-dock-height"
   | "--fh-tap-target"
+  | "--fh-control-height"
   | "--fh-icon-arrow-up-right"
   | "--fh-icon-arrow-up"
   | "--fh-icon-arrow-down"

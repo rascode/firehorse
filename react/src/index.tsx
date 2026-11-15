@@ -41,7 +41,7 @@ const cx = (...c: Array<string | false | undefined | null>) => c.filter(Boolean)
 /* Every component root renders data-fh="<Index ID>", so pages built with these components pass
  * npx firehorse-audit and agents reading the DOM know what each element is. Pass your own
  * data-fh (for example "local:pricing-box") to override. */
-const BUTTON_IDS = { primary: "BTN-1.1", secondary: "BTN-1.3", ghost: "BTN-2.2", outline: "BTN-2.1", plain: "BTN" } as const;
+const BUTTON_IDS = { primary: "BTN-1.1", secondary: "BTN-1.5", ghost: "BTN-2.2", outline: "BTN-2.1", plain: "BTN" } as const;
 const AVATAR_IDS = { rounded: "AVT-1.1", circle: "AVT-1.2", oval: "AVT-1.3", squircle: "AVT-1.4", square: "AVT-1.5" } as const;
 
 /* —— Primitives that are only markup —— */

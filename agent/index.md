@@ -42,7 +42,7 @@
 | `PNL` | Offset panel | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/offset-panel/) |
 | `ESP` | Etched split | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/etched-split/) |
 | `CTB` | CTA band | Building blocks | — | [open](https://firehorse.rascode.dev/patterns/cta-band/) |
-| `BTN` | Button | Actions | 1 Solid (5) · 2 Line (2) · 3 States (2) · 4 Round icon (2) · 5 Etched pill (1) | [open](https://firehorse.rascode.dev/components/actions/button/) |
+| `BTN` | Button | Actions | 1 Solid (7) · 2 Line (2) · 3 States (2) · 4 Round icon (2) · 5 Etched pill (1) | [open](https://firehorse.rascode.dev/components/actions/button/) |
 | `ACT` | Action & link | Actions | 1 Action (4) · 2 Link (2) · 3 Cue (4) | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
 | `MRK` | Markers | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
 | `EYE` | Eyebrow pill | Actions | 1 Lines (4) · 2 Shapes (4) · 3 Fills (5) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) · 7 Sizes (2) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
@@ -720,9 +720,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## BTN · Button
 
-Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge. --flat is solid black with white text in every scheme. --disc is one glyph on a round disc, in the text colour or, with data-tone, in a tone. --etched is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.
+Flat 3px rect, mono caps, solid fill (data-fh-button="convex" for the bevelled one). Primary buttons get an arrow; data-tone lights the top edge; --lg is the one size step (the text, nothing else). --flat is solid black with white text in every scheme. --disc is one glyph on a round disc, in the text colour or, with data-tone, in a tone. --etched is a frosted pill with a dashed etch edge and an ↑, for a trigger that opens something over art.
 
-Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-button--flat` `fh-button--outline` `fh-button--ghost` `fh-button--sm` `fh-button--disc` `fh-icon` `fh-button--etched`
+Classes: `fh-button` `fh-roll` `fh-button--lg` `fh-button--secondary` `fh-button--accent` `fh-button--flat` `fh-button--outline` `fh-button--ghost` `fh-button--disc` `fh-icon` `fh-button--etched`
 
 ### BTN-1 · Solid
 
@@ -738,22 +738,34 @@ Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-bu
 <a class="fh-button" href="#c-button" data-tone="sky" data-fh="BTN-1.2">Tone edge</a>
 ```
 
-#### BTN-1.3 · Secondary
+#### BTN-1.3 · Large
 
 ```html
-<button class="fh-button fh-button--secondary" type="button" data-fh="BTN-1.3">Secondary</button>
+<a class="fh-button fh-button--lg" href="#c-button" data-fh="BTN-1.3">Discuss a project</a>
 ```
 
-#### BTN-1.4 · Accent
+#### BTN-1.4 · Large, toned
 
 ```html
-<button class="fh-button fh-button--accent" type="button" data-fh="BTN-1.4">Accent</button>
+<a class="fh-button fh-button--lg" href="#c-button" data-tone="sky" data-fh="BTN-1.4">Tone edge</a>
 ```
 
-#### BTN-1.5 · Flat
+#### BTN-1.5 · Secondary
 
 ```html
-<button class="fh-button fh-button--flat" type="button" data-fh="BTN-1.5">Flat</button>
+<button class="fh-button fh-button--secondary" type="button" data-fh="BTN-1.5">Secondary</button>
+```
+
+#### BTN-1.6 · Accent
+
+```html
+<button class="fh-button fh-button--accent" type="button" data-fh="BTN-1.6">Accent</button>
+```
+
+#### BTN-1.7 · Flat
+
+```html
+<button class="fh-button fh-button--flat" type="button" data-fh="BTN-1.7">Flat</button>
 ```
 
 ### BTN-2 · Line
@@ -778,10 +790,10 @@ Classes: `fh-button` `fh-roll` `fh-button--secondary` `fh-button--accent` `fh-bu
 <button class="fh-button" type="button" aria-busy="true" data-fh="BTN-3.1">Saving</button>
 ```
 
-#### BTN-3.2 · Small, disabled
+#### BTN-3.2 · Disabled
 
 ```html
-<button class="fh-button fh-button--sm" type="button" disabled data-fh="BTN-3.2">Disabled</button>
+<button class="fh-button" type="button" disabled data-fh="BTN-3.2">Disabled</button>
 ```
 
 ### BTN-4 · Round icon
@@ -3021,13 +3033,13 @@ IDs retired before or since release, and what replaced them. Use the new ID.
 | `AVZ` | `AVT-2` |
 | `BTN-01` | `BTN-1.1` |
 | `BTN-02` | `BTN-1.2` |
-| `BTN-03` | `BTN-1.3` |
+| `BTN-03` | `BTN-1.5` |
 | `BTN-04` | `BTN-2.1` |
 | `BTN-05` | `BTN-2.2` |
-| `BTN-06` | `BTN-1.4` |
+| `BTN-06` | `BTN-1.6` |
 | `BTN-07` | `BTN-3.1` |
 | `BTN-08` | `BTN-3.2` |
-| `BTN-09` | `BTN-1.5` |
+| `BTN-09` | `BTN-1.7` |
 | `CAL-01` | `CAL-1.1` |
 | `CAL-02` | `CAL-1.3` |
 | `CAL-03` | `CAL-1.2` |
