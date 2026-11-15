@@ -90,6 +90,10 @@
     min-inline-size: 0;
   }
 
+  /* A host's value wrapper (Radix Select.Value renders a span) takes no box of its own,
+     so the avatar, the arc and the name stay one row inside the trigger. */
+  .fh-entity__value > span:not([class]) { display: contents; }
+
   /* The etch line between the avatar and the name. */
   /* The separator is an etched arc round the avatar's right side that
      runs the full height of the row, top edge to bottom edge, centred on

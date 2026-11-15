@@ -286,7 +286,11 @@ MoneyInput.displayName = "MoneyInput";
  *     shape="etched" groupBy={(a) => a.kind}
  *     stat={{ label: "Open", value: (a) => a.openActions, tone: (a) => (a.openActions ? "amber" : "neutral") }} />
  */
-export type Entity = { id: string; name: string; sub?: React.ReactNode; avatar?: string; initials?: string; tone?: Tone; group?: string; disabled?: boolean };
+export type Entity = { id: string; name: string; sub?: React.ReactNode; avatar?: string; initials?: string; tone?: Tone; group?: string; disabled?: boolean;
+  /** The avatar shape by kind (DR2): a person is a circle; an org, an agent or a record a rounded square. Unset: circle. */
+  kind?: "person" | "org" | "agent" | "record";
+  /** No avatar on this row (an "Inherit" or "None" choice). */
+  noAvatar?: boolean };
 export type EntityStat<E extends Entity = Entity> = {
   /** Mono label under the figure ("Open", "Unread", "Due"). With display "count", the accessible name. */
   label: string;
@@ -320,9 +324,9 @@ function EntityRow<E extends Entity>({ entity, avatar, stat, text }: { entity: E
   const tone = typeof stat?.tone === "function" ? stat.tone(entity) : stat?.tone;
   return (
     <>
-      {avatar ? (
+      {avatar && !entity.noAvatar ? (
         <>
-          <span className="fh-avatar fh-avatar--circle" data-tone={entity.tone}>{entity.avatar ? <img src={entity.avatar} alt="" /> : (entity.initials ?? initialsOf(entity.name))}</span>
+          <span className={entity.kind ? "fh-avatar" : "fh-avatar fh-avatar--circle"} data-kind={entity.kind} data-tone={entity.tone}>{entity.avatar ? <img src={entity.avatar} alt="" /> : (entity.initials ?? initialsOf(entity.name))}</span>
           <span className="fh-entity__sep" aria-hidden="true" />
         </>
       ) : null}
