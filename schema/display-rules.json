@@ -1,0 +1,1099 @@
+{
+  "$comment": "Firehorse data display contract: how a value is drawn, everywhere. Source of truth for src/js/values.js (resolveValue, via scripts/value-rules.mjs), agent/components/values.md and the UI audit. Plan: platform relay/2026-11-14-data-display-contract-plan.md. Rows of the grid are matched in order; the first row whose shape and match fit the field wins.",
+  "version": 1,
+  "shapes": {
+    "text": "short words",
+    "prose": "long words",
+    "number": "a count or measure",
+    "money": "an amount with a currency",
+    "ratio": "a part of a whole",
+    "temporal": "a moment or a span",
+    "option": "one value from a known set",
+    "options": "several values from a set",
+    "entity": "a thing with an identity",
+    "file": "a stored file or media",
+    "link": "an address you can open",
+    "flag": "yes or no",
+    "code": "an identifier shown in mono"
+  },
+  "contexts": {
+    "cell": "a datatable or table row",
+    "record": "a label and value row: sidecar, record table, review",
+    "card": "gallery, board, tile",
+    "metric": "the big figure",
+    "form": "editing"
+  },
+  "modes": [
+    "read",
+    "edit"
+  ],
+  "grid": [
+    {
+      "row": "option.status",
+      "label": "option, status (toned)",
+      "shape": "option",
+      "match": {
+        "kind": [
+          "status"
+        ]
+      },
+      "cell": "dot",
+      "record": "chip",
+      "card": "chip",
+      "metric": "chip",
+      "form": "select",
+      "note": "Status is a chip once per row; the dot is for dense cells and prose only."
+    },
+    {
+      "row": "option.few",
+      "label": "option, 2 to 4 values",
+      "shape": "option",
+      "match": {
+        "count": [
+          2,
+          4
+        ]
+      },
+      "cell": "chip",
+      "record": "chip",
+      "card": "chip",
+      "metric": null,
+      "form": "segmented"
+    },
+    {
+      "row": "option.many",
+      "label": "option, 8 or more values",
+      "shape": "option",
+      "match": {
+        "count": [
+          8,
+          null
+        ]
+      },
+      "cell": "chip",
+      "record": "chip",
+      "card": "chip",
+      "metric": null,
+      "form": "select-search"
+    },
+    {
+      "row": "option",
+      "label": "option, 5 to 7 values (or unknown)",
+      "shape": "option",
+      "cell": "chip",
+      "record": "chip",
+      "card": "chip",
+      "metric": null,
+      "form": "select",
+      "note": "Not in the approved grid: fills the gap between 4 and 8 values."
+    },
+    {
+      "row": "options",
+      "label": "options",
+      "shape": "options",
+      "cell": "chips",
+      "record": "chips-inline",
+      "card": "chips",
+      "metric": "count",
+      "form": "tag-field",
+      "max": {
+        "cell": 3,
+        "card": 2
+      }
+    },
+    {
+      "row": "entities",
+      "label": "entities (several)",
+      "shape": "entity",
+      "match": {
+        "multiple": true
+      },
+      "cell": "stack",
+      "record": "avatar-name",
+      "card": "stack",
+      "metric": "stack",
+      "form": "picker-multi",
+      "max": {
+        "cell": 4
+      },
+      "note": "Record context lists one per line."
+    },
+    {
+      "row": "entity.person",
+      "label": "entity, person or org",
+      "shape": "entity",
+      "match": {
+        "kind": [
+          "person",
+          "org"
+        ]
+      },
+      "cell": "avatar-name",
+      "record": "full",
+      "card": "chip",
+      "metric": "stack",
+      "form": "picker"
+    },
+    {
+      "row": "entity.record",
+      "label": "entity, record",
+      "shape": "entity",
+      "cell": "ref",
+      "record": "ref-key",
+      "card": "name",
+      "metric": null,
+      "form": "picker",
+      "note": "The form picker row shows name and description."
+    },
+    {
+      "row": "money",
+      "label": "money",
+      "shape": "money",
+      "cell": "amount",
+      "record": "amount-code",
+      "card": "compact",
+      "metric": "compact-delta",
+      "form": "money-input",
+      "align": {
+        "cell": "end",
+        "record": "end"
+      },
+      "mono": true
+    },
+    {
+      "row": "ratio",
+      "label": "ratio",
+      "shape": "ratio",
+      "cell": "bar",
+      "record": "text",
+      "card": "ring",
+      "metric": "ring",
+      "form": "range",
+      "note": "Metric uses meter instead of ring when the field has a target."
+    },
+    {
+      "row": "number.series",
+      "label": "number, series",
+      "shape": "number",
+      "match": {
+        "kind": [
+          "series"
+        ]
+      },
+      "cell": "sparkline",
+      "record": "sparkline",
+      "card": "sparkline",
+      "metric": "sparkline",
+      "form": null
+    },
+    {
+      "row": "number",
+      "label": "number",
+      "shape": "number",
+      "cell": "plain",
+      "record": "unit",
+      "card": "plain",
+      "metric": "plain-delta",
+      "form": "number-input",
+      "align": {
+        "cell": "end",
+        "record": "end"
+      }
+    },
+    {
+      "row": "temporal.date",
+      "label": "temporal, date",
+      "shape": "temporal",
+      "match": {
+        "kind": [
+          "date"
+        ]
+      },
+      "cell": "date-relative",
+      "record": "date",
+      "card": "relative",
+      "metric": "relative",
+      "form": "date-picker"
+    },
+    {
+      "row": "temporal.time",
+      "label": "temporal, time of day",
+      "shape": "temporal",
+      "match": {
+        "kind": [
+          "time"
+        ]
+      },
+      "cell": "time",
+      "record": "time",
+      "card": "time",
+      "metric": null,
+      "form": "time-input",
+      "note": "Not in the approved grid: a time of day has no relative form."
+    },
+    {
+      "row": "temporal.duration",
+      "label": "temporal, duration",
+      "shape": "temporal",
+      "match": {
+        "kind": [
+          "duration"
+        ]
+      },
+      "cell": "duration",
+      "record": "duration",
+      "card": "duration",
+      "metric": "duration",
+      "form": "duration-input",
+      "note": "Not in the approved grid: durations were an open item from the value inventory."
+    },
+    {
+      "row": "temporal",
+      "label": "temporal, moment",
+      "shape": "temporal",
+      "cell": "date-relative",
+      "record": "datetime",
+      "card": "relative",
+      "metric": "relative",
+      "form": "date-picker"
+    },
+    {
+      "row": "file",
+      "label": "file",
+      "shape": "file",
+      "cell": "type-chip",
+      "record": "file-row",
+      "card": "thumb",
+      "metric": "count",
+      "form": "dropzone",
+      "max": {
+        "cell": 3
+      }
+    },
+    {
+      "row": "link.email",
+      "label": "link, email",
+      "shape": "link",
+      "match": {
+        "kind": [
+          "email"
+        ]
+      },
+      "cell": "email",
+      "record": "email",
+      "card": "link-chip",
+      "metric": null,
+      "form": "email-input"
+    },
+    {
+      "row": "link.phone",
+      "label": "link, phone",
+      "shape": "link",
+      "match": {
+        "kind": [
+          "phone"
+        ]
+      },
+      "cell": "phone",
+      "record": "phone",
+      "card": "link-chip",
+      "metric": null,
+      "form": "phone-input"
+    },
+    {
+      "row": "link.action",
+      "label": "link, action (computed button)",
+      "shape": "link",
+      "match": {
+        "kind": [
+          "action"
+        ]
+      },
+      "cell": "action",
+      "record": "action",
+      "card": "action",
+      "metric": null,
+      "form": null,
+      "note": "Not in the approved grid: computed_button is an action, not a value."
+    },
+    {
+      "row": "link",
+      "label": "link, URL",
+      "shape": "link",
+      "cell": "link",
+      "record": "link",
+      "card": "link-chip",
+      "metric": null,
+      "form": "url-input"
+    },
+    {
+      "row": "flag",
+      "label": "flag",
+      "shape": "flag",
+      "cell": "check",
+      "record": "yes-no",
+      "card": "yes-no",
+      "metric": "count",
+      "form": "switch"
+    },
+    {
+      "row": "prose",
+      "label": "prose",
+      "shape": "prose",
+      "cell": "clamp-2",
+      "record": "full",
+      "card": "clamp-3",
+      "metric": null,
+      "form": "textarea"
+    },
+    {
+      "row": "code.secret",
+      "label": "code, secret (vault reference)",
+      "shape": "code",
+      "match": {
+        "kind": [
+          "secret"
+        ]
+      },
+      "cell": "masked",
+      "record": "masked",
+      "card": "masked",
+      "metric": null,
+      "form": "key-field",
+      "mono": true,
+      "note": "Not in the approved grid: credential types store a vault reference, never the value."
+    },
+    {
+      "row": "code.json",
+      "label": "code, structured (JSON)",
+      "shape": "code",
+      "match": {
+        "kind": [
+          "json"
+        ]
+      },
+      "cell": "mono",
+      "record": "code-block",
+      "card": "mono",
+      "metric": null,
+      "form": "textarea-mono",
+      "mono": true,
+      "note": "Not in the approved grid: JSON needs a block in the record."
+    },
+    {
+      "row": "code",
+      "label": "code",
+      "shape": "code",
+      "cell": "mono",
+      "record": "copyable",
+      "card": "mono",
+      "metric": null,
+      "form": "input-mono",
+      "mono": true
+    },
+    {
+      "row": "text",
+      "label": "text",
+      "shape": "text",
+      "cell": "line",
+      "record": "line",
+      "card": "line",
+      "metric": null,
+      "form": "input",
+      "note": "Not in the approved grid (the plan's grid had no text row)."
+    }
+  ],
+  "variants": {
+    "option": {
+      "group": "VAL-1",
+      "name": "Option",
+      "variants": {
+        "dot": {
+          "label": "Dot and word",
+          "parts": [
+            "MRK"
+          ]
+        },
+        "chip": {
+          "label": "Toned chip",
+          "parts": [
+            "CHP",
+            "SCR"
+          ]
+        },
+        "chip-solid": {
+          "label": "Solid chip",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "select": {
+          "label": "Chip with chevron",
+          "parts": [
+            "CHP",
+            "FLD"
+          ],
+          "editable": true
+        },
+        "segmented": {
+          "label": "Segmented",
+          "parts": [
+            "SEG"
+          ],
+          "editable": true
+        },
+        "select-search": {
+          "label": "Select with search",
+          "parts": [
+            "CHP",
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "options": {
+      "group": "VAL-2",
+      "name": "Options",
+      "variants": {
+        "chips": {
+          "label": "Chips, +N after the limit",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "chips-inline": {
+          "label": "Chips, wrapping",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "count": {
+          "label": "Count (3 tags)",
+          "parts": []
+        },
+        "tag-field": {
+          "label": "Tag field",
+          "parts": [
+            "TAG"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "entity": {
+      "group": "VAL-3",
+      "name": "Entity",
+      "variants": {
+        "name": {
+          "label": "Name",
+          "parts": []
+        },
+        "name-key": {
+          "label": "Name and key",
+          "parts": [
+            "DET"
+          ]
+        },
+        "avatar-name": {
+          "label": "Avatar and name",
+          "parts": [
+            "AVT"
+          ]
+        },
+        "avatar-name-description": {
+          "label": "Avatar, name and description",
+          "parts": [
+            "AVT",
+            "ENT"
+          ]
+        },
+        "full": {
+          "label": "Full row",
+          "parts": [
+            "AVT",
+            "ENT"
+          ]
+        },
+        "chip": {
+          "label": "Avatar chip",
+          "parts": [
+            "CHP",
+            "AVT"
+          ]
+        },
+        "stack": {
+          "label": "Avatar stack, +N",
+          "parts": [
+            "AVT"
+          ]
+        },
+        "ref": {
+          "label": "Reference (opens the sidecar)",
+          "parts": [
+            "REF"
+          ]
+        },
+        "ref-key": {
+          "label": "Reference and key",
+          "parts": [
+            "REF"
+          ]
+        },
+        "picker": {
+          "label": "Picker",
+          "parts": [
+            "ENT"
+          ],
+          "editable": true
+        },
+        "picker-multi": {
+          "label": "Picker, several",
+          "parts": [
+            "ENT"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "money": {
+      "group": "VAL-4",
+      "name": "Money",
+      "variants": {
+        "amount": {
+          "label": "Amount",
+          "parts": []
+        },
+        "amount-code": {
+          "label": "Amount and currency code",
+          "parts": []
+        },
+        "compact": {
+          "label": "Compact ($1.2M)",
+          "parts": []
+        },
+        "delta": {
+          "label": "Delta",
+          "parts": []
+        },
+        "compact-delta": {
+          "label": "Compact with delta",
+          "parts": []
+        },
+        "money-input": {
+          "label": "Money input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "ratio": {
+      "group": "VAL-5",
+      "name": "Ratio",
+      "variants": {
+        "text": {
+          "label": "Percent",
+          "parts": []
+        },
+        "bar": {
+          "label": "Bar",
+          "parts": [
+            "MET"
+          ]
+        },
+        "ring": {
+          "label": "Ring",
+          "parts": [
+            "FBK"
+          ]
+        },
+        "meter": {
+          "label": "Meter against a target",
+          "parts": [
+            "MET",
+            "GAU"
+          ]
+        },
+        "range": {
+          "label": "Range",
+          "parts": [
+            "UPL"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "number": {
+      "group": "VAL-6",
+      "name": "Number",
+      "variants": {
+        "plain": {
+          "label": "Plain",
+          "parts": []
+        },
+        "unit": {
+          "label": "With unit",
+          "parts": []
+        },
+        "delta": {
+          "label": "Delta",
+          "parts": []
+        },
+        "plain-delta": {
+          "label": "Plain with delta",
+          "parts": []
+        },
+        "sparkline": {
+          "label": "Sparkline",
+          "parts": [
+            "MET"
+          ]
+        },
+        "number-input": {
+          "label": "Number input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "temporal": {
+      "group": "VAL-7",
+      "name": "Temporal",
+      "variants": {
+        "date": {
+          "label": "Date",
+          "parts": []
+        },
+        "date-relative": {
+          "label": "Date and relative",
+          "parts": []
+        },
+        "relative": {
+          "label": "Relative",
+          "parts": []
+        },
+        "datetime": {
+          "label": "Date and time",
+          "parts": []
+        },
+        "range": {
+          "label": "Range",
+          "parts": []
+        },
+        "overdue": {
+          "label": "Overdue",
+          "parts": []
+        },
+        "time": {
+          "label": "Time of day",
+          "parts": []
+        },
+        "duration": {
+          "label": "Duration",
+          "parts": []
+        },
+        "date-picker": {
+          "label": "Date picker",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        },
+        "time-input": {
+          "label": "Time input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        },
+        "duration-input": {
+          "label": "Duration input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "file": {
+      "group": "VAL-8",
+      "name": "File",
+      "variants": {
+        "type-chip": {
+          "label": "Type chip (PDF)",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "thumb": {
+          "label": "Thumb",
+          "parts": [
+            "THB"
+          ]
+        },
+        "thumbs": {
+          "label": "Thumbs, +N",
+          "parts": [
+            "THB"
+          ]
+        },
+        "file-row": {
+          "label": "File row",
+          "parts": [
+            "SFL"
+          ]
+        },
+        "count": {
+          "label": "Count",
+          "parts": []
+        },
+        "dropzone": {
+          "label": "Dropzone",
+          "parts": [
+            "UPL"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "link": {
+      "group": "VAL-9",
+      "name": "Link",
+      "variants": {
+        "link": {
+          "label": "Link (trimmed URL)",
+          "parts": [
+            "ACT"
+          ]
+        },
+        "email": {
+          "label": "Email",
+          "parts": [
+            "ACT"
+          ]
+        },
+        "phone": {
+          "label": "Phone",
+          "parts": [
+            "ACT"
+          ]
+        },
+        "link-chip": {
+          "label": "Link chip",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "action": {
+          "label": "Action",
+          "parts": [
+            "ACT"
+          ]
+        },
+        "url-input": {
+          "label": "URL input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        },
+        "email-input": {
+          "label": "Email input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        },
+        "phone-input": {
+          "label": "Phone input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "flag": {
+      "group": "VAL-10",
+      "name": "Flag",
+      "variants": {
+        "check": {
+          "label": "Check",
+          "parts": [
+            "CHO"
+          ]
+        },
+        "yes-no": {
+          "label": "Yes or no",
+          "parts": []
+        },
+        "count": {
+          "label": "Count",
+          "parts": []
+        },
+        "switch": {
+          "label": "Switch",
+          "parts": [
+            "CHO"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "prose": {
+      "group": "VAL-11",
+      "name": "Prose, text and code",
+      "variants": {
+        "clamp-2": {
+          "label": "Two lines",
+          "parts": []
+        },
+        "clamp-3": {
+          "label": "Three lines",
+          "parts": []
+        },
+        "full": {
+          "label": "Full",
+          "parts": []
+        },
+        "textarea": {
+          "label": "Textarea",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "text": {
+      "group": "VAL-11",
+      "name": "Prose, text and code",
+      "variants": {
+        "line": {
+          "label": "Line",
+          "parts": []
+        },
+        "input": {
+          "label": "Input",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        }
+      }
+    },
+    "code": {
+      "group": "VAL-11",
+      "name": "Prose, text and code",
+      "variants": {
+        "mono": {
+          "label": "Mono",
+          "parts": [
+            "DET"
+          ]
+        },
+        "copyable": {
+          "label": "Copyable code",
+          "parts": [
+            "DET"
+          ]
+        },
+        "masked": {
+          "label": "Masked vault reference",
+          "parts": [
+            "DET"
+          ]
+        },
+        "code-block": {
+          "label": "Code block",
+          "parts": [
+            "DET"
+          ]
+        },
+        "input-mono": {
+          "label": "Input, mono",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        },
+        "textarea-mono": {
+          "label": "Textarea, mono",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true
+        },
+        "key-field": {
+          "label": "Key field",
+          "parts": [
+            "KEY"
+          ],
+          "editable": true
+        }
+      }
+    }
+  },
+  "toneMap": {
+    "lime": [
+      "merged",
+      "done",
+      "passed",
+      "live",
+      "active",
+      "ok",
+      "complete",
+      "approved",
+      "confirmed",
+      "read"
+    ],
+    "sky": [
+      "running",
+      "open",
+      "review",
+      "in-progress",
+      "sent",
+      "building",
+      "medium"
+    ],
+    "amber": [
+      "queued",
+      "pending",
+      "draft",
+      "waiting",
+      "warn",
+      "paused",
+      "planned",
+      "unread",
+      "high"
+    ],
+    "rose": [
+      "failed",
+      "error",
+      "rejected",
+      "blocked",
+      "overdue",
+      "revoked",
+      "urgent"
+    ],
+    "neutral": [
+      "archived",
+      "cancelled",
+      "skipped",
+      "idle",
+      "rotated",
+      "idea",
+      "sunset",
+      "low"
+    ]
+  },
+  "empty": {
+    "text": "—",
+    "tone": "muted"
+  },
+  "readOnly": {
+    "prefixes": [
+      "computed_",
+      "system_"
+    ],
+    "keys": [
+      "created_at",
+      "updated_at",
+      "deleted_at"
+    ]
+  },
+  "aliases": {
+    "text": {
+      "semanticType": "short_text"
+    },
+    "long": {
+      "semanticType": "long_text"
+    },
+    "number": {
+      "semanticType": "number_(decimal)"
+    },
+    "currency": {
+      "semanticType": "fiat_amount"
+    },
+    "percent": {
+      "semanticType": "percentage"
+    },
+    "progress": {
+      "semanticType": "percentage",
+      "display": {
+        "cell": "bar",
+        "record": "bar"
+      }
+    },
+    "select": {
+      "shape": "option",
+      "kind": "choice"
+    },
+    "status": {
+      "semanticType": "status"
+    },
+    "multi": {
+      "shape": "options",
+      "kind": "choice"
+    },
+    "tags": {
+      "semanticType": "tags"
+    },
+    "date": {
+      "semanticType": "date"
+    },
+    "check": {
+      "semanticType": "checkbox"
+    },
+    "rating": {
+      "shape": "ratio",
+      "kind": "rating",
+      "note": "No semantic type yet: a score out of 5."
+    },
+    "user": {
+      "semanticType": "owner_reference"
+    },
+    "users": {
+      "semanticType": "owner_reference",
+      "multiple": true
+    },
+    "url": {
+      "semanticType": "url"
+    },
+    "email": {
+      "semanticType": "email"
+    },
+    "phone": {
+      "semanticType": "phone_e164"
+    },
+    "link": {
+      "semanticType": "entity_reference",
+      "multiple": true
+    },
+    "attachment": {
+      "semanticType": "document_file",
+      "multiple": true
+    },
+    "formula": {
+      "semanticType": "computed_formula"
+    },
+    "sparkline": {
+      "shape": "number",
+      "kind": "series",
+      "note": "No semantic type yet: a list of numbers."
+    }
+  },
+  "rules": [
+    "Status is a chip, once per row. The dot is for dense cells and prose only.",
+    "A value with options never renders as free text. If it has an option set, it gets an Option or Options part.",
+    "Numbers align right and use tabular figures in every cell and record row.",
+    "Money always knows its currency. Cents show in record and form; cells may round to whole units only when every row in the column does.",
+    "The field overrides the grid, the grid overrides the surface. A field may name a variant (display: { cell: \"chip\" }); a surface never can.",
+    "Editable is the same part with a chevron or a control, never a different-looking part. Read and edit share size, colour and position.",
+    "Empty is a muted em dash, never a blank cell or null."
+  ]
+}

@@ -12,7 +12,11 @@
    * open, review, in-progress) sky; waiting (queued, pending, draft) amber;
    * failed (failed, error, rejected, blocked) rose; finished without a
    * result (archived, cancelled, skipped, idle) neutral. An unknown value
-   * stays neutral. The chip is a label, not a control.
+   * stays neutral. The word lists are the default tone map of the data
+   * display contract (schema/display-rules.json toneMap); the two must agree
+   * (test/values.test.mjs checks), so the semantic types' own status words
+   * (paused, confirmed, revoked, planned, priority levels) are here too.
+   * The chip is a label, not a control.
    *
    * Which marker for what (the chip rules):
    *   fh-chip    status of a record: in the record header, in a collapsed
@@ -25,9 +29,9 @@
     --fh-tone: var(--fh-tone-neutral);
     cursor: default;
 
-    &:is([data-status="merged" i], [data-status="done" i], [data-status="passed" i], [data-status="live" i], [data-status="active" i], [data-status="ok" i], [data-status="complete" i], [data-status="approved" i]) { --fh-tone: var(--fh-tone-lime); }
-    &:is([data-status="running" i], [data-status="open" i], [data-status="review" i], [data-status="in-progress" i], [data-status="sent" i]) { --fh-tone: var(--fh-tone-sky); }
-    &:is([data-status="queued" i], [data-status="pending" i], [data-status="draft" i], [data-status="waiting" i], [data-status="warn" i]) { --fh-tone: var(--fh-tone-amber); }
-    &:is([data-status="failed" i], [data-status="error" i], [data-status="rejected" i], [data-status="blocked" i], [data-status="overdue" i]) { --fh-tone: var(--fh-tone-rose); }
+    &:is([data-status="merged" i], [data-status="done" i], [data-status="passed" i], [data-status="live" i], [data-status="active" i], [data-status="ok" i], [data-status="complete" i], [data-status="approved" i], [data-status="confirmed" i], [data-status="read" i]) { --fh-tone: var(--fh-tone-lime); }
+    &:is([data-status="running" i], [data-status="open" i], [data-status="review" i], [data-status="in-progress" i], [data-status="sent" i], [data-status="building" i], [data-status="medium" i]) { --fh-tone: var(--fh-tone-sky); }
+    &:is([data-status="queued" i], [data-status="pending" i], [data-status="draft" i], [data-status="waiting" i], [data-status="warn" i], [data-status="paused" i], [data-status="planned" i], [data-status="unread" i], [data-status="high" i]) { --fh-tone: var(--fh-tone-amber); }
+    &:is([data-status="failed" i], [data-status="error" i], [data-status="rejected" i], [data-status="blocked" i], [data-status="overdue" i], [data-status="revoked" i], [data-status="urgent" i]) { --fh-tone: var(--fh-tone-rose); }
   }
 }
