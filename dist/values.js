@@ -47,6 +47,104 @@ export function isEmpty(value) {
   return value == null || value === "" || (Array.isArray(value) && value.length === 0);
 }
 
+/** The avatar kinds (DR2): a person is a circle; an org, an agent and a record are rounded squares. */
+export const AVATAR_KINDS = Object.freeze(Object.keys(rules.avatars.kinds));
+
+/**
+ * How an entity's avatar is drawn (DR2): data-kind (its shape), its size step, and how many faces a stack shows.
+ *   avatarOf("person", "full")  → { kind: "person", shape: "circle", size: "identity", token: "--fh-avatar-identity", max: 3 }
+ *   avatarOf("org", "stack")    → { kind: "org", shape: "rounded", size: "inline", token: "--fh-avatar-inline", max: 3 }
+ * kind is null for a kind the avatar system does not know: the avatar keeps the default plate and no data-kind.
+ */
+export function avatarOf(kind, variant = null) {
+  const k = kind && rules.avatars.kinds[kind] ? kind : null;
+  const size = rules.avatars.identity.includes(variant) ? "identity" : "inline";
+  return { kind: k, shape: k ? rules.avatars.kinds[k] : null, size, token: rules.avatars.sizes[size], max: rules.avatars.max };
+}
+
+/** At most two letters for an avatar with no image: "Maya Chen" → "MC", "Northwind" → "NO". */
+export function initialsOf(name) {
+  const words = String(name ?? "").trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return "";
+  const first = [...words[0]];
+  const letters = words.length > 1 ? first[0] + [...words[words.length - 1]][0] : first.slice(0, 2).join("");
+  return letters.toUpperCase().slice(0, rules.avatars.initials);
+}
+
+const escHtml = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const entityName = (e) => (e && typeof e === "object" ? String(e.label ?? e.name ?? e.id ?? "") : String(e ?? ""));
+const kindAttr = (k) => (k ? ` data-kind="${k}"` : "");
+
+/**
+ * One avatar as markup, with data-kind written from the entity's kind (DR2). Its size comes from the context
+ * (components/data/values.css), never from a size class here.
+ *   entity  { label | name, image?, initials?, kind? } (the Entity of values.d.ts)
+ *   opts    { kind (when the entity carries none), alt (true: the image names the entity; default "", the name is beside it) }
+ */
+export function avatarMarkup(entity, opts = {}) {
+  const { kind } = avatarOf(entity?.kind ?? opts.kind);
+  const name = entityName(entity);
+  const face = entity?.image ? `<img src="${escHtml(entity.image)}" alt="${opts.alt ? escHtml(name) : ""}">` : escHtml(String(entity?.initials ?? initialsOf(name)).slice(0, rules.avatars.initials));
+  return `<span class="fh-avatar"${kindAttr(kind)} title="${escHtml(name)}">${face}</span>`;
+}
+
+/** A stack (DR2): at most three faces, then "+N" at the same size and shape (the first face's kind); one label names them all. */
+export function stackMarkup(list = [], opts = {}) {
+  const max = opts.max ?? rules.avatars.max;
+  const { kind } = avatarOf(list[0]?.kind ?? opts.kind);
+  const names = list.map(entityName);
+  const rest = list.length - max;
+  const label = rest > 0 ? `${names.slice(0, max).join(", ")} and ${rest} more` : names.join(", ");
+  const faces = list.slice(0, max).map((e) => avatarMarkup(e, { kind: opts.kind })).join("");
+  const more = rest > 0 ? `<span class="fh-avatar fh-avatars__more"${kindAttr(kind)} aria-hidden="true">+${rest}</span>` : "";
+  return `<span class="fh-avatars" role="group" aria-label="${escHtml(label)}">${faces}${more}</span>`;
+}
+
+const fileNameOf = (f) => (f && typeof f === "object" ? String(f.name ?? f.filename ?? f.label ?? "") : String(f ?? ""));
+const fileUrlOf = (f) => (f && typeof f === "object" ? String(f.url ?? f.image ?? f.preview ?? "") : typeof f === "string" ? f : "");
+const asFileList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+const fileExtOf = (name) => {
+  const base = String(name ?? "").split("/").pop() ?? "";
+  const dot = base.lastIndexOf(".");
+  return dot > 0 ? base.slice(dot + 1).toUpperCase() : base.slice(0, 3).toUpperCase();
+};
+
+/** One image thumb at row height (DR4). */
+export function thumbMarkup(file, opts = {}) {
+  const name = fileNameOf(file);
+  const url = fileUrlOf(file);
+  const alt = escHtml(String(file?.alt ?? name));
+  const portrait = opts.portrait ? " fh-thumb--portrait" : "";
+  const lg = opts.lg ? " fh-thumb--lg" : "";
+  if (url) {
+    const open = opts.open !== false ? ` data-media-open data-media-url="${escHtml(url)}" data-media-alt="${alt}"` : "";
+    return `<button type="button" class="fh-thumb${portrait}${lg}"${open}><img src="${escHtml(url)}" alt="${alt}"></button>`;
+  }
+  return `<span class="fh-thumb fh-thumb--tile${portrait}${lg}" title="${escHtml(name)}">${escHtml(fileExtOf(name) || "?")}</span>`;
+}
+
+/** Side-by-side thumbs with +N (DR4): no overlap. */
+export function thumbClusterMarkup(files = [], opts = {}) {
+  const max = opts.max ?? rules.avatars.max;
+  const list = asFileList(files);
+  const names = list.map(fileNameOf);
+  const rest = list.length - max;
+  const label = rest > 0 ? `${names.slice(0, max).join(", ")} and ${rest} more` : names.join(", ");
+  const urls = list.map((f) => fileUrlOf(f)).filter(Boolean);
+  const open = urls.length ? ` data-media-cluster="${escHtml(urls.join("|"))}"` : "";
+  const faces = list.slice(0, max).map((f) => thumbMarkup(f, { open: true })).join("");
+  const more = rest > 0 ? `<span class="fh-thumb fh-thumb--tile fh-thumb--more" aria-hidden="true">+${rest}</span>` : "";
+  return `<span class="fh-thumbs-row" role="group" aria-label="${escHtml(label)}"${open}>${faces}${more}</span>`;
+}
+
+export function formatBytes(n) {
+  const b = Number(n);
+  if (!Number.isFinite(b) || b < 0) return "";
+  if (b < 1024) return `${b} B`;
+  if (b < 1024 * 1024) return `${Math.round(b / 1024)} KB`;
+  return `${(b / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 /** The ramp step (1 … steps) of the option at index i of n in an ordinal set: the first is 1, the last is the top step. */
 export function rampStep(i, n, steps = rules.ramp.steps) {
   if (n <= 1) return steps;
@@ -186,7 +284,7 @@ function variantMeta(shape, variant) {
  *   mode     "read" | "edit" (default: edit in a form, read elsewhere; text is always read)
  *   opts     { optionSets } a registry of option sets by key, over the published ones
  * Returns { shape, kind, row, context, mode, variant, id (the variant's Index ID, VAL-1.1), label, group, parts, editable, control, readOnly, align,
- *   figures, grouping, mono, max, multiple, unit, currency, currencyFrom, optionSet, ramp, sort, last, excluded, text, formula, empty, source, warnings }.
+ *   figures, grouping, mono, max, avatar (an entity's avatarOf(): data-kind, size step, stack max), multiple, unit, currency, currencyFrom, optionSet, ramp, sort, last, excluded, text, formula, empty, source, warnings }.
  * variant is null when the grid leaves the field out of that context (metric for prose, say): the surface skips it.
  * In the text context variant is a text format (rules.textFormats) and id is null; null means the value has no
  * text form (a secret): leave it out of CSV export, aria-label and copy.
@@ -250,6 +348,7 @@ export function resolveValue(field = {}, context = "cell", mode, opts = {}) {
     grouping: numeric ? row.grouping !== false : null,
     mono: Boolean(row.mono),
     max: row.max?.[context] ?? null,
+    avatar: d.shape === "entity" && context !== "text" ? avatarOf(d.kind, variant) : null,
     multiple: d.multiple,
     unit: d.unit,
     currency: d.shape === "money" ? (field.currency ?? null) : null,
