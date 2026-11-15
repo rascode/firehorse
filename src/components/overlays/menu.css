@@ -51,8 +51,10 @@
    *   --fh-menu-drop            how far the menu drops in as it opens (gap-bound)
    *   --fh-menu-etch, --fh-menu-etch-soft   the frame and the rules inside it
    *   --fh-menu-radius          the frame's corners (radius-sm)
-   * Size: --fh-menu-min (the narrowest, 13rem), --fh-menu-max (the tallest, min(22rem, 60dvh)). */
-  .fh-menu {
+   * Size: --fh-menu-min (the narrowest, 13rem), --fh-menu-max (the tallest, min(22rem, 60dvh)).
+   * A select's open list (FLD, VAL-1.4) is this menu: the values are set on the select too, so its
+   * ::picker(select) and options read the same ones (see forms/input.css). */
+  :is(.fh-menu, .fh-select, .fh-value__select) {
     --_text: var(--fh-menu-text, var(--fh-text-small));
     --_label: var(--fh-menu-label, var(--fh-text-label));
     --_strong: var(--fh-menu-title-weight, var(--fh-weight-bold));
@@ -66,14 +68,17 @@
     --_drop: var(--fh-menu-drop, var(--fh-gap-bound));
     --_etch: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-menu-etch, var(--fh-color-etch));
     --_etch-soft: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-menu-etch-soft, var(--fh-color-etch-soft, var(--fh-color-etch)));
+    --_radius: var(--fh-menu-radius, var(--fh-radius-sm));
+  }
 
+  .fh-menu {
     min-inline-size: var(--fh-menu-min, 13rem);
     max-block-size: var(--fh-menu-max, min(22rem, 60dvh));
     margin: 0;
     padding: var(--_frame);
     overflow: auto;
     border: var(--_etch);
-    border-radius: var(--fh-menu-radius, var(--fh-radius-sm));
+    border-radius: var(--_radius);
     background-color: var(--fh-color-surface-menu);
     -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
     backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
@@ -123,6 +128,12 @@
         background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
       }
       &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+      /* A listbox's option the keyboard is on (focus stays in its field, VAL-1.6): the focus look. */
+      &[role="option"][data-active] {
+        background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: -2px;
+      }
     }
 
     /* Separators: a soft rule across the full width, the frame inset included. */
@@ -193,7 +204,8 @@
   .fh-menu > :is(a, button, [role^="menuitem"]) > kbd,
   .fh-menu__kbd { margin-inline-start: auto; }
   .fh-menu > [role="menuitemcheckbox"],
-  .fh-menu > [role="menuitemradio"] {
+  .fh-menu > [role="menuitemradio"],
+  .fh-menu > [role="option"] {
     &::after {
       content: "";
       inline-size: var(--_icon);
@@ -203,7 +215,7 @@
       mask: var(--fh-icon-check) center / contain no-repeat;
       opacity: 0;
     }
-    &[aria-checked="true"]::after { opacity: 1; }
+    &:is([aria-checked="true"], [aria-selected="true"])::after { opacity: 1; }
     &:has(> kbd)::after { margin-inline-start: var(--_gap); }
   }
   .fh-menu > .fh-menu__danger { color: var(--fh-color-danger); }
@@ -373,11 +385,14 @@
    * hold any small preview (the column display menu draws the column's own value there).
    * fh-menu__item and fh-menu__tile also work outside a menu (the docs mega panel, a drawer).
    * Knobs: --fh-menu-tile (the tile, 2rem), --fh-menu-min (17rem here). */
-  .fh-menu--rich {
+  /* The Rich frame (rows in from it, large corners, rounded rows) is the context menu's look, and a
+   * select's open list takes it too. */
+  :is(.fh-menu--rich, .fh-select, .fh-value__select) {
     --_frame: var(--fh-menu-frame, var(--fh-inset-tight));
-    min-inline-size: var(--fh-menu-min, 17rem);
-    border-radius: var(--fh-menu-radius, var(--fh-radius-lg));
+    --_radius: var(--fh-menu-radius, var(--fh-radius-lg));
+    --_row-radius: var(--fh-radius-md);
   }
+  .fh-menu--rich { min-inline-size: var(--fh-menu-min, 17rem); }
 
   .fh-menu__item,
   .fh-menu__tile {

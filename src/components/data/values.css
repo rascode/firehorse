@@ -415,9 +415,12 @@
 
   .fh-value--chevron:has(> .fh-chip)::after { content: none; }
 
-  /* A native select that is the value's word: no box of its own, so it reads as the value. */
+  /* A native select that is the value's word: no box of its own, so it reads as the value.
+   * Open, its list is the Menu (forms/input.css); a select with search (VAL-1.6) opens the same
+   * list as a listbox (firehorse.js 18), the datalist kept for the browser without script. */
   .fh-value__select {
     appearance: none;
+    min-block-size: 0;
     min-inline-size: 0;
     margin: 0;
     padding: 0;

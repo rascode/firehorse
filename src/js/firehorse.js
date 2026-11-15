@@ -40,6 +40,9 @@
  *      End in any open menu; submenus (.fh-menu__sub) open to the side.
  *  17. Sidebar scrollbars: data-scrolling on a Sidebar's body while it
  *      scrolls, so the scrollbar fades in only then (or on hover).
+ *  18. Search lists (input.fh-value__select[list], VAL-1.6): the datalist
+ *      opens as a Menu listbox, filtered as you type. The native list
+ *      stays without this.
  *
  *   <script type="module" src="https://firehorse.rascode.dev/firehorse.js"></script>
  *   or: import "@rascode/firehorse/js";
@@ -1334,6 +1337,116 @@ ready(() => {
       trigger.focus({ preventScroll: true });
     }
   });
+});
+
+/* —— 18. Search lists (VAL-1.6) ———————————————————————————————
+ * A select with search (<input class="fh-value__select" list="id"> and its
+ * <datalist>) opens the Menu instead of the browser's own list: a listbox in
+ * the menu's frame under the value, filtered as you type. Focus stays in the
+ * field (a combobox): the arrow keys, Home and End move through the list,
+ * Enter picks, Escape closes, and a click picks. The chosen option carries the
+ * menu's check. The datalist stays the source of the options; without this
+ * script it opens as the native list. */
+ready(() => {
+  const EDGE = 8;
+  let n = 0;
+  const wire = (input) => {
+    if (input.dataset.fhList != null) return;
+    const dl = input.list;
+    if (!dl) return;
+    const id = `fh-list-${++n}`;
+    const menu = Object.assign(document.createElement("div"), { id, className: "fh-menu fh-menu--rich fh-menu--context fh-value__list" });
+    menu.popover = "manual";
+    menu.setAttribute("role", "listbox");
+    menu.setAttribute("aria-label", input.getAttribute("aria-label") || input.name || "Options");
+    (input.closest(".fh-value") || input).after(menu);
+    // A scroll closes it like a context menu; the field follows.
+    menu.addEventListener("toggle", (e) => { if (e.newState === "closed") { input.setAttribute("aria-expanded", "false"); setActive(null); } });
+    input.dataset.fhList = dl.id;
+    input.removeAttribute("list");
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-autocomplete", "list");
+    input.setAttribute("aria-controls", id);
+    input.setAttribute("aria-expanded", "false");
+    input.autocomplete = "off";
+
+    const rows = () => [...menu.children].filter((b) => !b.hidden);
+    const active = () => menu.querySelector(":scope > [data-active]");
+    const setActive = (row) => {
+      active()?.removeAttribute("data-active");
+      if (!row) return input.removeAttribute("aria-activedescendant");
+      row.setAttribute("data-active", "");
+      input.setAttribute("aria-activedescendant", row.id);
+      row.scrollIntoView({ block: "nearest" });
+    };
+    const fill = (all) => {
+      const q = all ? "" : input.value.trim().toLowerCase();
+      menu.replaceChildren(...[...dl.options].map((o, i) => {
+        const label = o.label || o.value;
+        const b = Object.assign(document.createElement("button"), { type: "button", tabIndex: -1, id: `${id}-${i}`, textContent: label });
+        b.setAttribute("role", "option");
+        b.setAttribute("aria-selected", String(label === input.value));
+        b.hidden = !!q && !label.toLowerCase().includes(q);
+        return b;
+      }));
+    };
+    const place = () => {
+      const anchor = input.closest(".fh-chip, .fh-value") || input, r = anchor.getBoundingClientRect();
+      menu.style.minInlineSize = `max(var(--fh-menu-min, 13rem), ${Math.round(r.width)}px)`;
+      const m = menu.getBoundingClientRect(), gap = 4;
+      const below = r.bottom + gap + m.height <= innerHeight - EDGE || r.top - gap - m.height < EDGE;
+      menu.style.setProperty("--fh-menu-x", `${Math.round(Math.max(EDGE, Math.min(r.left, innerWidth - m.width - EDGE)))}px`);
+      menu.style.setProperty("--fh-menu-y", `${Math.round(below ? r.bottom + gap : r.top - gap - m.height)}px`);
+    };
+    const isOpen = () => menu.matches(":popover-open");
+    const open = (all) => {
+      if (input.disabled || input.readOnly) return;
+      fill(all);
+      if (!rows().length) return close();
+      if (!isOpen()) menu.showPopover();
+      input.setAttribute("aria-expanded", "true");
+      place();
+      setActive(rows().find((b) => b.getAttribute("aria-selected") === "true") || (all ? null : rows()[0]));
+    };
+    const close = () => {
+      if (isOpen()) menu.hidePopover();
+      input.setAttribute("aria-expanded", "false");
+      setActive(null);
+    };
+    const pick = (row) => {
+      input.value = row.textContent;
+      close();
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+
+    input.addEventListener("input", (e) => { if (e.isTrusted) open(false); });
+    input.addEventListener("click", () => (isOpen() ? close() : open(true)));
+    input.addEventListener("blur", close);
+    input.addEventListener("keydown", (e) => {
+      const list = rows(), at = list.indexOf(active());
+      const go = (i) => { e.preventDefault(); setActive(list[(i + list.length) % list.length]); };
+      if (!isOpen()) {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); open(true); }
+        return;
+      }
+      if (e.key === "ArrowDown") go(at + 1);
+      else if (e.key === "ArrowUp") go(at < 0 ? -1 : at - 1);
+      else if (e.key === "Home" && at >= 0) go(0);
+      else if (e.key === "End" && at >= 0) go(list.length - 1);
+      else if (e.key === "Enter" && at >= 0) { e.preventDefault(); pick(list[at]); }
+      else if (e.key === "Escape") { e.preventDefault(); close(); }
+      else if (e.key === "Tab") close();
+    });
+    menu.addEventListener("pointerdown", (e) => e.preventDefault());
+    menu.addEventListener("click", (e) => {
+      const row = e.target.closest?.('[role="option"]');
+      if (row) { e.stopPropagation(); pick(row); }
+    });
+    addEventListener("resize", () => isOpen() && place(), { passive: true });
+  };
+  for (const input of document.querySelectorAll("input.fh-value__select[list]")) wire(input);
+  document.addEventListener("focusin", (e) => { if (e.target.matches?.("input.fh-value__select[list]")) wire(e.target); });
 });
 
 /* —— 17. Sidebar scrollbars ——

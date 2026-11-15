@@ -128,37 +128,104 @@
     }
   }
 
-  /* Customizable <select> (Chromium 135+): style the open picker too. */
+  /* —— A select's open list is the Menu (DRP-1.1 rows in the DRP-3.1 / DRP-4.1 frame) ——
+   * Customizable select (appearance: base-select) on every single-pick select: the field, the
+   * Values select (VAL-1.4) and the datatable panels. The list reads the menu's own values
+   * (--_text, --_etch, --_frame … set on the select in overlays/menu.css, so --fh-menu-* tune both),
+   * and the chosen option takes the menu's check. The closed field keeps its look; a
+   * <button><selectedcontent></selectedcontent></button> inside the select is optional and adds no box.
+   * Where the browser has no customizable select, the native list stays. Listboxes (multiple, size)
+   * are not lists that open, so they stay native. */
   @supports (appearance: base-select) {
-    .fh-select,
-    .fh-select::picker(select) {
-      appearance: base-select;
-    }
+    select:is(.fh-select, .fh-value__select):not([multiple], [size]) {
+      /* (the closed field is a flex box here: keep its word centred, as the native one) */
+      align-items: center;
 
-    .fh-select::picker-icon {
-      display: none;
-    }
-
-    .fh-select::picker(select) {
-      margin-block-start: var(--fh-gap-bound);
-      padding: var(--fh-item-frame);
-      border: var(--fh-border-thin) solid var(--fh-color-border-strong);
-      border-radius: var(--fh-radius-sm);
-      background-color: color-mix(in oklab, var(--fh-color-surface-raised) 94%, var(--fh-color-ink));
-      box-shadow: var(--fh-shadow-menu);
-    }
-
-    .fh-select option {
-      padding: var(--fh-item-block) var(--fh-item-inline);
-      border-radius: calc(var(--fh-radius-sm) - 1px);
-
-      &:is(:hover, :focus-visible) {
-        background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+      &,
+      &::picker(select) {
+        appearance: base-select;
       }
 
-      &::checkmark {
-        order: 1;
-        margin-inline-start: auto;
+      &::picker-icon { display: none; }
+      & > button { display: contents; }
+
+      &::picker(select) {
+        min-inline-size: max(anchor-size(self-inline), var(--fh-menu-min, 13rem));
+        max-block-size: var(--fh-menu-max, min(22rem, 60dvh));
+        margin-block: var(--fh-gap-bound);
+        padding: var(--_frame);
+        overflow: auto;
+        border: var(--_etch);
+        border-radius: var(--_radius);
+        background-color: var(--fh-color-surface-menu);
+        -webkit-backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+        backdrop-filter: blur(var(--fh-blur-chrome)) saturate(1.15);
+        color: var(--fh-color-text);
+        font-family: var(--fh-font-sans);
+        font-weight: var(--fh-weight-regular);
+        letter-spacing: normal;
+        line-height: var(--_leading);
+        text-transform: none;
+        box-shadow: var(--fh-shadow-menu);
+        opacity: 0;
+        translate: 0 calc(-1 * var(--_drop));
+        transition:
+          opacity var(--fh-duration-fast) var(--fh-ease-out),
+          translate var(--fh-duration-fast) var(--fh-ease-out),
+          overlay var(--fh-duration-fast) allow-discrete,
+          display var(--fh-duration-fast) allow-discrete;
+      }
+
+      &:open::picker(select) {
+        opacity: 1;
+        translate: 0 0;
+
+        @starting-style {
+          opacity: 0;
+          translate: 0 calc(-1 * var(--_drop));
+        }
+      }
+
+      /* Rows: the menu's rows, the check at the end of the chosen one. */
+      & option {
+        display: flex;
+        align-items: center;
+        gap: var(--_gap);
+        padding: var(--_item-b) calc(var(--_pad-i) - var(--_frame));
+        border-radius: var(--_row-radius, 0);
+        background: none;
+        color: inherit;
+        font-size: var(--_text);
+        line-height: var(--_leading);
+        cursor: var(--fh-cursor-action);
+
+        &:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+        &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+        &:disabled { color: var(--fh-color-text-subtle); cursor: default; }
+
+        &::checkmark {
+          content: "";
+          order: 1;
+          flex: none;
+          inline-size: var(--_icon);
+          aspect-ratio: 1;
+          margin-inline-start: auto;
+          background-color: var(--fh-tone, currentColor);
+          mask: var(--fh-icon-check) center / contain no-repeat;
+        }
+        &:not(:checked)::checkmark { opacity: 0; }
+      }
+
+      /* Separators, as in the menu. */
+      & hr {
+        margin: var(--_frame) calc(-1 * var(--_frame));
+        border: 0;
+        border-block-start: var(--_etch-soft);
+      }
+
+      @media (forced-colors: active) {
+        &::picker(select) { border: var(--fh-border-thin) solid CanvasText; }
+        & option::checkmark { background-color: CanvasText; }
       }
     }
   }
