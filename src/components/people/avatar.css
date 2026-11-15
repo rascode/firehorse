@@ -4,13 +4,32 @@
  */
 
 @layer fh.components {
+  /* Scale (DR2).
+   * Six steps, and every avatar in the system sits on one of them. The
+   * data display contract uses two: inline (cell, card, chip, stack,
+   * metric) and identity (a record's full row, a form's picker). */
+  :root {
+    --fh-avatar-xs: 1.375rem;
+    --fh-avatar-sm: 1.75rem;
+    --fh-avatar-md: 2.25rem;
+    --fh-avatar-lg: 3rem;
+    --fh-avatar-xl: 5.5rem;
+    --fh-avatar-2xl: 7rem;
+    --fh-avatar-inline: var(--fh-avatar-xs);
+    --fh-avatar-identity: var(--fh-avatar-md);
+  }
+
   /* —— Avatar ——
-   * Square plate by default (the Firehorse portrait); --round for
-   * people in social contexts. Initials fall back when there is no image.
-   *   <span class="fh-avatar" data-tone="sky"><img src="…" alt=""></span>
-   *   <span class="fh-avatar">JR</span> */
+   * Rounded plate by default (the Firehorse portrait). data-kind sets the
+   * shape from what the avatar stands for: a person is a circle; an org,
+   * an agent and a record are rounded squares. Initials fall back when
+   * there is no image, at most two letters.
+   *   <span class="fh-avatar" data-kind="person"><img src="…" alt=""></span>
+   *   <span class="fh-avatar" data-kind="org">NS</span>
+   * Knobs: --fh-avatar-size, --fh-avatar-initials (the initials' type tier),
+   * --fh-avatar-plate-radius (the rounded square of a non-person kind). */
   .fh-avatar {
-    --_size: var(--fh-avatar-size, 2.25rem);
+    --_size: var(--fh-avatar-size, var(--fh-avatar-md));
 
     position: relative;
     display: inline-grid;
@@ -18,16 +37,19 @@
     flex: none;
     inline-size: var(--_size);
     aspect-ratio: var(--fh-avatar-ratio, 1);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    /* One hairline for every avatar; dashed is the empty add slot only. */
+    border: var(--fh-border-thin) solid var(--fh-color-etch);
     /* Shape comes from config tokens (see tokens/config.css) so one
      * data-fh-avatar on <html> reshapes every avatar on the site. */
     border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--_size) * 0.3);
-    font-weight: var(--fh-weight-heavy);
+    font-size: var(--fh-avatar-initials, var(--fh-type-meta));
+    font-weight: var(--fh-weight-medium);
+    font-variant-numeric: tabular-nums;
     letter-spacing: var(--fh-tracking-mono);
+    line-height: 1;
     text-transform: uppercase;
 
     & > img {
@@ -54,23 +76,46 @@
     &[data-status="busy"]::after { background-color: var(--fh-color-danger); }
   }
 
-  .fh-avatar--sm { --fh-avatar-size: 1.75rem; }
-  .fh-avatar--lg { --fh-avatar-size: 3.5rem; }
-  .fh-avatar--xl { --fh-avatar-size: 5.5rem; }
+  /* Sizes: xs and sm set their initials in the label tier, md and up in meta. */
+  .fh-avatar--xs { --fh-avatar-size: var(--fh-avatar-xs); --fh-avatar-initials: var(--fh-type-label); --fh-avatar-plate-radius: var(--fh-radius-sm); }
+  .fh-avatar--sm { --fh-avatar-size: var(--fh-avatar-sm); --fh-avatar-initials: var(--fh-type-label); }
+  .fh-avatar--md { --fh-avatar-size: var(--fh-avatar-md); --fh-avatar-initials: var(--fh-type-meta); }
+  .fh-avatar--lg { --fh-avatar-size: var(--fh-avatar-lg); --fh-avatar-initials: var(--fh-type-meta); }
+  .fh-avatar--xl { --fh-avatar-size: var(--fh-avatar-xl); --fh-avatar-initials: var(--fh-type-meta); }
 
-  /* Overlapping stack: <div class="fh-avatars">…avatars… <span class="fh-avatar">+4</span></div> */
+  /* Shape by kind. Low specificity, so a shape modifier still wins outside
+   * a value; inside .fh-value the kind wins (components/data/values.css). */
+  .fh-avatar:where([data-kind="person"]) { --fh-avatar-radius: var(--fh-avatar-person-radius, var(--fh-radius-pill)); --fh-avatar-ratio: 1; }
+  .fh-avatar:where([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius, var(--fh-radius-md))); --fh-avatar-ratio: 1; }
+
+  /* Overlapping stack: at most three faces, then "+N" (avatar-group.css).
+   *   <div class="fh-avatars">…avatars… <span class="fh-avatar fh-avatars__more">+4</span></div>
+   * Each face after the first cuts a 2px canvas ring out of the one before. */
   .fh-avatars {
     display: flex;
     align-items: center;
 
-    & > .fh-avatar {
-      border-style: var(--fh-card-border-style, solid);
-      border-color: var(--fh-color-canvas);
-      border-width: var(--fh-border-heavy);
+    & > .fh-avatar + .fh-avatar {
+      margin-inline-start: calc(var(--fh-avatar-size, var(--fh-avatar-md)) * -0.3);
     }
 
-    & > .fh-avatar + .fh-avatar {
-      margin-inline-start: calc(var(--fh-avatar-size, 2.25rem) * -0.3);
+    & > .fh-avatar + .fh-avatar:not(.fh-avatar--ring, .fh-avatar--halo) {
+      box-shadow: 0 0 0 2px var(--fh-color-canvas);
+    }
+  }
+
+  /* The empty add slot: the one dashed avatar. */
+  .fh-avatar--add {
+    border-style: dashed;
+    background-color: transparent;
+    color: var(--fh-color-text-muted);
+    cursor: var(--fh-cursor-action);
+
+    &:hover { border-color: var(--fh-color-border-strong); color: var(--fh-color-text); }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
   }
 
@@ -80,8 +125,7 @@
   /* —— Avatar shapes, sizes, rings ——
    * Rounded rect is the Firehorse plate; every other shape is one
    * modifier away. */
-  .fh-avatar--xs { --fh-avatar-size: 1.4rem; }
-  .fh-avatar--2xl { --fh-avatar-size: 7rem; }
+  .fh-avatar--2xl { --fh-avatar-size: var(--fh-avatar-2xl); --fh-avatar-initials: var(--fh-type-meta); }
   .fh-avatar--circle { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
   .fh-avatar--square { --fh-avatar-radius: var(--fh-radius-sm); --fh-avatar-ratio: 1; }
   .fh-avatar--rounded { --fh-avatar-radius: var(--fh-radius-md); --fh-avatar-ratio: 1; }

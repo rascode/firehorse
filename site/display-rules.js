@@ -4,13 +4,16 @@
 // resolveValue() resolves them. Everything on this page is read from the contract at load: change
 // display-rules.json (or publish the platform's option sets), run node scripts/value-rules.mjs, reload.
 // Sample data only: people and figures are invented.
-import { resolveValue, textOf, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
+import { resolveValue, textOf, avatarMarkup, stackMarkup, thumbMarkup, thumbClusterMarkup, formatBytes, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
 
 const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const icon = (n) => `<i class="fh-icon fh-icon--${n}" aria-hidden="true"></i>`;
 const people = [["Maya Chen", "maya", "Owner"], ["Mateo Ruiz", "mateo", "Designer"], ["Ava Marlow", "ava", "Engineer"], ["Ruth Okoye", "ruth", "Finance"], ["Sam Hale", "sam", "Support"], ["Isla Grant", "isla", "Sales"]];
-const av = ([name, img], size = "fh-avatar--xs") => `<span class="fh-avatar ${size}" title="${esc(name)}"><img src="/img/avatars/${img}.webp" alt=""></span>`;
-const stack = (list, max) => `<span class="fh-avatars">${list.slice(0, max).map((p) => av(p)).join("")}${list.length > max ? `<span class="fh-avatar fh-avatar--xs">+${list.length - max}</span>` : ""}</span>`;
+// Avatars come from the resolver (DR2): data-kind from the entity kind, size from the .fh-value root they sit in.
+const person = ([label, img]) => ({ label, image: `/img/avatars/${img}.webp`, kind: "person" });
+const av = (p) => avatarMarkup(person(p));
+const stack = (list, max) => stackMarkup(list.map(person), { max });
+const value = (variant, html) => `<span class="fh-value fh-value--${variant}">${html}</span>`;
 const chip = (text, tone = "neutral", extra = "", ramp = null) => `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="${tone}"${ramp ? ` data-ramp="${ramp}"` : ""}>${extra}${esc(text)}</span>`;
 // Dot and word (VAL-1.1): a status in a table cell (decision 5); an ordinal option takes its ramp step instead of a tone.
 const dot = (o) => `<span class="fh-value fh-value--dot" ${o.ramp ? `data-ramp="${o.ramp}"` : `data-tone="${o.tone}"`} data-fh="VAL-1.1"><span class="fh-dot"></span>${esc(o.label)}</span>`;
@@ -28,6 +31,13 @@ const spark = (values) => {
 };
 const tags = ["demo", "featured", "internal", "beta", "q4"];
 const files = [["Proposal.pdf", "PDF", "412 KB"], ["Brief.docx", "DOCX", "38 KB"], ["Hero.png", "PNG", "1.2 MB"], ["Budget.xlsx", "XLSX", "64 KB"]];
+const imgOf = (n, alt) => ({ name: `dr4-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp`, alt: alt ?? `Sample ${n.toUpperCase()}`, bytes: 42000 + n.charCodeAt(0) * 100 });
+const imgSamples = ["a", "b", "c", "d", "e"].map((n) => imgOf(n));
+const docPreview = { name: "scope-of-work.pdf", preview: "/img/samples/dr4-a.webp", bytes: 212000 };
+const docPlain = { name: "brief.docx", bytes: 48000 };
+const mediaFrame = (file) => `<figure class="fh-card__media"><img src="${esc(fileUrl(file))}" alt="${esc(fileName(file))}"></figure>`;
+const fileUrl = (f) => (f?.url ?? f?.image ?? f?.preview ?? "");
+const fileName = (f) => (f?.name ?? "");
 const prose = "Kickoff went well. The client wants the design system first, then the marketing site on top of it, with a review every Friday and a shared board for open questions.";
 
 /** Markup for one variant of one row, for the row's sample field r (what resolveValue() returned). */
@@ -53,14 +63,17 @@ function draw(row, variant, max, r) {
     case "options:chips-inline": return `<span class="site-dr__wrap">${tags.map((t) => optionChip(opt(t))).join(" ")}</span>`;
     case "options:count": return num(`${tags.length} tags`);
     case "options:tag-field": return `<span class="fh-input site-dr__wrap site-dr__field">${tags.slice(0, 3).map((t) => chip(t, "neutral")).join(" ")}<span class="site-dr__muted">Add a tag</span></span>`;
-    case "entities:stack": return stack(people, max ?? 4);
-    case "entities:avatar-name": return `<span class="site-dr__list">${people.slice(0, 3).map((p) => `<span class="site-dr__row">${av(p)}${esc(p[0])}</span>`).join("")}</span>`;
-    case "entities:picker-multi": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${stack(people, 3)}<span class="fh-entity__who"><b>6 people</b></span></span>${chev}</button>`;
-    case "entity.person:avatar-name": return `<span class="site-dr__row">${av(people[0])}Maya Chen</span>`;
-    case "entity.person:full": return `<span class="fh-entity__value">${av(people[0], "fh-avatar--circle")}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span>`;
-    case "entity.person:chip": return `<span class="fh-chip fh-chip--sm site-dr__row">${av(people[0])}Maya Chen</span>`;
-    case "entity.person:stack": return stack(people.slice(0, 3), 4);
-    case "entity.person:picker": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${av(people[0], "fh-avatar--circle")}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span></span>${chev}</button>`;
+    case "entities:stack": return value("stack", stack(people, max));
+    case "entities:avatar-name": return value("avatar-name", `<span class="site-dr__list">${people.slice(0, max).map((p) => `<span class="site-dr__row">${av(p)}${esc(p[0])}</span>`).join("")}<span class="site-dr__muted">+${people.length - max} more</span></span>`);
+    case "entities:picker-multi": return `<div class="fh-value fh-value--picker-multi"><button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${stack(people, max)}<span class="fh-entity__who"><b>${people.length} people</b></span></span>${chev}</button></div>`;
+    case "entity.person:avatar-name": return value("avatar-name", `${av(people[0])}<span class="fh-value__name">Maya Chen</span>`);
+    case "entity.person:full": return `<div class="fh-value fh-value--full"><span class="fh-entity">${av(people[0])}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span></div>`;
+    case "entity.person:chip": return value("chip", `<span class="fh-chip fh-chip--sm">${av(people[0])}Maya Chen</span>`);
+    case "entity.person:picker": return `<div class="fh-value fh-value--picker"><button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${av(people[0])}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span></span>${chev}</button></div>`;
+    // A rich record (decision 10): its logo or initials, then its reference. Logos come from the record (W4).
+    case "entity.rich:avatar-ref": return value("avatar-ref", `${avatarMarkup({ label: "Claude", kind: "org" })}<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Claude</span></a>`);
+    case "entity.rich:picker": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${avatarMarkup({ label: "Claude", kind: "org" })}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Claude</b><small>Organization</small></span></span>${chev}</button>`;
+    case "entity.rich:name": return "Claude";
     case "entity.record:ref": return `<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Harbor index refresh</span></a>`;
     case "entity.record:ref-key": return `<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a>`;
     case "entity.record:name": return "Harbor index refresh";
@@ -96,9 +109,25 @@ function draw(row, variant, max, r) {
     case "temporal:date-picker": return input("2026-11-14T17:01", "datetime-local");
     case "file:type-chip": return files.slice(0, max).map((f) => chip(f[1])).join(" ") + (files.length > max ? ` ${chip(`+${files.length - max}`)}` : "");
     case "file:file-row": return `<span class="site-dr__row">${icon("file-text")}<b>Proposal.pdf</b><span class="site-dr__muted">412 KB</span></span>`;
-    case "file:thumb": return `<span class="site-dr__thumb">PDF</span>`;
+    case "file:thumb": return thumbMarkup(imgOf("a"));
+    case "file:thumbs": return thumbClusterMarkup(imgSamples, { max });
+    case "file:preview": return `<span class="site-dr__row">${thumbMarkup(imgOf("a"), { lg: true })}<span><b>dr4-a.webp</b><span class="site-dr__muted">${formatBytes(imgOf("a").bytes)}</span></span></span>`;
+    case "file:gallery": return `<span class="fh-thumb-gallery">${imgSamples.slice(0, 3).map((f) => thumbMarkup(f)).join("")}</span>`;
     case "file:count": return num("4 files");
     case "file:dropzone": return `<div class="fh-dropzone fh-dropzone--compact"><span class="fh-dropzone__title">Drop files or browse</span></div>`;
+    case "image:thumb": return thumbMarkup(imgOf("a"));
+    case "image:preview": return `<span class="site-dr__row">${thumbMarkup(imgOf("a"), { lg: true })}<span><b>dr4-a.webp</b><span class="site-dr__muted">${formatBytes(imgOf("a").bytes)}</span></span></span>`;
+    case "image:media": return mediaFrame(imgOf("a"));
+    case "image:dropzone": return `<label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><span class="fh-dropzone__title">Replace or remove</span>${thumbMarkup(imgOf("a"), { open: false })}</label>`;
+    case "images:thumbs": return thumbClusterMarkup(imgSamples, { max });
+    case "images:gallery": return `<span class="fh-thumb-gallery">${imgSamples.map((f) => thumbMarkup(f)).join("")}</span>`;
+    case "images:media-badge": return `<span class="fh-value fh-value--media-badge">${mediaFrame(imgOf("a"))}<span class="fh-badge">+2</span></span>`;
+    case "images:dropzone": return `<label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><span class="fh-dropzone__title">Add images</span><span class="fh-thumb-gallery">${imgSamples.slice(0, 2).map((f) => thumbMarkup(f, { open: false })).join("")}</span></label>`;
+    case "images:count": return num(`${imgSamples.length} files`);
+    case "document:doc-cell": return `<span class="site-dr__stack"><span class="site-dr__row">${thumbMarkup({ ...docPreview, url: docPreview.preview }, { portrait: true })}<b>${esc(docPreview.name)}</b></span><span class="site-dr__row">${chip("DOCX")} <b>${esc(docPlain.name)}</b></span></span>`;
+    case "document:doc-portrait": return `<span class="site-dr__row">${thumbMarkup({ ...docPreview, url: docPreview.preview }, { portrait: true, lg: true })}<span><b>${esc(docPreview.name)}</b><span class="site-dr__muted">${formatBytes(docPreview.bytes)} · PDF</span></span></span>`;
+    case "document:dropzone": return `<div class="fh-dropzone fh-dropzone--compact"><span class="fh-dropzone__title">Drop a document</span></div>`;
+    case "document:count": return num("2 files");
     case "link.email:email": return `<a href="mailto:maya.chen@example.com">maya.chen@example.com</a>`;
     case "link.email:link-chip": return chip("maya.chen@example.com", "sky", `${icon("at-sign")} `);
     case "link.email:email-input": return input("maya.chen@example.com", "email");
@@ -139,11 +168,13 @@ const sampleField = {
   "option.ordinal.few": { semanticType: "priority" }, "option.ordinal": sizes,
   "option.status": { semanticType: "status" }, "option.code": { semanticType: "country_code" }, "option.few": { semanticType: "pronouns" }, "option.many": regions,
   option: { semanticType: "barcode_format" }, options: { semanticType: "tags" }, entities: { semanticType: "owner_reference", multiple: true },
-  "entity.person": { semanticType: "owner_reference" }, "entity.record": { semanticType: "entity_reference" }, money: { semanticType: "fiat_amount", currency: "USD" },
+  "entity.person": { semanticType: "owner_reference" }, "entity.rich": { semanticType: "entity_reference", entity: "organization" }, "entity.record": { semanticType: "entity_reference" }, money: { semanticType: "fiat_amount", currency: "USD" },
   ratio: { semanticType: "percentage" }, series: { semanticType: "waveform_data" }, "number.duration": { semanticType: "duration_iso8601" },
   "number.id": { semanticType: "chain_id" }, number: { semanticType: "bitrate_kbps" },
   "temporal.date": { semanticType: "date" }, "temporal.time": { semanticType: "time" },
-  temporal: { semanticType: "updated_at", readOnly: false }, file: { semanticType: "document_file", multiple: true }, "link.email": { semanticType: "email" },
+  temporal: { semanticType: "updated_at", readOnly: false },
+  images: { semanticType: "image_asset", multiple: true }, image: { semanticType: "image_asset" }, document: { semanticType: "document_file" },
+  file: { semanticType: "media_file", multiple: true }, "link.email": { semanticType: "email" },
   "link.phone": { semanticType: "phone_e164" }, link: { semanticType: "url" },
   flag: { semanticType: "checkbox" }, prose: { semanticType: "description" }, "code.secret": { semanticType: "api_key_secret_ref" },
   "code.json": { semanticType: "barcode_metadata", readOnly: false }, code: { semanticType: "transaction_hash" }, "text.action": { semanticType: "computed_button" },
@@ -152,9 +183,12 @@ const sampleField = {
 const sampleValue = {
   "option.ordinal.few": "high", "option.ordinal": "l", "option.status": "active", "option.code": "MX", "option.few": "she/her", "option.many": "Northeast",
   option: "ean13", options: ["demo", "featured", "internal"], entities: people.slice(0, 3).map(([label], id) => ({ id, label })), "entity.person": { id: 1, label: "Maya Chen" },
+  "entity.rich": { id: "claude", label: "Claude", kind: "organization" },
   "entity.record": { id: 14, label: "Harbor index refresh" }, money: 12480.5, ratio: 69, series: [4, 7, 5, 9, 8, 12, 10, 14], "number.duration": 30840,
   "number.id": 11155111, number: 1411, "temporal.date": "2026-11-27", "temporal.time": "09:27:00", temporal: "2026-11-14T22:01:00Z",
-  file: files.map(([name]) => ({ name })), "link.email": "maya.chen@example.com", "link.phone": "+14005222613", link: "https://example.com/demo", flag: true,
+  file: files.map(([name]) => ({ name })),
+  image: imgOf("a"), images: imgSamples, document: docPreview,
+  "link.email": "maya.chen@example.com", "link.phone": "+14005222613", link: "https://example.com/demo", flag: true,
   prose: "Kickoff went **well**. See [the brief](https://example.com).", "code.secret": "vault:7f3a", "code.json": { format: "ean13" },
   code: "0xef111265ee51e58e6709", "text.action": "Open", text: "Weekly review",
 };
@@ -235,3 +269,155 @@ let start = "dark";
 try { start = localStorage.getItem("fh-dr-mode") ?? (getComputedStyle(document.documentElement).colorScheme === "light" ? "light" : "dark"); } catch {}
 for (const b of buttons) b.addEventListener("click", () => setMode(b.dataset.mode));
 setMode(start === "light" ? "light" : "dark");
+
+// Type tier playground (DR3): sets --fh-type-* on the grid frame or :root.
+{
+  const STORAGE = "fh-type-tiers";
+  const root = document.documentElement;
+  const frame = document.getElementById("dr-grid-table");
+  const rowsEl = document.getElementById("dr-type-rows");
+  if (rowsEl) {
+    const scopeBtns = [...document.querySelectorAll("#dr-type-scope button[data-scope]")];
+    const sizes = [
+      ["0.6875rem (micro)", "0.6875rem"],
+      ["0.72rem (label)", "0.72rem"],
+      ["0.78rem (caption)", "0.78rem"],
+      ["0.88rem (small)", "0.88rem"],
+      ["1rem (body)", "1rem"],
+      ["1.05rem (lede)", "1.05rem"],
+      ["1.15rem (large)", "1.15rem"],
+    ];
+    const weights = [["300 light", "300"], ["400 regular", "400"], ["500 medium", "500"], ["600 bold", "600"]];
+    const tracks = [["-0.02em", "-0.02em"], ["-0.01em", "-0.01em"], ["0", "0"], ["0.02em", "0.02em"], ["0.04em", "0.04em"], ["0.06em", "0.06em"], ["0.08em", "0.08em"]];
+    const sansFamilies = [
+      ["Inter", '"Inter", ui-sans-serif, system-ui, sans-serif'],
+      ["Geist", '"Geist", ui-sans-serif, system-ui, sans-serif'],
+      ["Hanken Grotesk", '"Hanken Grotesk", ui-sans-serif, system-ui, sans-serif'],
+      ["Archivo", '"Archivo", ui-sans-serif, system-ui, sans-serif'],
+      ["System", "ui-sans-serif, system-ui, -apple-system, sans-serif"],
+    ];
+    const monoFamilies = [
+      ["Geist Mono", '"Geist Mono", ui-monospace, monospace'],
+      ["System mono", 'ui-monospace, "SF Mono", monospace'],
+    ];
+    const TIER_ROWS = [
+      {
+        id: "value",
+        legend: "Value tier",
+        sample: '<span class="site-dr__type-sample site-dr__type-sample--value">2 hours ago</span> <span class="site-dr__type-sample site-dr__type-sample--value"><span class="fh-num">9:27 AM</span></span>',
+        fields: [
+          { key: "valueFamily", prop: "--fh-type-value-family", label: "Family", options: sansFamilies },
+          { key: "figureFamily", prop: "--fh-type-figure-family", label: "Figures", options: monoFamilies },
+          { key: "valueSize", prop: "--fh-type-value", label: "Size", options: sizes },
+          { key: "valueWeight", prop: "--fh-type-value-weight", label: "Weight", options: weights },
+          { key: "valueTracking", prop: "--fh-type-value-tracking", label: "Tracking", options: tracks },
+        ],
+      },
+      {
+        id: "meta",
+        legend: "Meta tier",
+        sample: '<span class="site-dr__type-sample site-dr__type-sample--meta">Owner · Goal Q4</span>',
+        fields: [
+          { key: "metaFamily", prop: "--fh-type-meta-family", label: "Family", options: sansFamilies },
+          { key: "metaSize", prop: "--fh-type-meta", label: "Size", options: sizes },
+          { key: "metaWeight", prop: "--fh-type-meta-weight", label: "Weight", options: weights },
+          { key: "metaTracking", prop: "--fh-type-meta-tracking", label: "Tracking", options: tracks },
+        ],
+      },
+      {
+        id: "label",
+        legend: "Label tier",
+        sample: '<span class="site-dr__type-sample site-dr__type-sample--label">AMOUNT · GL-814</span>',
+        fields: [
+          { key: "labelFamily", prop: "--fh-type-label-family", label: "Family", options: monoFamilies },
+          { key: "labelSize", prop: "--fh-type-label", label: "Size", options: sizes },
+          { key: "labelWeight", prop: "--fh-type-label-weight", label: "Weight", options: weights },
+          { key: "labelTracking", prop: "--fh-type-label-tracking", label: "Tracking", options: tracks },
+          { key: "labelCase", prop: "--fh-type-label-case", label: "Case", options: [["none", "none"], ["uppercase", "uppercase"]] },
+        ],
+      },
+    ];
+    const defaults = {};
+    const readDefaults = () => {
+      const cs = getComputedStyle(root);
+      for (const row of TIER_ROWS) for (const f of row.fields) defaults[f.key] = cs.getPropertyValue(f.prop).trim();
+    };
+    readDefaults();
+    let scope = "frame";
+    let state = {};
+    try {
+      const saved = localStorage.getItem(STORAGE);
+      if (saved) state = JSON.parse(saved);
+    } catch {}
+    const target = () => (scope === "root" ? root : frame ?? root);
+    const applyAll = () => {
+      const t = target();
+      for (const row of TIER_ROWS) for (const f of row.fields) {
+        const v = state[f.key];
+        if (v != null && v !== "" && v !== defaults[f.key]) t.style.setProperty(f.prop, v);
+        else t.style.removeProperty(f.prop);
+      }
+    };
+    const persist = () => { try { localStorage.setItem(STORAGE, JSON.stringify(state)); } catch {} };
+    const select = (id, label, key, options, val) => {
+      const cur = val ?? state[key] ?? defaults[key];
+      const norm = (v) => String(v ?? "").replace(/\s+/g, " ").trim().replace(/^(-?)0\./, "$1.").replace(/^0em$/, "0");
+      const hit = options.some(([, value]) => norm(value) === norm(cur));
+      const opts = (hit ? "" : `<option value="" selected>Theme default</option>`) + options.map(([text, value]) => `<option value="${esc(value)}"${hit && norm(cur) === norm(value) ? " selected" : ""}>${esc(text)}</option>`).join("");
+      return `<motionless-wrap class="fh-field"><label for="${id}">${esc(label)}</label><span class="fh-select-wrap"><select class="fh-select" id="${id}" data-type-key="${key}">${opts}</select></span></motionless-wrap>`;
+    };
+    rowsEl.innerHTML = TIER_ROWS.map((row) => `<fieldset class="site-dr__type-tier"><legend>${esc(row.legend)}</legend><div class="site-dr__type-sample-row" aria-hidden="true">${row.sample}</div><div class="site-dr__type-controls fh-cluster">${row.fields.map((f) => select(`dr-type-${f.key}`, f.label, f.key, f.options)).join("")}</div></fieldset>`).join("").replace(/motionless-wrap/g, "div");
+    rowsEl.addEventListener("change", (e) => {
+      const sel = e.target.closest("select[data-type-key]");
+      if (!sel) return;
+      state[sel.dataset.typeKey] = sel.value;
+      applyAll();
+      persist();
+    });
+    const setScope = (next) => {
+      scope = next;
+      for (const b of scopeBtns) b.setAttribute("aria-pressed", String(b.dataset.scope === scope));
+      applyAll();
+    };
+    for (const b of scopeBtns) b.addEventListener("click", () => setScope(b.dataset.scope));
+    document.getElementById("dr-type-reset")?.addEventListener("click", () => {
+      state = {};
+      persist();
+      applyAll();
+      for (const sel of rowsEl.querySelectorAll("select[data-type-key]")) {
+        const key = sel.dataset.typeKey;
+        sel.value = defaults[key] ?? "";
+      }
+    });
+    const changedProps = () => {
+      const out = [];
+      for (const row of TIER_ROWS) for (const f of row.fields) {
+        const v = state[f.key];
+        if (v != null && v !== defaults[f.key]) out.push([f.prop, v]);
+      }
+      return out;
+    };
+    document.getElementById("dr-type-copy-css")?.addEventListener("click", async () => {
+      const lines = changedProps();
+      const text = lines.length ? `:root {\n${lines.map(([n, v]) => `  ${n}: ${v};`).join("\n")}\n}` : ":root { /* matches defaults */ }";
+      try { await navigator.clipboard.writeText(text); } catch {}
+    });
+    document.getElementById("dr-type-copy-json")?.addEventListener("click", async () => {
+      const pick = (prop) => getComputedStyle(target()).getPropertyValue(prop).trim();
+      const block = {
+        value: { size: pick("--fh-type-value"), weight: pick("--fh-type-value-weight"), tracking: pick("--fh-type-value-tracking") },
+        figure: { tracking: pick("--fh-type-figure-tracking") },
+        name: { weight: pick("--fh-type-name-weight") },
+        meta: { size: pick("--fh-type-meta"), weight: pick("--fh-type-meta-weight"), tracking: pick("--fh-type-meta-tracking") },
+        label: { size: pick("--fh-type-label"), weight: pick("--fh-type-label-weight"), tracking: pick("--fh-type-label-tracking"), case: pick("--fh-type-label-case") },
+        fieldFloor: pick("--fh-type-field-floor") || "1rem",
+      };
+      try { await navigator.clipboard.writeText(JSON.stringify({ type: block }, null, 2)); } catch {}
+    });
+    applyAll();
+    for (const sel of rowsEl.querySelectorAll("select[data-type-key]")) {
+      const key = sel.dataset.typeKey;
+      if (state[key]) sel.value = state[key];
+    }
+  }
+}

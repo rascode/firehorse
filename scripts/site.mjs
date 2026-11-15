@@ -172,6 +172,10 @@ mkdirSync(join(out, "fonts"), { recursive: true });
 for (const f of readdirSync(join(root, "site/fonts"))) cp(`site/fonts/${f}`, `fonts/${f}`);
 mkdirSync(join(out, "img/avatars"), { recursive: true });
 for (const f of readdirSync(join(root, "site/img/avatars"))) cp(`site/img/avatars/${f}`, `img/avatars/${f}`);
+mkdirSync(join(out, "img/samples"), { recursive: true });
+if (existsSync(join(root, "site/img/samples"))) {
+  for (const f of readdirSync(join(root, "site/img/samples"))) cp(`site/img/samples/${f}`, `img/samples/${f}`);
+}
 cp("dist/tokens.json", "tokens.json");
 cp("site/favicon.svg", "favicon.svg");
 cp("dist/themes.css", "themes.css");

@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv/dist/2020.js";
-import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets, renderValue, variants, CHOICE_CONTEXTS } from "../src/js/values.js";
+import { resolveValue, describeField, optionSetFor, toneOf, rampOf, defaultTone, isEmpty, textOf, isoDuration, SHAPES, CONTEXTS, DRAWN_CONTEXTS, STATES, EMPTY, rules, optionSets, renderValue, variants, CHOICE_CONTEXTS, avatarOf, initialsOf, avatarMarkup, stackMarkup, AVATAR_KINDS } from "../src/js/values.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const types = JSON.parse(readFileSync(join(root, "schema/semantic-types.json"), "utf8")).types;
@@ -52,10 +52,10 @@ t("the grid only names variants its shape has, and every part is a Firehorse fam
   for (const s of SHAPES) assert.ok(rules.grid.some((r) => r.shape === s && !r.match), `${s} has a default row`);
 });
 
-t("the datatable's 22 types are aliases that resolve", () => {
-  const dt = ["text", "long", "number", "currency", "percent", "progress", "select", "status", "multi", "tags", "date", "check", "rating", "user", "users", "url", "email", "phone", "link", "attachment", "formula", "sparkline"];
+t("the datatable's types are aliases that resolve", () => {
+  const dt = ["text", "long", "number", "currency", "percent", "progress", "select", "status", "multi", "tags", "date", "check", "rating", "user", "users", "url", "email", "phone", "link", "attachment", "image", "images", "document", "formula", "sparkline"];
   assert.deepEqual(Object.keys(rules.aliases).sort(), [...dt].sort());
-  const want = { text: "text", long: "prose", number: "number", currency: "money", percent: "ratio", progress: "ratio", select: "option", status: "option", multi: "options", tags: "options", date: "temporal", check: "flag", rating: "ratio", user: "entity", users: "entity", url: "link", email: "link", phone: "link", link: "entity", attachment: "file", formula: "text", sparkline: "series" };
+  const want = { text: "text", long: "prose", number: "number", currency: "money", percent: "ratio", progress: "ratio", select: "option", status: "option", multi: "options", tags: "options", date: "temporal", check: "flag", rating: "ratio", user: "entity", users: "entity", url: "link", email: "link", phone: "link", link: "entity", attachment: "file", image: "file", images: "file", document: "file", formula: "text", sparkline: "series" };
   for (const type of dt) {
     const d = describeField({ type });
     assert.equal(d.shape, want[type], type);
@@ -138,7 +138,30 @@ t("options overflow, entities and people", () => {
   assert.equal(resolveValue({ semanticType: "entity_reference", entity: "org" }, "cell").variant, "avatar-name");
   const many = resolveValue({ semanticType: "owner_reference", multiple: true }, "cell");
   assert.equal(many.variant, "stack");
-  assert.equal(many.max, 4);
+  assert.equal(many.max, 3);
+});
+
+t("avatars (DR2): shape by kind, inline and identity sizes, stacks of 3 + N, two letters", () => {
+  assert.deepEqual([...AVATAR_KINDS], ["person", "org", "agent", "record"]);
+  const many = resolveValue({ semanticType: "owner_reference", multiple: true }, "cell");
+  for (const c of ["cell", "record", "card", "metric", "form"]) assert.equal(resolveValue({ semanticType: "owner_reference", multiple: true }, c).max, 3, `entities max in ${c}`);
+  assert.deepEqual(many.avatar, { kind: "person", shape: "circle", size: "inline", token: "--fh-avatar-inline", max: 3 });
+  assert.equal(resolveValue({ semanticType: "owner_reference" }, "metric").variant, "avatar-name", "one person is one face in a metric");
+  assert.equal(resolveValue({ semanticType: "owner_reference" }, "record").avatar.size, "identity");
+  assert.equal(resolveValue({ semanticType: "owner_reference" }, "form").avatar.size, "identity");
+  assert.equal(resolveValue({ semanticType: "owner_reference" }, "card").avatar.size, "inline");
+  assert.equal(resolveValue({ semanticType: "entity_reference", entity: "org" }, "cell").avatar.shape, "rounded");
+  assert.equal(resolveValue({ semanticType: "status" }, "cell").avatar, null);
+  assert.equal(avatarOf("planet").kind, null);
+  assert.equal(initialsOf("Maya Chen"), "MC");
+  assert.equal(initialsOf("Ana Lucia de la Cruz"), "AC");
+  assert.equal(initialsOf("northwind"), "NO");
+  assert.match(avatarMarkup({ label: "Northwind Studio", kind: "org" }), /^<span class="fh-avatar" data-kind="org" title="Northwind Studio">NS<\/span>$/);
+  const people = ["Ava", "Mateo", "Eleanor", "Ray", "Isla", "Sam"].map((label) => ({ label, kind: "person" }));
+  const stack = stackMarkup(people);
+  assert.equal(stack.match(/class="fh-avatar"/g).length, 3, "three faces");
+  assert.match(stack, /<span class="fh-avatar fh-avatars__more" data-kind="person" aria-hidden="true">\+3<\/span>/);
+  assert.match(stack, /aria-label="Ava, Mateo, Eleanor and 3 more"/);
 });
 
 t("numbers and money align right with tabular figures; money knows its currency", () => {
@@ -402,11 +425,12 @@ t("renderValue(): the empty dash, a viewer's pick only when allowed, escaping, a
 });
 
 t("a rich record (application, organization, brand) draws its avatar beside its reference (VAL-3.12, decision 10)", () => {
+  const shape = { application: "record", organization: "org", brand: "org", model: "agent" };
   for (const entity of ["application", "organization", "brand", "model"]) {
     const f = { key: "r", label: "Record", semanticType: "entity_reference", entity };
     assert.equal(resolveValue(f, "cell").variant, "avatar-ref", entity);
     const html = renderValue(f, { label: "Helm", initials: "HM", sidecar: "app-helm", href: "/apps/helm" }, "cell");
-    assert.match(html, /data-fh="VAL-3\.12"><span class="fh-avatar fh-avatar--square"[^>]*>HM<\/span><a class="fh-ref" href="\/apps\/helm" data-sidecar="app-helm">/);
+    assert.match(html, new RegExp(String.raw`data-fh="VAL-3\.12"><span class="fh-avatar" data-kind="${shape[entity]}"[^>]*>HM<\/span><a class="fh-ref" href="\/apps\/helm" data-sidecar="app-helm">`));
   }
   assert.equal(resolveValue({ semanticType: "entity_reference", entity: "organization" }, "metric").variant, "avatar-ref", "a summary tile shows the logo too");
   assert.equal(resolveValue({ semanticType: "entity_reference" }, "cell").variant, "ref", "a plain record stays a reference");

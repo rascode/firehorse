@@ -4,15 +4,24 @@
  */
 
 @layer fh.components {
-  /* —— Avatar groups —— */
+  /* —— Avatar groups ——
+   * A stack shows at most three faces, then "+N": the same size and shape
+   * as the faces (it follows the first face's kind), in the label tier.
+   * Same in every context. */
   .fh-avatars__more {
-    border-style: var(--fh-card-border-style, solid);
     background-color: var(--fh-color-surface-chrome);
     color: var(--fh-color-text-muted);
-    font-size: calc(var(--fh-avatar-size, 2.25rem) * 0.28);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-weight-medium);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--fh-tracking-none);
   }
 
-  .fh-avatars--lg > .fh-avatar { --fh-avatar-size: 3rem; }
+  .fh-avatars:has(> .fh-avatar:first-child[data-kind="person"]) > .fh-avatars__more { --fh-avatar-radius: var(--fh-radius-pill); }
+  .fh-avatars:has(> .fh-avatar:first-child:is([data-kind="org"], [data-kind="agent"], [data-kind="record"])) > .fh-avatars__more { --fh-avatar-radius: var(--fh-avatar-plate-radius, var(--fh-radius-md)); }
+
+  .fh-avatars--lg > .fh-avatar { --fh-avatar-size: var(--fh-avatar-lg); }
 
   /* Fans out on hover / focus. */
   .fh-avatars--spread > .fh-avatar + .fh-avatar {

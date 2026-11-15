@@ -44,7 +44,36 @@ const adaptive = new Set(decls(adaptiveSupports).map(([n]) => n));
 const presets = {};
 for (const m of configCss.matchAll(/\[data-fh-([\w-]+)="([\w-]+)"\]\s*\{([^}]*)\}/g)) (presets[m[1]] ??= {})[m[2]] = decls(m[3]);
 const densityRamp = decls(configCss.match(/\[data-fh-density\]\s*\{([^}]*)\}/)[1]);
-const CONFIG_KEYS = { avatar: "avatar", card: "card", cardMedia: "card-media", cardContent: "card-content", button: "button", chip: "chip", radius: "radius", density: "density", table: "table", type: "type" };
+const CONFIG_KEYS = {
+  avatar: "avatar",
+  avatarPerson: "avatar-person",
+  avatarEntity: "avatar-entity",
+  card: "card",
+  cardMedia: "card-media",
+  cardContent: "card-content",
+  button: "button",
+  chip: "chip",
+  radius: "radius",
+  density: "density",
+  table: "table",
+  rows: "rows",
+  type: "type",
+};
+const TYPE_TIER_KEYS = new Set([
+  "--fh-type-value",
+  "--fh-type-meta",
+  "--fh-type-label",
+  "--fh-type-value-weight",
+  "--fh-type-name-weight",
+  "--fh-type-value-tracking",
+  "--fh-type-figure-tracking",
+  "--fh-type-meta-weight",
+  "--fh-type-meta-tracking",
+  "--fh-type-label-weight",
+  "--fh-type-label-tracking",
+  "--fh-type-label-case",
+  "--fh-type-field-floor",
+]);
 
 /* —— OKLCH ⇄ sRGB ——————————————————————————————————————————— */
 const toLin = (x) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4);
@@ -107,6 +136,22 @@ export function compile(def, { source = "" } = {}) {
   add("--fh-font-figure", font.figure ?? "var(--fh-font-display)");
   if (font.mono) add("--fh-font-mono", font.mono);
   if (font.script) add("--fh-font-script", font.script);
+
+  const type = def.type ?? {};
+  const setType = (block, map) => {
+    for (const [key, token] of Object.entries(map)) {
+      const v = block?.[key];
+      if (v == null || v === "") continue;
+      if (!TYPE_TIER_KEYS.has(token)) { errors.push(`type: unknown token "${token}"`); continue; }
+      add(token, String(v));
+    }
+  };
+  setType(type.value, { size: "--fh-type-value", weight: "--fh-type-value-weight", tracking: "--fh-type-value-tracking" });
+  setType(type.figure, { tracking: "--fh-type-figure-tracking" });
+  setType(type.name, { weight: "--fh-type-name-weight" });
+  setType(type.meta, { size: "--fh-type-meta", weight: "--fh-type-meta-weight", tracking: "--fh-type-meta-tracking" });
+  setType(type.label, { size: "--fh-type-label", weight: "--fh-type-label-weight", tracking: "--fh-type-label-tracking", case: "--fh-type-label-case" });
+  if (type.fieldFloor != null) add("--fh-type-field-floor", String(type.fieldFloor));
 
   // Neutral ramp: every gray keeps its lightness and takes the theme's hue.
   const grays = Object.entries(primitives).filter(([n]) => /^--fh-gray-\d+$/.test(n));

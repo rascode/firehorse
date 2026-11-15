@@ -15,14 +15,17 @@
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
     color: var(--fh-color-text);
-    /* Entered values a touch heavier and larger than body text; the
-       placeholder stays at body weight. */
-    font-size: calc(var(--fh-text-body) * 1.03);
-    font-weight: var(--fh-weight-medium);
+    font-family: var(--fh-type-value-family);
+    font-size: var(--fh-type-value);
+    font-weight: var(--fh-type-value-weight);
+    letter-spacing: var(--fh-type-value-tracking);
     line-height: 1.4;
     appearance: none;
 
-    &::placeholder { font-weight: var(--fh-weight-regular); }
+    &::placeholder {
+      font-weight: var(--fh-type-value-weight);
+      color: var(--fh-color-text-placeholder);
+    }
     transition:
       background-color var(--fh-duration-fast) var(--fh-ease-standard),
       box-shadow var(--fh-duration-fast) var(--fh-ease-standard),
@@ -49,12 +52,18 @@
 
     @media (pointer: coarse) {
       min-block-size: var(--fh-tap-target);
-      font-size: var(--fh-text-body); /* body is 1rem, the 16px floor that stops iOS zoom-on-focus */
+      font-size: max(var(--fh-type-field-floor), var(--fh-type-value));
     }
 
     @media (forced-colors: active) {
       border-color: FieldText;
     }
+  }
+
+  :is(.fh-input, .fh-textarea, .fh-select):is([inputmode="decimal"], [inputmode="numeric"], [type="number"], [type="time"], [type="date"], [type="datetime-local"]) {
+    font-family: var(--fh-type-figure-family);
+    letter-spacing: var(--fh-type-figure-tracking);
+    font-variant-numeric: tabular-nums;
   }
 
   /* Quiet field (FLD-3): faint fill, no border — a barely-there lift off

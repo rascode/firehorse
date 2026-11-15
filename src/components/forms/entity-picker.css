@@ -44,7 +44,7 @@
    * is a small progress bar with its figure (a share: ownership, quota).
    * Knobs: --fh-entity-avatar, --fh-entity-radius, --fh-entity-list-width. */
   .fh-entity-picker {
-    --fh-entity-avatar: 1.9rem;
+    --fh-entity-avatar: var(--fh-avatar-sm);
     --fh-entity-radius: var(--fh-radius-sm);
     /* Lines inside the picker (separator, stat edge, group rules) are etched. */
     --_line: dashed;
@@ -55,7 +55,8 @@
 
   /* The row: shared by the trigger and every option. */
   .fh-entity {
-    --fh-avatar-size: var(--fh-entity-avatar, 1.9rem);
+    --fh-avatar-size: var(--fh-entity-avatar, var(--fh-avatar-sm));
+    --fh-avatar-initials: var(--fh-type-label);
     display: flex;
     align-items: center;
     gap: var(--fh-item-gap);
@@ -97,12 +98,12 @@
      rather than taking room of its own. */
   .fh-entity__sep {
     --_p: var(--fh-gap-related);
-    --_r: calc(var(--fh-avatar-size, 1.9rem) / 2 + var(--_p));
+    --_r: calc(var(--fh-avatar-size, var(--fh-avatar-sm)) / 2 + var(--_p));
     flex: none;
     align-self: stretch;
     inline-size: var(--_r);
     margin-block: calc(var(--_p) * -1);
-    margin-inline-start: calc((var(--fh-avatar-size, 1.9rem) / 2 + var(--fh-item-gap)) * -1);
+    margin-inline-start: calc((var(--fh-avatar-size, var(--fh-avatar-sm)) / 2 + var(--fh-item-gap)) * -1);
     border: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
     border-inline-start: 0;
     border-start-start-radius: 0;
@@ -123,6 +124,9 @@
   .fh-entity:has(.fh-avatar--circle) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-pill); }
   .fh-entity:has(.fh-avatar--square) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-sm); }
   .fh-entity:has(.fh-avatar--rounded) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-md); }
+  /* And the avatar kind (DR2): a person is a circle, an org, an agent or a record a rounded square. */
+  .fh-entity:has(.fh-avatar[data-kind="person"]) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-pill); }
+  .fh-entity:has(.fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"])) .fh-entity__sep { --fh-avatar-radius: var(--fh-radius-md); }
 
   .fh-entity__who {
     display: grid;
@@ -132,8 +136,10 @@
 
     & > b {
       overflow: hidden;
-      font-size: var(--fh-text-small);
-      font-weight: var(--fh-weight-medium);
+      font-family: var(--fh-type-value-family);
+      font-size: var(--fh-type-value);
+      font-weight: var(--fh-type-name-weight);
+      letter-spacing: var(--fh-type-value-tracking);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -141,7 +147,10 @@
     & > small {
       overflow: hidden;
       color: var(--fh-color-text-muted);
-      font-size: var(--fh-text-caption);
+      font-family: var(--fh-type-meta-family);
+      font-size: var(--fh-type-meta);
+      font-weight: var(--fh-type-meta-weight);
+      letter-spacing: var(--fh-type-meta-tracking);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -255,7 +264,7 @@
 
   /* —— List —— */
   .fh-entity-picker__list {
-    --fh-avatar-size: var(--fh-entity-avatar, 1.9rem);
+    --fh-avatar-size: var(--fh-entity-avatar, var(--fh-avatar-sm));
     inline-size: max(anchor-size(inline), var(--fh-entity-list-width, 18rem));
     max-inline-size: min(26rem, 100vi - 2rem);
     max-block-size: min(24rem, 60dvh);
@@ -406,7 +415,7 @@
       &:has(~ .fh-entity-picker__list:popover-open) { border-color: var(--fh-color-border-strong); }
     }
 
-    & .fh-entity-picker__list { border-radius: calc(var(--fh-entity-avatar, 1.9rem) / 2 + var(--fh-gap-grouped)); }
+    & .fh-entity-picker__list { border-radius: calc(var(--fh-entity-avatar, var(--fh-avatar-sm)) / 2 + var(--fh-gap-grouped)); }
   }
 
   /* --etched: drawn in dashed etch lines on no fill, like fh-profile. */

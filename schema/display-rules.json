@@ -305,9 +305,13 @@
       "metric": "stack",
       "form": "picker-multi",
       "max": {
-        "cell": 4
+        "cell": 3,
+        "record": 3,
+        "card": 3,
+        "metric": 3,
+        "form": 3
       },
-      "note": "Record context lists one per line.",
+      "note": "Record context lists one per line, faces at the inline size with the hairline; the form picker shows the stack and a count (6 people), never a truncated name. A stack shows 3 faces, then +N, in every context (DR2).",
       "text": "names",
       "choices": {
         "cell": [
@@ -335,9 +339,10 @@
       "cell": "avatar-name",
       "record": "full",
       "card": "chip",
-      "metric": "stack",
+      "metric": "avatar-name",
       "form": "picker",
       "text": "name",
+      "note": "One person is one face: avatar and name in a metric, never a stack (DR2).",
       "choices": {
         "cell": [
           "avatar-name",
@@ -698,6 +703,116 @@
           "relative",
           "date",
           "datetime"
+        ]
+      }
+    },
+    {
+      "row": "images",
+      "label": "images, several",
+      "shape": "file",
+      "match": {
+        "kind": [
+          "image",
+          "photo",
+          "logo",
+          "cover",
+          "screenshot",
+          "attachment"
+        ],
+        "multiple": true
+      },
+      "cell": "thumbs",
+      "record": "gallery",
+      "card": "media-badge",
+      "metric": "count",
+      "form": "dropzone",
+      "max": {
+        "cell": 3
+      },
+      "text": "file-names",
+      "choices": {
+        "cell": [
+          "thumbs",
+          "count",
+          "type-chip"
+        ],
+        "record": [
+          "gallery",
+          "thumbs",
+          "file-row"
+        ],
+        "card": [
+          "media-badge",
+          "thumbs",
+          "count"
+        ]
+      }
+    },
+    {
+      "row": "image",
+      "label": "image",
+      "shape": "file",
+      "match": {
+        "kind": [
+          "image",
+          "photo",
+          "logo",
+          "cover",
+          "screenshot",
+          "attachment"
+        ],
+        "multiple": false
+      },
+      "cell": "thumb",
+      "record": "preview",
+      "card": "media",
+      "metric": "thumb",
+      "form": "dropzone",
+      "text": "file-names",
+      "choices": {
+        "cell": [
+          "thumb",
+          "type-chip"
+        ],
+        "record": [
+          "preview",
+          "thumb",
+          "file-row"
+        ],
+        "card": [
+          "media",
+          "thumb"
+        ]
+      }
+    },
+    {
+      "row": "document",
+      "label": "document",
+      "shape": "file",
+      "match": {
+        "kind": [
+          "document"
+        ]
+      },
+      "cell": "doc-cell",
+      "record": "doc-portrait",
+      "card": "doc-portrait",
+      "metric": "count",
+      "form": "dropzone",
+      "text": "file-names",
+      "choices": {
+        "cell": [
+          "doc-cell",
+          "type-chip"
+        ],
+        "record": [
+          "doc-portrait",
+          "file-row",
+          "type-chip"
+        ],
+        "card": [
+          "doc-portrait",
+          "type-chip"
         ]
       }
     },
@@ -1461,6 +1576,56 @@
             "UPL"
           ],
           "editable": true
+        },
+        "preview": {
+          "id": "VAL-8.4",
+          "of": "file",
+          "label": "Preview (lg)",
+          "parts": [
+            "THB",
+            "SFL"
+          ]
+        },
+        "gallery": {
+          "id": "VAL-8.3",
+          "of": "file",
+          "label": "Gallery grid",
+          "parts": [
+            "THB"
+          ]
+        },
+        "media": {
+          "id": "VAL-8.2",
+          "of": "file",
+          "label": "Media frame",
+          "parts": [
+            "THB"
+          ]
+        },
+        "media-badge": {
+          "id": "VAL-8.3",
+          "of": "file",
+          "label": "Media frame, +N",
+          "parts": [
+            "THB"
+          ]
+        },
+        "doc-cell": {
+          "id": "VAL-8.4",
+          "of": "file",
+          "label": "Document cell",
+          "parts": [
+            "CHP",
+            "THB"
+          ]
+        },
+        "doc-portrait": {
+          "id": "VAL-8.2",
+          "of": "file",
+          "label": "Portrait preview",
+          "parts": [
+            "THB"
+          ]
         }
       }
     },
@@ -1764,6 +1929,25 @@
     "text": "—",
     "tone": "muted"
   },
+  "avatars": {
+    "note": "One avatar system (DR2). An entity avatar takes its shape from its kind and its size from the variant: identity for the record full row and the form picker, inline everywhere else. Stacks show at most max faces, then +N at the same size and shape. Initials are at most two letters.",
+    "sizes": {
+      "inline": "--fh-avatar-inline",
+      "identity": "--fh-avatar-identity"
+    },
+    "identity": [
+      "full",
+      "picker"
+    ],
+    "kinds": {
+      "person": "circle",
+      "org": "rounded",
+      "agent": "rounded",
+      "record": "rounded"
+    },
+    "max": 3,
+    "initials": 2
+  },
   "readOnly": {
     "prefixes": [
       "computed_",
@@ -1844,8 +2028,18 @@
       "multiple": true
     },
     "attachment": {
-      "semanticType": "document_file",
+      "semanticType": "image_asset",
       "multiple": true
+    },
+    "image": {
+      "semanticType": "image_asset"
+    },
+    "images": {
+      "semanticType": "image_asset",
+      "multiple": true
+    },
+    "document": {
+      "semanticType": "document_file"
     },
     "formula": {
       "semanticType": "computed_formula"

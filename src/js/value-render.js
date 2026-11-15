@@ -10,7 +10,7 @@
 // exactly as agent/components/values.md shows it. A viewer's own pick (the column display menu) comes in as
 // opts.variant and is used only when variants() allows it for the field and context.
 // Data display contract W3 (platform relay/2026-11-14-dc-w3-surfaces.md).
-import { rules, resolveValue, variants, textOf, isEmpty, toneOf, rampOf, isoDuration } from "./values.js";
+import { rules, resolveValue, variants, textOf, isEmpty, toneOf, rampOf, isoDuration, avatarOf, thumbMarkup, thumbClusterMarkup, formatBytes } from "./values.js";
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const attr = (name, v) => (v == null || v === false ? "" : v === true ? ` ${name}` : ` ${name}="${esc(v)}"`);
@@ -35,11 +35,17 @@ export function entityOf(e) {
   return { ...e, label: String(e.label ?? e.name ?? e.title ?? e.id ?? "") };
 }
 const initialsOf = (n = "") => n.split(/\s+/).filter(Boolean).map((p) => p[0]).slice(0, 2).join("").toUpperCase();
-function avatar(e, { square = false, alt = "", more = false } = {}) {
-  const cls = `fh-avatar ${square ? "fh-avatar--square" : "fh-avatar--circle"}${more ? " fh-avatars__more" : ""}`;
-  if (more) return `<span class="${cls}">${esc(e)}</span>`;
-  if (e.image) return `<span class="${cls}"${attr("data-tone", e.tone)}><img src="${esc(e.image)}" alt="${esc(alt)}"></span>`;
-  return `<span class="${cls}"${attr("data-tone", e.tone)} aria-hidden="true">${esc(e.initials ?? initialsOf(e.label))}</span>`;
+// The avatar's shape comes from what it stands for (DR2): data-kind, from the entity's kind. A rich record's kind
+// (an application, an organization, a brand, a model) maps onto the avatar system's rounded kinds.
+const RICH_KIND = { application: "record", organization: "org", brand: "org", model: "agent", user: "person", owner: "person" };
+const kindOf = (e, fallback = "person") => avatarOf(RICH_KIND[e?.kind] ?? e?.kind ?? fallback).kind ?? avatarOf(fallback).kind;
+function avatar(e, { kind = "person", alt = "", more = false } = {}) {
+  const k = more ? kind : kindOf(e, kind);
+  const cls = `fh-avatar${k === "person" ? " fh-avatar--circle" : ""}${more ? " fh-avatars__more" : ""}`;
+  const dk = attr("data-kind", k);
+  if (more) return `<span class="${cls}"${dk} aria-hidden="true">${esc(e)}</span>`;
+  if (e.image) return `<span class="${cls}"${dk}${attr("data-tone", e.tone)}><img src="${esc(e.image)}" alt="${esc(alt)}"></span>`;
+  return `<span class="${cls}"${dk}${attr("data-tone", e.tone)} aria-hidden="true">${esc(String(e.initials ?? initialsOf(e.label)).slice(0, rules.avatars?.initials ?? 2))}</span>`;
 }
 
 /** A file: { name, size?, type?, url?, image?, date? }; a string is its name. */
@@ -251,31 +257,31 @@ const each = (draw) => (o) => {
 const entity = {
   name: each((o) => `${rootOpen("span", o.r, "name", o.opts, { id: o.id })}${entityName(entityOf(o.value))}</span>`),
   "name-key": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "name-key", o.opts, { id: o.id })}${entityName(e)}${e.key ? `<code class="fh-kbd">${esc(e.key)}</code>` : ""}</span>`; }),
-  "avatar-name": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-name", o.opts, { id: o.id })}${avatar(e)}${entityName(e)}</span>`; }),
-  "avatar-name-description": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-name-description", o.opts, { id: o.id })}${avatar(e)}${who(e)}</span>`; }),
+  "avatar-name": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-name", o.opts, { id: o.id })}${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${entityName(e)}</span>`; }),
+  "avatar-name-description": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-name-description", o.opts, { id: o.id })}${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${who(e)}</span>`; }),
   full: each((o) => {
     const e = entityOf(o.value);
     const stat = e.stat ? `<span class="fh-entity__stat"${attr("data-tone", e.stat.tone)}><b>${esc(e.stat.value)}</b>${e.stat.label ? `<small>${esc(e.stat.label)}</small>` : ""}</span>` : "";
-    return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e)}<span class="fh-entity__sep"></span>${who(e)}${stat}</span></div>`;
+    return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}${stat}</span></div>`;
   }),
-  chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm">${avatar(e)}${esc(e.label)}</span></span>`; }),
+  chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
   stack: (o) => {
-    const items = list(o.value).map(entityOf).filter(Boolean), n = maxOf(o.r, o.opts, o.context, 4);
+    const items = list(o.value).map(entityOf).filter(Boolean), n = maxOf(o.r, o.opts, o.context, rules.avatars?.max ?? 3);
     const shown = items.slice(0, n), rest = items.length - shown.length;
     const names = shown.map((e) => e.label.split(/\s+/)[0]).join(", ") + (rest > 0 ? ` and ${rest} more` : "");
-    return `${rootOpen("span", o.r, "stack", o.opts, { id: o.id })}<span class="fh-avatars" role="group" aria-label="${esc(`${o.label}: ${names}`)}">${shown.map((e) => avatar(e, { alt: e.label }).replace(' aria-hidden="true"', ` role="img" aria-label="${esc(e.label)}"`)).join("")}${rest > 0 ? avatar(`+${rest}`, { more: true }) : ""}</span></span>`;
+    return `${rootOpen("span", o.r, "stack", o.opts, { id: o.id })}<span class="fh-avatars" role="group" aria-label="${esc(`${o.label}: ${names}`)}">${shown.map((e) => avatar(e, { alt: e.label, kind: o.r.avatar?.kind ?? "person" }).replace(' aria-hidden="true"', ` role="img" aria-label="${esc(e.label)}"`)).join("")}${rest > 0 ? avatar(`+${rest}`, { more: true, kind: kindOf(shown[0]) }) : ""}</span></span>`;
   },
   ref: each((o) => `${rootOpen("span", o.r, "ref", o.opts, { id: o.id })}${refLink(entityOf(o.value), false, o)}</span>`),
   // A rich record (an application, an organization, a brand): its square avatar or initials, then its reference.
-  "avatar-ref": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-ref", o.opts, { id: o.id })}${avatar(e, { square: true })}${refLink(e, false, o)}</span>`; }),
+  "avatar-ref": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-ref", o.opts, { id: o.id })}${avatar(e, { kind: RICH_KIND[o.r.kind] ?? "record" })}${refLink(e, false, o)}</span>`; }),
   "ref-key": each((o) => `${rootOpen("span", o.r, "ref-key", o.opts, { id: o.id })}${refLink(entityOf(o.value), true, o)}</span>`),
   picker: (o) => {
     const e = entityOf(list(o.value)[0]);
-    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value">${e ? `${avatar(e)}<span class="fh-entity__sep"></span>${who(e)}` : `<span class="fh-entity__who"><b>${esc(rules.empty.text)}</b></span>`}</span></button></div>`);
+    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value">${e ? `${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}` : `<span class="fh-entity__who"><b>${esc(rules.empty.text)}</b></span>`}</span></button></div>`);
   },
   "picker-multi": (o) => {
     const items = list(o.value).map(entityOf).filter(Boolean);
-    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value"><span class="fh-avatars" aria-hidden="true">${items.slice(0, 3).map((e) => avatar(e)).join("")}</span><span class="fh-entity__who"><b>${esc(items.map((e) => e.label.split(/\s+/)[0]).join(", "))}</b><small>${esc(word(items.length, "person", "people"))}</small></span></span></button></div>`);
+    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value"><span class="fh-avatars" aria-hidden="true">${items.slice(0, rules.avatars?.max ?? 3).map((e) => avatar(e, { kind: o.r.avatar?.kind ?? "person" })).join("")}</span><span class="fh-entity__who"><b>${esc(items.map((e) => e.label.split(/\s+/)[0]).join(", "))}</b><small>${esc(word(items.length, "person", "people"))}</small></span></span></button></div>`);
   },
 };
 
@@ -342,7 +348,12 @@ const temporal = {
 };
 
 const typeChip = (f) => `<span class="fh-chip fh-chip--sm" data-tone="${EXT_TONE[extOf(f)] ?? "neutral"}" title="${esc([f.name, sizeOf(f.size)].filter(Boolean).join(" · "))}">${esc(extOf(f) || "FILE")}</span>`;
-const thumb = (f) => (isImage(f) && (f.image ?? f.url) ? `<span class="fh-avatar fh-avatar--square"><img src="${esc(f.image ?? f.url)}" alt="${esc(f.name)}"></span>` : typeChip(f));
+// Image thumbs and clusters are the THB part's markup (DR4): thumbMarkup() and thumbClusterMarkup() in values.js.
+const urlOf = (f) => (f ? f.url ?? f.image ?? f.preview ?? "" : "");
+const thumb = (f, opts = {}) => (isImage(f) && urlOf(f) ? thumbMarkup(f, opts) : typeChip(f));
+const mediaFrame = (f) => `<figure class="fh-card__media"><img src="${esc(urlOf(f))}" alt="${esc(f.alt ?? f.name)}"></figure>`;
+const docThumb = (f, opts = {}) => (f.preview ? thumbMarkup({ ...f, url: f.preview, image: f.preview }, { portrait: true, ...opts }) : typeChip(f));
+const bytesOf = (f) => (f.bytes != null ? formatBytes(f.bytes) : sizeOf(f.size));
 const file = {
   "type-chip": (o) => {
     const files = list(o.value).map(fileOf), n = maxOf(o.r, o.opts, o.context, files.length), rest = files.length - Math.min(n, files.length);
@@ -350,8 +361,23 @@ const file = {
   },
   thumb: (o) => `${rootOpen("span", o.r, "thumb", o.opts, { id: o.id })}${thumb(fileOf(list(o.value)[0]))}</span>`,
   thumbs: (o) => {
-    const files = list(o.value).map(fileOf), n = maxOf(o.r, o.opts, o.context, 3), rest = files.length - Math.min(n, files.length);
-    return `${rootOpen("span", o.r, "thumbs", o.opts, { id: o.id })}<span class="fh-avatars" role="group" aria-label="${esc(word(files.length, "file", "files"))}">${files.slice(0, n).map(thumb).join("")}${rest > 0 ? `<span class="fh-avatar fh-avatar--square fh-avatars__more">+${rest}</span>` : ""}</span></span>`;
+    const files = list(o.value).map(fileOf);
+    return `${rootOpen("span", o.r, "thumbs", o.opts, { id: o.id })}${thumbClusterMarkup(files, { max: maxOf(o.r, o.opts, o.context, rules.avatars?.max ?? 3) })}</span>`;
+  },
+  preview: (o) => {
+    const f = fileOf(list(o.value)[0]);
+    return `${rootOpen("span", o.r, "preview", o.opts, { id: o.id })}${thumb(f, { lg: true })}<span><b>${esc(f.name)}</b>${bytesOf(f) ? `<span class="fh-value__sub">${esc(bytesOf(f))}</span>` : ""}</span></span>`;
+  },
+  gallery: (o) => `${rootOpen("span", o.r, "gallery", o.opts, { id: o.id })}<span class="fh-thumb-gallery">${list(o.value).map(fileOf).map((f) => thumb(f)).join("")}</span></span>`,
+  media: (o) => { const f = fileOf(list(o.value)[0]); return `${rootOpen("span", o.r, "media", o.opts, { id: o.id })}${urlOf(f) ? mediaFrame(f) : typeChip(f)}</span>`; },
+  "media-badge": (o) => {
+    const files = list(o.value).map(fileOf), f = files[0], rest = files.length - 1;
+    return `${rootOpen("span", o.r, "media-badge", o.opts, { id: o.id })}${urlOf(f) ? mediaFrame(f) : typeChip(f)}${rest > 0 ? `<span class="fh-badge">+${rest}</span>` : ""}</span>`;
+  },
+  "doc-cell": (o) => { const f = fileOf(list(o.value)[0]); return `${rootOpen("span", o.r, "doc-cell", o.opts, { id: o.id })}<span class="fh-cell__file">${docThumb(f)}<span>${esc(f.name)}</span></span></span>`; },
+  "doc-portrait": (o) => {
+    const f = fileOf(list(o.value)[0]);
+    return `${rootOpen("span", o.r, "doc-portrait", o.opts, { id: o.id })}${docThumb(f, { lg: true })}<span><b>${esc(f.name)}</b><span class="fh-value__sub">${esc([bytesOf(f), extOf(f)].filter(Boolean).join(" · "))}</span></span></span>`;
   },
   "file-row": (o) => `${rootOpen("div", o.r, "file-row", o.opts, { id: o.id })}<ul class="fh-files">${list(o.value).map(fileOf).map((f) => { const inner = `${icon(isImage(f) ? "image" : "file-text")}<span>${esc(f.name)}</span>${f.size != null ? `<small>${esc(sizeOf(f.size))}</small>` : ""}${f.date ? `<time datetime="${esc(f.date)}">${esc(dateText(asDate(f.date), o, { month: "short", day: "numeric" }))}</time>` : ""}`; return `<li>${f.url ? `<a href="${esc(f.url)}">${inner}</a>` : `<span>${inner}</span>`}</li>`; }).join("")}</ul></div>`,
   count: (o) => { const n = list(o.value).length; return `${rootOpen("span", o.r, "count", o.opts, { id: o.id })}${icon("paperclip")}${esc(word(n, "file", "files"))}</span>`; },

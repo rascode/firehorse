@@ -165,3 +165,36 @@ if (el) {
   });
 }
 }
+
+const sample = (n) => ({ name: `dr4-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp` });
+for (const size of ["sm", "md", "lg", "xl"]) {
+  const mount = document.getElementById(`upload-rows-${size}`);
+  if (!mount) continue;
+  const rows = [
+    { id: `${size}-filled`, slot: "Filled", photo: sample("a") },
+    { id: `${size}-empty`, slot: "Add", photo: null },
+    { id: `${size}-busy`, slot: "Uploading", photo: sample("b") },
+  ];
+  if (size === "xl") rows.push({ id: `${size}-error`, slot: "Error", photo: null });
+  const table = new FirehorseTable(mount, {
+    title: `data-fh-rows=${size}`,
+    icon: "upload",
+    tone: "violet",
+    primary: "slot",
+    pageSize: 10,
+    fields: [{ key: "slot", label: "State", type: "text", width: "7rem" }, { key: "photo", label: "Photo", type: "image", upload: true, accept: "image/*", maxBytes: 2_000_000 }],
+    rows,
+  });
+  table.setFileState(`${size}-busy`, "photo", { progress: 0.6, url: sample("b").url, error: null });
+  if (size === "xl") table.setFileState(`${size}-error`, "photo", { error: "Use an image file", progress: null });
+  mount.addEventListener("fh:file-add", (e) => {
+    const { row, column, files } = e.detail;
+    let p = 0;
+    const tick = () => {
+      p = Math.min(1, p + 0.22);
+      table.setFileState(row.id, column, { progress: p, error: null, url: URL.createObjectURL(files[0]) });
+      if (p < 1) setTimeout(tick, 100);
+    };
+    tick();
+  });
+}

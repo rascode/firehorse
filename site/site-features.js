@@ -110,8 +110,7 @@ export function agentMenu(host, getPrompt = basePrompt, { label = "Send to an ag
 $$("[data-agent-menu]:not([data-agent-menu=\"manual\"])").forEach((h) => agentMenu(h));
 
 /* —— Themes ——————————————————————————————————————————————
- * A theme is a colour set (neutrals and an accent, both schemes); it never
- * changes type, spacing, shape or layout. The list comes from
+ * A theme is the whole look: colour, type and component shapes. The list comes from
  * themes.json, which the theme compiler writes from src/themes/*.json.
  * Firehorse's enhancer (firehorse.js) does the switching: any
  * [data-fh-theme-select] control sets data-fh-theme on <html> and
@@ -125,7 +124,7 @@ const base = manifest.find((t) => t.base);
 export const BASE_THEME = { ...(base ?? { label: "Firehorse", tagline: "The base system.", config: {} }), name: "", scope: base?.name ?? "" };
 export const THEMES = [BASE_THEME, ...manifest.filter((t) => !t.base)];
 const themeOf = (name) => THEMES.find((t) => t.name === (name || "")) ?? BASE_THEME;
-const LABELS = { avatar: "Avatar", card: "Card", cardMedia: "Card media", cardContent: "Card content", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table" };
+const LABELS = { avatar: "Avatar", avatarPerson: "Avatar (person)", avatarEntity: "Avatar (entity)", card: "Card", cardMedia: "Card media", cardContent: "Card content", button: "Button", chip: "Chip", radius: "Radius", density: "Density", table: "Table", type: "Type preset" };
 const escHtml = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 export const themeSelect = (attrs = "") =>
@@ -159,7 +158,7 @@ drawer.dataset.tone = "fuchsia";
 drawer.setAttribute("aria-labelledby", "themes-drawer-title");
 drawer.style.setProperty("--fh-dialog-size", "24rem");
 drawer.innerHTML = `<header class="fh-detail__header"><div class="fh-detail__bar"><span>Themes</span><button class="fh-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()"></button></div>
-  <div class="fh-detail__identity"><div><h2 id="themes-drawer-title">Theme this site</h2><p>A theme is a colour set, light and dark. It never moves type, spacing or layout.</p></div></div></header>
+  <div class="fh-detail__identity"><div><h2 id="themes-drawer-title">Theme this site</h2><p>A theme is the whole look: colour, type and component shapes.</p></div></div></header>
   <div class="fh-detail__body">
     ${themeCards()}
     <section class="fh-detail__section"><h3>What <span data-theme-name></span> decides</h3><dl class="fh-detail__fields" data-theme-decisions></dl></section>
