@@ -335,6 +335,8 @@
 
   .fh-masthead--app .fh-masthead__tools {
     flex-wrap: nowrap;
+
+    & > * { flex: none; }
   }
 
   @container fh-masthead (inline-size < 56rem) {
@@ -350,6 +352,8 @@
 
   @container fh-masthead (inline-size < 30rem) {
     .fh-masthead__summary { display: none; }
+    /* Narrow: the working pill keeps only its mark, so the profile picker always fits. */
+    .fh-masthead--app .fh-working > :not(.fh-working__mark) { display: none; }
     .fh-masthead__crumb { display: none; }
   }
 
