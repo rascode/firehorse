@@ -30,7 +30,9 @@ export const PUBLIC_ENTRY = join(root, "src/firehorse.public.css");
 /** Integration sheets: each file is its own stylesheet (dist/<name>, dist/full/<name>), not part of the entry. */
 export const INTEGRATIONS = join(root, "src/integrations");
 /** Public JS modules and the family that mounts each one. */
-export const RUNTIME = { "src/js/datatable.js": "DTB" };
+// The surfaces draw values through the contract at run time (W3): the Values parts and the column display menu they
+// write count as used by the datatable, the table, the record table and the metric tiles that mount them.
+export const RUNTIME = { "src/js/datatable.js": "DTB", "src/js/value-render.js": "DTB", "src/js/column-menu.js": "DTB", "src/js/table.js": "TBL", "src/js/record-table.js": "TBL", "src/js/metrics.js": "MET" };
 /** The site's own chrome: the parts and scripts every docs page carries. The site-only sheet also covers held parts the home page uses. */
 export const CHROME = ["site/parts/layout.html", "site/parts/header.html", "site/parts/dock.html", "site/parts/bar.html", "site/parts/cmdk.html", "site/parts/footer.html", "site/site.js", "site/site-index.js", "scripts/pages.mjs", "site/pages/index.html"];
 

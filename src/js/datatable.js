@@ -15,23 +15,40 @@
  * or:  import { FirehorseTable } from "@rascode/firehorse/datatable";
  *      new FirehorseTable(el, { fields, rows });
  *
- * Field types are a registry, so you can add your own:
+ * Every value is drawn by the data display contract (values.js): a field's type is an alias for a
+ * semantic type (or send semanticType, optionSet, entity kind and the rest directly), and
+ * renderValue() draws it as its Values (VAL) part in the cell, card or record context. The table
+ * never decides how a value looks. A viewer can re-display any column with the variants the grid
+ * allows (the column display menu, column-menu.js): saved per viewer in this browser under
+ * fh:presentation:<table id>, or handed in by the app (presentation: { initial, store: false }).
+ *
+ * Field types are a registry, so you can add your own (a custom type draws itself):
  *   FirehorseTable.defineType("sku", { icon: "barcode", kind: "text",
  *     render: (v) => `<code>${v}</code>` });
  *
+ * Expandable rows (the records table, DTB-2): expand: true opens a row's other fields as a record
+ * table under it; expand: (row) => html puts your own content there.
+ *
  * Events (bubble from the table element):
- *   fh:row-open  { row }          a row or card was opened
- *   fh:change    { row, key, value } a value changed (checkbox, board drag)
- *   fh:bulk      { action, rows }  a bulk action ran
- *   fh:action    {}               the toolbar's primary action
+ *   fh:row-open             { row }                         a row or card was opened
+ *   fh:change               { row, key, value }             a value changed (checkbox, board drag)
+ *   fh:bulk                 { action, rows }                a bulk action ran
+ *   fh:action               {}                              the toolbar's primary action
+ *   fh:presentation-change  { table, key, context, variant } a viewer re-displayed a column (null: reset)
+ *   fh:record-toggle        { open, toggle, detail, row }   a row's detail opened or closed
  */
+
+import { renderValue, textOf, describeField, optionSetFor, toneOf as toneIn, isEmpty, resolveValue, rules } from "./values.js";
+import { menuTrigger, bindColumnMenu, presentationStore } from "./column-menu.js";
+import { recordTable } from "./record-table.js";
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const icon = (n, extra = "") => (n ? `<i class="fh-icon fh-icon--${n} ${extra}" aria-hidden="true"></i>` : "");
 const uid = () => Math.random().toString(36).slice(2, 8);
 const DAY = 864e5;
 
-/* —— Field types ———————————————————————————————————————— */
+/* —— Field types: what the toolbar knows (icon, filter kind, aggregate). How a value looks is the
+ * contract's: every built-in type is an alias in display-rules.json and draws through renderValue(). —— */
 const kinds = {
   text: { ops: ["contains", "does not contain", "is", "is not", "is empty", "is not empty"] },
   number: { ops: ["=", "≠", ">", "<", "≥", "≤", "is empty", "is not empty"] },
@@ -41,84 +58,38 @@ const kinds = {
   bool: { ops: ["is checked", "is not checked"] },
 };
 
-const optionOf = (f, v) => (f.options ?? []).find((o) => (o.value ?? o) === v);
-const toneOf = (f, v) => optionOf(f, v)?.tone ?? f.tone ?? "neutral";
-const initials = (n = "") => n.split(/\s+/).map((p) => p[0]).slice(0, 2).join("").toUpperCase();
-
-function relDate(d) {
-  const days = Math.round((new Date(d).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / DAY);
-  if (days === 0) return "Today";
-  if (days === 1) return "Tomorrow";
-  if (days === -1) return "Yesterday";
-  return days > 0 ? `in ${days}d` : `${-days}d ago`;
-}
-
-function avatar(p, size = "") {
-  if (!p) return "";
-  const name = typeof p === "string" ? p : p.name;
-  const img = typeof p === "object" && p.image ? `<img src="${esc(p.image)}" alt="">` : esc(initials(name));
-  return `<span class="fh-avatar ${size}" title="${esc(name)}">${img}</span>`;
-}
-
-function spark(values = []) {
-  if (!values.length) return "";
-  const w = 88, h = 22, min = Math.min(...values), max = Math.max(...values) || 1;
-  const pts = values.map((v, i) => [(i / (values.length - 1 || 1)) * w, h - 2 - ((v - min) / (max - min || 1)) * (h - 4)]);
-  const d = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
-  const [lx, ly] = pts.at(-1);
-  return `<svg class="fh-sparkline" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="currentColor" opacity=".12"/><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${lx}" cy="${ly}" r="2.2" fill="currentColor"/></svg>`;
-}
-
+const names = (v = []) => [].concat(v ?? []).map((p) => (p && typeof p === "object" ? p.name ?? p.label ?? p.id : p));
 export const types = {
-  text: { icon: "type", kind: "text", render: (v) => esc(v) },
-  long: { icon: "file-text", kind: "text", cell: "long", render: (v) => `<span>${esc(v)}</span>` },
-  number: { icon: "hash", kind: "number", agg: "sum", render: (v, f, t) => (v == null || v === "" ? "" : t.nf.format(v)) },
-  currency: {
-    icon: "dollar-sign", kind: "number", agg: "sum",
-    render: (v, f, t) => (v == null || v === "" ? "" : new Intl.NumberFormat(t.locale, { style: "currency", currency: f.currency ?? t.currency, maximumFractionDigits: 0 }).format(v)),
-    text: (v, f, t) => (v == null ? "" : new Intl.NumberFormat(t.locale, { style: "currency", currency: f.currency ?? t.currency, maximumFractionDigits: 0 }).format(v)),
-  },
-  percent: { icon: "percent", kind: "number", agg: "avg", render: (v, f) => (v == null ? "" : `<span class="fh-cell__bar" data-tone="${f.tone ?? "sky"}" style="--v:${Math.max(0, Math.min(100, v))}"><i></i><span>${Math.round(v)}%</span></span>`) },
-  progress: { icon: "loader-circle", kind: "number", agg: "avg", render: (v, f) => types.percent.render(v, f) },
-  select: { icon: "circle-dot", kind: "option", render: (v, f) => (v ? `<span class="fh-pill" data-tone="${toneOf(f, v)}">${esc(v)}</span>` : "") },
-  status: { icon: "activity", kind: "option", render: (v, f) => (v ? `<span class="fh-status${optionOf(f, v)?.live ? " fh-status--live" : ""}" data-tone="${toneOf(f, v)}">${esc(v)}</span>` : "") },
-  multi: { icon: "list-checks", kind: "options", render: (v = [], f) => v.map((x) => `<span class="fh-pill" data-tone="${toneOf(f, x)}">${esc(x)}</span>`).join("") },
-  tags: { icon: "tag", kind: "options", render: (v = [], f) => v.map((x) => `<span class="fh-pill" data-tone="${f.tone ?? "neutral"}">#${esc(x)}</span>`).join("") },
-  date: {
-    icon: "calendar", kind: "date",
-    render: (v, f, t) => {
-      if (!v) return "";
-      const d = new Date(v);
-      return `<time datetime="${esc(v)}">${d.toLocaleDateString(t.locale, { month: "short", day: "numeric" })}</time><small>${relDate(v)}</small>`;
-    },
-    attrs: (v, f) => (f.overdue && v && new Date(v) < new Date(new Date().toDateString()) ? " data-overdue" : ""),
-    text: (v) => v ?? "",
-  },
-  check: { icon: "circle-check", kind: "bool", agg: "checked", render: (v, f, t, row) => `<input class="fh-dt__checkbox" type="checkbox" ${v ? "checked" : ""} data-edit="${esc(f.key)}" aria-label="${esc(f.label)}: ${esc(row[t.primary])}">` },
-  rating: { icon: "star", kind: "number", agg: "avg", render: (v, f) => (v == null ? "" : `<span class="fh-rating" data-tone="${f.tone ?? "amber"}" style="--v:${v}" role="img" aria-label="${v} of 5"></span>`) },
-  user: {
-    icon: "user", kind: "text",
-    render: (v) => (v ? `<span class="fh-cell__user">${avatar(v, "fh-avatar--xs")}<span>${esc(v.name ?? v)}</span></span>` : ""),
-    text: (v) => v?.name ?? v ?? "",
-  },
-  users: {
-    icon: "users", kind: "options",
-    render: (v = []) => `<span class="fh-avatars">${v.slice(0, 4).map((p) => avatar(p, "fh-avatar--xs")).join("")}${v.length > 4 ? `<span class="fh-avatar fh-avatar--xs">+${v.length - 4}</span>` : ""}</span>`,
-    text: (v = []) => v.map((p) => p.name ?? p).join(", "),
-    values: (v = []) => v.map((p) => p.name ?? p),
-  },
-  url: { icon: "link", kind: "text", render: (v) => (v ? `<a href="${esc(v)}" target="_blank" rel="noopener">${esc(String(v).replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</a>` : "") },
-  email: { icon: "at-sign", kind: "text", render: (v) => (v ? `<a href="mailto:${esc(v)}">${esc(v)}</a>` : "") },
-  phone: { icon: "phone", kind: "text", render: (v) => (v ? `<a href="tel:${esc(String(v).replace(/[^\d+]/g, ""))}">${esc(v)}</a>` : "") },
-  link: { icon: "link-2", kind: "options", render: (v = [], f) => [].concat(v).map((x) => `<span class="fh-pill fh-pill--link" data-tone="${f.tone ?? "sky"}">${esc(x)}</span>`).join("") },
-  attachment: {
-    icon: "paperclip", kind: "options",
-    render: (v = []) => `<span class="fh-thumbs">${v.slice(0, 3).map((a) => (a.image ? `<img src="${esc(a.image)}" alt="${esc(a.name ?? "")}">` : `<span title="${esc(a.name ?? "")}">${esc((a.name ?? "").split(".").pop()?.toUpperCase() ?? "")}</span>`)).join("")}${v.length > 3 ? `<span>+${v.length - 3}</span>` : ""}</span>`,
-    text: (v = []) => v.map((a) => a.name).join(", "),
-    values: (v = []) => v.map((a) => a.name),
-  },
-  formula: { icon: "sigma", kind: "number", render: (v, f, t) => (typeof v === "number" ? t.nf.format(v) : esc(v)) },
-  sparkline: { icon: "chart-line", kind: "number", render: (v, f) => `<span data-tone="${f.tone ?? "sky"}">${spark(v)}</span>`, value: (v = []) => v.at(-1) ?? 0, text: (v = []) => v.join(" ") },
+  text: { icon: "type", kind: "text" },
+  long: { icon: "file-text", kind: "text", cell: "long" },
+  number: { icon: "hash", kind: "number", agg: "sum" },
+  currency: { icon: "dollar-sign", kind: "number", agg: "sum" },
+  percent: { icon: "percent", kind: "number", agg: "avg" },
+  progress: { icon: "loader-circle", kind: "number", agg: "avg" },
+  select: { icon: "circle-dot", kind: "option" },
+  status: { icon: "activity", kind: "option" },
+  multi: { icon: "list-checks", kind: "options" },
+  tags: { icon: "tag", kind: "options" },
+  date: { icon: "calendar", kind: "date" },
+  check: { icon: "circle-check", kind: "bool", agg: "checked" },
+  rating: { icon: "star", kind: "number", agg: "avg" },
+  user: { icon: "user", kind: "text" },
+  users: { icon: "users", kind: "options", values: names },
+  url: { icon: "link", kind: "text" },
+  email: { icon: "at-sign", kind: "text" },
+  phone: { icon: "phone", kind: "text" },
+  link: { icon: "link-2", kind: "options", values: names },
+  attachment: { icon: "paperclip", kind: "options", values: (v = []) => [].concat(v ?? []).map((a) => a?.name ?? a) },
+  formula: { icon: "sigma", kind: "number" },
+  sparkline: { icon: "chart-line", kind: "number", value: (v = []) => v.at(-1) ?? 0, text: (v = []) => v.join(" ") },
+};
+// A field that names no built-in type (semanticType, shape) gets its toolbar kind from its shape.
+const SHAPE_TYPE = {
+  text: { icon: "type", kind: "text" }, prose: { icon: "file-text", kind: "text", cell: "long" }, code: { icon: "code", kind: "text" },
+  number: { icon: "hash", kind: "number", agg: "sum" }, money: { icon: "dollar-sign", kind: "number", agg: "sum" },
+  ratio: { icon: "percent", kind: "number", agg: "avg" }, series: types.sparkline, temporal: { icon: "calendar", kind: "date" },
+  option: { icon: "circle-dot", kind: "option" }, options: { icon: "tag", kind: "options" }, entity: { icon: "user", kind: "text" },
+  file: types.attachment, link: { icon: "link", kind: "text" }, flag: types.check,
 };
 
 /* —— The table ——————————————————————————————————————————— */
@@ -130,12 +101,23 @@ export class FirehorseTable {
     this.el = el;
     this.id = el.id || `fh-dt-${uid()}`;
     this.cfg = config;
-    this.fields = config.fields.map((f) => ({ label: f.key, type: "text", ...f }));
+    // A field with no type, semantic type or shape is text.
+    this.fields = config.fields.map((f) => ({ label: f.key, ...(f.type || f.semanticType || f.shape || f.optionSet ? {} : { type: "text" }), ...f }));
     this.primary = config.primary ?? this.fields[0].key;
     this.rows = config.rows.map((r, i) => ({ id: r.id ?? String(i + 1), ...r }));
     this.locale = config.locale ?? undefined;
     this.currency = config.currency ?? "USD";
     this.nf = new Intl.NumberFormat(this.locale);
+    this.vfs = new Map(this.fields.map((f) => [f.key, this.valueField(f)]));
+    this.cents = new Map();
+    this.measure();
+    // The column display menu: on for every viewer, unless the author locks it (presentation.choose: false, or a
+    // field's choose: false). Picks are kept per viewer in this browser, or handed in by the app (initial, store: false).
+    const pres = config.presentation ?? {};
+    this.choose = pres.choose !== false;
+    this.storeId = config.id ?? (el.id || null) ?? null;
+    this.store = presentationStore(this.storeId ?? String(config.title ?? "records").toLowerCase().replace(/[^a-z0-9]+/g, "-"), { store: pres.store !== false });
+    this.choice = { ...(pres.initial ?? {}), ...this.store.load() };
     this.state = {
       query: "",
       filters: config.filters ?? [],
@@ -148,16 +130,56 @@ export class FirehorseTable {
       selected: new Set(),
       collapsed: new Set(),
       widths: {},
+      expanded: new Set(config.expanded ?? []),
     };
     this.pageSize = config.pageSize ?? 25;
-    this.boardField = config.boardField ?? this.fields.find((f) => f.type === "status" || f.type === "select")?.key;
+    this.boardField = config.boardField ?? this.fields.find((f) => this.type(f).kind === "option")?.key;
     this.el.classList.add("fh-dt");
     this.mount();
   }
 
   field(key) { return this.fields.find((f) => f.key === key); }
-  type(f) { return types[f.type] ?? types.text; }
-  text(f, v) { const t = this.type(f); return t.text ? t.text(v, f, this) : Array.isArray(v) ? v.join(", ") : String(v ?? ""); }
+  /** The field as the contract reads it: a built-in type stays its alias; a custom type (defineType) is not passed. */
+  valueField(f) {
+    const builtin = Boolean(types[f.type]) && !types[f.type].render && Boolean(rules.aliases[f.type]);
+    const vf = { ...f, type: builtin ? f.type : undefined };
+    if (describeField(vf).shape === "money" && !vf.currency && !vf.currencyFrom) vf.currency = this.currency;
+    return vf;
+  }
+  vf(f) { return this.vfs?.get(f.key) ?? this.valueField(f); }
+  /** A custom type (defineType with render) draws itself; every other field draws through the contract. */
+  custom(f) { return Boolean(types[f.type]?.render); }
+  shape(f) { return this.custom(f) ? null : describeField(this.vf(f)).shape; }
+  type(f) { return types[f.type] ?? SHAPE_TYPE[this.shape(f)] ?? types.text; }
+  set(f) { return this.custom(f) ? (f.options ? { options: f.options.map((o) => (typeof o === "object" ? { label: String(o.value), ...o } : { value: o, label: String(o) })) } : null) : optionSetFor(this.vf(f)); }
+  options(f) { return this.set(f)?.options ?? []; }
+  toneOf(f, v) { return toneIn(this.set(f), v); }
+  /** Money columns draw whole units in cells only when every row is whole (rule 4). */
+  measure() {
+    for (const f of this.fields) {
+      if (this.shape(f) !== "money") continue;
+      const whole = this.rows.every((r) => isEmpty(r[f.key]) || Number.isInteger(Number(r[f.key]?.amount ?? r[f.key])));
+      whole ? this.cents.set(f.key, false) : this.cents.delete(f.key);
+    }
+  }
+  /** One value, drawn by the contract in a context (cell, card, record); a custom type draws itself. */
+  draw(f, v, context, row, extra = {}) {
+    const t = types[f.type];
+    if (t?.render) return t.render(v, f, this, row);
+    const opts = { row, label: f.label, locale: this.locale, ...extra };
+    if (context === "cell") {
+      if (this.choice[f.key]) opts.variant = this.choice[f.key];
+      if (this.cents.has(f.key)) opts.cents = this.cents.get(f.key);
+      if (this.shape(f) === "flag" && f.editable !== false && row) Object.assign(opts, { edit: true, editKey: f.key, label: `${f.label}: ${this.text(this.field(this.primary), row[this.primary])}` });
+    }
+    return renderValue(this.vf(f), v, context, opts);
+  }
+  text(f, v) {
+    const t = this.type(f);
+    if (t.text) return t.text(v, f, this);
+    if (this.custom(f)) return Array.isArray(v) ? v.join(", ") : String(v ?? "");
+    return textOf(this.vf(f), v) ?? "";
+  }
   values(f, v) { const t = this.type(f); return t.values ? t.values(v) : [].concat(v ?? []); }
   num(f, v) { const t = this.type(f); return t.value ? t.value(v) : Number(v); }
   get visible() { return this.fields.filter((f) => !this.state.hidden.has(f.key)); }
@@ -206,8 +228,9 @@ export class FirehorseTable {
     if (kind === "number") return (this.num(f, a) || 0) - (this.num(f, b) || 0);
     if (kind === "date") return (a ? new Date(a) : 0) - (b ? new Date(b) : 0);
     if (kind === "bool") return Number(!!a) - Number(!!b);
-    if (kind === "option" && f.options) {
-      const i = (v) => f.options.findIndex((o) => (o.value ?? o) === v);
+    if (kind === "option" && this.options(f).length) {
+      const opts = this.options(f);
+      const i = (v) => opts.findIndex((o) => String(o.value) === String(v));
       return i(a) - i(b);
     }
     return this.text(f, a).localeCompare(this.text(f, b), this.locale, { numeric: true, sensitivity: "base" });
@@ -234,8 +257,8 @@ export class FirehorseTable {
 
   aggregate(f, rows) {
     const t = this.type(f);
-    if (t.agg === "sum") { const s = rows.reduce((n, r) => n + (Number(r[f.key]) || 0), 0); return `Sum <b>${t.text ? t.text(s, f, this) : this.nf.format(s)}</b>`; }
-    if (t.agg === "avg") { const vals = rows.map((r) => this.num(f, r[f.key])).filter((x) => !Number.isNaN(x)); const a = vals.length ? vals.reduce((m, x) => m + x, 0) / vals.length : 0; return `Avg <b>${f.type === "rating" ? a.toFixed(1) : Math.round(a) + (f.type === "percent" || f.type === "progress" ? "%" : "")}</b>`; }
+    if (t.agg === "sum") { const s = rows.reduce((n, r) => n + (Number(r[f.key]?.amount ?? r[f.key]) || 0), 0); return `Sum <b>${this.shape(f) === "money" ? renderValue(this.vf(f), s, "cell", { align: false, cents: this.cents.get(f.key), locale: this.locale }) : this.nf.format(s)}</b>`; }
+    if (t.agg === "avg") { const vals = rows.map((r) => this.num(f, r[f.key])).filter((x) => !Number.isNaN(x)); const a = vals.length ? vals.reduce((m, x) => m + x, 0) / vals.length : 0; return `Avg <b>${f.type === "rating" ? a.toFixed(1) : Math.round(a) + (this.shape(f) === "ratio" ? "%" : "")}</b>`; }
     if (t.agg === "checked") return `<b>${rows.filter((r) => r[f.key]).length}</b> checked`;
     return "";
   }
@@ -266,6 +289,7 @@ export class FirehorseTable {
       <div class="fh-dt__footer" data-footer></div>`;
     this.el.dataset.density = this.state.density;
     this.el.dataset.view = this.state.view;
+    if (c.expand) this.el.dataset.expandable = "";
     this.bind();
     this.render();
   }
@@ -294,6 +318,18 @@ export class FirehorseTable {
     });
     this.el.addEventListener("click", (e) => {
       const t = e.target;
+      const x = t.closest(".fh-dt__expand");
+      if (x && this.el.contains(x)) {
+        // The row's own toggle: records.js (if loaded) must not flip it back.
+        e.stopPropagation();
+        const id = x.closest("[data-id]")?.dataset.id;
+        const open = x.getAttribute("aria-expanded") !== "true";
+        open ? this.state.expanded.add(id) : this.state.expanded.delete(id);
+        x.setAttribute("aria-expanded", String(open));
+        const detail = this.el.querySelector(`#${CSS.escape(x.getAttribute("aria-controls"))}`);
+        if (detail) detail.hidden = !open;
+        return this.emit("fh:record-toggle", { open, toggle: x, detail, row: this.rows.find((r) => r.id === id) });
+      }
       const th = t.closest("[data-sort-key]");
       if (th) return this.toggleSort(th.dataset.sortKey, e.shiftKey);
       const g = t.closest("[data-group-toggle]");
@@ -330,6 +366,14 @@ export class FirehorseTable {
     }
     this.bindResize();
     this.bindBoard();
+    bindColumnMenu(this.el, {
+      context: "cell",
+      field: (k) => this.vf(this.field(k)),
+      sample: (k) => this.rows.map((r) => r[k]).find((v) => !isEmpty(v)),
+      current: (k) => this.choice[k] ?? null,
+      options: (k) => ({ label: this.field(k)?.label, cents: this.cents.get(k), locale: this.locale, row: this.rows.find((r) => !isEmpty(r[k])) }),
+      pick: (k, v) => this.present(k, v),
+    });
   }
 
   emit(name, detail) { this.el.dispatchEvent(new CustomEvent(name, { bubbles: true, detail })); }
@@ -411,11 +455,44 @@ export class FirehorseTable {
     this.renderBulk();
   }
 
-  cell(f, row) {
-    const t = this.type(f);
-    const v = row[f.key];
-    return `<td class="fh-cell fh-cell--${t.cell ?? f.type}"${t.attrs ? t.attrs(v, f) : ""} data-label="${esc(f.label)}">${t.render(v, f, this, row)}</td>`;
+  /** A viewer re-displayed a column (the column display menu); null puts it back to the field's default. */
+  present(key, variant) {
+    variant ? (this.choice[key] = variant) : delete this.choice[key];
+    this.store.save(this.choice);
+    this.emit("fh:presentation-change", { table: this.storeId ?? this.id, key, context: "cell", variant: variant ?? null });
+    this.renderBody();
   }
+
+  cellClass(f) {
+    const end = !this.custom(f) && resolveValue(this.vf(f), "cell").align === "end";
+    return `fh-cell fh-cell--${esc(this.type(f).cell ?? f.type ?? this.shape(f))}${end ? " fh-cell--end" : ""}`;
+  }
+
+  cell(f, row) {
+    return `<td class="${this.cellClass(f)}" data-label="${esc(f.label)}">${this.draw(f, row[f.key], "cell", row)}</td>`;
+  }
+
+  /** The detail under an expandable row: your own (expand: (row) => html), or the row's other fields as a record table. */
+  detail(r) {
+    if (typeof this.cfg.expand === "function") return this.cfg.expand(r, this) ?? "";
+    const shown = new Set(this.visible.map((f) => f.key));
+    const keys = this.cfg.detailFields ?? this.fields.filter((f) => !shown.has(f.key) && f.key !== this.primary).map((f) => f.key);
+    const fields = (keys.length ? keys : this.fields.filter((f) => f.key !== this.primary).map((f) => f.key)).map((k) => this.field(k)).filter((f) => f && !this.custom(f)).map((f) => this.vf(f));
+    return recordTable(fields, r, { variant: "mixed", label: `${this.text(this.field(this.primary), r[this.primary])}, details`, locale: this.locale });
+  }
+
+  /** The groups a row falls in: [{ key, raw, label }]. */
+  groupKeys(gf, r) {
+    const kind = this.type(gf).kind;
+    const raws = kind === "options" ? this.values(gf, r[gf.key]) : [r[gf.key]];
+    if (!raws.length || raws.every((x) => isEmpty(x))) return [{ key: "(empty)", raw: null, label: "(empty)" }];
+    return raws.map((raw) => {
+      const label = kind === "options" ? String(raw) : this.text(gf, raw) || "(empty)";
+      return { key: kind === "option" ? String(raw) : label, raw, label };
+    });
+  }
+
+  trigger(f) { return this.custom(f) ? "" : menuTrigger(this.vf(f), "cell", { choose: this.choose }); }
 
   grid(rows) {
     const vis = this.visible.filter((f) => f.key !== this.primary);
@@ -423,59 +500,73 @@ export class FirehorseTable {
     const sortOf = (k) => { const s = this.state.sort.find((x) => x.key === k); return s ? ` aria-sort="${s.dir === "asc" ? "ascending" : "descending"}"` : ""; };
     const rank = (k) => (this.state.sort.length > 1 ? this.state.sort.findIndex((x) => x.key === k) + 1 : 0);
     const w = (f) => this.state.widths[f.key] ?? f.width ?? ({ long: "18rem", user: "11rem", users: "8rem", multi: "14rem", tags: "12rem", attachment: "7rem", check: "6rem", rating: "8rem", sparkline: "8rem", email: "14rem", url: "12rem" }[f.type] ?? "10rem");
-    const head = (f, sticky) => `<th scope="col"${sticky ? ' data-sticky="primary"' : ""}${sortOf(f.key)} style="position:${sticky ? "sticky" : "sticky"}"><button class="fh-dt__th" type="button" data-sort-key="${esc(f.key)}" title="Sort by ${esc(f.label)} (shift-click to add)">${icon(this.type(f).icon)}<span>${esc(f.label)}</span>${rank(f.key) ? `<span class="fh-dt__sort-rank">${rank(f.key)}</span>` : ""}</button><span class="fh-dt__resize" data-resize="${esc(f.key)}" aria-hidden="true"></span></th>`;
+    const head = (f, sticky) => `<th scope="col"${sticky ? ' data-sticky="primary"' : ""}${sortOf(f.key)} data-fh-colmenu-host style="position:sticky"><span class="fh-dt__head"><button class="fh-dt__th" type="button" data-sort-key="${esc(f.key)}" title="Sort by ${esc(f.label)} (shift-click to add)">${icon(this.type(f).icon)}<span><span class="fh-roll">${esc(f.label)}</span></span>${rank(f.key) ? `<span class="fh-dt__sort-rank">${rank(f.key)}</span>` : ""}</button>${this.trigger(f)}</span><span class="fh-dt__resize" data-resize="${esc(f.key)}" aria-hidden="true"></span></th>`;
     const allSel = rows.length && rows.every((r) => this.state.selected.has(r.id));
-    const row = (r) => `<tr tabindex="0" data-id="${esc(r.id)}" aria-selected="${this.state.selected.has(r.id)}">
-        <td data-sticky="select"><input type="checkbox" data-select aria-label="Select ${esc(r[this.primary])}" ${this.state.selected.has(r.id) ? "checked" : ""}></td>
-        <th scope="row" data-sticky="primary" class="fh-cell fh-cell--${p.type}">${this.type(p).render(r[p.key], p, this, r)}</th>
-        ${vis.map((f) => this.cell(f, r)).join("")}</tr>`;
+    const expand = Boolean(this.cfg.expand);
+    const name = (r) => this.text(p, r[p.key]);
+    const row = (r) => {
+      const open = this.state.expanded.has(r.id);
+      const did = `${this.id}-d-${String(r.id).replace(/[^\w-]/g, "_")}`;
+      return `<tr tabindex="0" data-id="${esc(r.id)}" aria-selected="${this.state.selected.has(r.id)}">
+        <td data-sticky="select">${expand ? `<button class="fh-dt__expand" type="button" aria-expanded="${open}" aria-controls="${did}" aria-label="Details of ${esc(name(r))}"></button>` : ""}<input type="checkbox" data-select aria-label="Select ${esc(name(r))}" ${this.state.selected.has(r.id) ? "checked" : ""}></td>
+        <th scope="row" data-sticky="primary" class="${this.cellClass(p)}">${this.draw(p, r[p.key], "cell", r)}</th>
+        ${vis.map((f) => this.cell(f, r)).join("")}</tr>${expand ? `<tr class="fh-dt__detail" id="${did}"${open ? "" : " hidden"}><td colspan="${vis.length + 2}">${this.detail(r)}</td></tr>` : ""}`;
+    };
     let bodyRows = "";
     if (this.state.group) {
       const gf = this.field(this.state.group);
       const groups = new Map();
       for (const r of rows) {
-        const keys = this.type(gf).kind === "options" ? (this.values(gf, r[gf.key]).length ? this.values(gf, r[gf.key]) : ["(empty)"]) : [this.text(gf, r[gf.key]) || "(empty)"];
-        for (const k of keys) { if (!groups.has(k)) groups.set(k, []); groups.get(k).push(r); }
+        for (const g of this.groupKeys(gf, r)) { if (!groups.has(g.key)) groups.set(g.key, { ...g, list: [] }); groups.get(g.key).list.push(r); }
       }
-      for (const [k, list] of groups) {
+      const optionKind = this.type(gf).kind === "option" || this.type(gf).kind === "options";
+      for (const [k, { raw, label, list }] of groups) {
         const open = !this.state.collapsed.has(k);
-        const tone = toneOf(gf, k);
+        const tone = optionKind && raw != null ? this.toneOf(gf, raw) : "neutral";
+        const title = optionKind && raw != null && !this.custom(gf) ? renderValue({ ...this.vf(gf), multiple: false, shape: "option" }, raw, "record") : esc(label);
         const aggs = vis.map((f) => this.aggregate(f, list)).filter(Boolean).slice(0, 2).join(" · ");
-        bodyRows += `<tr class="fh-dt__group" data-tone="${tone}"><td colspan="${vis.length + 2}"><button class="fh-dt__group-toggle" type="button" data-group-toggle="${esc(k)}" aria-expanded="${open}">${types[gf.type]?.kind === "option" ? `<span class="fh-pill" data-tone="${tone}">${esc(k)}</span>` : esc(k)}</button><span class="fh-dt__group-meta">${list.length} record${list.length === 1 ? "" : "s"}${aggs ? ` · ${aggs.replace(/<\/?b>/g, "")}` : ""}</span></td></tr>`;
+        bodyRows += `<tr class="fh-dt__group" data-tone="${tone}"><td colspan="${vis.length + 2}"><button class="fh-dt__group-toggle" type="button" data-group-toggle="${esc(k)}" aria-expanded="${open}">${title}</button><span class="fh-dt__group-meta">${list.length} record${list.length === 1 ? "" : "s"}${aggs ? ` · ${aggs}` : ""}</span></td></tr>`;
         if (open) bodyRows += list.map(row).join("");
       }
     } else bodyRows = rows.map(row).join("");
     const all = this.result;
-    const foot = `<tfoot><tr><td data-sticky="select"></td><td data-sticky="primary"><b>${all.length}</b> records</td>${vis.map((f) => `<td class="fh-cell--${f.type}">${this.aggregate(f, all)}</td>`).join("")}</tr></tfoot>`;
+    const foot = `<tfoot><tr><td data-sticky="select"></td><td data-sticky="primary"><b>${all.length}</b> records</td>${vis.map((f) => `<td class="${this.cellClass(f)}">${this.aggregate(f, all)}</td>`).join("")}</tr></tfoot>`;
+    const lead = expand ? "4.6rem" : "2.6rem";
     return `<div class="fh-dt__scroll" tabindex="-1"><table class="fh-dt__table" aria-label="${esc(this.cfg.title ?? "Records")}">
-      <colgroup><col style="inline-size:2.6rem;width:2.6rem"><col data-col="${esc(p.key)}" style="width:${w(p)}">${vis.map((f) => `<col data-col="${esc(f.key)}" style="width:${w(f)}">`).join("")}</colgroup>
+      <colgroup><col style="inline-size:${lead};width:${lead}"><col data-col="${esc(p.key)}" style="width:${w(p)}">${vis.map((f) => `<col data-col="${esc(f.key)}" style="width:${w(f)}">`).join("")}</colgroup>
       <thead><tr><th scope="col" data-sticky="select"><input type="checkbox" data-select-all aria-label="Select all on this page" ${allSel ? "checked" : ""}></th>${head(p, true)}${vis.map((f) => head(f)).join("")}</tr></thead>
       <tbody>${bodyRows}</tbody>${foot}</table></div>`;
   }
 
-  cardFields(r, n = 4, skip = null) {
-    return this.visible.filter((f) => f.key !== this.primary && f.key !== skip && f.type !== "long").slice(0, n)
-      .map((f) => `<div><dt>${icon(this.type(f).icon)} ${esc(f.label)}</dt><dd>${this.type(f).render(r[f.key], f, this, r)}</dd></div>`).join("");
+  /** A card's fields, each drawn in the card context (gallery and board). Long text stays in the record. */
+  cardValues(r, n = 4, skip = null) {
+    return this.visible.filter((f) => f.key !== this.primary && f.key !== skip && this.type(f).cell !== "long" && (this.custom(f) || resolveValue(this.vf(f), "card").variant))
+      .slice(0, n)
+      .map((f) => `<div><dt>${icon(this.type(f).icon)} ${esc(f.label)}</dt><dd>${this.draw(f, r[f.key], "card", r)}</dd></div>`).join("");
   }
 
   gallery(rows) {
     const toneField = this.field(this.boardField);
-    return `<div class="fh-dt__gallery">${rows.map((r) => `<article class="fh-dt__card" tabindex="0" data-id="${esc(r.id)}" data-tone="${toneField ? toneOf(toneField, r[toneField.key]) : "sky"}" aria-selected="${this.state.selected.has(r.id)}">
+    return `<div class="fh-dt__gallery">${rows.map((r) => `<article class="fh-dt__card" tabindex="0" data-id="${esc(r.id)}" data-tone="${toneField ? this.toneOf(toneField, r[toneField.key]) : "sky"}" aria-selected="${this.state.selected.has(r.id)}">
       <div class="fh-dt__cover"></div>
-      <h4>${this.type(this.field(this.primary)).render(r[this.primary], this.field(this.primary), this, r)}</h4>
-      <dl>${this.cardFields(r, 5)}</dl></article>`).join("")}</div>`;
+      <h4>${this.draw(this.field(this.primary), r[this.primary], "card", r)}</h4>
+      <dl>${this.cardValues(r, 5)}</dl></article>`).join("")}</div>`;
   }
 
   board(rows) {
     const f = this.field(this.boardField);
     if (!f) return this.gallery(rows);
-    const lanes = (f.options ?? [...new Set(rows.map((r) => r[f.key]))]).map((o) => o.value ?? o);
+    const set = this.options(f);
+    const lanes = set.length ? set.map((o) => o.value) : [...new Set(rows.map((r) => r[f.key]))];
+    const p = this.field(this.primary);
+    const sumField = this.fields.find((x) => this.shape(x) === "money");
     return `<div class="fh-dt__board">${lanes.map((lane) => {
-      const list = rows.filter((r) => r[f.key] === lane);
-      const tone = toneOf(f, lane);
-      const sumField = this.fields.find((x) => x.type === "currency");
-      return `<section class="fh-dt__lane" data-tone="${tone}" data-lane="${esc(lane)}"><header><span class="fh-status" data-tone="${tone}">${esc(lane)}</span><span class="fh-dt__count">${list.length}${sumField ? ` · ${types.currency.text(list.reduce((n, r) => n + (r[sumField.key] || 0), 0), sumField, this)}` : ""}</span></header>
-        <div>${list.map((r) => `<article class="fh-dt__card" tabindex="0" draggable="true" data-id="${esc(r.id)}" data-tone="${tone}"><h4>${this.type(this.field(this.primary)).render(r[this.primary], this.field(this.primary), this, r)}</h4><dl>${this.cardFields(r, 3, this.boardField)}</dl></article>`).join("")}</div></section>`;
+      const list = rows.filter((r) => String(r[f.key]) === String(lane));
+      const tone = this.toneOf(f, lane);
+      const sum = sumField ? list.reduce((n, r) => n + (Number(r[sumField.key]?.amount ?? r[sumField.key]) || 0), 0) : null;
+      // The lane's status is a chip, as on every card and board (decision 5).
+      return `<section class="fh-dt__lane" data-tone="${tone}" data-lane="${esc(lane)}"><header>${this.custom(f) ? esc(lane) : renderValue(this.vf(f), lane, "card")}<span class="fh-dt__count">${list.length}${sumField ? ` · ${renderValue(this.vf(sumField), sum, "card", { locale: this.locale })}` : ""}</span></header>
+        <div>${list.map((r) => `<article class="fh-dt__card" tabindex="0" draggable="true" data-id="${esc(r.id)}" data-tone="${tone}"><h4>${this.draw(p, r[p.key], "card", r)}</h4><dl>${this.cardValues(r, 3, this.boardField)}</dl></article>`).join("")}</div></section>`;
     }).join("")}</div>`;
   }
 
@@ -516,7 +607,7 @@ export class FirehorseTable {
         let value = "";
         if (!noValue) {
           if (kind === "option" || kind === "options") {
-            const opts = (f.options ?? [...new Set(this.rows.flatMap((r) => this.values(f, r[f.key])))]).map((o) => o.value ?? o);
+            const opts = this.options(f).length ? this.options(f).map((o) => o.value) : [...new Set(this.rows.flatMap((r) => this.values(f, r[f.key])))];
             const cur = [].concat(fl.value ?? []);
             value = `<select class="fh-select" data-i="${i}" data-part="value" ${fl.op.includes("of") ? "multiple size=3" : ""}>${fl.op.includes("of") ? "" : "<option value=''>Any</option>"}${opts.map((o) => `<option ${cur.includes(o) ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
           } else value = `<input class="fh-input" data-i="${i}" data-part="value" type="${kind === "number" || fl.op.startsWith("is within") ? "number" : kind === "date" ? "date" : "text"}" value="${esc(fl.value ?? "")}" placeholder="${fl.op.startsWith("is within") ? "days" : "Value"}">`;
@@ -530,7 +621,7 @@ export class FirehorseTable {
       p.innerHTML = `<h3>Sort</h3>${rows || `<p class="fh-muted" style="margin:0">Click a column header to sort. Shift-click to add a second sort.</p>`}<div><button class="fh-button fh-button--sm fh-button--secondary" type="button" data-part="add">${icon("plus")} Add sort</button></div>`;
     }
     if (name === "group") {
-      const groupable = (f) => ["select", "status", "multi", "tags", "user", "users", "check", "rating", "link"].includes(f.type);
+      const groupable = (f) => ["option", "options", "bool"].includes(this.type(f).kind) || ["user", "users", "rating", "link"].includes(f.type) || this.shape(f) === "entity";
       p.innerHTML = `<h3>Group by</h3><select class="fh-select" data-part="group"><option value="">None</option>${fieldOpts(this.state.group, groupable)}</select>${this.state.group ? `<div class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><button class="fh-dt__tool" type="button" data-part="collapse">Collapse all</button><button class="fh-dt__tool" type="button" data-part="expand">Expand all</button></div>` : ""}`;
     }
     if (name === "fields") {
@@ -567,7 +658,7 @@ export class FirehorseTable {
     }
     if (name === "group") {
       if (part === "group") { this.state.group = t.value || null; this.state.collapsed.clear(); }
-      if (part === "collapse") { const gf = this.field(this.state.group); for (const r of this.rows) for (const k of this.type(gf).kind === "options" ? this.values(gf, r[gf.key]) : [this.text(gf, r[gf.key]) || "(empty)"]) this.state.collapsed.add(k); }
+      if (part === "collapse") { const gf = this.field(this.state.group); for (const r of this.rows) for (const g of this.groupKeys(gf, r)) this.state.collapsed.add(g.key); }
       if (part === "expand") this.state.collapsed.clear();
       this.render();
       this.renderPanel("group");
@@ -617,7 +708,7 @@ export class FirehorseTable {
   }
 
   /* —— Public helpers —— */
-  setRows(rows) { this.rows = rows.map((r, i) => ({ id: r.id ?? String(i + 1), ...r })); this.render(); }
+  setRows(rows) { this.rows = rows.map((r, i) => ({ id: r.id ?? String(i + 1), ...r })); this.measure(); this.render(); }
   update(id, patch) { Object.assign(this.rows.find((r) => r.id === id) ?? {}, patch); this.render(); }
 }
 

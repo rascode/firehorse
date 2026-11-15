@@ -34,4 +34,29 @@
     &:is([data-status="queued" i], [data-status="pending" i], [data-status="draft" i], [data-status="waiting" i], [data-status="warn" i], [data-status="paused" i], [data-status="planned" i], [data-status="unread" i], [data-status="high" i]) { --fh-tone: var(--fh-tone-amber); }
     &:is([data-status="failed" i], [data-status="error" i], [data-status="rejected" i], [data-status="blocked" i], [data-status="overdue" i], [data-status="revoked" i], [data-status="urgent" i]) { --fh-tone: var(--fh-tone-rose); }
   }
+
+  /* fh-status: inline status text, a tone dot and its word (SCR). Not for table cells: a cell draws its
+   * status as the Values dot and word (VAL-1.1). Moved here from the datatable's cells (W3). */
+  .fh-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    font-size: var(--fh-text-caption);
+
+    &::before {
+      content: "";
+      inline-size: 0.5rem;
+      aspect-ratio: 1;
+      border-radius: var(--fh-radius-round);
+      background-color: var(--fh-tone);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 22%, transparent);
+    }
+  }
+
+  /* Live status: the dot pulses (the dot's Doppler) for work that's in
+   * progress, so it stands apart from what's queued. In a datatable, give
+   * the option `live: true`. */
+  @media (prefers-reduced-motion: no-preference) {
+    .fh-status--live::before { animation: fh-doppler var(--fh-duration-pulse) var(--fh-ease-out) infinite; }
+  }
 }
