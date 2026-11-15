@@ -185,6 +185,17 @@
   .fh-value .fh-avatar--square { --fh-avatar-size: var(--_thumb); }
   .fh-value--file-row > .fh-files { flex: 1 1 auto; }
 
+  /* A file with no link (nothing to open yet) keeps the files row's layout: icon, name, size, date. */
+  .fh-value--file-row > .fh-files > li > span {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tight) 0;
+    color: var(--fh-color-text);
+  }
+
+  .fh-value--file-row > .fh-files > li > span > span { flex: 1 1 auto; }
+
   /* —— VAL-10 Flag —— */
   .fh-value--no { color: var(--fh-color-text-muted); }
 

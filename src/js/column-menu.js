@@ -156,19 +156,24 @@ export function bindColumnMenu(root, cfg) {
     const item = e.target.closest("[data-variant]");
     if (!item || !button || item.getAttribute("aria-disabled") === "true") return;
     const key = button.dataset.fhColmenu;
-    const v = item.dataset.variant || null;
+    const picked = item.dataset.variant || null;
+    // Picking the field's own variant is the same as Reset: nothing is kept for it.
+    const own = variants(cfg.field(key), cfg.context).find((x) => x.default)?.variant;
     close({ focus: true });
-    cfg.pick(key, v);
+    cfg.pick(key, picked === own ? null : picked);
+    // The surface redraws its header: focus returns to the column's new button.
+    root.querySelector(`[data-fh-colmenu="${CSS.escape(key)}"]`)?.focus();
   });
   menu.addEventListener("keydown", (e) => {
     const list = items();
     const i = list.indexOf(doc.activeElement);
-    const go = (n) => { e.preventDefault(); list[(n + list.length) % list.length]?.focus(); };
+    // Handled here, so firehorse.js's own menu keys (when the page loads it) don't move focus a second time.
+    const go = (n) => { e.preventDefault(); e.stopPropagation(); list[(n + list.length) % list.length]?.focus(); };
     if (e.key === "ArrowDown") go(i + 1);
     else if (e.key === "ArrowUp") go(i - 1);
     else if (e.key === "Home") go(0);
     else if (e.key === "End") go(list.length - 1);
-    else if (e.key === "Escape") { e.preventDefault(); close({ focus: true }); }
+    else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close({ focus: true }); }
     else if (e.key === "Tab") close();
   });
   return { menu, close, open };

@@ -72,7 +72,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 9. Option sets are data: a field points at its set (devops.option_sets, published as schema/option-sets.json). A status option's tone is its state's: done lime, moving sky, waiting amber, failed rose, ended neutral.
 10. Every value has a text form, the plain string for CSV export, aria-label, copy and search. A secret has none, export included.
 11. A viewer may re-display a column with the variants its grid row lists under choices, and nothing else; a secret offers none. The metric and form contexts offer no choice.
-12. A record with its own logo (an application, an organization, a brand) draws its avatar beside its reference: the square avatar, or its initials, then the link that opens it.
+12. A record with its own logo or icon (an application, an organization, a brand, an AI model) draws its avatar beside its reference, in cells, records, cards and summary tiles: the square avatar, or its initials, then the link that opens it.
 <!-- rules:end -->
 
 ## The grid
@@ -90,7 +90,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | options | `chips` +N after 3 | `chips-inline` | `chips` +N after 2 | `count` | `tag-field` | `labels` | VAL-2 |
 | entities (several) (Record context lists one per line) | `stack` +N after 4 | `avatar-name` | `stack` | `stack` | `picker-multi` | `names` | VAL-3 |
 | entity, person or org | `avatar-name` | `full` | `chip` | `stack` | `picker` | `name` | VAL-3 |
-| entity, rich record (application, organization, brand) (A record with its own logo draws its avatar (or initials) beside its reference, in every context (decision 10, Rascode 2026-11-14)) | `avatar-ref` | `avatar-ref` | `avatar-ref` | · | `picker` | `name` | VAL-3 |
+| entity, rich record (application, organization, brand, AI model) (A record with its own logo or icon (an application, an organization such as Claude's maker, a brand, an AI model) draws its avatar (or initials) beside its reference in every context, summary tiles included (decision 10, Rascode 2026-11-14)) | `avatar-ref` | `avatar-ref` | `avatar-ref` | `avatar-ref` | `picker` | `name` | VAL-3 |
 | entity, record (The form picker row shows name and description) | `ref` | `ref-key` | `name` | · | `picker` | `name` | VAL-3 |
 | money | `amount`, right | `amount-code`, right | `compact` | `compact-delta` | `money-input` | `amount-code` | VAL-4 |
 | ratio (Metric uses meter instead of ring when the field has a target) | `bar` | `text` | `ring` | `ring` | `range` | `percent` | VAL-5 |

@@ -8,28 +8,28 @@
  * (fh-kv, fh-kv--single, fh-kv--fields, fh-kv__full, fh-review, fh-review__row, fh-review__edit, fh-dl) still work.
  * Script (optional): record-table.js draws it from fields + a record and adds the column display menu.
  *
- *   <dl class="fh-record fh-record--read" data-fh="TBL-3.1">
+ *   <dl class="fh-record-table fh-record-table--read" data-fh="TBL-3.1">
  *     <div><dt>Owner</dt><dd><span class="fh-value fh-value--full" data-fh="VAL-3.5">…</span></dd></div>
  *   </dl>
  *
  * Variants (the class on the dl):
- *   fh-record--read     TBL-3.1  one column of rows on etched rules, the value on the right
- *   fh-record--fields   TBL-3.2  a field beside each label, filling the right; it drops under its label when narrow
- *   fh-record--mixed    TBL-3.3  two columns of rows once each can be 19rem; fh-record__full spans both
- *   fh-record--review   TBL-3.4  label, value, and an Edit action (fh-record__edit) on the right of each row
- *   fh-record--stacked  TBL-3.5  the label over its value in a narrow slot, beside it from 28rem
+ *   fh-record-table--read     TBL-3.1  one column of rows on etched rules, the value on the right
+ *   fh-record-table--fields   TBL-3.2  a field beside each label, filling the right; it drops under its label when narrow
+ *   fh-record-table--mixed    TBL-3.3  two columns of rows once each can be 19rem; fh-record-table__full spans both
+ *   fh-record-table--review   TBL-3.4  label, value, and an Edit action (fh-record-table__edit) on the right of each row
+ *   fh-record-table--stacked  TBL-3.5  the label over its value in a narrow slot, beside it from 28rem
  * A row narrower than 18rem stacks in Read, Fields and Mixed: the value goes under its label, flush left.
  * Row spacing (TBL-4.1) comes from data-fh-rows on the page (--fh-row-pad), as for every table.
- * Knobs: --fh-record-label (the label column in Fields and Stacked, 11rem), --fh-kv-label (its old name).
+ * Knobs: --fh-record-table-label (the label column in Fields and Stacked, 11rem), --fh-kv-label (its old name).
  */
 @layer fh.components {
-  .fh-record,
+  .fh-record-table,
   .fh-kv,
   .fh-review,
   .fh-dl { margin: 0; }
 
   /* —— Read, Fields and Mixed: label left, value right, on etched rules —— */
-  :is(.fh-record--read, .fh-record--fields, .fh-record--mixed, .fh-kv) {
+  :is(.fh-record-table--read, .fh-record-table--fields, .fh-record-table--mixed, .fh-kv) {
     --_gap: var(--fh-gap-sectioned);
 
     display: grid;
@@ -89,16 +89,16 @@
     }
   }
 
-  :is(.fh-record--mixed, .fh-kv) > :is(.fh-record__full, .fh-kv__full) { grid-column: 1 / -1; }
-  :is(.fh-record--mixed, .fh-kv) > :is(.fh-record__full, .fh-kv__full) > dd { flex-basis: 100%; text-align: start; }
-  :is(.fh-record--read, .fh-kv--single) { grid-template-columns: minmax(0, 1fr); }
+  :is(.fh-record-table--mixed, .fh-kv) > :is(.fh-record-table__full, .fh-kv__full) { grid-column: 1 / -1; }
+  :is(.fh-record-table--mixed, .fh-kv) > :is(.fh-record-table__full, .fh-kv__full) > dd { flex-basis: 100%; text-align: start; }
+  :is(.fh-record-table--read, .fh-kv--single) { grid-template-columns: minmax(0, 1fr); }
 
   /* Fields: label on the left, the field filling the right; the field drops under its label when the row runs out of room. */
-  :is(.fh-record--fields, .fh-kv--fields) {
+  :is(.fh-record-table--fields, .fh-kv--fields) {
     grid-template-columns: minmax(0, 1fr);
 
     & > div { align-items: center; }
-    & dt { flex: 0 0 var(--fh-record-label, var(--fh-kv-label, 11rem)); }
+    & dt { flex: 0 0 var(--fh-record-table-label, var(--fh-kv-label, 11rem)); }
     & dd { flex: 1 1 14rem; text-align: start; }
     & dd > :is(.fh-input, .fh-select, .fh-select-wrap, .fh-textarea, .fh-value--field) { inline-size: 100%; }
     & dd > .fh-value:not(.fh-value--field) { justify-content: flex-start; }
@@ -107,7 +107,7 @@
   .fh-kv--fields { grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19rem, calc(50% - var(--_gap) / 2))), 1fr)); }
 
   /* —— Review: label, value, Edit on the right —— */
-  :is(.fh-record--review, .fh-review) {
+  :is(.fh-record-table--review, .fh-review) {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
@@ -143,7 +143,7 @@
     }
   }
 
-  :is(.fh-record__edit, .fh-review__edit) {
+  :is(.fh-record-table__edit, .fh-review__edit) {
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: start;
@@ -153,14 +153,14 @@
   .fh-review__quote { color: var(--fh-color-text); white-space: pre-line; }
 
   @container fh-review (inline-size >= 36rem) {
-    :is(.fh-record--review, .fh-review) > div { grid-template-columns: 9rem minmax(0, 1fr) auto; }
-    :is(.fh-record--review, .fh-review) > div > dt { padding-block-start: calc(var(--fh-gap-bound) / 2); }
-    :is(.fh-record--review, .fh-review) > div > dd { grid-column: 2; }
-    :is(.fh-record__edit, .fh-review__edit) { grid-column: 3; grid-row: 1; }
+    :is(.fh-record-table--review, .fh-review) > div { grid-template-columns: 9rem minmax(0, 1fr) auto; }
+    :is(.fh-record-table--review, .fh-review) > div > dt { padding-block-start: calc(var(--fh-gap-bound) / 2); }
+    :is(.fh-record-table--review, .fh-review) > div > dd { grid-column: 2; }
+    :is(.fh-record-table__edit, .fh-review__edit) { grid-column: 3; grid-row: 1; }
   }
 
   /* —— Stacked: the label over its value, beside it from 28rem —— */
-  :is(.fh-record--stacked, .fh-dl) {
+  :is(.fh-record-table--stacked, .fh-dl) {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     container: fh-dl / inline-size;
@@ -191,13 +191,13 @@
   }
 
   @container fh-dl (inline-size >= 28rem) {
-    :is(.fh-record--stacked, .fh-dl) > div {
-      grid-template-columns: var(--fh-record-label, 11rem) minmax(0, 1fr);
+    :is(.fh-record-table--stacked, .fh-dl) > div {
+      grid-template-columns: var(--fh-record-table-label, 11rem) minmax(0, 1fr);
       gap: var(--fh-gap-grouped-wide);
       align-items: baseline;
     }
   }
 
   /* The column display menu's button sits after the label (column-menu.css). */
-  .fh-record dt > .fh-colmenu__button { margin-inline-start: 0; }
+  .fh-record-table dt > .fh-colmenu__button { margin-inline-start: 0; }
 }

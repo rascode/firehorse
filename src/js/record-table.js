@@ -49,7 +49,7 @@ export function recordTable(fields = [], record = {}, opts = {}) {
       if (!r.variant) return "";
       const html = renderValue(f, value, "form", { ...shared, id, name: f.key });
       const full = describeField(f).shape === "prose" || r.variant === "textarea" || r.variant === "textarea-mono";
-      return `  <div${full ? ` class="fh-record__full"` : ""} data-fh-field="${esc(f.key)}"${fieldAttrs(f)}><dt>${r.editable ? `<label for="${esc(id)}">${label}</label>` : label}</dt><dd data-fh-value="${raw(value)}">${html}</dd></div>`;
+      return `  <div${full ? ` class="fh-record-table__full"` : ""} data-fh-field="${esc(f.key)}"${fieldAttrs(f)}><dt>${r.editable ? `<label for="${esc(id)}">${label}</label>` : label}</dt><dd data-fh-value="${raw(value)}">${html}</dd></div>`;
     }
     const r = resolveValue(f, "record");
     if (!r.variant) return "";
@@ -59,15 +59,15 @@ export function recordTable(fields = [], record = {}, opts = {}) {
     const full = variant === "mixed" && (r.shape === "prose" || FULL.has(shown));
     const trigger = opts.choose === false ? "" : menuTrigger(f, "record", { choose: opts.choose !== false });
     const head = trigger ? `<dt data-fh-colmenu-host><span class="fh-roll">${label}</span>${trigger}</dt>` : `<dt>${label}</dt>`;
-    const edit = variant === "review" ? `<button type="button" class="fh-action fh-record__edit" data-fh-record-edit="${esc(f.key)}" aria-label="${esc(`${opts.edit ?? "Edit"} ${f.label ?? f.key}`)}">${esc(opts.edit ?? "Edit")}</button>` : "";
-    return `  <div${full ? ` class="fh-record__full"` : ""} data-fh-field="${esc(f.key)}"${fieldAttrs(f)}>${head}<dd data-fh-value="${raw(value)}">${html}</dd>${edit}</div>`;
+    const edit = variant === "review" ? `<button type="button" class="fh-action fh-record-table__edit" data-fh-record-edit="${esc(f.key)}" aria-label="${esc(`${opts.edit ?? "Edit"} ${f.label ?? f.key}`)}">${esc(opts.edit ?? "Edit")}</button>` : "";
+    return `  <div${full ? ` class="fh-record-table__full"` : ""} data-fh-field="${esc(f.key)}"${fieldAttrs(f)}>${head}<dd data-fh-value="${raw(value)}">${html}</dd>${edit}</div>`;
   }).filter(Boolean);
-  return `<dl class="fh-record fh-record--${variant}"${opts.label ? ` aria-label="${esc(opts.label)}"` : ""} data-fh="${VARIANTS[variant]}">\n${rows.join("\n")}\n</dl>`;
+  return `<dl class="fh-record-table fh-record-table--${variant}"${opts.label ? ` aria-label="${esc(opts.label)}"` : ""} data-fh="${VARIANTS[variant]}">\n${rows.join("\n")}\n</dl>`;
 }
 
 /** Reads a static record table's fields, record and variant back from its markup (div[data-fh-field], dd[data-fh-value]). */
 export function readRecord(dl) {
-  const variant = Object.keys(VARIANTS).find((v) => dl.classList.contains(`fh-record--${v}`)) ?? "read";
+  const variant = Object.keys(VARIANTS).find((v) => dl.classList.contains(`fh-record-table--${v}`)) ?? "read";
   const fields = [], record = {};
   for (const row of dl.querySelectorAll(":scope > div[data-fh-field]")) {
     const dd = row.querySelector(":scope > dd[data-fh-value]");
@@ -85,7 +85,7 @@ export class RecordTable {
   constructor(el, config = {}) {
     this.el = el;
     // A static record table (server markup) is read back from its own rows.
-    const read = !config.fields && el.querySelector(":scope > dl.fh-record") ? readRecord(el.querySelector(":scope > dl.fh-record")) : null;
+    const read = !config.fields && el.querySelector(":scope > dl.fh-record-table") ? readRecord(el.querySelector(":scope > dl.fh-record-table")) : null;
     this.cfg = { ...(read ?? {}), ...config };
     this.fields = config.fields ?? read?.fields ?? [];
     this.record = config.record ?? read?.record ?? {};

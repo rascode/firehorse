@@ -94,8 +94,9 @@ if (el) {
   el.addEventListener("fh:action", () => toast("New record: wire this to your create form."));
   el.addEventListener("fh:change", (e) => toast(`${e.detail.row.company}: ${e.detail.key} → ${e.detail.value}`));
 
-  // —— Record drawer ——
+  // —— Record drawer (the category page has it; a specimen page shows the table alone) ——
   const dlg = document.getElementById("record");
+  if (dlg) {
   const $ = (s) => dlg.querySelector(s);
   // Every value in the drawer is drawn by the contract in the record context, as in the table.
   const field = (key, extra = {}) => ({ ...config.fields.find((f) => f.key === key), ...extra });
@@ -162,4 +163,5 @@ if (el) {
       dlg.close();
     }
   });
+}
 }

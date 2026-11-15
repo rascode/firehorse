@@ -6,7 +6,8 @@
  *   money      the compact figure with its delta (VAL-4.5)        $48.2K ↑ $5.2K
  *   number     the figure with its delta (VAL-6.4)                42 ↑ 8, a series beside it as a sparkline (VAL-6.5)
  *   ratio      a ring (VAL-5.3), a meter against a target (VAL-5.4), or the figure over a bar (display: { metric: "bar" })
- *   entities   the count, with the people as a stack (VAL-3.7)
+ *   entities   the count, with the people as a stack (VAL-3.7); one rich record (organization, application, brand,
+ *              AI model) as its logo and link (VAL-3.12)
  *   duration, temporal, options, files, flags: the metric variant the grid names (count, relative, duration)
  * A field that the grid leaves out of the metric context (text, a status) names its variant: display: { metric: "line" }.
  *
@@ -33,6 +34,8 @@ export function metricFigure(field = {}, value, o = {}) {
   if (!r.variant) return { figure: "", below: "" };
   if (r.shape === "ratio" && (r.variant === "ring" || r.variant === "meter")) return { figure: renderValue(f, value, "metric", v), below: "", direct: true };
   if (r.shape === "ratio") return { figure: `<p class="fh-metric__value">${renderValue(f, value, "record", { ...v, align: false })}</p>`, below: renderValue(f, value, "metric", v) };
+  // One rich record (an organization, an application, an AI model): its logo and its link, a step up in size.
+  if (r.shape === "entity" && !r.multiple) return { figure: `<div class="fh-metric__figure">${renderValue(f, value, "metric", { ...v, size: "lg" })}</div>`, below: "" };
   if (r.shape === "entity") {
     const n = isEmpty(value) ? 0 : [].concat(value).length;
     return { figure: `<div class="fh-metric__figure"><p class="fh-metric__value">${renderValue({ key: `${f.key}-count`, shape: "number" }, n, "card")}</p>${renderValue(f, value, "metric", v)}</div>`, below: "" };

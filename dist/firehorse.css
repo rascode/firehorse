@@ -6896,11 +6896,11 @@
     justify-content: flex-end;
   }
 
-  .fh-record, .fh-review, .fh-dl {
+  .fh-record-table, .fh-review, .fh-dl {
     margin: 0;
   }
 
-  :is(.fh-record--read, .fh-record--fields, .fh-record--mixed) {
+  :is(.fh-record-table--read, .fh-record-table--fields, .fh-record-table--mixed) {
     --_gap: var(--fh-gap-sectioned);
     grid-template-columns: repeat(auto-fit, minmax(min(100.0%, max(19rem, calc(50.0% - var(--_gap) / 2))), 1fr));
     column-gap: var(--_gap);
@@ -6972,20 +6972,20 @@
     }
   }
 
-  .fh-record--mixed > .fh-record__full {
+  .fh-record-table--mixed > .fh-record-table__full {
     grid-column: 1 / -1;
   }
 
-  .fh-record--mixed > .fh-record__full > dd {
+  .fh-record-table--mixed > .fh-record-table__full > dd {
     text-align: start;
     flex-basis: 100%;
   }
 
-  .fh-record--read {
+  .fh-record-table--read {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .fh-record--fields {
+  .fh-record-table--fields {
     grid-template-columns: minmax(0, 1fr);
 
     & > div {
@@ -6993,7 +6993,7 @@
     }
 
     & dt {
-      flex: 0 0 var(--fh-record-label, var(--fh-kv-label, 11rem));
+      flex: 0 0 var(--fh-record-table-label, var(--fh-kv-label, 11rem));
     }
 
     & dd {
@@ -7010,7 +7010,7 @@
     }
   }
 
-  :is(.fh-record--review, .fh-review) {
+  :is(.fh-record-table--review, .fh-review) {
     border-block-start: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 10%, transparent);
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
@@ -7046,7 +7046,7 @@
     }
   }
 
-  :is(.fh-record__edit, .fh-review__edit) {
+  :is(.fh-record-table__edit, .fh-review__edit) {
     grid-area: 1 / 2 / span 2;
     align-self: start;
   }
@@ -7061,24 +7061,24 @@
   }
 
   @container fh-review (inline-size >= 36rem) {
-    :is(.fh-record--review, .fh-review) > div {
+    :is(.fh-record-table--review, .fh-review) > div {
       grid-template-columns: 9rem minmax(0, 1fr) auto;
     }
 
-    :is(.fh-record--review, .fh-review) > div > dt {
+    :is(.fh-record-table--review, .fh-review) > div > dt {
       padding-block-start: calc(var(--fh-gap-bound) / 2);
     }
 
-    :is(.fh-record--review, .fh-review) > div > dd {
+    :is(.fh-record-table--review, .fh-review) > div > dd {
       grid-column: 2;
     }
 
-    :is(.fh-record__edit, .fh-review__edit) {
+    :is(.fh-record-table__edit, .fh-review__edit) {
       grid-area: 1 / 3;
     }
   }
 
-  :is(.fh-record--stacked, .fh-dl) {
+  :is(.fh-record-table--stacked, .fh-dl) {
     grid-template-columns: minmax(0, 1fr);
     display: grid;
     container: fh-dl / inline-size;
@@ -7109,14 +7109,14 @@
   }
 
   @container fh-dl (inline-size >= 28rem) {
-    :is(.fh-record--stacked, .fh-dl) > div {
-      grid-template-columns: var(--fh-record-label, 11rem) minmax(0, 1fr);
+    :is(.fh-record-table--stacked, .fh-dl) > div {
+      grid-template-columns: var(--fh-record-table-label, 11rem) minmax(0, 1fr);
       gap: var(--fh-gap-grouped-wide);
       align-items: baseline;
     }
   }
 
-  .fh-record dt > .fh-colmenu__button {
+  .fh-record-table dt > .fh-colmenu__button {
     margin-inline-start: 0;
   }
 
@@ -7934,7 +7934,13 @@
     }
 
     & tr.fh-dt__detail > td {
-      padding-inline-start: calc(var(--fh-dt-primary-offset) + var(--_pad));
+      padding-inline-start: calc(var(--fh-dt-primary-offset, 4.6rem) + var(--_pad));
+    }
+
+    & tr.fh-dt__detail > td > * {
+      inline-size: min(100%, var(--fh-dt-detail-width, 56rem));
+      position: sticky;
+      inset-inline-start: calc(var(--fh-dt-primary-offset, 4.6rem) + var(--_pad));
     }
   }
 
@@ -12394,7 +12400,7 @@
       align-self: end;
     }
 
-    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-dl, .fh-record, .fh-value--bar) {
+    & > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-dl, .fh-record-table, .fh-value--bar) {
       grid-row: 5;
       margin-block-start: var(--fh-gap-related);
     }
@@ -12414,7 +12420,7 @@
       margin-block-start: var(--fh-gap-related);
     }
 
-    &:not(:has( > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-dl, .fh-record, .fh-value--bar))) > .fh-metric__source {
+    &:not(:has( > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-dl, .fh-record-table, .fh-value--bar))) > .fh-metric__source {
       grid-row: 5;
     }
 
@@ -12436,7 +12442,7 @@
       }
     }
 
-    &:not(:has( > .fh-metric__source,  > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-dl, .fh-record, .fh-value--bar))) > .fh-metric__more {
+    &:not(:has( > .fh-metric__source,  > :is(.fh-progress, .fh-sparkline, .fh-metric__row, .fh-table-wrap, .fh-dl, .fh-record-table, .fh-value--bar))) > .fh-metric__more {
       grid-row: 5;
     }
   }
@@ -12892,6 +12898,18 @@
   }
 
   .fh-value--file-row > .fh-files {
+    flex: auto;
+  }
+
+  .fh-value--file-row > .fh-files > li > span {
+    align-items: center;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-tight) 0;
+    color: var(--fh-color-text);
+    display: flex;
+  }
+
+  .fh-value--file-row > .fh-files > li > span > span {
     flex: auto;
   }
 
