@@ -36,7 +36,8 @@
    * --compact: avatar only (narrow bars). --reveal: avatar only until hover,
    * focus or an open menu, then the full chip. The trigger shows a ring while its menu is open. */
   .fh-profile {
-    --fh-avatar-size: 1.85rem;
+    --fh-avatar-size: var(--fh-avatar-sm);
+    --fh-avatar-initials: var(--fh-type-label);
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-related);
@@ -165,7 +166,8 @@
   }
 
   .fh-profile-menu {
-    --fh-avatar-size: 1.75rem;
+    --fh-avatar-size: var(--fh-avatar-sm);
+    --fh-avatar-initials: var(--fh-type-label);
     min-inline-size: 18rem;
     max-inline-size: min(22rem, 100vi - 2rem);
     max-block-size: min(36rem, 85dvh);
@@ -176,7 +178,8 @@
   }
 
   .fh-profile-menu__card {
-    --fh-avatar-size: 2.75rem;
+    --fh-avatar-size: var(--fh-avatar-lg);
+    --fh-avatar-initials: var(--fh-type-meta);
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;

@@ -1617,7 +1617,7 @@ A banner over the header, an empty state, and the announcement banner: a tag in 
 
 ### AVT · Avatars
 
-Shapes, sizes and presence, rings and halos, generated avatars and groups.
+Shapes, sizes and presence, rings and halos, generated avatars, kinds (shape by what the avatar stands for) and groups.
 
 ```html
 <!-- AVT-1.1 · Shapes › Rounded rect -->
@@ -1634,6 +1634,102 @@ Shapes, sizes and presence, rings and halos, generated avatars and groups.
 
 <!-- AVT-1.5 · Shapes › Square -->
 <figure><span class="fh-avatar fh-avatar--2xl fh-avatar--square" data-face data-fh="AVT-1.5"><img src="img/avatars/isla.webp" alt="Isla"></span><figcaption>Square</figcaption></figure>
+
+<!-- AVT-6.1 · Kinds › Kinds · light -->
+<div class="fh-stack">
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="People are circles.">
+    <code>person</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="person" data-face data-fh="AVT-6.1"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="person" data-face data-fh="AVT-6.1"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar" data-kind="person" data-face data-fh="AVT-6.1"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="person" data-face data-fh="AVT-6.1"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="person" data-face data-fh="AVT-6.1"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-face data-fh="AVT-6.1"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatars" role="group" aria-label="Mateo Ruiz, Eleanor Park, Ray Okafor and 2 more" data-fh="AVT-6.1"><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatars__more" data-kind="person" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="person" type="button" aria-label="Add a person" data-fh="AVT-6.1"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Orgs are rounded squares.">
+    <code>org</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.1">NS</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.1">NS</span>
+    <span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.1">NS</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.1">NS</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.1">NS</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.1">NS</span>
+    <span class="fh-avatars" role="group" aria-label="Northwind Studio, Halcyon Health, Juniper Labs and 2 more" data-fh="AVT-6.1"><span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio">NS</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Halcyon Health">HH</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Juniper Labs">JL</span><span class="fh-avatar fh-avatars__more" data-kind="org" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="org" type="button" aria-label="Add an org" data-fh="AVT-6.1"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Agents are rounded squares.">
+    <code>agent</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="agent" data-face data-fh="AVT-6.1"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="agent" data-face data-fh="AVT-6.1"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar" data-kind="agent" data-face data-fh="AVT-6.1"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="agent" data-face data-fh="AVT-6.1"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="agent" data-face data-fh="AVT-6.1"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="agent" data-face data-fh="AVT-6.1"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatars" role="group" aria-label="Reginald, Scout, Ledger and 2 more" data-fh="AVT-6.1"><span class="fh-avatar" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald"></span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Scout">SC</span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Ledger">LD</span><span class="fh-avatar fh-avatars__more" data-kind="agent" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="agent" type="button" aria-label="Add an agent" data-fh="AVT-6.1"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Records are rounded squares.">
+    <code>record</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.1">GL</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.1">GL</span>
+    <span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.1">GL</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.1">GL</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.1">GL</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.1">GL</span>
+    <span class="fh-avatars" role="group" aria-label="Goal GL-014, Goal GL-015, Goal GL-016 and 1 more" data-fh="AVT-6.1"><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-015">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-016">GL</span><span class="fh-avatar fh-avatars__more" data-kind="record" aria-hidden="true">+1</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="record" type="button" aria-label="Add a record" data-fh="AVT-6.1"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+</div>
+
+<!-- AVT-6.2 · Kinds › Kinds · dark -->
+<div class="fh-stack">
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="People are circles.">
+    <code>person</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="person" data-face data-fh="AVT-6.2"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="person" data-face data-fh="AVT-6.2"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar" data-kind="person" data-face data-fh="AVT-6.2"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="person" data-face data-fh="AVT-6.2"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="person" data-face data-fh="AVT-6.2"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-face data-fh="AVT-6.2"><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatars" role="group" aria-label="Mateo Ruiz, Eleanor Park, Ray Okafor and 2 more" data-fh="AVT-6.2"><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatars__more" data-kind="person" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="person" type="button" aria-label="Add a person" data-fh="AVT-6.2"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Orgs are rounded squares.">
+    <code>org</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.2">NS</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.2">NS</span>
+    <span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.2">NS</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.2">NS</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.2">NS</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="org" role="img" aria-label="Northwind Studio" data-fh="AVT-6.2">NS</span>
+    <span class="fh-avatars" role="group" aria-label="Northwind Studio, Halcyon Health, Juniper Labs and 2 more" data-fh="AVT-6.2"><span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio">NS</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Halcyon Health">HH</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Juniper Labs">JL</span><span class="fh-avatar fh-avatars__more" data-kind="org" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="org" type="button" aria-label="Add an org" data-fh="AVT-6.2"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Agents are rounded squares.">
+    <code>agent</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="agent" data-face data-fh="AVT-6.2"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="agent" data-face data-fh="AVT-6.2"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar" data-kind="agent" data-face data-fh="AVT-6.2"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="agent" data-face data-fh="AVT-6.2"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="agent" data-face data-fh="AVT-6.2"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="agent" data-face data-fh="AVT-6.2"><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatars" role="group" aria-label="Reginald, Scout, Ledger and 2 more" data-fh="AVT-6.2"><span class="fh-avatar" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald"></span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Scout">SC</span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Ledger">LD</span><span class="fh-avatar fh-avatars__more" data-kind="agent" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="agent" type="button" aria-label="Add an agent" data-fh="AVT-6.2"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Records are rounded squares.">
+    <code>record</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.2">GL</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.2">GL</span>
+    <span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.2">GL</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.2">GL</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.2">GL</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="record" role="img" aria-label="Goal GL-014" data-fh="AVT-6.2">GL</span>
+    <span class="fh-avatars" role="group" aria-label="Goal GL-014, Goal GL-015, Goal GL-016 and 1 more" data-fh="AVT-6.2"><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-015">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-016">GL</span><span class="fh-avatar fh-avatars__more" data-kind="record" aria-hidden="true">+1</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="record" type="button" aria-label="Add a record" data-fh="AVT-6.2"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+</div>
 ```
 
 ### AUT · Sign in & sign up
@@ -2504,6 +2600,112 @@ New: `fh-stack--md` (the default gap, named), `fh-text-small`, `fh-text-micro`, 
 <div class="fh-stack fh-stack--md" style="max-inline-size: var(--fh-measure-narrow)">
   <p class="fh-text-small" style="margin:0">Small text, <code class="fh-font-mono">fh-font-mono</code> inline.</p>
   <p class="fh-text-micro fh-muted" style="margin:0">Micro text for a footnote or a source line.</p>
+</div>
+```
+
+### Light
+
+`xs · sm · md · lg · xl · 2xl · stack · add`
+
+```html
+<div class="fh-stack">
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="People are circles.">
+    <code>person</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatars" role="group" aria-label="Mateo Ruiz, Eleanor Park, Ray Okafor and 2 more"><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatars__more" data-kind="person" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="person" type="button" aria-label="Add a person"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Orgs are rounded squares.">
+    <code>org</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatars" role="group" aria-label="Northwind Studio, Halcyon Health, Juniper Labs and 2 more"><span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio">NS</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Halcyon Health">HH</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Juniper Labs">JL</span><span class="fh-avatar fh-avatars__more" data-kind="org" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="org" type="button" aria-label="Add an org"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Agents are rounded squares.">
+    <code>agent</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatars" role="group" aria-label="Reginald, Scout, Ledger and 2 more"><span class="fh-avatar" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald"></span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Scout">SC</span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Ledger">LD</span><span class="fh-avatar fh-avatars__more" data-kind="agent" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="agent" type="button" aria-label="Add an agent"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Records are rounded squares.">
+    <code>record</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatars" role="group" aria-label="Goal GL-014, Goal GL-015, Goal GL-016 and 1 more"><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-015">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-016">GL</span><span class="fh-avatar fh-avatars__more" data-kind="record" aria-hidden="true">+1</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="record" type="button" aria-label="Add a record"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+</div>
+```
+
+### Dark
+
+`xs · sm · md · lg · xl · 2xl · stack · add`
+
+```html
+<div class="fh-stack">
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="People are circles.">
+    <code>person</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-face><img src="img/avatars/ava.webp" alt="Ava Mendes"></span>
+    <span class="fh-avatars" role="group" aria-label="Mateo Ruiz, Eleanor Park, Ray Okafor and 2 more"><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/mateo.webp" alt="Mateo Ruiz"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/eleanor.webp" alt="Eleanor Park"></span><span class="fh-avatar" data-kind="person" data-face><img src="img/avatars/ray.webp" alt="Ray Okafor"></span><span class="fh-avatar fh-avatars__more" data-kind="person" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="person" type="button" aria-label="Add a person"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Orgs are rounded squares.">
+    <code>org</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="org" role="img" aria-label="Northwind Studio">NS</span>
+    <span class="fh-avatars" role="group" aria-label="Northwind Studio, Halcyon Health, Juniper Labs and 2 more"><span class="fh-avatar" data-kind="org" role="img" aria-label="Northwind Studio">NS</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Halcyon Health">HH</span><span class="fh-avatar" data-kind="org" role="img" aria-label="Juniper Labs">JL</span><span class="fh-avatar fh-avatars__more" data-kind="org" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="org" type="button" aria-label="Add an org"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Agents are rounded squares.">
+    <code>agent</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald, support agent"></span>
+    <span class="fh-avatars" role="group" aria-label="Reginald, Scout, Ledger and 2 more"><span class="fh-avatar" data-kind="agent" data-face><img src="img/avatars/reginald.webp" alt="Reginald"></span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Scout">SC</span><span class="fh-avatar" data-kind="agent" role="img" aria-label="Ledger">LD</span><span class="fh-avatar fh-avatars__more" data-kind="agent" aria-hidden="true">+2</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="agent" type="button" aria-label="Add an agent"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
+  <div class="fh-cluster" style="--fh-gap: var(--fh-space-4); --fh-align: center" role="group" aria-label="Records are rounded squares.">
+    <code>record</code>
+    <span class="fh-avatar fh-avatar--xs" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--sm" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--lg" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--xl" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatar fh-avatar--2xl" data-kind="record" role="img" aria-label="Goal GL-014">GL</span>
+    <span class="fh-avatars" role="group" aria-label="Goal GL-014, Goal GL-015, Goal GL-016 and 1 more"><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-014">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-015">GL</span><span class="fh-avatar" data-kind="record" role="img" aria-label="Goal GL-016">GL</span><span class="fh-avatar fh-avatars__more" data-kind="record" aria-hidden="true">+1</span></span>
+    <button class="fh-avatar fh-avatar--add" data-kind="record" type="button" aria-label="Add a record"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+  </div>
 </div>
 ```
 

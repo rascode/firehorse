@@ -16,8 +16,11 @@ export interface OptionSet {
   /** Every option with its label and tone; an ordinal choice set's options carry their ramp step (1 to 4). */
   options: (Option & { label: string; tone: Tone; ramp?: number })[];
 }
+/** What an entity avatar stands for (DR2): a person is a circle; an org, an agent and a record are rounded squares. */
+export type AvatarKind = "person" | "org" | "agent" | "record";
+export interface Avatar { kind: AvatarKind | null; shape: "circle" | "rounded" | null; size: "inline" | "identity"; token: "--fh-avatar-inline" | "--fh-avatar-identity"; max: number }
 export interface Entity {
-  id: string | number; kind?: "person" | "org" | "record"; label: string; description?: string; image?: string; initials?: string;
+  id: string | number; kind?: AvatarKind; label: string; description?: string; image?: string; initials?: string;
   tone?: Tone; key?: string; href?: string; sidecar?: string; stat?: { value: string | number; label?: string; tone?: Tone };
 }
 
@@ -32,7 +35,7 @@ export interface ValueField {
   shape?: Shape;
   kind?: string;
   /** Entity kind, same as kind for the entity shape. */
-  entity?: "person" | "org" | "record";
+  entity?: AvatarKind;
   multiple?: boolean;
   unit?: string;
   /** ISO 4217 or crypto code; money always knows its currency (rule 4). */
@@ -58,7 +61,7 @@ export interface ResolvedValue {
   variant: string | null; /** The variant's Firehorse Index ID (VAL-1.1), the part to draw; null in the text context. */ id: string | null; label: string | null; group: string; parts: string[];
   editable: boolean; control: string | null; readOnly: boolean;
   align: "start" | "end"; figures: "tabular" | null; /** Thousands separators: false for an identifier-like number (chain_id). */ grouping: boolean | null;
-  mono: boolean; max: number | null; multiple: boolean;
+  mono: boolean; max: number | null; /** An entity: data-kind, size step and stack max (DR2); null for other shapes. */ avatar: Avatar | null; multiple: boolean;
   unit: string | null; currency: string | null; currencyFrom: string | null; optionSet: OptionSet | null;
   /** The options draw with data-ramp (an ordinal choice set: priority). */ ramp: boolean;
   /** "order": sort by the option set's order, never the alphabet. */ sort: "order" | null;
@@ -94,4 +97,12 @@ export function toneOf(set: OptionSet | null | undefined, value: unknown): Tone;
 export function defaultTone(value: unknown): Tone;
 export function isReadOnly(semanticType?: string | null): boolean;
 export function isEmpty(value: unknown): boolean;
+export const AVATAR_KINDS: readonly AvatarKind[];
+export function avatarOf(kind?: string | null, variant?: string | null): Avatar;
+/** At most two letters: "Maya Chen" gives "MC". */
+export function initialsOf(name: string): string;
+/** One avatar with data-kind from the entity kind. */
+export function avatarMarkup(entity: Partial<Entity> & { name?: string }, opts?: { kind?: string; alt?: boolean }): string;
+/** At most three faces, then +N at the same size and shape. */
+export function stackMarkup(list: (Partial<Entity> & { name?: string })[], opts?: { kind?: string; max?: number }): string;
 export function gridRow(described: DescribedField, count?: number | null, set?: OptionSet | null): Record<string, any>;

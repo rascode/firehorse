@@ -53,11 +53,15 @@ function relDate(d) {
   return days > 0 ? `in ${days}d` : `${-days}d ago`;
 }
 
+// A user cell is a person unless the value says otherwise: data-kind sets the avatar shape (DR2).
+const AVATAR_KINDS = ["person", "org", "agent", "record"];
+const avatarKind = (p) => (typeof p === "object" && AVATAR_KINDS.includes(p?.kind) ? p.kind : "person");
+
 function avatar(p, size = "") {
   if (!p) return "";
   const name = typeof p === "string" ? p : p.name;
   const img = typeof p === "object" && p.image ? `<img src="${esc(p.image)}" alt="">` : esc(initials(name));
-  return `<span class="fh-avatar ${size}" title="${esc(name)}">${img}</span>`;
+  return `<span class="fh-avatar ${size}" data-kind="${avatarKind(p)}" title="${esc(name)}">${img}</span>`;
 }
 
 function spark(values = []) {
@@ -103,7 +107,8 @@ export const types = {
   },
   users: {
     icon: "users", kind: "options",
-    render: (v = []) => `<span class="fh-avatars">${v.slice(0, 4).map((p) => avatar(p, "fh-avatar--xs")).join("")}${v.length > 4 ? `<span class="fh-avatar fh-avatar--xs">+${v.length - 4}</span>` : ""}</span>`,
+    // At most three faces, then +N at the same size and shape (DR2).
+    render: (v = []) => `<span class="fh-avatars">${v.slice(0, 3).map((p) => avatar(p, "fh-avatar--xs")).join("")}${v.length > 3 ? `<span class="fh-avatar fh-avatar--xs fh-avatars__more" data-kind="${avatarKind(v[0])}">+${v.length - 3}</span>` : ""}</span>`,
     text: (v = []) => v.map((p) => p.name ?? p).join(", "),
     values: (v = []) => v.map((p) => p.name ?? p),
   },

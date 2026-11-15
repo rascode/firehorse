@@ -4,13 +4,16 @@
 // resolveValue() resolves them. Everything on this page is read from the contract at load: change
 // display-rules.json (or publish the platform's option sets), run node scripts/value-rules.mjs, reload.
 // Sample data only: people and figures are invented.
-import { resolveValue, textOf, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
+import { resolveValue, textOf, avatarMarkup, stackMarkup, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
 
 const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const icon = (n) => `<i class="fh-icon fh-icon--${n}" aria-hidden="true"></i>`;
 const people = [["Maya Chen", "maya", "Owner"], ["Mateo Ruiz", "mateo", "Designer"], ["Ava Marlow", "ava", "Engineer"], ["Ruth Okoye", "ruth", "Finance"], ["Sam Hale", "sam", "Support"], ["Isla Grant", "isla", "Sales"]];
-const av = ([name, img], size = "fh-avatar--xs") => `<span class="fh-avatar ${size}" title="${esc(name)}"><img src="/img/avatars/${img}.webp" alt=""></span>`;
-const stack = (list, max) => `<span class="fh-avatars">${list.slice(0, max).map((p) => av(p)).join("")}${list.length > max ? `<span class="fh-avatar fh-avatar--xs">+${list.length - max}</span>` : ""}</span>`;
+// Avatars come from the resolver (DR2): data-kind from the entity kind, size from the .fh-value root they sit in.
+const person = ([label, img]) => ({ label, image: `/img/avatars/${img}.webp`, kind: "person" });
+const av = (p) => avatarMarkup(person(p));
+const stack = (list, max) => stackMarkup(list.map(person), { max });
+const value = (variant, html) => `<span class="fh-value fh-value--${variant}">${html}</span>`;
 const chip = (text, tone = "neutral", extra = "", ramp = null) => `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="${tone}"${ramp ? ` data-ramp="${ramp}"` : ""}>${extra}${esc(text)}</span>`;
 // Dot and word (VAL-1.1): a status in a table cell (decision 5); an ordinal option takes its ramp step instead of a tone.
 const dot = (o) => `<span class="fh-value fh-value--dot" ${o.ramp ? `data-ramp="${o.ramp}"` : `data-tone="${o.tone}"`} data-fh="VAL-1.1"><span class="fh-dot"></span>${esc(o.label)}</span>`;
@@ -53,14 +56,13 @@ function draw(row, variant, max, r) {
     case "options:chips-inline": return `<span class="site-dr__wrap">${tags.map((t) => optionChip(opt(t))).join(" ")}</span>`;
     case "options:count": return num(`${tags.length} tags`);
     case "options:tag-field": return `<span class="fh-input site-dr__wrap site-dr__field">${tags.slice(0, 3).map((t) => chip(t, "neutral")).join(" ")}<span class="site-dr__muted">Add a tag</span></span>`;
-    case "entities:stack": return stack(people, max ?? 4);
-    case "entities:avatar-name": return `<span class="site-dr__list">${people.slice(0, 3).map((p) => `<span class="site-dr__row">${av(p)}${esc(p[0])}</span>`).join("")}</span>`;
-    case "entities:picker-multi": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${stack(people, 3)}<span class="fh-entity__who"><b>6 people</b></span></span>${chev}</button>`;
-    case "entity.person:avatar-name": return `<span class="site-dr__row">${av(people[0])}Maya Chen</span>`;
-    case "entity.person:full": return `<span class="fh-entity__value">${av(people[0], "fh-avatar--circle")}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span>`;
-    case "entity.person:chip": return `<span class="fh-chip fh-chip--sm site-dr__row">${av(people[0])}Maya Chen</span>`;
-    case "entity.person:stack": return stack(people.slice(0, 3), 4);
-    case "entity.person:picker": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${av(people[0], "fh-avatar--circle")}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span></span>${chev}</button>`;
+    case "entities:stack": return value("stack", stack(people, max));
+    case "entities:avatar-name": return value("avatar-name", `<span class="site-dr__list">${people.slice(0, max).map((p) => `<span class="site-dr__row">${av(p)}${esc(p[0])}</span>`).join("")}<span class="site-dr__muted">+${people.length - max} more</span></span>`);
+    case "entities:picker-multi": return `<div class="fh-value fh-value--picker-multi"><button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${stack(people, max)}<span class="fh-entity__who"><b>${people.length} people</b></span></span>${chev}</button></div>`;
+    case "entity.person:avatar-name": return value("avatar-name", `${av(people[0])}<span class="fh-value__name">Maya Chen</span>`);
+    case "entity.person:full": return `<div class="fh-value fh-value--full"><span class="fh-entity">${av(people[0])}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span></div>`;
+    case "entity.person:chip": return value("chip", `<span class="fh-chip fh-chip--sm">${av(people[0])}Maya Chen</span>`);
+    case "entity.person:picker": return `<div class="fh-value fh-value--picker"><button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${av(people[0])}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span></span>${chev}</button></div>`;
     case "entity.record:ref": return `<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Harbor index refresh</span></a>`;
     case "entity.record:ref-key": return `<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a>`;
     case "entity.record:name": return "Harbor index refresh";

@@ -230,8 +230,8 @@
     }
 
     & .fh-mega__link-media:has(> img) {
-      --fh-avatar-size: 2rem;
-      inline-size: var(--fh-avatar-size, 2rem);
+      --fh-avatar-size: var(--fh-avatar-sm);
+      inline-size: var(--fh-avatar-size, var(--fh-avatar-sm));
     }
   }
 
@@ -249,11 +249,11 @@
 
     &:has(> img),
     &.fh-avatar {
-      --fh-avatar-size: 2.4rem;
-      inline-size: var(--fh-avatar-size, 2.4rem);
+      --fh-avatar-size: var(--fh-avatar-md);
+      inline-size: var(--fh-avatar-size, var(--fh-avatar-md));
       aspect-ratio: 1;
       overflow: hidden;
-      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone, var(--fh-color-etch)) 45%, transparent);
+      border: var(--fh-border-thin) solid var(--fh-color-etch);
       border-radius: var(--fh-radius-md);
       background-color: var(--fh-color-surface-sunken);
 

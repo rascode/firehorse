@@ -178,9 +178,13 @@
       "metric": "stack",
       "form": "picker-multi",
       "max": {
-        "cell": 4
+        "cell": 3,
+        "record": 3,
+        "card": 3,
+        "metric": 3,
+        "form": 3
       },
-      "note": "Record context lists one per line.",
+      "note": "Record context lists one per line, faces at the inline size with the hairline; the form picker shows the stack and a count (6 people), never a truncated name. A stack shows 3 faces, then +N, in every context (DR2).",
       "text": "names"
     },
     {
@@ -196,9 +200,10 @@
       "cell": "avatar-name",
       "record": "full",
       "card": "chip",
-      "metric": "stack",
+      "metric": "avatar-name",
       "form": "picker",
-      "text": "name"
+      "text": "name",
+      "note": "One person is one face: avatar and name in a metric, never a stack (DR2)."
     },
     {
       "row": "entity.record",
@@ -1266,6 +1271,25 @@
   "empty": {
     "text": "—",
     "tone": "muted"
+  },
+  "avatars": {
+    "note": "One avatar system (DR2). An entity avatar takes its shape from its kind and its size from the variant: identity for the record full row and the form picker, inline everywhere else. Stacks show at most max faces, then +N at the same size and shape. Initials are at most two letters.",
+    "sizes": {
+      "inline": "--fh-avatar-inline",
+      "identity": "--fh-avatar-identity"
+    },
+    "identity": [
+      "full",
+      "picker"
+    ],
+    "kinds": {
+      "person": "circle",
+      "org": "rounded",
+      "agent": "rounded",
+      "record": "rounded"
+    },
+    "max": 3,
+    "initials": 2
   },
   "readOnly": {
     "prefixes": [

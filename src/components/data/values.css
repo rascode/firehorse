@@ -35,11 +35,13 @@
   /* —— Root: one set of measures for the whole family —— */
   .fh-value {
     --_text: var(--fh-value-text, var(--fh-type-value));
-    --_avatar: var(--fh-value-avatar, 1.5rem);
+    --_avatar: var(--fh-value-avatar, var(--fh-avatar-inline));
     --_ring: var(--fh-value-ring, 2.5rem);
-    --_thumb: var(--fh-value-thumb, 2rem);
+    --_thumb: var(--fh-value-thumb, var(--fh-avatar-sm));
     --_spark: var(--fh-value-spark, 6rem);
     --fh-avatar-size: var(--_avatar);
+    --fh-avatar-initials: var(--fh-type-label);
+    --fh-avatar-plate-radius: var(--fh-radius-sm);
     --fh-ring-size: var(--_ring);
     --fh-gauge-size: calc(var(--_ring) * 1.6);
     position: relative;
@@ -58,9 +60,9 @@
 
   .fh-value--lg {
     --_text: var(--fh-value-text-lg, var(--fh-text-body));
-    --_avatar: var(--fh-value-avatar-lg, 2rem);
+    --_avatar: var(--fh-value-avatar-lg, var(--fh-avatar-sm));
     --_ring: var(--fh-value-ring-lg, 3.5rem);
-    --_thumb: var(--fh-value-thumb-lg, 2.75rem);
+    --_thumb: var(--fh-value-thumb-lg, var(--fh-avatar-lg));
     --_spark: var(--fh-value-spark-lg, 8rem);
     gap: var(--fh-gap-grouped);
   }
@@ -157,14 +159,33 @@
   .fh-value--chips-inline > .fh-chips { flex-wrap: wrap; }
 
 
-  /* —— VAL-3 Entity —— */
+  /* —— VAL-3 Entity ——
+   * Two sizes (DR2): inline in cell, card, chip, stack and metric; identity in the record's full row and the
+   * form's picker. The entity's kind sets the shape and wins over any shape modifier: a person is a circle,
+   * an org, an agent and a record are rounded squares (smaller corners at the inline size). */
   .fh-value > .fh-avatar,
-  .fh-value .fh-avatars > .fh-avatar { --fh-avatar-size: var(--_avatar); }
+  .fh-value .fh-avatars > .fh-avatar,
+  .fh-value .fh-chip > .fh-avatar { --fh-avatar-size: var(--_avatar); }
 
-  /* An avatar inside a chip sits at the chip's own height. */
-  .fh-value .fh-chip > .fh-avatar {
-    --fh-avatar-size: 1.4em;
-    margin-inline-start: calc(var(--fh-gap-bound) * -1);
+  .fh-value:is(.fh-value--full, .fh-value--picker) {
+    --_avatar: var(--fh-value-avatar-identity, var(--fh-avatar-identity));
+    --fh-avatar-initials: var(--fh-type-meta);
+    --fh-avatar-plate-radius: var(--fh-radius-md);
+  }
+
+  /* A picker trigger draws its avatar at the value size; its list keeps the picker row size. */
+  .fh-value .fh-entity-picker > .fh-entity { --fh-avatar-size: var(--_avatar); }
+
+  .fh-value .fh-avatar[data-kind="person"] { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 1; }
+  .fh-value .fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-plate-radius); --fh-avatar-ratio: 1; }
+
+  /* An avatar inside a chip sits at the inline size, tucked into the chip's start. */
+  .fh-value .fh-chip > .fh-avatar { margin-inline-start: calc(var(--fh-gap-bound) * -1); }
+
+  /* The picker for several shows the stack and a count ("6 people"), never a truncated name. */
+  .fh-value--picker-multi {
+    & .fh-entity__value > :is(.fh-avatars, .fh-entity__who) { flex: none; }
+    & .fh-entity__who > b { overflow: visible; text-overflow: clip; }
   }
 
   /* The full row and the picker rows read the entity row (fh-entity) as it is; in read it is no control. */
@@ -443,7 +464,7 @@
     font-size: var(--fh-type-value);
   }
 
-  .fh-value--lg .fh-entity-picker { --fh-entity-avatar: 2.4rem; }
+  .fh-value--lg .fh-entity-picker { --fh-entity-avatar: var(--fh-avatar-md); }
   .fh-value--lg .fh-dropzone__title { font-size: 1em; font-weight: var(--fh-weight-regular); }
   .fh-value--lg .fh-check > input { zoom: 1.25; }
 
