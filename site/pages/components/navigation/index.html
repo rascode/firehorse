@@ -88,29 +88,61 @@
           </div>
         </div>
 
-          <div class="site-demo site-anchor" id="c-nav" data-fh-id="NAV" data-fh-groups="Default|Nav links">
-            <div class="site-demo__head"><h3>Navigation</h3><p>Pagination, a wizard stepper, search and a side nav. <code>--links</code> is a site's top links in mono caps: a pill wash on hover, a rolling label and an accent chevron on a link that opens a panel.</p></div>
+          <div class="site-demo site-anchor" id="c-nav" data-fh-id="NAV" data-fh-groups="Nav links|Search|Stepper|Pagination|Sidenav">
+            <div class="site-demo__head"><h3>Navigation</h3><p>Pagination, a wizard stepper, search and a side nav. Nav links are a site's top links in mono caps: a pill wash on hover, a rolling label and an accent chevron on a link that opens a panel; <code>--tone</code> washes the current link in the nav's tone and <code>--lg</code> is the one size step. Every part reads one set of <code>--fh-nav-*</code> values.</p></div>
             <div class="site-demo__stage" data-demo>
-<div class="fh-stack fh-stack--lg">
-<div class="fh-stack fh-stack--lg" data-fh-id="NAV-1.1" data-fh-name="Default">
-  <label class="fh-search"><span class="fh-sr-only">Search</span><input type="search" placeholder="Search components"><kbd class="fh-kbd">⌘K</kbd></label>
-  <ol class="fh-stepper" data-tone="lime">
-    <li data-state="done">Details</li>
-    <li data-state="current" aria-current="step">Scope</li>
-    <li>Review</li>
-    <li>Sign</li>
-  </ol>
-  <nav class="fh-pagination" aria-label="Pages">
-    <a href="#c-nav" rel="prev">Prev</a><a href="#c-nav">1</a><a href="#c-nav" aria-current="page">2</a><a href="#c-nav">3</a><span>…</span><a href="#c-nav">9</a><a href="#c-nav" rel="next">Next</a>
-  </nav>
-  <nav class="fh-sidenav" aria-label="Portal" data-tone="sky">
+<dl class="fh-dl site-variants site-variants--grouped">
+  <div data-fh-id="NAV-1" data-fh-name="Nav links"><dt>Nav links<code>.fh-nav--links · .fh-nav__link · --tone · --lg</code></dt><dd>
+    <nav class="fh-nav fh-nav--links" aria-label="Site (sample 1)" data-fh-id="NAV-1.1" data-fh-name="Nav links">
+      <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-1"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+      <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+      <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+      <div class="fh-menu" id="nav-links-demo-1" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+    </nav>
+    <nav class="fh-nav fh-nav--links fh-nav--tone" aria-label="Site (sample 2)" data-tone="violet" data-fh-id="NAV-1.2" data-fh-name="Toned">
+      <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-2"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+      <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+      <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+      <div class="fh-menu" id="nav-links-demo-2" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+    </nav>
+    <nav class="fh-nav fh-nav--links fh-nav--lg" aria-label="Site (sample 3)" data-fh-id="NAV-1.3" data-fh-name="Large">
+      <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-3"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+      <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+      <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+      <div class="fh-menu" id="nav-links-demo-3" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+    </nav>
+    <nav class="fh-nav fh-nav--links fh-nav--lg fh-nav--tone" aria-label="Site (sample 4)" data-tone="amber" data-fh-id="NAV-1.4" data-fh-name="Large, toned">
+      <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-4"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+      <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+      <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+      <div class="fh-menu" id="nav-links-demo-4" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+    </nav>
+  </dd></div>
+  <div data-fh-id="NAV-2" data-fh-name="Search"><dt>Search<code>.fh-search</code></dt><dd>
+    <label class="fh-search" data-fh-id="NAV-2.1" data-fh-name="Search field"><span class="fh-sr-only">Search</span><input type="search" placeholder="Search components"><kbd class="fh-kbd">⌘K</kbd></label>
+  </dd></div>
+  <div data-fh-id="NAV-3" data-fh-name="Stepper"><dt>Stepper<code>.fh-stepper</code></dt><dd>
+    <ol class="fh-stepper" data-tone="lime" data-fh-id="NAV-3.1" data-fh-name="Stepper">
+      <li data-state="done">Details</li>
+      <li data-state="current" aria-current="step">Scope</li>
+      <li>Review</li>
+      <li>Sign</li>
+    </ol>
+  </dd></div>
+  <div data-fh-id="NAV-4" data-fh-name="Pagination"><dt>Pagination<code>.fh-pagination</code></dt><dd>
+    <nav class="fh-pagination" aria-label="Pages" data-fh-id="NAV-4.1" data-fh-name="Pagination">
+      <a href="#c-nav" rel="prev">Prev</a><a href="#c-nav">1</a><a href="#c-nav" aria-current="page">2</a><a href="#c-nav">3</a><span>…</span><a href="#c-nav">9</a><a href="#c-nav" rel="next">Next</a>
+    </nav>
+  </dd></div>
+  <div data-fh-id="NAV-5" data-fh-name="Sidenav"><dt>Sidenav<code>.fh-sidenav · __area · __child · __badge</code></dt><dd>
+  <nav class="fh-sidenav" aria-label="Portal" data-tone="sky" data-fh-id="NAV-5.1" data-fh-name="Grouped links">
     <section><p class="fh-label">Portal</p>
       <a href="#c-nav" aria-current="page">Overview</a>
       <a href="#c-nav">Invoices <span class="fh-badge" data-tone="amber">2</span></a>
       <a href="#c-nav">Agents</a>
     </section>
   </nav>
-  <nav class="fh-sidenav" aria-label="Collapsible demo" data-tone="violet">
+  <nav class="fh-sidenav" aria-label="Collapsible demo" data-tone="violet" data-fh-id="NAV-5.2" data-fh-name="Collapsible areas">
     <div class="fh-sidenav__area" data-open="true">
       <div class="fh-sidenav__area-head">
         <a href="#c-nav" class="fh-sidenav__row" data-contains-active="true">
@@ -138,14 +170,8 @@
       </div>
     </div>
   </nav>
-</div>
-  <nav class="fh-nav fh-nav--links" aria-label="Site (sample)" data-fh-id="NAV-2.1" data-fh-name="Nav links">
-    <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-docs"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
-    <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
-    <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
-    <div class="fh-menu" id="nav-links-demo-docs" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
-  </nav>
-</div>
+  </dd></div>
+</dl>
             </div>
           </div>
 

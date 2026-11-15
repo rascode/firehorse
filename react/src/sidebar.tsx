@@ -292,7 +292,7 @@ function RailFlyout({
   return createPortal(
     <div
       ref={hostRef}
-      data-fh="NAV-2.2"
+      data-fh="NAV-5"
       className="fh-sidenav-flyout"
       role="dialog"
       aria-label={title}

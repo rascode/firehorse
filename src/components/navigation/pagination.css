@@ -1,5 +1,5 @@
 /*
- * Firehorse — Pagination (NAV)
+ * Firehorse — Pagination (NAV-4)
  * components/navigation · layer fh.components · docs /components/navigation/#NAV
  */
 
@@ -9,7 +9,10 @@
    *     <a href="?p=1" rel="prev">Prev</a>
    *     <a href="?p=1">1</a> <a href="?p=2" aria-current="page">2</a> <span>…</span>
    *     <a href="?p=3" rel="next">Next</a>
-   *   </nav> */
+   *   </nav>
+   * Page cells at the family height (--fh-nav-height, control height), square at least; numbers in
+   * mono caption, tabular; the current page bold (--fh-nav-weight). Prev / Next take the family's
+   * quiet mono caps (--fh-nav-text, --fh-nav-tracking, --fh-nav-label-weight). */
   .fh-pagination {
     display: flex;
     flex-wrap: wrap;
@@ -18,12 +21,13 @@
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-caption);
     font-variant-numeric: tabular-nums;
+    line-height: var(--fh-nav-leading, var(--fh-leading-snug));
 
     & > :is(a, button, span) {
       display: inline-grid;
       place-items: center;
-      min-inline-size: 2.25rem;
-      block-size: 2.25rem;
+      min-inline-size: var(--fh-nav-height, var(--fh-control-height));
+      block-size: var(--fh-nav-height, var(--fh-control-height));
       padding-inline: var(--fh-inset-tight);
       border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
       border-radius: var(--fh-radius-sm);
@@ -40,13 +44,15 @@
     & > [aria-current] {
       border-color: var(--fh-color-text);
       color: var(--fh-color-text);
+      font-weight: var(--fh-nav-weight, var(--fh-weight-bold));
     }
 
     & > :is([rel="prev"], [rel="next"]) {
-      padding-inline: var(--fh-inset-control);
-      letter-spacing: var(--fh-tracking-wider);
+      padding-inline: var(--fh-nav-pad-inline, var(--fh-inset-control));
+      font-size: var(--fh-nav-text, var(--fh-text-label));
+      font-weight: var(--fh-nav-label-weight, var(--fh-weight-regular));
+      letter-spacing: var(--fh-nav-tracking, var(--fh-tracking-caps));
       text-transform: uppercase;
-      font-size: var(--fh-text-label);
     }
 
     & > [rel="next"] {

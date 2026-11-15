@@ -1,5 +1,5 @@
 /*
- * Firehorse — Stepper (NAV)
+ * Firehorse — Stepper (NAV-3)
  * components/navigation · layer fh.components · docs /components/navigation/#NAV
  */
 
@@ -10,7 +10,10 @@
    *     <li data-state="done">Details</li>
    *     <li aria-current="step">Scope</li>
    *     <li>Review</li>
-   *   </ol> */
+   *   </ol>
+   * The steps read the family's mono caps (--fh-nav-text, --fh-nav-tracking): quiet regular labels
+   * (--fh-nav-label-weight), the current step bold (--fh-nav-weight) at full ink. The step disc is
+   * sized in em of the label, so it follows the text. */
   .fh-stepper {
     display: flex;
     gap: var(--fh-gap-related);
@@ -27,8 +30,10 @@
       min-inline-size: 0;
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-label);
-      letter-spacing: var(--fh-tracking-wider);
+      font-size: var(--fh-nav-text, var(--fh-text-label));
+      font-weight: var(--fh-nav-label-weight, var(--fh-weight-regular));
+      letter-spacing: var(--fh-nav-tracking, var(--fh-tracking-caps));
+      line-height: var(--fh-nav-leading, var(--fh-leading-snug));
       text-transform: uppercase;
       white-space: nowrap;
       counter-increment: fh-stepper;
@@ -38,23 +43,25 @@
         display: grid;
         place-items: center;
         flex: none;
-        inline-size: 1.6rem;
+        inline-size: 2.25em;
         aspect-ratio: 1;
         border: var(--fh-border-thick) var(--fh-card-border-style, dashed) var(--fh-color-etch);
         border-radius: var(--fh-radius-round);
-        font-size: var(--fh-text-micro);
+        font-size: var(--fh-nav-text, var(--fh-text-label));
+        letter-spacing: var(--fh-tracking-none);
       }
 
       /* connector */
       &:not(:last-child)::after {
         content: "";
         flex: 1;
-        min-inline-size: 1rem;
+        min-inline-size: var(--fh-gap-grouped-wide);
         border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       }
 
       &[aria-current] {
         color: var(--fh-color-text);
+        font-weight: var(--fh-nav-weight, var(--fh-weight-bold));
 
         &::before {
           border-style: var(--fh-card-border-style, solid);
@@ -72,7 +79,7 @@
           border-color: var(--fh-tone);
           background-color: var(--fh-tone);
           color: var(--fh-color-on-tone);
-          font-weight: var(--fh-weight-heavy);
+          font-weight: var(--fh-nav-weight, var(--fh-weight-bold));
         }
 
         &::after {
@@ -91,12 +98,12 @@
       letter-spacing: 0;
 
       &::before {
-        font-size: var(--fh-text-micro);
+        font-size: var(--fh-nav-text, var(--fh-text-label));
       }
     }
 
     .fh-stepper > li:not([aria-current]):not(:last-child)::after {
-      min-inline-size: 0.75rem;
+      min-inline-size: var(--fh-gap-grouped);
     }
   }
 

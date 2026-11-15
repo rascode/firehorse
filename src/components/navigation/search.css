@@ -1,17 +1,18 @@
 /*
- * Firehorse — Search (NAV)
+ * Firehorse — Search (NAV-2)
  * components/navigation · layer fh.components · docs /components/navigation/#NAV
  */
 
 @layer fh.components {
   /* —— Search field ——
    *   <label class="fh-search"><span class="fh-sr-only">Search</span>
-   *     <input type="search" placeholder="Search docs"><kbd class="fh-kbd">/</kbd></label> */
+   *     <input type="search" placeholder="Search docs"><kbd class="fh-kbd">/</kbd></label>
+   * At the family height (--fh-nav-height, control height); the glass at --fh-nav-icon. */
   .fh-search {
     display: flex;
     align-items: center;
     gap: var(--fh-gap-related);
-    min-block-size: 2.5rem;
+    min-block-size: var(--fh-nav-height, var(--fh-control-height));
     padding-inline: var(--fh-inset-control);
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
@@ -20,20 +21,20 @@
     &::before {
       content: "";
       flex: none;
-      inline-size: 0.95rem;
+      inline-size: var(--fh-nav-icon, 1em);
       aspect-ratio: 1;
       background-color: currentColor;
       mask: var(--fh-icon-search) center / contain no-repeat;
     }
 
     &:focus-within {
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--fh-color-text) 18%, transparent);
+      box-shadow: 0 0 0 var(--fh-border-heavy) color-mix(in oklab, var(--fh-color-text) 18%, transparent);
     }
 
     & > input {
       flex: 1;
       min-inline-size: 0;
-      block-size: 2.5rem;
+      block-size: var(--fh-nav-height, var(--fh-control-height));
       border: 0;
       background: none;
       color: var(--fh-color-text);

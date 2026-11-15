@@ -1,8 +1,8 @@
 /*
- * Firehorse — Sidenav (NAV)
+ * Firehorse — Sidenav (NAV-5)
  * components/navigation · layer fh.components · docs /components/navigation/#NAV
  *
- * Parts (all in NAV-1.1 Default; NAV-2 is Nav links, nav.css):
+ * Parts (NAV-5.1 Grouped links, NAV-5.2 Collapsible areas; NAV-1 is Nav links, nav.css):
  *   flat      flat grouped links
  *   area      collapsible area (SideNavSection)
  *   child     child link row (no icon)
@@ -20,6 +20,9 @@
    *       <a href="…">Invoices <span class="fh-badge">2</span></a>
    *     </section>
    *   </nav> */
+  /* Rows on the item recipe (--fh-item-block by --fh-item-inline); section heads in the family's
+     quiet mono caps (--fh-nav-text, --fh-nav-tracking, --fh-nav-label-weight); the current row
+     washes in its tone with a heavy bar; child rows at caption with gap-bound block padding. */
   .fh-sidenav {
     display: grid;
     gap: var(--fh-gap-sectioned);
@@ -32,7 +35,10 @@
 
     & .fh-label {
       margin-block-end: var(--fh-gap-related);
-      padding-inline: var(--fh-inset-control);
+      padding-inline: var(--fh-item-inline);
+      font-size: var(--fh-nav-text, var(--fh-text-label));
+      font-weight: var(--fh-nav-label-weight, var(--fh-weight-regular));
+      letter-spacing: var(--fh-nav-tracking, var(--fh-tracking-caps));
     }
 
     & a,
@@ -41,7 +47,7 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--fh-gap-grouped);
-      padding: var(--fh-inset-tight) var(--fh-inset-control);
+      padding: var(--fh-item-block) var(--fh-item-inline);
       border-radius: var(--fh-radius-sm);
       color: var(--fh-color-text-muted);
       font-size: var(--fh-text-small);
@@ -63,7 +69,7 @@
       &[aria-current]:not([aria-current="false"]),
       &[data-active="true"] {
         background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
-        box-shadow: inset 2px 0 0 var(--fh-tone);
+        box-shadow: inset var(--fh-border-heavy) 0 0 var(--fh-tone);
         color: var(--fh-color-text);
       }
 
@@ -105,9 +111,10 @@
     flex: 0 0 auto;
     display: inline-grid;
     place-items: center;
-    inline-size: 1.75rem;
-    block-size: 1.75rem;
-    margin-inline-end: var(--fh-gap-bound);
+    align-self: stretch;
+    aspect-ratio: 1;
+    margin-block: var(--fh-item-frame);
+    margin-inline-end: var(--fh-item-frame);
     border: 0;
     border-radius: var(--fh-radius-sm);
     background: transparent;
@@ -135,7 +142,7 @@
   /* Child list with vertical guide */
   .fh-sidenav__children {
     display: grid;
-    gap: 0.1rem;
+    gap: 0;
     margin-inline-start: var(--fh-gap-grouped);
     padding-inline-start: var(--fh-inset-control);
     border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-etch) 70%, transparent);
@@ -161,10 +168,11 @@
     }
   }
 
-  /* Child items — smaller type, no icons (child) */
-  .fh-sidenav__child {
-    font-size: var(--fh-text-xs, 0.75rem);
+  /* Child items: caption, gap-bound block padding, no icons. Scoped under the nav so it outranks
+     the row rule (.fh-sidenav a). */
+  .fh-sidenav .fh-sidenav__child {
     padding-block: var(--fh-gap-bound);
+    font-size: var(--fh-text-caption);
     justify-content: flex-start;
   }
 
@@ -181,7 +189,7 @@
   /* —— Rail flyout —— */
   .fh-sidenav-flyout {
     position: fixed;
-    z-index: 40;
+    z-index: var(--fh-z-dropdown);
     min-inline-size: 12rem;
     max-inline-size: 18rem;
     padding: var(--fh-inset-control);
@@ -201,7 +209,7 @@
 
   .fh-sidenav-flyout__list {
     display: grid;
-    gap: 0.1rem;
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -212,7 +220,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--fh-gap-grouped);
-    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    padding: var(--fh-item-block) var(--fh-item-inline);
     border-radius: var(--fh-radius-sm);
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-small);
@@ -226,7 +234,7 @@
 
   .fh-sidenav-flyout__list a[aria-current]:not([aria-current="false"]) {
     background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
-    box-shadow: inset 2px 0 0 var(--fh-tone);
+    box-shadow: inset var(--fh-border-heavy) 0 0 var(--fh-tone);
     color: var(--fh-color-text);
   }
 }

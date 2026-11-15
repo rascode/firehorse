@@ -4316,10 +4316,16 @@
       "anchor": "c-nav",
       "page": "/components/navigation/",
       "url": "https://firehorse.rascode.dev/components/navigation/navigation/",
-      "summary": "Pagination, a wizard stepper, search and a side nav. --links is a site's top links in mono caps: a pill wash on hover, a rolling label and an accent chevron on a link that opens a panel.",
+      "summary": "Pagination, a wizard stepper, search and a side nav. Nav links are a site's top links in mono caps: a pill wash on hover, a rolling label and an accent chevron on a link that opens a panel; --tone washes the current link in the nav's tone and --lg is the one size step. Every part reads one set of --fh-nav-* values.",
       "classes": [
-        "fh-stack",
-        "fh-stack--lg",
+        "fh-nav",
+        "fh-nav--links",
+        "fh-nav__link",
+        "fh-roll",
+        "fh-icon",
+        "fh-menu",
+        "fh-nav--tone",
+        "fh-nav--lg",
         "fh-search",
         "fh-sr-only",
         "fh-kbd",
@@ -4332,75 +4338,78 @@
         "fh-sidenav__area-head",
         "fh-sidenav__row",
         "fh-cluster",
-        "fh-icon",
         "fh-sidenav__label",
         "fh-sidenav__badge",
         "fh-sidenav__chevron",
         "fh-sidenav__children",
-        "fh-sidenav__child",
-        "fh-nav",
-        "fh-nav--links",
-        "fh-nav__link",
-        "fh-roll",
-        "fh-menu"
+        "fh-sidenav__child"
       ],
-      "markup": "<div class=\"fh-stack fh-stack--lg\">\n  <label class=\"fh-search\" data-fh=\"NAV-1.1\"><span class=\"fh-sr-only\">Search</span><input type=\"search\" placeholder=\"Search components\"><kbd class=\"fh-kbd\">⌘K</kbd></label>\n  <ol class=\"fh-stepper\" data-tone=\"lime\" data-fh=\"NAV-1.1\">\n    <li data-state=\"done\">Details</li>\n    <li data-state=\"current\" aria-current=\"step\">Scope</li>\n    <li>Review</li>\n    <li>Sign</li>\n  </ol>\n  <nav class=\"fh-pagination\" aria-label=\"Pages\" data-fh=\"NAV-1.1\">\n    <a href=\"#c-nav\" rel=\"prev\">Prev</a><a href=\"#c-nav\">1</a><a href=\"#c-nav\" aria-current=\"page\">2</a><a href=\"#c-nav\">3</a><span>…</span><a href=\"#c-nav\">9</a><a href=\"#c-nav\" rel=\"next\">Next</a>\n  </nav>\n  <nav class=\"fh-sidenav\" aria-label=\"Portal\" data-tone=\"sky\" data-fh=\"NAV-1.1\">\n    <section><p class=\"fh-label\">Portal</p>\n      <a href=\"#c-nav\" aria-current=\"page\">Overview</a>\n      <a href=\"#c-nav\">Invoices <span class=\"fh-badge\" data-tone=\"amber\">2</span></a>\n      <a href=\"#c-nav\">Agents</a>\n    </section>\n  </nav>\n  <nav class=\"fh-sidenav\" aria-label=\"Collapsible demo\" data-tone=\"violet\" data-fh=\"NAV-1.1\">\n    <div class=\"fh-sidenav__area\" data-open=\"true\">\n      <div class=\"fh-sidenav__area-head\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__row\" data-contains-active=\"true\">\n          <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--database\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Schemas</span></span>\n          <span class=\"fh-badge fh-sidenav__badge\" data-tone=\"rose\" data-alert=\"true\">3</span>\n        </a>\n        <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"true\" aria-controls=\"demo-schemas\" aria-label=\"Collapse Schemas\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n      </div>\n      <div id=\"demo-schemas\" class=\"fh-sidenav__children\" data-state=\"open\" role=\"region\" aria-label=\"Schemas\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\" aria-current=\"page\">Codex</a>\n      </div>\n    </div>\n    <div class=\"fh-sidenav__area\" data-open=\"false\">\n      <div class=\"fh-sidenav__area-head\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__row\">\n          <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--store\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Store</span></span>\n        </a>\n        <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"false\" aria-controls=\"demo-store\" aria-label=\"Expand Store\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n      </div>\n      <div id=\"demo-store\" class=\"fh-sidenav__children\" data-state=\"closed\" hidden role=\"region\" aria-label=\"Store\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Studio</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Products</a>\n      </div>\n    </div>\n  </nav>\n</div>",
+      "markup": "<nav class=\"fh-nav fh-nav--links\" aria-label=\"Site (sample 1)\" data-fh=\"NAV-1.1\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-1\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-1\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
       "groups": [
         {
           "id": "NAV-1",
-          "name": "Default",
-          "summary": "",
+          "name": "Nav links",
+          "summary": ".fh-nav--links · .fh-nav__link · --tone · --lg",
           "variants": [
-            "NAV-1.1"
+            "NAV-1.1",
+            "NAV-1.2",
+            "NAV-1.3",
+            "NAV-1.4"
           ],
-          "markup": "<div class=\"fh-stack fh-stack--lg\">\n  <label class=\"fh-search\" data-fh=\"NAV-1.1\"><span class=\"fh-sr-only\">Search</span><input type=\"search\" placeholder=\"Search components\"><kbd class=\"fh-kbd\">⌘K</kbd></label>\n  <ol class=\"fh-stepper\" data-tone=\"lime\" data-fh=\"NAV-1.1\">\n    <li data-state=\"done\">Details</li>\n    <li data-state=\"current\" aria-current=\"step\">Scope</li>\n    <li>Review</li>\n    <li>Sign</li>\n  </ol>\n  <nav class=\"fh-pagination\" aria-label=\"Pages\" data-fh=\"NAV-1.1\">\n    <a href=\"#c-nav\" rel=\"prev\">Prev</a><a href=\"#c-nav\">1</a><a href=\"#c-nav\" aria-current=\"page\">2</a><a href=\"#c-nav\">3</a><span>…</span><a href=\"#c-nav\">9</a><a href=\"#c-nav\" rel=\"next\">Next</a>\n  </nav>\n  <nav class=\"fh-sidenav\" aria-label=\"Portal\" data-tone=\"sky\" data-fh=\"NAV-1.1\">\n    <section><p class=\"fh-label\">Portal</p>\n      <a href=\"#c-nav\" aria-current=\"page\">Overview</a>\n      <a href=\"#c-nav\">Invoices <span class=\"fh-badge\" data-tone=\"amber\">2</span></a>\n      <a href=\"#c-nav\">Agents</a>\n    </section>\n  </nav>\n  <nav class=\"fh-sidenav\" aria-label=\"Collapsible demo\" data-tone=\"violet\" data-fh=\"NAV-1.1\">\n    <div class=\"fh-sidenav__area\" data-open=\"true\">\n      <div class=\"fh-sidenav__area-head\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__row\" data-contains-active=\"true\">\n          <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--database\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Schemas</span></span>\n          <span class=\"fh-badge fh-sidenav__badge\" data-tone=\"rose\" data-alert=\"true\">3</span>\n        </a>\n        <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"true\" aria-controls=\"demo-schemas\" aria-label=\"Collapse Schemas\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n      </div>\n      <div id=\"demo-schemas\" class=\"fh-sidenav__children\" data-state=\"open\" role=\"region\" aria-label=\"Schemas\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\" aria-current=\"page\">Codex</a>\n      </div>\n    </div>\n    <div class=\"fh-sidenav__area\" data-open=\"false\">\n      <div class=\"fh-sidenav__area-head\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__row\">\n          <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--store\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Store</span></span>\n        </a>\n        <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"false\" aria-controls=\"demo-store\" aria-label=\"Expand Store\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n      </div>\n      <div id=\"demo-store\" class=\"fh-sidenav__children\" data-state=\"closed\" hidden role=\"region\" aria-label=\"Store\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Studio</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Products</a>\n      </div>\n    </div>\n  </nav>\n</div>",
-          "markupFrom": "variant"
+          "markup": "<div><dt>Nav links<code>.fh-nav--links · .fh-nav__link · --tone · --lg</code></dt><dd>\n  <nav class=\"fh-nav fh-nav--links\" aria-label=\"Site (sample 1)\" data-fh=\"NAV-1.1\">\n    <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-1\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n    <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n    <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n    <div class=\"fh-menu\" id=\"nav-links-demo-1\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n  </nav>\n  <nav class=\"fh-nav fh-nav--links fh-nav--tone\" aria-label=\"Site (sample 2)\" data-tone=\"violet\" data-fh=\"NAV-1.2\">\n    <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-2\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n    <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n    <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n    <div class=\"fh-menu\" id=\"nav-links-demo-2\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n  </nav>\n  <nav class=\"fh-nav fh-nav--links fh-nav--lg\" aria-label=\"Site (sample 3)\" data-fh=\"NAV-1.3\">\n    <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-3\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n    <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n    <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n    <div class=\"fh-menu\" id=\"nav-links-demo-3\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n  </nav>\n  <nav class=\"fh-nav fh-nav--links fh-nav--lg fh-nav--tone\" aria-label=\"Site (sample 4)\" data-tone=\"amber\" data-fh=\"NAV-1.4\">\n    <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-4\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n    <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n    <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n    <div class=\"fh-menu\" id=\"nav-links-demo-4\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n  </nav>\n</dd></div>",
+          "markupFrom": "group",
+          "anchor": "c-nav"
         },
         {
           "id": "NAV-2",
-          "name": "Nav links",
-          "summary": "",
+          "name": "Search",
+          "summary": ".fh-search",
           "variants": [
             "NAV-2.1"
           ],
-          "markup": "<nav class=\"fh-nav fh-nav--links\" aria-label=\"Site (sample)\" data-fh=\"NAV-2.1\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-docs\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-docs\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
-          "markupFrom": "variant"
+          "markup": "<div><dt>Search<code>.fh-search</code></dt><dd>\n  <label class=\"fh-search\" data-fh=\"NAV-2.1\"><span class=\"fh-sr-only\">Search</span><input type=\"search\" placeholder=\"Search components\"><kbd class=\"fh-kbd\">⌘K</kbd></label>\n</dd></div>",
+          "markupFrom": "group",
+          "anchor": "c-nav"
+        },
+        {
+          "id": "NAV-3",
+          "name": "Stepper",
+          "summary": ".fh-stepper",
+          "variants": [
+            "NAV-3.1"
+          ],
+          "markup": "<div><dt>Stepper<code>.fh-stepper</code></dt><dd>\n  <ol class=\"fh-stepper\" data-tone=\"lime\" data-fh=\"NAV-3.1\">\n    <li data-state=\"done\">Details</li>\n    <li data-state=\"current\" aria-current=\"step\">Scope</li>\n    <li>Review</li>\n    <li>Sign</li>\n  </ol>\n</dd></div>",
+          "markupFrom": "group",
+          "anchor": "c-nav"
+        },
+        {
+          "id": "NAV-4",
+          "name": "Pagination",
+          "summary": ".fh-pagination",
+          "variants": [
+            "NAV-4.1"
+          ],
+          "markup": "<div><dt>Pagination<code>.fh-pagination</code></dt><dd>\n  <nav class=\"fh-pagination\" aria-label=\"Pages\" data-fh=\"NAV-4.1\">\n    <a href=\"#c-nav\" rel=\"prev\">Prev</a><a href=\"#c-nav\">1</a><a href=\"#c-nav\" aria-current=\"page\">2</a><a href=\"#c-nav\">3</a><span>…</span><a href=\"#c-nav\">9</a><a href=\"#c-nav\" rel=\"next\">Next</a>\n  </nav>\n</dd></div>",
+          "markupFrom": "group",
+          "anchor": "c-nav"
+        },
+        {
+          "id": "NAV-5",
+          "name": "Sidenav",
+          "summary": ".fh-sidenav · __area · __child · __badge",
+          "variants": [
+            "NAV-5.1",
+            "NAV-5.2"
+          ],
+          "markup": "<div><dt>Sidenav<code>.fh-sidenav · __area · __child · __badge</code></dt><dd>\n<nav class=\"fh-sidenav\" aria-label=\"Portal\" data-tone=\"sky\" data-fh=\"NAV-5.1\">\n  <section><p class=\"fh-label\">Portal</p>\n    <a href=\"#c-nav\" aria-current=\"page\">Overview</a>\n    <a href=\"#c-nav\">Invoices <span class=\"fh-badge\" data-tone=\"amber\">2</span></a>\n    <a href=\"#c-nav\">Agents</a>\n  </section>\n</nav>\n<nav class=\"fh-sidenav\" aria-label=\"Collapsible demo\" data-tone=\"violet\" data-fh=\"NAV-5.2\">\n  <div class=\"fh-sidenav__area\" data-open=\"true\">\n    <div class=\"fh-sidenav__area-head\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__row\" data-contains-active=\"true\">\n        <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--database\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Schemas</span></span>\n        <span class=\"fh-badge fh-sidenav__badge\" data-tone=\"rose\" data-alert=\"true\">3</span>\n      </a>\n      <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"true\" aria-controls=\"demo-schemas\" aria-label=\"Collapse Schemas\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div id=\"demo-schemas\" class=\"fh-sidenav__children\" data-state=\"open\" role=\"region\" aria-label=\"Schemas\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\" aria-current=\"page\">Codex</a>\n    </div>\n  </div>\n  <div class=\"fh-sidenav__area\" data-open=\"false\">\n    <div class=\"fh-sidenav__area-head\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__row\">\n        <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--store\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Store</span></span>\n      </a>\n      <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"false\" aria-controls=\"demo-store\" aria-label=\"Expand Store\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div id=\"demo-store\" class=\"fh-sidenav__children\" data-state=\"closed\" hidden role=\"region\" aria-label=\"Store\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Studio</a>\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Products</a>\n    </div>\n  </div>\n</nav>\n</dd></div>",
+          "markupFrom": "group",
+          "anchor": "c-nav"
         }
       ],
       "variants": [
         {
           "id": "NAV-1.1",
           "group": "NAV-1",
-          "name": "Default",
-          "classes": [
-            "fh-stack",
-            "fh-stack--lg",
-            "fh-search",
-            "fh-sr-only",
-            "fh-kbd",
-            "fh-stepper",
-            "fh-pagination",
-            "fh-sidenav",
-            "fh-label",
-            "fh-badge",
-            "fh-sidenav__area",
-            "fh-sidenav__area-head",
-            "fh-sidenav__row",
-            "fh-cluster",
-            "fh-icon",
-            "fh-sidenav__label",
-            "fh-sidenav__badge",
-            "fh-sidenav__chevron",
-            "fh-sidenav__children",
-            "fh-sidenav__child"
-          ],
-          "config": {},
-          "markup": "<div class=\"fh-stack fh-stack--lg\">\n  <label class=\"fh-search\" data-fh=\"NAV-1.1\"><span class=\"fh-sr-only\">Search</span><input type=\"search\" placeholder=\"Search components\"><kbd class=\"fh-kbd\">⌘K</kbd></label>\n  <ol class=\"fh-stepper\" data-tone=\"lime\" data-fh=\"NAV-1.1\">\n    <li data-state=\"done\">Details</li>\n    <li data-state=\"current\" aria-current=\"step\">Scope</li>\n    <li>Review</li>\n    <li>Sign</li>\n  </ol>\n  <nav class=\"fh-pagination\" aria-label=\"Pages\" data-fh=\"NAV-1.1\">\n    <a href=\"#c-nav\" rel=\"prev\">Prev</a><a href=\"#c-nav\">1</a><a href=\"#c-nav\" aria-current=\"page\">2</a><a href=\"#c-nav\">3</a><span>…</span><a href=\"#c-nav\">9</a><a href=\"#c-nav\" rel=\"next\">Next</a>\n  </nav>\n  <nav class=\"fh-sidenav\" aria-label=\"Portal\" data-tone=\"sky\" data-fh=\"NAV-1.1\">\n    <section><p class=\"fh-label\">Portal</p>\n      <a href=\"#c-nav\" aria-current=\"page\">Overview</a>\n      <a href=\"#c-nav\">Invoices <span class=\"fh-badge\" data-tone=\"amber\">2</span></a>\n      <a href=\"#c-nav\">Agents</a>\n    </section>\n  </nav>\n  <nav class=\"fh-sidenav\" aria-label=\"Collapsible demo\" data-tone=\"violet\" data-fh=\"NAV-1.1\">\n    <div class=\"fh-sidenav__area\" data-open=\"true\">\n      <div class=\"fh-sidenav__area-head\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__row\" data-contains-active=\"true\">\n          <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--database\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Schemas</span></span>\n          <span class=\"fh-badge fh-sidenav__badge\" data-tone=\"rose\" data-alert=\"true\">3</span>\n        </a>\n        <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"true\" aria-controls=\"demo-schemas\" aria-label=\"Collapse Schemas\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n      </div>\n      <div id=\"demo-schemas\" class=\"fh-sidenav__children\" data-state=\"open\" role=\"region\" aria-label=\"Schemas\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\" aria-current=\"page\">Codex</a>\n      </div>\n    </div>\n    <div class=\"fh-sidenav__area\" data-open=\"false\">\n      <div class=\"fh-sidenav__area-head\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__row\">\n          <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--store\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Store</span></span>\n        </a>\n        <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"false\" aria-controls=\"demo-store\" aria-label=\"Expand Store\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n      </div>\n      <div id=\"demo-store\" class=\"fh-sidenav__children\" data-state=\"closed\" hidden role=\"region\" aria-label=\"Store\">\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Studio</a>\n        <a href=\"#c-nav\" class=\"fh-sidenav__child\">Products</a>\n      </div>\n    </div>\n  </nav>\n</div>",
-          "tier": "free"
-        },
-        {
-          "id": "NAV-2.1",
-          "group": "NAV-2",
           "name": "Nav links",
           "classes": [
             "fh-nav",
@@ -4411,13 +4420,142 @@
             "fh-menu"
           ],
           "config": {},
-          "markup": "<nav class=\"fh-nav fh-nav--links\" aria-label=\"Site (sample)\" data-fh=\"NAV-2.1\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-docs\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-docs\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
+          "markup": "<nav class=\"fh-nav fh-nav--links\" aria-label=\"Site (sample 1)\" data-fh=\"NAV-1.1\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-1\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-1\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-1.2",
+          "group": "NAV-1",
+          "name": "Toned",
+          "classes": [
+            "fh-nav",
+            "fh-nav--links",
+            "fh-nav--tone",
+            "fh-nav__link",
+            "fh-roll",
+            "fh-icon",
+            "fh-menu"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-nav fh-nav--links fh-nav--tone\" aria-label=\"Site (sample 2)\" data-tone=\"violet\" data-fh=\"NAV-1.2\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-2\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-2\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-1.3",
+          "group": "NAV-1",
+          "name": "Large",
+          "classes": [
+            "fh-nav",
+            "fh-nav--links",
+            "fh-nav--lg",
+            "fh-nav__link",
+            "fh-roll",
+            "fh-icon",
+            "fh-menu"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-nav fh-nav--links fh-nav--lg\" aria-label=\"Site (sample 3)\" data-fh=\"NAV-1.3\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-3\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-3\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-1.4",
+          "group": "NAV-1",
+          "name": "Large, toned",
+          "classes": [
+            "fh-nav",
+            "fh-nav--links",
+            "fh-nav--lg",
+            "fh-nav--tone",
+            "fh-nav__link",
+            "fh-roll",
+            "fh-icon",
+            "fh-menu"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-nav fh-nav--links fh-nav--lg fh-nav--tone\" aria-label=\"Site (sample 4)\" data-tone=\"amber\" data-fh=\"NAV-1.4\">\n  <button class=\"fh-nav__link\" type=\"button\" popovertarget=\"nav-links-demo-4\"><span class=\"fh-roll\">Docs</span><i class=\"fh-icon fh-icon--chevron-down\" aria-hidden=\"true\"></i></button>\n  <a class=\"fh-nav__link\" href=\"#c-nav\"><span class=\"fh-roll\">Build with Firehorse</span></a>\n  <a class=\"fh-nav__link\" href=\"#c-nav\" aria-current=\"page\"><span class=\"fh-roll\">Design patterns</span></a>\n  <div class=\"fh-menu\" id=\"nav-links-demo-4\" popover><a href=\"#c-nav\">Guidelines</a><a href=\"#c-nav\">Foundations</a><a href=\"#c-nav\">Components</a></div>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-2.1",
+          "group": "NAV-2",
+          "name": "Search field",
+          "classes": [
+            "fh-search",
+            "fh-sr-only",
+            "fh-kbd"
+          ],
+          "config": {},
+          "markup": "<label class=\"fh-search\" data-fh=\"NAV-2.1\"><span class=\"fh-sr-only\">Search</span><input type=\"search\" placeholder=\"Search components\"><kbd class=\"fh-kbd\">⌘K</kbd></label>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-3.1",
+          "group": "NAV-3",
+          "name": "Stepper",
+          "classes": [
+            "fh-stepper"
+          ],
+          "config": {},
+          "markup": "<ol class=\"fh-stepper\" data-tone=\"lime\" data-fh=\"NAV-3.1\">\n  <li data-state=\"done\">Details</li>\n  <li data-state=\"current\" aria-current=\"step\">Scope</li>\n  <li>Review</li>\n  <li>Sign</li>\n</ol>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-4.1",
+          "group": "NAV-4",
+          "name": "Pagination",
+          "classes": [
+            "fh-pagination"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-pagination\" aria-label=\"Pages\" data-fh=\"NAV-4.1\">\n  <a href=\"#c-nav\" rel=\"prev\">Prev</a><a href=\"#c-nav\">1</a><a href=\"#c-nav\" aria-current=\"page\">2</a><a href=\"#c-nav\">3</a><span>…</span><a href=\"#c-nav\">9</a><a href=\"#c-nav\" rel=\"next\">Next</a>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-5.1",
+          "group": "NAV-5",
+          "name": "Grouped links",
+          "classes": [
+            "fh-sidenav",
+            "fh-label",
+            "fh-badge"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-sidenav\" aria-label=\"Portal\" data-tone=\"sky\" data-fh=\"NAV-5.1\">\n  <section><p class=\"fh-label\">Portal</p>\n    <a href=\"#c-nav\" aria-current=\"page\">Overview</a>\n    <a href=\"#c-nav\">Invoices <span class=\"fh-badge\" data-tone=\"amber\">2</span></a>\n    <a href=\"#c-nav\">Agents</a>\n  </section>\n</nav>",
+          "tier": "free"
+        },
+        {
+          "id": "NAV-5.2",
+          "group": "NAV-5",
+          "name": "Collapsible areas",
+          "classes": [
+            "fh-sidenav",
+            "fh-sidenav__area",
+            "fh-sidenav__area-head",
+            "fh-sidenav__row",
+            "fh-cluster",
+            "fh-icon",
+            "fh-sidenav__label",
+            "fh-badge",
+            "fh-sidenav__badge",
+            "fh-sidenav__chevron",
+            "fh-sidenav__children",
+            "fh-sidenav__child"
+          ],
+          "config": {},
+          "markup": "<nav class=\"fh-sidenav\" aria-label=\"Collapsible demo\" data-tone=\"violet\" data-fh=\"NAV-5.2\">\n  <div class=\"fh-sidenav__area\" data-open=\"true\">\n    <div class=\"fh-sidenav__area-head\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__row\" data-contains-active=\"true\">\n        <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--database\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Schemas</span></span>\n        <span class=\"fh-badge fh-sidenav__badge\" data-tone=\"rose\" data-alert=\"true\">3</span>\n      </a>\n      <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"true\" aria-controls=\"demo-schemas\" aria-label=\"Collapse Schemas\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div id=\"demo-schemas\" class=\"fh-sidenav__children\" data-state=\"open\" role=\"region\" aria-label=\"Schemas\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\" aria-current=\"page\">Codex</a>\n    </div>\n  </div>\n  <div class=\"fh-sidenav__area\" data-open=\"false\">\n    <div class=\"fh-sidenav__area-head\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__row\">\n        <span class=\"fh-cluster\" style=\"--fh-gap: var(--fh-space-2)\"><i class=\"fh-icon fh-icon--store\" aria-hidden=\"true\"></i><span class=\"fh-sidenav__label\">Store</span></span>\n      </a>\n      <button type=\"button\" class=\"fh-sidenav__chevron\" aria-expanded=\"false\" aria-controls=\"demo-store\" aria-label=\"Expand Store\"><i class=\"fh-icon fh-icon--chevron-right\" aria-hidden=\"true\"></i></button>\n    </div>\n    <div id=\"demo-store\" class=\"fh-sidenav__children\" data-state=\"closed\" hidden role=\"region\" aria-label=\"Store\">\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Overview</a>\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Studio</a>\n      <a href=\"#c-nav\" class=\"fh-sidenav__child\">Products</a>\n    </div>\n  </div>\n</nav>",
           "tier": "free"
         }
       ],
       "stageClasses": [
-        "fh-stack",
-        "fh-stack--lg",
+        "fh-dl",
+        "fh-nav",
+        "fh-nav--links",
+        "fh-nav__link",
+        "fh-roll",
+        "fh-icon",
+        "fh-menu",
+        "fh-nav--tone",
+        "fh-nav--lg",
         "fh-search",
         "fh-sr-only",
         "fh-kbd",
@@ -4430,17 +4568,11 @@
         "fh-sidenav__area-head",
         "fh-sidenav__row",
         "fh-cluster",
-        "fh-icon",
         "fh-sidenav__label",
         "fh-sidenav__badge",
         "fh-sidenav__chevron",
         "fh-sidenav__children",
-        "fh-sidenav__child",
-        "fh-nav",
-        "fh-nav--links",
-        "fh-nav__link",
-        "fh-roll",
-        "fh-menu"
+        "fh-sidenav__child"
       ],
       "tier": "free"
     },
@@ -8211,8 +8343,6 @@
     "fh-cubes": "CUB",
     "fh-logos": "LGS",
     "fh-steps": "STP",
-    "fh-search": "NAV",
-    "fh-nav": "NAV",
     "fh-menu": "DRP",
     "fh-skeleton": "FBK",
     "fh-auth": "AUT",

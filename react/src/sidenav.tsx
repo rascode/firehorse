@@ -1,5 +1,5 @@
 /**
- * Firehorse SideNav — collapsible two-level sidebar (NAV / NAV-2.*).
+ * Firehorse SideNav — collapsible two-level sidebar (NAV-5 Sidenav).
  * Style from @rascode/firehorse sidenav.css; behavior here (expand, flyout, a11y).
  *
  *   <SideNav aria-label="Main">
@@ -13,7 +13,7 @@ import * as React from "react";
 type Tone = "sky" | "teal" | "lime" | "amber" | "orange" | "accent" | "rose" | "fuchsia" | "violet" | "neutral";
 const cx = (...c: Array<string | false | undefined | null>) => c.filter(Boolean).join(" ");
 
-/* —— NavBadge (NAV-2.3) —— */
+/* —— NavBadge (NAV-5.1) —— */
 export type NavBadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
   count: number;
   /** When true (default if count > 0), uses rose/alert tone. */
@@ -25,7 +25,7 @@ export function NavBadge({ count, alert, tone, className, ...p }: NavBadgeProps)
   const alertTone = alert ?? count > 0;
   return (
     <span
-      data-fh="NAV-2.3"
+      data-fh="NAV-5.1"
       data-tone={tone ?? (alertTone ? "rose" : "amber")}
       data-alert={alertTone ? "true" : undefined}
       className={cx("fh-badge", "fh-sidenav__badge", className)}
@@ -80,7 +80,7 @@ export const SideNavItem = React.forwardRef<HTMLAnchorElement, SideNavItemProps>
       return React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
         ref,
         className: cx(cls, (children as React.ReactElement<{ className?: string }>).props.className),
-        "data-fh": child ? "NAV-2.1" : "NAV",
+        "data-fh": child ? "NAV-5.2" : "NAV-5.1",
         "data-active": active ? "true" : undefined,
         "data-contains-active": containsActive ? "true" : undefined,
         "aria-current": active ? "page" : undefined,
@@ -89,7 +89,7 @@ export const SideNavItem = React.forwardRef<HTMLAnchorElement, SideNavItemProps>
     return (
       <a
         ref={ref}
-        data-fh={child ? "NAV-2.1" : "NAV"}
+        data-fh={child ? "NAV-5.2" : "NAV-5.1"}
         data-active={active ? "true" : undefined}
         data-contains-active={containsActive ? "true" : undefined}
         aria-current={active ? "page" : undefined}
@@ -168,7 +168,7 @@ export function SideNavSection({
         <a
           href={href}
           className={labelClass}
-          data-fh="NAV-2"
+          data-fh="NAV-5.2"
           data-active={active ? "true" : undefined}
           data-contains-active={containsActive ? "true" : undefined}
           aria-current={active ? "page" : undefined}
@@ -181,7 +181,7 @@ export function SideNavSection({
         <button
           type="button"
           className={labelClass}
-          data-fh="NAV-2"
+          data-fh="NAV-5.2"
           data-active={active ? "true" : undefined}
           data-contains-active={containsActive ? "true" : undefined}
           onClick={onLabelClick}
@@ -195,7 +195,7 @@ export function SideNavSection({
   }
 
   return (
-    <div className={cx("fh-sidenav__area", className)} data-fh="NAV-2" data-open={open ? "true" : "false"}>
+    <div className={cx("fh-sidenav__area", className)} data-fh="NAV-5.2" data-open={open ? "true" : "false"}>
       <div className="fh-sidenav__area-head">
         {labelNode}
         <button
@@ -227,7 +227,7 @@ export function SideNavSection({
   );
 }
 
-/* —— SideNavFlyout (NAV-2.2) —— */
+/* —— SideNavFlyout (NAV-5) —— */
 export type SideNavFlyoutProps = {
   title: string;
   open: boolean;
@@ -272,7 +272,7 @@ export function SideNavFlyout({ title, open, onClose, anchor, children, leaveDel
   return (
     <div
       ref={ref}
-      data-fh="NAV-2.2"
+      data-fh="NAV-5"
       className="fh-sidenav-flyout"
       role="dialog"
       aria-label={title}

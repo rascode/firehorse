@@ -1503,64 +1503,94 @@ Underline tabs that scroll sideways when they run out of room. `fh-tabs--mono` f
 
 ### NAV · Navigation
 
-Pagination, a wizard stepper, search and a side nav. `--links` is a site's top links in mono caps: a pill wash on hover, a rolling label and an accent chevron on a link that opens a panel.
+Pagination, a wizard stepper, search and a side nav. Nav links are a site's top links in mono caps: a pill wash on hover, a rolling label and an accent chevron on a link that opens a panel; `--tone` washes the current link in the nav's tone and `--lg` is the one size step. Every part reads one set of `--fh-nav-*` values.
 
 ```html
-<!-- NAV-1.1 · Default › Default -->
-<div class="fh-stack fh-stack--lg">
-  <label class="fh-search" data-fh="NAV-1.1"><span class="fh-sr-only">Search</span><input type="search" placeholder="Search components"><kbd class="fh-kbd">⌘K</kbd></label>
-  <ol class="fh-stepper" data-tone="lime" data-fh="NAV-1.1">
-    <li data-state="done">Details</li>
-    <li data-state="current" aria-current="step">Scope</li>
-    <li>Review</li>
-    <li>Sign</li>
-  </ol>
-  <nav class="fh-pagination" aria-label="Pages" data-fh="NAV-1.1">
-    <a href="#c-nav" rel="prev">Prev</a><a href="#c-nav">1</a><a href="#c-nav" aria-current="page">2</a><a href="#c-nav">3</a><span>…</span><a href="#c-nav">9</a><a href="#c-nav" rel="next">Next</a>
-  </nav>
-  <nav class="fh-sidenav" aria-label="Portal" data-tone="sky" data-fh="NAV-1.1">
-    <section><p class="fh-label">Portal</p>
-      <a href="#c-nav" aria-current="page">Overview</a>
-      <a href="#c-nav">Invoices <span class="fh-badge" data-tone="amber">2</span></a>
-      <a href="#c-nav">Agents</a>
-    </section>
-  </nav>
-  <nav class="fh-sidenav" aria-label="Collapsible demo" data-tone="violet" data-fh="NAV-1.1">
-    <div class="fh-sidenav__area" data-open="true">
-      <div class="fh-sidenav__area-head">
-        <a href="#c-nav" class="fh-sidenav__row" data-contains-active="true">
-          <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><i class="fh-icon fh-icon--database" aria-hidden="true"></i><span class="fh-sidenav__label">Schemas</span></span>
-          <span class="fh-badge fh-sidenav__badge" data-tone="rose" data-alert="true">3</span>
-        </a>
-        <button type="button" class="fh-sidenav__chevron" aria-expanded="true" aria-controls="demo-schemas" aria-label="Collapse Schemas"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <div id="demo-schemas" class="fh-sidenav__children" data-state="open" role="region" aria-label="Schemas">
-        <a href="#c-nav" class="fh-sidenav__child">Overview</a>
-        <a href="#c-nav" class="fh-sidenav__child" aria-current="page">Codex</a>
-      </div>
-    </div>
-    <div class="fh-sidenav__area" data-open="false">
-      <div class="fh-sidenav__area-head">
-        <a href="#c-nav" class="fh-sidenav__row">
-          <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><i class="fh-icon fh-icon--store" aria-hidden="true"></i><span class="fh-sidenav__label">Store</span></span>
-        </a>
-        <button type="button" class="fh-sidenav__chevron" aria-expanded="false" aria-controls="demo-store" aria-label="Expand Store"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <div id="demo-store" class="fh-sidenav__children" data-state="closed" hidden role="region" aria-label="Store">
-        <a href="#c-nav" class="fh-sidenav__child">Overview</a>
-        <a href="#c-nav" class="fh-sidenav__child">Studio</a>
-        <a href="#c-nav" class="fh-sidenav__child">Products</a>
-      </div>
-    </div>
-  </nav>
-</div>
-
-<!-- NAV-2.1 · Nav links › Nav links -->
-<nav class="fh-nav fh-nav--links" aria-label="Site (sample)" data-fh="NAV-2.1">
-  <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-docs"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+<!-- NAV-1.1 · Nav links › Nav links -->
+<nav class="fh-nav fh-nav--links" aria-label="Site (sample 1)" data-fh="NAV-1.1">
+  <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-1"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
   <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
   <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
-  <div class="fh-menu" id="nav-links-demo-docs" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+  <div class="fh-menu" id="nav-links-demo-1" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+</nav>
+
+<!-- NAV-1.2 · Nav links › Toned -->
+<nav class="fh-nav fh-nav--links fh-nav--tone" aria-label="Site (sample 2)" data-tone="violet" data-fh="NAV-1.2">
+  <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-2"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+  <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+  <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+  <div class="fh-menu" id="nav-links-demo-2" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+</nav>
+
+<!-- NAV-1.3 · Nav links › Large -->
+<nav class="fh-nav fh-nav--links fh-nav--lg" aria-label="Site (sample 3)" data-fh="NAV-1.3">
+  <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-3"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+  <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+  <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+  <div class="fh-menu" id="nav-links-demo-3" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+</nav>
+
+<!-- NAV-1.4 · Nav links › Large, toned -->
+<nav class="fh-nav fh-nav--links fh-nav--lg fh-nav--tone" aria-label="Site (sample 4)" data-tone="amber" data-fh="NAV-1.4">
+  <button class="fh-nav__link" type="button" popovertarget="nav-links-demo-4"><span class="fh-roll">Docs</span><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></button>
+  <a class="fh-nav__link" href="#c-nav"><span class="fh-roll">Build with Firehorse</span></a>
+  <a class="fh-nav__link" href="#c-nav" aria-current="page"><span class="fh-roll">Design patterns</span></a>
+  <div class="fh-menu" id="nav-links-demo-4" popover><a href="#c-nav">Guidelines</a><a href="#c-nav">Foundations</a><a href="#c-nav">Components</a></div>
+</nav>
+
+<!-- NAV-2.1 · Search › Search field -->
+<label class="fh-search" data-fh="NAV-2.1"><span class="fh-sr-only">Search</span><input type="search" placeholder="Search components"><kbd class="fh-kbd">⌘K</kbd></label>
+
+<!-- NAV-3.1 · Stepper › Stepper -->
+<ol class="fh-stepper" data-tone="lime" data-fh="NAV-3.1">
+  <li data-state="done">Details</li>
+  <li data-state="current" aria-current="step">Scope</li>
+  <li>Review</li>
+  <li>Sign</li>
+</ol>
+
+<!-- NAV-4.1 · Pagination › Pagination -->
+<nav class="fh-pagination" aria-label="Pages" data-fh="NAV-4.1">
+  <a href="#c-nav" rel="prev">Prev</a><a href="#c-nav">1</a><a href="#c-nav" aria-current="page">2</a><a href="#c-nav">3</a><span>…</span><a href="#c-nav">9</a><a href="#c-nav" rel="next">Next</a>
+</nav>
+
+<!-- NAV-5.1 · Sidenav › Grouped links -->
+<nav class="fh-sidenav" aria-label="Portal" data-tone="sky" data-fh="NAV-5.1">
+  <section><p class="fh-label">Portal</p>
+    <a href="#c-nav" aria-current="page">Overview</a>
+    <a href="#c-nav">Invoices <span class="fh-badge" data-tone="amber">2</span></a>
+    <a href="#c-nav">Agents</a>
+  </section>
+</nav>
+
+<!-- NAV-5.2 · Sidenav › Collapsible areas -->
+<nav class="fh-sidenav" aria-label="Collapsible demo" data-tone="violet" data-fh="NAV-5.2">
+  <div class="fh-sidenav__area" data-open="true">
+    <div class="fh-sidenav__area-head">
+      <a href="#c-nav" class="fh-sidenav__row" data-contains-active="true">
+        <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><i class="fh-icon fh-icon--database" aria-hidden="true"></i><span class="fh-sidenav__label">Schemas</span></span>
+        <span class="fh-badge fh-sidenav__badge" data-tone="rose" data-alert="true">3</span>
+      </a>
+      <button type="button" class="fh-sidenav__chevron" aria-expanded="true" aria-controls="demo-schemas" aria-label="Collapse Schemas"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></button>
+    </div>
+    <div id="demo-schemas" class="fh-sidenav__children" data-state="open" role="region" aria-label="Schemas">
+      <a href="#c-nav" class="fh-sidenav__child">Overview</a>
+      <a href="#c-nav" class="fh-sidenav__child" aria-current="page">Codex</a>
+    </div>
+  </div>
+  <div class="fh-sidenav__area" data-open="false">
+    <div class="fh-sidenav__area-head">
+      <a href="#c-nav" class="fh-sidenav__row">
+        <span class="fh-cluster" style="--fh-gap: var(--fh-space-2)"><i class="fh-icon fh-icon--store" aria-hidden="true"></i><span class="fh-sidenav__label">Store</span></span>
+      </a>
+      <button type="button" class="fh-sidenav__chevron" aria-expanded="false" aria-controls="demo-store" aria-label="Expand Store"><i class="fh-icon fh-icon--chevron-right" aria-hidden="true"></i></button>
+    </div>
+    <div id="demo-store" class="fh-sidenav__children" data-state="closed" hidden role="region" aria-label="Store">
+      <a href="#c-nav" class="fh-sidenav__child">Overview</a>
+      <a href="#c-nav" class="fh-sidenav__child">Studio</a>
+      <a href="#c-nav" class="fh-sidenav__child">Products</a>
+    </div>
+  </div>
 </nav>
 ```
 
