@@ -155,10 +155,15 @@ export const tokensOf = (classes = []) => {
 
 // Agent notes: the family's entry in agent/components.md (### ID · Name, up to the next heading).
 let agentCache;
+// A family with its own agent doc (agent/components/<name>.md, such as values.md for VAL) is read there too, under the same
+// heading, so a held family's specimen still has its notes (agent/components.md lists public families only).
+let ownDocs;
 const agentEntry = (id) => {
   agentCache ??= existsSync(join(root, "agent/components.md")) ? readFileSync(join(root, "agent/components.md"), "utf8") : "";
-  const m = agentCache.match(new RegExp(`^### ${id} · [^\\n]*\\n([\\s\\S]*?)(?=^##+ |(?![\\s\\S]))`, "m"));
-  return m ? m[1].trim() : "";
+  ownDocs ??= existsSync(join(root, "agent/components")) ? readdirSync(join(root, "agent/components")).filter((n) => n.endsWith(".md")).map((n) => readFileSync(join(root, "agent/components", n), "utf8")) : [];
+  const re = new RegExp(`^### ${id} · [^\\n]*\\n([\\s\\S]*?)(?=^##+ |(?![\\s\\S]))`, "m");
+  for (const text of [agentCache, ...ownDocs]) { const m = text.match(re); if (m) return m[1].trim(); }
+  return "";
 };
 const mdToHtml = (md) => md.split(/(```html\n[\s\S]*?\n```)/).filter((s) => s.trim()).map((s) => {
   const code = s.match(/^```html\n([\s\S]*?)\n```$/);

@@ -57,6 +57,22 @@ const sections = {
     }),
   ].join("\n"),
 };
+// Parts: the VAL family from the full Index (dist/full/index.json, written by the build): each variant's ID, its
+// name, the parts it is built from and its markup (read, edit, --lg). Absent before the first build: left as is.
+const indexPath = join(root, "dist/full/index.json");
+const val = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, "utf8")).families.find((f) => f.id === "VAL") : null;
+if (val) {
+  const byId = new Map(val.variants.map((v) => [v.id, v]));
+  sections.parts = Object.entries(contract.variants).reduce((acc, [shape, f]) => {
+    if (!acc.groups.has(f.group)) { acc.groups.add(f.group); acc.out.push(`#### ${f.group} ${f.name}`, ""); }
+    for (const [key, v] of Object.entries(f.variants)) {
+      const markup = byId.get(v.id)?.markup;
+      if (!markup) throw new Error(`${v.id} (${shape} ${key}) is in display-rules.json but not in the Index`);
+      acc.out.push(`\`${v.id}\` ${v.label} · \`${shape}\` \`${key}\`${v.editable ? " · editable" : ""}${v.parts.length ? ` · built from ${v.parts.join(", ")}` : ""}`, "", "```html", markup, "```", "");
+    }
+    return acc;
+  }, { groups: new Set(), out: [] }).out.join("\n").trim();
+}
 const docPath = join(root, "agent/components/values.md");
 let doc = readFileSync(docPath, "utf8");
 for (const [name, text] of Object.entries(sections)) {
