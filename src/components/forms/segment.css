@@ -163,12 +163,17 @@
   .fh-segment--roll[aria-pressed="true"] .fh-segment__roll > span { translate: 0 -100%; }
 
   /* SEG-2.2 Mode toggle (and SEG-2.3 with icons): the switch's frame and items, bold, the
-     pressed one filled with the primary. */
+     pressed one filled with the primary. One line: when its slot is narrower than the options,
+     it scrolls inside itself the way fh-tabs does, never clipped. */
   :is(.fh-segment--mode, .fh-dictate) {
     flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
 
     & > button {
+      flex: none;
       font-weight: var(--fh-weight-bold);
+      &:focus-visible { outline-offset: calc(-1 * var(--fh-focus-width)); }
       transition:
         background-color var(--fh-duration-base) var(--fh-ease-standard),
         color var(--fh-duration-base) var(--fh-ease-standard);

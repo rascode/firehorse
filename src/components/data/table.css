@@ -119,9 +119,9 @@
     }
   }
 
-  /* Reflow to labelled rows in narrow slots. */
+  /* Reflow to labelled rows in narrow slots. A Timetable section's table (STT) always reflows. */
   @container fh-table (inline-size < 36rem) {
-    .fh-table.fh-table--reflow {
+    :is(.fh-table.fh-table--reflow, .fh-panel-section--timetable .fh-table) {
       & thead {
         position: absolute;
         inline-size: 1px;

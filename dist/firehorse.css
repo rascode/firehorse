@@ -5161,10 +5161,18 @@
   }
 
   :is(.fh-segment--mode, .fh-dictate) {
+    scrollbar-width: none;
     flex-wrap: nowrap;
+    overflow-x: auto;
 
     & > button {
       font-weight: var(--fh-weight-bold);
+      flex: none;
+
+      &:focus-visible {
+        outline-offset: calc(-1 * var(--fh-focus-width));
+      }
+
       transition: background-color var(--fh-duration-base) var(--fh-ease-standard),
         color var(--fh-duration-base) var(--fh-ease-standard);
 
@@ -13044,6 +13052,10 @@
   }
 
   @container fh-sidecar (inline-size <= 22rem) {
+    
+  }
+
+  @container fh-table (inline-size < 36rem) {
     
   }
 

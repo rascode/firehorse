@@ -47,6 +47,15 @@
     text-transform: var(--fh-type-label-case);
   }
 
+  /* Narrow slot: the table stacks by data-label (the fh-table reflow rule, table.css); the time
+   * column gives up its 1% width, and the day mark stays one full-width row. */
+  @container fh-table (inline-size < 36rem) {
+    .fh-panel-section--timetable .fh-table {
+      & :is(th, td):first-child { inline-size: auto; }
+      & .fh-panel-section__day > th { display: block; }
+    }
+  }
+
   .fh-panel-section--properties .fh-kv {
     --fh-row-pad: var(--fh-inset-tight);
   }
