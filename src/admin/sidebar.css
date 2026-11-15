@@ -635,6 +635,7 @@
   .fh-sidebar[data-fh-side="rail"] :is(.fh-sidebar__body, .fh-sidebar__window-body) {
     padding-inline: 0;
     overflow-x: clip;
+    overflow-clip-margin: var(--fh-gap-grouped);
     scrollbar-width: none;
   }
 
@@ -715,7 +716,7 @@
     position: absolute;
     z-index: 1;
     inset-block-start: calc(50% - var(--fh-sidebar-cube) * 0.55);
-    inset-inline-start: calc(50% + var(--fh-sidebar-cube) * 0.12);
+    inset-inline-start: calc(50% + var(--fh-sidebar-cube) / 2 - 0.7rem);
     inset-inline-end: auto;
     translate: 0 0;
     clip-path: none;
@@ -728,8 +729,8 @@
     display: inline-grid;
     place-items: center;
     border-radius: var(--fh-radius-pill);
-    background-color: color-mix(in oklab, var(--_c) 10%, transparent);
-    box-shadow: 0 0 0 var(--fh-border-heavy) var(--_fill);
+    background-color: color-mix(in oklab, var(--_c) 22%, var(--fh-color-surface));
+    box-shadow: 0 0 0 var(--fh-border-heavy) var(--fh-color-surface);
     border: 0;
     font-size: var(--fh-text-micro);
     line-height: 1;
@@ -740,12 +741,12 @@
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"][data-tone="warn"],
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"][data-tone="warn"]:not([data-display]) {
-    background-color: color-mix(in oklab, var(--fh-tone-amber) 22%, transparent);
+    background-color: color-mix(in oklab, var(--fh-tone-amber) 30%, var(--fh-color-surface));
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"][data-tone="danger"],
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-kind="count"][data-tone="danger"]:not([data-display]) {
-    background-color: color-mix(in oklab, var(--fh-color-danger) 22%, transparent);
+    background-color: color-mix(in oklab, var(--fh-color-danger) 30%, var(--fh-color-surface));
   }
 
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bubble"] .fh-sidebar__metric-denom,
@@ -753,15 +754,26 @@
     display: none;
   }
 
+  /* Rail bar: the open layout puts the bar in grid column 2, row 2. An absolutely placed grid child takes its
+     grid area as the containing block, so the placement is reset here and the line hangs under the cube. */
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__item:has(> .fh-sidebar__metric[data-display="bar"]) {
+    grid-template-rows: none;
+  }
+
+  .fh-sidebar[data-fh-side="rail"] .fh-sidebar__item:has(> .fh-sidebar__metric[data-display="bar"]) .fh-sidebar__cube {
+    grid-row: auto;
+  }
+
   .fh-sidebar[data-fh-side="rail"] .fh-sidebar__metric[data-display="bar"] {
     position: absolute;
-    inset-block-start: calc(50% + var(--fh-sidebar-cube) / 2 + var(--fh-gap-bound));
-    inset-inline-start: 50%;
-    translate: -50% 0;
+    grid-area: auto;
+    inset: auto 0 calc(var(--fh-inset-tight) / 2 - var(--fh-border-heavy) / 2) 0;
+    margin-inline: auto;
+    translate: none;
     clip-path: none;
     inline-size: var(--fh-sidebar-cube);
     block-size: var(--fh-border-heavy);
-    margin: 0;
+    margin-block: 0;
     padding: 0;
     display: block;
     grid-template-columns: unset;
