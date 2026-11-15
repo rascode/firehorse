@@ -971,6 +971,18 @@ export const tokens = {
     "tier": "primitives",
     "group": "duration"
   },
+  "--fh-duration-roll": {
+    "$value": "0.5s",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
+  "--fh-duration-dwell": {
+    "$value": "2.6s",
+    "$type": "duration",
+    "tier": "primitives",
+    "group": "duration"
+  },
   "--fh-ease-standard": {
     "$value": "ease",
     "$type": "cubicBezier",

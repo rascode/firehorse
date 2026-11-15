@@ -20,25 +20,22 @@
    *              lightness that reads on each scheme. The root is --fh-root
    *              (the accent unless set), or --fh-rotator-root.
    *   data-tone  on the rotator colours every word; on a word, that word alone
-   *   knobs      --fh-rotator-step (time on each word, 2.6s)
-   *              --fh-rotator-color · --fh-rotator-font · --fh-rotator-weight
-   *              --fh-rotator-style · --fh-rotator-scale (size vs. the line, 1)
-   *              --fh-rotator-tracking · --fh-rotator-root (for --walk)
+   *   knobs      --fh-rotator-step (time on each word, --fh-duration-dwell)
+   *              --fh-rotator-color · --fh-rotator-root (for --walk)
+   * The word takes its copy's type: font, size, weight, style and tracking all
+   * come from the text around it (no size step). To change them, style the copy.
+   * Each word rolls in over --fh-duration-roll, the slot's width eases over the same.
    * The slot holds the widest word; with dist/firehorse.js it eases to each
    * word's own width instead, so the text after it glides. */
   .fh-rotator {
-    --_step: var(--fh-rotator-step, 2.6s);
+    --_step: var(--fh-rotator-step, var(--fh-duration-dwell));
+    --_roll: var(--fh-duration-roll);
     display: inline-grid;
     justify-items: start;
     overflow: clip;
     overflow-clip-margin: 0.06em;
-    transition: inline-size 0.5s var(--fh-ease-out);
+    transition: inline-size var(--_roll) var(--fh-ease-out);
     color: var(--fh-rotator-color, inherit);
-    font-family: var(--fh-rotator-font, inherit);
-    font-size: calc(1em * var(--fh-rotator-scale, 1));
-    font-style: var(--fh-rotator-style, inherit);
-    font-weight: var(--fh-rotator-weight, inherit);
-    letter-spacing: var(--fh-rotator-tracking, inherit);
 
     & > * {
       grid-area: 1 / 1;
@@ -84,8 +81,8 @@
       animation-timing-function: var(--fh-ease-out);
       animation-iteration-count: infinite;
       animation-fill-mode: both;
-      /* Word k starts its roll k steps in; the first is already in place at load. */
-      animation-delay: calc(var(--_k, 0) * var(--_step) - var(--_step) * 0.1923);
+      /* Word k starts its roll k steps in; the first is already in place at load (one roll back). */
+      animation-delay: calc(var(--_k, 0) * var(--_step) - var(--_roll));
     }
     .fh-rotator:has(> :nth-child(2):last-child) > * { animation-name: fh-rotator-2; --_n: 2; }
     .fh-rotator:has(> :nth-child(3):last-child) > * { animation-name: fh-rotator-3; --_n: 3; }
@@ -99,6 +96,7 @@
     .fh-rotator:not(:hover)[data-fh-paused] > * { animation-play-state: paused; }
   }
 
+  /* Each word's share of the loop: a roll in (roll ÷ (step × n)), held to its step's end, then a roll out. */
   @keyframes fh-rotator-2 {
     0% { opacity: 0; translate: 0 var(--_from, 100%); }
     9.62%, 50.00% { opacity: 1; translate: 0 0; }

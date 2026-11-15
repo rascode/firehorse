@@ -297,11 +297,11 @@ body:has(.site-hc) .site-kc-launch .site-kc-face { inline-size: 2rem; }
    until then, and the cycle takes over exactly where it shows the first word, so nothing jumps. */
 @media (prefers-reduced-motion: no-preference) {
   .site-hc__tag .fh-rotator { --_hold: 2.9s; } /* starts as the chip under the logo lands (2.9s) */
-  .site-hc__tag .fh-rotator > * { animation-delay: calc(var(--_hold) + var(--_k, 0) * var(--_step) - var(--_step) * 0.1923); }
+  .site-hc__tag .fh-rotator > * { animation-delay: calc(var(--_hold) + var(--_k, 0) * var(--_step) - var(--_roll)); }
   .site-hc__tag .fh-rotator > :first-child {
     animation-name: fh-rotator-7, hc-word-hold;
     animation-duration: calc(var(--_step) * 7), var(--_hold);
-    animation-delay: calc(var(--_hold) - var(--_step) * 0.1923), 0s;
+    animation-delay: calc(var(--_hold) - var(--_roll)), 0s;
     animation-iteration-count: infinite, 1;
     animation-fill-mode: both, none;
     animation-timing-function: var(--fh-ease-out), linear;

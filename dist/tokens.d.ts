@@ -162,6 +162,8 @@ export type FirehorseToken =
   | "--fh-duration-base"
   | "--fh-duration-slow"
   | "--fh-duration-pulse"
+  | "--fh-duration-roll"
+  | "--fh-duration-dwell"
   | "--fh-ease-standard"
   | "--fh-ease-out"
   | "--fh-ease-in-out"

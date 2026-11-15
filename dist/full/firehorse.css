@@ -257,6 +257,8 @@
     --fh-duration-base: .22s;
     --fh-duration-slow: .42s;
     --fh-duration-pulse: 1.8s;
+    --fh-duration-roll: .5s;
+    --fh-duration-dwell: 2.6s;
     --fh-ease-standard: ease;
     --fh-ease-out: cubic-bezier(.22, 1, .36, 1);
     --fh-ease-in-out: cubic-bezier(.65, 0, .35, 1);
@@ -3435,15 +3437,11 @@
   }
 
   .fh-rotator {
-    --_step: var(--fh-rotator-step, 2.6s);
+    --_step: var(--fh-rotator-step, var(--fh-duration-dwell));
+    --_roll: var(--fh-duration-roll);
     overflow-clip-margin: .06em;
-    transition: inline-size .5s var(--fh-ease-out);
+    transition: inline-size var(--_roll) var(--fh-ease-out);
     color: var(--fh-rotator-color, inherit);
-    font-family: var(--fh-rotator-font, inherit);
-    font-size: calc(1em * var(--fh-rotator-scale, 1));
-    font-style: var(--fh-rotator-style, inherit);
-    font-weight: var(--fh-rotator-weight, inherit);
-    letter-spacing: var(--fh-rotator-tracking, inherit);
     justify-items: start;
     display: inline-grid;
     overflow: clip;
@@ -3546,7 +3544,7 @@
       animation-timing-function: var(--fh-ease-out);
       animation-iteration-count: infinite;
       animation-fill-mode: both;
-      animation-delay: calc(var(--_k, 0) * var(--_step) - var(--_step) * .1923);
+      animation-delay: calc(var(--_k, 0) * var(--_step) - var(--_roll));
     }
 
     .fh-rotator:has( > :nth-child(2):last-child) > * {
