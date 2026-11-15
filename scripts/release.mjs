@@ -84,6 +84,12 @@ export const liveFieldTypes = () => fieldGroups({ live: true }).flatMap((g) => g
 export const isHeldTarget = (v) => String(v).split(/\s+/).filter(Boolean)
   .some((t) => (t.startsWith("/") ? pageStatus(t.split("#")[0]) !== "live" : categories.has(t) ? categories.get(t).status !== "live" : !isPublic(t)));
 
+/** A live category can be marked "stage": "preview" (published, still early): its pages and its families'
+ *  pages carry a Preview chip in their head, and the docs menu marks its link. */
+export const stageOf = (id) => categories.get(categoryOf(id))?.stage ?? null;
+/** The Preview chip for a head or a menu link ("" when the category is not in preview). */
+export const previewChip = (stage, { sm = false } = {}) => stage === "preview" ? `<span class="fh-chip fh-chip--tone${sm ? " fh-chip--sm" : ""}" data-tone="sky" data-fh-stage="preview">Preview</span>` : "";
+
 /** The small chip the --all preview puts in a held, draft or Pro head. */
 export const chip = (status, tier = "free") => {
   if (status !== "live") return `<span class="site-release-chip" data-fh-release="${status}">${status === "draft" ? "Draft" : "Held"}</span>`;

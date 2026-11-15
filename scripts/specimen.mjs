@@ -15,7 +15,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { showAll, isPublic, shownStatus, tierOf, categoryOf, chip } from "./release.mjs";
+import { showAll, isPublic, shownStatus, tierOf, categoryOf, chip, stageOf, previewChip } from "./release.mjs";
 import { LAYOUT, isBlock } from "./fh-tag.mjs";
 
 /** release.json category keys whose families get specimen pages. Two live categories are not here yet:
@@ -242,7 +242,7 @@ ${g.items.map((e) => `            <a class="site-variant" href="#${e.id}" data-s
       </nav>
       <div class="site-specimen__title">
         <h1 class="fh-display" id="specimen-title">${esc(f.name)}</h1>
-        <p class="site-specimen__meta"><code class="fh-chip fh-chip--plain fh-mono" id="${f.id}">${f.id}</code> <span class="fh-chip fh-chip--tone" data-tone="${tier === "pro" ? "fuchsia" : tone}" data-specimen-tier>${tier === "pro" ? "Pro" : "Free"}</span>${held}</p>
+        <p class="site-specimen__meta"><code class="fh-chip fh-chip--plain fh-mono" id="${f.id}">${f.id}</code> <span class="fh-chip fh-chip--tone" data-tone="${tier === "pro" ? "fuchsia" : tone}" data-specimen-tier>${tier === "pro" ? "Pro" : "Free"}</span>${previewChip(stageOf(f.id)) ? " " + previewChip(stageOf(f.id)) : ""}${held}</p>
       </div>
       ${f.summary ? `<p class="fh-lede">${esc(f.summary)}</p>` : ""}
       <div class="site-specimen__modebar">

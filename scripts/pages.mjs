@@ -10,7 +10,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expandGenerated, summaryCells } from "./developer.mjs";
-import { releasePages, dropHeldLinks, chip, elements, cut } from "./release.mjs";
+import { releasePages, dropHeldLinks, chip, elements, cut, previewChip } from "./release.mjs";
 import { withSpecimens, categoryGrid, redirectsFor, stageMode } from "./specimen.mjs";
 
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -199,7 +199,7 @@ const pageHead = (p, chips, all) => {
           <a class="fh-breadcrumb__back" href="${parent ? parent.path : "/"}" aria-label="Back to ${escHtml(parent ? parent.meta.name : "Firehorse")}"><span class="fh-dot fh-dot--live"></span></a>
           <ol>${crumbs}</ol>
         </nav>
-        <h1 class="fh-display" id="page-title">${m.headline ?? escHtml(m.name)}</h1>
+        <h1 class="fh-display" id="page-title">${m.headline ?? escHtml(m.name)}</h1>${m.stage === "preview" ? `\n        <p class="site-page-stage">${previewChip("preview")}</p>` : ""}
         ${m.lede ? `<p class="fh-lede">${m.lede}</p>` : ""}
         ${m.heroCta ?? ""}
       </div>
@@ -287,7 +287,7 @@ const navParts = (all) => {
   const walk = [0, 3, 1, 5, 6, 2]; // root, a split complement, warm, the other complement, cool, warm-far
   // "Firehorse forms: fields and…" reads as "Fields and…" under the title that already says Forms.
   const blurb = (d) => { const t = d.replace(/^(The )?Firehorse [^:]{1,40}:\s*/, ""); return t.charAt(0).toUpperCase() + t.slice(1); };
-  const item = (x, pre) => `${pre}<li><a class="fh-menu__item" href="${x.path}"><span class="fh-menu__tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span><span class="fh-roll">${escHtml(x.meta.name)}</span>${x.meta.description ? `<small>${escHtml(blurb(x.meta.description))}</small>` : ""}</a></li>`;
+  const item = (x, pre) => `${pre}<li><a class="fh-menu__item" href="${x.path}"><span class="fh-menu__tile"><i class="fh-icon fh-icon--${x.meta.icon ?? "file-text"}" aria-hidden="true"></i></span><span class="fh-roll">${escHtml(x.meta.name)}</span>${previewChip(x.meta.stage, { sm: true })}${x.meta.description ? `<small>${escHtml(blurb(x.meta.description))}</small>` : ""}</a></li>`;
   const mega = `    <div class="fh-mega__grid">
 ${MEGA.map((col, i) => {
     const items = (col.parent ? [by(col.parent), ...list.filter((x) => x.meta.parent === col.parent)] : col.paths.map((p) => (typeof p === "string" ? by(p) : by(p.path.split("#")[0]) && { path: p.path, meta: { name: p.name, icon: p.icon, description: p.description } }))).filter(Boolean);
