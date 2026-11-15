@@ -1,17 +1,20 @@
-// Firehorse site: the display rules specimen (data display contract W1), approved by Rascode 2026-11-14.
-// Every row of schema/display-rules.json in every context, drawn with today's parts (the Values family, VAL,
-// is wave W2), then all 127 semantic types as resolveValue() resolves them. Everything on this page is read
-// from the contract at load: change display-rules.json, run node scripts/value-rules.mjs, reload.
+// Firehorse site: the display rules specimen (data display contract W1, approved by Rascode 2026-11-14; updated
+// for W2b, plan section 7). Every row of schema/display-rules.json in every context, the text context as the
+// string textOf() makes, every option set published from devops.option_sets, then all 127 semantic types as
+// resolveValue() resolves them. Everything on this page is read from the contract at load: change
+// display-rules.json (or publish the platform's option sets), run node scripts/value-rules.mjs, reload.
 // Sample data only: people and figures are invented.
-import { resolveValue, rules, semanticTypes, CONTEXTS, EMPTY, toneOf } from "./values.js";
+import { resolveValue, textOf, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
 
 const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const icon = (n) => `<i class="fh-icon fh-icon--${n}" aria-hidden="true"></i>`;
 const people = [["Maya Chen", "maya", "Owner"], ["Mateo Ruiz", "mateo", "Designer"], ["Ava Marlow", "ava", "Engineer"], ["Ruth Okoye", "ruth", "Finance"], ["Sam Hale", "sam", "Support"], ["Isla Grant", "isla", "Sales"]];
 const av = ([name, img], size = "fh-avatar--xs") => `<span class="fh-avatar ${size}" title="${esc(name)}"><img src="/img/avatars/${img}.webp" alt=""></span>`;
 const stack = (list, max) => `<span class="fh-avatars">${list.slice(0, max).map((p) => av(p)).join("")}${list.length > max ? `<span class="fh-avatar fh-avatar--xs">+${list.length - max}</span>` : ""}</span>`;
-const chip = (text, tone = "neutral", extra = "") => `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="${tone}">${extra}${esc(text)}</span>`;
-const status = (v, tag = "span", after = "") => `<${tag} class="fh-chip fh-chip--tone fh-chip--sm" data-status="${esc(v)}"${tag === "button" ? ' type="button"' : ""}>${esc(v)}${after}</${tag}>`;
+const chip = (text, tone = "neutral", extra = "", ramp = null) => `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="${tone}"${ramp ? ` data-ramp="${ramp}"` : ""}>${extra}${esc(text)}</span>`;
+// Dot and word (VAL-1.1): a status in a table cell (decision 5); an ordinal option takes its ramp step instead of a tone.
+const dot = (o) => `<span class="fh-value fh-value--dot" ${o.ramp ? `data-ramp="${o.ramp}"` : `data-tone="${o.tone}"`} data-fh="VAL-1.1"><span class="fh-dot"></span>${esc(o.label)}</span>`;
+const optionChip = (o) => chip(o.label, o.tone, "", o.ramp);
 const chev = ` ${icon("chevron-down")}`;
 const num = (s) => `<span class="fh-num site-dr__num">${s}</span>`;
 const delta = (s, tone) => ` <span class="site-dr__delta" data-tone="${tone}">${s}</span>`;
@@ -27,21 +30,27 @@ const tags = ["demo", "featured", "internal", "beta", "q4"];
 const files = [["Proposal.pdf", "PDF", "412 KB"], ["Brief.docx", "DOCX", "38 KB"], ["Hero.png", "PNG", "1.2 MB"], ["Budget.xlsx", "XLSX", "64 KB"]];
 const prose = "Kickoff went well. The client wants the design system first, then the marketing site on top of it, with a review every Friday and a shared board for open questions.";
 
-/** Markup for one variant of one row. The samples are today's parts; W2 replaces them with VAL parts. */
-function draw(row, variant, max) {
-  const set = { options: (semanticTypes.status.options ?? []).map((value) => ({ value })) };
+/** Markup for one variant of one row, for the row's sample field r (what resolveValue() returned). */
+function draw(row, variant, max, r) {
+  const opt = (v) => r?.optionSet?.options.find((o) => o.value === v) ?? { value: v, label: v, tone: "neutral" };
   switch (`${row}:${variant}`) {
-    case "option.status:dot": return `<span class="fh-status" data-tone="${toneOf(set, "active")}">active</span>`;
-    case "option.status:chip": return status("active");
-    case "option.status:select": return status("active", "button", chev);
+    case "option.ordinal.few:dot": case "option.ordinal:dot": return dot(opt(row === "option.ordinal" ? "l" : "high"));
+    case "option.ordinal.few:chip": case "option.ordinal:chip": return optionChip(opt(row === "option.ordinal" ? "l" : "high"));
+    case "option.ordinal.few:segmented": return `<nav class="fh-segment" aria-label="Sample">${r.optionSet.options.map((o) => `<a${o.value === "high" ? ' aria-current="true"' : ""}>${esc(o.label)}</a>`).join("")}</nav>`;
+    case "option.ordinal:select": return `${optionChip(opt("l"))}${chev}`;
+    case "option.status:dot": return dot(opt("active"));
+    case "option.status:chip": return optionChip(opt("active"));
+    case "option.status:select": return `<button class="fh-chip fh-chip--tone fh-chip--sm" type="button" data-tone="${opt("active").tone}">${esc(opt("active").label)}${chev}</button>`;
+    case "option.code:chip": return chip("MX", "neutral");
+    case "option.code:select-search": return `<span class="site-dr__row">${icon("search")}${select("MX · Mexico")}</span>`;
     case "option.few:chip": return chip("she/her");
     case "option.few:segmented": return `<nav class="fh-segment" aria-label="Sample"><a aria-current="true">she/her</a><a>he/him</a><a>they/them</a></nav>`;
-    case "option.many:chip": return chip("Mexico");
-    case "option.many:select-search": return `<span class="site-dr__row">${icon("search")}${select("Mexico")}</span>`;
-    case "option:chip": return chip("Spanish");
-    case "option:select": return select("Spanish");
-    case "options:chips": return tags.slice(0, max).map((t) => chip(t)).join(" ") + (tags.length > max ? ` ${chip(`+${tags.length - max}`)}` : "");
-    case "options:chips-inline": return `<span class="site-dr__wrap">${tags.map((t) => chip(t)).join(" ")}</span>`;
+    case "option.many:chip": return chip("Northeast", "teal");
+    case "option.many:select-search": return `<span class="site-dr__row">${icon("search")}${select("Northeast")}</span>`;
+    case "option:chip": return optionChip(opt("ean13"));
+    case "option:select": return select("EAN-13");
+    case "options:chips": return tags.slice(0, max).map((t) => optionChip(opt(t))).join(" ") + (tags.length > max ? ` ${chip(`+${tags.length - max}`)}` : "");
+    case "options:chips-inline": return `<span class="site-dr__wrap">${tags.map((t) => optionChip(opt(t))).join(" ")}</span>`;
     case "options:count": return num(`${tags.length} tags`);
     case "options:tag-field": return `<span class="fh-input site-dr__wrap site-dr__field">${tags.slice(0, 3).map((t) => chip(t, "neutral")).join(" ")}<span class="site-dr__muted">Add a tag</span></span>`;
     case "entities:stack": return stack(people, max ?? 4);
@@ -65,19 +74,22 @@ function draw(row, variant, max) {
     case "ratio:text": return num("69%");
     case "ratio:ring": return `<div class="fh-ring site-dr__ring" style="--fh-value: 69" role="img" aria-label="69%"><b>69%</b></div>`;
     case "ratio:range": return `<input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Sample">`;
-    case "number.series:sparkline": return spark([4, 7, 5, 9, 8, 12, 10, 14]);
-    case "number:plain": return num("155");
-    case "number:unit": return num("155 min");
-    case "number:plain-delta": return `${num("155")}${delta("+12", "lime")}`;
-    case "number:number-input": return input("155", "number");
+    case "series:sparkline": return spark([4, 7, 5, 9, 8, 12, 10, 14]);
+    case "series:sparkline-last": return `<span class="site-dr__row">${spark([4, 7, 5, 9, 8, 12, 10, 14])}${num("14")}</span>`;
+    case "number.duration:duration": return num("8h 34m");
+    case "number.duration:duration-input": return input("8h 34m");
+    case "number.id:plain": return num("11155111");
+    case "number.id:number-input": return input("11155111", "text", ' inputmode="numeric"');
+    case "number:plain": return num("1,411");
+    case "number:unit": return num("1,411 kbps");
+    case "number:plain-delta": return `${num("1,411")}${delta("+12", "lime")}`;
+    case "number:number-input": return input("1411", "number");
     case "temporal.date:date-relative": return `Nov 27 <span class="site-dr__muted">· in 13d</span>`;
     case "temporal.date:date": return "Nov 27, 2026";
     case "temporal.date:relative": return "in 13 days";
     case "temporal.date:date-picker": return input("2026-11-27", "date");
     case "temporal.time:time": return num("9:27 AM");
     case "temporal.time:time-input": return input("09:27", "time");
-    case "temporal.duration:duration": return num("8h 34m");
-    case "temporal.duration:duration-input": return input("8h 34m");
     case "temporal:date-relative": return `Nov 14 <span class="site-dr__muted">· 2h ago</span>`;
     case "temporal:datetime": return "Nov 14, 2026, 5:01 PM";
     case "temporal:relative": return "2 hours ago";
@@ -93,7 +105,7 @@ function draw(row, variant, max) {
     case "link.phone:phone": return `<a href="tel:+14005222613">+1 400 522 2613</a>`;
     case "link.phone:link-chip": return chip("+1 400 522 2613", "sky", `${icon("phone")} `);
     case "link.phone:phone-input": return input("+1 400 522 2613", "tel");
-    case "link.action:action": return `<a class="fh-action" href="#dr-grid">Open ${icon("arrow-up-right")}</a>`;
+    case "text.action:action": return `<a class="fh-action" href="#dr-grid">Open ${icon("arrow-up-right")}</a>`;
     case "link:link": return `<a href="#dr-grid">example.com/demo</a>`;
     case "link:link-chip": return chip("example.com", "sky", `${icon("link")} `);
     case "link:url-input": return input("https://example.com/demo", "url");
@@ -119,34 +131,69 @@ function draw(row, variant, max) {
   }
 }
 
-// A sample field per grid row, so the page shows what resolveValue() really returns for it.
+// A sample field per grid row, so the page shows what resolveValue() really returns for it, and a sample value
+// for its text form (textOf). Two rows have no semantic type of their own yet: a sample field carries its set.
+const sizes = { key: "size", optionSet: { key: "sample.size", kind: "choice", ordinal: true, options: ["xs", "s", "m", "l", "xl"].map((v) => ({ value: v, label: v.toUpperCase() })) } };
+const regions = { key: "region", optionSet: { key: "sample.region", kind: "choice", options: ["Northeast", "Southeast", "Midwest", "Southwest", "West", "Northwest", "Mountain", "Pacific"].map((v) => ({ value: v, tone: "teal" })) } };
 const sampleField = {
-  "option.status": { semanticType: "status" }, "option.few": { semanticType: "pronouns" }, "option.many": { semanticType: "country_code" },
-  option: { semanticType: "language_code" }, options: { semanticType: "tags" }, entities: { semanticType: "owner_reference", multiple: true },
+  "option.ordinal.few": { semanticType: "priority" }, "option.ordinal": sizes,
+  "option.status": { semanticType: "status" }, "option.code": { semanticType: "country_code" }, "option.few": { semanticType: "pronouns" }, "option.many": regions,
+  option: { semanticType: "barcode_format" }, options: { semanticType: "tags" }, entities: { semanticType: "owner_reference", multiple: true },
   "entity.person": { semanticType: "owner_reference" }, "entity.record": { semanticType: "entity_reference" }, money: { semanticType: "fiat_amount", currency: "USD" },
-  ratio: { semanticType: "percentage" }, "number.series": { semanticType: "waveform_data" }, number: { semanticType: "duration_minutes" },
-  "temporal.date": { semanticType: "date" }, "temporal.time": { semanticType: "time" }, "temporal.duration": { semanticType: "duration_iso8601" },
+  ratio: { semanticType: "percentage" }, series: { semanticType: "waveform_data" }, "number.duration": { semanticType: "duration_iso8601" },
+  "number.id": { semanticType: "chain_id" }, number: { semanticType: "bitrate_kbps" },
+  "temporal.date": { semanticType: "date" }, "temporal.time": { semanticType: "time" },
   temporal: { semanticType: "updated_at", readOnly: false }, file: { semanticType: "document_file", multiple: true }, "link.email": { semanticType: "email" },
-  "link.phone": { semanticType: "phone_e164" }, "link.action": { semanticType: "computed_button" }, link: { semanticType: "url" },
+  "link.phone": { semanticType: "phone_e164" }, link: { semanticType: "url" },
   flag: { semanticType: "checkbox" }, prose: { semanticType: "description" }, "code.secret": { semanticType: "api_key_secret_ref" },
-  "code.json": { semanticType: "barcode_metadata", readOnly: false }, code: { semanticType: "transaction_hash" }, text: { semanticType: "title" },
+  "code.json": { semanticType: "barcode_metadata", readOnly: false }, code: { semanticType: "transaction_hash" }, "text.action": { semanticType: "computed_button" },
+  text: { semanticType: "title" },
 };
+const sampleValue = {
+  "option.ordinal.few": "high", "option.ordinal": "l", "option.status": "active", "option.code": "MX", "option.few": "she/her", "option.many": "Northeast",
+  option: "ean13", options: ["demo", "featured", "internal"], entities: people.slice(0, 3).map(([label], id) => ({ id, label })), "entity.person": { id: 1, label: "Maya Chen" },
+  "entity.record": { id: 14, label: "Harbor index refresh" }, money: 12480.5, ratio: 69, series: [4, 7, 5, 9, 8, 12, 10, 14], "number.duration": 30840,
+  "number.id": 11155111, number: 1411, "temporal.date": "2026-11-27", "temporal.time": "09:27:00", temporal: "2026-11-14T22:01:00Z",
+  file: files.map(([name]) => ({ name })), "link.email": "maya.chen@example.com", "link.phone": "+14005222613", link: "https://example.com/demo", flag: true,
+  prose: "Kickoff went **well**. See [the brief](https://example.com).", "code.secret": "vault:7f3a", "code.json": { format: "ean13" },
+  code: "0xef111265ee51e58e6709", "text.action": "Open", text: "Weekly review",
+};
+const nameOf = (field) => field.semanticType ?? field.optionSet?.key ?? field.key;
 
 function gridTable() {
   const head = `<thead><tr><th scope="col">Row</th>${CONTEXTS.map((c) => `<th scope="col">${c}<small>${esc(rules.contexts[c])}</small></th>`).join("")}</tr></thead>`;
   const body = rules.grid.map((row) => {
     const field = sampleField[row.row];
     const isNew = /^Not in the approved grid/.test(row.note ?? "");
+    const isW2b = /\(decision \d\)\.?$/.test(row.note ?? "");
     const cells = CONTEXTS.map((c) => {
       const r = resolveValue(field, c);
       if (r.row !== row.row) return `<td class="site-dr__cell" data-mismatch>resolves to ${esc(r.row)}</td>`;
+      if (c === "text") {
+        // The text context is never drawn: show the string textOf() makes for the sample value.
+        if (!r.variant) return `<td class="site-dr__cell"><div class="site-dr__sample site-dr__muted">no text form</div><code class="site-dr__name">none</code></td>`;
+        return `<td class="site-dr__cell"><div class="site-dr__sample"><code class="site-dr__text">${esc(textOf(field, sampleValue[row.row]))}</code></div><code class="site-dr__name">${esc(r.variant)}</code></td>`;
+      }
       if (!r.variant) return `<td class="site-dr__cell site-dr__none"><span class="site-dr__muted" aria-label="Not shown">·</span></td>`;
-      return `<td class="site-dr__cell"${r.align === "end" ? ' data-align="end"' : ""}><div class="site-dr__sample">${draw(row.row, r.variant, r.max)}</div><code class="site-dr__name">${esc(r.variant)}${r.max ? ` +N after ${r.max}` : ""}</code></td>`;
+      return `<td class="site-dr__cell"${r.align === "end" ? ' data-align="end"' : ""}><div class="site-dr__sample">${draw(row.row, r.variant, r.max, r)}</div><code class="site-dr__name">${esc(r.variant)}${r.max ? ` +N after ${r.max}` : ""}</code></td>`;
     }).join("");
-    return `<tr${isNew ? " data-new" : ""}><th scope="row"><b>${esc(row.label)}</b><small>${esc(rules.variants[row.shape].group)} ${esc(rules.variants[row.shape].name)} · <code>${esc(field.semanticType)}</code></small>${isNew ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span>` : ""}${row.note ? `<small class="site-dr__note">${esc(row.note)}</small>` : ""}</th>${cells}</tr>`;
+    return `<tr${isNew ? " data-new" : ""}${isW2b ? " data-w2b" : ""}><th scope="row"><b>${esc(row.label)}</b><small>${esc(rules.variants[row.shape].group)} ${esc(rules.variants[row.shape].name)} · <code>${esc(nameOf(field))}</code></small>${isNew ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span>` : ""}${isW2b ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="violet">Section 7</span>` : ""}${row.note ? `<small class="site-dr__note">${esc(row.note)}</small>` : ""}</th>${cells}</tr>`;
   }).join("");
   const empty = `<tr><th scope="row"><b>Empty (any shape)</b><small>Rule 7</small></th>${CONTEXTS.map(() => `<td class="site-dr__cell"><div class="site-dr__sample site-dr__muted">${EMPTY.text}</div><code class="site-dr__name">empty</code></td>`).join("")}</tr>`;
   return `<div class="fh-table-wrap site-dr__scroll"><table class="fh-table site-dr__grid">${head}<tbody>${body}${empty}</tbody></table></div>`;
+}
+
+// Every option set published from devops.option_sets (migration 435): its kind, who uses it, and its options as
+// they draw (a status option by its state's tone, a category by its own, an ordinal choice set as a ramp).
+function setsTable() {
+  const used = (key) => Object.keys(semanticTypes).filter((k) => semanticTypes[k].optionSet === key);
+  const rows = Object.entries(optionSets).map(([key, set]) => {
+    const r = resolveValue({ optionSet: key, shape: "option", kind: set.ordinal && set.kind !== "status" ? "ordinal" : set.kind === "status" ? "status" : "choice" }, "record");
+    const options = r.optionSet.options.map((o) => `<span class="site-dr__opt">${set.kind === "status" ? dot(o) : optionChip(o)}${o.state ? `<small class="site-dr__muted">${esc(o.state)}</small>` : ""}</span>`).join("");
+    const kind = `${set.kind}${set.ordinal ? ", ordinal" : ""}${r.ramp ? ", ramp" : ""}`;
+    return `<tr><th scope="row"><code>${esc(key)}</code><small>${esc(set.label ?? "")}</small></th><td><small>${esc(kind)}${set.generator ? `<br>generated: ${esc(set.generator)} (samples)` : ""}</small></td><td><small>${used(key).map((k) => `<code>${esc(k)}</code>`).join(" ")}</small></td><td><div class="site-dr__wrap">${options}</div></td></tr>`;
+  }).join("");
+  return `<div class="fh-table-wrap site-dr__scroll"><table class="fh-table site-dr__types"><thead><tr><th scope="col">Set</th><th scope="col">Kind</th><th scope="col">Used by</th><th scope="col">Options, in order</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
 function typesTable() {
@@ -167,6 +214,10 @@ function typesTable() {
 const fill = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
 fill("dr-grid-table", gridTable());
 fill("dr-types-table", typesTable());
+fill("dr-sets-table", setsTable());
+fill("dr-count-sets", String(Object.keys(optionSets).length));
+fill("dr-count-rules", String(rules.rules.length));
+fill("dr-count-w2b", String(rules.grid.filter((r) => /\(decision \d\)\.?$/.test(r.note ?? "")).length));
 fill("dr-rules-list", rules.rules.map((r) => `<li>${esc(r)}</li>`).join(""));
 fill("dr-count-rows", String(rules.grid.length));
 fill("dr-count-new", String(rules.grid.filter((r) => /^Not in the approved grid/.test(r.note ?? "")).length));

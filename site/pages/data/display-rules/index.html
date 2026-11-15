@@ -5,9 +5,9 @@
   "name": "Display rules",
   "tone": "sky",
   "title": "Display rules · Firehorse",
-  "description": "The data display contract's rule grid: every shape in every context, drawn with today's parts, and all 127 semantic types as resolveValue() resolves them.",
+  "description": "The data display contract's rule grid: every shape in every context, the text form of each value, every option set, and all 127 semantic types as resolveValue() resolves them.",
   "headline": "Display rules: one way to show a value",
-  "lede": "Every shape in every context, read live from schema/display-rules.json. The samples use today's parts; the Values family (VAL) that replaces them is wave W2.",
+  "lede": "Every shape in every context, read live from schema/display-rules.json, with the option sets the platform publishes from devops.option_sets. Updated for the merged plan (section 7): series, the text context, option sets and priority's ramp.",
   "styles": ["/display-rules.css"],
   "scripts": ["display-rules.js"],
   "icon": "table-2"
@@ -26,9 +26,10 @@
       <h2 id="dr-approve-title">Approved</h2>
       <div class="site-dr__ask">
         <p>The grid below has <b id="dr-count-rows">27</b> rows. Each row is one kind of value; each column is where it sits. The name under each sample is the variant <code>resolveValue()</code> returns for that row's sample field, so the page shows the contract itself, not a drawing of it.</p>
-        <p>Rascode approved the grid on 2026-11-14. The <b id="dr-count-new">7</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span> were not in the plan's grid: they fill gaps found while giving all 127 types a shape (text, time of day, durations, 5 to 7 options, actions, secrets, JSON), and were approved with it.</p>
+        <p>Rascode approved the grid on 2026-11-14. The <b id="dr-count-new">7</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span> were not in the plan's grid: they fill gaps found while giving all 127 types a shape (text, time of day, 5 to 7 options, secrets, JSON), and were approved with it. Durations and actions, added then too, now come from section 7.</p>
         <p>Use the Dark / Light toggle at the top to check every variant in both modes.</p>
-        <p>Next, wave W2 builds each variant as a Values part (VAL-1 to VAL-11) with read and edit states.</p>
+        <p>The <b id="dr-count-w2b">7</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="violet">Section 7</span> come from the merged plan (Rascode, 2026-11-14 20:08 ET; the Sheet wins over migration 434): priority as an ordinal ramp, generated code sets, series as the 14th shape, durations and identifier-like numbers as numbers, and the computed button as an action. Status in a table cell is dot and word; chip in record, card and board. The <code>text</code> column is the sixth context: the plain string each value becomes for CSV export, <code>aria-label</code>, copy and search. A secret has none.</p>
+        <p>The Values family (VAL-1 to VAL-11) is built (W2). Next, wave W3 puts the surfaces on it.</p>
       </div>
     </section>
 
@@ -39,12 +40,18 @@
     </section>
 
     <section id="dr-rules" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-rules-title" data-fh-label="Rules">
-      <h2 id="dr-rules-title">The seven rules</h2>
+      <h2 id="dr-rules-title">The <span id="dr-count-rules">10</span> rules</h2>
       <ol id="dr-rules-list"></ol>
+    </section>
+
+    <section id="dr-sets" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-sets-title" data-fh-label="Option sets">
+      <h2 id="dr-sets-title"><span id="dr-count-sets">23</span> option sets</h2>
+      <p>Option sets are data: <code>devops.option_sets</code> (migration 435), published to <code>schema/option-sets.json</code>. A status option is in one of five states and takes its tone: done lime, moving sky, waiting amber, failed rose, ended neutral. A category is toned with a hue no state uses. A code set is generated from a standard and holds samples until it is. Priority is ordinal: one hue stepped in order, low to urgent.</p>
+      <div class="site-dr__frame" id="dr-sets-table" data-dr-frame data-fh-scheme="dark"><p class="site-dr__muted">Loading the option sets…</p></div>
     </section>
 
     <section id="dr-types" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-types-title" data-fh-label="Semantic types">
       <h2 id="dr-types-title">All <span id="dr-count-types">127</span> semantic types</h2>
-      <p>Each type's display shape comes from the platform database (<code>devops.semantic_types</code>, migration 434), published to <code>schema/semantic-types.json</code>. The variant in each column is what <code>resolveValue()</code> returns for that type alone.</p>
+      <p>Each type's display shape comes from the platform database (<code>devops.semantic_types</code>, migrations 434 and 435), published to <code>schema/semantic-types.json</code>. The variant in each column is what <code>resolveValue()</code> returns for that type alone.</p>
       <div class="site-dr__frame" id="dr-types-table" data-dr-frame data-fh-scheme="dark"><p class="site-dr__muted">Loading the types…</p></div>
     </section>
