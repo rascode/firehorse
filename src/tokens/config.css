@@ -148,10 +148,14 @@
 
   /* —— Row spacing: the room above and below each row of a table,
      key value list or description list. md is the default. —— */
-  [data-fh-rows="sm"] { --fh-row-pad: var(--fh-space-2); }
-  [data-fh-rows="md"] { --fh-row-pad: var(--fh-space-3); }
-  [data-fh-rows="lg"] { --fh-row-pad: var(--fh-space-4); }
-  [data-fh-rows="xl"] { --fh-row-pad: var(--fh-space-5); }
+  [data-fh-rows="sm"] { --fh-row-pad: var(--fh-space-2); --fh-row-media: 1.5rem; }
+  [data-fh-rows="md"] { --fh-row-pad: var(--fh-space-3); --fh-row-media: 2rem; }
+  [data-fh-rows="lg"] { --fh-row-pad: var(--fh-space-4); --fh-row-media: 2.75rem; }
+  [data-fh-rows="xl"] { --fh-row-pad: var(--fh-space-5); --fh-row-media: 3.5rem; }
+
+  :root {
+    --fh-media-lg: 5rem;
+  }
 
   /* —— Density: rescales the spacing ramp —— */
   [data-fh-density] {

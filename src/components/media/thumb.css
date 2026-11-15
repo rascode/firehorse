@@ -1,0 +1,136 @@
+/*
+ * Firehorse — Thumbs (THB)
+ * components/media · layer fh.components
+ * Row-height thumbs for datatable cells and value previews (DR4).
+ */
+
+@layer fh.components {
+  .fh-thumb {
+    --_size: var(--fh-row-media, var(--fh-avatar-inline));
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: var(--_size);
+    block-size: var(--_size);
+    padding: 0;
+    border: var(--fh-border-thin) solid var(--fh-color-border);
+    border-radius: var(--fh-avatar-entity-radius, var(--fh-radius-md));
+    background: var(--fh-color-surface-sunken);
+    overflow: hidden;
+    vertical-align: middle;
+    cursor: var(--fh-cursor-action);
+
+    & img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
+    }
+  }
+
+  .fh-thumb--tile {
+    font-family: var(--fh-type-figure-family);
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-type-label-weight);
+    letter-spacing: var(--fh-type-label-tracking);
+    text-transform: var(--fh-type-label-case, uppercase);
+    color: var(--fh-color-text-muted);
+    cursor: default;
+  }
+
+  .fh-thumb--portrait {
+  aspect-ratio: 3 / 4;
+    block-size: auto;
+    inline-size: calc(var(--_size) * 0.75);
+  }
+
+  .fh-thumb--lg {
+    --_size: var(--fh-media-lg, 5rem);
+  }
+
+  .fh-thumbs-row {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    vertical-align: middle;
+
+    & > .fh-thumb--more {
+      font-family: var(--fh-type-figure-family);
+      font-size: var(--fh-type-label);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--fh-type-figure-tracking);
+    }
+  }
+
+  .fh-thumb-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--fh-media-lg, 5rem), 1fr));
+    gap: var(--fh-gap-bound);
+  }
+
+  .fh-cell__file {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-bound);
+    min-block-size: var(--fh-row-media, 2rem);
+
+    &[data-uploading]::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: 0;
+      block-size: 2px;
+      border-radius: var(--fh-radius-pill);
+      background: linear-gradient(var(--fh-tone, var(--fh-color-accent)), var(--fh-tone, var(--fh-color-accent))) 0 / calc(var(--fh-upload-progress, 0) * 1%) 100% no-repeat, color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+    }
+
+    &[data-error] .fh-cell__file-error {
+      display: block;
+      color: var(--fh-color-danger);
+      font-size: var(--fh-type-meta);
+    }
+  }
+
+  .fh-cell__file-error { display: none; }
+
+  .fh-cell__file-add {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--fh-row-media, 2rem);
+    block-size: var(--fh-row-media, 2rem);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-avatar-entity-radius, var(--fh-radius-md));
+    color: var(--fh-color-text-subtle);
+    cursor: var(--fh-cursor-action);
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--fh-color-border-strong);
+      color: var(--fh-color-text);
+    }
+  }
+
+  .fh-cell__file-actions {
+    display: inline-flex;
+    gap: var(--fh-gap-bound);
+    opacity: 0;
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+
+  .fh-cell__file:hover .fh-cell__file-actions,
+  .fh-cell__file:focus-within .fh-cell__file-actions {
+    opacity: 1;
+  }
+
+  .fh-media-view {
+    max-inline-size: min(90vw, 48rem);
+    max-block-size: 85vh;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+}

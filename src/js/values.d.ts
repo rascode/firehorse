@@ -105,4 +105,7 @@ export function initialsOf(name: string): string;
 export function avatarMarkup(entity: Partial<Entity> & { name?: string }, opts?: { kind?: string; alt?: boolean }): string;
 /** At most three faces, then +N at the same size and shape. */
 export function stackMarkup(list: (Partial<Entity> & { name?: string })[], opts?: { kind?: string; max?: number }): string;
+export function thumbMarkup(file: unknown, opts?: { portrait?: boolean; lg?: boolean; open?: boolean }): string;
+export function thumbClusterMarkup(files: unknown[], opts?: { max?: number }): string;
+export function formatBytes(n: number): string;
 export function gridRow(described: DescribedField, count?: number | null, set?: OptionSet | null): Record<string, any>;

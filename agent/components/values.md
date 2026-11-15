@@ -110,6 +110,9 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | temporal, date | `date-relative` | `date` | `relative` | `relative` | `date-picker` | `iso-date` | VAL-7 |
 | temporal, time of day (Not in the approved grid: a time of day has no relative form) | `time` | `time` | `time` | · | `time-input` | `time` | VAL-7 |
 | temporal, moment | `date-relative` | `datetime` | `relative` | `relative` | `date-picker` | `iso-datetime` | VAL-7 |
+| images, several | `thumbs` +N after 3 | `gallery` | `thumbs` | `count` | `dropzone` | `file-names` | VAL-8 |
+| image | `thumb` | `preview` | `thumb` | `thumb` | `dropzone` | `file-names` | VAL-8 |
+| document | `type-chip` | `preview` | `thumb` | `count` | `dropzone` | `file-names` | VAL-8 |
 | file | `type-chip` +N after 3 | `file-row` | `thumb` | `count` | `dropzone` | `file-names` | VAL-8 |
 | link, email | `email` | `email` | `link-chip` | · | `email-input` | `value` | VAL-9 |
 | link, phone | `phone` | `phone` | `link-chip` | · | `phone-input` | `value` | VAL-9 |
@@ -134,7 +137,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD · `duration` · `duration-input` (edit) FLD |
 | VAL-6 Number | series | `sparkline` MET · `sparkline-last` MET |
 | VAL-7 Temporal | temporal | `date` · `date-relative` · `relative` · `datetime` · `range` · `overdue` · `time` · `duration` · `date-picker` (edit) FLD · `time-input` (edit) FLD · `duration-input` (edit) FLD |
-| VAL-8 File | file | `type-chip` CHP · `thumb` THB · `thumbs` THB · `file-row` SFL · `count` · `dropzone` (edit) UPL |
+| VAL-8 File | file | `type-chip` CHP · `thumb` THB · `thumbs` THB · `file-row` SFL · `count` · `dropzone` (edit) UPL · `preview` THB, SFL · `gallery` THB |
 | VAL-9 Link | link | `link` ACT · `email` ACT · `phone` ACT · `link-chip` CHP · `action` ACT · `url-input` (edit) FLD · `email-input` (edit) FLD · `phone-input` (edit) FLD |
 | VAL-10 Flag | flag | `check` CHO · `yes-no` · `count` · `switch` (edit) CHO |
 | VAL-11 Prose, text and code | prose | `clamp-2` · `clamp-3` · `full` · `textarea` (edit) FLD |
@@ -228,7 +231,10 @@ Every relation cell and picker row reads this object and shows as much as its va
 | `email` | `email` | link |  |
 | `phone` | `phone_e164` | link |  |
 | `link` | `entity_reference` | entity, several |  |
-| `attachment` | `document_file` | file, several |  |
+| `attachment` | `image_asset` | file, several |  |
+| `image` | `image_asset` | file |  |
+| `images` | `image_asset` | file, several |  |
+| `document` | `document_file` | file |  |
 | `formula` | `computed_formula` | text |  |
 | `sparkline` | · | series | No semantic type yet: a list of numbers. |
 <!-- aliases:end -->
@@ -902,6 +908,26 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
   <div class="fh-value fh-value--dropzone fh-value--field" data-mode="read" data-fh="VAL-8.6"><label class="fh-dropzone" data-tone="sky"><input type="file" multiple disabled><span class="fh-dropzone__title">Drop files or browse</span><span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span></label></div>
   <div class="fh-value fh-value--dropzone fh-value--field" data-mode="edit" data-fh="VAL-8.6"><label class="fh-dropzone" data-tone="sky"><input type="file" multiple><span class="fh-dropzone__title">Drop files or browse</span><span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span></label></div>
   <div class="fh-value fh-value--dropzone fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-8.6"><label class="fh-dropzone" data-tone="sky"><input type="file" multiple><span class="fh-dropzone__title">Drop files or browse</span><span class="fh-dropzone__hint">PDF, PNG or JPG · up to 10 MB</span></label></div>
+</div>
+```
+
+`VAL-8.4` Preview (lg) · `file` `preview` · built from THB, SFL
+
+```html
+<div class="fh-stack">
+  <div class="fh-value fh-value--file-row" data-fh="VAL-8.4"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul></div>
+  <div class="fh-value fh-value--file-row" data-mode="edit" data-fh="VAL-8.4"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul><button class="fh-value__action" type="button" aria-label="Remove relay-report.md" title="Remove"><i class="fh-icon fh-icon--x" aria-hidden="true"></i></button><label class="fh-value__action" aria-label="Replace the file" title="Replace the file"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></div>
+  <div class="fh-value fh-value--file-row fh-value--lg" data-fh="VAL-8.4"><ul class="fh-files"><li><a href="#c-values-file"><i class="fh-icon fh-icon--file-text" aria-hidden="true"></i><span>relay-report.md</span><small>12 KB</small><time datetime="2026-11-11">Nov 11</time></a></li></ul></div>
+</div>
+```
+
+`VAL-8.3` Gallery grid · `file` `gallery` · built from THB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--thumbs" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
+  <span class="fh-value fh-value--thumbs" data-mode="edit" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span><label class="fh-value__action" aria-label="Add an image" title="Add an image"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i><input type="file" hidden></label></span>
+  <span class="fh-value fh-value--thumbs fh-value--lg" data-fh="VAL-8.3"><span class="fh-avatars" role="group" aria-label="5 images"><span class="fh-avatar fh-avatar--square"><img src="img/shop/ceramic-jar.svg" alt="ceramic-jar.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/candle.svg" alt="candle.svg"></span><span class="fh-avatar fh-avatar--square"><img src="img/shop/soap.svg" alt="soap.svg"></span><span class="fh-avatar fh-avatar--square fh-avatars__more">+2</span></span></span>
 </div>
 ```
 

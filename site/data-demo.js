@@ -158,3 +158,39 @@ if (el) {
     }
   });
 }
+
+const uploadEl = document.getElementById("upload-rows-dt");
+if (uploadEl) {
+  const sample = (n) => ({ name: `sample-${n}.webp`, url: `/img/samples/dr4-${n}.webp`, image: `/img/samples/dr4-${n}.webp` });
+  const uploadRows = [
+    { id: "u1", label: "sm", photo: sample("a") },
+    { id: "u2", label: "md", photo: sample("b") },
+    { id: "u3", label: "lg", photo: sample("c") },
+    { id: "u4", label: "xl", photo: sample("d") },
+    { id: "u5", label: "error", photo: null },
+  ];
+  const uploadTable = new FirehorseTable(uploadEl, {
+    title: "Upload by row height",
+    icon: "upload",
+    tone: "violet",
+    primary: "label",
+    pageSize: 10,
+    fields: [
+      { key: "label", label: "Rows", type: "text", width: "6rem" },
+      { key: "photo", label: "Photo", type: "image", upload: true, accept: "image/*", maxBytes: 2_000_000 },
+    ],
+    rows: uploadRows,
+  });
+  uploadTable.setFileState("u5", "photo", { error: "Use an image file", progress: null });
+  uploadEl.addEventListener("fh:file-add", (e) => {
+    const { row, column, files } = e.detail;
+    let p = 0;
+    const tick = () => {
+      p = Math.min(1, p + 0.18);
+      uploadTable.setFileState(row.id, column, { progress: p, error: null });
+      if (p < 1) requestAnimationFrame(() => setTimeout(tick, 120));
+      else uploadTable.setFileState(row.id, column, { progress: 1, url: URL.createObjectURL(files[0]), error: null });
+    };
+    tick();
+  });
+}

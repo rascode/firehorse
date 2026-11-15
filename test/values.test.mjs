@@ -52,10 +52,10 @@ t("the grid only names variants its shape has, and every part is a Firehorse fam
   for (const s of SHAPES) assert.ok(rules.grid.some((r) => r.shape === s && !r.match), `${s} has a default row`);
 });
 
-t("the datatable's 22 types are aliases that resolve", () => {
-  const dt = ["text", "long", "number", "currency", "percent", "progress", "select", "status", "multi", "tags", "date", "check", "rating", "user", "users", "url", "email", "phone", "link", "attachment", "formula", "sparkline"];
+t("the datatable's types are aliases that resolve", () => {
+  const dt = ["text", "long", "number", "currency", "percent", "progress", "select", "status", "multi", "tags", "date", "check", "rating", "user", "users", "url", "email", "phone", "link", "attachment", "image", "images", "document", "formula", "sparkline"];
   assert.deepEqual(Object.keys(rules.aliases).sort(), [...dt].sort());
-  const want = { text: "text", long: "prose", number: "number", currency: "money", percent: "ratio", progress: "ratio", select: "option", status: "option", multi: "options", tags: "options", date: "temporal", check: "flag", rating: "ratio", user: "entity", users: "entity", url: "link", email: "link", phone: "link", link: "entity", attachment: "file", formula: "text", sparkline: "series" };
+  const want = { text: "text", long: "prose", number: "number", currency: "money", percent: "ratio", progress: "ratio", select: "option", status: "option", multi: "options", tags: "options", date: "temporal", check: "flag", rating: "ratio", user: "entity", users: "entity", url: "link", email: "link", phone: "link", link: "entity", attachment: "file", image: "file", images: "file", document: "file", formula: "text", sparkline: "series" };
   for (const type of dt) {
     const d = describeField({ type });
     assert.equal(d.shape, want[type], type);

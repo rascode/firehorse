@@ -37,7 +37,7 @@
     --_text: var(--fh-value-text, var(--fh-type-value));
     --_avatar: var(--fh-value-avatar, var(--fh-avatar-inline));
     --_ring: var(--fh-value-ring, 2.5rem);
-    --_thumb: var(--fh-value-thumb, var(--fh-avatar-sm));
+    --_thumb: var(--fh-value-thumb, var(--fh-row-media, var(--fh-avatar-sm)));
     --_spark: var(--fh-value-spark, 6rem);
     --fh-avatar-size: var(--_avatar);
     --fh-avatar-initials: var(--fh-type-label);
@@ -320,6 +320,15 @@
 
   /* —— VAL-8 File: a thumb is a square avatar frame holding the image —— */
   .fh-value .fh-avatar--square { --fh-avatar-size: var(--_thumb); }
+  .fh-value--thumb .fh-thumb,
+  .fh-value--thumbs .fh-thumbs-row { --_size: var(--_thumb); }
+  .fh-value--preview .fh-thumb { --_size: var(--fh-media-lg, 5rem); }
+  .fh-value--preview {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+  }
+  .fh-value--gallery .fh-thumb-gallery .fh-thumb { --_size: var(--fh-media-lg, 5rem); }
   .fh-value--file-row > .fh-files { flex: 1 1 auto; }
 
   /* —— VAL-10 Flag —— */

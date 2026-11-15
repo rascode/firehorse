@@ -98,9 +98,15 @@ function draw(row, variant, max, r) {
     case "temporal:date-picker": return input("2026-11-14T17:01", "datetime-local");
     case "file:type-chip": return files.slice(0, max).map((f) => chip(f[1])).join(" ") + (files.length > max ? ` ${chip(`+${files.length - max}`)}` : "");
     case "file:file-row": return `<span class="site-dr__row">${icon("file-text")}<b>Proposal.pdf</b><span class="site-dr__muted">412 KB</span></span>`;
-    case "file:thumb": return `<span class="site-dr__thumb">PDF</span>`;
+    case "file:thumb": return `<span class="fh-thumb fh-thumb--tile">PNG</span>`;
+    case "file:thumbs": return `<span class="fh-thumbs-row"><span class="fh-thumb fh-thumb--tile">A</span><span class="fh-thumb fh-thumb--tile">B</span><span class="fh-thumb fh-thumb--tile fh-thumb--more">+2</span></span>`;
+    case "file:preview": return `<span class="site-dr__row"><span class="fh-thumb fh-thumb--lg fh-thumb--tile">IMG</span><span><b>hero.webp</b><span class="site-dr__muted">48 KB</span></span></span>`;
+    case "file:gallery": return `<span class="fh-thumb-gallery"><span class="fh-thumb fh-thumb--tile">A</span><span class="fh-thumb fh-thumb--tile">B</span><span class="fh-thumb fh-thumb--tile">C</span></span>`;
     case "file:count": return num("4 files");
     case "file:dropzone": return `<div class="fh-dropzone fh-dropzone--compact"><span class="fh-dropzone__title">Drop files or browse</span></div>`;
+    case "image:thumb": case "image:preview": case "image:dropzone": case "images:thumbs": case "images:gallery": case "images:dropzone":
+    case "document:type-chip": case "document:preview": case "document:dropzone": case "document:thumb": case "document:count":
+      return draw("file", variant.split(":")[1], max, r);
     case "link.email:email": return `<a href="mailto:maya.chen@example.com">maya.chen@example.com</a>`;
     case "link.email:link-chip": return chip("maya.chen@example.com", "sky", `${icon("at-sign")} `);
     case "link.email:email-input": return input("maya.chen@example.com", "email");
@@ -145,7 +151,9 @@ const sampleField = {
   ratio: { semanticType: "percentage" }, series: { semanticType: "waveform_data" }, "number.duration": { semanticType: "duration_iso8601" },
   "number.id": { semanticType: "chain_id" }, number: { semanticType: "bitrate_kbps" },
   "temporal.date": { semanticType: "date" }, "temporal.time": { semanticType: "time" },
-  temporal: { semanticType: "updated_at", readOnly: false }, file: { semanticType: "document_file", multiple: true }, "link.email": { semanticType: "email" },
+  temporal: { semanticType: "updated_at", readOnly: false },
+  images: { semanticType: "image_asset", multiple: true }, image: { semanticType: "image_asset" }, document: { semanticType: "document_file" },
+  file: { semanticType: "media_file", multiple: true }, "link.email": { semanticType: "email" },
   "link.phone": { semanticType: "phone_e164" }, link: { semanticType: "url" },
   flag: { semanticType: "checkbox" }, prose: { semanticType: "description" }, "code.secret": { semanticType: "api_key_secret_ref" },
   "code.json": { semanticType: "barcode_metadata", readOnly: false }, code: { semanticType: "transaction_hash" }, "text.action": { semanticType: "computed_button" },

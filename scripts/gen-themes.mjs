@@ -56,6 +56,7 @@ const CONFIG_KEYS = {
   radius: "radius",
   density: "density",
   table: "table",
+  rows: "rows",
   type: "type",
 };
 const TYPE_TIER_KEYS = new Set([

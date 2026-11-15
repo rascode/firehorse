@@ -628,6 +628,44 @@ ready(() => {
     }
   });
 
+  /* —— Media viewer (DR4): thumbs open a dialog at natural size —— */
+  let mediaDlg = document.getElementById("fh-media-viewer");
+  if (!mediaDlg) {
+    mediaDlg = document.createElement("dialog");
+    mediaDlg.id = "fh-media-viewer";
+    mediaDlg.className = "fh-dialog";
+    mediaDlg.innerHTML = `<form method="dialog"><header class="fh-dialog__header"><button class="fh-close" value="cancel" aria-label="Close"></button></header><div class="fh-dialog__body"><img class="fh-media-view" alt=""></div></form>`;
+    document.body.append(mediaDlg);
+  }
+  const mediaImg = mediaDlg.querySelector(".fh-media-view");
+  let cluster = [];
+  let clusterI = 0;
+  const showMedia = (url, alt, list) => {
+    cluster = list?.length ? list : [url];
+    clusterI = Math.max(0, cluster.indexOf(url));
+    mediaImg.src = cluster[clusterI];
+    mediaImg.alt = alt || "";
+    if (!mediaDlg.open) mediaDlg.showModal();
+  };
+  document.addEventListener("click", (e) => {
+    const thumb = e.target.closest?.("[data-media-open]");
+    if (thumb) { e.preventDefault(); showMedia(thumb.dataset.mediaUrl, thumb.dataset.mediaAlt); return; }
+    const row = e.target.closest?.("[data-media-cluster]");
+    if (row) {
+      e.preventDefault();
+      const list = row.dataset.mediaCluster.split("|").filter(Boolean);
+      const first = row.querySelector("[data-media-url]") || row.querySelector("img");
+      const url = first?.dataset?.mediaUrl || first?.src;
+      showMedia(url, first?.alt, list);
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!mediaDlg.open) return;
+    if (e.key === "Escape") { mediaDlg.close(); return; }
+    if (e.key === "ArrowRight" && cluster.length > 1) { clusterI = (clusterI + 1) % cluster.length; mediaImg.src = cluster[clusterI]; }
+    if (e.key === "ArrowLeft" && cluster.length > 1) { clusterI = (clusterI - 1 + cluster.length) % cluster.length; mediaImg.src = cluster[clusterI]; }
+  });
+
   /* —— 9. Quantity steppers —— */
   document.addEventListener("click", (e) => {
     const b = e.target.closest?.(".fh-qty > button");

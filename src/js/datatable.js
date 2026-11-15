@@ -26,7 +26,46 @@
  *   fh:action    {}               the toolbar's primary action
  */
 
+import { thumbMarkup, thumbClusterMarkup, formatBytes } from "./values.js";
+
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const asFiles = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+const fname = (f) => (f && typeof f === "object" ? String(f.name ?? f.filename ?? f.label ?? "") : String(f ?? ""));
+const furl = (f) => (f && typeof f === "object" ? String(f.url ?? f.image ?? f.preview ?? "") : typeof f === "string" ? f : "");
+const fext = (n) => {
+  const base = String(n ?? "").split("/").pop() ?? "";
+  const dot = base.lastIndexOf(".");
+  return dot > 0 ? base.slice(dot + 1).toUpperCase() : base.slice(0, 3).toUpperCase();
+};
+const acceptDefault = (type) => ({ image: "image/*", images: "image/*", document: "application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx", attachment: "image/*" }[type] ?? "*/*");
+
+function docCell(v) {
+  const f = asFiles(v)[0];
+  if (!f) return "";
+  const prev = f.preview ? furl(f) : "";
+  if (prev) return `<span class="fh-cell__file">${thumbMarkup(f, { portrait: true })}<span>${esc(fname(f))}</span></span>`;
+  return `<span class="fh-pill fh-pill--link" title="${esc(fname(f))}">${esc(fext(fname(f)))}</span> <span>${esc(fname(f))}</span>`;
+}
+
+function fileUploadCell(table, f, row, v) {
+  const key = `${row.id}:${f.key}`;
+  const st = table.fileState.get(key) ?? {};
+  const list = asFiles(v);
+  const empty = !list.length && !st.url;
+  const accept = f.accept ?? acceptDefault(f.type);
+  const multiple = f.multiple ?? f.type === "images";
+  const input = `<input type="file" hidden accept="${esc(accept)}" ${multiple ? "multiple" : ""} data-file-input data-row="${esc(row.id)}" data-col="${esc(f.key)}">`;
+  if (st.error) {
+    return `<span class="fh-cell__file" data-error><span class="fh-cell__file-error">${esc(st.error)}</span>${input}<button type="button" class="fh-cell__file-add" data-file-pick aria-label="Add file">${icon("plus")}</button></span>`;
+  }
+  if (empty) {
+    return `<span class="fh-cell__file">${input}<button type="button" class="fh-cell__file-add" data-file-pick aria-label="Add file" tabindex="0">${icon("plus")}</button></span>`;
+  }
+  const file = { ...list[0], url: st.url ?? furl(list[0]), image: st.url ?? furl(list[0]) };
+  const body = f.type === "images" ? thumbClusterMarkup(list.map((x, i) => ({ ...x, url: i === 0 && st.url ? st.url : furl(x), image: i === 0 && st.url ? st.url : furl(x) }))) : f.type === "document" ? docCell(file) : thumbMarkup(file);
+  const prog = st.progress != null ? ` data-uploading style="--fh-upload-progress:${Math.max(0, Math.min(1, st.progress))}"` : "";
+  return `<span class="fh-cell__file"${prog}>${body}<span class="fh-cell__file-actions"><button type="button" class="fh-value__action" data-file-replace aria-label="Replace">${icon("upload")}</button>${multiple ? `<button type="button" class="fh-value__action" data-file-add aria-label="Add">${icon("plus")}</button>` : ""}<button type="button" class="fh-value__action" data-file-remove aria-label="Remove">${icon("x")}</button></span>${input}</span>`;
+}
 const icon = (n, extra = "") => (n ? `<i class="fh-icon fh-icon--${n} ${extra}" aria-hidden="true"></i>` : "");
 const uid = () => Math.random().toString(36).slice(2, 8);
 const DAY = 864e5;
@@ -116,11 +155,27 @@ export const types = {
   email: { icon: "at-sign", kind: "text", render: (v) => (v ? `<a href="mailto:${esc(v)}">${esc(v)}</a>` : "") },
   phone: { icon: "phone", kind: "text", render: (v) => (v ? `<a href="tel:${esc(String(v).replace(/[^\d+]/g, ""))}">${esc(v)}</a>` : "") },
   link: { icon: "link-2", kind: "options", render: (v = [], f) => [].concat(v).map((x) => `<span class="fh-pill fh-pill--link" data-tone="${f.tone ?? "sky"}">${esc(x)}</span>`).join("") },
+  image: {
+    icon: "image", kind: "text",
+    render: (v, f, t, row) => (f.upload ? fileUploadCell(t, f, row, v) : (v ? thumbMarkup(v) : "")),
+    text: (v) => fname(v),
+  },
+  images: {
+    icon: "image", kind: "options",
+    render: (v, f, t, row) => (f.upload ? fileUploadCell(t, f, row, v) : thumbClusterMarkup(asFiles(v))),
+    text: (v = []) => asFiles(v).map(fname).join(", "),
+    values: (v = []) => asFiles(v).map(fname),
+  },
+  document: {
+    icon: "file-text", kind: "text",
+    render: (v, f, t, row) => (f.upload ? fileUploadCell(t, f, row, v) : docCell(v)),
+    text: (v) => fname(v),
+  },
   attachment: {
     icon: "paperclip", kind: "options",
-    render: (v = []) => `<span class="fh-thumbs">${v.slice(0, 3).map((a) => (a.image ? `<img src="${esc(a.image)}" alt="${esc(a.name ?? "")}">` : `<span title="${esc(a.name ?? "")}">${esc((a.name ?? "").split(".").pop()?.toUpperCase() ?? "")}</span>`)).join("")}${v.length > 3 ? `<span>+${v.length - 3}</span>` : ""}</span>`,
-    text: (v = []) => v.map((a) => a.name).join(", "),
-    values: (v = []) => v.map((a) => a.name),
+    render: (v, f, t, row) => (f.upload ? fileUploadCell(t, f, row, v) : thumbClusterMarkup(asFiles(v))),
+    text: (v = []) => asFiles(v).map(fname).join(", "),
+    values: (v = []) => asFiles(v).map(fname),
   },
   formula: { icon: "sigma", kind: "number", render: (v, f, t) => (typeof v === "number" ? t.nf.format(v) : esc(v)) },
   sparkline: { icon: "chart-line", kind: "number", render: (v, f) => `<span data-tone="${f.tone ?? "sky"}">${spark(v)}</span>`, value: (v = []) => v.at(-1) ?? 0, text: (v = []) => v.join(" ") },
@@ -156,8 +211,28 @@ export class FirehorseTable {
     };
     this.pageSize = config.pageSize ?? 25;
     this.boardField = config.boardField ?? this.fields.find((f) => f.type === "status" || f.type === "select")?.key;
+    this.fileState = new Map();
+    this._fileUrls = new Map();
     this.el.classList.add("fh-dt");
     this.mount();
+  }
+
+  setFileState(rowId, column, patch = {}) {
+    const key = `${rowId}:${column}`;
+    const prev = this.fileState.get(key) ?? {};
+    const next = { ...prev, ...patch };
+  if (patch.url && prev.url && String(prev.url).startsWith("blob:") && patch.url !== prev.url) URL.revokeObjectURL(prev.url);
+    this.fileState.set(key, next);
+    if (patch.progress == null && patch.error == null && patch.url) {
+      const row = this.rows.find((r) => r.id === rowId);
+      const f = this.field(column);
+      if (row && f) {
+        const v = row[column];
+        if (v && typeof v === "object" && !Array.isArray(v)) row[column] = { ...v, url: patch.url, image: patch.url };
+        else if (Array.isArray(v) && v[0]) v[0] = { ...v[0], url: patch.url, image: patch.url };
+      }
+    }
+    this.renderBody();
   }
 
   field(key) { return this.fields.find((f) => f.key === key); }
@@ -335,6 +410,80 @@ export class FirehorseTable {
     }
     this.bindResize();
     this.bindBoard();
+    this.bindFiles();
+  }
+
+  bindFiles() {
+    const pick = (wrap) => wrap?.querySelector("[data-file-input]");
+    this.el.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-file-pick], [data-file-replace], [data-file-add]");
+      if (!t) return;
+      const wrap = t.closest(".fh-cell__file");
+      pick(wrap)?.click();
+    });
+    this.el.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const t = e.target.closest(".fh-cell__file-add");
+      if (!t) return;
+      e.preventDefault();
+      pick(t.closest(".fh-cell__file"))?.click();
+    });
+    this.el.addEventListener("change", (e) => {
+      const input = e.target;
+      if (!input.matches("[data-file-input]")) return;
+      const f = this.field(input.dataset.col);
+      const row = this.rows.find((r) => r.id === input.dataset.row);
+      if (!f || !row) return;
+      const files = [...input.files];
+      input.value = "";
+      if (!files.length) return;
+      const maxB = f.maxBytes ?? Infinity;
+      const accept = f.accept ?? acceptDefault(f.type);
+      let err = null;
+      for (const file of files) {
+        if (file.size > maxB) { err = `Too large (max ${formatBytes(maxB)})`; break; }
+        if (accept === "image/*" && !file.type.startsWith("image/")) { err = "Use an image file"; break; }
+        if (accept !== "*/*" && accept !== "image/*" && !accept.split(",").some((a) => file.type === a.trim() || file.name.toLowerCase().endsWith(a.trim().replace(/^\./, "")))) { err = "Wrong file type"; break; }
+      }
+      const key = `${row.id}:${f.key}`;
+      if (err) { this.setFileState(row.id, f.key, { error: err, progress: null }); return; }
+      const url = URL.createObjectURL(files[0]);
+      this._fileUrls.set(key, url);
+      this.setFileState(row.id, f.key, { url, progress: 0, error: null });
+      this.emit("fh:file-add", { row, column: f.key, files });
+    });
+    this.el.addEventListener("click", (e) => {
+      const rm = e.target.closest("[data-file-remove]");
+      if (!rm) return;
+      const wrap = rm.closest(".fh-cell__file");
+      const input = wrap?.querySelector("[data-file-input]");
+      if (!input) return;
+      const f = this.field(input.dataset.col);
+      const row = this.rows.find((r) => r.id === input.dataset.row);
+      if (!f || !row) return;
+      const key = `${row.id}:${f.key}`;
+      const u = this._fileUrls.get(key);
+      if (u) { URL.revokeObjectURL(u); this._fileUrls.delete(key); }
+      this.fileState.delete(key);
+      row[f.key] = f.type === "images" ? [] : null;
+      this.emit("fh:file-remove", { row, column: f.key, files: [] });
+      this.renderBody();
+    });
+    this.el.addEventListener("dragover", (e) => {
+      if (!e.target.closest(".fh-cell__file-add, .fh-cell__file")) return;
+      e.preventDefault();
+    });
+    this.el.addEventListener("drop", (e) => {
+      const add = e.target.closest(".fh-cell__file");
+      if (!add) return;
+      e.preventDefault();
+      const input = add.querySelector("[data-file-input]");
+      if (!input?.files) return;
+      const dt = new DataTransfer();
+      for (const file of e.dataTransfer.files) dt.items.add(file);
+      input.files = dt.files;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
   }
 
   emit(name, detail) { this.el.dispatchEvent(new CustomEvent(name, { bubbles: true, detail })); }
@@ -625,6 +774,8 @@ export class FirehorseTable {
   setRows(rows) { this.rows = rows.map((r, i) => ({ id: r.id ?? String(i + 1), ...r })); this.render(); }
   update(id, patch) { Object.assign(this.rows.find((r) => r.id === id) ?? {}, patch); this.render(); }
 }
+
+export { types as datatableTypes };
 
 /* —— Auto-init: <div data-fh-datatable><script type="application/json">…</script></div> —— */
 function boot() {

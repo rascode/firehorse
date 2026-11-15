@@ -360,6 +360,69 @@
       "text": "iso-datetime"
     },
     {
+      "row": "images",
+      "label": "images, several",
+      "shape": "file",
+      "match": {
+        "kind": [
+          "image",
+          "photo",
+          "logo",
+          "cover",
+          "screenshot",
+          "attachment"
+        ],
+        "multiple": true
+      },
+      "cell": "thumbs",
+      "record": "gallery",
+      "card": "thumbs",
+      "metric": "count",
+      "form": "dropzone",
+      "max": {
+        "cell": 3
+      },
+      "text": "file-names"
+    },
+    {
+      "row": "image",
+      "label": "image",
+      "shape": "file",
+      "match": {
+        "kind": [
+          "image",
+          "photo",
+          "logo",
+          "cover",
+          "screenshot",
+          "attachment"
+        ],
+        "multiple": false
+      },
+      "cell": "thumb",
+      "record": "preview",
+      "card": "thumb",
+      "metric": "thumb",
+      "form": "dropzone",
+      "text": "file-names"
+    },
+    {
+      "row": "document",
+      "label": "document",
+      "shape": "file",
+      "match": {
+        "kind": [
+          "document"
+        ]
+      },
+      "cell": "type-chip",
+      "record": "preview",
+      "card": "thumb",
+      "metric": "count",
+      "form": "dropzone",
+      "text": "file-names"
+    },
+    {
       "row": "file",
       "label": "file",
       "shape": "file",
@@ -969,6 +1032,23 @@
             "UPL"
           ],
           "editable": true
+        },
+        "preview": {
+          "id": "VAL-8.4",
+          "of": "file",
+          "label": "Preview (lg)",
+          "parts": [
+            "THB",
+            "SFL"
+          ]
+        },
+        "gallery": {
+          "id": "VAL-8.3",
+          "of": "file",
+          "label": "Gallery grid",
+          "parts": [
+            "THB"
+          ]
         }
       }
     },
@@ -1371,8 +1451,18 @@
       "multiple": true
     },
     "attachment": {
-      "semanticType": "document_file",
+      "semanticType": "image_asset",
       "multiple": true
+    },
+    "image": {
+      "semanticType": "image_asset"
+    },
+    "images": {
+      "semanticType": "image_asset",
+      "multiple": true
+    },
+    "document": {
+      "semanticType": "document_file"
     },
     "formula": {
       "semanticType": "computed_formula"

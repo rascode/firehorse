@@ -189,6 +189,7 @@ export declare class FirehorseTable {
 
   setRows(rows: Record<string, unknown>[]): void;
   update(id: string, patch: Record<string, unknown>): void;
+  setFileState(rowId: string, column: string, patch: { progress?: number | null; url?: string | null; error?: string | null }): void;
 }
 
 export declare const types: Record<string, FieldTypeDef>;

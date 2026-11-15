@@ -100,6 +100,51 @@ export function stackMarkup(list = [], opts = {}) {
   return `<span class="fh-avatars" role="group" aria-label="${escHtml(label)}">${faces}${more}</span>`;
 }
 
+const fileNameOf = (f) => (f && typeof f === "object" ? String(f.name ?? f.filename ?? f.label ?? "") : String(f ?? ""));
+const fileUrlOf = (f) => (f && typeof f === "object" ? String(f.url ?? f.image ?? f.preview ?? "") : typeof f === "string" ? f : "");
+const asFileList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+const fileExtOf = (name) => {
+  const base = String(name ?? "").split("/").pop() ?? "";
+  const dot = base.lastIndexOf(".");
+  return dot > 0 ? base.slice(dot + 1).toUpperCase() : base.slice(0, 3).toUpperCase();
+};
+
+/** One image thumb at row height (DR4). */
+export function thumbMarkup(file, opts = {}) {
+  const name = fileNameOf(file);
+  const url = fileUrlOf(file);
+  const alt = escHtml(String(file?.alt ?? name));
+  const portrait = opts.portrait ? " fh-thumb--portrait" : "";
+  const lg = opts.lg ? " fh-thumb--lg" : "";
+  if (url) {
+    const open = opts.open !== false ? ` data-media-open data-media-url="${escHtml(url)}" data-media-alt="${alt}"` : "";
+    return `<button type="button" class="fh-thumb${portrait}${lg}"${open}><img src="${escHtml(url)}" alt="${alt}"></button>`;
+  }
+  return `<span class="fh-thumb fh-thumb--tile${portrait}${lg}" title="${escHtml(name)}">${escHtml(fileExtOf(name) || "?")}</span>`;
+}
+
+/** Side-by-side thumbs with +N (DR4): no overlap. */
+export function thumbClusterMarkup(files = [], opts = {}) {
+  const max = opts.max ?? rules.avatars.max;
+  const list = asFileList(files);
+  const names = list.map(fileNameOf);
+  const rest = list.length - max;
+  const label = rest > 0 ? `${names.slice(0, max).join(", ")} and ${rest} more` : names.join(", ");
+  const urls = list.map((f) => fileUrlOf(f)).filter(Boolean);
+  const open = urls.length ? ` data-media-cluster="${escHtml(urls.join("|"))}"` : "";
+  const faces = list.slice(0, max).map((f) => thumbMarkup(f, { open: false })).join("");
+  const more = rest > 0 ? `<span class="fh-thumb fh-thumb--tile fh-thumb--more" aria-hidden="true">+${rest}</span>` : "";
+  return `<span class="fh-thumbs-row" role="group" aria-label="${escHtml(label)}"${open}>${faces}${more}</span>`;
+}
+
+export function formatBytes(n) {
+  const b = Number(n);
+  if (!Number.isFinite(b) || b < 0) return "";
+  if (b < 1024) return `${b} B`;
+  if (b < 1024 * 1024) return `${Math.round(b / 1024)} KB`;
+  return `${(b / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 /** The ramp step (1 … steps) of the option at index i of n in an ordinal set: the first is 1, the last is the top step. */
 export function rampStep(i, n, steps = rules.ramp.steps) {
   if (n <= 1) return steps;
