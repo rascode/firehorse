@@ -1,0 +1,39 @@
+/* Firehorse site: the display rules specimen (/data/display-rules/, data display contract W1). Page chrome only:
+   the samples inside the grid are today's Firehorse parts. */
+.site-dr__scroll { overflow-x: auto; margin-block: var(--fh-space-4, 1rem); }
+.site-dr__grid, .site-dr__types { min-width: 60rem; width: 100%; }
+.site-dr__grid { table-layout: fixed; }
+.site-dr__grid col.site-dr__label, .site-dr__grid thead th:first-child { width: 13rem; }
+.site-dr__grid th[scope="col"] small, .site-dr__grid th[scope="row"] small { display: block; color: var(--fh-text-muted); font-weight: 400; }
+.site-dr__grid th[scope="row"] { vertical-align: top; }
+.site-dr__grid th[scope="row"] .fh-chip { margin-block-start: .35rem; }
+.site-dr__note { margin-block-start: .35rem; max-width: 18rem; }
+.site-dr__grid tr[data-new] > th { box-shadow: inset 3px 0 0 var(--fh-tone-amber); }
+.site-dr__cell { vertical-align: top; overflow: hidden; }
+.site-dr__cell[data-align="end"] .site-dr__sample { justify-content: flex-end; text-align: end; }
+.site-dr__cell[data-mismatch] { color: var(--fh-tone-rose); }
+.site-dr__sample { display: flex; align-items: center; flex-wrap: wrap; gap: .3rem; min-height: 2rem; }
+.site-dr__name { display: block; margin-block-start: .4rem; font-size: var(--fh-text-micro, .72rem); color: var(--fh-text-muted); }
+.site-dr__muted { color: var(--fh-text-muted); }
+.site-dr__num { font-variant-numeric: tabular-nums; }
+.site-dr__delta { font-size: var(--fh-text-micro, .72rem); color: var(--fh-tone); }
+.site-dr__tone { color: var(--fh-tone); }
+.site-dr__row { display: inline-flex; align-items: center; gap: .4rem; }
+.site-dr__list { display: grid; gap: .3rem; }
+.site-dr__wrap { display: inline-flex; flex-wrap: wrap; gap: .25rem; align-items: center; }
+.site-dr__field { max-width: 100%; min-width: 0; }
+.site-dr__input { inline-size: 100%; max-inline-size: 11rem; min-inline-size: 0; box-sizing: border-box; }
+.site-dr__cell .fh-segment { max-inline-size: 100%; flex-wrap: wrap; }
+.site-dr__cell .fh-select-wrap { inline-size: 100%; max-inline-size: 11rem; }
+.site-dr__mono { font-family: var(--fh-font-mono); }
+.site-dr__bar { width: 4.5rem; }
+.site-dr__ring { --fh-ring-size: 2.75rem; }
+.site-dr__block { margin: 0; }
+.site-dr__clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--lines); overflow: hidden; max-width: 16rem; }
+.site-dr__thumb { display: inline-grid; place-items: center; inline-size: 2.5rem; block-size: 3rem; border: 1px solid var(--fh-border); border-radius: var(--fh-radius-sm, 4px); font: 600 var(--fh-text-micro, .72rem) var(--fh-font-mono); color: var(--fh-text-muted); }
+.site-dr__types td, .site-dr__types th { vertical-align: top; }
+.site-dr__types th[scope="row"] small { display: block; color: var(--fh-text-muted); font-weight: 400; }
+.site-dr__group th { padding-block-start: 1.25rem; text-transform: capitalize; }
+.site-dr__group small { text-transform: none; color: var(--fh-text-muted); font-weight: 400; }
+.site-dr__ask { display: grid; gap: .5rem; max-width: 46rem; }
+.site-dr__grid thead th { white-space: normal; overflow-wrap: anywhere; vertical-align: top; }

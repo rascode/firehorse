@@ -1,0 +1,42 @@
+<!--@meta {
+  "path": "/data/display-rules/",
+  "order": 1001,
+  "unlisted": true,
+  "name": "Display rules",
+  "tone": "sky",
+  "title": "Display rules (for approval) · Firehorse",
+  "description": "The data display contract's rule grid: every shape in every context, drawn with today's parts, and all 127 semantic types as resolveValue() resolves them.",
+  "headline": "Display rules: one way to show a value",
+  "lede": "Every shape in every context, read live from schema/display-rules.json. The samples use today's parts; the Values family (VAL) that replaces them is wave W2.",
+  "styles": ["/display-rules.css"],
+  "scripts": ["display-rules.js"],
+  "icon": "table-2"
+}-->
+<!--@main-->
+    <!-- Data display contract W1: the specimen Rascode approves before W2 builds the Values family.
+         Everything below is filled by site/display-rules.js from the contract (values.js / value-rules.js). -->
+    <section id="dr-approve" class="fh-section fh-section--ruled" data-tone="amber" aria-labelledby="dr-approve-title" data-fh-label="Approve">
+      <h2 id="dr-approve-title">What to approve</h2>
+      <div class="site-dr__ask">
+        <p>The grid below has <b id="dr-count-rows">27</b> rows. Each row is one kind of value; each column is where it sits. The name under each sample is the variant <code>resolveValue()</code> returns for that row's sample field, so the page shows the contract itself, not a drawing of it.</p>
+        <p><b id="dr-count-new">8</b> rows marked <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Needs your OK</span> are not in the plan's grid: they fill gaps found while giving all 127 types a shape (text, time of day, durations, 5 to 7 options, actions, secrets, JSON). Approve the grid as it stands, or name the rows to change.</p>
+        <p>Approved, wave W2 builds each variant as a Values part (VAL-1 to VAL-11) with read and edit states.</p>
+      </div>
+    </section>
+
+    <section id="dr-grid" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-grid-title" data-fh-label="Grid">
+      <h2 id="dr-grid-title">The grid: every shape in every context</h2>
+      <p>Rows are matched in order: the first row whose shape and conditions fit the field wins. <code>·</code> means the field is not shown in that context.</p>
+      <div id="dr-grid-table"><p class="site-dr__muted">Loading the grid…</p></div>
+    </section>
+
+    <section id="dr-rules" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-rules-title" data-fh-label="Rules">
+      <h2 id="dr-rules-title">The seven rules</h2>
+      <ol id="dr-rules-list"></ol>
+    </section>
+
+    <section id="dr-types" class="fh-section fh-section--ruled" data-tone="sky" aria-labelledby="dr-types-title" data-fh-label="Semantic types">
+      <h2 id="dr-types-title">All <span id="dr-count-types">127</span> semantic types</h2>
+      <p>Each type's display shape comes from the platform database (<code>devops.semantic_types</code>, migration 434), published to <code>schema/semantic-types.json</code>. The variant in each column is what <code>resolveValue()</code> returns for that type alone.</p>
+      <div id="dr-types-table"><p class="site-dr__muted">Loading the types…</p></div>
+    </section>
