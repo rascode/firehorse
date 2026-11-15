@@ -2,6 +2,7 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { dirname, join } from "node:path";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -33,7 +34,9 @@ const families = parse(await client.callTool({ name: "list_families", arguments:
 expect(Array.isArray(families) && families.length > 50, `list_families got ${families?.length}`);
 // dist/index.json is the public Index (release.json): only public families, so the checks use live ones.
 expect(families.some((f) => f.id === "BTN"), "list_families includes BTN");
-expect(!families.some((f) => f.id === "CUB"), "list_families leaves out CUB (held in release.json)");
+// A held family stays out: the first one release.json holds (CUB was the example until it went live).
+const heldFamily = JSON.parse(readFileSync(new URL("../release.json", import.meta.url), "utf8")).components.find((c) => c.status === "hold")?.id;
+expect(heldFamily && !families.some((f) => f.id === heldFamily), `list_families leaves out ${heldFamily} (held in release.json)`);
 
 const button = parse(await client.callTool({ name: "get_component", arguments: { id: "BTN-01" } }));
 expect(button.id === "BTN-1.1", `BTN-01 resolves to BTN-1.1 (got ${button.id})`);

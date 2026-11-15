@@ -28,7 +28,9 @@ const allOut = join(dist, ".release-all");
 run("scripts/site.mjs", ["--all"], { FH_SITE_OUT: allOut });
 for (const p of list) expect(existsSync(fileOf(allOut, p.path)), `--all: ${p.path} was not built`);
 for (const path of heldPages.filter((x) => x.endsWith(".html"))) expect(existsSync(fileOf(allOut, path)), `--all: ${path} was not built`);
-expect(held.length === 0 || /data-fh-release="(hold|draft)"/.test(readFileSync(fileOf(allOut, "/components/actions/"), "utf8")), "--all: held demos carry data-fh-release");
+// Some built page shows a held demo, marked (the Actions page was the example until Cubes went live).
+const marked = list.some((p) => existsSync(fileOf(allOut, p.path)) && /data-fh-release="(hold|draft)"/.test(readFileSync(fileOf(allOut, p.path), "utf8")));
+expect(held.length === 0 || marked, "--all: held demos carry data-fh-release");
 
 expect(existsSync(join(allOut, "audio")) && readdirSync(join(allOut, "audio")).some((f) => f.endsWith(".mp3")), "--all: site/audio/*.mp3 not copied");
 

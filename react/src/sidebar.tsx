@@ -158,7 +158,7 @@ function Metric({ metric }: { metric: SidebarMetric }) {
 
 function Cube({ icon, tone }: { icon?: string; tone?: Tone }) {
   return (
-    <span className="fh-sidebar__cube" data-tone={tone}>
+    <span className="fh-cube fh-cube--icon fh-sidebar__cube" data-tone={tone}>
       {icon ? <i className={cx("fh-icon", `fh-icon--${icon}`)} aria-hidden="true" /> : null}
     </span>
   );

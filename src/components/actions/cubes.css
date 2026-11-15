@@ -44,6 +44,53 @@
   /* Outline cube: the tone as a dashed frame instead of a fill. */
   .fh-cube--outline { border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone)); background-color: color-mix(in oklab, var(--_cube, var(--fh-tone)) 8%, transparent); color: var(--_cube, var(--fh-tone)); }
 
+  /* —— Icon cube (CUB-1.5) ——
+   * A square tone block holding one icon: the sidebar's rows (SHL) and the metric tiles' heads (MET) draw the same
+   * part, so one change reaches both. Solid by default; fh-cube--soft is the tint with no frame (CUB-1.6),
+   * fh-cube--outline the etched dashed frame (CUB-1.4).
+   *   <span class="fh-cube fh-cube--icon" data-tone="sky"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>
+   * A parent sets the look for every icon cube inside it: data-fh-cube="soft" | "outline" (a modifier on the cube
+   * still wins; fh-cube--solid brings one back to the fill).
+   * Knobs: --fh-cube-size (the square, default 1.5rem), --_cube (its colour, default the tone). */
+  .fh-cube--icon {
+    inline-size: var(--fh-cube-size, 1.5rem);
+    block-size: var(--fh-cube-size, 1.5rem);
+    min-inline-size: 0;
+    max-inline-size: none;
+    padding: 0;
+    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    font-family: inherit;
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-display-weight);
+    letter-spacing: normal;
+    line-height: 1;
+
+    & > .fh-icon {
+      --fh-icon-size: calc(var(--fh-cube-size, 1.5rem) * 0.63);
+      font-size: var(--fh-text-caption);
+    }
+  }
+
+  :where([data-fh-cube="soft"]) .fh-cube--icon,
+  .fh-cube--icon.fh-cube--soft {
+    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 16%, transparent);
+    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+  }
+
+  :where([data-fh-cube="outline"]) .fh-cube--icon,
+  .fh-cube--icon.fh-cube--outline {
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    background-color: color-mix(in oklab, var(--_cube, var(--fh-tone, var(--fh-color-accent))) 8%, transparent);
+    color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+  }
+
+  .fh-cube--icon.fh-cube--solid {
+    border: 0;
+    background-color: var(--_cube, var(--fh-tone, var(--fh-color-accent)));
+    color: oklch(from var(--_cube, var(--fh-tone, var(--fh-color-accent))) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+  }
+
   .fh-cubes {
     display: flex;
     flex-wrap: wrap;

@@ -9,7 +9,7 @@
    * it came from. Tiles sit in fh-metrics, as many across as fit.
    *   <div class="fh-metrics">
    *     <article class="fh-metric" data-tone="teal">
-   *       <p class="fh-metric__label"><i class="fh-icon fh-icon--scale"></i>Legal</p>
+   *       <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--scale"></i></span>Legal</p>
    *       <p class="fh-metric__value">LLC</p>
    *       <p class="fh-metric__sub">Formed 2019 · Delaware</p>
    *       <p class="fh-metric__source">State records</p>
@@ -116,6 +116,9 @@
     text-transform: uppercase;
 
     & > .fh-icon { flex: none; color: var(--fh-tone, var(--fh-color-text-muted)); }
+    /* The icon in the Icon cube (CUB-1.5), as in the sidebar: solid by default; soft and outline from the cube's
+     * modifier or a parent's data-fh-cube. A tile with no tone gets a muted cube. */
+    & > .fh-cube--icon { --_cube: var(--fh-tone, var(--fh-color-text-muted)); --fh-cube-size: var(--fh-metric-cube, 1.5rem); }
   }
 
   .fh-metric__value {

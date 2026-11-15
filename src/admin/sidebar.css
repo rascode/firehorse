@@ -243,23 +243,11 @@
     pointer-events: none;
   }
 
+  /* The row's icon block is the Icon cube (CUB-1.5): fh-cube fh-cube--icon fh-sidebar__cube. The sidebar sets
+   * only its size and colour, so the cube's looks (soft, outline, data-fh-cube) reach the sidebar too. */
   .fh-sidebar__cube {
-    display: inline-grid;
-    place-items: center;
-    flex: none;
-    inline-size: var(--fh-sidebar-cube);
-    block-size: var(--fh-sidebar-cube);
-    border-radius: var(--fh-radius-sm);
-    background: var(--_c);
-    color: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
-    font-size: var(--fh-text-caption);
-    font-weight: var(--fh-display-weight);
-    line-height: 1;
-  }
-
-  .fh-sidebar__cube .fh-icon {
-    --fh-icon-size: 0.95rem;
-    font-size: var(--fh-text-caption);
+    --fh-cube-size: var(--fh-sidebar-cube);
+    --_cube: var(--_c);
   }
 
   .fh-sidebar__label {
