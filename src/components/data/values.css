@@ -180,22 +180,69 @@
   .fh-value .fh-avatar[data-kind="person"] { --fh-avatar-radius: var(--fh-avatar-person-radius, var(--fh-radius-pill)); --fh-avatar-ratio: 1; }
   .fh-value .fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"]) { --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius)); --fh-avatar-ratio: 1; }
 
+  /* One row (#199): avatar, then the name over its description, then the stat at the end. It never wraps;
+   * a name and a description take one line each and end in an ellipsis (the full text is the title) only
+   * when the slot really runs out of room. The row fills its slot, so a container query can fit it. */
+  .fh-value:is(.fh-value--full, .fh-value--picker) {
+    container: fh-entity / inline-size;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
   .fh-value:is(.fh-value--full, .fh-value--picker) > .fh-entity,
   .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity-picker > .fh-entity {
-    flex-wrap: wrap;
-    align-items: flex-start;
-    row-gap: var(--fh-gap-bound);
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__value { min-inline-size: 0; }
+
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who {
+    flex: 1 1 auto;
+    min-inline-size: 3ch;
   }
 
   .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who > :is(b, small) {
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .fh-value--full .fh-entity__stat {
-    flex: 1 1 100%;
-    justify-content: flex-start;
+  /* The name may take a second line, at word breaks, before it ends in an ellipsis: a short name is never cut. */
+  .fh-value:is(.fh-value--full, .fh-value--picker) .fh-entity__who > b {
+    display: -webkit-box;
+    white-space: normal;
+    overflow-wrap: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  /* The full row is a read row, not a control: no trigger padding at its end. */
+  .fh-value--full > .fh-entity { padding-inline-end: 0; }
+
+  .fh-value--full .fh-entity__stat { flex: none; }
+
+  /* A narrow slot (a grid column, a sidecar at its smallest): the identity avatar steps down to the inline
+   * size, and the stat keeps its figure and drops its label, so the name keeps the room. */
+  @container fh-entity (max-width: 14rem) {
+    .fh-value .fh-entity { --_avatar: var(--fh-value-avatar-inline, var(--fh-avatar-inline)); --fh-avatar-initials: var(--fh-type-label); }
+    .fh-value .fh-entity { gap: var(--fh-gap-related); padding-inline-start: var(--fh-gap-bound); }
+    .fh-value .fh-entity-picker > .fh-entity { padding-inline-end: var(--fh-gap-related); }
+    /* The arc overlaps the avatar; it takes no gap of its own. */
+    .fh-value .fh-entity__sep { margin-inline-end: calc(var(--fh-gap-related) * -1); }
+    .fh-value .fh-entity__stat { padding-inline-start: var(--fh-gap-related); }
+    .fh-value .fh-entity__stat > small { display: none; }
+  }
+
+  /* A reference with its key (VAL-3.9): when both do not fit on one line the key moves under the name instead
+   * of squeezing it; the label may take two lines before it ends in an ellipsis. */
+  .fh-value--ref-key .fh-ref { flex-wrap: wrap; align-items: baseline; row-gap: var(--fh-gap-bound); min-inline-size: 0; }
+  .fh-value--ref-key .fh-ref__label {
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   /* An avatar inside a chip sits at the inline size, tucked into the chip's start. */

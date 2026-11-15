@@ -4,7 +4,7 @@
 // resolveValue() resolves them. Everything on this page is read from the contract at load: change
 // display-rules.json (or publish the platform's option sets), run node scripts/value-rules.mjs, reload.
 // Sample data only: people and figures are invented.
-import { resolveValue, textOf, avatarMarkup, stackMarkup, thumbMarkup, thumbClusterMarkup, formatBytes, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
+import { resolveValue, renderValue, textOf, avatarMarkup, stackMarkup, thumbMarkup, thumbClusterMarkup, formatBytes, rules, semanticTypes, optionSets, CONTEXTS, EMPTY } from "./values.js";
 
 const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const icon = (n) => `<i class="fh-icon fh-icon--${n}" aria-hidden="true"></i>`;
@@ -12,6 +12,12 @@ const people = [["Maya Chen", "maya", "Owner"], ["Mateo Ruiz", "mateo", "Designe
 // Avatars come from the resolver (DR2): data-kind from the entity kind, size from the .fh-value root they sit in.
 const person = ([label, img]) => ({ label, image: `/img/avatars/${img}.webp`, kind: "person" });
 const av = (p) => avatarMarkup(person(p));
+// The single-entity samples (#199): everything a VAL-3 variant can show, so each context picks what it needs.
+const entitySample = {
+  "entity.person": { id: 1, label: "Maya Chen", image: "/img/avatars/maya.webp", kind: "person", description: "Owner", stat: { value: 5, label: "Open", tone: "amber" } },
+  "entity.rich": { id: "claude", label: "Claude", kind: "organization", description: "Organization" },
+  "entity.record": { id: 14, label: "Harbor index refresh", key: "GL-014", description: "Goal · Q4" },
+};
 const stack = (list, max) => stackMarkup(list.map(person), { max });
 const value = (variant, html) => `<span class="fh-value fh-value--${variant}">${html}</span>`;
 const chip = (text, tone = "neutral", extra = "", ramp = null) => `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="${tone}"${ramp ? ` data-ramp="${ramp}"` : ""}>${extra}${esc(text)}</span>`;
@@ -41,7 +47,9 @@ const fileName = (f) => (f?.name ?? "");
 const prose = "Kickoff went well. The client wants the design system first, then the marketing site on top of it, with a review every Friday and a shared board for open questions.";
 
 /** Markup for one variant of one row, for the row's sample field r (what resolveValue() returned). */
-function draw(row, variant, max, r) {
+function draw(row, variant, max, r, context) {
+  // One entity (#199): the contract draws it, renderValue() in the context, so the page shows what a surface gets.
+  if (entitySample[row]) return renderValue(sampleField[row], entitySample[row], context, { href: "#dr-grid" });
   const opt = (v) => r?.optionSet?.options.find((o) => o.value === v) ?? { value: v, label: v, tone: "neutral" };
   switch (`${row}:${variant}`) {
     case "option.ordinal.few:dot": case "option.ordinal:dot": return dot(opt(row === "option.ordinal" ? "l" : "high"));
@@ -66,18 +74,6 @@ function draw(row, variant, max, r) {
     case "entities:stack": return value("stack", stack(people, max));
     case "entities:avatar-name": return value("avatar-name", `<span class="site-dr__list">${people.slice(0, max).map((p) => `<span class="site-dr__row">${av(p)}${esc(p[0])}</span>`).join("")}<span class="site-dr__muted">+${people.length - max} more</span></span>`);
     case "entities:picker-multi": return `<div class="fh-value fh-value--picker-multi"><button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${stack(people, max)}<span class="fh-entity__who"><b>${people.length} people</b></span></span>${chev}</button></div>`;
-    case "entity.person:avatar-name": return value("avatar-name", `${av(people[0])}<span class="fh-value__name">Maya Chen</span>`);
-    case "entity.person:full": return `<div class="fh-value fh-value--full"><span class="fh-entity">${av(people[0])}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span><span class="fh-entity__stat" data-tone="amber"><b>5</b><small>Open</small></span></span></div>`;
-    case "entity.person:chip": return value("chip", `<span class="fh-chip fh-chip--sm">${av(people[0])}Maya Chen</span>`);
-    case "entity.person:picker": return `<div class="fh-value fh-value--picker"><button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${av(people[0])}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Maya Chen</b><small>Owner</small></span></span>${chev}</button></div>`;
-    // A rich record (decision 10): its logo or initials, then its reference. Logos come from the record (W4).
-    case "entity.rich:avatar-ref": return value("avatar-ref", `${avatarMarkup({ label: "Claude", kind: "org" })}<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Claude</span></a>`);
-    case "entity.rich:picker": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value">${avatarMarkup({ label: "Claude", kind: "org" })}<span class="fh-entity__sep"></span><span class="fh-entity__who"><b>Claude</b><small>Organization</small></span></span>${chev}</button>`;
-    case "entity.rich:name": return "Claude";
-    case "entity.record:ref": return `<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Harbor index refresh</span></a>`;
-    case "entity.record:ref-key": return `<a class="fh-ref" href="#dr-grid"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a>`;
-    case "entity.record:name": return "Harbor index refresh";
-    case "entity.record:picker": return `<button class="fh-entity site-dr__field" type="button"><span class="fh-entity__value"><span class="fh-entity__who"><b>Harbor index refresh</b><small>Goal · Q4</small></span></span>${chev}</button>`;
     case "money:amount": return num("$12,481");
     case "money:amount-code": return num("$12,480.50 USD");
     case "money:compact": return num("$12.5K");
@@ -209,7 +205,7 @@ function gridTable() {
         return `<td class="site-dr__cell"><div class="site-dr__sample"><code class="site-dr__text">${esc(textOf(field, sampleValue[row.row]))}</code></div><code class="site-dr__name">${esc(r.variant)}</code></td>`;
       }
       if (!r.variant) return `<td class="site-dr__cell site-dr__none"><span class="site-dr__muted" aria-label="Not shown">·</span></td>`;
-      return `<td class="site-dr__cell"${r.align === "end" ? ' data-align="end"' : ""}><div class="site-dr__sample">${draw(row.row, r.variant, r.max, r)}</div><code class="site-dr__name">${esc(r.variant)}${r.max ? ` +N after ${r.max}` : ""}</code></td>`;
+      return `<td class="site-dr__cell"${r.align === "end" ? ' data-align="end"' : ""}><div class="site-dr__sample">${draw(row.row, r.variant, r.max, r, c)}</div><code class="site-dr__name">${esc(r.variant)}${r.max ? ` +N after ${r.max}` : ""}</code></td>`;
     }).join("");
     return `<tr${isNew ? " data-new" : ""}${isW2b ? " data-w2b" : ""}><th scope="row"><b>${esc(row.label)}</b><small>${esc(rules.variants[row.shape].group)} ${esc(rules.variants[row.shape].name)} · <code>${esc(nameOf(field))}</code></small>${isNew ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Added</span>` : ""}${isW2b ? `<span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="violet">Section 7</span>` : ""}${row.note ? `<small class="site-dr__note">${esc(row.note)}</small>` : ""}</th>${cells}</tr>`;
   }).join("");

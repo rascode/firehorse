@@ -248,11 +248,11 @@ const options = {
   },
 };
 
-const entityName = (e) => `<span class="fh-value__name">${esc(e.label)}</span>`;
-const who = (e, desc = e.description) => `<span class="fh-entity__who"><b>${esc(e.label)}</b>${desc ? `<small>${esc(desc)}</small>` : ""}</span>`;
+const entityName = (e) => `<span class="fh-value__name" title="${esc(e.label)}">${esc(e.label)}</span>`;
+const who = (e, desc = e.description) => `<span class="fh-entity__who"><b title="${esc(e.label)}">${esc(e.label)}</b>${desc ? `<small title="${esc(desc)}">${esc(desc)}</small>` : ""}</span>`;
 const refLink = (e, key, o) => {
   const href = e.href ?? o.opts.href ?? null;
-  const inner = `<span class="fh-ref__label">${esc(e.label)}</span>${key && e.key ? `<code class="fh-ref__key">${esc(e.key)}</code>` : ""}`;
+  const inner = `<span class="fh-ref__label" title="${esc(e.label)}">${esc(e.label)}</span>${key && e.key ? `<code class="fh-ref__key">${esc(e.key)}</code>` : ""}`;
   if (e.gone) return `<span class="fh-ref fh-ref--gone" title="This record was removed">${inner}<span class="fh-ref__note">removed</span></span>`;
   return href || e.sidecar ? `<a class="fh-ref"${attr("href", href ?? "#")}${attr("data-sidecar", e.sidecar)}>${inner}</a>` : `<span class="fh-ref">${inner}</span>`;
 };
@@ -273,7 +273,7 @@ const entity = {
     const stat = e.stat ? `<span class="fh-entity__stat"${attr("data-tone", e.stat.tone)}><b>${esc(e.stat.value)}</b>${e.stat.label ? `<small>${esc(e.stat.label)}</small>` : ""}</span>` : "";
     return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}${stat}</span></div>`;
   }),
-  chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
+  chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm fh-chip--avatar">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
   stack: (o) => {
     const items = list(o.value).map(entityOf).filter(Boolean), n = maxOf(o.r, o.opts, o.context, rules.avatars?.max ?? 3);
     const shown = items.slice(0, n), rest = items.length - shown.length;
