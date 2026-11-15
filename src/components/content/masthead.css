@@ -1,11 +1,21 @@
+@import "./summary-chip.css";
+
 /*
  * Firehorse — Masthead (MST)
  * components/content · layer fh.components · docs /layout/#MST
  * MST-1 Header: MST-1.1 Bar, MST-1.2 Page, MST-1.3 Split.
  * MST-2 Lockup: MST-2.1 Lockup, a hero's wordmark and headline on one etched line.
+ * MST-3 App bar: MST-3.1 Lead, MST-3.2 Summary, MST-3.3 Tools, MST-3.4 Summary chip.
  */
 
 @layer fh.components {
+  /* Frost panel recipe (sidebar and app bar); sidebar.css repeats this for admin builds. */
+  :where(:root, .fh-theme) {
+    --fh-frost-panel-f: clamp(0, var(--fh-frost, 0.45), 1);
+    --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
+    --fh-frost-panel-filter: blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * 0.35));
+  }
+
   /* —— Masthead ——
    * A glass header: an etched edge, see-through fill with a blur behind
    * it, and the stacking deck's caption inside (number on the left,
@@ -230,4 +240,125 @@
   /* Above: its top on the top of the headline's first part; below: just under the line. */
   .fh-masthead__above { grid-area: 1 / 1; align-self: start; justify-self: start; margin-block-end: var(--fh-gap-grouped-wide); }
   .fh-masthead__below { grid-area: 3 / 1; align-self: start; margin-block-start: var(--fh-gap-related); }
+
+  /* —— App bar (MST-3) ——
+   * The global header on the sidebar's frost panel: lead, summary chips and tools on one bar.
+   *   <header class="fh-masthead fh-masthead--app">
+   *     <div class="fh-masthead__lead" data-tone="sky">…cube… <span class="fh-masthead__title">Today</span>…</div>
+   *     <div class="fh-masthead__summary">…fh-summary-chip…</div>
+   *     <div class="fh-masthead__tools">…</div>
+   *   </header>
+   * Knobs: --fh-app-bar-edge (opt-in border, like --fh-sidebar-edge). */
+  .fh-masthead--app {
+    --fh-sidebar-cube: 1.5rem;
+    --_f: var(--fh-frost-panel-f);
+    --_fill: var(--fh-frost-panel-fill);
+    --_filter: var(--fh-frost-panel-filter);
+
+    position: sticky;
+    inset-block-start: var(--fh-gap-grouped);
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-gap-grouped);
+    min-block-size: calc(var(--fh-sidebar-cube) + 2 * var(--fh-inset-tight));
+    padding: var(--fh-inset-tight);
+    border: var(--fh-app-bar-edge, 0);
+    border-radius: var(--fh-radius-lg);
+    background-color: var(--_fill);
+    box-shadow: var(--fh-sidebar-shadow, var(--fh-shadow-panel));
+    backdrop-filter: var(--_filter);
+    container: fh-masthead / inline-size;
+
+    & > * { margin: 0; min-inline-size: 0; }
+  }
+
+  .fh-masthead__lead {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+    padding-inline-end: var(--fh-inset-control);
+  }
+
+  .fh-masthead__lead .fh-sidebar__cube {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--fh-sidebar-cube);
+    block-size: var(--fh-sidebar-cube);
+    border-radius: var(--fh-radius-sm);
+    background: var(--_c, var(--fh-tone));
+    color: oklch(from var(--_c, var(--fh-tone)) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+    font-size: var(--fh-text-caption);
+    font-weight: var(--fh-display-weight);
+    line-height: 1;
+  }
+
+  .fh-masthead__lead .fh-sidebar__cube .fh-icon {
+    --fh-icon-size: 0.95rem;
+    font-size: var(--fh-text-caption);
+  }
+
+  .fh-masthead__lead .fh-sidebar__cube[data-tone] {
+    --_c: var(--fh-tone);
+  }
+
+  .fh-masthead__lead > .fh-masthead__title {
+    overflow: hidden;
+    font-family: var(--fh-type-value-family);
+    font-size: var(--fh-type-value);
+    font-weight: var(--fh-type-value-weight);
+    letter-spacing: var(--fh-type-value-tracking);
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-masthead__crumb {
+    overflow: hidden;
+    flex: none;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-type-value-family);
+    font-size: var(--fh-type-value);
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-masthead__summary {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+  }
+
+  .fh-masthead--app .fh-masthead__tools {
+    flex-wrap: nowrap;
+  }
+
+  @container fh-masthead (inline-size < 56rem) {
+    .fh-masthead__summary .fh-summary-chip__value { display: none; }
+    .fh-masthead__summary .fh-summary-chip:has(.fh-summary-chip__short) .fh-summary-chip__short { display: inline; }
+  }
+
+  @container fh-masthead (inline-size < 40rem) {
+    .fh-masthead__summary .fh-summary-chip:not(:first-child) { display: none; }
+    .fh-masthead__summary .fh-summary-chip:first-child .fh-summary-chip__value { display: none; }
+    .fh-masthead__summary .fh-summary-chip:first-child .fh-summary-chip__short { display: inline; }
+  }
+
+  @container fh-masthead (inline-size < 30rem) {
+    .fh-masthead__summary { display: none; }
+    .fh-masthead__crumb { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-masthead--app :is(.fh-summary-chip, .fh-summary-chip__bar)::before {
+      transition: none;
+    }
+  }
 }

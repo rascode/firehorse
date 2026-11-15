@@ -1,0 +1,102 @@
+/*
+ * Firehorse — Summary chip (MST-3.4)
+ * components/content · layer fh.components · docs /layout/#MST
+ */
+
+@layer fh.components {
+  /* —— Summary chip ——
+   * A compact readout in the app bar: a label and a value, an optional progress track, and a
+   * popover card with a key-value list and links.
+   *   <button class="fh-summary-chip" type="button" popovertarget="chip-1" aria-label="…" style="anchor-name: --chip-1">
+   *     <span class="fh-summary-chip__label">Cycle</span>
+   *     <span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span>
+   *     <span class="fh-summary-chip__short" hidden>C5 · Y4</span>
+   *     <span class="fh-summary-chip__bar" style="--fh-summary-value: 87%"></span>
+   *   </button>
+   *   <div id="chip-1" popover class="fh-menu" style="position-anchor: --chip-1">…fh-kv…</div>
+   * Knob: --fh-summary-value (the bar fill, a percentage). */
+  .fh-summary-chip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--fh-gap-bound);
+    min-inline-size: 0;
+    max-inline-size: 14rem;
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text);
+    cursor: var(--fh-cursor-action);
+    text-align: center;
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 1px;
+    }
+    &:has(+ .fh-menu:popover-open) {
+      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+    }
+  }
+
+  .fh-summary-chip__label {
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-type-label-family, var(--fh-font-mono));
+    font-size: var(--fh-type-label);
+    font-weight: var(--fh-weight-regular);
+    letter-spacing: var(--fh-tracking-wider);
+    line-height: var(--fh-leading-snug);
+    text-transform: uppercase;
+  }
+
+  .fh-summary-chip__value {
+    overflow: hidden;
+    font-family: var(--fh-type-value-family);
+    font-size: var(--fh-type-value);
+    font-weight: var(--fh-type-value-weight);
+    letter-spacing: var(--fh-type-value-tracking);
+    line-height: var(--fh-leading-snug);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & .fh-num {
+      font-family: var(--fh-type-figure-family);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--fh-type-figure-tracking);
+    }
+  }
+
+  .fh-summary-chip__short {
+    display: none;
+    font-family: var(--fh-type-figure-family);
+    font-size: var(--fh-type-value);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--fh-type-figure-tracking);
+    line-height: var(--fh-leading-snug);
+    white-space: nowrap;
+  }
+
+  .fh-summary-chip__bar {
+    display: block;
+  inline-size: 100%;
+  block-size: 2px;
+  overflow: hidden;
+  border-radius: var(--fh-radius-pill);
+  background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+
+    &::before {
+      content: "";
+      display: block;
+      block-size: 100%;
+      inline-size: var(--fh-summary-value, 0%);
+      border-radius: inherit;
+      background-color: var(--fh-tone, var(--fh-color-accent));
+      transition: inline-size var(--fh-duration-slow) var(--fh-ease-out);
+    }
+  }
+
+  .fh-summary-chip:not(:has(.fh-summary-chip__bar)) {
+    gap: var(--fh-gap-bound);
+  }
+}

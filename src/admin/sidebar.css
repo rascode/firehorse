@@ -19,10 +19,17 @@
    *     <div class="fh-sidebar__foot">…</div>
    *   </nav>
    * Wrap the nav in a host with container fh-sidebar-host for the sheet at narrow width. */
+  /* Frost panel recipe (sidebar and app bar): one set of tokens so a theme change moves both. */
+  :where(:root, .fh-theme) {
+    --fh-frost-panel-f: clamp(0, var(--fh-frost, 0.45), 1);
+    --fh-frost-panel-fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--fh-frost-panel-f) * 75%), transparent);
+    --fh-frost-panel-filter: blur(calc(var(--fh-frost-panel-f) * 24px)) saturate(calc(1 + var(--fh-frost-panel-f) * 0.35));
+  }
+
   .fh-sidebar {
-    --_f: clamp(0, var(--fh-frost, 0.45), 1);
-    --_fill: color-mix(in oklab, var(--fh-color-surface) calc(15% + var(--_f) * 75%), transparent);
-    --_filter: blur(calc(var(--_f) * 24px)) saturate(calc(1 + var(--_f) * 0.35));
+    --_f: var(--fh-frost-panel-f);
+    --_fill: var(--fh-frost-panel-fill);
+    --_filter: var(--fh-frost-panel-filter);
     --fh-sidebar-width: 15rem;
     --fh-sidebar-rail: 3.5rem;
     --fh-sidebar-cube: 1.5rem;

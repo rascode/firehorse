@@ -35,7 +35,7 @@
 | `CLS` | Cluster | Layout | 1 Cluster (3) | [open](https://firehorse.rascode.dev/layout/cluster/) |
 | `GRD` | Auto grid | Layout | — | [open](https://firehorse.rascode.dev/layout/auto-grid/) |
 | `COL` | Columns | Columns | 1 Columns (3) · 2 Compositions (3) | [open](https://firehorse.rascode.dev/layout/columns/) |
-| `MST` | Masthead | Masthead | 1 Header (3) · 2 Lockup (1) | [open](https://firehorse.rascode.dev/layout/masthead/) |
+| `MST` | Masthead | Masthead | 1 Header (3) · 2 Lockup (1) · 3 App bar (4) | [open](https://firehorse.rascode.dev/layout/masthead/) |
 | `BKD` | Backdrop | Backdrop | 1 Backdrop (2) · 2 Frost (1) · 3 Blueprint (1) · 4 Chooser (1) | [open](https://firehorse.rascode.dev/layout/backdrop/) |
 | `FND` | Fender | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/fender/) |
 | `CIN` | Cinch | Page design patterns | — | [open](https://firehorse.rascode.dev/patterns/cinch/) |
@@ -561,9 +561,9 @@ Three placements to start from. Offset: copy held to the left, the image breakin
 
 ## MST · Masthead
 
-The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. Shown over a picture so the frost reads.
+The head of a page or app. The header is a glass panel with a large caption: number left in the tone, title right, an etched rule under both. --bar is the one-line top bar, the client's round logo first (__mark); --split puts the caption and the tools in two pills with the page between them. The lockup is a hero's sign-off: the wordmark, an etched line from it to the edge, and the headline split by the line, its rolling word in the root colour's family. --app is the app bar on the sidebar's frost panel: a lead with the sidebar cube, summary chips with cards, and tools. Shown over a picture so the frost reads.
 
-Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-masthead__mark` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm` `fh-masthead--split` `fh-avatar--sm` `fh-masthead--lockup` `fh-eyebrow-pill` `fh-masthead__above` `fh-dot` `fh-dot--live` `fh-eyebrow-pill__seg` `fh-masthead__wordmark` `fh-masthead__bar` `fh-masthead__etch` `fh-masthead__headline` `fh-masthead__top` `fh-masthead__turn` `fh-rotator` `fh-rotator--walk` `fh-masthead__below` `fh-lede`
+Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-masthead__mark` `fh-masthead__caption` `fh-masthead__index` `fh-masthead__title` `fh-masthead__foot` `fh-masthead__meta` `fh-masthead__tools` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-chip` `fh-button` `fh-button--sm` `fh-masthead--split` `fh-avatar--sm` `fh-masthead--lockup` `fh-eyebrow-pill` `fh-masthead__above` `fh-dot` `fh-dot--live` `fh-eyebrow-pill__seg` `fh-masthead__wordmark` `fh-masthead__bar` `fh-masthead__etch` `fh-masthead__headline` `fh-masthead__top` `fh-masthead__turn` `fh-rotator` `fh-rotator--walk` `fh-masthead__below` `fh-lede` `fh-masthead__lead` `fh-sidebar__cube` `fh-icon` `fh-masthead__crumb` `fh-masthead__summary` `fh-summary-chip` `fh-summary-chip__label` `fh-summary-chip__value` `fh-num` `fh-summary-chip__short` `fh-menu` `fh-kv` `fh-kv--single` `fh-summary-chip__bar` `fh-menu__foot` `fh-link` `fh-working` `fh-working__mark` `fh-working__what` `fh-button--disc` `fh-profile` `fh-profile--compact` `fh-profile-menu` `fh-profile-menu__card` `fh-profile-menu__id` `fh-stack` `fh-stack--lg` `fh-cluster`
 
 ### MST-1 · Header
 
@@ -618,6 +618,46 @@ Classes: `fh-masthead` `fh-masthead--bar` `fh-avatar` `fh-avatar--circle` `fh-ma
   <p class="fh-masthead__headline"><span class="fh-masthead__top">The design system</span> <span class="fh-masthead__turn">that <em><span class="fh-rotator fh-rotator--walk"><span>scales</span><span aria-hidden="true">adapts</span><span aria-hidden="true">grows</span><span aria-hidden="true">responds</span></span>.</em></span></p>
   <div class="fh-masthead__below"><p class="fh-lede">Built for modern workflows</p></div>
 </header>
+```
+
+### MST-3 · App bar
+
+#### MST-3.1 · Lead
+
+```html
+<div class="fh-masthead__lead"><span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--sun" aria-hidden="true"></i></span><span class="fh-masthead__title">Today</span><span class="fh-masthead__crumb">› Sat 14 Nov</span></div>
+```
+
+#### MST-3.2 · Summary
+
+```html
+<div class="fh-masthead__summary">
+  <button class="fh-summary-chip" type="button" popovertarget="mst-sum-dt" aria-label="Saturday 14 November, 11:15 PM Eastern. Day 318, 47 days left in 2026." style="anchor-name: --mst-sum-dt" data-fh="MST-3.2"><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span><span class="fh-summary-chip__short">Sat 14</span></button>
+  <div id="mst-sum-dt" popover class="fh-menu" aria-label="Today" style="position-anchor: --mst-sum-dt" data-fh="MST-3.2"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div><div><dt>Days left in 2026</dt><dd>47</dd></div></dl></div>
+  <button class="fh-summary-chip" type="button" data-tone="violet" popovertarget="mst-sum-cy" aria-label="Cycle 5, Year 4, Chapter 3. House 4, Vibration 8." style="anchor-name: --mst-sum-cy" data-fh="MST-3.2"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__short">C5 · Y4</span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+  <div id="mst-sum-cy" popover class="fh-menu" aria-label="Cycle" style="position-anchor: --mst-sum-cy" data-fh="MST-3.2"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div><div><dt>Age number</dt><dd>4</dd></div><div><dt>Chapter 3</dt><dd>Saturn</dd></div><div><dt>Days left</dt><dd>112</dd></div></dl><div class="fh-menu__foot"><a class="fh-link" href="#l-masthead">Open year</a><a class="fh-link" href="#l-masthead">Open cycle</a></div></div>
+</div>
+```
+
+#### MST-3.3 · Tools
+
+```html
+<div class="fh-masthead__tools"><a class="fh-working" data-tone="violet" href="#l-masthead" data-fh="MST-3.3"><i class="fh-icon fh-icon--sparkles fh-working__mark" aria-hidden="true"></i><b>Claude</b><span class="fh-working__what">#636 · App bar</span></a><button class="fh-button fh-button--disc" type="button" aria-label="Search" data-fh="MST-3.3"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></button><button class="fh-profile fh-profile--compact" type="button" popovertarget="mst-sum-prf" aria-label="Justin Rascoe" style="anchor-name: --mst-sum-prf" data-fh="MST-3.3"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span></button><div id="mst-sum-prf" popover class="fh-menu fh-profile-menu" role="menu" aria-label="Account" style="position-anchor: --mst-sum-prf" data-fh="MST-3.3"><div class="fh-profile-menu__card" data-tone="sky"><span class="fh-avatar fh-avatar--circle" data-tone="sky">JR</span><span class="fh-profile-menu__id"><b>Justin Rascoe</b><small>justin@rascode.dev</small></span></div></div></div>
+```
+
+#### MST-3.4 · Summary chip
+
+```html
+<div class="fh-stack fh-stack--lg">
+  <div class="fh-cluster" style="flex-wrap: wrap; justify-content: center; gap: var(--fh-gap-grouped)">
+    <button class="fh-summary-chip" type="button" popovertarget="mst-chip-a" aria-label="Saturday 14 November, 11:15 PM Eastern" style="anchor-name: --mst-chip-a" data-fh="MST-3.4"><span class="fh-summary-chip__label">Now</span><span class="fh-summary-chip__value"><span class="fh-num">Sat 14 Nov · 11:15 PM EST</span></span></button>
+    <div id="mst-chip-a" popover class="fh-menu" aria-label="Now" style="position-anchor: --mst-chip-a" data-fh="MST-3.4"><dl class="fh-kv fh-kv--single"><div><dt>Day</dt><dd>318</dd></div></dl></div>
+    <button class="fh-summary-chip" type="button" popovertarget="mst-chip-b" aria-label="Cycle 5, Year 4" style="anchor-name: --mst-chip-b" data-fh="MST-3.4"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span>    <span class="fh-summary-chip__short">C5 · Y4</span></button>
+    <button class="fh-summary-chip" type="button" popovertarget="mst-chip-c" aria-label="Cycle 5, open card" data-tone="violet" style="anchor-name: --mst-chip-c" data-fh="MST-3.4"><span class="fh-summary-chip__label">Cycle</span><span class="fh-summary-chip__value"><span class="fh-num">Cycle 5 · Year 4 · Ch 3</span></span><span class="fh-summary-chip__bar" style="--fh-summary-value: 87%" aria-hidden="true"></span></button>
+    <div id="mst-chip-c" popover class="fh-menu" aria-label="Cycle" open style="position-anchor: --mst-chip-c" data-fh="MST-3.4"><dl class="fh-kv fh-kv--single"><div><dt>House</dt><dd>4</dd></div><div><dt>Vibration</dt><dd>8</dd></div></dl></div>
+    <button class="fh-summary-chip" type="button" data-tone="lime" aria-label="Synced" data-fh="MST-3.4"><span class="fh-summary-chip__label">Sync</span><span class="fh-summary-chip__value"><span class="fh-num">All clear</span></span><span class="fh-summary-chip__bar" style="--fh-summary-value: 64%" aria-hidden="true"></span></button>
+  </div>
+</div>
 ```
 
 ## BKD · Backdrop
