@@ -23,7 +23,7 @@ import { renderValue, variants } from "./values.js";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const ICON = {
   dot: "circle-dot", chip: "tag", "chip-solid": "tag", chips: "tag", "chips-inline": "list", count: "hash",
-  name: "type", "name-key": "type", "avatar-name": "user", "avatar-name-description": "user", full: "users", stack: "users", ref: "link-2", "ref-key": "link-2", "avatar-ref": "layout-grid",
+  name: "type", "name-key": "type", "avatar-name": "user", "avatar-name-description": "user", full: "users", stack: "users", ref: "link-2", "ref-key": "link-2", "avatar-ref": "layout-grid", cube: "box",
   amount: "dollar-sign", "amount-code": "dollar-sign", compact: "dollar-sign", text: "percent", bar: "chart-bar", ring: "gauge", meter: "gauge",
   plain: "hash", unit: "ruler", sparkline: "chart-line", "sparkline-last": "chart-line", duration: "timer",
   date: "calendar", "date-relative": "calendar-clock", relative: "clock", datetime: "calendar-clock", time: "clock",

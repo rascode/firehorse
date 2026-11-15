@@ -72,6 +72,8 @@ const config = {
   footnote: "Sample data",
   // A row opens its hidden fields (email, phone, website, weighted) as a record table under it.
   expand: true,
+  // The column display menu starts Source as a Cube (any viewer can pick another or reset it).
+  presentation: { initial: { source: "cube" } },
   fields: [
     { key: "org", label: "Company", semanticType: "entity_reference", entity: "organization", width: "14rem" },
     { key: "contact", label: "Contact", type: "user" },

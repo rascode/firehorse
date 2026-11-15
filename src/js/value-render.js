@@ -188,7 +188,14 @@ function chip(text, tone, { solid = false, ramp = null, extra = "" } = {}) {
 const inputAttrs = (o, label) => `${attr("name", o.opts.name ?? o.field.key)}${attr("id", o.opts.id)} aria-label="${esc(label)}"${o.edit ? "" : " readonly"}`;
 const field = (o, inner, extraCls = []) => `${rootOpen("div", o.r, o.variant, o.opts, { id: o.id, mode: o.edit ? "edit" : "read", cls: ["fh-value--field", ...extraCls] })}${inner}</div>`;
 
+// Cube (Rascode 2026-11-15): the value inside a Cube (CUB), in its tone: an option's tone, an entity's own colour
+// (its logo's), a number or an amount in the field's tone. A viewer picks it from the column display menu.
+const cubeOf = (text, { tone, ramp, title } = {}) => `<b class="fh-cube"${attr("data-tone", tone)}${attr("data-ramp", ramp)}${attr("title", title)}>${esc(text)}</b>`;
 const option = {
+  cube: (o) => {
+    const set = o.r.optionSet, v = optValue(o.value), ramp = rampOf(set, v);
+    return `${rootOpen("span", o.r, "cube", o.opts, { id: o.id })}${cubeOf(optLabel(set, o.value), { tone: ramp ? null : toneOf(set, v), ramp })}</span>`;
+  },
   dot: (o) => {
     const set = o.r.optionSet, v = optValue(o.value);
     return `${rootOpen("span", o.r, "dot", o.opts, { id: o.id, tone: rampOf(set, v) ? null : toneOf(set, v), ramp: rampOf(set, v) })}<span class="fh-dot${optLive(set, v) ? " fh-dot--live" : ""}"></span>${esc(optLabel(set, o.value))}</span>`;
@@ -256,6 +263,7 @@ const each = (draw) => (o) => {
   return `<span class="fh-stack" style="--fh-stack-gap: var(--fh-gap-related)">${items.map((e) => draw({ ...o, value: e })).join("")}</span>`;
 };
 const entity = {
+  cube: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "cube", o.opts, { id: o.id })}${cubeOf(e.label, { tone: e.tone })}</span>`; }),
   name: each((o) => `${rootOpen("span", o.r, "name", o.opts, { id: o.id })}${entityName(entityOf(o.value))}</span>`),
   "name-key": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "name-key", o.opts, { id: o.id })}${entityName(e)}${e.key ? `<code class="fh-kbd">${esc(e.key)}</code>` : ""}</span>`; }),
   "avatar-name": each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "avatar-name", o.opts, { id: o.id })}${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${entityName(e)}</span>`; }),
@@ -287,6 +295,7 @@ const entity = {
 };
 
 const money = {
+  cube: (o) => { const m = moneyParts(o.field, o.value, o.r, o.opts); return `${rootOpen("span", o.r, "cube", o.opts, { id: o.id })}${cubeOf(m.fmt(m.amount, { notation: "compact", minimumFractionDigits: 0, maximumFractionDigits: 1 }), { tone: o.field.tone, title: m.full })}</span>`; },
   amount: (o) => { const m = moneyParts(o.field, o.value, o.r, o.opts); return `${rootOpen("span", o.r, "amount", o.opts, { id: o.id })}<data value="${m.amount.toFixed(o.r.kind === "crypto" ? 8 : 2)}"${m.iso ? "" : ""}>${esc(m.fmt(m.amount))}</data>${!m.iso && m.code ? `<span class="fh-value__sub">${esc(m.code)}</span>` : ""}</span>`; },
   "amount-code": (o) => { const m = moneyParts(o.field, o.value, o.r, { ...o.opts, cents: true }); return `${rootOpen("span", o.r, "amount-code", o.opts, { id: o.id })}<data value="${m.amount.toFixed(o.r.kind === "crypto" ? 8 : 2)}">${esc(m.fmt(m.amount))}</data>${m.code ? `<abbr class="fh-value__sub" title="${esc(m.iso ? currencyName(m.code, o.opts.locale) : m.code)}">${esc(m.code)}</abbr>` : ""}</span>`; },
   compact: (o) => { const m = moneyParts(o.field, o.value, o.r, o.opts); return `${rootOpen("span", o.r, "compact", o.opts, { id: o.id })}<data value="${m.amount}" title="${esc(m.full)}">${esc(m.fmt(m.amount, { notation: "compact", minimumFractionDigits: 0, maximumFractionDigits: 1 }))}</data></span>`; },
@@ -316,6 +325,7 @@ const ratio = {
 const numText = (o, n = o.value) => nf(o.opts.locale, { maximumFractionDigits: 2, useGrouping: o.r.grouping !== false }).format(Number(n && typeof n === "object" ? n.value : n));
 const seriesOf = (v) => (Array.isArray(v) ? v : Array.isArray(v?.values) ? v.values : []);
 const number = {
+  cube: (o) => `${rootOpen("span", o.r, "cube", o.opts, { id: o.id })}${cubeOf(numText(o), { tone: o.field.tone })}</span>`,
   plain: (o) => `${rootOpen("span", o.r, "plain", o.opts, { id: o.id })}${esc(numText(o))}</span>`,
   unit: (o) => `${rootOpen("span", o.r, "unit", o.opts, { id: o.id })}${esc(numText(o))}${o.r.unit ? `<span class="fh-value__sub">${esc(o.r.unit)}</span>` : ""}</span>`,
   delta: (o) => { const d = deltaOf(o.value, o.opts, o.field) ?? Number(o.value); return `${rootOpen("span", o.r, "delta", o.opts, { id: o.id })}${deltaMarkup(d, numText(o, Math.abs(d)), o.field, o.opts)}</span>`; },

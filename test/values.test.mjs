@@ -382,7 +382,7 @@ t("every grid row lists choices for cell, record and card, the grid's own first,
 
 t("variants(): the default first, none for a secret, none in metric or form, a meter only with a target", () => {
   const s = variants({ semanticType: "status" }, "cell");
-  assert.deepEqual(s.map((v) => v.variant), ["dot", "chip"]);
+  assert.deepEqual(s.map((v) => v.variant), ["dot", "chip", "cube"]);
   assert.ok(s[0].default && !s[1].default);
   assert.deepEqual(variants({ semanticType: "api_key_secret_ref" }, "cell"), []);
   assert.deepEqual(variants({ semanticType: "status" }, "metric"), []);
@@ -434,7 +434,17 @@ t("a rich record (application, organization, brand) draws its avatar beside its 
   }
   assert.equal(resolveValue({ semanticType: "entity_reference", entity: "organization" }, "metric").variant, "avatar-ref", "a summary tile shows the logo too");
   assert.equal(resolveValue({ semanticType: "entity_reference" }, "cell").variant, "ref", "a plain record stays a reference");
-  assert.deepEqual(variants({ semanticType: "entity_reference", entity: "brand" }, "cell").map((v) => v.variant), ["avatar-ref", "ref", "ref-key", "name"]);
+  assert.deepEqual(variants({ semanticType: "entity_reference", entity: "brand" }, "cell").map((v) => v.variant), ["avatar-ref", "ref", "ref-key", "name", "cube"]);
+});
+
+t("a value can draw as a Cube: option, entity, money and number (VAL-1.7, 3.13, 4.7, 6.7)", () => {
+  const status = { semanticType: "status", optionSet: { options: [{ value: "won", label: "Won", tone: "lime" }] } };
+  assert.match(renderValue(status, "won", "cell", { variant: "cube" }), /data-fh="VAL-1\.7"><b class="fh-cube" data-tone="lime">Won<\/b>/);
+  assert.match(renderValue({ semanticType: "entity_reference", entity: "organization" }, { label: "Claude", tone: "orange" }, "cell", { variant: "cube" }), /data-fh="VAL-3\.13"><b class="fh-cube" data-tone="orange">Claude<\/b>/);
+  assert.match(renderValue({ type: "currency", currency: "USD", tone: "teal" }, 48200, "cell", { variant: "cube" }), /data-fh="VAL-4\.7"><b class="fh-cube" data-tone="teal" title="\$48,200\.00 USD">\$48\.2K<\/b>/);
+  assert.match(renderValue({ type: "number", tone: "sky" }, 1250, "cell", { variant: "cube" }), /data-fh="VAL-6\.7"><b class="fh-cube" data-tone="sky">1,250<\/b>/);
+  for (const f of [status, { type: "currency" }, { type: "number" }, { semanticType: "entity_reference", entity: "brand" }]) assert.ok(variants(f, "cell").some((v) => v.variant === "cube"), JSON.stringify(f));
+  assert.ok(!variants({ type: "currency" }, "cell").length || variants({ type: "currency" }, "cell")[0].variant !== "cube", "a cube is never the default");
 });
 
 console.log(`values: ${n} checks passed`);

@@ -1,5 +1,5 @@
 {
-  "$comment": "Firehorse data display contract: how a value is drawn, everywhere. Source of truth for src/js/values.js (resolveValue, via scripts/value-rules.mjs), agent/components/values.md and the UI audit. Plan: platform relay/2026-11-14-data-display-contract-plan.md. Version 3 (W3): each grid row lists `choices`, the variants a viewer may pick for a column in cell, record and card (the column display menu, decision 9); the first is the grid's own. Version 2 (W2b, plan section 7): series is the 14th shape, text the sixth context, option sets come from schema/option-sets.json (devops.option_sets), priority is ordinal with a tone ramp. A variant with `of` is the same Values part as that shape's variant of the same ID. Rows of the grid are matched in order; the first row whose shape and match fit the field wins. Every variant carries its Firehorse Index ID (VAL-1.1 …), the part drawn at /data/values/.",
+  "$comment": "Firehorse data display contract: how a value is drawn, everywhere. Source of truth for src/js/values.js (resolveValue, via scripts/value-rules.mjs), agent/components/values.md and the UI audit. Plan: platform relay/2026-11-14-data-display-contract-plan.md. Version 3 (W3): each grid row lists `choices`, the variants a viewer may pick for a column in cell, record and card (the column display menu, decision 9); the first is the grid's own. Version 2 (W2b, plan section 7): series is the 14th shape, text the sixth context, option sets come from schema/option-sets.json (devops.option_sets), priority is ordinal with a tone ramp. A variant with `of` is the same Values part as that shape's variant of the same ID. Rows of the grid are matched in order; the first row whose shape and match fit the field wins. Every variant carries its Firehorse Index ID (VAL-1.1 …), the part drawn at /data/values/. Cube (Rascode 2026-11-15): option, entity, money and number values can draw as a Cube (CUB), picked from the column display menu.",
   "version": 3,
   "shapes": {
     "text": "short words",
@@ -55,17 +55,20 @@
         "cell": [
           "dot",
           "chip",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "record": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "card": [
           "dot",
           "chip",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ]
       }
     },
@@ -90,17 +93,20 @@
         "cell": [
           "dot",
           "chip",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "record": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "card": [
           "dot",
           "chip",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ]
       }
     },
@@ -123,15 +129,18 @@
       "choices": {
         "cell": [
           "dot",
-          "chip"
+          "chip",
+          "cube"
         ],
         "record": [
           "chip",
-          "dot"
+          "dot",
+          "cube"
         ],
         "card": [
           "chip",
-          "dot"
+          "dot",
+          "cube"
         ]
       }
     },
@@ -183,17 +192,20 @@
         "cell": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "record": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "card": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ]
       }
     },
@@ -217,17 +229,20 @@
         "cell": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "record": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "card": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ]
       }
     },
@@ -246,17 +261,20 @@
         "cell": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "record": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ],
         "card": [
           "chip",
           "dot",
-          "chip-solid"
+          "chip-solid",
+          "cube"
         ]
       }
     },
@@ -348,19 +366,22 @@
           "avatar-name",
           "name",
           "chip",
-          "avatar-name-description"
+          "avatar-name-description",
+          "cube"
         ],
         "record": [
           "full",
           "avatar-name-description",
           "avatar-name",
           "name",
-          "chip"
+          "chip",
+          "cube"
         ],
         "card": [
           "chip",
           "avatar-name",
-          "name"
+          "name",
+          "cube"
         ]
       }
     },
@@ -388,17 +409,20 @@
           "avatar-ref",
           "ref",
           "ref-key",
-          "name"
+          "name",
+          "cube"
         ],
         "record": [
           "avatar-ref",
           "ref-key",
-          "full"
+          "full",
+          "cube"
         ],
         "card": [
           "avatar-ref",
           "name",
-          "chip"
+          "chip",
+          "cube"
         ]
       }
     },
@@ -418,18 +442,21 @@
           "ref",
           "ref-key",
           "name",
-          "name-key"
+          "name-key",
+          "cube"
         ],
         "record": [
           "ref-key",
           "ref",
           "name-key",
-          "name"
+          "name",
+          "cube"
         ],
         "card": [
           "name",
           "name-key",
-          "ref"
+          "ref",
+          "cube"
         ]
       }
     },
@@ -452,17 +479,20 @@
         "cell": [
           "amount",
           "amount-code",
-          "compact"
+          "compact",
+          "cube"
         ],
         "record": [
           "amount-code",
           "amount",
-          "compact"
+          "compact",
+          "cube"
         ],
         "card": [
           "compact",
           "amount",
-          "amount-code"
+          "amount-code",
+          "cube"
         ]
       }
     },
@@ -603,15 +633,18 @@
       "choices": {
         "cell": [
           "plain",
-          "unit"
+          "unit",
+          "cube"
         ],
         "record": [
           "unit",
-          "plain"
+          "plain",
+          "cube"
         ],
         "card": [
           "plain",
-          "unit"
+          "unit",
+          "cube"
         ]
       }
     },
@@ -1172,6 +1205,13 @@
             "FLD"
           ],
           "editable": true
+        },
+        "cube": {
+          "id": "VAL-1.7",
+          "label": "Cube",
+          "parts": [
+            "CUB"
+          ]
         }
       }
     },
@@ -1299,6 +1339,13 @@
             "AVT",
             "REF"
           ]
+        },
+        "cube": {
+          "id": "VAL-3.13",
+          "label": "Cube",
+          "parts": [
+            "CUB"
+          ]
         }
       }
     },
@@ -1338,6 +1385,13 @@
             "FLD"
           ],
           "editable": true
+        },
+        "cube": {
+          "id": "VAL-4.7",
+          "label": "Cube",
+          "parts": [
+            "CUB"
+          ]
         }
       }
     },
@@ -1435,6 +1489,13 @@
           ],
           "editable": true,
           "of": "temporal"
+        },
+        "cube": {
+          "id": "VAL-6.7",
+          "label": "Cube",
+          "parts": [
+            "CUB"
+          ]
         }
       }
     },

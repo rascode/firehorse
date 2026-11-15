@@ -120,12 +120,12 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 
 | Group | Shape | Variants (parts) |
 |---|---|---|
-| VAL-1 Option | option | `dot` MRK · `chip` CHP, SCR · `chip-solid` CHP · `select` (edit) CHP, FLD · `segmented` (edit) SEG · `select-search` (edit) CHP, FLD |
+| VAL-1 Option | option | `dot` MRK · `chip` CHP, SCR · `chip-solid` CHP · `select` (edit) CHP, FLD · `segmented` (edit) SEG · `select-search` (edit) CHP, FLD · `cube` CUB |
 | VAL-2 Options | options | `chips` CHP · `chips-inline` CHP · `count` · `tag-field` (edit) TAG |
-| VAL-3 Entity | entity | `name` · `name-key` DET · `avatar-name` AVT · `avatar-name-description` AVT, ENT · `full` AVT, ENT · `chip` CHP, AVT · `stack` AVT · `ref` REF · `ref-key` REF · `picker` (edit) ENT · `picker-multi` (edit) ENT · `avatar-ref` AVT, REF |
-| VAL-4 Money | money | `amount` · `amount-code` · `compact` · `delta` · `compact-delta` · `money-input` (edit) FLD |
+| VAL-3 Entity | entity | `name` · `name-key` DET · `avatar-name` AVT · `avatar-name-description` AVT, ENT · `full` AVT, ENT · `chip` CHP, AVT · `stack` AVT · `ref` REF · `ref-key` REF · `picker` (edit) ENT · `picker-multi` (edit) ENT · `avatar-ref` AVT, REF · `cube` CUB |
+| VAL-4 Money | money | `amount` · `amount-code` · `compact` · `delta` · `compact-delta` · `money-input` (edit) FLD · `cube` CUB |
 | VAL-5 Ratio | ratio | `text` · `bar` MET · `ring` FBK · `meter` MET, GAU · `range` (edit) UPL |
-| VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD · `duration` · `duration-input` (edit) FLD |
+| VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD · `duration` · `duration-input` (edit) FLD · `cube` CUB |
 | VAL-6 Number | series | `sparkline` MET · `sparkline-last` MET |
 | VAL-7 Temporal | temporal | `date` · `date-relative` · `relative` · `datetime` · `range` · `overdue` · `time` · `duration` · `date-picker` (edit) FLD · `time-input` (edit) FLD · `duration-input` (edit) FLD |
 | VAL-8 File | file | `type-chip` CHP · `thumb` THB · `thumbs` THB · `file-row` SFL · `count` · `dropzone` (edit) UPL · `preview` THB, SFL · `gallery` THB · `media` THB · `media-badge` THB · `doc-cell` CHP, THB · `doc-portrait` THB |
@@ -351,6 +351,17 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 </div>
 ```
 
+`VAL-1.7` Cube · `option` `cube` · built from CUB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--cube" data-fh="VAL-1.7"><b class="fh-cube" data-tone="lime">Won</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-1.7"><b class="fh-cube" data-tone="amber">Proposal</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-1.7"><b class="fh-cube" data-tone="sky">Lead</b></span>
+  <span class="fh-value fh-value--cube fh-value--lg" data-fh="VAL-1.7"><b class="fh-cube" data-tone="lime">Won</b></span>
+</div>
+```
+
 #### VAL-2 Options
 
 `VAL-2.1` Chips, +N after the limit · `options` `chips` · built from CHP
@@ -518,6 +529,17 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
 </div>
 ```
 
+`VAL-3.13` Cube · `entity` `cube` · built from CUB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--cube" data-fh="VAL-3.13"><b class="fh-cube" data-tone="orange">Claude</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-3.13"><b class="fh-cube" data-tone="teal">Northwind Studio</b></span>
+  <span class="fh-value fh-value--cube" data-fh="VAL-3.13"><b class="fh-cube" data-tone="accent">Helm</b></span>
+  <span class="fh-value fh-value--cube fh-value--lg" data-fh="VAL-3.13"><b class="fh-cube" data-tone="orange">Claude</b></span>
+</div>
+```
+
 #### VAL-4 Money
 
 `VAL-4.1` Amount · `money` `amount`
@@ -578,6 +600,16 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
   <div class="fh-value fh-value--money-input fh-value--field" data-mode="read" data-fh="VAL-4.6"><div class="fh-field fh-money" data-fh-money data-currency="USD"><div class="fh-input-group"><span class="fh-money__currency">USD</span><input class="fh-input" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="4800" aria-label="Amount" readonly><input type="hidden" data-fh-money-value></div></div></div>
   <div class="fh-value fh-value--money-input fh-value--field" data-mode="edit" data-fh="VAL-4.6"><div class="fh-field fh-money" data-fh-money data-currency="USD"><div class="fh-input-group"><span class="fh-money__currency">USD</span><input class="fh-input" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="4800" aria-label="Amount"><input type="hidden" data-fh-money-value></div></div></div>
   <div class="fh-value fh-value--money-input fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-4.6"><div class="fh-field fh-money" data-fh-money data-currency="USD"><div class="fh-input-group"><span class="fh-money__currency">USD</span><input class="fh-input" name="amount" inputmode="decimal" autocomplete="off" placeholder="0.00" value="4800" aria-label="Amount"><input type="hidden" data-fh-money-value></div></div></div>
+</div>
+```
+
+`VAL-4.7` Cube · `money` `cube` · built from CUB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-4.7"><b class="fh-cube" data-tone="teal" title="$48,200.00 USD">$48.2K</b></span>
+  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-4.7"><b class="fh-cube" data-tone="violet" title="$1,250,000.00 USD">$1.3M</b></span>
+  <span class="fh-value fh-value--cube fh-value--end fh-value--lg" data-fh="VAL-4.7"><b class="fh-cube" data-tone="teal" title="$48,200.00 USD">$48.2K</b></span>
 </div>
 ```
 
@@ -714,6 +746,16 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
   <div class="fh-value fh-value--duration-input fh-value--field" data-mode="read" data-fh="VAL-7.11"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours" readonly><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes" readonly><span>m</span></div></div>
   <div class="fh-value fh-value--duration-input fh-value--field" data-mode="edit" data-fh="VAL-7.11"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours"><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes"><span>m</span></div></div>
   <div class="fh-value fh-value--duration-input fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-7.11"><div class="fh-input-group"><input class="fh-input" type="number" min="0" value="1" aria-label="Hours"><span>h</span><input class="fh-input" type="number" min="0" max="59" value="25" aria-label="Minutes"><span>m</span></div></div>
+</div>
+```
+
+`VAL-6.7` Cube · `number` `cube` · built from CUB
+
+```html
+<div class="fh-cluster">
+  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-6.7"><b class="fh-cube" data-tone="sky">1,250</b></span>
+  <span class="fh-value fh-value--cube fh-value--end" data-fh="VAL-6.7"><b class="fh-cube" data-tone="lime">42</b></span>
+  <span class="fh-value fh-value--cube fh-value--end fh-value--lg" data-fh="VAL-6.7"><b class="fh-cube" data-tone="sky">1,250</b></span>
 </div>
 ```
 
