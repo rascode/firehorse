@@ -111,10 +111,10 @@
 
   .fh-signature {
     font-family: var(--fh-font-script);
-    font-size: clamp(2rem, 1.4rem + 2.5cqi, 2.75rem);
+    font-size: var(--fh-signature-text, var(--fh-text-h1));
     font-weight: var(--fh-weight-medium);
     line-height: var(--fh-leading-tight);
-    letter-spacing: 0.01em;
+    letter-spacing: var(--fh-tracking-mono);
   }
 
   /* Size and face helpers for text that is not a role of its own. */
@@ -130,20 +130,32 @@
     color: var(--fh-color-text-subtle);
   }
 
-  /* Long-form reading (articles, legal, docs) */
+  /* Long-form reading (articles, legal, docs). The rhythm is in em, so it follows the prose's
+   * text size; each step is a knob: --fh-prose-text (lede), --fh-prose-leading (relaxed),
+   * --fh-prose-measure (42rem), --fh-prose-flow (between blocks, 1.15em), --fh-prose-section
+   * (above a heading, 2em), --fh-prose-after-head (under a heading, 0.65em), --fh-prose-indent
+   * (a list's indent, 1.25em), --fh-prose-item (between list items, 0.4em), --fh-prose-code-pad
+   * (inline code, 0.1em 0.35em). */
   .fh-prose {
-    max-inline-size: 42rem;
-    font-size: var(--fh-text-lede);
-    line-height: 1.7;
+    --_flow: var(--fh-prose-flow, 1.15em);
+    --_section: var(--fh-prose-section, 2em);
+    --_after-head: var(--fh-prose-after-head, 0.65em);
+    --_indent: var(--fh-prose-indent, 1.25em);
+    --_item: var(--fh-prose-item, 0.4em);
+    --_code-pad: var(--fh-prose-code-pad, 0.1em 0.35em);
+
+    max-inline-size: var(--fh-prose-measure, 42rem);
+    font-size: var(--fh-prose-text, var(--fh-text-lede));
+    line-height: var(--fh-prose-leading, var(--fh-leading-relaxed));
     color: var(--fh-color-text-muted);
 
     & > * + * {
-      margin-block-start: 1.15em;
+      margin-block-start: var(--_flow);
     }
 
     & :is(h2, h3, h4) {
       color: var(--fh-color-text);
-      margin-block-start: 2em;
+      margin-block-start: var(--_section);
     }
 
     & h2 {
@@ -155,7 +167,7 @@
     }
 
     & :is(h2, h3, h4) + * {
-      margin-block-start: 0.65em;
+      margin-block-start: var(--_after-head);
     }
 
     & strong {
@@ -170,11 +182,11 @@
     }
 
     & :is(ul, ol) {
-      padding-inline-start: 1.25em;
+      padding-inline-start: var(--_indent);
     }
 
     & li + li {
-      margin-block-start: 0.4em;
+      margin-block-start: var(--_item);
     }
 
     & blockquote {
@@ -184,7 +196,7 @@
     }
 
     & :not(pre) > code {
-      padding: 0.1em 0.35em;
+      padding: var(--_code-pad);
       border-radius: var(--fh-radius-sm);
       background: var(--fh-color-surface-raised);
       color: var(--fh-color-text);

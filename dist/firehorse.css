@@ -795,10 +795,10 @@
 
   .fh-signature {
     font-family: var(--fh-font-script);
-    font-size: clamp(2rem, 1.4rem + 2.5cqi, 2.75rem);
+    font-size: var(--fh-signature-text, var(--fh-text-h1));
     font-weight: var(--fh-weight-medium);
     line-height: var(--fh-leading-tight);
-    letter-spacing: .01em;
+    letter-spacing: var(--fh-tracking-mono);
   }
 
   .fh-text-small {
@@ -822,18 +822,24 @@
   }
 
   .fh-prose {
-    max-inline-size: 42rem;
-    font-size: var(--fh-text-lede);
+    --_flow: var(--fh-prose-flow, 1.15em);
+    --_section: var(--fh-prose-section, 2em);
+    --_after-head: var(--fh-prose-after-head, .65em);
+    --_indent: var(--fh-prose-indent, 1.25em);
+    --_item: var(--fh-prose-item, .4em);
+    --_code-pad: var(--fh-prose-code-pad, .1em .35em);
+    max-inline-size: var(--fh-prose-measure, 42rem);
+    font-size: var(--fh-prose-text, var(--fh-text-lede));
+    line-height: var(--fh-prose-leading, var(--fh-leading-relaxed));
     color: var(--fh-color-text-muted);
-    line-height: 1.7;
 
     & > * + * {
-      margin-block-start: 1.15em;
+      margin-block-start: var(--_flow);
     }
 
     & :is(h2, h3, h4) {
       color: var(--fh-color-text);
-      margin-block-start: 2em;
+      margin-block-start: var(--_section);
     }
 
     & h2 {
@@ -845,7 +851,7 @@
     }
 
     & :is(h2, h3, h4) + * {
-      margin-block-start: .65em;
+      margin-block-start: var(--_after-head);
     }
 
     & strong {
@@ -861,11 +867,11 @@
     }
 
     & :is(ul, ol) {
-      padding-inline-start: 1.25em;
+      padding-inline-start: var(--_indent);
     }
 
     & li + li {
-      margin-block-start: .4em;
+      margin-block-start: var(--_item);
     }
 
     & blockquote {
@@ -875,10 +881,10 @@
     }
 
     & :not(pre) > code {
+      padding: var(--_code-pad);
       border-radius: var(--fh-radius-sm);
       background: var(--fh-color-surface-raised);
       color: var(--fh-color-text);
-      padding: .1em .35em;
     }
 
     & pre {
@@ -5472,10 +5478,10 @@
     place-items: center start;
     column-gap: var(--fh-gap-related);
     row-gap: var(--fh-gap-bound);
-    padding: .35rem var(--fh-inset-control);
+    padding: var(--fh-gap-bound) var(--fh-inset-control);
+    min-block-size: var(--fh-field-height, var(--fh-control-height));
     text-align: start;
     grid-template-columns: auto auto minmax(0, 1fr);
-    min-block-size: 2.5rem;
 
     &:before {
       inline-size: 1.05rem;
@@ -5500,7 +5506,7 @@
 
   .fh-dropzone__title {
     color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family);
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
     font-size: var(--fh-type-value);
     font-weight: var(--fh-type-name-weight);
     letter-spacing: var(--fh-type-value-tracking);
@@ -5527,6 +5533,9 @@
 
   .fh-range {
     --_track: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+    --_bar: var(--fh-range-bar, var(--fh-gap-bound));
+    --_thumb: var(--fh-range-thumb, calc(var(--fh-inset-tile) + var(--fh-border-heavy)));
+    --_cut: var(--fh-range-cut, calc(var(--fh-border-heavy) + var(--fh-border-thin)));
     block-size: 1.25rem;
     inline-size: 100%;
     accent-color: var(--fh-tone);
@@ -5536,52 +5545,45 @@
     margin: 0;
 
     &::-webkit-slider-runnable-track {
+      block-size: var(--_bar);
       border-radius: var(--fh-radius-pill);
       background: var(--_track);
-      block-size: .3rem;
     }
 
     &::-moz-range-track {
+      block-size: var(--_bar);
       border-radius: var(--fh-radius-pill);
       background: var(--_track);
-      block-size: .3rem;
     }
 
     &::-moz-range-progress {
+      block-size: var(--_bar);
       border-radius: var(--fh-radius-pill);
       background: var(--fh-tone);
-      block-size: .3rem;
     }
 
     &::-webkit-slider-thumb {
       appearance: none;
+      inline-size: var(--_thumb);
       aspect-ratio: 1;
-      border: 3px solid var(--fh-color-canvas);
+      border: var(--_cut) solid var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background: var(--fh-color-text);
-      inline-size: 1.1rem;
-      box-shadow: 0 0 0 1px var(--fh-color-border-strong);
-      margin-block-start: -.4rem;
+      box-shadow: 0 0 0 var(--fh-border-thin) var(--fh-color-border-strong);
+      margin-block-start: calc((var(--_bar) - var(--_thumb)) / 2);
     }
 
     &::-moz-range-thumb {
-      border: 3px solid var(--fh-color-canvas);
+      inline-size: var(--_thumb);
+      block-size: var(--_thumb);
+      border: var(--_cut) solid var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background: var(--fh-color-text);
-      block-size: 1.1rem;
-      inline-size: 1.1rem;
     }
 
     &:focus-visible {
-      outline: none;
-
-      &::-webkit-slider-thumb {
-        box-shadow: 0 0 0 2px var(--fh-color-focus);
-      }
-
-      &::-moz-range-thumb {
-        box-shadow: 0 0 0 2px var(--fh-color-focus);
-      }
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     &:disabled {
@@ -5599,7 +5601,7 @@
     & > label {
       min-inline-size: 0;
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-label-family);
+      font-family: var(--fh-type-label-family, var(--fh-font-mono));
       font-size: var(--fh-type-label);
       font-weight: var(--fh-type-label-weight);
       letter-spacing: var(--fh-type-label-tracking);
@@ -5609,7 +5611,7 @@
 
     & > output {
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-figure-family);
+      font-family: var(--fh-type-figure-family, var(--fh-font-mono));
       font-size: var(--fh-type-value);
       font-weight: var(--fh-type-value-weight);
       letter-spacing: var(--fh-type-figure-tracking);

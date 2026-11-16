@@ -18,6 +18,9 @@
    * Disabled: disabled on the input. */
   .fh-range {
     --_track: color-mix(in oklab, var(--fh-color-text) 14%, transparent);
+    --_bar: var(--fh-range-bar, var(--fh-gap-bound));
+    --_thumb: var(--fh-range-thumb, calc(var(--fh-inset-tile) + var(--fh-border-heavy)));
+    --_cut: var(--fh-range-cut, calc(var(--fh-border-heavy) + var(--fh-border-thin)));
 
     inline-size: 100%;
     block-size: 1.25rem;
@@ -28,52 +31,46 @@
     cursor: var(--fh-cursor-action);
 
     &::-webkit-slider-runnable-track {
-      block-size: 0.3rem;
+      block-size: var(--_bar);
       border-radius: var(--fh-radius-pill);
       background: var(--_track);
     }
 
     &::-moz-range-track {
-      block-size: 0.3rem;
+      block-size: var(--_bar);
       border-radius: var(--fh-radius-pill);
       background: var(--_track);
     }
 
     &::-moz-range-progress {
-      block-size: 0.3rem;
+      block-size: var(--_bar);
       border-radius: var(--fh-radius-pill);
       background: var(--fh-tone);
     }
 
     &::-webkit-slider-thumb {
       appearance: none;
-      inline-size: 1.1rem;
+      inline-size: var(--_thumb);
       aspect-ratio: 1;
-      margin-block-start: -0.4rem;
-      border: 3px solid var(--fh-color-canvas);
+      margin-block-start: calc((var(--_bar) - var(--_thumb)) / 2);
+      border: var(--_cut) solid var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background: var(--fh-color-text);
-      box-shadow: 0 0 0 1px var(--fh-color-border-strong);
+      box-shadow: 0 0 0 var(--fh-border-thin) var(--fh-color-border-strong);
     }
 
     &::-moz-range-thumb {
-      inline-size: 1.1rem;
-      block-size: 1.1rem;
-      border: 3px solid var(--fh-color-canvas);
+      inline-size: var(--_thumb);
+      block-size: var(--_thumb);
+      border: var(--_cut) solid var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background: var(--fh-color-text);
     }
 
+    /* The standard focus ring, around the whole slider, as on every control. */
     &:focus-visible {
-      outline: none;
-
-      &::-webkit-slider-thumb {
-        box-shadow: 0 0 0 2px var(--fh-color-focus);
-      }
-
-      &::-moz-range-thumb {
-        box-shadow: 0 0 0 2px var(--fh-color-focus);
-      }
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: var(--fh-focus-offset);
     }
 
     &:disabled {
@@ -91,7 +88,7 @@
     & > label {
       min-inline-size: 0;
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-label-family);
+      font-family: var(--fh-type-label-family, var(--fh-font-mono));
       font-size: var(--fh-type-label);
       font-weight: var(--fh-type-label-weight);
       letter-spacing: var(--fh-type-label-tracking);
@@ -106,7 +103,7 @@
       border: 0;
       background: none;
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-figure-family);
+      font-family: var(--fh-type-figure-family, var(--fh-font-mono));
       font-size: var(--fh-type-value);
       font-weight: var(--fh-type-value-weight);
       letter-spacing: var(--fh-type-figure-tracking);

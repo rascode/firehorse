@@ -111,8 +111,8 @@
     align-items: center;
     column-gap: var(--fh-gap-related);
     row-gap: var(--fh-gap-bound);
-    padding: 0.35rem var(--fh-inset-control);
-    min-block-size: 2.5rem;
+    padding: var(--fh-gap-bound) var(--fh-inset-control);
+    min-block-size: var(--fh-field-height, var(--fh-control-height));
     text-align: start;
 
     &::before { inline-size: 1.05rem; }
@@ -132,7 +132,7 @@
 
   .fh-dropzone__title {
     color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family);
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
     font-size: var(--fh-type-value);
     font-weight: var(--fh-type-name-weight);
     letter-spacing: var(--fh-type-value-tracking);
