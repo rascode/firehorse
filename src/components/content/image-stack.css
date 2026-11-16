@@ -6,9 +6,10 @@
 @layer fh.components {
   /* —— Image stack ——
    * A few images that belong together (the screenshots behind one step, the shots of one
-   * product) sit as one card with the next ones peeking out behind it. Pointing at the stack,
-   * or tabbing into it, fans the cards out downward on a raised layer, over whatever sits
-   * below, so nothing on the page moves. Each card opens its image.
+   * product) sit as one card with the next ones peeking out behind it to the end. Pointing at the
+   * stack, or tabbing into it, fans the cards out in a row to the end (right in left-to-right
+   * text), on a raised layer over whatever sits there, so nothing on the page moves. No panel,
+   * no edge behind them: just the cards. Each card opens its image.
    *
    *   <div class="fh-image-stack" data-fh="IMS-1.1">
    *     <ul class="fh-image-stack__list" aria-label="3 images">
@@ -24,10 +25,13 @@
    *   </div>
    *
    * IMS-1.1 Stack (cards with their details) · IMS-1.2 Bare (.fh-image-stack--bare, images only).
+   * When the end side has no room for the row (the stack sits at the edge, or on a phone),
+   * image-stack.js sets data-fan="start" as the pointer or focus arrives and the row opens toward
+   * the start instead. Without the script it always opens to the end.
    * Opens on hover (pointers that hover), on focus inside it, and on [data-open] (image-stack.js
    * sets it on the first tap of a touch screen; Escape or a tap elsewhere closes). One image is
-   * just a card: no count, nothing to open. Cards are the same height (one line per caption
-   * row), so each moves down by its own height: no measuring.
+   * just a card: no count, nothing to open. Cards are the same width, so each moves along by its
+   * own width: no measuring.
    * IMS-2.1 Viewer: image-stack.js opens a clicked card in a dialog with the image, its details,
    * a count and previous / next (arrow keys too). Without the script each card links to its image. */
   .fh-image-stack {
@@ -39,12 +43,13 @@
     --_edge: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
     --_i: 0;
     --_n: 1;
+    --_dir: 1;
+    --_fan: 1;
 
     position: relative;
     display: grid;
     min-inline-size: 0;
     /* Room for the cards peeking out behind the first. */
-    padding-block-end: calc(var(--_peek) * min(var(--_n) - 1, 2));
     padding-inline-end: calc(var(--_peek) * min(var(--_n) - 1, 2));
 
     &:has(> .fh-image-stack__list > :nth-child(2)) { --_n: 2; }
@@ -59,37 +64,37 @@
   .fh-image-stack__list {
     position: relative;
     display: grid;
+    column-gap: var(--_gap);   /* not a layout gap (one cell): image-stack.js reads it to measure the row */
     margin: 0;
     padding: 0;
     list-style: none;
 
-    /* The open stack's backing: one raised panel under the fanned cards. It also keeps the pointer
-     * "inside" across the gaps, so hover does not flicker between cards. */
+    /* Open, an invisible strip under the fanned cards keeps the pointer "inside" across the gaps,
+     * so hover does not flicker between cards. It has no fill and no edge. */
     &::before {
       content: "";
       position: absolute;
       z-index: 0;
-      /* Out past the room kept for the peek too, so nothing behind shows at the edge. */
-      inset-block-start: calc(var(--_pad) * -1);
-      inset-inline: calc(var(--_pad) * -1) calc(var(--_pad) * -1 - var(--_peek) * min(var(--_n) - 1, 2));
-      block-size: calc((100% + var(--_gap)) * var(--_n) - var(--_gap) + var(--_pad) * 2);
-      border: var(--_edge);
-      border-radius: calc(var(--_radius) + var(--_pad));
-      background-color: var(--fh-color-surface-raised);
-      opacity: 0;
+      inset-block: 0;
+      inset-inline-start: 0;
+      inline-size: calc((100% + var(--_gap)) * var(--_n) - var(--_gap));
       visibility: hidden;
       pointer-events: none;
     }
+  }
+
+  .fh-image-stack[data-fan="start"] > .fh-image-stack__list::before {
+    inset-inline: auto 0;
   }
 
   .fh-image-stack__item {
     z-index: calc(var(--_n) - var(--_i));
     grid-area: 1 / 1;
     min-inline-size: 0;
-    /* Closed: each card behind the first peeks out down and to the end, a touch smaller. It shrinks
-     * toward its far corner, so the shrink never eats the peek. */
-    transform-origin: bottom right;
-    translate: calc(var(--_peek) * min(var(--_i), 2)) calc(var(--_peek) * min(var(--_i), 2));
+    /* Closed: each card behind the first peeks out to the end, a touch smaller. It shrinks toward
+     * its end edge, so the shrink never eats the peek. */
+    transform-origin: right center;
+    translate: calc(var(--_peek) * min(var(--_i), 2) * var(--_dir)) 0;
     scale: calc(1 - 0.03 * min(var(--_i), 2));
     transition:
       translate var(--fh-duration-base) var(--fh-ease-out),
@@ -185,14 +190,14 @@
 
   .fh-image-stack:not(:has(> .fh-image-stack__list > :nth-child(2))) > .fh-image-stack__count { display: none; }
 
-  /* —— Open: the cards fan out downward over the content below ———— */
+  /* —— Open: the cards fan out in a row to the end, over what sits there ——— */
   .fh-image-stack:is([data-open], :focus-within):has(> .fh-image-stack__list > :nth-child(2)) {
     z-index: var(--fh-z-dropdown);
 
-    & > .fh-image-stack__list::before { opacity: 1; visibility: visible; pointer-events: auto; }
+    & > .fh-image-stack__list::before { visibility: visible; pointer-events: auto; }
 
     & .fh-image-stack__item {
-      translate: 0 calc((100% + var(--_gap)) * var(--_i));
+      translate: calc((100% + var(--_gap)) * var(--_i) * var(--_fan)) 0;
       scale: 1;
       opacity: 1;
 
@@ -206,10 +211,10 @@
     .fh-image-stack:hover:has(> .fh-image-stack__list > :nth-child(2)) {
       z-index: var(--fh-z-dropdown);
 
-      & > .fh-image-stack__list::before { opacity: 1; visibility: visible; pointer-events: auto; }
+      & > .fh-image-stack__list::before { visibility: visible; pointer-events: auto; }
 
       & .fh-image-stack__item {
-        translate: 0 calc((100% + var(--_gap)) * var(--_i));
+        translate: calc((100% + var(--_gap)) * var(--_i) * var(--_fan)) 0;
         scale: 1;
         opacity: 1;
 
@@ -219,6 +224,14 @@
       & > .fh-image-stack__count { opacity: 0; }
     }
   }
+
+  /* Right-to-left text: the peek and the row run to the left. */
+  .fh-image-stack:dir(rtl) { --_dir: -1; --_fan: -1; }
+
+  /* No room at the end: image-stack.js turns the row toward the start. */
+  .fh-image-stack[data-fan="start"] { --_fan: -1; }
+  .fh-image-stack[data-fan="start"]:dir(rtl) { --_fan: 1; }
+  .fh-image-stack:dir(rtl) .fh-image-stack__item { transform-origin: left center; }
 
   /* IMS-1.2 Bare: images only. */
   .fh-image-stack--bare .fh-image-stack__shot > figcaption { display: none; }

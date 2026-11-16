@@ -1449,7 +1449,7 @@ Long text (an agent's reply, an update, a note) folds to `--fh-fold-lines` lines
 
 ### IMS · Image stack
 
-Images that belong together sit as one card with the next two peeking out behind it and a count on its corner. Point at the stack, tab into it, or tap it once on a phone, and the cards fan out downward on a raised panel, floating over what sits below so nothing moves. Click a card to open the viewer: the full image, its details, a count and previous / next (arrow keys too). `image-stack.js` (`@rascode/firehorse/image-stack`) adds the tap and the viewer; without it the stack still opens on hover and focus and each card links to its image.
+Images that belong together sit as one card with the next two peeking out behind it and a count on its corner. Point at the stack, tab into it, or tap it once on a phone, and the cards fan out in a row to the right, floating over what sits there so nothing moves. Click a card to open the viewer: the full image, its details, a count and previous / next (arrow keys too). `image-stack.js` (`@rascode/firehorse/image-stack`) adds the tap and the viewer; without it the stack still opens on hover and focus and each card links to its image.
 
 ```html
 <!-- IMS-1.1 · Image stack › Stack -->

@@ -5,6 +5,10 @@
  * opens on hover and on focus with CSS alone, and each card links to its
  * image. This script adds:
  *
+ *   - Room: as the pointer or focus arrives, it checks whether the row fits on
+ *     the end side (right in left-to-right text) inside the nearest clipping
+ *     box or the window. If not, it sets data-fan="start" and the row opens
+ *     toward the start; if neither side fits, it takes the roomier one.
  *   - Touch: the first tap on a closed stack opens it (data-open) instead of
  *     following the link; a tap outside, or Escape, closes it.
  *   - The viewer (IMS-2.1): a click on a card opens its image in a dialog with
@@ -12,7 +16,7 @@
  *     a click on the backdrop closes it, and focus goes back to the card.
  *
  *   import "@rascode/firehorse/image-stack";
- *   import { initImageStack, openImageViewer, closeImageStacks } from "@rascode/firehorse/image-stack";
+ *   import { initImageStack, openImageViewer, closeImageStacks, fitImageStack } from "@rascode/firehorse/image-stack";
  *
  * A card's details come from its figcaption: .fh-image-stack__file and each
  * .fh-image-stack__meta. Set data-full on the link for a different full-size
@@ -99,6 +103,39 @@ export function openImageViewer(stack, index = 0) {
   if (!viewer.open) viewer.showModal();
 }
 
+const clipBox = (el) => {
+  for (let p = el.parentElement; p && p !== doc.body; p = p.parentElement) {
+    const ox = getComputedStyle(p).overflowX;
+    if (ox !== "visible") { const r = p.getBoundingClientRect(); return { left: r.left, right: r.right }; }
+  }
+  return { left: 0, right: doc.documentElement.clientWidth };
+};
+
+/** Picks the side the row opens to: the end when it fits, else the start (data-fan="start"). */
+export function fitImageStack(stack) {
+  const list = stack.querySelector(":scope > .fh-image-stack__list");
+  const first = list?.firstElementChild;
+  const n = list?.children.length ?? 0;
+  if (!first || n < 2) return;
+  const card = first.offsetWidth;                              // untransformed width
+  const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
+  const reach = (card + gap) * (n - 1);
+  const r = list.getBoundingClientRect();
+  const box = clipBox(stack);
+  const rtl = getComputedStyle(stack).direction === "rtl";
+  const start = rtl ? r.right : r.left;                        // the first card's start edge
+  const endRoom = rtl ? (start - card) - box.left : box.right - (start + card);
+  const startRoom = rtl ? box.right - start : start - box.left;
+  const toStart = endRoom < reach && startRoom > endRoom;
+  if (toStart) stack.dataset.fan = "start";
+  else delete stack.dataset.fan;
+}
+
+const fitFrom = (e) => {
+  const stack = e.target.closest?.(SELECTOR);
+  if (stack && !stack.contains(e.relatedTarget)) fitImageStack(stack);
+};
+
 /** Closes every stack opened by a tap (or all but one). */
 export function closeImageStacks(except = null) {
   for (const s of doc.querySelectorAll(`${SELECTOR}[data-open]`)) if (s !== except) s.removeAttribute("data-open");
@@ -118,6 +155,7 @@ function onClick(e) {
   if (lastPointer === "touch" && items.length > 1 && !stack.hasAttribute("data-open")) {
     e.preventDefault();
     closeImageStacks(stack);
+    fitImageStack(stack);
     stack.setAttribute("data-open", "");
     return;
   }
@@ -142,6 +180,8 @@ export function initImageStack() {
   doc.addEventListener("pointerdown", (e) => { lastPointer = e.pointerType || "mouse"; }, { capture: true, passive: true });
   doc.addEventListener("click", onClick);
   doc.addEventListener("keydown", onKey);
+  doc.addEventListener("pointerover", fitFrom);
+  doc.addEventListener("focusin", fitFrom);
 }
 
 if (doc) {

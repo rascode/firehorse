@@ -1793,7 +1793,7 @@ Classes: `fh-fold` `fh-fold__body` `fh-body` `fh-button` `fh-button--ghost` `fh-
 
 ## IMS · Image stack
 
-Images that belong together sit as one card with the next two peeking out behind it and a count on its corner. Point at the stack, tab into it, or tap it once on a phone, and the cards fan out downward on a raised panel, floating over what sits below so nothing moves. Click a card to open the viewer: the full image, its details, a count and previous / next (arrow keys too). image-stack.js (@rascode/firehorse/image-stack) adds the tap and the viewer; without it the stack still opens on hover and focus and each card links to its image.
+Images that belong together sit as one card with the next two peeking out behind it and a count on its corner. Point at the stack, tab into it, or tap it once on a phone, and the cards fan out in a row to the right, floating over what sits there so nothing moves. Click a card to open the viewer: the full image, its details, a count and previous / next (arrow keys too). image-stack.js (@rascode/firehorse/image-stack) adds the tap and the viewer; without it the stack still opens on hover and focus and each card links to its image.
 
 Classes: `fh-image-stack` `fh-image-stack__list` `fh-image-stack__item` `fh-image-stack__shot` `fh-image-stack__open` `fh-image-stack__file` `fh-image-stack__meta` `fh-image-stack__count` `fh-image-stack--bare` `fh-image-viewer` `fh-image-viewer__count` `fh-button` `fh-button--disc` `fh-image-viewer__close` `fh-icon` `fh-image-viewer__prev` `fh-image-viewer__figure` `fh-image-viewer__img` `fh-image-viewer__caption` `fh-image-viewer__file` `fh-image-viewer__meta` `fh-image-viewer__next`
 
