@@ -334,7 +334,6 @@ function EntityRow<E extends Entity>({ entity, avatar, stat, text }: { entity: E
       {avatar && !entity.noAvatar ? (
         <>
           <span className={entity.kind ? "fh-avatar" : "fh-avatar fh-avatar--circle"} data-kind={entity.kind} data-tone={entity.tone}>{entity.avatar ? <img src={entity.avatar} alt="" /> : (entity.initials ?? initialsOf(entity.name))}</span>
-          <span className="fh-entity__sep" aria-hidden="true" />
         </>
       ) : null}
       <span className="fh-entity__who"><b>{text ? text(entity.name) : entity.name}</b>{entity.sub ? <small>{entity.sub}</small> : null}</span>

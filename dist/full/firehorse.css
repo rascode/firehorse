@@ -6111,45 +6111,7 @@
   }
 
   .fh-entity__sep {
-    --_p: var(--fh-gap-related);
-    --_r: calc(var(--fh-avatar-size, var(--fh-avatar-sm)) / 2 + var(--_p));
-    inline-size: var(--_r);
-    margin-block: calc(var(--_p) * -1);
-    border: var(--fh-border-thin) var(--_line, dashed) var(--fh-color-etch);
-    pointer-events: none;
-    border-inline-start: 0;
-    border-start-start-radius: 0;
-    border-start-end-radius: min(var(--_r), calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_p)));
-    border-end-end-radius: min(var(--_r), calc(var(--fh-avatar-radius, var(--fh-radius-md)) + var(--_p)));
-    border-end-start-radius: 0;
-    flex: none;
-    align-self: stretch;
-    margin-inline-start: calc((var(--fh-avatar-size, var(--fh-avatar-sm)) / 2 + var(--fh-item-gap)) * -1);
-  }
-
-  .fh-entity:has(.fh-entity__sep) {
-    padding-block: var(--fh-gap-related);
-    padding-inline-start: var(--fh-gap-related);
-  }
-
-  .fh-entity:has(.fh-avatar--circle) .fh-entity__sep {
-    --fh-avatar-radius: var(--fh-radius-pill);
-  }
-
-  .fh-entity:has(.fh-avatar--square) .fh-entity__sep {
-    --fh-avatar-radius: var(--fh-radius-sm);
-  }
-
-  .fh-entity:has(.fh-avatar--rounded) .fh-entity__sep {
-    --fh-avatar-radius: var(--fh-radius-md);
-  }
-
-  .fh-entity:has(.fh-avatar[data-kind="person"]) .fh-entity__sep {
-    --fh-avatar-radius: var(--fh-radius-pill);
-  }
-
-  .fh-entity:has(.fh-avatar:is([data-kind="org"], [data-kind="agent"], [data-kind="record"])) .fh-entity__sep {
-    --fh-avatar-radius: var(--fh-radius-md);
+    display: none;
   }
 
   .fh-entity__who {
@@ -6445,7 +6407,6 @@
 
   .fh-entity-picker--rounded {
     --fh-entity-radius: var(--fh-radius-pill);
-    --fh-avatar-radius: var(--fh-radius-pill);
 
     & .fh-avatar {
       --fh-avatar-radius: var(--fh-radius-pill);
@@ -20354,10 +20315,6 @@
 
     .fh-value .fh-entity-picker > .fh-entity {
       padding-inline-end: var(--fh-gap-related);
-    }
-
-    .fh-value .fh-entity__sep {
-      margin-inline-end: calc(var(--fh-gap-related) * -1);
     }
 
     .fh-value .fh-entity__stat {

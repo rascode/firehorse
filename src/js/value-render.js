@@ -272,7 +272,7 @@ const entity = {
   full: each((o) => {
     const e = entityOf(o.value);
     const stat = e.stat ? `<span class="fh-entity__stat"${attr("data-tone", e.stat.tone)}><b>${esc(e.stat.value)}</b>${e.stat.label ? `<small>${esc(e.stat.label)}</small>` : ""}</span>` : "";
-    return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}${stat}</span></div>`;
+    return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${who(e)}${stat}</span></div>`;
   }),
   chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm fh-chip--avatar">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
   stack: (o) => {
@@ -287,7 +287,7 @@ const entity = {
   "ref-key": each((o) => `${rootOpen("span", o.r, "ref-key", o.opts, { id: o.id })}${refLink(entityOf(o.value), true, o)}</span>`),
   picker: (o) => {
     const e = entityOf(list(o.value)[0]);
-    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value">${e ? `${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}` : `<span class="fh-entity__who"><b>${esc(rules.empty.text)}</b></span>`}</span></button></div>`);
+    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value">${e ? `${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${who(e)}` : `<span class="fh-entity__who"><b>${esc(rules.empty.text)}</b></span>`}</span></button></div>`);
   },
   "picker-multi": (o) => {
     const items = list(o.value).map(entityOf).filter(Boolean);
