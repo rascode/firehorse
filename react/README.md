@@ -20,7 +20,22 @@ import { Button, Dialog, DialogTrigger, DialogContent, DropdownMenu, DropdownMen
 </Dialog>
 ```
 
-Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2), **Sidebar** (admin sidebar, SBR), PasswordInput, **MoneyInput**.
+Included: Button, Chip, Icon, Avatar, Dialog (modal, sheet, float), DropdownMenu, Popover, Tooltip, Tabs, Accordion, Select, Switch, Checkbox, Toast, **Toaster** and **toast()**, ThemeSelect, **SideNav / SideNavSection / SideNavItem / SideNavFlyout / NavBadge** (collapsible two-level sidebar, NAV-2), **Sidebar** (admin sidebar, SBR), PasswordInput, **MoneyInput**.
+
+Toasts (DLG). Mount one `<Toaster />`. `toast(title, options)` returns an id. `toast.success` and `toast.error` set the tone. `toast.dismiss(id)` removes one. Tones are `neutral` (default), `success` and `danger`. Duration is 5000ms, or 8000ms for danger. Success and neutral are a polite live region; danger is assertive. An action is `{ label, href }` or `{ label, onClick }`. An `href` that starts with `http://` or `https://` opens in a new tab (`target="_blank"` `rel="noreferrer"`). The close button is `aria-label="Dismiss"`.
+
+```tsx
+import { Toaster, toast } from "@rascode/firehorse-react";
+
+<Toaster />
+toast("Saved.");
+toast.success("Published to X", {
+  action: { label: "View on X", href: "https://x.com" },
+});
+toast.error("Could not publish", {
+  description: "The post did not go out.",
+});
+```
 
 Sidebar (SBR):
 

@@ -48,12 +48,34 @@
         </div>
 
         <div class="site-demo site-anchor" id="c-overlay" data-fh-id="DLG">
-          <div class="site-demo__head"><h3>Dialog, menu, toast</h3><p>Native <code>&lt;dialog&gt;</code> and popovers, with enter and exit animations from <code>@starting-style</code>.</p></div>
+          <div class="site-demo__head"><h3>Dialog, menu, toast</h3><p>Native <code>&lt;dialog&gt;</code> and popovers, with enter and exit animations from <code>@starting-style</code>. A toast is neutral, success or danger: a title, an optional muted description, and an optional action that is the text link.</p></div>
           <div class="site-demo__stage" data-demo>
 <div class="fh-cluster" style="--fh-gap: var(--fh-space-4)">
   <button class="fh-button" type="button" data-open-dialog="demo-dialog" data-fh="BTN">Open dialog</button>
   <button class="fh-button fh-button--secondary" type="button" popovertarget="demo-menu" style="anchor-name: --demo-menu" data-fh="BTN-1.5">Open menu</button>
   <button class="fh-button fh-button--ghost" type="button" data-toast="Saved. We'll be in touch within a day." data-fh="BTN-2.2">Show toast</button>
+</div>
+<div class="fh-stack" style="--fh-gap: var(--fh-gap-grouped)">
+  <div class="fh-toast" data-tone="neutral" role="status">
+    <div class="fh-toast__body">
+      <p>Saved.</p>
+    </div>
+    <button class="fh-close" type="button" aria-label="Dismiss"></button>
+  </div>
+  <div class="fh-toast" data-tone="success" role="status">
+    <div class="fh-toast__body">
+      <p>Published to X</p>
+      <a class="fh-link fh-toast__action" href="https://x.com" target="_blank" rel="noreferrer">View on X</a>
+    </div>
+    <button class="fh-close" type="button" aria-label="Dismiss"></button>
+  </div>
+  <div class="fh-toast" data-tone="danger" role="alert">
+    <div class="fh-toast__body">
+      <p>Could not publish</p>
+      <p class="fh-toast__description">The post did not go out. Try again in a moment.</p>
+    </div>
+    <button class="fh-close" type="button" aria-label="Dismiss"></button>
+  </div>
 </div>
 <div id="demo-menu" popover class="fh-menu" style="position-anchor: --demo-menu" data-fh="DRP-1.1">
   <a href="#c-overlay">Duplicate</a>
