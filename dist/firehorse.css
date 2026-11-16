@@ -292,6 +292,7 @@
     --fh-z-lifted: 2;
     --fh-z-guides: 2147480000;
     --fh-z-under: -1;
+    --fh-z-deep: -2;
     --fh-z-sticky: 20;
     --fh-z-drawer: 25;
     --fh-z-dropdown: 30;
@@ -5902,7 +5903,7 @@
     display: grid;
 
     & > b {
-      font-family: var(--fh-type-value-family);
+      font-family: var(--fh-type-value-family, var(--fh-font-sans));
       font-size: var(--fh-type-value);
       font-weight: var(--fh-type-name-weight);
       letter-spacing: var(--fh-type-value-tracking);
@@ -5913,7 +5914,7 @@
 
     & > small {
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-meta-family);
+      font-family: var(--fh-type-meta-family, var(--fh-font-sans));
       font-size: var(--fh-type-meta);
       font-weight: var(--fh-type-meta-weight);
       letter-spacing: var(--fh-type-meta-tracking);
@@ -5974,13 +5975,13 @@
   }
 
   .fh-entity__stat--count {
+    min-inline-size: var(--fh-entity-count, 1.35rem);
+    block-size: var(--fh-entity-count, 1.35rem);
+    padding-inline: var(--fh-entity-count-pad, .4rem);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 16%, transparent);
     border: 0;
     place-items: center;
-    block-size: 1.35rem;
-    min-inline-size: 1.35rem;
-    padding-inline: .4rem;
     display: inline-grid;
 
     & > b {
@@ -6101,8 +6102,8 @@
   }
 
   .fh-entity-picker__group {
+    gap: var(--fh-entity-group-gap, .1rem);
     border: 0;
-    gap: .1rem;
     min-inline-size: 0;
     margin: 0;
     padding: 0;
@@ -6241,7 +6242,7 @@
 
     & .fh-entity-picker__list .fh-entity + .fh-entity:before {
       content: "";
-      inset-block-start: -.05rem;
+      inset-block-start: calc(var(--fh-border-thin) * -1);
       inset-inline: var(--fh-gap-related);
       border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       pointer-events: none;
@@ -9889,7 +9890,7 @@
     row-gap: var(--fh-gap-bound);
     padding: var(--fh-inset-tile) var(--fh-inset-card);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 55%, transparent);
-    border-inline-start: 3px var(--fh-card-border-style, solid) var(--fh-tone);
+    border-inline-start: var(--fh-alert-edge, calc(var(--fh-border-heavy) + var(--fh-border-thin))) var(--fh-card-border-style, solid) var(--fh-tone);
     border-radius: var(--fh-radius-sm);
     background-color: color-mix(in oklab, var(--fh-tone) 7%, transparent);
     color: var(--fh-color-text-muted);
@@ -9901,12 +9902,12 @@
 
     &:before {
       content: "";
+      inline-size: var(--fh-alert-dot, .5rem);
       aspect-ratio: 1;
       border-radius: var(--fh-radius-round);
       background-color: var(--fh-tone);
       grid-row: 1 / span 2;
-      inline-size: .5rem;
-      margin-block-start: .45em;
+      margin-block-start: var(--fh-alert-dot-nudge, .45em);
     }
 
     & > :not(.fh-close, .fh-alert__actions) {
@@ -9915,8 +9916,8 @@
     }
 
     & > .fh-close {
-      inline-size: 1.5rem;
-      margin: calc(-1 * var(--fh-gap-bound)) -.4rem 0 0;
+      inline-size: var(--fh-alert-close, 1.5rem);
+      margin: calc(-1 * var(--fh-gap-bound)) calc(-1 * var(--fh-alert-close-nudge, .4rem)) 0 0;
       grid-area: 1 / 3;
     }
 
@@ -10165,7 +10166,7 @@
 
     &:indeterminate {
       background-image: linear-gradient(90deg, transparent, var(--fh-tone), transparent);
-      animation: fh-sweep 1.4s var(--fh-ease-in-out) infinite;
+      animation: fh-sweep var(--fh-progress-sweep, var(--fh-duration-scene)) var(--fh-ease-in-out) infinite;
       background-repeat: no-repeat;
       background-size: 40% 100%;
     }
@@ -10317,7 +10318,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-skeleton {
-      animation: 1.6s linear infinite fh-shimmer;
+      animation: fh-shimmer var(--fh-skeleton-shimmer, var(--fh-duration-pulse)) linear infinite;
     }
   }
 

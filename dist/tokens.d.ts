@@ -197,6 +197,7 @@ export type FirehorseToken =
   | "--fh-z-lifted"
   | "--fh-z-guides"
   | "--fh-z-under"
+  | "--fh-z-deep"
   | "--fh-z-sticky"
   | "--fh-z-drawer"
   | "--fh-z-dropdown"

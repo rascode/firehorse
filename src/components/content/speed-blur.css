@@ -21,10 +21,13 @@
    *   knobs      --fh-speed-focus (x y of the sharp spot, 50% 40%)
    *              --fh-speed-focus-size (how big it is, 34% 40%)
    *              --fh-speed-amount (streak length, 18px)
-   *              --fh-speed-ratio (16 / 9) · --fh-speed-grain (0.12) */
+   *              --fh-speed-ratio (16 / 9) · --fh-speed-grain (0.12)
+   *              --fh-speed-stretch (12, the squeeze) · --fh-speed-orbit (82%)
+   *              --fh-speed-drift (1.5%, the drift's reach) · --fh-speed-drift-time (dwell)
+   *              --fh-speed-scan (heavy plus thin, the scanline pitch) */
   .fh-speed {
     --_amount: var(--fh-speed-amount, 18px);
-    --_stretch: 12;
+    --_stretch: var(--fh-speed-stretch, 12);
     position: relative;
     display: grid;
     aspect-ratio: var(--fh-speed-ratio, 16 / 9);
@@ -41,7 +44,7 @@
   .fh-speed__smear {
     position: absolute;
     inset: 0 -6%;
-    z-index: -2;
+    z-index: var(--fh-z-deep);
     transform: scaleX(var(--_stretch));
     filter: blur(calc(var(--_amount) / var(--_stretch))) saturate(1.1);
   }
@@ -57,7 +60,7 @@
   .fh-speed__img {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--fh-z-under);
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
@@ -66,15 +69,16 @@
 
   /* Grain: fine scanlines and a soft vignette. */
   .fh-speed::after {
+    --_scan: var(--fh-speed-scan, calc(var(--fh-border-heavy) + var(--fh-border-thin)));
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--fh-z-under);
     background:
-      repeating-linear-gradient(180deg, color-mix(in oklab, var(--fh-color-ink) 60%, transparent) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(180deg, color-mix(in oklab, var(--fh-color-ink) 60%, transparent) 0 var(--fh-border-thin), transparent var(--fh-border-thin) var(--_scan)),
       radial-gradient(120% 90% at 50% 45%, transparent 55%, color-mix(in oklab, var(--fh-color-ink) 55%, transparent));
     opacity: calc(var(--fh-speed-grain, 0.12) * 4);
-    background-size: 100% 3px, 100% 100%;
+    background-size: 100% var(--_scan), 100% 100%;
     mix-blend-mode: multiply;
     pointer-events: none;
   }
@@ -82,10 +86,10 @@
   .fh-speed--orbit::before {
     content: "";
     position: absolute;
-    z-index: -1;
+    z-index: var(--fh-z-under);
     inset-inline-start: var(--fh-speed-focus-x, 50%);
     inset-block-start: var(--fh-speed-focus-y, 40%);
-    inline-size: 82%;
+    inline-size: var(--fh-speed-orbit, 82%);
     aspect-ratio: 1;
     translate: -50% -50%;
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-color-on-ink) 35%, transparent);
@@ -96,11 +100,11 @@
   /* —— Motion: the streak drifts a little, as if still moving —— */
   @media (prefers-reduced-motion: no-preference) {
     .fh-speed:not(.fh-speed--still) .fh-speed__smear {
-      animation: fh-speed-drift 5s var(--fh-ease-out) infinite alternate;
+      animation: fh-speed-drift var(--fh-speed-drift-time, var(--fh-duration-dwell)) var(--fh-ease-out) infinite alternate;
     }
   }
   @keyframes fh-speed-drift {
-    from { translate: -1.5% 0; }
-    to { translate: 1.5% 0; }
+    from { translate: calc(var(--fh-speed-drift, 1.5%) * -1) 0; }
+    to { translate: var(--fh-speed-drift, 1.5%) 0; }
   }
 }

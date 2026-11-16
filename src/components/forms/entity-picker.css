@@ -140,7 +140,7 @@
 
     & > b {
       overflow: hidden;
-      font-family: var(--fh-type-value-family);
+      font-family: var(--fh-type-value-family, var(--fh-font-sans));
       font-size: var(--fh-type-value);
       font-weight: var(--fh-type-name-weight);
       letter-spacing: var(--fh-type-value-tracking);
@@ -151,7 +151,7 @@
     & > small {
       overflow: hidden;
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-meta-family);
+      font-family: var(--fh-type-meta-family, var(--fh-font-sans));
       font-size: var(--fh-type-meta);
       font-weight: var(--fh-type-meta-weight);
       letter-spacing: var(--fh-type-meta-tracking);
@@ -216,9 +216,9 @@
   .fh-entity__stat--count {
     display: inline-grid;
     place-items: center;
-    min-inline-size: 1.35rem;
-    block-size: 1.35rem;
-    padding-inline: 0.4rem;
+    min-inline-size: var(--fh-entity-count, 1.35rem);
+    block-size: var(--fh-entity-count, 1.35rem);
+    padding-inline: var(--fh-entity-count-pad, 0.4rem);
     border: 0;
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-tone, var(--fh-color-text)) 16%, transparent);
@@ -318,7 +318,7 @@
   /* A group: its label, then its rows. Groups after the first get a rule. */
   .fh-entity-picker__group {
     display: grid;
-    gap: 0.1rem;
+    gap: var(--fh-entity-group-gap, 0.1rem);
     min-inline-size: 0;
     margin: 0;
     padding: 0;
@@ -448,7 +448,7 @@
     & .fh-entity-picker__list .fh-entity + .fh-entity::before {
       content: "";
       position: absolute;
-      inset-block-start: -0.05rem;
+      inset-block-start: calc(var(--fh-border-thin) * -1);
       inset-inline: var(--fh-gap-related);
       border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       pointer-events: none;

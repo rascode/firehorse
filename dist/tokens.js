@@ -1181,6 +1181,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "z"
   },
+  "--fh-z-deep": {
+    "$value": "-2",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
   "--fh-z-sticky": {
     "$value": "20",
     "$type": "number",
