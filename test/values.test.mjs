@@ -116,8 +116,11 @@ t("option sets: tones fall back to the default tone map; a registry key wins ove
 
 t("the tone map and the Status chip's CSS agree word for word", () => {
   const css = readFileSync(join(root, "src/components/actions/chip-status.css"), "utf8");
-  for (const tone of ["lime", "sky", "amber", "rose"]) {
-    const line = css.split("\n").find((l) => l.includes(`--fh-tone: var(--fh-tone-${tone})`) && l.includes("&:is("));
+  const semantic = readFileSync(join(root, "src/tokens/semantic.css"), "utf8");
+  // The chip names a status group (--fh-status-*); semantic.css gives each group its tone.
+  for (const [group, tone] of [["done", "lime"], ["moving", "sky"], ["waiting", "amber"], ["failed", "rose"]]) {
+    assert.ok(semantic.includes(`--fh-status-${group}: var(--fh-tone-${tone});`), group + " is " + tone);
+    const line = css.split("\n").find((l) => l.includes(`--fh-tone: var(--fh-status-${group})`) && l.includes("&:is("));
     const words = [...line.matchAll(/data-status="([^"]+)" i/g)].map((m) => m[1]);
     assert.deepEqual(words.sort(), [...rules.toneMap[tone]].sort(), tone);
   }
