@@ -15,7 +15,7 @@
     font-size: var(--fh-type-label);
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-none);
+    letter-spacing: var(--fh-avatar-tracking, var(--fh-tracking-none));
   }
 
   .fh-avatars:has(> .fh-avatar:first-child[data-kind="person"]) > .fh-avatars__more { --fh-avatar-radius: var(--fh-radius-pill); }
@@ -23,11 +23,7 @@
 
   .fh-avatars--lg > .fh-avatar { --fh-avatar-size: var(--fh-avatar-lg); }
 
-  /* Fans out on hover / focus. */
-  .fh-avatars--spread > .fh-avatar + .fh-avatar {
-    transition: margin-inline-start var(--fh-duration-base) var(--fh-ease-out);
-  }
-
+  /* Fans out on hover / focus: it snaps open (no layout transition, rule 31). */
   .fh-avatars--spread:is(:hover, :focus-within, :focus-visible) > .fh-avatar + .fh-avatar {
     margin-inline-start: var(--fh-gap-bound);
   }

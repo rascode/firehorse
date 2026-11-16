@@ -17,10 +17,17 @@
    * there is no image, at most two letters.
    *   <span class="fh-avatar" data-kind="person"><img src="…" alt=""></span>
    *   <span class="fh-avatar" data-kind="org">NS</span>
-   * Knobs: --fh-avatar-size, --fh-avatar-initials (the initials' type tier),
-   * --fh-avatar-plate-radius (the rounded square of a non-person kind). */
+   * One set of values for every avatar: --fh-avatar-size (the plate, a DR2 step),
+   * --fh-avatar-initials (the initials' type tier), --fh-avatar-radius and --fh-avatar-ratio
+   * (the shape), --fh-avatar-plate-radius (the rounded square of a non-person kind),
+   * --fh-avatar-squircle-radius (32%), --fh-avatar-dot (0.75em, the presence dot, scaling with
+   * the initials), --fh-avatar-ring (border-heavy, the canvas gap of a ring, a halo and a stack
+   * cut-out) and --fh-avatar-tracking (mono, the uppercase initials). A stack reads
+   * --fh-avatars-overlap (0.3 of a face). Size steps set the plate and the initials' tier: the
+   * plate is what an avatar is. */
   .fh-avatar {
     --_size: var(--fh-avatar-size, var(--fh-avatar-md));
+    --_avt-ring: var(--fh-avatar-ring, var(--fh-border-heavy));
 
     position: relative;
     display: inline-grid;
@@ -29,7 +36,7 @@
     inline-size: var(--_size);
     aspect-ratio: var(--fh-avatar-ratio, 1);
     /* One hairline for every avatar; dashed is the empty add slot only. */
-    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
     /* Shape comes from config tokens (see tokens/config.css) so one
      * data-fh-avatar on <html> reshapes every avatar on the site. */
     border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
@@ -39,8 +46,8 @@
     font-size: var(--fh-avatar-initials, var(--fh-type-meta));
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-mono);
-    line-height: 1;
+    letter-spacing: var(--fh-avatar-tracking, var(--fh-tracking-mono));
+    line-height: var(--fh-leading-none);
     text-transform: uppercase;
 
     & > img {
@@ -54,9 +61,9 @@
     &[data-status]::after {
       content: "";
       position: absolute;
-      inset-block-end: -2px;
-      inset-inline-end: -2px;
-      inline-size: 0.6rem;
+      inset-block-end: calc(var(--fh-border-heavy) * -1);
+      inset-inline-end: calc(var(--fh-border-heavy) * -1);
+      inline-size: var(--fh-avatar-dot, 0.75em);
       aspect-ratio: 1;
       border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
@@ -81,23 +88,24 @@
 
   /* Overlapping stack: at most three faces, then "+N" (avatar-group.css).
    *   <div class="fh-avatars">…avatars… <span class="fh-avatar fh-avatars__more">+4</span></div>
-   * Each face after the first cuts a 2px canvas ring out of the one before. */
+   * Each face after the first cuts a canvas ring (--fh-avatar-ring) out of the one before. */
   .fh-avatars {
     display: flex;
     align-items: center;
 
     & > .fh-avatar + .fh-avatar {
-      margin-inline-start: calc(var(--fh-avatar-size, var(--fh-avatar-md)) * -0.3);
+      margin-inline-start: calc(var(--_size) * var(--fh-avatars-overlap, 0.3) * -1);
     }
 
     & > .fh-avatar + .fh-avatar:not(.fh-avatar--ring, .fh-avatar--halo) {
-      box-shadow: 0 0 0 2px var(--fh-color-canvas);
+      box-shadow: 0 0 0 var(--_avt-ring) var(--fh-color-canvas);
     }
   }
 
   /* The empty add slot: the one dashed avatar. */
   .fh-avatar--add {
-    border-style: dashed;
+    padding: 0;
+    border-style: var(--fh-avatar-add-border-style, dashed);
     background-color: transparent;
     color: var(--fh-color-text-muted);
     cursor: var(--fh-cursor-action);
@@ -122,7 +130,7 @@
   .fh-avatar--rounded { --fh-avatar-radius: var(--fh-radius-md); --fh-avatar-ratio: 1; }
   /* Oval: a portrait rectangle capped with a half circle top and bottom. */
   .fh-avatar--oval { --fh-avatar-radius: var(--fh-radius-pill); --fh-avatar-ratio: 3 / 4; }
-  .fh-avatar--squircle { --fh-avatar-radius: 32%; --fh-avatar-ratio: 1; --fh-avatar-corner-shape: squircle; }
+  .fh-avatar--squircle { --fh-avatar-radius: var(--fh-avatar-squircle-radius, 32%); --fh-avatar-ratio: 1; --fh-avatar-corner-shape: squircle; }
 
   @supports (corner-shape: squircle) {
     .fh-avatar {
@@ -138,25 +146,25 @@
   .fh-avatar--ring {
     border: 0;
     box-shadow:
-      0 0 0 2px var(--fh-color-canvas),
-      0 0 0 4px var(--fh-tone);
+      0 0 0 var(--_avt-ring) var(--fh-color-canvas),
+      0 0 0 calc(var(--_avt-ring) * 2) var(--fh-tone);
   }
 
-  /* Halo: a soft tone glow that breathes. */
+  /* Halo: a tone ring with no blur that breathes from one ring to two (no drop shadow). */
   .fh-avatar--halo {
     border: 0;
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 35%, transparent), 0 0 24px -4px var(--fh-tone);
+    box-shadow: 0 0 0 var(--_avt-ring) color-mix(in oklab, var(--fh-tone) 45%, transparent);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-avatar--halo {
-      animation: fh-halo 3s var(--fh-ease-in-out) infinite alternate;
+      animation: fh-halo var(--fh-duration-dwell) var(--fh-ease-in-out) infinite alternate;
     }
   }
 
   @keyframes fh-halo {
     to {
-      box-shadow: 0 0 0 5px color-mix(in oklab, var(--fh-tone) 20%, transparent), 0 0 36px -2px var(--fh-tone);
+      box-shadow: 0 0 0 calc(var(--_avt-ring) * 2) color-mix(in oklab, var(--fh-tone) 25%, transparent);
     }
   }
 
@@ -169,7 +177,6 @@
       radial-gradient(circle at 85% 90%, oklch(from var(--fh-tone) calc(l - 0.12) c calc(h - 30)) 0, transparent 60%),
       var(--fh-tone);
     color: var(--fh-color-on-tone);
-    text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
   }
 
   /* A record with no logo yet (data-kind org, agent or record, with its tone): its initials on the tone, the

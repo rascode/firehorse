@@ -7,6 +7,14 @@
   /* —— Slides: 16:9 canvases, 1280 × 720 ——
    * <section class="fh-canvas fh-slide"> works on its own (one per page
    * in print) and as a reveal.js slide with dist/reveal.css. */
+  /* One set of values for every slide piece, set once on .fh-slide, in canvas units (frame
+   * pixels, scaled by the canvas): the type reads the canvas tiers, --fh-slide-list (sub),
+   * --fh-slide-index, --fh-slide-note and --fh-slide-label (small) and --fh-slide-quote (title);
+   * --fh-slide-stat (96) and --fh-slide-code (22) are the slide's own. Spacing:
+   * --fh-slide-index-col (76), --fh-slide-row-pad (20), --fh-slide-gap (24, between stats),
+   * --fh-slide-stat-gap (28), --fh-slide-stat-pad (30), --fh-slide-code-pad-block (30) and
+   * --fh-slide-code-pad-inline (34); --fh-slide-note-gap (0.3em) and --fh-slide-quote-mark
+   * (2.2em) scale with their text. --fh-slide-tracking (wider) sets the uppercase labels. */
   .fh-slide {
     --fh-canvas-w: 1280;
     --fh-canvas-h: 720;
@@ -16,6 +24,20 @@
     --fh-canvas-sub: 28;
     --fh-canvas-small: 17;
     --fh-canvas-measure: 22ch;
+    --_sld-list: var(--fh-slide-list, var(--fh-canvas-sub, 28));
+    --_sld-index: var(--fh-slide-index, var(--fh-canvas-small, 17));
+    --_sld-note: var(--fh-slide-note, var(--fh-canvas-small, 17));
+    --_sld-label: var(--fh-slide-label, var(--fh-canvas-small, 17));
+    --_sld-quote: var(--fh-slide-quote, var(--fh-canvas-title, 60));
+    --_sld-stat: var(--fh-slide-stat, 96);
+    --_sld-code: var(--fh-slide-code, 22);
+    --_sld-index-col: var(--fh-slide-index-col, 76);
+    --_sld-row-pad: var(--fh-slide-row-pad, 20);
+    --_sld-gap: var(--fh-slide-gap, 24);
+    --_sld-stat-gap: var(--fh-slide-stat-gap, 28);
+    --_sld-stat-pad: var(--fh-slide-stat-pad, 30);
+    --_sld-code-pad-b: var(--fh-slide-code-pad-block, 30);
+    --_sld-code-pad-i: var(--fh-slide-code-pad-inline, 34);
 
     & .fh-canvas__main { justify-content: flex-start; }
   }
@@ -35,17 +57,17 @@
     padding: 0;
     counter-reset: fh-slide;
     list-style: none;
-    font-size: calc(30 * var(--_u));
+    font-size: calc(var(--_sld-list) * var(--_u));
 
     & > li {
       display: grid;
-      grid-template-columns: calc(76 * var(--_u)) minmax(0, 1fr);
+      grid-template-columns: calc(var(--_sld-index-col) * var(--_u)) minmax(0, 1fr);
       align-items: baseline;
-      padding-block: calc(20 * var(--_u));
+      padding-block: calc(var(--_sld-row-pad) * var(--_u));
       border-block-start: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       color: var(--fh-color-text);
       counter-increment: fh-slide;
-      line-height: 1.3;
+      line-height: var(--fh-leading-heading);
     }
 
     & > li:last-child { border-block-end: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch); }
@@ -54,19 +76,19 @@
       content: counter(fh-slide, decimal-leading-zero);
       color: var(--fh-tone);
       font-family: var(--fh-font-mono);
-      font-size: 0.6em;
+      font-size: calc(var(--_sld-index) * var(--_u));
       font-weight: var(--fh-weight-medium);
       letter-spacing: var(--fh-tracking-mono);
     }
 
-    & small { display: block; margin-block-start: 0.3em; color: var(--fh-color-text-muted); font-size: 0.7em; }
+    & small { display: block; margin-block-start: var(--fh-slide-note-gap, 0.3em); color: var(--fh-color-text-muted); font-size: calc(var(--_sld-note) * var(--_u)); }
   }
 
   .fh-slide__stats {
     display: grid;
     grid-auto-columns: minmax(0, 1fr);
     grid-auto-flow: column;
-    gap: calc(24 * var(--_u));
+    gap: calc(var(--_sld-gap) * var(--_u));
     margin: 0;
     padding: 0;
     list-style: none;
@@ -75,8 +97,8 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: calc(28 * var(--_u));
-      padding: calc(30 * var(--_u));
+      gap: calc(var(--_sld-stat-gap) * var(--_u));
+      padding: calc(var(--_sld-stat-pad) * var(--_u));
       border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-color-surface-raised) 55%, transparent);
@@ -85,19 +107,19 @@
     & b {
       color: var(--_cube, var(--fh-tone));
       font-family: var(--fh-font-display);
-      font-size: calc(96 * var(--_u));
+      font-size: calc(var(--_sld-stat) * var(--_u));
       font-weight: var(--fh-weight-medium);
       font-variant-numeric: tabular-nums;
-      letter-spacing: -0.045em;
-      line-height: 0.9;
+      letter-spacing: var(--fh-tracking-tightest);
+      line-height: var(--fh-leading-none);
     }
 
     & span {
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
-      font-size: calc(var(--fh-canvas-small, 17) * var(--_u));
-      letter-spacing: var(--fh-tracking-wider);
-      line-height: 1.3;
+      font-size: calc(var(--_sld-label) * var(--_u));
+      letter-spacing: var(--fh-slide-tracking, var(--fh-tracking-wider));
+      line-height: var(--fh-leading-heading);
       text-transform: uppercase;
     }
 
@@ -110,10 +132,10 @@
     margin: 0;
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
-    font-size: calc(58 * var(--_u));
+    font-size: calc(var(--_sld-quote) * var(--_u));
     font-weight: var(--fh-weight-medium);
-    letter-spacing: -0.025em;
-    line-height: 1.08;
+    letter-spacing: var(--fh-tracking-snug);
+    line-height: var(--fh-leading-tight);
     text-wrap: balance;
 
     &::before {
@@ -121,8 +143,8 @@
       display: block;
       block-size: 0.55em;
       color: var(--fh-tone);
-      font-size: 2.2em;
-      line-height: 1;
+      font-size: var(--fh-slide-quote-mark, 2.2em);
+      line-height: var(--fh-leading-none);
     }
   }
 
@@ -130,9 +152,9 @@
     margin: 0;
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--fh-canvas-small, 17) * var(--_u));
+    font-size: calc(var(--_sld-label) * var(--_u));
     font-style: normal;
-    letter-spacing: var(--fh-tracking-wider);
+    letter-spacing: var(--fh-slide-tracking, var(--fh-tracking-wider));
     text-transform: uppercase;
 
     & b { color: var(--fh-tone); font-weight: var(--fh-weight-medium); }
@@ -140,19 +162,19 @@
 
   .fh-slide__code {
     margin: 0;
-    padding: calc(30 * var(--_u)) calc(34 * var(--_u));
+    padding: calc(var(--_sld-code-pad-b) * var(--_u)) calc(var(--_sld-code-pad-i) * var(--_u));
     overflow: hidden;
     border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-sunken);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
-    font-size: calc(22 * var(--_u));
-    line-height: 1.65;
+    font-size: calc(var(--_sld-code) * var(--_u));
+    line-height: var(--fh-leading-relaxed);
     tab-size: 2;
     white-space: pre;
 
-    & mark { border-radius: calc(4 * var(--_u)); background-color: color-mix(in oklab, var(--fh-tone) 24%, transparent); color: inherit; }
+    & mark { border-radius: var(--fh-radius-sm); background-color: color-mix(in oklab, var(--fh-tone) 24%, transparent); color: inherit; }
     & i { color: var(--fh-color-text-subtle); font-style: normal; }
   }
 

@@ -10381,9 +10381,10 @@
 
   .fh-avatar {
     --_size: var(--fh-avatar-size, var(--fh-avatar-md));
+    --_avt-ring: var(--fh-avatar-ring, var(--fh-border-heavy));
     inline-size: var(--_size);
     aspect-ratio: var(--fh-avatar-ratio, 1);
-    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
     border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
@@ -10391,11 +10392,11 @@
     font-size: var(--fh-avatar-initials, var(--fh-type-meta));
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-mono);
+    letter-spacing: var(--fh-avatar-tracking, var(--fh-tracking-mono));
+    line-height: var(--fh-leading-none);
     text-transform: uppercase;
     flex: none;
     place-items: center;
-    line-height: 1;
     display: inline-grid;
     position: relative;
 
@@ -10408,14 +10409,14 @@
 
     &[data-status]:after {
       content: "";
+      inline-size: var(--fh-avatar-dot, .75em);
       aspect-ratio: 1;
       border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background-color: var(--fh-color-live);
-      inline-size: .6rem;
       position: absolute;
-      inset-block-end: -2px;
-      inset-inline-end: -2px;
+      inset-block-end: calc(var(--fh-border-heavy) * -1);
+      inset-inline-end: calc(var(--fh-border-heavy) * -1);
     }
 
     &[data-status="away"]:after {
@@ -10468,19 +10469,20 @@
     display: flex;
 
     & > .fh-avatar + .fh-avatar {
-      margin-inline-start: calc(var(--fh-avatar-size, var(--fh-avatar-md)) * -.3);
+      margin-inline-start: calc(var(--_size) * var(--fh-avatars-overlap, .3) * -1);
     }
 
     & > .fh-avatar + .fh-avatar:not(.fh-avatar--ring, .fh-avatar--halo) {
-      box-shadow: 0 0 0 2px var(--fh-color-canvas);
+      box-shadow: 0 0 0 var(--_avt-ring) var(--fh-color-canvas);
     }
   }
 
   .fh-avatar--add {
+    border-style: var(--fh-avatar-add-border-style, dashed);
     color: var(--fh-color-text-muted);
     cursor: var(--fh-cursor-action);
     background-color: #0000;
-    border-style: dashed;
+    padding: 0;
 
     &:hover {
       border-color: var(--fh-color-border-strong);
@@ -10519,7 +10521,7 @@
   }
 
   .fh-avatar--squircle {
-    --fh-avatar-radius: 32%;
+    --fh-avatar-radius: var(--fh-avatar-squircle-radius, 32%);
     --fh-avatar-ratio: 1;
     --fh-avatar-corner-shape: squircle;
   }
@@ -10535,25 +10537,25 @@
   }
 
   .fh-avatar--ring {
-    box-shadow: 0 0 0 2px var(--fh-color-canvas),
-      0 0 0 4px var(--fh-tone);
+    box-shadow: 0 0 0 var(--_avt-ring) var(--fh-color-canvas),
+      0 0 0 calc(var(--_avt-ring) * 2) var(--fh-tone);
     border: 0;
   }
 
   .fh-avatar--halo {
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 35%, transparent), 0 0 24px -4px var(--fh-tone);
+    box-shadow: 0 0 0 var(--_avt-ring) color-mix(in oklab, var(--fh-tone) 45%, transparent);
     border: 0;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-avatar--halo {
-      animation: fh-halo 3s var(--fh-ease-in-out) infinite alternate;
+      animation: fh-halo var(--fh-duration-dwell) var(--fh-ease-in-out) infinite alternate;
     }
   }
 
   @keyframes fh-halo {
     to {
-      box-shadow: 0 0 0 5px color-mix(in oklab, var(--fh-tone) 20%, transparent), 0 0 36px -2px var(--fh-tone);
+      box-shadow: 0 0 0 calc(var(--_avt-ring) * 2) color-mix(in oklab, var(--fh-tone) 25%, transparent);
     }
   }
 
@@ -10562,7 +10564,6 @@
       radial-gradient(circle at 85% 90%, oklch(from var(--fh-tone) calc(l - .12) c calc(h - 30)) 0, transparent 60%),
       var(--fh-tone);
     color: var(--fh-color-on-tone);
-    text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
     border: 0;
   }
 
@@ -10798,7 +10799,7 @@
     font-size: var(--fh-type-label);
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-none);
+    letter-spacing: var(--fh-avatar-tracking, var(--fh-tracking-none));
   }
 
   .fh-avatars:has( > .fh-avatar:first-child[data-kind="person"]) > .fh-avatars__more {
@@ -10811,10 +10812,6 @@
 
   .fh-avatars--lg > .fh-avatar {
     --fh-avatar-size: var(--fh-avatar-lg);
-  }
-
-  .fh-avatars--spread > .fh-avatar + .fh-avatar {
-    transition: margin-inline-start var(--fh-duration-base) var(--fh-ease-out);
   }
 
   .fh-avatars--spread:is(:hover, :focus-within, :focus-visible) > .fh-avatar + .fh-avatar {

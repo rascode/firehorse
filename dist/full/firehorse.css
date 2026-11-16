@@ -11026,9 +11026,10 @@
 
   .fh-avatar {
     --_size: var(--fh-avatar-size, var(--fh-avatar-md));
+    --_avt-ring: var(--fh-avatar-ring, var(--fh-border-heavy));
     inline-size: var(--_size);
     aspect-ratio: var(--fh-avatar-ratio, 1);
-    border: var(--fh-border-thin) solid var(--fh-color-etch);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
     border-radius: var(--fh-avatar-radius, var(--fh-radius-md));
     background-color: var(--fh-color-surface-raised);
     color: var(--fh-color-text);
@@ -11036,11 +11037,11 @@
     font-size: var(--fh-avatar-initials, var(--fh-type-meta));
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-mono);
+    letter-spacing: var(--fh-avatar-tracking, var(--fh-tracking-mono));
+    line-height: var(--fh-leading-none);
     text-transform: uppercase;
     flex: none;
     place-items: center;
-    line-height: 1;
     display: inline-grid;
     position: relative;
 
@@ -11053,14 +11054,14 @@
 
     &[data-status]:after {
       content: "";
+      inline-size: var(--fh-avatar-dot, .75em);
       aspect-ratio: 1;
       border: var(--fh-border-heavy) var(--fh-card-border-style, solid) var(--fh-color-canvas);
       border-radius: var(--fh-radius-round);
       background-color: var(--fh-color-live);
-      inline-size: .6rem;
       position: absolute;
-      inset-block-end: -2px;
-      inset-inline-end: -2px;
+      inset-block-end: calc(var(--fh-border-heavy) * -1);
+      inset-inline-end: calc(var(--fh-border-heavy) * -1);
     }
 
     &[data-status="away"]:after {
@@ -11113,19 +11114,20 @@
     display: flex;
 
     & > .fh-avatar + .fh-avatar {
-      margin-inline-start: calc(var(--fh-avatar-size, var(--fh-avatar-md)) * -.3);
+      margin-inline-start: calc(var(--_size) * var(--fh-avatars-overlap, .3) * -1);
     }
 
     & > .fh-avatar + .fh-avatar:not(.fh-avatar--ring, .fh-avatar--halo) {
-      box-shadow: 0 0 0 2px var(--fh-color-canvas);
+      box-shadow: 0 0 0 var(--_avt-ring) var(--fh-color-canvas);
     }
   }
 
   .fh-avatar--add {
+    border-style: var(--fh-avatar-add-border-style, dashed);
     color: var(--fh-color-text-muted);
     cursor: var(--fh-cursor-action);
     background-color: #0000;
-    border-style: dashed;
+    padding: 0;
 
     &:hover {
       border-color: var(--fh-color-border-strong);
@@ -11164,7 +11166,7 @@
   }
 
   .fh-avatar--squircle {
-    --fh-avatar-radius: 32%;
+    --fh-avatar-radius: var(--fh-avatar-squircle-radius, 32%);
     --fh-avatar-ratio: 1;
     --fh-avatar-corner-shape: squircle;
   }
@@ -11180,25 +11182,25 @@
   }
 
   .fh-avatar--ring {
-    box-shadow: 0 0 0 2px var(--fh-color-canvas),
-      0 0 0 4px var(--fh-tone);
+    box-shadow: 0 0 0 var(--_avt-ring) var(--fh-color-canvas),
+      0 0 0 calc(var(--_avt-ring) * 2) var(--fh-tone);
     border: 0;
   }
 
   .fh-avatar--halo {
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-tone) 35%, transparent), 0 0 24px -4px var(--fh-tone);
+    box-shadow: 0 0 0 var(--_avt-ring) color-mix(in oklab, var(--fh-tone) 45%, transparent);
     border: 0;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .fh-avatar--halo {
-      animation: fh-halo 3s var(--fh-ease-in-out) infinite alternate;
+      animation: fh-halo var(--fh-duration-dwell) var(--fh-ease-in-out) infinite alternate;
     }
   }
 
   @keyframes fh-halo {
     to {
-      box-shadow: 0 0 0 5px color-mix(in oklab, var(--fh-tone) 20%, transparent), 0 0 36px -2px var(--fh-tone);
+      box-shadow: 0 0 0 calc(var(--_avt-ring) * 2) color-mix(in oklab, var(--fh-tone) 25%, transparent);
     }
   }
 
@@ -11207,7 +11209,6 @@
       radial-gradient(circle at 85% 90%, oklch(from var(--fh-tone) calc(l - .12) c calc(h - 30)) 0, transparent 60%),
       var(--fh-tone);
     color: var(--fh-color-on-tone);
-    text-shadow: 0 1px 0 color-mix(in oklab, var(--fh-color-on-tone) 25%, transparent);
     border: 0;
   }
 
@@ -11583,7 +11584,7 @@
     font-size: var(--fh-type-label);
     font-weight: var(--fh-weight-medium);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--fh-tracking-none);
+    letter-spacing: var(--fh-avatar-tracking, var(--fh-tracking-none));
   }
 
   .fh-avatars:has( > .fh-avatar:first-child[data-kind="person"]) > .fh-avatars__more {
@@ -11596,10 +11597,6 @@
 
   .fh-avatars--lg > .fh-avatar {
     --fh-avatar-size: var(--fh-avatar-lg);
-  }
-
-  .fh-avatars--spread > .fh-avatar + .fh-avatar {
-    transition: margin-inline-start var(--fh-duration-base) var(--fh-ease-out);
   }
 
   .fh-avatars--spread:is(:hover, :focus-within, :focus-visible) > .fh-avatar + .fh-avatar {
@@ -18039,6 +18036,20 @@
     --fh-canvas-sub: 28;
     --fh-canvas-small: 17;
     --fh-canvas-measure: 22ch;
+    --_sld-list: var(--fh-slide-list, var(--fh-canvas-sub, 28));
+    --_sld-index: var(--fh-slide-index, var(--fh-canvas-small, 17));
+    --_sld-note: var(--fh-slide-note, var(--fh-canvas-small, 17));
+    --_sld-label: var(--fh-slide-label, var(--fh-canvas-small, 17));
+    --_sld-quote: var(--fh-slide-quote, var(--fh-canvas-title, 60));
+    --_sld-stat: var(--fh-slide-stat, 96);
+    --_sld-code: var(--fh-slide-code, 22);
+    --_sld-index-col: var(--fh-slide-index-col, 76);
+    --_sld-row-pad: var(--fh-slide-row-pad, 20);
+    --_sld-gap: var(--fh-slide-gap, 24);
+    --_sld-stat-gap: var(--fh-slide-stat-gap, 28);
+    --_sld-stat-pad: var(--fh-slide-stat-pad, 30);
+    --_sld-code-pad-b: var(--fh-slide-code-pad-block, 30);
+    --_sld-code-pad-i: var(--fh-slide-code-pad-inline, 34);
 
     & .fh-canvas__main {
       justify-content: flex-start;
@@ -18071,20 +18082,20 @@
 
   .fh-slide__list {
     counter-reset: fh-slide;
-    font-size: calc(30 * var(--_u));
+    font-size: calc(var(--_sld-list) * var(--_u));
     margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
 
     & > li {
-      grid-template-columns: calc(76 * var(--_u)) minmax(0, 1fr);
-      padding-block: calc(20 * var(--_u));
+      grid-template-columns: calc(var(--_sld-index-col) * var(--_u)) minmax(0, 1fr);
+      padding-block: calc(var(--_sld-row-pad) * var(--_u));
       border-block-start: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       color: var(--fh-color-text);
       counter-increment: fh-slide;
+      line-height: var(--fh-leading-heading);
       align-items: baseline;
-      line-height: 1.3;
       display: grid;
     }
 
@@ -18096,21 +18107,21 @@
       content: counter(fh-slide, decimal-leading-zero);
       color: var(--fh-tone);
       font-family: var(--fh-font-mono);
-      font-size: .6em;
+      font-size: calc(var(--_sld-index) * var(--_u));
       font-weight: var(--fh-weight-medium);
       letter-spacing: var(--fh-tracking-mono);
     }
 
     & small {
       color: var(--fh-color-text-muted);
-      margin-block-start: .3em;
-      font-size: .7em;
+      font-size: calc(var(--_sld-note) * var(--_u));
+      margin-block-start: var(--fh-slide-note-gap, .3em);
       display: block;
     }
   }
 
   .fh-slide__stats {
-    gap: calc(24 * var(--_u));
+    gap: calc(var(--_sld-gap) * var(--_u));
     grid-auto-columns: minmax(0, 1fr);
     grid-auto-flow: column;
     margin: 0;
@@ -18120,8 +18131,8 @@
 
     & > li {
       justify-content: space-between;
-      gap: calc(28 * var(--_u));
-      padding: calc(30 * var(--_u));
+      gap: calc(var(--_sld-stat-gap) * var(--_u));
+      padding: calc(var(--_sld-stat-pad) * var(--_u));
       border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       border-radius: var(--fh-radius-md);
       background-color: color-mix(in oklab, var(--fh-color-surface-raised) 55%, transparent);
@@ -18132,20 +18143,20 @@
     & b {
       color: var(--_cube, var(--fh-tone));
       font-family: var(--fh-font-display);
-      font-size: calc(96 * var(--_u));
+      font-size: calc(var(--_sld-stat) * var(--_u));
       font-weight: var(--fh-weight-medium);
       font-variant-numeric: tabular-nums;
-      letter-spacing: -.045em;
-      line-height: .9;
+      letter-spacing: var(--fh-tracking-tightest);
+      line-height: var(--fh-leading-none);
     }
 
     & span {
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
-      font-size: calc(var(--fh-canvas-small, 17) * var(--_u));
-      letter-spacing: var(--fh-tracking-wider);
+      font-size: calc(var(--_sld-label) * var(--_u));
+      letter-spacing: var(--fh-slide-tracking, var(--fh-tracking-wider));
+      line-height: var(--fh-leading-heading);
       text-transform: uppercase;
-      line-height: 1.3;
     }
 
     & > li:nth-child(3n+2) b {
@@ -18161,19 +18172,19 @@
     max-inline-size: 24ch;
     color: var(--fh-color-text-strong);
     font-family: var(--fh-font-display);
-    font-size: calc(58 * var(--_u));
+    font-size: calc(var(--_sld-quote) * var(--_u));
     font-weight: var(--fh-weight-medium);
-    letter-spacing: -.025em;
+    letter-spacing: var(--fh-tracking-snug);
+    line-height: var(--fh-leading-tight);
     text-wrap: balance;
     margin: 0;
-    line-height: 1.08;
 
     &:before {
       content: "“";
       block-size: .55em;
       color: var(--fh-tone);
-      font-size: 2.2em;
-      line-height: 1;
+      font-size: var(--fh-slide-quote-mark, 2.2em);
+      line-height: var(--fh-leading-none);
       display: block;
     }
   }
@@ -18181,8 +18192,8 @@
   .fh-slide__cite {
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: calc(var(--fh-canvas-small, 17) * var(--_u));
-    letter-spacing: var(--fh-tracking-wider);
+    font-size: calc(var(--_sld-label) * var(--_u));
+    letter-spacing: var(--fh-slide-tracking, var(--fh-tracking-wider));
     text-transform: uppercase;
     margin: 0;
     font-style: normal;
@@ -18194,21 +18205,21 @@
   }
 
   .fh-slide__code {
-    padding: calc(30 * var(--_u)) calc(34 * var(--_u));
+    padding: calc(var(--_sld-code-pad-b) * var(--_u)) calc(var(--_sld-code-pad-i) * var(--_u));
     border: var(--_hair) var(--fh-card-border-style, dashed) var(--fh-color-etch);
     border-radius: var(--fh-radius-md);
     background-color: var(--fh-color-surface-sunken);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
-    font-size: calc(22 * var(--_u));
+    font-size: calc(var(--_sld-code) * var(--_u));
+    line-height: var(--fh-leading-relaxed);
     tab-size: 2;
     white-space: pre;
     margin: 0;
-    line-height: 1.65;
     overflow: hidden;
 
     & mark {
-      border-radius: calc(4 * var(--_u));
+      border-radius: var(--fh-radius-sm);
       background-color: color-mix(in oklab, var(--fh-tone) 24%, transparent);
       color: inherit;
     }
