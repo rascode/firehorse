@@ -6,17 +6,18 @@
 @layer fh.components {
   /* —— Now-playing equalizer ——
    *   <span class="fh-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-   * Animates while an ancestor is [data-playing] or it has .fh-eq--on. */
+   * Animates while an ancestor is [data-playing] or it has .fh-eq--on.
+   * Values: --fh-eq-height (0.85rem), --fh-eq-bar (heavy plus thin), --fh-eq-gap (heavy). */
   .fh-eq {
     display: inline-flex;
     align-items: end;
-    gap: 2px;
-    block-size: 0.85rem;
+    gap: var(--fh-eq-gap, var(--fh-border-heavy));
+    block-size: var(--fh-eq-height, 0.85rem);
 
     & > i {
-      inline-size: 3px;
+      inline-size: var(--fh-eq-bar, calc(var(--fh-border-heavy) + var(--fh-border-thin)));
       block-size: 30%;
-      border-radius: 1px;
+      border-radius: var(--fh-border-thin);
       background-color: var(--fh-tone, var(--fh-color-text));
       transform-origin: bottom;
     }
@@ -28,8 +29,8 @@
     :is([data-playing], [aria-current="true"][data-playing]) .fh-eq > i,
     .fh-eq--on > i { animation: fh-eq var(--fh-duration-intro) var(--fh-ease-in-out) infinite alternate; }
     :is([data-playing]) .fh-eq > i:nth-child(2), .fh-eq--on > i:nth-child(2) { animation-duration: var(--fh-duration-enter); }
-    :is([data-playing]) .fh-eq > i:nth-child(3), .fh-eq--on > i:nth-child(3) { animation-duration: 0.78s; animation-delay: -0.2s; }
-    :is([data-playing]) .fh-eq > i:nth-child(4), .fh-eq--on > i:nth-child(4) { animation-duration: 0.54s; animation-delay: -0.35s; }
+    :is([data-playing]) .fh-eq > i:nth-child(3), .fh-eq--on > i:nth-child(3) { animation-duration: var(--fh-duration-reveal); animation-delay: -0.2s; }
+    :is([data-playing]) .fh-eq > i:nth-child(4), .fh-eq--on > i:nth-child(4) { animation-duration: var(--fh-duration-roll); animation-delay: -0.35s; }
   }
   @keyframes fh-eq { from { scale: 1 0.25; } to { scale: 1 1.15; } }
 

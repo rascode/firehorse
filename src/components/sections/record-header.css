@@ -68,12 +68,12 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .fh-record__mark[data-state="live"]::after { animation: fh-record-live 2.4s var(--fh-ease-out) infinite; }
+    .fh-record__mark[data-state="live"]::after { animation: fh-record-live var(--fh-duration-dwell) var(--fh-ease-out) infinite; }
   }
 
   @keyframes fh-record-live {
     0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--fh-color-success) 45%, transparent); }
-    70%, 100% { box-shadow: 0 0 0 0.45rem transparent; }
+    70%, 100% { box-shadow: 0 0 0 var(--fh-record-pulse, 0.45rem) transparent; }
   }
 
   .fh-record__id {
@@ -85,7 +85,7 @@
 
   .fh-record__title {
     margin: 0;
-    font-size: clamp(1.6rem, 1.2rem + 1.6cqi, 2.25rem);
+    font-size: var(--fh-record-title, var(--fh-text-h2));
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-heading);
     line-height: var(--fh-leading-tight);
@@ -149,7 +149,8 @@
       align-self: start;
       margin-block-start: calc(var(--fh-gap-grouped) * -1 - var(--_size) / 2);
       margin-inline-start: var(--fh-gap-sectioned);
-      outline: 4px solid var(--fh-color-canvas);
+      /* A canvas ring cut around the mark (a ring, not an outline: rule 13). */
+      box-shadow: 0 0 0 calc(var(--fh-border-heavy) * 2) var(--fh-color-canvas);
     }
 
     & > .fh-record__id { align-self: end; }
