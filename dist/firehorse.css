@@ -13524,59 +13524,8 @@
     
   }
 
-  .fh-log {
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
-    border-radius: var(--fh-radius-md);
-    background-color: var(--fh-color-surface);
-    font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-caption);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    overflow: hidden;
-
-    & > li {
-      gap: var(--fh-gap-related) var(--fh-gap-grouped);
-      padding: var(--fh-inset-tight) var(--fh-inset-control);
-      grid-template-columns: 4.5rem 4.75rem minmax(0, 1fr);
-      align-items: baseline;
-      display: grid;
-      container: fh-log-row / inline-size;
-
-      & + li {
-        border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
-      }
-    }
-
-    & time {
-      color: var(--fh-color-text-subtle);
-      font-variant-numeric: tabular-nums;
-    }
-
-    & .fh-chip {
-      cursor: default;
-      letter-spacing: var(--fh-tracking-wider);
-      text-transform: uppercase;
-    }
-
-    & code {
-      min-inline-size: 0;
-      color: var(--fh-color-text);
-      font: inherit;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-  }
-
   @container fh-panel-section (inline-size < 24rem) {
-    .fh-log > li {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-
-    .fh-log code {
-      grid-column: 1 / -1;
-    }
+    
   }
 
   .fh-files {
