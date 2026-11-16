@@ -1,0 +1,345 @@
+/*
+ * Firehorse — Activity log (TML-2)
+ * components/content · layer fh.components · docs /pro/project-management/#activity-log
+ * Free: Thread log, Compact log, Grouped by run. The Media log's image gutter (TML-2.2) is Pro
+ * (pro/src/pm/activity-log.css); without Pro its images sit under the entry.
+ *
+ * The story of a piece of work, top to bottom: who did what (Claude takes an
+ * action, an update comes back from Grok, a person adds a note), what kind of
+ * step it was, when, a body that folds, and the images that came with it.
+ * TML-1.4 (Activity feed) stays the one-line feed; TML-2 is the full log.
+ *
+ *   TML-2.1 Thread log      .fh-activity-log
+ *   TML-2.2 Media log       .fh-activity-log .fh-activity-log--media     images in a right-hand gutter
+ *   TML-2.3 Compact log     .fh-activity-log .fh-activity-log--compact   one line per entry, opens in place
+ *   TML-2.4 Grouped by run  .fh-activity-log .fh-activity-log--grouped   entries under collapsible run headers
+ *   Size step              .fh-activity-log--lg                the only difference allowed between variants
+ *
+ *   <section class="fh-activity-log" data-fh="TML-2.1" aria-label="Relay activity">
+ *     <header class="fh-activity-log__bar">
+ *       <p class="fh-activity-log__title">Relay #696</p>
+ *       <div class="fh-segment fh-segment--mode fh-activity-log__render" role="group" aria-label="Show text as" hidden>
+ *         <button type="button" data-render="rendered" aria-pressed="true">Rendered</button>
+ *         <button type="button" data-render="plain" aria-pressed="false">Plain text</button>
+ *       </div>
+ *     </header>
+ *     <ol class="fh-activity-log__list">
+ *       <li class="fh-activity-log__entry">
+ *         <span class="fh-avatar" data-kind="agent" data-tone="violet" role="img" aria-label="Claude">…</span>
+ *         <div class="fh-activity-log__main">
+ *           <p class="fh-activity-log__head"><b class="fh-activity-log__actor">Claude</b>
+ *             <span class="fh-chip fh-chip--tone fh-chip--sm fh-activity-log__kind" data-tone="sky">Action</span>
+ *             <time class="fh-activity-log__time" datetime="2026-11-15T20:41">8:41 PM</time></p>
+ *           <p class="fh-activity-log__summary">Dispatched the relay to Grok CLI</p>
+ *           <div class="fh-fold" style="--fh-fold-lines: 6">
+ *             <div class="fh-fold__body fh-activity-log__text" id="e1">Raw **markdown**, shown as typed until activity-log.js renders it.</div>
+ *             <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button"
+ *               aria-expanded="false" aria-controls="e1" hidden>Show all</button>
+ *           </div>
+ *           <ul class="fh-activity-log__links"><li><a class="fh-chip fh-chip--sm" href="…">Commit</a></li></ul>
+ *         </div>
+ *         <div class="fh-activity-log__media"><div class="fh-image-stack">…</div></div>   (Media log, IMS)
+ *       </li>
+ *     </ol>
+ *   </section>
+ *
+ * Kinds and their tones (one vocabulary with the work log's event kinds):
+ *   action sky · update violet · note amber · verify teal · commit lime · fix orange · error rose
+ * Actors: an agent is data-kind="agent" (its tone fill, or its logo as an img); a person is a circle
+ * (fh-avatar--circle, a photo or fh-avatar--generated initials). Folding needs fold.js (FOL) on the page.
+ * Body text is the markdown source. Without activity-log.js it shows as typed (whitespace kept) and the
+ * Rendered | Plain text switch stays hidden; with it, the switch shows and the text renders. */
+
+@layer fh.components {
+  .fh-activity-log {
+    /* Family values: one set for every variant. --lg is the only step. */
+    --_av: var(--fh-activity-log-avatar, 2rem);
+    --_media: var(--fh-activity-log-media, 14rem);
+    --_text: var(--fh-activity-log-text, var(--fh-text-small));
+    --_gap: var(--fh-activity-log-gap, var(--fh-inset-card));
+    --_rail: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+
+    container-type: inline-size;
+    display: grid;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+  }
+
+  .fh-activity-log--lg {
+    --_av: var(--fh-activity-log-avatar-lg, 2.5rem);
+    --_media: var(--fh-activity-log-media-lg, 16.5rem);
+    --_text: var(--fh-activity-log-text-lg, var(--fh-text-body));
+  }
+
+  /* —— Bar: title and the Rendered | Plain text switch ———————— */
+  .fh-activity-log__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fh-gap-related);
+    padding-block-end: var(--fh-gap-related);
+    border-block-end: var(--_rail);
+  }
+
+  .fh-activity-log__title {
+    margin: 0;
+    color: var(--fh-color-text);
+    font-size: var(--_text);
+    font-weight: var(--fh-weight-bold);
+  }
+
+  .fh-activity-log__render[hidden] { display: none; }
+
+  /* —— Entries ————————————————————————————————————————————— */
+  .fh-activity-log__list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fh-activity-log__entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--_av) minmax(0, 1fr);
+    column-gap: var(--fh-gap-grouped-wide);
+    row-gap: var(--fh-gap-related);
+    padding-block-end: var(--_gap);
+
+    /* The actor's avatar is the rail's node. */
+    & > .fh-avatar {
+      --fh-avatar-size: var(--_av);
+      z-index: 1;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      align-self: start;
+    }
+
+    & > .fh-avatar > .fh-icon { inline-size: 55%; block-size: 55%; }
+
+    /* Rail: from under the avatar to the next one. */
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      inset-block: calc(var(--_av) + var(--fh-gap-bound)) var(--fh-gap-bound);
+      inset-inline-start: calc(var(--_av) / 2 - 0.5px);
+      border-inline-start: var(--_rail);
+    }
+  }
+
+  .fh-activity-log__main {
+    display: grid;
+    grid-column: 2;
+    gap: var(--fh-gap-bound);
+    align-content: start;
+    min-inline-size: 0;
+    padding-block-start: calc((var(--_av) - 1.5em) / 2);
+    font-size: var(--_text);
+  }
+
+  .fh-activity-log__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-bound) var(--fh-gap-related);
+    margin: 0;
+    line-height: var(--fh-leading-snug);
+  }
+
+  .fh-activity-log__actor {
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-bold);
+  }
+
+  .fh-activity-log__time {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-activity-log__summary {
+    margin: 0;
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-medium);
+    line-height: var(--fh-leading-snug);
+  }
+
+  /* —— Body: markdown source, or rendered markdown ————————————— */
+  .fh-activity-log__text {
+    color: var(--fh-color-text-muted);
+    font-size: var(--_text);
+    line-height: var(--fh-leading-normal);
+    /* As typed: the source keeps its line breaks and indents. */
+    white-space: pre-wrap;
+    tab-size: 2;
+
+    &[data-md="rendered"] { white-space: normal; }
+
+    & :is(h1, h2, h3, h4, h5, h6) {
+      color: var(--fh-color-text);
+      font-size: var(--_text);
+      font-weight: var(--fh-weight-bold);
+      line-height: var(--fh-leading-snug);
+    }
+
+    & :is(b, strong) { color: var(--fh-color-text); font-weight: var(--fh-weight-bold); }
+
+    & :is(ul, ol) { display: grid; gap: var(--fh-gap-bound); padding-inline-start: 1.25em; }
+
+    & a { color: var(--fh-color-text); text-decoration: underline; text-underline-offset: 0.2em; }
+
+    & code {
+      padding: 0.05em 0.35em;
+      border-radius: var(--fh-radius-sm);
+      background-color: color-mix(in oklab, var(--fh-color-text) 7%, transparent);
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: 0.9em;
+    }
+
+    & pre {
+      overflow-x: auto;
+      padding: var(--fh-inset-tight) var(--fh-inset-control);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch));
+      border-radius: var(--fh-radius-md);
+      background-color: var(--fh-color-surface-sunken);
+      white-space: pre;
+
+      & code { padding: 0; background: none; font-size: var(--fh-text-micro); }
+    }
+
+    & blockquote {
+      padding-inline-start: var(--fh-inset-control);
+      border-inline-start: var(--fh-border-thick) solid var(--fh-color-etch);
+      color: var(--fh-color-text-muted);
+    }
+
+    & hr { inline-size: 100%; border: 0; border-block-start: var(--_rail); }
+  }
+
+  /* —— Links under the body (commit, file, spec) ——————————————— */
+  .fh-activity-log__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound);
+    margin: var(--fh-gap-bound) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* —— Images: an Image stack (IMS) per entry ———————————————————
+   *   <div class="fh-activity-log__media"><div class="fh-image-stack">…</div></div>
+   * The stack peeks, fans out over the entries below on hover, and opens the viewer (image-stack.js). */
+  .fh-activity-log__media {
+    grid-column: 2;
+    min-inline-size: 0;
+    max-inline-size: var(--_media);
+  }
+
+  /* —— TML-2.3 Compact log: one line, opens in place ———————————— */
+  .fh-activity-log--compact {
+    --_av: var(--fh-activity-log-avatar-compact, 1.5rem);
+    --_gap: var(--fh-gap-related);
+  }
+
+  .fh-activity-log__more {
+    display: grid;
+    grid-column: 2;
+    min-inline-size: 0;
+
+    & > summary {
+      display: flex;
+      align-items: center;
+      gap: var(--fh-gap-related);
+      min-block-size: var(--_av);
+      border-radius: var(--fh-radius-sm);
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker { display: none; }
+      &:hover .fh-activity-log__summary { text-decoration: underline; text-underline-offset: 0.2em; }
+      &:focus-visible { outline: 2px solid var(--fh-color-focus, currentColor); outline-offset: 2px; }
+
+      & > .fh-activity-log__summary {
+        flex: 1;
+        min-inline-size: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      & > .fh-icon--chevron-down {
+        flex: none;
+        color: var(--fh-color-text-subtle);
+        transition: rotate var(--fh-duration-fast, 150ms) var(--fh-ease-out, ease-out);
+      }
+    }
+
+    &[open] > summary > .fh-icon--chevron-down { rotate: 180deg; }
+
+    & > .fh-activity-log__main { grid-column: auto; padding-block: var(--fh-gap-related) 0; }
+  }
+
+  .fh-activity-log--compact .fh-activity-log__entry > .fh-avatar { grid-row: 1; }
+
+  .fh-activity-log--compact .fh-activity-log__more > summary > :is(.fh-activity-log__actor, .fh-activity-log__kind, .fh-activity-log__time) { flex: none; }
+
+  @container (inline-size < 30rem) {
+    .fh-activity-log--compact .fh-activity-log__more > summary > .fh-activity-log__kind { display: none; }
+  }
+
+  /* —— TML-2.4 Grouped by run: entries under collapsible headers ——— */
+  .fh-activity-log__groups {
+    display: grid;
+    gap: var(--fh-gap-related);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fh-activity-log__group > details > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-bound) var(--fh-gap-related);
+    padding-block: var(--fh-gap-related);
+    margin-block-end: var(--fh-gap-related);
+    border-block-end: var(--_rail);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+    &:focus-visible { outline: 2px solid var(--fh-color-focus, currentColor); outline-offset: 2px; }
+
+    & > .fh-icon--chevron-down {
+      color: var(--fh-color-text-subtle);
+      rotate: -90deg;
+      transition: rotate var(--fh-duration-fast, 150ms) var(--fh-ease-out, ease-out);
+    }
+  }
+
+  .fh-activity-log__group > details[open] > summary > .fh-icon--chevron-down { rotate: 0deg; }
+
+  .fh-activity-log__group-title {
+    color: var(--fh-color-text);
+    font-size: var(--_text);
+    font-weight: var(--fh-weight-bold);
+  }
+
+  .fh-activity-log__count {
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    letter-spacing: var(--fh-tracking-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fh-activity-log__group > details > .fh-activity-log__list { padding-inline-start: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-activity-log :is(.fh-icon--chevron-down) { transition: none; }
+  }
+}

@@ -35,8 +35,14 @@ export const statusOf = (id) => {
 };
 /** Every family, group and variant ID release.json names. */
 export const releaseIds = () => [...components.values()].flatMap((c) => [c.id, ...Object.keys(c.variants ?? {})]);
-/** "free" or "pro"; an unlisted family is free. */
-export const tierOf = (id) => components.get(familyOf(id))?.tier ?? "free";
+/** "free" or "pro". A group or variant listed under its family's "tiers" wins (a free version of a Pro
+ *  family, or the reverse), else the family's tier; an unlisted family is free. */
+export const tierOf = (id) => {
+  const c = components.get(familyOf(id));
+  if (!c) return "free";
+  if (String(id).includes("-")) return c.tiers?.[id] ?? c.tiers?.[groupIdOf(id)] ?? c.tier ?? "free";
+  return c.tier ?? "free";
+};
 /** The category an ID belongs to, or undefined. */
 export const categoryOf = (id) => components.get(familyOf(id))?.category;
 /** Public: the family is live, its category is live, and (for a group or variant) its own status is live. */
@@ -96,6 +102,21 @@ export const chip = (status, tier = "free") => {
   return tier === "pro" ? `<span class="site-release-chip" data-fh-release="pro">Pro</span>` : "";
 };
 
+/** A version priced apart from its family (a free version of a Pro family, or a Pro one of a free family) gets a
+ *  Free or Pro chip after its demo head's <h3>, on every build. */
+const tierChips = (main) => {
+  const edits = [];
+  for (const e of elements(main, famRe)) {
+    const id = e.open.match(famRe)[1];
+    if (!id.includes("-")) continue;
+    const tier = tierOf(id);
+    if (tier === tierOf(familyOf(id))) continue;
+    const head = /^\s*<div class="site-demo__head">\s*<h3[^>]*>[\s\S]*?<\/h3>/.exec(main.slice(e.start + e.open.length, e.end));
+    if (head) edits.push({ at: e.start + e.open.length + head[0].length, text: ` <span class="site-release-chip" data-fh-release="${tier}">${tier === "pro" ? "Pro" : "Free"}</span>` });
+  }
+  return edits.sort((a, b) => b.at - a.at).reduce((s, x) => s.slice(0, x.at) + x.text + s.slice(x.at), main);
+};
+
 // HTML helpers (string based, so the source markup is kept byte for byte).
 /** Every element whose opening tag matches attrRe, from its open tag to its balanced close tag. */
 export const elements = (html, attrRe) => {
@@ -140,6 +161,7 @@ const famRe = /\sdata-fh-id="([A-Z]{3}(?:-\d+(?:\.\d+)?)?)"/;
  *  held and draft demos (and Pro ones) get data-fh-release and a chip in their head. { public: true } forces the
  *  public result whatever the flag (the agent files are always public). */
 export const releaseMain = (main, { public: pub = false } = {}) => {
+  main = tierChips(main);
   const tagged = elements(main, famRe).map((e) => ({ ...e, id: e.open.match(famRe)[1] }));
   if (showAll && !pub) {
     // Point edits on the source string (attribute before the open tag's ">", chip after the head's <h3>), applied
@@ -240,6 +262,11 @@ const validate = async () => {
     if (!ids.has(c.id)) errors.push(`component ${c.id}: no family ${c.id} on any docs page`);
     if (!categories.has(c.category)) errors.push(`component ${c.id}: category "${c.category}" is not listed`);
     if (c.tier && !TIERS.includes(c.tier)) errors.push(`component ${c.id}: unknown tier "${c.tier}" (use ${TIERS.join(", ")})`);
+    for (const [v, t] of Object.entries(c.tiers ?? {})) {
+      if (!TIERS.includes(t)) errors.push(`tier of ${v}: unknown tier "${t}" (use ${TIERS.join(", ")})`);
+      if (familyOf(v) !== c.id) errors.push(`tier of ${v} is listed under ${c.id}`);
+      if (!ids.has(v)) errors.push(`tier of ${v}: no such ID on any docs page`);
+    }
     for (const [v, s] of Object.entries(c.variants ?? {})) {
       status(`variant ${v}`, s);
       if (familyOf(v) !== c.id) errors.push(`variant ${v} is listed under ${c.id}`);
