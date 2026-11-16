@@ -73,6 +73,7 @@ import { tokens } from "@rascode/firehorse/tokens";
 | `dist/themes/rascode.css` | Rascode brand layer (Inter, Geist Mono, Caveat) |
 | `dist/tokens.json` · `tokens.js` · `tokens.d.ts` | Every token with value, type, tier and group |
 | `dist/fold.js` · `fold.d.ts` | Optional text fold script (`@rascode/firehorse/fold`, FOL): folds long text to a few lines with Show all / Show less; without it the text shows in full |
+| `dist/image-field.js` · `image-field.d.ts` | Optional image field script (`@rascode/firehorse/image-field`, IMF, held): pane switching, drop / paste / browse with a preview, icon search, and a `fh-image-field:change` event; fetching a URL stays with the host |
 | `src/` | Source, one file per concern, native CSS nesting |
 | `agent/` | Agent contract and canonical component markup |
 | `site/` | The firehorse.rascode.dev documentation site |
