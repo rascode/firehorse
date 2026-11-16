@@ -4440,7 +4440,7 @@
     & > label, & > .fh-field__label, & > legend {
       align-items: center;
       gap: var(--fh-gap-related);
-      font-family: var(--fh-type-label-family);
+      font-family: var(--fh-type-label-family, var(--fh-font-mono));
       font-size: var(--fh-type-label);
       font-weight: var(--fh-type-label-weight);
       letter-spacing: var(--fh-type-label-tracking);
@@ -4453,12 +4453,12 @@
 
     &:has(:is(input, textarea, select)[required]) > label:after, &.fh-field--optional > label:after {
       content: "Required";
-      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+      padding: 0 var(--fh-inset-tight);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 32%, transparent);
       border-radius: var(--fh-radius-pill);
       font-size: var(--fh-text-micro);
+      line-height: var(--fh-leading-normal);
       color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
-      padding: .08rem .42rem .12rem;
-      line-height: 1.35;
     }
 
     &.fh-field--optional > label:after {
@@ -4478,7 +4478,7 @@
   }
 
   .fh-field__hint, .fh-field__error {
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);
@@ -4498,19 +4498,19 @@
   }
 
   .fh-input, .fh-textarea, .fh-select {
-    min-block-size: 2.5rem;
     inline-size: 100%;
-    padding: var(--fh-item-block) var(--fh-item-inline);
+    min-block-size: var(--fh-field-height, var(--fh-control-height));
+    padding: var(--fh-gap-bound) var(--fh-item-inline);
     border: var(--fh-border-thin) solid transparent;
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
     color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family);
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
     font-size: var(--fh-type-value);
     font-weight: var(--fh-type-value-weight);
     letter-spacing: var(--fh-type-value-tracking);
+    line-height: var(--fh-leading-normal);
     appearance: none;
-    line-height: 1.4;
 
     &::placeholder {
       font-weight: var(--fh-type-value-weight);
@@ -4549,7 +4549,7 @@
   }
 
   :is(.fh-input, .fh-textarea, .fh-select):is([inputmode="decimal"], [inputmode="numeric"], [type="number"], [type="time"], [type="date"], [type="datetime-local"]) {
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     letter-spacing: var(--fh-type-figure-tracking);
     font-variant-numeric: tabular-nums;
   }
@@ -4573,15 +4573,16 @@
   }
 
   .fh-textarea {
+    min-block-size: 7.5rem;
+    padding-block: var(--fh-item-block);
     resize: vertical;
     field-sizing: content;
-    min-block-size: 7.5rem;
   }
 
   .fh-select {
     cursor: var(--fh-cursor-action);
     background-image: none;
-    padding-inline-end: 2.25rem;
+    padding-inline-end: var(--fh-control-height);
   }
 
   .fh-select-wrap {
@@ -4743,8 +4744,8 @@
   }
 
   .fh-input-group > .fh-input-reveal {
+    inline-size: var(--fh-field-height, var(--fh-control-height));
     border-radius: var(--fh-radius-sm);
-    inline-size: 2.5rem;
     color: var(--fh-color-text-subtle);
     cursor: var(--fh-cursor-action);
     transition: color var(--fh-duration-fast) var(--fh-ease-standard);
@@ -4791,7 +4792,7 @@
 
   .fh-money .fh-input-group > .fh-input {
     min-inline-size: 0;
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     font-variant-numeric: tabular-nums;
     letter-spacing: var(--fh-type-figure-tracking);
     text-align: end;
@@ -4799,7 +4800,7 @@
   }
 
   .fh-money__currency {
-    font-family: var(--fh-type-label-family);
+    font-family: var(--fh-type-label-family, var(--fh-font-mono));
     font-size: var(--fh-type-label);
     font-weight: var(--fh-type-label-weight);
     letter-spacing: var(--fh-type-label-tracking);
@@ -6275,7 +6276,7 @@
     border-radius: var(--fh-radius-round);
     background-color: var(--fh-color-danger);
     inline-size: .4rem;
-    animation: fh-dictate-blink 1.2s var(--fh-ease-in-out) infinite;
+    animation: fh-dictate-blink var(--fh-duration-pulse) var(--fh-ease-in-out) infinite;
   }
 
   .fh-dictate__live {
@@ -6313,16 +6314,16 @@
 
   .fh-dictate__wave {
     align-items: center;
-    gap: 2px;
+    gap: var(--fh-border-heavy);
     block-size: .9rem;
     display: inline-flex;
 
     & > i {
+      inline-size: var(--fh-border-heavy);
+      border-radius: var(--fh-radius-pill);
       background-color: var(--fh-color-danger);
       block-size: 30%;
-      inline-size: 2px;
       animation: fh-dictate-wave var(--fh-duration-intro) var(--fh-ease-in-out) infinite;
-      border-radius: 1px;
     }
 
     & > i:nth-child(2) {
@@ -9363,17 +9364,19 @@
   }
 
   .fh-chip {
+    --_pad-b: var(--fh-chip-pad-block, calc(var(--fh-gap-bound) + var(--fh-border-heavy)));
+    --_pad-i: var(--fh-chip-pad-inline, var(--fh-inset-control));
     align-items: center;
-    gap: var(--fh-gap-related);
+    gap: var(--fh-chip-gap, var(--fh-gap-related));
     inline-size: fit-content;
     max-inline-size: 100%;
-    padding: .38rem var(--fh-inset-control);
+    padding: var(--_pad-b) var(--_pad-i);
     border: var(--fh-border-thin) var(--fh-chip-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 22%, transparent);
     border-radius: var(--fh-chip-radius, var(--fh-radius-pill));
     background: var(--fh-chip-bg, none);
-    box-shadow: inset 0 calc(var(--fh-chip-underline, 0px) * -1) 0 color-mix(in oklab, var(--fh-tone) 70%, transparent);
+    box-shadow: inset 0 calc(-1 * var(--fh-chip-underline, 0px)) 0 color-mix(in oklab, var(--fh-tone) 70%, transparent);
     color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-caption);
+    font-size: var(--fh-chip-text, var(--fh-text-caption));
     line-height: var(--fh-leading-snug);
     white-space: nowrap;
     cursor: var(--fh-cursor-action);
@@ -9386,11 +9389,11 @@
 
     &:before {
       content: "";
+      inline-size: var(--fh-chip-dot, .5em);
       aspect-ratio: 1;
       border-radius: var(--fh-radius-round);
       background-color: var(--fh-tone);
       flex: none;
-      inline-size: .4rem;
     }
 
     &:hover {
@@ -9418,20 +9421,21 @@
 
     & .fh-chip__remove {
       aspect-ratio: 1;
+      inline-size: 1lh;
       border-radius: var(--fh-radius-round);
-      inline-size: 1rem;
       color: inherit;
       background: none;
       border: 0;
+      flex: none;
       place-items: center;
-      margin-inline-end: -.35rem;
+      margin-inline-end: calc(-1 * var(--fh-gap-bound));
       padding: 0;
       display: inline-grid;
 
       &:before {
         content: "";
         aspect-ratio: 1;
-        inline-size: .6rem;
+        inline-size: .75em;
         mask: var(--fh-icon-close) center / contain no-repeat;
         background-color: currentColor;
       }
@@ -9472,7 +9476,8 @@
     &:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], :has(:checked)) {
       background-color: var(--fh-tone);
       color: var(--fh-color-on-tone);
-      box-shadow: 0 0 0 2px var(--fh-color-bg, var(--fh-color-canvas)), 0 0 0 4px var(--fh-tone);
+      outline: var(--fh-border-heavy) solid var(--fh-tone);
+      outline-offset: var(--fh-border-heavy);
     }
   }
 
@@ -9485,19 +9490,20 @@
 
   .fh-chip--underline {
     padding-inline: var(--fh-inset-tight);
-    box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--fh-tone) 45%, transparent);
+    box-shadow: inset 0 calc(-1 * var(--fh-border-thin)) 0 color-mix(in oklab, var(--fh-tone) 45%, transparent);
     background: none;
-    border: 0;
+    border-color: #0000;
     border-radius: 0;
 
     &:hover {
-      box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      box-shadow: inset 0 calc(-1 * var(--fh-border-heavy)) 0 color-mix(in oklab, var(--fh-tone) 70%, transparent);
     }
 
     &:is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], :has(:checked)) {
       color: var(--fh-color-text);
-      box-shadow: inset 0 -2px 0 var(--fh-tone);
+      box-shadow: inset 0 calc(-1 * var(--fh-border-heavy)) 0 var(--fh-tone);
       background: none;
+      border-color: #0000;
     }
   }
 
@@ -9508,8 +9514,9 @@
   .fh-chip__index, .fh-chips--indexed > .fh-chip:after {
     color: var(--fh-tone);
     font-family: var(--fh-font-mono);
-    font-size: .85em;
+    font-size: var(--fh-chip-index, var(--fh-text-label));
     font-weight: var(--fh-weight-medium);
+    line-height: inherit;
     letter-spacing: var(--fh-tracking-wide);
     font-variant-numeric: tabular-nums;
     order: -1;
@@ -9533,7 +9540,10 @@
   }
 
   .fh-chip > .fh-icon {
+    block-size: 1lh;
+    inline-size: 1lh;
     color: var(--fh-tone);
+    flex: none;
   }
 
   .fh-chip--solid > .fh-icon {
@@ -9547,12 +9557,14 @@
   }
 
   .fh-chip--sm {
-    padding: var(--fh-item-frame) .6rem;
+    --_pad-b: var(--fh-chip-pad-block-sm, var(--fh-gap-bound));
+    --_pad-i: var(--fh-chip-pad-inline-sm, var(--fh-inset-tight));
     font-size: var(--fh-text-label);
   }
 
   .fh-chip--lg {
-    padding: var(--fh-inset-tight) var(--fh-inset-tile);
+    --_pad-b: var(--fh-chip-pad-block-lg, var(--fh-inset-tight));
+    --_pad-i: var(--fh-chip-pad-inline-lg, var(--fh-inset-tile));
     font-size: var(--fh-text-small);
   }
 
@@ -9574,11 +9586,11 @@
   }
 
   .fh-chips--track {
+    inline-size: fit-content;
+    padding: var(--fh-chip-frame, var(--fh-item-frame));
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 22%, transparent);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--fh-color-surface-raised) 40%, transparent);
-    inline-size: fit-content;
-    padding: .16rem;
 
     & .fh-chip {
       border-color: #0000;
@@ -9634,7 +9646,7 @@
     min-inline-size: 0;
     padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) var(--fh-inset-tight);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 40%, transparent);
-    border-radius: var(--fh-radius-md);
+    border-radius: var(--fh-radius-sm);
     background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
     color: var(--fh-color-text);
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard),
@@ -9657,7 +9669,7 @@
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
-    letter-spacing: .04em;
+    letter-spacing: var(--fh-tracking-caps);
     flex: none;
     place-items: center;
     display: grid;
@@ -9693,7 +9705,8 @@
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-micro);
-      letter-spacing: var(--fh-tracking-wider);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-caps);
       text-overflow: ellipsis;
       text-transform: uppercase;
       white-space: nowrap;

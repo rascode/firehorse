@@ -36,7 +36,7 @@
       align-items: center;
       gap: var(--fh-gap-related);
       padding: 0;
-      font-family: var(--fh-type-label-family);
+      font-family: var(--fh-type-label-family, var(--fh-font-mono));
       font-size: var(--fh-type-label);
       font-weight: var(--fh-type-label-weight);
       letter-spacing: var(--fh-type-label-tracking);
@@ -49,11 +49,11 @@
     &:has(:is(input, textarea, select)[required]) > label::after,
     &.fh-field--optional > label::after {
       content: "Required";
-      padding: 0.08rem 0.42rem 0.12rem;
-      border: var(--fh-border-thin) dashed color-mix(in oklab, var(--fh-color-text) 32%, transparent);
+      padding: 0 var(--fh-inset-tight);
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-color-text) 32%, transparent);
       border-radius: var(--fh-radius-pill);
       font-size: var(--fh-text-micro);
-      line-height: 1.35;
+      line-height: var(--fh-leading-normal);
       color: color-mix(in oklab, var(--fh-color-text-muted) 78%, var(--fh-color-text));
     }
 
@@ -77,7 +77,7 @@
   .fh-field__hint,
   .fh-field__error {
     margin: 0;
-    font-family: var(--fh-type-meta-family);
+    font-family: var(--fh-type-meta-family, var(--fh-font-sans));
     font-size: var(--fh-type-meta);
     font-weight: var(--fh-type-meta-weight);
     letter-spacing: var(--fh-type-meta-tracking);

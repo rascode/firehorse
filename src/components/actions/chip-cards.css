@@ -1,6 +1,6 @@
 /*
- * Firehorse — Chip cards (CHC)
- * components/actions · layer fh.components · docs /components/actions/#CHC
+ * Firehorse — Chip cards (CHP-3)
+ * components/actions · layer fh.components · docs /components/actions/chips/
  */
 
 @layer fh.components {
@@ -18,7 +18,7 @@
     min-inline-size: 0;
     padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) var(--fh-inset-tight);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--fh-tone) 40%, transparent);
-    border-radius: var(--fh-radius-md);
+    border-radius: var(--fh-radius-sm);
     background-color: color-mix(in oklab, var(--fh-tone) 5%, transparent);
     color: var(--fh-color-text);
     text-decoration: none;
@@ -45,7 +45,7 @@
     font-family: var(--fh-font-mono);
     font-size: var(--fh-text-micro);
     font-weight: var(--fh-weight-heavy);
-    letter-spacing: 0.04em;
+    letter-spacing: var(--fh-tracking-caps);
 
     & > :is(img, svg) {
       inline-size: 100%;
@@ -78,7 +78,8 @@
       color: var(--fh-color-text-muted);
       font-family: var(--fh-font-mono);
       font-size: var(--fh-text-micro);
-      letter-spacing: var(--fh-tracking-wider);
+      font-weight: var(--fh-weight-regular);
+      letter-spacing: var(--fh-tracking-caps);
       text-overflow: ellipsis;
       text-transform: uppercase;
       white-space: nowrap;

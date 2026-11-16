@@ -64,7 +64,7 @@
     aspect-ratio: 1;
     border-radius: var(--fh-radius-round);
     background-color: var(--fh-color-danger);
-    animation: fh-dictate-blink 1.2s var(--fh-ease-in-out) infinite;
+    animation: fh-dictate-blink var(--fh-duration-pulse) var(--fh-ease-in-out) infinite;
   }
 
   .fh-dictate__live {
@@ -103,13 +103,13 @@
   .fh-dictate__wave {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: var(--fh-border-heavy);
     block-size: 0.9rem;
 
     & > i {
-      inline-size: 2px;
+      inline-size: var(--fh-border-heavy);
       block-size: 30%;
-      border-radius: 1px;
+      border-radius: var(--fh-radius-pill);
       background-color: var(--fh-color-danger);
       animation: fh-dictate-wave var(--fh-duration-intro) var(--fh-ease-in-out) infinite;
     }

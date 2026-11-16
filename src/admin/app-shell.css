@@ -278,16 +278,20 @@
     min-block-size: 100dvh;
   }
 
+  /* The bar is the masthead bar's outer size (46px): a control-height row in the frame ring and a
+     thin line each side (clear on top, the etch below), so it lines up with the sidebar head. */
   .fh-app__bar {
     position: sticky;
     inset-block-start: 0;
-    z-index: 2;
+    z-index: var(--fh-z-sticky);
     display: flex;
     align-items: center;
     gap: var(--fh-gap-grouped);
-    min-block-size: 3.5rem;
-    padding-inline: var(--fh-app-pad, var(--fh-inset-page));
-    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    box-sizing: border-box;
+    min-block-size: calc(var(--fh-app-bar-height, var(--fh-control-height)) + 2 * (var(--fh-item-frame) + var(--fh-border-thin)));
+    padding: var(--fh-item-frame) var(--fh-app-pad, var(--fh-inset-page));
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
+    border-block-end-color: var(--fh-color-etch);
     background-color: color-mix(in oklab, var(--fh-color-canvas) 86%, transparent);
     backdrop-filter: blur(var(--fh-blur-chrome));
   }
@@ -314,19 +318,19 @@
    * A thin rule in the environment's colour along the top of the app, so
    * where you are is visible from any screen. Production gets a thicker one. */
   .fh-app[data-fh-env] {
-    border-block-start: 3px var(--fh-card-border-style, solid) var(--fh-env-tone, var(--fh-color-text-subtle));
+    border-block-start: calc(var(--fh-border-heavy) + var(--fh-border-thin)) var(--fh-card-border-style, solid) var(--fh-env-tone, var(--fh-color-text-subtle));
   }
 
   .fh-app[data-fh-env="production"] {
-    border-block-start-width: 4px;
+    border-block-start-width: calc(var(--fh-border-heavy) + var(--fh-border-heavy));
   }
 
   [data-fh-env] {
     --fh-env-tone: var(--fh-color-text-subtle);
   }
-  [data-fh-env="local"] { --fh-env-tone: var(--fh-tone-lime); }
+  [data-fh-env="local"] { --fh-env-tone: var(--fh-color-success); }
   [data-fh-env="staging"],
-  [data-fh-env="preview"] { --fh-env-tone: var(--fh-tone-amber); }
+  [data-fh-env="preview"] { --fh-env-tone: var(--fh-color-warning); }
   [data-fh-env="production"] { --fh-env-tone: var(--fh-color-danger); }
 
   /* SHL-1.2: collapsible sidebar.
@@ -361,13 +365,17 @@
     min-inline-size: 0;
   }
 
+  /* The column changes width at once (no layout transition); what it shows fades in. */
   @media (prefers-reduced-motion: no-preference) {
-    .fh-app.fh-app--rail > .fh-app__side {
-      transition:
-        inline-size var(--fh-duration-base) var(--fh-ease-out),
-        flex-basis var(--fh-duration-base) var(--fh-ease-out),
-        max-inline-size var(--fh-duration-base) var(--fh-ease-out);
+    /* Two names for one fade, one per state, so it plays again each time the column opens or closes. */
+    .fh-app.fh-app--rail > .fh-app__side :is(.fh-app__brand, .fh-sidenav, .fh-app__side-foot) {
+      animation: fh-app-side-fade-open var(--fh-duration-base) var(--fh-ease-out);
     }
+    .fh-app.fh-app--rail:is([data-fh-side="rail"], :has(.fh-app__side-state:checked)) > .fh-app__side :is(.fh-app__brand, .fh-sidenav, .fh-app__side-foot) {
+      animation-name: fh-app-side-fade-rail;
+    }
+    @keyframes fh-app-side-fade-open { from { opacity: 0; } }
+    @keyframes fh-app-side-fade-rail { from { opacity: 0; } }
 
     .fh-app.fh-app--rail .fh-app__side-toggle .fh-icon {
       transition: rotate var(--fh-duration-base) var(--fh-ease-out);
@@ -420,7 +428,7 @@
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
-    margin: -1px;
+    margin: calc(-1 * var(--fh-border-thin));
     padding: 0;
     overflow: hidden;
     clip-path: inset(50%);
@@ -570,7 +578,7 @@
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
-      margin: -1px;
+      margin: calc(-1 * var(--fh-border-thin));
       padding: 0;
       overflow: hidden;
       clip-path: inset(50%);
@@ -584,7 +592,7 @@
       display: block;
       inline-size: 1px;
       block-size: 1px;
-      margin: -1px;
+      margin: calc(-1 * var(--fh-border-thin));
       padding: 0;
       overflow: hidden;
       clip-path: inset(50%);
@@ -627,7 +635,7 @@
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
-      margin: -1px;
+      margin: calc(-1 * var(--fh-border-thin));
       padding: 0;
       overflow: hidden;
       clip-path: inset(50%);
@@ -649,7 +657,7 @@
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
-      margin: -1px;
+      margin: calc(-1 * var(--fh-border-thin));
       padding: 0;
       overflow: hidden;
       clip-path: inset(50%);
@@ -696,7 +704,7 @@
     @media (prefers-reduced-motion: no-preference) {
       .fh-app.fh-app--rail > .fh-app__side:popover-open {
         transition:
-          inset-inline-start var(--fh-duration-base) var(--fh-ease-out),
+          translate var(--fh-duration-base) var(--fh-ease-out),
           overlay var(--fh-duration-base) allow-discrete,
           display var(--fh-duration-base) allow-discrete;
       }
@@ -711,7 +719,7 @@
 
     @starting-style {
       .fh-app.fh-app--rail > .fh-app__side:popover-open {
-        inset-inline-start: -100%;
+        translate: -100% 0;
       }
 
       .fh-app.fh-app--rail > .fh-app__side:popover-open::backdrop {

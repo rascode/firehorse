@@ -4,22 +4,24 @@
  */
 
 @layer fh.components {
-  /* —— Text inputs, textarea, select —— */
+  /* —— Text inputs, textarea, select ——
+   * One field height for the family: an input, a select, a money or password field is the control
+   * height (--fh-field-height, 36px), the same as a button; a textarea keeps its rows. */
   .fh-input,
   .fh-textarea,
   .fh-select {
     inline-size: 100%;
-    min-block-size: 2.5rem;
-    padding: var(--fh-item-block) var(--fh-item-inline);
+    min-block-size: var(--fh-field-height, var(--fh-control-height));
+    padding: var(--fh-gap-bound) var(--fh-item-inline);
     border: var(--fh-border-thin) solid transparent;
     border-radius: var(--fh-radius-sm);
     background-color: var(--fh-color-field);
     color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family);
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
     font-size: var(--fh-type-value);
     font-weight: var(--fh-type-value-weight);
     letter-spacing: var(--fh-type-value-tracking);
-    line-height: 1.4;
+    line-height: var(--fh-leading-normal);
     appearance: none;
 
     &::placeholder {
@@ -61,7 +63,7 @@
   }
 
   :is(.fh-input, .fh-textarea, .fh-select):is([inputmode="decimal"], [inputmode="numeric"], [type="number"], [type="time"], [type="date"], [type="datetime-local"]) {
-    font-family: var(--fh-type-figure-family);
+    font-family: var(--fh-type-figure-family, var(--fh-font-mono));
     letter-spacing: var(--fh-type-figure-tracking);
     font-variant-numeric: tabular-nums;
   }
@@ -98,12 +100,13 @@
 
   .fh-textarea {
     min-block-size: 7.5rem;
+    padding-block: var(--fh-item-block);
     resize: vertical;
     field-sizing: content;
   }
 
   .fh-select {
-    padding-inline-end: 2.25rem;
+    padding-inline-end: var(--fh-control-height);
     background-image: none;
     cursor: var(--fh-cursor-action);
   }
