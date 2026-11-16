@@ -8,9 +8,18 @@
    * Stack them inside `.fh-toaster` (fixed, bottom-end).
    *   <div class="fh-toaster" role="region" aria-label="Notifications">
    *     <div class="fh-toast" data-tone="success" role="status">
-   *       <p>Saved.</p><button class="fh-close" aria-label="Dismiss"></button>
+   *       <div class="fh-toast__body">
+   *         <p>Published to X.</p>
+   *         <p class="fh-toast__description">The post is live.</p>
+   *         <a class="fh-link fh-toast__action" href="https://x.com">View on X</a>
+   *       </div>
+   *       <button class="fh-close" type="button" aria-label="Dismiss"></button>
    *     </div>
-   *   </div>  */
+   *   </div>
+   * Tones: neutral (the default edge), success, danger.
+   * The action is the inline link (`.fh-link`), on its own line. A button
+   * action drops the control chrome so it reads the same.
+   * Enter slides in. Reduced motion keeps the fade and drops the slide. */
   .fh-toaster {
     position: fixed;
     z-index: var(--fh-z-toast);
@@ -38,18 +47,52 @@
     line-height: var(--fh-leading-normal);
     box-shadow: var(--fh-shadow-overlay);
     pointer-events: auto;
-    transition:
-      opacity var(--fh-duration-base) var(--fh-ease-out),
-      translate var(--fh-duration-base) var(--fh-ease-out);
+    transition: opacity var(--fh-duration-base) var(--fh-ease-out);
 
     @starting-style {
       opacity: 0;
-      translate: 0 0.75rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition:
+        opacity var(--fh-duration-base) var(--fh-ease-out),
+        translate var(--fh-duration-base) var(--fh-ease-out);
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 0.75rem;
+      }
     }
 
     & .fh-close {
       inline-size: 1.5rem;
       margin: calc(-1 * var(--fh-gap-bound)) calc(-1 * var(--fh-gap-bound)) 0 0;
+    }
+
+    & .fh-toast__body {
+      display: grid;
+      gap: var(--fh-gap-related);
+      min-inline-size: 0;
+    }
+
+    & .fh-toast__description {
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-small);
+    }
+
+    & .fh-toast__action {
+      justify-self: start;
+    }
+
+    & button.fh-toast__action {
+      padding: 0;
+      border: 0;
+      background: none;
+      text-align: start;
+    }
+
+    &[data-tone="neutral"] {
+      --_edge: var(--fh-color-border-strong);
     }
 
     &[data-tone="success"] {
