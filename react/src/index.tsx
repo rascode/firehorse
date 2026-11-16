@@ -25,6 +25,13 @@ export {
   type NavBadgeProps,
 } from "./sidenav";
 export {
+  ImageField,
+  type ImageFieldProps,
+  type ImageFieldValue,
+  type ImageFieldChange,
+  type ImageFieldKind,
+} from "./image-field";
+export {
   Sidebar,
   resolveMetricDisplay,
   metricTone,
