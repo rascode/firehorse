@@ -25,10 +25,10 @@
       font-size: var(--fh-text-micro);
       text-decoration: none;
 
-      & > .fh-icon { font-size: 1.25rem; }
+      & > .fh-icon { font-size: var(--fh-tab-bar-icon, 1.25rem); }
       &[aria-current="page"] { color: var(--fh-tone, var(--fh-color-text)); }
       &[aria-current="page"]::before { content: ""; position: absolute; inset-block-start: calc(-1 * var(--fh-gap-related)); inline-size: 1.5rem; block-size: 2px; border-radius: var(--fh-radius-sm); background-color: currentColor; }
-      & > b { position: absolute; inset-block-start: 0.1rem; inset-inline-start: calc(50% + var(--fh-gap-bound)); min-inline-size: 1rem; padding: 0 var(--fh-gap-bound); border-radius: var(--fh-radius-pill); background-color: var(--fh-color-danger); color: var(--fh-color-on-media); font-size: var(--fh-text-micro); line-height: 1rem; text-align: center; }
+      & > b { position: absolute; inset-block-start: var(--fh-tab-bar-badge-nudge, 0.1rem); inset-inline-start: calc(50% + var(--fh-gap-bound)); min-inline-size: 1rem; padding: 0 var(--fh-gap-bound); border-radius: var(--fh-radius-pill); background-color: var(--fh-color-danger); color: var(--fh-color-on-media); font-size: var(--fh-text-micro); line-height: 1rem; text-align: center; }
     }
   }
 

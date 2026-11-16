@@ -24,7 +24,7 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--fh-gap-sectioned);
-      padding: var(--fh-inset-card) clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card));
+      padding: var(--fh-inset-card) clamp(var(--fh-inset-tile), var(--fh-accordion-pad, 3cqi), var(--fh-inset-card));
       color: var(--fh-color-text);
       font-size: var(--fh-text-body);
       font-weight: var(--fh-weight-semibold);
@@ -64,7 +64,7 @@
     }
 
     & details > :not(summary) {
-      padding: 0 clamp(var(--fh-inset-tile), 3cqi, var(--fh-inset-card)) var(--fh-inset-card);
+      padding: 0 clamp(var(--fh-inset-tile), var(--fh-accordion-pad, 3cqi), var(--fh-inset-card)) var(--fh-inset-card);
       max-inline-size: var(--fh-measure);
       color: var(--fh-color-text-muted);
       line-height: var(--fh-leading-relaxed);

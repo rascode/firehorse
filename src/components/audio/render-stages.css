@@ -51,7 +51,7 @@
       var(--fh-tone, var(--fh-color-accent));
   }
   @media (prefers-reduced-motion: no-preference) {
-    .fh-stages[data-state="active"] .fh-stages__track::after { animation: fh-stages-flow 0.8s linear infinite; }
+    .fh-stages[data-state="active"] .fh-stages__track::after { animation: fh-stages-flow var(--fh-duration-intro) linear infinite; }
   }
   @keyframes fh-stages-flow { to { background-position: 34px 0, 0 0; } }
   .fh-stages__list {
@@ -66,7 +66,7 @@
       display: inline-flex;
       align-items: center;
       gap: var(--fh-gap-bound);
-      padding: 0.15rem var(--fh-inset-tight);
+      padding: var(--fh-stages-pad-block, 0.15rem) var(--fh-inset-tight);
       border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       border-radius: var(--fh-radius-pill);
       color: var(--fh-color-text-subtle);

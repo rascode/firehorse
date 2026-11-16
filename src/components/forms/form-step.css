@@ -84,7 +84,7 @@
   @container fh-form-steps (inline-size >= 52rem) {
     .fh-form-step {
       grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
-      column-gap: clamp(var(--fh-gap-separated), 6cqi, 6rem);
+      column-gap: clamp(var(--fh-gap-separated), var(--fh-step-gap, 6cqi), var(--fh-step-gap-max, 6rem));
     }
     .fh-form-step__head {
       position: sticky;

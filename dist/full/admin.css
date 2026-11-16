@@ -1892,7 +1892,7 @@
       content: "";
       inset-block: 0;
       inset-inline: calc(-1 * var(--fh-app-pad, var(--fh-gap-sectioned)));
-      z-index: -1;
+      z-index: var(--fh-z-under);
       border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) transparent;
       pointer-events: none;
       transition: background-color var(--fh-duration-base) var(--fh-ease-standard),
@@ -2147,7 +2147,7 @@
 
     & > b {
       font-family: var(--fh-font-figure);
-      font-size: 22.2222cqi;
+      font-size: var(--fh-gauge-figure, calc(100cqi / 4.5));
       font-weight: var(--fh-weight-medium);
       font-variant-numeric: tabular-nums;
       align-self: center;
@@ -2158,7 +2158,7 @@
       max-inline-size: calc(100cqi - var(--_w) * 4);
       color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
-      font-size: max(var(--fh-text-micro), calc(100cqi / 14));
+      font-size: max(var(--fh-text-micro), var(--fh-gauge-caption, calc(100cqi / 14)));
       letter-spacing: var(--fh-tracking-wider);
       text-transform: uppercase;
       align-self: center;
@@ -2215,7 +2215,7 @@
 
   .fh-working__mark {
     color: var(--fh-tone);
-    animation: fh-working-think 2.4s var(--fh-ease-standard) infinite;
+    animation: fh-working-think var(--fh-duration-dwell) var(--fh-ease-standard) infinite;
     flex: none;
   }
 
@@ -2653,8 +2653,8 @@
   .fh-check-card__icon {
     margin-block: var(--fh-gap-grouped) var(--fh-gap-related);
     color: var(--fh-tone, var(--fh-color-text-muted));
+    font-size: var(--fh-tracker-figure, 2rem);
     align-self: center;
-    font-size: 2rem;
     line-height: 1;
   }
 
@@ -2767,7 +2767,7 @@
         border-radius: var(--fh-radius-pill);
         background: var(--fh-tone, var(--fh-color-text-muted));
         position: absolute;
-        inset-block-start: calc(var(--fh-inset-control) + .4em);
+        inset-block-start: calc(var(--fh-inset-control) + var(--fh-tracker-nudge, .4em));
         inset-inline-start: calc(var(--fh-gap-bound) * -1 - var(--fh-border-thin) / 2);
       }
     }

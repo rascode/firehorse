@@ -77,7 +77,7 @@
     &::before {
       content: "";
       position: absolute;
-      z-index: -1;
+      z-index: var(--fh-z-under);
       inset-block: 0;
       inset-inline: calc(
         max(var(--_margin), (100% - var(--_max)) / 2) - var(--fh-scaffold-outdent)
@@ -125,7 +125,7 @@
     &::after {
       content: "";
       position: absolute;
-      inset-block-start: calc(var(--fh-scaffold-tick) / -2 - 0.5px);
+      inset-block-start: calc(var(--fh-scaffold-tick) / -2 - var(--fh-border-thin) / 2);
       inline-size: var(--fh-scaffold-tick);
       block-size: var(--fh-scaffold-tick);
       background: var(--fh-color-scaffold-tick);

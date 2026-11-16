@@ -1163,6 +1163,18 @@ export const tokens = {
     "tier": "primitives",
     "group": "z"
   },
+  "--fh-z-lifted": {
+    "$value": "2",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
+  "--fh-z-guides": {
+    "$value": "2147483000",
+    "$type": "number",
+    "tier": "primitives",
+    "group": "z"
+  },
   "--fh-z-under": {
     "$value": "-1",
     "$type": "number",

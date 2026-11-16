@@ -194,6 +194,8 @@ export type FirehorseToken =
   | "--fh-z-cell-corner"
   | "--fh-z-cell-handle"
   | "--fh-z-cell-bar"
+  | "--fh-z-lifted"
+  | "--fh-z-guides"
   | "--fh-z-under"
   | "--fh-z-sticky"
   | "--fh-z-drawer"

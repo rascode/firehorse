@@ -17,14 +17,13 @@
     --_color: var(--fh-action-color, var(--fh-color-text));
     --_text: var(--fh-action-text, var(--fh-text-caption));
     --_weight: var(--fh-action-weight, var(--fh-weight-bold));
-    --_tracking: var(--fh-action-tracking, var(--fh-tracking-wide));
     --_arrow: var(--fh-action-arrow, 0.8em);
 
     display: inline-flex;
     align-items: center;
     gap: var(--fh-gap-bound);
     padding: 0;
-    padding-block-end: 0.2em;
+    padding-block-end: var(--fh-action-underline-gap, 0.2em);
     border: 0;
     border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_color) 45%, transparent);
     background: none;
@@ -32,7 +31,7 @@
     font-family: var(--fh-font-mono);
     font-size: var(--_text);
     font-weight: var(--_weight);
-    letter-spacing: var(--_tracking);
+    letter-spacing: var(--fh-action-tracking, var(--fh-tracking-wide));
     line-height: var(--fh-leading-heading);
     text-transform: uppercase;
     text-decoration: none;

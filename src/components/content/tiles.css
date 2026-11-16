@@ -63,7 +63,7 @@
 
     /* Each cell draws its own left and bottom rule, pulled 1px so neighbours share one line. */
     /* (.fh-tile listed too, so a tile placed straight in the grid keeps its rules over its own border reset) */
-    & > *, & > .fh-tile { margin: 0 0 -1px -1px; border-block-end: var(--_rule); border-inline-start: var(--_rule); }
+    & > *, & > .fh-tile { margin: 0 0 calc(-1 * var(--fh-border-thin)) calc(-1 * var(--fh-border-thin)); border-block-end: var(--_rule); border-inline-start: var(--_rule); }
     & > li > .fh-tile { block-size: 100%; }
   }
 
@@ -76,7 +76,6 @@
     --_note: var(--fh-tile-note, var(--fh-text-caption));
     --_mono: var(--fh-tile-mono, var(--fh-text-label));
     --_mono-weight: var(--fh-tile-mono-weight, var(--fh-weight-regular));
-    --_tracking: var(--fh-tile-tracking, var(--fh-tracking-caps));
     --_pad-b: var(--fh-tile-pad-block, var(--fh-inset-tile));
     --_pad-i: var(--fh-tile-pad-inline, var(--fh-inset-tile));
     --_gap: var(--fh-tile-gap, var(--fh-gap-related));
@@ -139,7 +138,7 @@
     font-family: var(--fh-font-mono);
     font-size: var(--_mono);
     font-weight: var(--_mono-weight);
-    letter-spacing: var(--_tracking);
+    letter-spacing: var(--fh-tile-tracking, var(--fh-tracking-caps));
     line-height: var(--_leading);
     text-transform: uppercase;
   }

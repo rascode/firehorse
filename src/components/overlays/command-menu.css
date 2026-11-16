@@ -9,7 +9,7 @@
    *     <div class="fh-command__list"><p class="fh-menu__label">Pages</p><a>…</a></div> </dialog> */
   .fh-command {
     --fh-dialog-size: 36rem;
-    margin-block-start: 12vh;
+    margin-block-start: var(--fh-command-menu-drop, 12vh);
     padding: 0;
 
     &[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; max-block-size: min(30rem, 76dvh); }
@@ -28,7 +28,7 @@
   .fh-command__list {
     display: grid;
     align-content: start;
-    gap: 1px;
+    gap: var(--fh-border-thin);
     padding: var(--fh-inset-tight);
     overflow-y: auto;
 
