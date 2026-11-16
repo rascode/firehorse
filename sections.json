@@ -172,6 +172,16 @@
       "slots": ["speaker", "time", "message"],
       "chips": { "rule": "The message count and the time of the last one.", "max": 2 }
     },
+    "activity": {
+      "id": "SAC",
+      "members": ["SCT", "CHP", "TML", "FOL", "IMS"],
+      "class": "fh-panel-section fh-panel-section--activity",
+      "icon": "activity",
+      "tone": "violet",
+      "body": "fh-activity-log (TML-2.1 Thread log): fh-activity-log__bar with the Rendered | Plain text switch; fh-activity-log__list > fh-activity-log__entry (actor avatar; fh-activity-log__head: actor, kind chip, time; fh-activity-log__summary; markdown body in fh-fold; fh-activity-log__links; images in fh-activity-log__media > fh-image-stack). activity-log.js, fold.js, image-stack.js",
+      "slots": ["actor (an agent: data-kind=agent avatar, its logo or tone; a person: a circle)", "kind (action, update, note, verify, commit, fix, error: the work log's event kinds)", "time", "summary", "body (markdown, folded)", "links", "images (Image stack)"],
+      "chips": { "rule": "The entry count and the span of time it covers.", "max": 2 }
+    },
     "log": {
       "id": "SLG",
       "members": ["SCT", "CHP"],
