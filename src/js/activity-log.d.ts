@@ -1,4 +1,4 @@
-/** Wires every .fh-activity-log in root (or root itself). Runs on import; call again after entries change. */
+/** Wires every .fh-activity-log in root (or root itself), except those marked data-boot="off" (drawn by a framework). Runs on import; call again after entries change. */
 export function boot(root?: Document | Element): Element[];
 /** Shows every body in a log rendered ("rendered") or as typed ("plain"), and sets its switch to match. */
 export function setLogRender(log: Element, mode: "rendered" | "plain"): void;

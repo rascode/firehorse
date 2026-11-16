@@ -11,6 +11,8 @@
 //
 // The choice is remembered per viewer (localStorage "fh-activity-log-render"). A log's own
 // data-render sets its starting mode; a body's own data-render ("plain" | "rendered") pins it.
+// A log drawn by a framework (React and the like) sets data-boot="off": this script leaves it alone, and the host
+// renders bodies with renderMarkdown() and keeps the switch in its own state.
 // Each change dispatches "fh:log-render" on the log (detail: { mode }) and refreshes any text
 // fold around a body ("fh:fold-refresh"), so Show all / Show less still measures right.
 //
@@ -151,7 +153,10 @@ function bind(log) {
 
 /** Wires every .fh-activity-log in root (or root itself). Safe to call again after entries change. */
 export function boot(root = document) {
-  const logs = root.matches?.(".fh-activity-log") ? [root] : [...root.querySelectorAll(".fh-activity-log")];
+  const all = root.matches?.(".fh-activity-log") ? [root] : [...root.querySelectorAll(".fh-activity-log")];
+  // A log a framework draws (React, Vue…) carries data-boot="off": the framework owns its DOM, so boot leaves it
+  // alone and the host renders bodies with renderMarkdown() and keeps the switch in its own state.
+  const logs = all.filter((log) => log.dataset.boot !== "off");
   for (const log of logs) bind(log);
   return logs;
 }
