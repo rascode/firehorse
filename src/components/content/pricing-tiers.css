@@ -5,222 +5,221 @@
 
 @layer fh.components {
   /* —— Pricing tiers ——
-   * Each tier is a card in the new look, the same card as the Tiles and the Stacking deck: the
-   * etched raised surface at radius-sm, and a head with a solid Icon cube in the tier's tone (CUB-1.5)
-   * beside a numbered mono caps name (01 · Pro). The price sits big on the stat tier over a quiet
-   * mono note and a soft rule that runs edge to edge. The pitch comes next, then the features, one
-   * per row between soft rules, each checked in a soft tone cube. The action sits at the foot. The
-   * featured tier takes a tone wash, a solid tone frame and its tag, a solid tone block as tall as
-   * the small cube, on the head line at the end.
+   * The Tile panel (MEG-3.1) and the Tiles (TIL) as a price list: one etched panel, the tiers as
+   * open cells on its ruled grid (no box per tier). Each tier leads like a tile: a solid cube in
+   * its tone, the name big and bold, a quiet pitch under it, and its number in mono caps at the top
+   * right. The price follows on a rule, the features on the next with a check in the tone, and the
+   * action is the cell's foot: a ruled mono caps row with an arrow, like the panel's foot cells.
+   * The featured tier takes a wash of its tone, its tag after its number in the tone, and a solid
+   * foot in the tone.
    *   <div class="fh-tiers">
    *     <article class="fh-tier" data-tone="fuchsia" data-featured="Most picked">
-   *       <header>
-   *         <div class="fh-tier__head">
-   *           <span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span>
-   *           <p class="fh-tier__name">Pro</p>
-   *         </div>
-   *         <p class="fh-tier__price"><b>$29</b>/mo</p>
-   *         <p class="fh-tier__note">Billed monthly</p>
+   *       <header class="fh-tier__head">
+   *         <span class="fh-tier__cube"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span>
+   *         <h3 class="fh-tier__name">Pro</h3>
+   *         <p class="fh-tier__pitch">For a product or site that should fill its own forms.</p>
    *       </header>
-   *       <p class="fh-tier__pitch">…</p>
-   *       <ul class="fh-checklist" data-tone>…</ul>
-   *       <a class="fh-button fh-button--block">Start</a>
+   *       <div class="fh-tier__price"><b>$29</b><span>/mo per project</span><small class="fh-tier__note">Billed monthly</small></div>
+   *       <ul class="fh-checklist" data-tone><li>…</li></ul>
+   *       <a class="fh-tier__foot" href="…">Start trial<i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a>
    *     </article>
    *   </div>
-   * A tier without a head (the name straight in the card) still numbers its name; the cube is optional.
-   * An explicit tag element, <span class="fh-tier__flag">Most chosen</span>, does what data-featured does.
+   * Four children (head, price, features, foot), so a page can line them up across tiers with subgrid.
    * Family values, each a public knob:
-   *   --fh-tiers-gap (gap-grouped, between the cards) · --fh-tiers-min (17rem, the narrowest card)
-   *   --fh-tier-pad (inset-card; the rules run past it) · --fh-tier-gap (gap-sectioned, between the parts)
-   *   --fh-tier-cube (control height, the head's cube) · --fh-tier-check (the small cube, a feature's check)
-   *   --fh-tier-price (stat) · --fh-tier-price-gap (0.15em, before the unit) · --fh-tier-mono (label)
-   *   --fh-tier-tracking (caps) · --fh-tier-fill (raised surface) · --fh-tier-etch (etch)
-   *   --fh-tier-rule (etch-soft) · --fh-tier-radius (radius-sm) · --fh-tier-tag (the small cube, the tag's height) */
+   *   --fh-tiers-min (16rem, the narrowest tier) · --fh-tier-pad (inset-card) · --fh-tier-gap (gap-related, inside a part)
+   *   --fh-tier-name (h3) · --fh-tier-name-weight (heading weight) · --fh-tier-name-tracking (heading tracking)
+   *   --fh-tier-cube (2em of the name) · --fh-tier-icon (1em of the name) · --fh-tier-pitch (small)
+   *   --fh-tier-price (h2) · --fh-tier-mono (label) · --fh-tier-tracking (caps) · --fh-tier-leading (snug)
+   *   --fh-tier-text (small, the features) · --fh-tier-check (body, the check) · --fh-tier-wash (the featured wash)
+   *   --fh-tier-fill (raised surface, the panel) · --fh-tier-radius (radius-sm, the panel) · --fh-tier-tone (a tier's colour, else its data-tone) */
   .fh-tiers {
+    --_rule: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiers-min, 17rem)), 1fr));
-    gap: var(--fh-tiers-gap, var(--fh-gap-grouped));
-    align-items: stretch;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-tiers-min, 16rem)), 1fr));
+    overflow: hidden;
+    border: var(--_rule);
+    border-radius: var(--fh-tier-radius, var(--fh-radius-sm));
+    background-color: var(--fh-tier-fill, var(--fh-color-surface-raised));
     counter-reset: fh-tier;
+
+    /* Each tier draws its own left and bottom rule, pulled a line so neighbours share one (the Tiles' grid). */
+    & > .fh-tier { margin: 0 0 calc(-1 * var(--fh-border-thin)) calc(-1 * var(--fh-border-thin)); border-block-end: var(--_rule); border-inline-start: var(--_rule); }
   }
 
   .fh-tier {
+    --_c: var(--fh-tier-tone, var(--fh-tone, var(--fh-color-accent)));
+    --_ink: light-dark(oklch(from var(--_c) min(l, 0.5) c h), oklch(from var(--_c) max(l, 0.74) c h));
+    --_on: oklch(from var(--_c) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
     --_pad: var(--fh-tier-pad, var(--fh-inset-card));
+    --_gap: var(--fh-tier-gap, var(--fh-gap-related));
+    --_name: var(--fh-tier-name, var(--fh-text-h3));
     --_mono: var(--fh-tier-mono, var(--fh-text-label));
-    --_rule: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-tier-rule, var(--fh-color-etch-soft));
-    --_cube-size: var(--fh-tier-cube, var(--fh-control-height));
-    --_tag: var(--fh-tier-tag, var(--fh-tile-cube-size));
+    --_leading: var(--fh-tier-leading, var(--fh-leading-snug));
+    --_rule: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--fh-tier-gap, var(--fh-gap-sectioned));
-    padding: var(--_pad);
-    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-tier-etch, var(--fh-color-etch));
-    border-radius: var(--fh-tier-radius, var(--fh-radius-sm));
-    background-color: var(--fh-tier-fill, var(--fh-color-surface-raised));
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    align-content: start;
+    min-inline-size: 0;
+    padding: var(--_pad) var(--_pad) 0;
     color: var(--fh-color-text);
+    line-height: var(--_leading);
     counter-increment: fh-tier;
-    container: fh-tier / inline-size;
-    transition: border-color var(--fh-duration-fast) var(--fh-ease-standard), background-color var(--fh-duration-fast) var(--fh-ease-standard);
 
-    &:hover { border-color: color-mix(in oklab, var(--fh-tone) 45%, var(--fh-tier-etch, var(--fh-color-etch))); }
-
-    & > header {
-      display: grid;
-      gap: var(--fh-gap-related);
-    }
-
-    /* The price block's soft rule runs edge to edge. */
-    & > header,
-    & > .fh-tier__price {
-      margin-inline: calc(var(--_pad) * -1);
-      padding-inline: var(--_pad);
-      padding-block-end: var(--_pad);
-      border-block-end: var(--_rule);
-    }
-    & > header > .fh-tier__price { margin-inline: 0; padding: 0; border: 0; }
-
-    & > .fh-button,
-    & > .fh-tier__actions {
-      margin-block-start: auto;
-    }
-
-    /* Featured: a tone wash and a solid tone frame. */
-    &:is([data-featured], .fh-tier--featured) {
-      border-style: var(--fh-card-border-style, solid);
-      border-color: color-mix(in oklab, var(--fh-tone) 60%, transparent);
-      background-color: color-mix(in oklab, var(--fh-tone) 7%, var(--fh-tier-fill, var(--fh-color-surface-raised)));
-    }
-
-    /* data-featured="Most picked": the tag on the head line, at the end, centred on the head's cube. */
-    &[data-featured]::before,
-    & > .fh-tier__flag {
+    /* The number, top right in mono caps; the featured tier adds its tag in the tone. */
+    &::before {
+      content: counter(fh-tier, decimal-leading-zero);
       position: absolute;
-      z-index: var(--fh-z-raised);
-      inset-block-start: calc(var(--_pad) + (var(--_cube-size) - var(--_tag)) / 2);
+      inset-block-start: var(--_pad);
       inset-inline-end: var(--_pad);
-      display: inline-grid;
-      place-items: center;
-      block-size: var(--_tag);
-      padding-inline: var(--fh-inset-tight);
-      border: 0;
-      border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
-      background-color: var(--fh-tone);
-      color: oklch(from var(--fh-tone) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);
+      color: var(--fh-color-text-subtle);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-micro);
-      font-weight: var(--fh-weight-heavy);
+      font-size: var(--_mono);
       letter-spacing: var(--fh-tier-tracking, var(--fh-tracking-caps));
-      line-height: var(--fh-leading-none);
+      line-height: var(--_leading);
       text-transform: uppercase;
-      white-space: nowrap;
     }
 
-    &[data-featured]::before { content: attr(data-featured); }
-    &[data-featured=""]::before { content: "Popular"; }
+    &:is([data-featured], .fh-tier--featured) {
+      background-color: color-mix(in oklab, var(--_c) var(--fh-tier-wash, 6%), transparent);
+      &::before { color: var(--_ink); }
+    }
+    &[data-featured]::before { content: counter(fh-tier, decimal-leading-zero) " · " attr(data-featured); }
+    &[data-featured=""]::before { content: counter(fh-tier, decimal-leading-zero) " · Popular"; }
   }
 
-  /* Head: the cube, then the numbered name. */
+  /* Head: the tile's lead. A cube in the tone, the name, the pitch. */
   .fh-tier__head {
+    display: grid;
+    justify-items: start;
+    align-content: start;
+    gap: var(--_gap);
+    padding-block-end: var(--_pad);
+  }
+  .fh-tier__cube {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--fh-tier-cube, 2em);
+    block-size: var(--fh-tier-cube, 2em);
+    margin-block-end: var(--_gap);
+    border-radius: var(--fh-radius-md);
+    background-color: var(--_c);
+    color: var(--_on);
+    font-size: var(--_name);
+    line-height: var(--fh-leading-none);
+
+    & .fh-icon { --fh-icon-size: var(--fh-tier-icon, 1em); font-size: var(--fh-tier-icon, 1em); }
+  }
+  .fh-tier__name {
+    margin: 0;
+    font-size: var(--_name);
+    font-weight: var(--fh-tier-name-weight, var(--fh-heading-weight));
+    letter-spacing: var(--fh-tier-name-tracking, var(--fh-heading-tracking));
+    line-height: var(--_leading);
+  }
+  .fh-tier__pitch {
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-tier-pitch, var(--fh-text-small));
+    line-height: var(--fh-leading-normal);
+  }
+
+  /* Price: on its own rule, the figure big, the unit quiet, the note in mono caps. */
+  .fh-tier__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    align-content: start;
+    column-gap: var(--fh-gap-bound);
+    row-gap: var(--_gap);
+    margin: 0 calc(var(--_pad) * -1);
+    padding: var(--_pad);
+    border-block-start: var(--_rule);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+
+    & > b {
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-figure);
+      font-size: var(--fh-tier-price, var(--fh-text-h2));
+      font-weight: var(--fh-heading-weight);
+      letter-spacing: var(--fh-tracking-tight);
+      line-height: var(--fh-leading-none);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+  .fh-tier__note {
+    flex-basis: 100%;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--_mono);
+    letter-spacing: var(--fh-tier-tracking, var(--fh-tracking-caps));
+    line-height: var(--_leading);
+    text-transform: uppercase;
+  }
+
+  /* Features: on the next rule, a check in the tone before each, no box. */
+  .fh-tier > .fh-checklist {
+    align-content: start;
+    gap: var(--_gap);
+    margin: 0 calc(var(--_pad) * -1);
+    padding: var(--_pad);
+    border-block-start: var(--_rule);
+
+    & > li {
+      min-block-size: 0;
+      padding: 0 0 0 calc(var(--fh-tier-check, var(--fh-text-body)) + var(--_gap));
+      font-size: var(--fh-tier-text, var(--fh-text-small));
+      line-height: var(--fh-leading-normal);
+    }
+    & > li::before { display: none; }
+    & > li::after {
+      inline-size: var(--fh-tier-check, var(--fh-text-body));
+      block-size: 1lh;
+      aspect-ratio: auto;
+      background-color: var(--_ink);
+      mask-size: var(--fh-tier-check, var(--fh-text-body));
+    }
+  }
+
+  /* Foot: the action as the cell's last row, like the panel's foot cells. */
+  .fh-tier__foot {
     display: flex;
     align-items: center;
-    gap: var(--fh-gap-grouped);
-    min-block-size: var(--_cube-size);
-    min-inline-size: 0;
-
-    & > .fh-cube--icon {
-      --fh-cube-size: var(--_cube-size);
-      --fh-tile-cube-icon: var(--fh-text-body);
-    }
-  }
-
-  .fh-tier__name {
-    display: flex;
-    align-items: baseline;
-    gap: var(--fh-gap-bound);
-    min-inline-size: 0;
-    margin: 0;
+    justify-content: space-between;
+    gap: var(--_gap);
+    inline-size: calc(100% + 2 * var(--_pad));
+    margin: 0 calc(var(--_pad) * -1);
+    padding: var(--fh-inset-control) var(--_pad);
+    border: 0;
+    border-block-start: var(--_rule);
+    border-radius: 0;
+    background-color: transparent;
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
     font-size: var(--_mono);
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tier-tracking, var(--fh-tracking-caps));
-    line-height: var(--fh-leading-snug);
+    line-height: var(--_leading);
+    text-align: start;
+    text-decoration: none;
     text-transform: uppercase;
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
 
-    &::before {
-      content: counter(fh-tier, decimal-leading-zero) " ·";
-      color: var(--fh-color-text-subtle);
-      font-weight: var(--fh-weight-regular);
-    }
+    & > .fh-icon { flex: none; color: var(--_ink); font-size: var(--fh-text-body); transition: translate var(--fh-duration-fast) var(--fh-ease-standard); }
+    &:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--_c) 10%, transparent); }
+    &:is(:hover, :focus-visible) > .fh-icon { translate: var(--fh-gap-bound) 0; }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: calc(var(--fh-focus-width) * -1); }
   }
+  .fh-tier:is([data-featured], .fh-tier--featured) > .fh-tier__foot {
+    background-color: var(--_c);
+    color: var(--_on);
 
-  /* A tier with no head: the name keeps the head's line, so the tag still lines up. */
-  .fh-tier > .fh-tier__name { min-block-size: var(--_cube-size); align-items: center; }
-
-  .fh-tier__price {
-    margin: 0;
-    color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-small);
-
-    & > b {
-      margin-inline-end: var(--fh-tier-price-gap, 0.15em);
-      color: var(--fh-color-text);
-      font-family: var(--fh-font-figure);
-      font-size: var(--fh-tier-price, var(--fh-text-stat));
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-tightest);
-      line-height: var(--fh-leading-tight);
-      font-variant-numeric: tabular-nums;
-    }
-  }
-
-  .fh-tier__note {
-    margin: 0;
-    color: var(--fh-color-text-muted);
-    font-family: var(--fh-font-mono);
-    font-size: var(--_mono);
-    letter-spacing: var(--fh-tier-tracking, var(--fh-tracking-caps));
-    text-transform: uppercase;
-  }
-
-  .fh-tier__pitch {
-    margin: 0;
-    color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-small);
-    line-height: var(--fh-leading-normal);
-  }
-
-  /* Features: one per row between soft rules that run edge to edge, each checked in a soft tone cube. */
-  .fh-tier > .fh-checklist {
-    --_chk: var(--fh-tier-check, var(--fh-tile-cube-size));
-    flex: 1;
-    align-content: start;
-    gap: 0;
-    margin-inline: calc(var(--_pad) * -1);
-    border-block: var(--_rule);
-
-    & > li {
-      display: flex;
-      align-items: center;
-      min-block-size: 0;
-      padding: var(--fh-inset-tight) var(--_pad) var(--fh-inset-tight) calc(var(--_pad) + var(--_chk) + var(--fh-gap-grouped));
-    }
-    & > li + li { border-block-start: var(--_rule); }
-
-    & > li::before,
-    & > li::after {
-      inset-block-start: 50%;
-      inset-inline-start: var(--_pad);
-      inline-size: var(--_chk);
-      translate: 0 -50%;
-    }
-    & > li::before {
-      border: 0;
-      border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
-      background-color: color-mix(in oklab, var(--_mark) 16%, transparent);
-    }
-    & > li::after { mask-size: var(--fh-tile-cube-icon); }
+    & > .fh-icon { color: var(--_on); }
+    &:is(:hover, :focus-visible) { background-color: color-mix(in oklab, var(--_c) 88%, var(--fh-color-text)); }
   }
 
 }

@@ -153,6 +153,7 @@ if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
   cp("pro/dist/firehorse-pro.min.css", "firehorse-pro.css");
   cp("pro/dist/calendar.js", "calendar.js");
   cp("pro/dist/keyfield.js", "keyfield.js");
+  if (existsSync(join(root, "pro/dist/activity-log.js"))) cp("pro/dist/activity-log.js", "activity-log.js");
   if (existsSync(join(root, "pro/dist/motion.js"))) cp("pro/dist/motion.js", "motion-pro.js");
 }
 // site/audio (the Audio demo tracks) goes with Audio: held, so only --all copies it.

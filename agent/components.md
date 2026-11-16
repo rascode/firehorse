@@ -1417,6 +1417,36 @@ Rows with a visual, text and a trailing slot. A dashed timeline for activity.
 </div>
 ```
 
+### FOL · Text fold
+
+Long text (an agent's reply, an update, a note) folds to `--fh-fold-lines` lines (6 by default), the last line fading into whatever surface it sits on, with a ghost Show all / Show less button. `fold.js` (`@rascode/firehorse/fold`) sets the clamp and shows the button only when the text is taller than it, measured on load and when the width changes. Without the script it is plain full text.
+
+```html
+<!-- FOL-1.1 · Text fold › Short text -->
+<div class="fh-fold" style="max-inline-size: 34rem" data-fh="FOL-1.1">
+  <div class="fh-fold__body fh-body" id="fold-short"><p>Round 2 is in. The index check passes now.</p></div>
+  <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="fold-short" hidden>Show all</button>
+</div>
+
+<!-- FOL-1.2 · Text fold › Long text -->
+<div class="fh-fold" style="max-inline-size: 34rem; --fh-fold-lines: 4" data-fh="FOL-1.2">
+  <div class="fh-fold__body fh-body" id="fold-long">
+    <p>Round 2 is in. The index check passes now: the three new code variants were missing from the ledger, and the day mark had no slot in sections.json. I took the 375 shot again; the Tokens table scrolls inside its frame and the page no longer scrolls sideways.</p>
+    <p>Three commits on the relay branch, none pushed. The report is at relay/runs/rs1-fh-relay-sidecar-parts.report.md, with the timetable and the last lines of every check. The full build hash changed, so it is recorded in test/builds.test.mjs, as the last relay did.</p>
+  </div>
+  <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="fold-long" hidden>Show all</button>
+</div>
+
+<!-- FOL-1.3 · Text fold › Open -->
+<div class="fh-fold" style="max-inline-size: 34rem; --fh-fold-lines: 4" data-open data-fh="FOL-1.3">
+  <div class="fh-fold__body fh-body" id="fold-open">
+    <p>Round 2 is in. The index check passes now: the three new code variants were missing from the ledger, and the day mark had no slot in sections.json. I took the 375 shot again; the Tokens table scrolls inside its frame and the page no longer scrolls sideways.</p>
+    <p>Three commits on the relay branch, none pushed. The report is at relay/runs/rs1-fh-relay-sidecar-parts.report.md, with the timetable and the last lines of every check. The full build hash changed, so it is recorded in test/builds.test.mjs, as the last relay did.</p>
+  </div>
+  <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="true" aria-controls="fold-open" hidden>Show less</button>
+</div>
+```
+
 ### DET · Code and divider
 
 A code block with its copy button, a divider with a word in it, and keyboard keys. The description list that sat here moved to the Record table (TBL-3.5, Stacked).
@@ -1439,34 +1469,34 @@ Each tier is a card in the new look: an Icon cube in its tone, a numbered name a
 ```html
 <div class="fh-tiers" data-fh="TIR">
   <article class="fh-tier" data-tone="sky">
-    <header>
-      <div class="fh-tier__head"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></span><h4 class="fh-tier__name">Assessment</h4></div>
-      <p class="fh-tier__price"><b>$750</b> one time</p>
-      <p class="fh-tier__note">Readout in a week</p>
+    <header class="fh-tier__head">
+      <span class="fh-tier__cube"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></span>
+      <h4 class="fh-tier__name">Assessment</h4>
+      <p class="fh-tier__pitch">Find the risks before they find you.</p>
     </header>
-    <p class="fh-tier__pitch">Find the risks before they find you.</p>
+    <div class="fh-tier__price"><b>$750</b><span>one time</span><small class="fh-tier__note">Readout in a week</small></div>
     <ul class="fh-checklist" data-tone><li>Backend review</li><li>Risk register</li><li>30-minute readout</li></ul>
-    <a class="fh-button fh-button--secondary fh-button--block" href="#c-pricing">Book assessment</a>
+    <a class="fh-tier__foot" href="#c-pricing">Book assessment<i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a>
   </article>
   <article class="fh-tier" data-tone="accent" data-featured="Most chosen">
-    <header>
-      <div class="fh-tier__head"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><h4 class="fh-tier__name">Agent</h4></div>
-      <p class="fh-tier__price"><b>$1,695</b> per month</p>
-      <p class="fh-tier__note">3-day free trial</p>
+    <header class="fh-tier__head">
+      <span class="fh-tier__cube"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span>
+      <h4 class="fh-tier__name">Agent</h4>
+      <p class="fh-tier__pitch">A trained agent on your channels, live in days.</p>
     </header>
-    <p class="fh-tier__pitch">A trained agent on your channels, live in days.</p>
+    <div class="fh-tier__price"><b>$1,695</b><span>per month</span><small class="fh-tier__note">3-day free trial</small></div>
     <ul class="fh-checklist" data-tone><li>Voice and text</li><li>5 channels wired</li><li>Weekly tuning</li></ul>
-    <a class="fh-button fh-button--block" href="#c-pricing">Add an agent</a>
+    <a class="fh-tier__foot" href="#c-pricing">Add an agent<i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a>
   </article>
   <article class="fh-tier" data-tone="lime">
-    <header>
-      <div class="fh-tier__head"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span><h4 class="fh-tier__name">Managed</h4></div>
-      <p class="fh-tier__price"><b>$400</b> per month</p>
-      <p class="fh-tier__note">Cancel anytime</p>
+    <header class="fh-tier__head">
+      <span class="fh-tier__cube"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span>
+      <h4 class="fh-tier__name">Managed</h4>
+      <p class="fh-tier__pitch">A steady hand on the systems you already run.</p>
     </header>
-    <p class="fh-tier__pitch">A steady hand on the systems you already run.</p>
+    <div class="fh-tier__price"><b>$400</b><span>per month</span><small class="fh-tier__note">Cancel anytime</small></div>
     <ul class="fh-checklist" data-tone><li>Monitoring</li><li>Monthly report</li><li>Priority fixes</li></ul>
-    <a class="fh-button fh-button--secondary fh-button--block" href="#c-pricing">Talk to us</a>
+    <a class="fh-tier__foot" href="#c-pricing">Talk to us<i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i></a>
   </article>
 </div>
 ```
@@ -2939,6 +2969,110 @@ A native select, or a small colour menu: a dot and a mono caps label per colour,
   <li class="fh-activity__day">Yesterday</li>
   <li class="fh-activity__item"><span class="fh-avatar" data-tone="teal">SL</span><div class="fh-activity__body"><p class="fh-activity__line"><b>Sam</b> created the project <a href="#timelines">Halcyon Health site</a></p><time class="fh-activity__time" datetime="2026-10-31T16:20">Oct 31, 4:20 PM</time></div></li>
 </ol>
+
+<!-- TML-2.1 · Activity log › Thread log -->
+<div style="max-inline-size: 52rem">
+<section class="fh-log" data-fh="TML-2.1" aria-label="Relay #696 · Button tokens"><header class="fh-log__bar"><p class="fh-log__title">Relay #696 · Button tokens</p><div class="fh-segment fh-segment--mode fh-log__render" role="group" aria-label="Show text as" hidden><button type="button" data-render="rendered" aria-pressed="true">Rendered</button><button type="button" data-render="plain" aria-pressed="false">Plain text</button></div></header><ol class="fh-log__list"><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="sky">Action</span><time class="fh-log__time" datetime="2026-11-15T20:12" title="Sun 15 Nov 2026, 8:12 PM EST">8:12 PM</time></p><p class="fh-log__summary">Dispatched the relay to Grok CLI</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml21-0">Sent **L6 · Button tokens** to Grok CLI.
+
+- Spec: `relay/2026-11-15-button-tokens.md`
+- Model: `grok-code-fast-1`
+- Tier: screen</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml21-0" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Spec</a></li></ul></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="teal" role="img" aria-label="Grok"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Grok</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="violet">Update</span><time class="fh-log__time" datetime="2026-11-15T20:19" title="Sun 15 Nov 2026, 8:19 PM EST">8:19 PM</time></p><p class="fh-log__summary">Update from Grok: three files changed, checks passed</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml21-1">## Changes
+
+1. `src/components/actions/button.css`: padding and gap now read the family values.
+2. `src/components/actions/button-group.css`: the joined edge uses `--fh-border-thin`.
+3. `site/pages/components/actions/index.html`: demo updated to the new sizes.
+
+```css
+- padding: 0.5rem 0.875rem;
++ padding: var(--fh-inset-tight) var(--fh-inset-control);
+```
+
+Every check in `relay:verify -- --tier screen` passed:
+
+- typecheck: ok
+- lint:css: ok
+- leak scan: ok
+
+&gt; No JavaScript added; the change is CSS only.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml21-1" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="teal">Verify</span><time class="fh-log__time" datetime="2026-11-15T20:24" title="Sun 15 Nov 2026, 8:24 PM EST">8:24 PM</time></p><p class="fh-log__summary">Checked the button pages in light and dark</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml21-2">Both modes look right on the *Actions* page. One thing for Rascode: the ghost button reads heavier in light.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml21-2" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="sky" role="img" aria-label="Rascode">JR</span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Rascode</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="amber">Note</span><time class="fh-log__time" datetime="2026-11-15T20:27" title="Sun 15 Nov 2026, 8:27 PM EST">8:27 PM</time></p><p class="fh-log__summary">Ghost button is too heavy in light</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml21-3">Take its border through the **preset**, like every other card edge. No one-off colour.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml21-3" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="orange">Fix</span><time class="fh-log__time" datetime="2026-11-15T20:31" title="Sun 15 Nov 2026, 8:31 PM EST">8:31 PM</time></p><p class="fh-log__summary">Ghost border now follows the preset</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml21-4">Changed `fh-button--ghost` to read `--fh-card-border-style` and `--fh-card-border-color`. Rechecked light and dark.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml21-4" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="lime">Commit</span><time class="fh-log__time" datetime="2026-11-15T20:33" title="Sun 15 Nov 2026, 8:33 PM EST">8:33 PM</time></p><p class="fh-log__summary">Landed in the main checkout</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml21-5">One commit for the part, one for the demo. Logged on the work log.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml21-5" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Commit</a></li><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Work log</a></li></ul></div></li></ol></section>
+</div>
+
+<!-- TML-2.2 · Activity log › Media log -->
+<div style="max-inline-size: 64rem">
+<section class="fh-log fh-log--media" data-fh="TML-2.2" aria-label="Relay #696 · Button tokens"><header class="fh-log__bar"><p class="fh-log__title">Relay #696 · Button tokens</p><div class="fh-segment fh-segment--mode fh-log__render" role="group" aria-label="Show text as" hidden><button type="button" data-render="rendered" aria-pressed="true">Rendered</button><button type="button" data-render="plain" aria-pressed="false">Plain text</button></div></header><ol class="fh-log__list"><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="sky">Action</span><time class="fh-log__time" datetime="2026-11-15T20:12" title="Sun 15 Nov 2026, 8:12 PM EST">8:12 PM</time></p><p class="fh-log__summary">Dispatched the relay to Grok CLI</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml22-0">Sent **L6 · Button tokens** to Grok CLI.
+
+- Spec: `relay/2026-11-15-button-tokens.md`
+- Model: `grok-code-fast-1`
+- Tier: screen</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml22-0" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Spec</a></li></ul></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="teal" role="img" aria-label="Grok"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Grok</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="violet">Update</span><time class="fh-log__time" datetime="2026-11-15T20:19" title="Sun 15 Nov 2026, 8:19 PM EST">8:19 PM</time></p><p class="fh-log__summary">Update from Grok: three files changed, checks passed</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml22-1">## Changes
+
+1. `src/components/actions/button.css`: padding and gap now read the family values.
+2. `src/components/actions/button-group.css`: the joined edge uses `--fh-border-thin`.
+3. `site/pages/components/actions/index.html`: demo updated to the new sizes.
+
+```css
+- padding: 0.5rem 0.875rem;
++ padding: var(--fh-inset-tight) var(--fh-inset-control);
+```
+
+Every check in `relay:verify -- --tier screen` passed:
+
+- typecheck: ok
+- lint:css: ok
+- leak scan: ok
+
+&gt; No JavaScript added; the change is CSS only.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml22-1" hidden>Show all</button></div></div><ul class="fh-log__media" aria-label="Images"><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-dark.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-dark.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Grok · 8:19 PM</span></figcaption></figure></li></ul></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="teal">Verify</span><time class="fh-log__time" datetime="2026-11-15T20:24" title="Sun 15 Nov 2026, 8:24 PM EST">8:24 PM</time></p><p class="fh-log__summary">Checked the button pages in light and dark</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml22-2">Both modes look right on the *Actions* page. One thing for Rascode: the ghost button reads heavier in light.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml22-2" hidden>Show all</button></div></div><ul class="fh-log__media" aria-label="Images"><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-dark.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-dark.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Claude · 8:24 PM</span></figcaption></figure></li><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-light.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-light.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Claude · 8:24 PM</span></figcaption></figure></li></ul></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="sky" role="img" aria-label="Rascode">JR</span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Rascode</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="amber">Note</span><time class="fh-log__time" datetime="2026-11-15T20:27" title="Sun 15 Nov 2026, 8:27 PM EST">8:27 PM</time></p><p class="fh-log__summary">Ghost button is too heavy in light</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml22-3">Take its border through the **preset**, like every other card edge. No one-off colour.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml22-3" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="orange">Fix</span><time class="fh-log__time" datetime="2026-11-15T20:31" title="Sun 15 Nov 2026, 8:31 PM EST">8:31 PM</time></p><p class="fh-log__summary">Ghost border now follows the preset</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml22-4">Changed `fh-button--ghost` to read `--fh-card-border-style` and `--fh-card-border-color`. Rechecked light and dark.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml22-4" hidden>Show all</button></div></div><ul class="fh-log__media" aria-label="Images"><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-light.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-light.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Claude · 8:31 PM</span></figcaption></figure></li></ul></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="lime">Commit</span><time class="fh-log__time" datetime="2026-11-15T20:33" title="Sun 15 Nov 2026, 8:33 PM EST">8:33 PM</time></p><p class="fh-log__summary">Landed in the main checkout</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml22-5">One commit for the part, one for the demo. Logged on the work log.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml22-5" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Commit</a></li><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Work log</a></li></ul></div></li></ol></section>
+</div>
+
+<!-- TML-2.3 · Activity log › Compact log -->
+<div style="max-inline-size: 36rem">
+<section class="fh-log fh-log--compact" data-fh="TML-2.3" aria-label="Relay #696"><header class="fh-log__bar"><p class="fh-log__title">Relay #696</p><div class="fh-segment fh-segment--mode fh-log__render" role="group" aria-label="Show text as" hidden><button type="button" data-render="rendered" aria-pressed="true">Rendered</button><button type="button" data-render="plain" aria-pressed="false">Plain text</button></div></header><ol class="fh-log__list"><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><details class="fh-log__more"><summary><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="sky">Action</span><span class="fh-log__summary">Dispatched the relay to Grok CLI</span><time class="fh-log__time" datetime="2026-11-15T20:12" title="Sun 15 Nov 2026, 8:12 PM EST">8:12 PM</time><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary><div class="fh-log__main"><div class="fh-fold" style="--fh-fold-lines: 6"><div class="fh-fold__body fh-log__text" id="tml23-0">Sent **L6 · Button tokens** to Grok CLI.
+
+- Spec: `relay/2026-11-15-button-tokens.md`
+- Model: `grok-code-fast-1`
+- Tier: screen</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml23-0" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Spec</a></li></ul></div></details></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="teal" role="img" aria-label="Grok"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><details class="fh-log__more"><summary><b class="fh-log__actor">Grok</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="violet">Update</span><span class="fh-log__summary">Update from Grok: three files changed, checks passed</span><time class="fh-log__time" datetime="2026-11-15T20:19" title="Sun 15 Nov 2026, 8:19 PM EST">8:19 PM</time><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary><div class="fh-log__main"><div class="fh-fold" style="--fh-fold-lines: 6"><div class="fh-fold__body fh-log__text" id="tml23-1">## Changes
+
+1. `src/components/actions/button.css`: padding and gap now read the family values.
+2. `src/components/actions/button-group.css`: the joined edge uses `--fh-border-thin`.
+3. `site/pages/components/actions/index.html`: demo updated to the new sizes.
+
+```css
+- padding: 0.5rem 0.875rem;
++ padding: var(--fh-inset-tight) var(--fh-inset-control);
+```
+
+Every check in `relay:verify -- --tier screen` passed:
+
+- typecheck: ok
+- lint:css: ok
+- leak scan: ok
+
+&gt; No JavaScript added; the change is CSS only.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml23-1" hidden>Show all</button></div></div><ul class="fh-log__media" aria-label="Images"><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-dark.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-dark.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Grok · 8:19 PM</span></figcaption></figure></li></ul></details></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><details class="fh-log__more"><summary><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="teal">Verify</span><span class="fh-log__summary">Checked the button pages in light and dark</span><time class="fh-log__time" datetime="2026-11-15T20:24" title="Sun 15 Nov 2026, 8:24 PM EST">8:24 PM</time><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary><div class="fh-log__main"><div class="fh-fold" style="--fh-fold-lines: 6"><div class="fh-fold__body fh-log__text" id="tml23-2">Both modes look right on the *Actions* page. One thing for Rascode: the ghost button reads heavier in light.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml23-2" hidden>Show all</button></div></div><ul class="fh-log__media" aria-label="Images"><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-dark.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-dark.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Claude · 8:24 PM</span></figcaption></figure></li><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-light.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-light.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Claude · 8:24 PM</span></figcaption></figure></li></ul></details></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="sky" role="img" aria-label="Rascode">JR</span><details class="fh-log__more"><summary><b class="fh-log__actor">Rascode</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="amber">Note</span><span class="fh-log__summary">Ghost button is too heavy in light</span><time class="fh-log__time" datetime="2026-11-15T20:27" title="Sun 15 Nov 2026, 8:27 PM EST">8:27 PM</time><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary><div class="fh-log__main"><div class="fh-fold" style="--fh-fold-lines: 6"><div class="fh-fold__body fh-log__text" id="tml23-3">Take its border through the **preset**, like every other card edge. No one-off colour.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml23-3" hidden>Show all</button></div></div></details></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><details class="fh-log__more"><summary><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="orange">Fix</span><span class="fh-log__summary">Ghost border now follows the preset</span><time class="fh-log__time" datetime="2026-11-15T20:31" title="Sun 15 Nov 2026, 8:31 PM EST">8:31 PM</time><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary><div class="fh-log__main"><div class="fh-fold" style="--fh-fold-lines: 6"><div class="fh-fold__body fh-log__text" id="tml23-4">Changed `fh-button--ghost` to read `--fh-card-border-style` and `--fh-card-border-color`. Rechecked light and dark.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml23-4" hidden>Show all</button></div></div><ul class="fh-log__media" aria-label="Images"><li><figure class="fh-log__shot"><a href="/img/samples/tml2-actions-light.webp" target="_blank" rel="noopener"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy" width="960" height="600"></a><figcaption><span class="fh-log__file">actions-light.webp</span><span class="fh-log__meta">1440 × 900 · — KB</span><span class="fh-log__meta">Screenshot · Claude · 8:31 PM</span></figcaption></figure></li></ul></details></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><details class="fh-log__more"><summary><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="lime">Commit</span><span class="fh-log__summary">Landed in the main checkout</span><time class="fh-log__time" datetime="2026-11-15T20:33" title="Sun 15 Nov 2026, 8:33 PM EST">8:33 PM</time><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i></summary><div class="fh-log__main"><div class="fh-fold" style="--fh-fold-lines: 6"><div class="fh-fold__body fh-log__text" id="tml23-5">One commit for the part, one for the demo. Logged on the work log.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml23-5" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Commit</a></li><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Work log</a></li></ul></div></details></li></ol></section>
+</div>
+
+<!-- TML-2.4 · Activity log › Grouped by run -->
+<div style="max-inline-size: 52rem">
+<section class="fh-log fh-log--grouped" data-fh="TML-2.4" aria-label="Relay #696 · Button tokens"><header class="fh-log__bar"><p class="fh-log__title">Relay #696 · Button tokens</p><div class="fh-segment fh-segment--mode fh-log__render" role="group" aria-label="Show text as" hidden><button type="button" data-render="rendered" aria-pressed="true">Rendered</button><button type="button" data-render="plain" aria-pressed="false">Plain text</button></div></header><ol class="fh-log__groups"><li class="fh-log__group"><details><summary><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i><span class="fh-log__group-title">Run 1 · Grok CLI</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="passed">Passed</span><span class="fh-log__count">3 entries · 8:12–8:24 PM</span></summary><ol class="fh-log__list"><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="sky">Action</span><time class="fh-log__time" datetime="2026-11-15T20:12" title="Sun 15 Nov 2026, 8:12 PM EST">8:12 PM</time></p><p class="fh-log__summary">Dispatched the relay to Grok CLI</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml24-0">Sent **L6 · Button tokens** to Grok CLI.
+
+- Spec: `relay/2026-11-15-button-tokens.md`
+- Model: `grok-code-fast-1`
+- Tier: screen</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml24-0" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Spec</a></li></ul></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="teal" role="img" aria-label="Grok"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Grok</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="violet">Update</span><time class="fh-log__time" datetime="2026-11-15T20:19" title="Sun 15 Nov 2026, 8:19 PM EST">8:19 PM</time></p><p class="fh-log__summary">Update from Grok: three files changed, checks passed</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml24-1">## Changes
+
+1. `src/components/actions/button.css`: padding and gap now read the family values.
+2. `src/components/actions/button-group.css`: the joined edge uses `--fh-border-thin`.
+3. `site/pages/components/actions/index.html`: demo updated to the new sizes.
+
+```css
+- padding: 0.5rem 0.875rem;
++ padding: var(--fh-inset-tight) var(--fh-inset-control);
+```
+
+Every check in `relay:verify -- --tier screen` passed:
+
+- typecheck: ok
+- lint:css: ok
+- leak scan: ok
+
+&gt; No JavaScript added; the change is CSS only.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml24-1" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="teal">Verify</span><time class="fh-log__time" datetime="2026-11-15T20:24" title="Sun 15 Nov 2026, 8:24 PM EST">8:24 PM</time></p><p class="fh-log__summary">Checked the button pages in light and dark</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml24-2">Both modes look right on the *Actions* page. One thing for Rascode: the ghost button reads heavier in light.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml24-2" hidden>Show all</button></div></div></li></ol></details></li><li class="fh-log__group"><details open><summary><i class="fh-icon fh-icon--chevron-down" aria-hidden="true"></i><span class="fh-log__group-title">Review · Rascode and Claude</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="done">Done</span><span class="fh-log__count">3 entries · 8:27–8:33 PM</span></summary><ol class="fh-log__list"><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="sky" role="img" aria-label="Rascode">JR</span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Rascode</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="amber">Note</span><time class="fh-log__time" datetime="2026-11-15T20:27" title="Sun 15 Nov 2026, 8:27 PM EST">8:27 PM</time></p><p class="fh-log__summary">Ghost button is too heavy in light</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml24-3">Take its border through the **preset**, like every other card edge. No one-off colour.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml24-3" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="orange">Fix</span><time class="fh-log__time" datetime="2026-11-15T20:31" title="Sun 15 Nov 2026, 8:31 PM EST">8:31 PM</time></p><p class="fh-log__summary">Ghost border now follows the preset</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml24-4">Changed `fh-button--ghost` to read `--fh-card-border-style` and `--fh-card-border-color`. Rechecked light and dark.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml24-4" hidden>Show all</button></div></div></li><li class="fh-log__entry"><span class="fh-avatar fh-avatar--circle" data-tone="violet" role="img" aria-label="Claude"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span><div class="fh-log__main"><p class="fh-log__head"><b class="fh-log__actor">Claude</b><span class="fh-chip fh-chip--tone fh-chip--sm fh-log__kind" data-tone="lime">Commit</span><time class="fh-log__time" datetime="2026-11-15T20:33" title="Sun 15 Nov 2026, 8:33 PM EST">8:33 PM</time></p><p class="fh-log__summary">Landed in the main checkout</p><div class="fh-fold" style="--fh-fold-lines: 4"><div class="fh-fold__body fh-log__text" id="tml24-5">One commit for the part, one for the demo. Logged on the work log.</div><button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="tml24-5" hidden>Show all</button></div><ul class="fh-log__links"><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Commit</a></li><li><a class="fh-chip fh-chip--sm" href="#activity-log"><i class="fh-icon fh-icon--link" aria-hidden="true"></i>Work log</a></li></ul></div></li></ol></details></li></ol></section>
+</div>
 ```
 
 ### CAL · Calendar pickers
