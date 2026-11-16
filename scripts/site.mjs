@@ -110,7 +110,7 @@ const busted = {
 };
 const siteJs = stamp("site/site.js");
 // The library modules the site serves at its root (dist/*.js): the demos import them by name.
-const SITE_MODULES = ["firehorse.js", "audio.js", "datatable.js", "sidecar.js", "records.js", "money.js", "tabs-nav.js", "fold.js", "values.js", "value-rules.js", "value-render.js", "column-menu.js", "table.js", "record-table.js", "metrics.js"];
+const SITE_MODULES = ["firehorse.js", "audio.js", "datatable.js", "sidecar.js", "records.js", "money.js", "tabs-nav.js", "fold.js", "image-stack.js", "values.js", "value-rules.js", "value-render.js", "column-menu.js", "table.js", "record-table.js", "metrics.js"];
 const bust = (s) => Object.entries(busted).reduce((acc, [f, v]) => acc.replaceAll(`href="${f}"`, `href="${f}?v=${v}"`).replaceAll(`href="/${f}"`, `href="/${f}?v=${v}"`), s);
 // Every local script gets a content stamp too (module scripts are cached hard by browsers).
 const jsStamp = Object.fromEntries([...readdirSync(join(root, "site")).filter((f) => f.endsWith(".js")).map((f) => [f, stamp(`site/${f}`)]),
