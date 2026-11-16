@@ -1859,6 +1859,54 @@ export const tokens = {
     "tier": "semantic",
     "group": "wash"
   },
+  "--fh-spectrum-1": {
+    "$value": "var(--fh-tone-sky)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-2": {
+    "$value": "var(--fh-tone-teal)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-3": {
+    "$value": "var(--fh-tone-lime)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-4": {
+    "$value": "var(--fh-tone-amber)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-5": {
+    "$value": "var(--fh-tone-orange)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-6": {
+    "$value": "var(--fh-tone-rose)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-7": {
+    "$value": "var(--fh-tone-fuchsia)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
+  "--fh-spectrum-8": {
+    "$value": "var(--fh-tone-violet)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "spectrum"
+  },
   "--fh-blueprint-ink": {
     "$value": "light-dark(var(--fh-tone-sky), var(--fh-color-text))",
     "$type": "dimension",

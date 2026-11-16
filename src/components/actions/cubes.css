@@ -7,40 +7,53 @@
   /* —— Cubes ——
    * Tone-filled blocks carrying a mono value. In a list, each cube
    * walks the tone wheel by +28° so a row of facts reads as one
-   * family rather than a rainbow. */
+   * family rather than a rainbow.
+   *
+   * One set of values for every cube, set once on .fh-cube: --fh-cube-text (micro),
+   * --fh-cube-weight (heavy), --fh-cube-tracking (mono), --fh-cube-leading (snug),
+   * --fh-cube-pad-block (0.4em) and --fh-cube-pad-inline (0.7em), --fh-cube-min (3em, the
+   * narrowest), --fh-cube-max (15em, then it ellipses), --fh-cube-radius (radius-sm) and
+   * --fh-cube-icon (1em, an icon beside the value).
+   * Size: --lg (small) and --xl (lede) change the text, nothing else; the spacing is em, so it
+   * grows with the text and every size keeps one shape. --sm is retired (the value has no
+   * smaller step): the class stays and does nothing.
+   * Every cube carries a thin border (clear on the fills), so an outline cube is the same size
+   * as a solid one, and every cube is one line tall, so one holding only an icon matches. */
   .fh-cube {
+    --_cube-pad-b: var(--fh-cube-pad-block, 0.4em);
+    --_cube-pad-i: var(--fh-cube-pad-inline, 0.7em);
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--fh-gap-bound);
     flex: none;
-    min-inline-size: 2rem;
-    max-inline-size: 11rem;
-    padding: 0.34rem var(--fh-inset-tight);
+    min-inline-size: var(--fh-cube-min, 3em);
+    max-inline-size: var(--fh-cube-max, 15em);
+    /* One line tall even when it holds only an icon. */
+    min-block-size: calc(1lh + 2 * var(--_cube-pad-b) + 2 * var(--fh-border-thin));
+    padding: var(--_cube-pad-b) var(--_cube-pad-i);
     overflow: hidden;
-    border-radius: var(--fh-radius-sm);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
+    border-radius: var(--fh-cube-radius, var(--fh-radius-sm));
     background-color: var(--_cube, var(--fh-tone));
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    font-weight: var(--fh-weight-heavy);
+    font-size: var(--fh-cube-text, var(--fh-text-micro));
+    font-weight: var(--fh-cube-weight, var(--fh-weight-heavy));
     font-style: normal;
-    letter-spacing: var(--fh-tracking-mono);
-    line-height: 1.1;
+    letter-spacing: var(--fh-cube-tracking, var(--fh-tracking-mono));
+    line-height: var(--fh-cube-leading, var(--fh-leading-snug));
     font-variant-numeric: tabular-nums;
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: background-color var(--fh-duration-base) var(--fh-ease-standard);
   }
 
-  .fh-cube--lg {
-    min-inline-size: 2.75rem;
-    padding: var(--fh-inset-tight) 0.65rem;
-    font-size: var(--fh-text-small);
-  }
-  .fh-cube--sm { min-inline-size: 1.5rem; padding: var(--fh-item-frame) 0.35rem; font-size: var(--fh-text-micro); }
-  .fh-cube--xl { min-inline-size: 3.5rem; max-inline-size: 14rem; padding: var(--fh-inset-control) 0.85rem; border-radius: var(--fh-radius-md); font-size: var(--fh-text-lede); letter-spacing: var(--fh-tracking-heading); }
-  .fh-cube > .fh-icon { font-size: 1.1em; }
+  /* Size steps: the text only. */
+  .fh-cube--lg { font-size: var(--fh-text-small); }
+  .fh-cube--xl { font-size: var(--fh-text-lede); }
+  .fh-cube > .fh-icon { font-size: var(--fh-cube-icon, 1em); }
   /* Outline cube: the tone as a dashed frame instead of a fill. */
   .fh-cube--outline { border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--_cube, var(--fh-tone)); background-color: color-mix(in oklab, var(--_cube, var(--fh-tone)) 8%, transparent); color: var(--_cube, var(--fh-tone)); }
 
@@ -65,6 +78,7 @@
     block-size: var(--_ic-size);
     min-inline-size: 0;
     max-inline-size: none;
+    min-block-size: 0;
     padding: 0;
     border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
     color: oklch(from var(--_ic) clamp(0.16, (0.64 - l) * 100, 0.99) calc(c * 0.25) h);

@@ -20,15 +20,22 @@
     & > :nth-child(3n + 2) { --_cube: oklch(from var(--fh-tone) l c calc(h + 28)); }
     & > :nth-child(3n + 3) { --_cube: oklch(from var(--fh-tone) l c calc(h + 56)); }
   }
+  /* One set of values for every cube card (plain, strip, stacked), set once on .fh-cube-card:
+   * --fh-cube-card-pad-block and --fh-cube-card-pad-inline (inset-tile), --fh-cube-card-gap
+   * (gap-grouped, between the cube and the text, and down a stacked card) and
+   * --fh-cube-card-line-gap (gap-bound, between the label and its note). */
   .fh-cube-card {
     --_c: var(--_cube, var(--fh-tone));
+    --_cc-pad-b: var(--fh-cube-card-pad-block, var(--fh-inset-tile));
+    --_cc-pad-i: var(--fh-cube-card-pad-inline, var(--fh-inset-tile));
+    --_cc-gap: var(--fh-cube-card-gap, var(--fh-gap-grouped));
 
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: var(--fh-gap-grouped);
+    gap: var(--_cc-gap);
     min-inline-size: 0;
-    padding: var(--fh-inset-control);
+    padding: var(--_cc-pad-b) var(--_cc-pad-i);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 40%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--_c) 5%, transparent);
@@ -38,11 +45,11 @@
 
     & > .fh-cube { --_cube: var(--_c); }
     &:is(a, button, label):hover { border-color: color-mix(in oklab, var(--_c) 70%, transparent); background-color: color-mix(in oklab, var(--_c) 10%, transparent); }
-    &:is(a, button, label):focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: 2px; }
+    &:is(a, button, label):focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
   }
   .fh-cube-card__text {
     display: grid;
-    gap: 0.15rem;
+    gap: var(--fh-cube-card-line-gap, var(--fh-gap-bound));
     min-inline-size: 0;
 
     & b { overflow: hidden; font-weight: var(--fh-weight-medium); text-overflow: ellipsis; white-space: nowrap; }
@@ -73,7 +80,6 @@
     & > .fh-cube-card {
       --_c: var(--fh-tone);
       align-items: flex-start;
-      padding: var(--fh-inset-tile) var(--fh-inset-card);
       border: 0;
       border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
@@ -93,10 +99,8 @@
   .fh-cube-card--stack {
     flex-direction: column;
     align-items: start;
-    gap: var(--fh-gap-grouped);
-    padding: var(--fh-inset-tile);
 
-    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--fh-gap-grouped); border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
+    & > .fh-cubes { margin-block-start: auto; padding-block-start: var(--_cc-gap); border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 30%, transparent); inline-size: 100%; }
   }
 
 }

@@ -423,6 +423,14 @@
     --fh-wash-tone-2: var(--fh-tone-violet);
     --fh-wash-tone-3: var(--fh-tone-teal);
     --fh-wash-tone-4: var(--fh-tone-amber);
+    --fh-spectrum-1: var(--fh-tone-sky);
+    --fh-spectrum-2: var(--fh-tone-teal);
+    --fh-spectrum-3: var(--fh-tone-lime);
+    --fh-spectrum-4: var(--fh-tone-amber);
+    --fh-spectrum-5: var(--fh-tone-orange);
+    --fh-spectrum-6: var(--fh-tone-rose);
+    --fh-spectrum-7: var(--fh-tone-fuchsia);
+    --fh-spectrum-8: var(--fh-tone-violet);
     --fh-blueprint-ink: light-dark(var(--fh-tone-sky), var(--fh-color-text));
     --fh-blueprint-ground: light-dark(color-mix(in oklab, var(--fh-color-canvas) 94%, var(--fh-tone-sky)), color-mix(in oklab, var(--fh-color-canvas) 72%, var(--fh-tone-sky)));
   }
@@ -6692,12 +6700,12 @@
   }
 
   .fh-auth {
-    --fh-auth-art: url("art/etch-contours.svg");
-    --fh-auth-ink: color-mix(in oklab, var(--fh-color-text) 34%, transparent);
-    --fh-auth-flow: 9s;
-    --fh-auth-flow-b: 14.3s;
-    --fh-auth-glass: color-mix(in oklab, var(--fh-color-surface) 80%, transparent);
-    --fh-auth-glass-blur: var(--fh-blur-chrome);
+    --_auth-text: var(--fh-auth-text, var(--fh-text-small));
+    --_auth-gap: var(--fh-auth-gap, var(--fh-gap-sectioned));
+    --_auth-form-gap: var(--fh-auth-form-gap, var(--fh-gap-grouped-wide));
+    --_auth-width: var(--fh-auth-width, 27rem);
+    --_auth-glass: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
+    --_auth-glass-blur: var(--fh-auth-glass-blur, var(--fh-blur-chrome));
     border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
     border-radius: var(--fh-radius-lg);
     background-color: var(--fh-color-surface);
@@ -6725,13 +6733,13 @@
     }
 
     &:before {
-      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-sky) 5%, var(--fh-tone-teal) 11%, var(--fh-tone-lime) 15%, var(--fh-tone-amber) 22%, var(--fh-tone-orange) 26%, var(--fh-tone-rose) 33%, var(--fh-tone-fuchsia) 37%, var(--fh-tone-violet) 41%, transparent 47%, transparent 100%) 0 0 / calc(100% / 3) 100% repeat-x;
+      background: linear-gradient(90deg, transparent 0%, var(--fh-spectrum-1) 5%, var(--fh-spectrum-2) 11%, var(--fh-spectrum-3) 15%, var(--fh-spectrum-4) 22%, var(--fh-spectrum-5) 26%, var(--fh-spectrum-6) 33%, var(--fh-spectrum-7) 37%, var(--fh-spectrum-8) 41%, transparent 47%, transparent 100%) 0 0 / calc(100% / 3) 100% repeat-x;
       opacity: .55;
       transform: skewX(-16deg);
     }
 
     &:after {
-      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-violet) 6%, var(--fh-tone-rose) 12%, var(--fh-tone-amber) 17%, var(--fh-tone-teal) 23%, var(--fh-tone-sky) 27%, transparent 33%, transparent 100%) 37% 0 / calc(100% / 3) 100% repeat-x;
+      background: linear-gradient(90deg, transparent 0%, var(--fh-spectrum-8) 6%, var(--fh-spectrum-6) 12%, var(--fh-spectrum-4) 17%, var(--fh-spectrum-2) 23%, var(--fh-spectrum-1) 27%, transparent 33%, transparent 100%) 37% 0 / calc(100% / 3) 100% repeat-x;
       opacity: .4;
       transform: skewX(11deg);
     }
@@ -6740,7 +6748,7 @@
   @media (prefers-reduced-motion: no-preference) {
     .fh-auth__art:before, .fh-auth__art:after {
       will-change: translate;
-      animation: fh-auth-flow var(--fh-auth-flow, 9s) linear infinite;
+      animation: fh-auth-flow var(--fh-auth-flow, var(--fh-duration-sheen)) linear infinite;
     }
 
     .fh-auth__art:after {
@@ -6755,20 +6763,19 @@
   }
 
   .fh-auth__corner {
-    z-index: 2;
+    z-index: var(--fh-auth-z, var(--fh-z-raised));
     position: absolute;
     inset-block-start: var(--fh-gap-grouped-wide);
     inset-inline-end: var(--fh-gap-grouped-wide);
 
     & .fh-segmented {
-      background-color: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
-      -webkit-backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
-      backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
+      background-color: var(--_auth-glass);
+      -webkit-backdrop-filter: blur(var(--_auth-glass-blur)) saturate(1.2);
+      backdrop-filter: blur(var(--_auth-glass-blur)) saturate(1.2);
     }
   }
 
   .fh-auth__logo {
-    --fh-auth-logo: none;
     inline-size: var(--fh-auth-logo-size, 7.5rem);
     aspect-ratio: var(--fh-auth-logo-ratio, 4);
     background-color: var(--fh-color-text);
@@ -6778,10 +6785,10 @@
 
   .fh-auth__panel {
     align-content: center;
-    gap: var(--fh-gap-sectioned);
+    gap: var(--_auth-gap);
     inline-size: 100%;
-    max-inline-size: 27rem;
-    padding: clamp(var(--fh-inset-card), 6cqi, var(--fh-inset-card)) clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
+    max-inline-size: var(--_auth-width);
+    padding: var(--fh-auth-pad-block, var(--fh-inset-card)) var(--fh-auth-pad-inline, var(--fh-inset-card));
     margin-inline: auto;
     display: grid;
     position: relative;
@@ -6792,8 +6799,8 @@
     gap: var(--fh-gap-related);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    letter-spacing: var(--fh-tracking-wider);
+    font-size: var(--fh-auth-label, var(--fh-text-label));
+    letter-spacing: var(--fh-auth-tracking, var(--fh-tracking-caps));
     text-transform: uppercase;
     flex-wrap: wrap;
     display: inline-flex;
@@ -6809,16 +6816,16 @@
     display: grid;
 
     & h1, & h2, & h3 {
-      font-size: clamp(1.5rem, 1.2rem + 1.6cqi, 2rem);
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-heading);
+      font-size: var(--fh-auth-title, var(--fh-text-h3));
+      font-weight: var(--fh-auth-title-weight, var(--fh-weight-medium));
+      letter-spacing: var(--fh-auth-title-tracking, var(--fh-tracking-heading));
+      line-height: var(--fh-auth-title-leading, var(--fh-leading-tight));
       margin: 0;
-      line-height: 1.1;
     }
 
     & p {
       color: var(--fh-color-text-muted);
-      font-size: var(--fh-text-small);
+      font-size: var(--_auth-text);
       margin: 0;
     }
   }
@@ -6843,7 +6850,7 @@
   }
 
   .fh-auth__form {
-    gap: var(--fh-gap-grouped-wide);
+    gap: var(--_auth-form-gap);
     margin: 0;
     display: grid;
 
@@ -6856,8 +6863,8 @@
   .fh-auth__row {
     justify-content: space-between;
     align-items: center;
-    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
-    font-size: var(--fh-text-small);
+    gap: var(--fh-gap-related) var(--_auth-form-gap);
+    font-size: var(--_auth-text);
     flex-wrap: wrap;
     display: flex;
 
@@ -6882,7 +6889,7 @@
 
   .fh-auth__foot {
     color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-small);
+    font-size: var(--_auth-text);
     text-align: center;
     margin: 0;
 
@@ -6920,12 +6927,12 @@
   @keyframes fh-auth-in {
     from {
       opacity: 0;
-      translate: 0 .35rem;
+      translate: 0 var(--fh-gap-bound);
     }
   }
 
   .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-auth-split, 23rem)), 1fr));
   }
 
   .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) .fh-auth__art {
@@ -6945,7 +6952,7 @@
 
   .fh-auth--card {
     min-block-size: 38rem;
-    padding: clamp(var(--fh-inset-tile), 5cqi, var(--fh-inset-card));
+    padding: clamp(var(--fh-inset-tile), var(--fh-auth-frame, 5cqi), var(--fh-inset-card));
     place-items: center;
 
     & .fh-auth__art {
@@ -6978,15 +6985,15 @@
     }
 
     .fh-auth--glass > .fh-auth__panel {
-      inline-size: min(27rem, 100% - 2 * var(--fh-gap-sectioned));
+      inline-size: min(var(--_auth-width), 100% - 2 * var(--_auth-gap));
       min-block-size: 0;
-      margin-block: var(--fh-gap-sectioned);
+      margin-block: var(--_auth-gap);
       border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 14%, transparent);
       border-radius: var(--fh-radius-lg);
-      background-color: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
-      -webkit-backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
-      backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
-      box-shadow: inset 0 1px 0 color-mix(in oklab, var(--fh-color-text) 10%, transparent),
+      background-color: var(--_auth-glass);
+      -webkit-backdrop-filter: blur(var(--_auth-glass-blur)) saturate(1.2);
+      backdrop-filter: blur(var(--_auth-glass-blur)) saturate(1.2);
+      box-shadow: inset 0 var(--fh-border-thin) 0 color-mix(in oklab, var(--fh-color-text) 10%, transparent),
         var(--fh-shadow-overlay);
       grid-area: 1 / 1;
       place-self: center;
@@ -7006,8 +7013,8 @@
   }
 
   .fh-auth__forgot {
-    gap: var(--fh-gap-grouped-wide);
-    font-size: var(--fh-text-small);
+    gap: var(--_auth-form-gap);
+    font-size: var(--_auth-text);
     display: grid;
 
     & > summary {
@@ -7049,10 +7056,10 @@
 
     & > li:before {
       content: "";
+      inline-size: var(--fh-dot-size, .4rem);
+      block-size: var(--fh-dot-size, .4rem);
       border: var(--fh-border-thin) var(--fh-card-border-style, solid) currentColor;
       border-radius: var(--fh-radius-round);
-      block-size: .4rem;
-      inline-size: .4rem;
     }
 
     & > li[data-state="met"] {
@@ -9488,53 +9495,44 @@
   }
 
   .fh-cube {
+    --_cube-pad-b: var(--fh-cube-pad-block, .4em);
+    --_cube-pad-i: var(--fh-cube-pad-inline, .7em);
     justify-content: center;
     align-items: center;
     gap: var(--fh-gap-bound);
-    min-inline-size: 2rem;
-    max-inline-size: 11rem;
-    padding: .34rem var(--fh-inset-tight);
-    border-radius: var(--fh-radius-sm);
+    min-inline-size: var(--fh-cube-min, 3em);
+    max-inline-size: var(--fh-cube-max, 15em);
+    min-block-size: calc(1lh + 2 * var(--_cube-pad-b) + 2 * var(--fh-border-thin));
+    padding: var(--_cube-pad-b) var(--_cube-pad-i);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) transparent;
+    border-radius: var(--fh-cube-radius, var(--fh-radius-sm));
     background-color: var(--_cube, var(--fh-tone));
     color: var(--fh-color-on-tone);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    font-weight: var(--fh-weight-heavy);
-    letter-spacing: var(--fh-tracking-mono);
+    font-size: var(--fh-cube-text, var(--fh-text-micro));
+    font-weight: var(--fh-cube-weight, var(--fh-weight-heavy));
+    letter-spacing: var(--fh-cube-tracking, var(--fh-tracking-mono));
+    font-style: normal;
+    line-height: var(--fh-cube-leading, var(--fh-leading-snug));
     font-variant-numeric: tabular-nums;
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: background-color var(--fh-duration-base) var(--fh-ease-standard);
     flex: none;
-    font-style: normal;
-    line-height: 1.1;
     display: inline-flex;
     overflow: hidden;
   }
 
   .fh-cube--lg {
-    min-inline-size: 2.75rem;
-    padding: var(--fh-inset-tight) .65rem;
     font-size: var(--fh-text-small);
   }
 
-  .fh-cube--sm {
-    min-inline-size: 1.5rem;
-    padding: var(--fh-item-frame) .35rem;
-    font-size: var(--fh-text-micro);
-  }
-
   .fh-cube--xl {
-    min-inline-size: 3.5rem;
-    max-inline-size: 14rem;
-    padding: var(--fh-inset-control) .85rem;
-    border-radius: var(--fh-radius-md);
     font-size: var(--fh-text-lede);
-    letter-spacing: var(--fh-tracking-heading);
   }
 
   .fh-cube > .fh-icon {
-    font-size: 1.1em;
+    font-size: var(--fh-cube-icon, 1em);
   }
 
   .fh-cube--outline {
@@ -9549,6 +9547,7 @@
     inline-size: var(--_ic-size);
     block-size: var(--_ic-size);
     border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    min-block-size: 0;
     min-inline-size: 0;
     max-inline-size: none;
     color: oklch(from var(--_ic) clamp(.16, (.64 - l) * 100, .99) calc(c * .25) h);
@@ -9984,10 +9983,13 @@
 
   .fh-cube-card {
     --_c: var(--_cube, var(--fh-tone));
+    --_cc-pad-b: var(--fh-cube-card-pad-block, var(--fh-inset-tile));
+    --_cc-pad-i: var(--fh-cube-card-pad-inline, var(--fh-inset-tile));
+    --_cc-gap: var(--fh-cube-card-gap, var(--fh-gap-grouped));
     align-items: flex-start;
-    gap: var(--fh-gap-grouped);
+    gap: var(--_cc-gap);
     min-inline-size: 0;
-    padding: var(--fh-inset-control);
+    padding: var(--_cc-pad-b) var(--_cc-pad-i);
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 40%, transparent);
     border-radius: var(--fh-radius-md);
     background-color: color-mix(in oklab, var(--_c) 5%, transparent);
@@ -10008,12 +10010,12 @@
 
     &:is(a, button, label):focus-visible {
       outline: var(--fh-focus-width) solid var(--fh-color-focus);
-      outline-offset: 2px;
+      outline-offset: var(--fh-focus-offset);
     }
   }
 
   .fh-cube-card__text {
-    gap: .15rem;
+    gap: var(--fh-cube-card-line-gap, var(--fh-gap-bound));
     min-inline-size: 0;
     display: grid;
 
@@ -10061,7 +10063,6 @@
 
     & > .fh-cube-card {
       --_c: var(--fh-tone);
-      padding: var(--fh-inset-tile) var(--fh-inset-card);
       border: 0;
       border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
       border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
@@ -10083,16 +10084,14 @@
   }
 
   .fh-cube-card--stack {
-    align-items: start;
-    gap: var(--fh-gap-grouped);
-    padding: var(--fh-inset-tile);
     flex-direction: column;
+    align-items: start;
 
     & > .fh-cubes {
       border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) color-mix(in oklab, var(--_c) 30%, transparent);
       inline-size: 100%;
       margin-block-start: auto;
-      padding-block-start: var(--fh-gap-grouped);
+      padding-block-start: var(--_cc-gap);
     }
   }
 

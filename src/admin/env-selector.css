@@ -16,38 +16,66 @@
    *   </div>
    * The trigger always shows where you are; the menu reopens the same page
    * in another environment and says which database this one is using.
-   * data-fh-warn on the trigger marks a mismatch (local app, hosted data). */
+   * data-fh-warn on the trigger marks a mismatch (local app, hosted data).
+   *
+   * One set of values for the Selector, the Pill and the menu, set once on all three, on the
+   * Segment recipe: --fh-env-text (label), --fh-env-weight (medium, the environment's name),
+   * --fh-env-tracking (caps), --fh-env-leading (snug), --fh-env-pad-block (gap-bound),
+   * --fh-env-pad-inline (inset-control), --fh-env-frame (item-frame), --fh-env-gap (gap-related),
+   * --fh-env-dot (the dot family's size), --fh-env-halo (border-heavy, the ring round the
+   * Selector's dot), --fh-env-chevron (1em), --fh-env-warn (the warning colour, the mismatch chip)
+   * and --fh-env-tone (the environment's colour; set per data-fh-env by the app).
+   * The Selector adds the frame to its padding, so it is as tall as the Pill (an eyebrow pill,
+   * EYE). The mismatch chip is one line inside that padding, so a warning never makes either taller.
+   */
+  :is(.fh-env, .fh-env-pill, .fh-env-menu) {
+    --_env-tone: var(--fh-env-tone, var(--fh-color-text-subtle));
+    --_env-text: var(--fh-env-text, var(--fh-text-label));
+    --_env-weight: var(--fh-env-weight, var(--fh-weight-medium));
+    --_env-leading: var(--fh-env-leading, var(--fh-leading-snug));
+    --_env-pad-b: var(--fh-env-pad-block, var(--fh-gap-bound));
+    --_env-pad-i: var(--fh-env-pad-inline, var(--fh-inset-control));
+    --_env-frame: var(--fh-env-frame, var(--fh-item-frame));
+    --_env-gap: var(--fh-env-gap, var(--fh-gap-related));
+    --_env-dot: var(--fh-env-dot, var(--fh-dot-size, 0.4rem));
+    --_env-halo: var(--fh-env-halo, var(--fh-border-heavy));
+    --_env-chevron: var(--fh-env-chevron, 1em);
+    --_env-warn: var(--fh-env-warn, var(--fh-color-warning));
+    --_env-edge: calc(var(--_env-pad-b) + var(--_env-frame));
+  }
+
   .fh-env {
     display: inline-flex;
     align-items: center;
-    gap: var(--fh-item-gap);
-    min-block-size: 2rem;
-    padding: 0 var(--fh-item-inline);
-    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-env-tone, var(--fh-color-text-subtle)) 45%, transparent);
+    gap: var(--_env-gap);
+    padding: var(--_env-edge) var(--_env-pad-i);
+    border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--_env-tone) 45%, transparent);
     border-radius: var(--fh-radius-pill);
-    background-color: color-mix(in oklab, var(--fh-env-tone, var(--fh-color-text-subtle)) 10%, transparent);
+    background-color: color-mix(in oklab, var(--_env-tone) 10%, transparent);
     color: var(--fh-color-text);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    letter-spacing: var(--fh-tracking-wider);
+    font-size: var(--_env-text);
+    letter-spacing: var(--fh-env-tracking, var(--fh-tracking-caps));
+    line-height: var(--_env-leading);
     text-transform: uppercase;
     cursor: var(--fh-cursor-action);
     anchor-name: --fh-env;
 
     &::before {
       content: "";
-      inline-size: 0.5rem;
+      flex: none;
+      inline-size: var(--_env-dot);
       aspect-ratio: 1;
       border-radius: var(--fh-radius-round);
-      background-color: var(--fh-env-tone, var(--fh-color-text-subtle));
-      box-shadow: 0 0 0 3px color-mix(in oklab, var(--fh-env-tone, var(--fh-color-text-subtle)) 24%, transparent);
+      background-color: var(--_env-tone);
+      box-shadow: 0 0 0 var(--_env-halo) color-mix(in oklab, var(--_env-tone) 24%, transparent);
     }
 
-    &:hover { background-color: color-mix(in oklab, var(--fh-env-tone, var(--fh-color-text-subtle)) 16%, transparent); }
+    &:hover { background-color: color-mix(in oklab, var(--_env-tone) 16%, transparent); }
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
   }
 
-  .fh-env__name { font-weight: var(--fh-weight-medium); }
+  .fh-env__name { font-weight: var(--_env-weight); }
 
   .fh-env__host {
     color: var(--fh-color-text-muted);
@@ -55,13 +83,16 @@
     letter-spacing: 0;
   }
 
-  .fh-env[data-fh-warn]::after {
+  /* The mismatch chip: one line inside the trigger's padding, in the warning colour. */
+  :is(.fh-env, .fh-env-pill)[data-fh-warn]::after {
     content: attr(data-fh-warn);
-    padding: 0.1rem 0.4rem;
+    padding-inline: var(--_env-gap);
     border-radius: var(--fh-radius-pill);
-    background-color: var(--fh-tone-amber);
+    background-color: var(--_env-warn);
     color: var(--fh-color-on-primary);
-    letter-spacing: var(--fh-tracking-wider);
+    letter-spacing: var(--fh-env-tracking, var(--fh-tracking-caps));
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
   @container fh-app (inline-size < 40rem) {
@@ -75,7 +106,8 @@
    * The trigger built from the segmented eyebrow pill (EYE-5.2): live dot,
    * the environment on the left, the host on the right, a chevron to say it
    * opens. At rest only the dot and the environment show; hover, keyboard
-   * focus or an open menu reveals the host and chevron.
+   * focus or an open menu reveals the host and chevron. The reveal moves only
+   * width and opacity (rule 31): the space before each part comes in at once.
    *   <button class="fh-eyebrow-pill fh-env-pill" data-fh-env="local" popovertarget="env">
    *     <span class="fh-dot"></span>
    *     <span class="fh-eyebrow-pill__seg"><strong>Local</strong></span>
@@ -84,20 +116,17 @@
    *   </button>
    */
   .fh-env-pill {
-    --fh-tone: var(--fh-env-tone, var(--fh-color-text-subtle));
+    --fh-tone: var(--_env-tone);
     gap: 0;
-    padding-inline-end: var(--fh-inset-control);
     /* Etched: a dashed border in the environment's colour, no fill; the dot stays solid. */
     border-style: var(--fh-card-border-style, dashed);
-    border-color: color-mix(in oklab, var(--fh-env-tone, var(--fh-color-text-subtle)) 60%, transparent);
+    border-color: color-mix(in oklab, var(--_env-tone) 60%, transparent);
     background-color: transparent;
     cursor: var(--fh-cursor-action);
     anchor-name: --fh-env;
-    transition:
-      background-color var(--fh-duration-fast) var(--fh-ease-standard),
-      padding var(--fh-duration-base) var(--fh-ease-standard);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), border-color var(--fh-duration-fast) var(--fh-ease-standard);
 
-    & > .fh-dot { margin-inline-end: var(--fh-gap-related); }
+    & > .fh-dot { margin-inline-end: var(--_env-gap); }
 
     /* The parts that reveal: they collapse to nothing at rest. */
     & > .fh-env-pill__host,
@@ -107,9 +136,7 @@
       opacity: 0;
       transition:
         max-inline-size var(--fh-duration-base) var(--fh-ease-standard),
-        opacity var(--fh-duration-fast) var(--fh-ease-standard),
-        margin var(--fh-duration-base) var(--fh-ease-standard),
-        padding var(--fh-duration-base) var(--fh-ease-standard);
+        opacity var(--fh-duration-fast) var(--fh-ease-standard);
     }
 
     & > .fh-env-pill__host {
@@ -123,7 +150,7 @@
 
     & > .fh-env-pill__chevron {
       flex: none;
-      inline-size: 0.7rem;
+      inline-size: var(--_env-chevron);
       aspect-ratio: 1;
       background-color: var(--fh-color-text-subtle);
       mask: var(--fh-icon-chevron-down) center / contain no-repeat;
@@ -132,19 +159,19 @@
     &:hover,
     &:focus-visible,
     &:has(+ .fh-env-menu:popover-open) {
-      border-color: var(--fh-env-tone, var(--fh-color-text-subtle));
+      border-color: var(--_env-tone);
 
       & > .fh-env-pill__host {
         max-inline-size: 20rem;
-        margin-inline-start: var(--fh-gap-related);
-        padding-inline-start: var(--fh-inset-tight);
+        margin-inline-start: var(--_env-gap);
+        padding-inline-start: var(--_env-gap);
         border-inline-start-color: var(--fh-color-etch);
         opacity: 1;
       }
 
       & > .fh-env-pill__chevron {
-        max-inline-size: 0.7rem;
-        margin-inline-start: var(--fh-gap-related);
+        max-inline-size: var(--_env-chevron);
+        margin-inline-start: var(--_env-gap);
         opacity: 1;
       }
     }
@@ -153,14 +180,7 @@
 
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: var(--fh-focus-offset); }
 
-    &[data-fh-warn]::after {
-      content: attr(data-fh-warn);
-      margin-inline-start: var(--fh-gap-related);
-      padding: 0.1rem 0.4rem;
-      border-radius: var(--fh-radius-pill);
-      background-color: var(--fh-tone-amber);
-      color: var(--fh-color-on-primary);
-    }
+    &[data-fh-warn]::after { margin-inline-start: var(--_env-gap); }
 
     @media (prefers-reduced-motion: reduce) {
       &, & > * { transition: none; }
@@ -178,13 +198,13 @@
     & > a[data-fh-env]::before {
       content: "";
       flex: none;
-      inline-size: 0.5rem;
+      inline-size: var(--_env-dot);
       aspect-ratio: 1;
       border-radius: var(--fh-radius-round);
-      background-color: var(--fh-env-tone, var(--fh-color-text-subtle));
+      background-color: var(--_env-tone);
     }
 
-    & > a[aria-checked="true"] { font-weight: var(--fh-weight-medium); }
+    & > a[aria-checked="true"] { font-weight: var(--_env-weight); }
 
     & small {
       margin-inline-start: auto;
@@ -194,20 +214,21 @@
     }
   }
 
+  /* The data line sits on the menu's item inset, so it lines up with the items above it. */
   .fh-env-menu__data {
     display: grid;
-    gap: var(--fh-gap-bound);
+    gap: var(--_env-pad-b);
     margin: 0;
-    padding: var(--fh-item-frame) var(--fh-inset-control) var(--fh-inset-tight);
+    padding: var(--_env-pad-b) var(--_pad-i, var(--fh-inset-tile)) var(--_item-b, var(--fh-inset-tight));
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-caption);
 
     & b {
-      color: var(--fh-env-tone, var(--fh-color-text-subtle));
+      color: var(--_env-tone);
       font-family: var(--fh-font-mono);
-      font-size: var(--fh-text-micro);
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-wider);
+      font-size: var(--_env-text);
+      font-weight: var(--_env-weight);
+      letter-spacing: var(--fh-env-tracking, var(--fh-tracking-caps));
       text-transform: uppercase;
     }
   }

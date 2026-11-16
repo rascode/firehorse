@@ -54,18 +54,32 @@
  * password rules): li[data-state="met" | "unmet" | "checking"].
  * .fh-auth-page centres the block on a full-height canvas for a
  * standalone sign-in route.
+ *
+ * One set of values for every layout (split, card, glass, plain) and the method switch, set
+ * once on .fh-auth: --fh-auth-title (h3), --fh-auth-title-weight (medium),
+ * --fh-auth-title-tracking (heading), --fh-auth-title-leading (tight), --fh-auth-text (small,
+ * the lede, row, foot and forgot link), --fh-auth-label (label) and --fh-auth-tracking (caps,
+ * the brand line), --fh-auth-pad-block and --fh-auth-pad-inline (inset-card, the panel),
+ * --fh-auth-gap (gap-sectioned, between the panel's parts), --fh-auth-form-gap
+ * (gap-grouped-wide, between fields), --fh-auth-frame (5cqi between inset-tile and inset-card,
+ * the card layout's margin round the form), --fh-auth-width (27rem, the panel),
+ * --fh-auth-split (23rem, the narrowest split column), --fh-auth-art (the linework),
+ * --fh-auth-ink (its colour), --fh-auth-flow and --fh-auth-flow-b (sheen and 14.3s, the two
+ * bands' drift; the second never lines up with the first), --fh-auth-glass and
+ * --fh-auth-glass-blur (the frosted panel), --fh-auth-z (raised, the corner control).
+ * The art's bands read the spectrum tokens (--fh-spectrum-1…8).
  */
 
 @layer fh.components {
   .fh-auth {
-    --fh-auth-art: url("art/etch-contours.svg");
-    --fh-auth-ink: color-mix(in oklab, var(--fh-color-text) 34%, transparent);
-    --fh-auth-flow: 9s;
-    --fh-auth-flow-b: 14.3s;
+    --_auth-text: var(--fh-auth-text, var(--fh-text-small));
+    --_auth-gap: var(--fh-auth-gap, var(--fh-gap-sectioned));
+    --_auth-form-gap: var(--fh-auth-form-gap, var(--fh-gap-grouped-wide));
+    --_auth-width: var(--fh-auth-width, 27rem);
     /* Firehorse glass: the landing page's see-through pane (80%) frosted
        with the chrome blur, so the art reads through softly, not loudly. */
-    --fh-auth-glass: color-mix(in oklab, var(--fh-color-surface) 80%, transparent);
-    --fh-auth-glass-blur: var(--fh-blur-chrome);
+    --_auth-glass: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
+    --_auth-glass-blur: var(--fh-auth-glass-blur, var(--fh-blur-chrome));
     position: relative;
     display: grid;
     container: fh-auth / inline-size;
@@ -99,13 +113,13 @@
     }
 
     &::before {
-      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-sky) 5%, var(--fh-tone-teal) 11%, var(--fh-tone-lime) 15%, var(--fh-tone-amber) 22%, var(--fh-tone-orange) 26%, var(--fh-tone-rose) 33%, var(--fh-tone-fuchsia) 37%, var(--fh-tone-violet) 41%, transparent 47%, transparent 100%) 0 0 / calc(100% / 3) 100% repeat-x;
+      background: linear-gradient(90deg, transparent 0%, var(--fh-spectrum-1) 5%, var(--fh-spectrum-2) 11%, var(--fh-spectrum-3) 15%, var(--fh-spectrum-4) 22%, var(--fh-spectrum-5) 26%, var(--fh-spectrum-6) 33%, var(--fh-spectrum-7) 37%, var(--fh-spectrum-8) 41%, transparent 47%, transparent 100%) 0 0 / calc(100% / 3) 100% repeat-x;
       transform: skewX(-16deg);
       opacity: 0.55;
     }
 
     &::after {
-      background: linear-gradient(90deg, transparent 0%, var(--fh-tone-violet) 6%, var(--fh-tone-rose) 12%, var(--fh-tone-amber) 17%, var(--fh-tone-teal) 23%, var(--fh-tone-sky) 27%, transparent 33%, transparent 100%) 37% 0 / calc(100% / 3) 100% repeat-x;
+      background: linear-gradient(90deg, transparent 0%, var(--fh-spectrum-8) 6%, var(--fh-spectrum-6) 12%, var(--fh-spectrum-4) 17%, var(--fh-spectrum-2) 23%, var(--fh-spectrum-1) 27%, transparent 33%, transparent 100%) 37% 0 / calc(100% / 3) 100% repeat-x;
       transform: skewX(11deg);
       opacity: 0.4;
     }
@@ -115,7 +129,7 @@
     .fh-auth__art::before,
     .fh-auth__art::after {
       will-change: translate;
-      animation: fh-auth-flow var(--fh-auth-flow, 9s) linear infinite;
+      animation: fh-auth-flow var(--fh-auth-flow, var(--fh-duration-sheen)) linear infinite;
     }
     .fh-auth__art::after { animation-duration: var(--fh-auth-flow-b, 14.3s); }
   }
@@ -128,13 +142,13 @@
    * Sits over the art in every layout; frosted so it reads on any linework. */
   .fh-auth__corner {
     position: absolute;
-    z-index: 2;
+    z-index: var(--fh-auth-z, var(--fh-z-raised));
     inset-block-start: var(--fh-gap-grouped-wide);
     inset-inline-end: var(--fh-gap-grouped-wide);
 
     & .fh-segmented {
-      background-color: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
-      backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
+      background-color: var(--_auth-glass);
+      backdrop-filter: blur(var(--_auth-glass-blur)) saturate(1.2);
     }
   }
 
@@ -142,7 +156,6 @@
    * serves light and dark. Point --fh-auth-logo at it; set
    * --fh-auth-logo-ratio to its width / height. —— */
   .fh-auth__logo {
-    --fh-auth-logo: none;
     display: block;
     inline-size: var(--fh-auth-logo-size, 7.5rem);
     aspect-ratio: var(--fh-auth-logo-ratio, 4);
@@ -155,11 +168,11 @@
     position: relative;
     display: grid;
     align-content: center;
-    gap: var(--fh-gap-sectioned);
+    gap: var(--_auth-gap);
     inline-size: 100%;
-    max-inline-size: 27rem;
+    max-inline-size: var(--_auth-width);
     margin-inline: auto;
-    padding: clamp(var(--fh-inset-card), 6cqi, var(--fh-inset-card)) clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
+    padding: var(--fh-auth-pad-block, var(--fh-inset-card)) var(--fh-auth-pad-inline, var(--fh-inset-card));
   }
 
   .fh-auth__brand {
@@ -169,8 +182,8 @@
     gap: var(--fh-gap-related);
     color: var(--fh-color-text-muted);
     font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-label);
-    letter-spacing: var(--fh-tracking-wider);
+    font-size: var(--fh-auth-label, var(--fh-text-label));
+    letter-spacing: var(--fh-auth-tracking, var(--fh-tracking-caps));
     text-transform: uppercase;
 
     & b { color: var(--fh-color-text); font-weight: var(--fh-weight-medium); }
@@ -184,16 +197,16 @@
     & h2,
     & h3 {
       margin: 0;
-      font-size: clamp(1.5rem, 1.2rem + 1.6cqi, 2rem);
-      font-weight: var(--fh-weight-medium);
-      letter-spacing: var(--fh-tracking-heading);
-      line-height: 1.1;
+      font-size: var(--fh-auth-title, var(--fh-text-h3));
+      font-weight: var(--fh-auth-title-weight, var(--fh-weight-medium));
+      letter-spacing: var(--fh-auth-title-tracking, var(--fh-tracking-heading));
+      line-height: var(--fh-auth-title-leading, var(--fh-leading-tight));
     }
 
     & p {
       margin: 0;
       color: var(--fh-color-text-muted);
-      font-size: var(--fh-text-small);
+      font-size: var(--_auth-text);
     }
   }
 
@@ -219,7 +232,7 @@
 
   .fh-auth__form {
     display: grid;
-    gap: var(--fh-gap-grouped-wide);
+    gap: var(--_auth-form-gap);
     margin: 0;
 
     & .fh-button[type="submit"] { inline-size: 100%; justify-content: center; }
@@ -231,8 +244,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--fh-gap-related) var(--fh-gap-grouped-wide);
-    font-size: var(--fh-text-small);
+    gap: var(--fh-gap-related) var(--_auth-form-gap);
+    font-size: var(--_auth-text);
 
     & a { color: var(--fh-color-text-muted); }
     & a:hover { color: var(--fh-tone, var(--fh-color-text)); }
@@ -249,7 +262,7 @@
   .fh-auth__foot {
     margin: 0;
     color: var(--fh-color-text-muted);
-    font-size: var(--fh-text-small);
+    font-size: var(--_auth-text);
     text-align: center;
 
     /* The "Sign up" / "Sign in" link is a <label for> the switch's radio. */
@@ -281,14 +294,14 @@
   }
 
   @keyframes fh-auth-in {
-    from { opacity: 0; translate: 0 0.35rem; }
+    from { opacity: 0; translate: 0 var(--fh-gap-bound); }
   }
 
   /* —— Split (default): art beside the form when there's room, on top when not.
    *    The columns come from auto-fit (the block can't query its own width);
    *    the art's divider follows the layout through a query on fh-auth. —— */
   .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--fh-auth-split, 23rem)), 1fr));
   }
 
   .fh-auth:not(.fh-auth--card, .fh-auth--plain, .fh-auth--glass) .fh-auth__art {
@@ -307,7 +320,7 @@
   /* —— Card: the form floats on full-bleed art —— */
   .fh-auth--card {
     min-block-size: 38rem;
-    padding: clamp(var(--fh-inset-tile), 5cqi, var(--fh-inset-card));
+    padding: clamp(var(--fh-inset-tile), var(--fh-auth-frame, 5cqi), var(--fh-inset-card));
     place-items: center;
 
     & .fh-auth__art {
@@ -347,16 +360,16 @@
     .fh-auth--glass > .fh-auth__panel {
       grid-area: 1 / 1;
       place-self: center;
-      inline-size: min(27rem, 100% - 2 * var(--fh-gap-sectioned));
+      inline-size: min(var(--_auth-width), 100% - 2 * var(--_auth-gap));
       min-block-size: 0;
-      margin-block: var(--fh-gap-sectioned);
+      margin-block: var(--_auth-gap);
       border: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 14%, transparent);
       border-radius: var(--fh-radius-lg);
-      background-color: var(--fh-auth-glass, color-mix(in oklab, var(--fh-color-surface) 80%, transparent));
-      backdrop-filter: blur(var(--fh-auth-glass-blur, var(--fh-blur-chrome))) saturate(1.2);
+      background-color: var(--_auth-glass);
+      backdrop-filter: blur(var(--_auth-glass-blur)) saturate(1.2);
       /* A crisp top edge catches the light; no gradient wash. */
       box-shadow:
-        inset 0 1px 0 color-mix(in oklab, var(--fh-color-text) 10%, transparent),
+        inset 0 var(--fh-border-thin) 0 color-mix(in oklab, var(--fh-color-text) 10%, transparent),
         var(--fh-shadow-overlay);
     }
   }
@@ -377,8 +390,8 @@
   /* Forgot password: a disclosure under the password form, holding its own form. */
   .fh-auth__forgot {
     display: grid;
-    gap: var(--fh-gap-grouped-wide);
-    font-size: var(--fh-text-small);
+    gap: var(--_auth-form-gap);
+    font-size: var(--_auth-text);
 
     & > summary {
       inline-size: fit-content;
@@ -411,8 +424,8 @@
     }
     & > li::before {
       content: "";
-      inline-size: 0.4rem;
-      block-size: 0.4rem;
+      inline-size: var(--fh-dot-size, 0.4rem);
+      block-size: var(--fh-dot-size, 0.4rem);
       border: var(--fh-border-thin) var(--fh-card-border-style, solid) currentColor;
       border-radius: var(--fh-radius-round);
     }
