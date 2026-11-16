@@ -38,7 +38,7 @@
   .fh-balance__figure {
     margin: 0;
     font-family: var(--fh-font-figure);
-    font-size: clamp(var(--fh-text-stat), 9cqi, var(--fh-text-display));
+    font-size: var(--fh-balance-figure, clamp(var(--fh-text-stat), 9cqi, var(--fh-text-display)));
     font-weight: var(--fh-weight-medium);
     letter-spacing: var(--fh-tracking-tightest);
     line-height: var(--fh-leading-none);
@@ -50,8 +50,8 @@
 
   .fh-balance__currency,
   .fh-balance__cents {
-    font-size: 0.5em;
-    vertical-align: 0.7em;
+    font-size: var(--fh-balance-minor, 0.5em);
+    vertical-align: var(--fh-balance-minor-lift, 0.7em);
     color: var(--fh-color-text-muted);
   }
   .fh-balance__cents { vertical-align: baseline; }
@@ -76,7 +76,7 @@
   /* Share bar: one segment per span, width from --fh-share. */
   .fh-balance__split {
     display: flex;
-    gap: 2px;
+    gap: var(--fh-border-heavy);
     block-size: var(--fh-gap-related);
     border-radius: var(--fh-radius-pill);
     overflow: hidden;

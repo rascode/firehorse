@@ -34,7 +34,7 @@
       outline: 0;
       background: none;
       color: var(--fh-color-text);
-      font-family: var(--fh-type-value-family);
+      font-family: var(--fh-type-value-family, var(--fh-font-sans));
       font-size: var(--fh-type-value);
       font-weight: var(--fh-type-value-weight);
       letter-spacing: var(--fh-type-value-tracking);
@@ -137,7 +137,7 @@
     & > input {
       flex: 1;
       min-inline-size: 0;
-      padding: var(--fh-gap-bound) var(--fh-inset-tight) var(--fh-gap-bound) 0.1rem;
+      padding: var(--fh-gap-bound) var(--fh-inset-tight) var(--fh-gap-bound) var(--fh-tags-input-nudge, 0.1rem);
       border: 0;
       outline: 0;
       background: none;
@@ -148,7 +148,7 @@
 
   .fh-tags__prefix {
     flex: none;
-    padding: 0.15rem 0.4rem;
+    padding: var(--fh-tags-prefix-pad-block, 0.15rem) var(--fh-tags-prefix-pad-inline, 0.4rem);
     border: 0;
     border-radius: var(--fh-radius-pill);
     background: none;

@@ -148,7 +148,7 @@
     grid-template-rows: auto 1fr;
     align-content: start;
     min-inline-size: 0;
-    margin-inline-start: -1px;
+    margin-inline-start: calc(var(--fh-border-thin) * -1);
     padding: 0;
     border-inline-start: var(--_etch-soft);
   }
@@ -253,7 +253,7 @@
       inline-size: var(--fh-avatar-size, var(--fh-avatar-md));
       aspect-ratio: 1;
       overflow: hidden;
-      border: var(--fh-border-thin) solid var(--fh-color-etch);
+      border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-etch);
       border-radius: var(--fh-radius-md);
       background-color: var(--fh-color-surface-sunken);
 
@@ -316,7 +316,7 @@
       justify-content: space-between;
       gap: var(--_gap);
       min-block-size: var(--_rail);
-      margin: 0 0 0 -1px;
+      margin: 0 0 0 calc(var(--fh-border-thin) * -1);
       padding: 0 var(--_pad-i);
       border-inline-start: var(--_etch-soft);
       color: var(--fh-color-text);

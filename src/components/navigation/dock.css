@@ -171,8 +171,8 @@
   .fh-dock__progress {
     position: absolute;
     inset-inline: 0;
-    inset-block-end: -1px;
-    block-size: 2px;
+    inset-block-end: calc(var(--fh-border-thin) * -1);
+    block-size: var(--fh-border-heavy);
     background-color: var(--fh-tone);
     transform-origin: 0 50%;
     scale: 0 1;
@@ -271,7 +271,7 @@
       position: absolute;
       inset-block: 0;
       inset-inline: calc((100% - 100cqi) / 2);
-      z-index: -1;
+      z-index: var(--fh-z-under);
       border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) color-mix(in oklab, var(--fh-color-text) 12%, transparent);
       background-color: color-mix(in oklab, var(--fh-color-canvas) 92%, transparent);
       backdrop-filter: blur(var(--fh-blur-chrome));
@@ -316,7 +316,7 @@
       gap: var(--fh-gap-bound);
       margin-inline: calc(var(--fh-page-margin, 1rem) * -1);
       padding-inline: var(--fh-page-margin, 1rem);
-      padding-block: 2px;
+      padding-block: var(--fh-border-heavy);
       scroll-snap-type: x proximity;
       scroll-padding-inline: var(--fh-page-margin, 1rem);
       mask-image: linear-gradient(90deg, transparent, black var(--fh-gap-grouped-wide), black calc(100% - var(--fh-gap-sectioned)), transparent);

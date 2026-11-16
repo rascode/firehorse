@@ -9,17 +9,17 @@
     display: grid;
     gap: var(--fh-gap-sectioned);
     margin: 0;
-    padding: clamp(var(--fh-inset-card), 5cqi, var(--fh-inset-card));
+    padding: var(--fh-testimonial-pad, var(--fh-inset-card));
     border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
     border-radius: var(--fh-radius-md);
 
     & > blockquote {
       margin: 0;
       color: var(--fh-color-text);
-      font-size: clamp(1.1rem, 0.9rem + 1.2cqi, 1.5rem);
+      font-size: var(--fh-testimonial-quote, var(--fh-text-h3));
       font-weight: var(--fh-weight-regular);
       letter-spacing: var(--fh-tracking-heading);
-      line-height: 1.45;
+      line-height: var(--fh-leading-normal);
       text-wrap: pretty;
 
       &::before {
@@ -28,8 +28,8 @@
         margin-block-end: var(--fh-gap-related);
         color: var(--fh-tone);
         font-family: var(--fh-font-mono);
-        font-size: 2.5rem;
-        line-height: 0.6;
+        font-size: var(--fh-testimonial-mark, 2.5rem);
+        line-height: var(--fh-testimonial-mark-leading, 0.6);
       }
     }
 

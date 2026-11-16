@@ -19,7 +19,7 @@
     max-inline-size: none;
     max-block-size: none;
     margin: 0;
-    padding: clamp(var(--fh-inset-card), 8vh, var(--fh-inset-page)) var(--fh-page-margin, var(--fh-inset-card));
+    padding: var(--fh-overlay-nav-pad-block, clamp(var(--fh-inset-card), 8vh, var(--fh-inset-page))) var(--fh-page-margin, var(--fh-inset-card));
     border: 0;
     background-color: color-mix(in oklab, var(--fh-color-canvas) 96%, transparent);
     color: var(--fh-color-text);
@@ -65,10 +65,10 @@
       align-items: baseline;
       gap: var(--fh-gap-grouped-wide);
       color: var(--fh-color-text);
-      font-size: clamp(2.25rem, 8cqi, 5.5rem);
+      font-size: var(--fh-overlay-nav-link, var(--fh-text-hero));
       font-weight: var(--fh-weight-medium);
-      letter-spacing: -0.045em;
-      line-height: 1;
+      letter-spacing: var(--fh-tracking-tightest);
+      line-height: var(--fh-leading-none);
       text-decoration: none;
       transition: color var(--fh-duration-fast);
 
