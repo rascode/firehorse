@@ -6,7 +6,9 @@
 @layer fh.patterns {
   /* —— Window frame ——
    * Product evidence in browser chrome (three dots + bar).
-   *   <figure class="fh-window"><div class="fh-window__bar"></div>…</figure> */
+   *   <figure class="fh-window"><div class="fh-window__bar"></div>…</figure>
+   * Values: --fh-window-dot (0.6rem) and --fh-window-dot-gap (0.35rem), the three bar dots in the
+   * danger, warning and success colours; --fh-window-pad (tile to card on the container). */
   .fh-window {
     margin: 0;
     overflow: hidden;
@@ -21,7 +23,7 @@
     display: flex;
     align-items: center;
     gap: var(--fh-gap-grouped);
-    min-block-size: 2.25rem;
+    min-block-size: var(--fh-control-height);
     padding-inline: var(--fh-inset-control);
     background-color: var(--fh-color-surface-chrome);
     border-block-end: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border);
@@ -31,21 +33,23 @@
     letter-spacing: var(--fh-tracking-wide);
 
     &::before {
+      --_dot: var(--fh-window-dot, 0.6rem);
+      --_step: calc(var(--_dot) + var(--fh-window-dot-gap, 0.35rem));
       content: "";
       flex: none;
-      inline-size: 0.6rem;
+      inline-size: var(--_dot);
       aspect-ratio: 1;
       border-radius: var(--fh-radius-round);
-      background-color: var(--fh-tone-rose);
+      background-color: var(--fh-color-danger);
       box-shadow:
-        0.95rem 0 0 var(--fh-tone-amber),
-        1.9rem 0 0 var(--fh-tone-lime);
-      margin-inline-end: 2.2rem;
+        var(--_step) 0 0 var(--fh-color-warning),
+        calc(var(--_step) * 2) 0 0 var(--fh-color-success);
+      margin-inline-end: calc(var(--_step) * 2);
     }
   }
 
   .fh-window__body {
-    padding: clamp(var(--fh-inset-tile), 4cqi, var(--fh-inset-card));
+    padding: var(--fh-window-pad, clamp(var(--fh-inset-tile), 4cqi, var(--fh-inset-card)));
   }
 
 }

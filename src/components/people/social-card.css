@@ -58,25 +58,27 @@
     gap: var(--fh-gap-related);
     padding: var(--fh-inset-tile) var(--fh-inset-control) var(--fh-inset-tight);
   }
+  /* Values: --fh-social-name (h3), --fh-social-name-gap and --fh-social-stat-gap (0.35em, scaling
+   * with the text), --fh-social-check (0.85em, the verified mark). */
   .fh-social__name {
     display: flex;
     align-items: center;
-    gap: 0.35em;
+    gap: var(--fh-social-name-gap, 0.35em);
     margin: 0;
     font-family: var(--fh-font-display);
-    font-size: clamp(1.15rem, 7cqi, 1.4rem);
+    font-size: var(--fh-social-name, var(--fh-text-h3));
     font-weight: var(--fh-weight-bold);
     letter-spacing: var(--fh-tracking-heading);
   }
   .fh-social__check {
-    --fh-icon-size: 0.85em;
+    --fh-icon-size: var(--fh-social-check, 0.85em);
     color: var(--fh-color-success);
   }
   .fh-social__bio {
     margin: 0;
     color: var(--fh-color-text-muted);
     font-size: var(--fh-text-small);
-    line-height: 1.45;
+    line-height: var(--fh-leading-normal);
   }
   .fh-social__foot {
     display: flex;
@@ -90,7 +92,7 @@
     gap: var(--fh-gap-grouped-wide);
     margin: 0;
   }
-  .fh-social__stats > div { display: flex; align-items: center; gap: 0.35em; }
+  .fh-social__stats > div { display: flex; align-items: center; gap: var(--fh-social-stat-gap, 0.35em); }
   .fh-social__stats dt { display: inline-flex; color: var(--fh-color-text-muted); }
   .fh-social__stats dd { margin: 0; font-weight: var(--fh-weight-bold); font-variant-numeric: tabular-nums; font-size: var(--fh-text-small); }
   .fh-social__foot > .fh-button { border-radius: var(--fh-radius-pill); }
@@ -104,7 +106,7 @@
   :is(.fh-social--fade, .fh-social--dark) > .fh-social__photo {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--fh-z-under);
     block-size: 100%;
     aspect-ratio: auto;
     border-radius: 0;
@@ -114,7 +116,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--fh-z-under);
     backdrop-filter: blur(var(--fh-social-blur, 18px));
     mask-image: linear-gradient(to bottom, transparent, var(--fh-color-ink) 45%);
     display: var(--fh-card-content-scrim, block);
