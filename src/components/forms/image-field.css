@@ -147,3 +147,13 @@
     --_fg: var(--fh-color-danger);
   }
 }
+
+@layer fh.components {
+  /* 375: the compact dropzone's hint goes under the title instead of over it (PE1 review). */
+  @container fh-image-field (max-width: 26rem) {
+    .fh-image-field .fh-dropzone--compact {
+      grid-template-columns: auto minmax(0, 1fr);
+      & > .fh-dropzone__hint { grid-column: 1 / -1; justify-self: start; white-space: normal; }
+    }
+  }
+}
