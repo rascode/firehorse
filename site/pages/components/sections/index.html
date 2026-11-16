@@ -8,7 +8,7 @@
   "description": "Firehorse sections: the record sidecar, the section shell, and twelve pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files, form, stage).",
   "headline": "One sidecar, one section shell, twelve kinds of data",
   "lede": "A record sidecar with a fixed header, and a library of sections picked by the kind of data they hold. Each one starts with an icon and a title, collapses, and shows summary chips only when collapsed.",
-  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js", "/fold.js", "/image-stack.js", "/activity-log.js"],
+  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js", "/fold.js", "/image-stack.js", "/activity-log.js", "/image-field.js"],
   "styles": [],
   "icon": "panels-top-left",
   "summary": [
@@ -28,7 +28,7 @@
     <section id="sections" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Sections" aria-label="Sections">
       <div class="fh-stack fh-stack--xl">
 
-        <div class="site-demo site-anchor" id="c-sidecar" data-fh-id="SDC" data-fh-groups="Sidecar|Relay record">
+        <div class="site-demo site-anchor" id="c-sidecar" data-fh-id="SDC" data-fh-groups="Sidecar|Relay record|Profile page|People">
           <div class="site-demo__head"><h3>Record sidecar</h3><p>One drawer for every record. A fixed header (eyebrow with the record kind, mark, title, one chip row, actions, one close control), then the sections, then the linked records. Body text steps down through the public text tokens, so every component inside follows. Open the whole stack from the first section or collapse them all.</p></div>
           <div class="site-demo__stage" data-demo>
 <aside class="fh-sidecar" style="--fh-sidecar-height: 44rem" aria-label="Record" data-fh-id="SDC-1.1" data-fh-name="Sidecar">
@@ -612,6 +612,541 @@
 </div>
           </div>
         </div>
+
+        <!-- Profile page (SDC-3, PE1 #201): one person on the detail template, built from Firehorse parts only: the record
+             header with the xl person avatar in the mark slot, metric tiles, sub tabs, and the Profile sections, Photo
+             holding the image field (IMF). Sample data and the sample avatars. -->
+        <div class="site-demo site-anchor" id="c-profile-page" data-fh-id="SDC-3" data-fh-groups="Profile page">
+          <div class="site-demo__head"><h3>Profile page</h3><p>One person on the detail template: the record header with the xl person avatar, the name, the @handle, a presence dot and role chips; four metric tiles; sub tabs Profile, Photo and Activity; then Identity, Contact, Photo (the image field), Goals (one goal with its own icon, one inheriting the person's photo, with its source line) and Activity.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-tpl fh-tpl--detail" data-fh-id="SDC-3.1" data-fh-name="Profile page">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky">
+      <span class="fh-avatar fh-avatar--xl" data-kind="person" data-status="online" style="grid-area: mark"><img src="/img/avatars/ava.webp" alt=""></span>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">Ava Moreno</h2>
+        <p class="fh-record__sub">@ava · online</p>
+        <p class="fh-record__chips"><span class="fh-chip fh-chip--sm" data-tone="rose">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky">Design</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm fh-button--secondary" type="button">Edit</button></div>
+    </div>
+  </header>
+  <div class="fh-metrics">
+<article class="fh-metric" data-tone="sky">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span>Ideas</p>
+  <p class="fh-metric__sub">3 this week</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">14</span></p></div>
+  <p class="fh-metric__source">Helm ideas</p>
+</article>
+<article class="fh-metric" data-tone="violet">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--message-square" aria-hidden="true"></i></span>Remarks</p>
+  <p class="fh-metric__sub">8 this week</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">52</span></p></div>
+  <p class="fh-metric__source">Idea remarks</p>
+</article>
+<article class="fh-metric" data-tone="teal">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>Active goals</p>
+  <p class="fh-metric__sub">1 inherits the photo</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">2</span></p></div>
+  <p class="fh-metric__source">Goals</p>
+</article>
+<article class="fh-metric" data-tone="amber">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>Member since</p>
+  <p class="fh-metric__sub">8 months</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">Mar 2026</span></p></div>
+  <p class="fh-metric__source">Account</p>
+</article>
+  </div>
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Profile pages">
+      <a href="#c-profile-page" aria-current="page">Profile</a>
+      <a href="#c-profile-page">Photo</a>
+      <a href="#c-profile-page">Activity <span class="fh-badge">3</span></a>
+    </nav>
+  </div>
+  <div class="fh-tpl__body fh-stack">
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--id-card fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Identity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">5 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field"><label for="pf-display">Display name</label><input class="fh-input" id="pf-display" type="text" value="Ava Moreno" autocomplete="nickname"></div>
+    <div class="fh-field"><label for="pf-first">First name</label><input class="fh-input" id="pf-first" type="text" value="Ava" autocomplete="given-name"></div>
+    <div class="fh-field"><label for="pf-last">Last name</label><input class="fh-input" id="pf-last" type="text" value="Moreno" autocomplete="family-name"></div>
+    <div class="fh-field"><label for="pf-user">Username</label><input class="fh-input" id="pf-user" type="text" value="ava" autocomplete="username"><p class="fh-field__hint">Shown as @ava</p></div>
+    <div class="fh-field"><label for="pf-tz">Time zone</label><div class="fh-select-wrap"><select class="fh-select" id="pf-tz"><option selected>America/New_York (ET)</option><option>America/Chicago (CT)</option><option>Europe/London (GMT)</option></select></div></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="teal" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--mail fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Contact</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field"><label for="pf-email">Email</label><input class="fh-input" id="pf-email" type="email" value="ava@rascode.dev" readonly><p class="fh-field__hint">From the sign-in account</p></div>
+    <div class="fh-field"><label for="pf-phone">Phone</label><input class="fh-input" id="pf-phone" type="tel" value="+1 212 555 0142" autocomplete="tel"></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit">Save</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="violet" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Photo</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">1 image</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-image-field" data-kind="person" data-size="xl">
+  <div class="fh-image-field__layout">
+    <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--xl" data-kind="person"><img src="/img/avatars/ava.webp" alt=""></span></div>
+    <div class="fh-image-field__main">
+      <div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Photo source"><button type="button" data-pane="upload" aria-pressed="true">Upload</button><button type="button" data-pane="url" aria-pressed="false">From a URL</button></div>
+      <div class="fh-image-field__panes">
+        <div class="fh-image-field__pane" data-pane="upload">
+          <label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"><span class="fh-dropzone__title">Drop, paste or browse</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label>
+        </div>
+        <div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden>
+          <div class="fh-field"><label for="pf-photo-url">Image address</label><div class="fh-image-field__url"><input class="fh-input" id="pf-photo-url" type="url" inputmode="url" placeholder="https://" pattern="https://.*" value=""><button class="fh-button fh-button--secondary" type="button" data-fetch>Fetch</button></div><p class="fh-image-field__status" role="status"><span class="fh-spinner" aria-hidden="true"></span>Fetching the image</p><p class="fh-field__error"></p><p class="fh-image-field__fetched"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fh-image-field__foot"><button class="fh-button" type="button">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove>Remove</button></div>
+</div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--target fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Goals</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 goals</span><span class="fh-chip" data-tone="amber">1 inherits</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap"><table class="fh-table">
+  <thead><tr><th scope="col">Goal</th><th scope="col">Image</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><td><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="goal" data-tone="teal"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><a class="fh-ref" href="#pe1-person-sidecar" data-sidecar="goal-harbor"><span class="fh-ref__label" title="Harbor index refresh">Harbor index refresh</span></a></span></td><td>Its own icon</td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+    <tr><td><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="goal"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#pe1-person-sidecar" data-sidecar="goal-ledger"><span class="fh-ref__label" title="Ledger cleanup">Ledger cleanup</span></a></span><p class="fh-image-field__source fh-field__hint">From Ava's photo <button class="fh-button fh-button--ghost fh-button--sm" type="button" data-reset>Reset</button></p></td><td>Inherited</td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Activity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">3 steps</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap"><table class="fh-table">
+  <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+  <tbody>
+    <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+    <tr><td data-label="Time">20:35</td><td data-label="Step">Changed the photo</td><td data-label="Detail">Uploaded a WebP, 240 KB</td></tr>
+    <tr><td data-label="Time">18:12</td><td data-label="Step">Remarked on an idea</td><td data-label="Detail">Profile editor plan, #201</td></tr>
+    <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+    <tr><td data-label="Time">09:40</td><td data-label="Step">Opened a goal</td><td data-label="Detail">Harbor index refresh</td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <!-- People (SDC-4, PE1 #201): the people area on the list template: metric tiles, a datatable of people with a
+             table and cards toggle (SEG-2.2), and the person record sidecar. A name opens #pe1-person-sidecar (a closed
+             dialog after #sidecar-demo); SDC-4.3 is the same sidecar open in place. Sample data. -->
+        <div class="site-demo site-anchor" id="c-people" data-fh-id="SDC-4" data-fh-groups="People">
+          <div class="site-demo__head"><h3>People</h3><p>The people area on the list template: four metric tiles, then the people as a datatable (avatar and name, @username, email, roles as chips, status, last seen) or, with the toggle, a grid of person cards with the large avatar. A name opens the person in the record sidecar with the Profile sections; the last specimen is that sidecar open in place.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--xl">
+<div class="fh-tpl fh-tpl--list" data-fh-id="SDC-4.1" data-fh-name="People list">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky">
+      <div class="fh-record__mark"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title">People</h2>
+        <p class="fh-record__sub">Everyone with an account, newest first.</p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm" type="button">Invite</button></div>
+    </div>
+  </header>
+  <div class="fh-metrics">
+<article class="fh-metric" data-tone="sky">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>People</p>
+  <p class="fh-metric__sub">2 joined this month</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">6</span></p></div>
+  <p class="fh-metric__source">Accounts</p>
+</article>
+<article class="fh-metric" data-tone="lime">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--activity" aria-hidden="true"></i></span>Active</p>
+  <p class="fh-metric__sub">Seen in the last 7 days</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">4</span></p></div>
+  <p class="fh-metric__source">Sessions</p>
+</article>
+<article class="fh-metric" data-tone="violet">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--image" aria-hidden="true"></i></span>With a photo</p>
+  <p class="fh-metric__sub">1 shows initials</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">5</span></p></div>
+  <p class="fh-metric__source">Profiles</p>
+</article>
+<article class="fh-metric" data-tone="amber">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--user-plus" aria-hidden="true"></i></span>Pending approvals</p>
+  <p class="fh-metric__sub">Oldest: 3 days</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1">2</span></p></div>
+  <p class="fh-metric__source">Sign-ups</p>
+</article>
+  </div>
+  <div class="fh-tpl__filters">
+    <label class="fh-search"><span class="fh-sr-only">Find a person</span><input type="search" placeholder="Find a person"></label>
+    <div class="fh-select-wrap"><select class="fh-select" aria-label="Role"><option>All roles</option><option>Admin</option><option>Engineer</option><option>Operator</option></select></div>
+    <div class="fh-segment fh-segment--mode" role="group" aria-label="View" onclick="const b = event.target.closest('button'); if (!b) return; for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b)); for (const v of this.closest('.fh-tpl').querySelectorAll('[data-view]')) v.hidden = v.dataset.view !== b.value"><button type="button" value="table" aria-pressed="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Table</button><button type="button" value="cards" aria-pressed="false"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i>Cards</button></div>
+  </div>
+  <div class="fh-tpl__body">
+    <div class="fh-dt fh-dt--records" aria-label="People" data-view="table">
+      <div class="fh-dt__scroll"><table class="fh-dt__table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Username</th><th scope="col">Email</th><th scope="col">Roles</th><th scope="col">Status</th><th scope="col">Last seen</th></tr></thead>
+        <tbody>
+          <tr data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="person"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label" title="Ava Moreno">Ava Moreno</span></a></span></td><td data-label="Username"><code>@ava</code></td><td data-label="Email"><a class="fh-link" href="mailto:ava@rascode.dev">ava@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="rose">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky">Design</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></td><td data-label="Last seen">Today, 21:02</td></tr>
+          <tr data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="person"><img src="/img/avatars/mateo.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label" title="Mateo Ruiz">Mateo Ruiz</span></a></span></td><td data-label="Username"><code>@mateo</code></td><td data-label="Email"><a class="fh-link" href="mailto:mateo@rascode.dev">mateo@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="teal">Engineer</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></td><td data-label="Last seen">Today, 18:40</td></tr>
+          <tr data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="person"><img src="/img/avatars/isla.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label" title="Isla Grant">Isla Grant</span></a></span></td><td data-label="Username"><code>@isla</code></td><td data-label="Email"><a class="fh-link" href="mailto:isla@rascode.dev">isla@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="amber">Operator</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></td><td data-label="Last seen">Yesterday</td></tr>
+          <tr data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="person"><img src="/img/avatars/ray.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label" title="Ray Okafor">Ray Okafor</span></a></span></td><td data-label="Username"><code>@ray</code></td><td data-label="Email"><a class="fh-link" href="mailto:ray@rascode.dev">ray@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="teal">Engineer</span><span class="fh-chip fh-chip--sm" data-tone="violet">Reviewer</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></td><td data-label="Last seen">Nov 12</td></tr>
+          <tr data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="person">RA</span><a class="fh-ref" href="#c-people" data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label" title="Ruth Abara">Ruth Abara</span></a></span></td><td data-label="Username"><code>@ruth</code></td><td data-label="Email"><a class="fh-link" href="mailto:ruth@rascode.dev">ruth@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="neutral">Viewer</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">pending</span></td><td data-label="Last seen">Never</td></tr>
+          <tr data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="person"><img src="/img/avatars/sam.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label" title="Sam Lee">Sam Lee</span></a></span></td><td data-label="Username"><code>@sam</code></td><td data-label="Email"><a class="fh-link" href="mailto:sam@rascode.dev">sam@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="amber">Operator</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">pending</span></td><td data-label="Last seen">Never</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="fh-grid" style="--fh-grid-min: 12rem" data-view="cards" hidden>
+  <article class="fh-card" data-tone="rose"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="online"><img src="/img/avatars/ava.webp" alt=""></span>
+    <p class="fh-card__meta">@ava</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Ava Moreno</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="rose">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky">Design</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="away"><img src="/img/avatars/mateo.webp" alt=""></span>
+    <p class="fh-card__meta">@mateo</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Mateo Ruiz</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="teal">Engineer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person"><img src="/img/avatars/isla.webp" alt=""></span>
+    <p class="fh-card__meta">@isla</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Isla Grant</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="amber">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person"><img src="/img/avatars/ray.webp" alt=""></span>
+    <p class="fh-card__meta">@ray</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Ray Okafor</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="teal">Engineer</span><span class="fh-chip fh-chip--sm" data-tone="violet">Reviewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="neutral"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person">RA</span>
+    <p class="fh-card__meta">@ruth</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Ruth Abara</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="neutral">Viewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">pending</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person"><img src="/img/avatars/sam.webp" alt=""></span>
+    <p class="fh-card__meta">@sam</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Sam Lee</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="amber">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">pending</span></p>
+  </div></article>
+    </div>
+  </div>
+</div>
+<div class="fh-grid" style="--fh-grid-min: 12rem" data-fh-id="SDC-4.2" data-fh-name="People cards">
+  <article class="fh-card" data-tone="rose"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="online"><img src="/img/avatars/ava.webp" alt=""></span>
+    <p class="fh-card__meta">@ava</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Ava Moreno</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="rose">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky">Design</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="away"><img src="/img/avatars/mateo.webp" alt=""></span>
+    <p class="fh-card__meta">@mateo</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Mateo Ruiz</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="teal">Engineer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person"><img src="/img/avatars/isla.webp" alt=""></span>
+    <p class="fh-card__meta">@isla</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Isla Grant</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="amber">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person"><img src="/img/avatars/ray.webp" alt=""></span>
+    <p class="fh-card__meta">@ray</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Ray Okafor</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="teal">Engineer</span><span class="fh-chip fh-chip--sm" data-tone="violet">Reviewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="neutral"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person">RA</span>
+    <p class="fh-card__meta">@ruth</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Ruth Abara</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="neutral">Viewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">pending</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person"><img src="/img/avatars/sam.webp" alt=""></span>
+    <p class="fh-card__meta">@sam</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar"><span class="fh-ref__label">Sam Lee</span></a></h3>
+    <p class="fh-chips"><span class="fh-chip fh-chip--sm" data-tone="amber">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">pending</span></p>
+  </div></article>
+</div>
+<div class="fh-stack" style="max-inline-size: 34rem">
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" open style="--fh-dialog-size: 34rem; position: relative; inset: auto; inline-size: 100%; block-size: 60rem; margin: 0" aria-labelledby="ps-title" data-fh-id="SDC-4.3" data-fh-name="Person record (SDC)">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Person</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark"><span class="fh-avatar fh-avatar--lg" data-kind="person" data-status="online"><img src="/img/avatars/ava.webp" alt=""></span></span>
+      <div>
+        <h2 class="fh-sidecar__title" id="ps-title">Ava Moreno</h2>
+        <p class="fh-sidecar__sub"><code>@ava</code> · ava@rascode.dev</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="rose">Admin</span><span class="fh-chip" data-tone="sky">Design</span><span class="fh-chip" data-tone="lime">active</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--id-card fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Identity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">5 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field"><label for="ps-display">Display name</label><input class="fh-input" id="ps-display" type="text" value="Ava Moreno" autocomplete="nickname"></div>
+    <div class="fh-field"><label for="ps-first">First name</label><input class="fh-input" id="ps-first" type="text" value="Ava" autocomplete="given-name"></div>
+    <div class="fh-field"><label for="ps-last">Last name</label><input class="fh-input" id="ps-last" type="text" value="Moreno" autocomplete="family-name"></div>
+    <div class="fh-field"><label for="ps-user">Username</label><input class="fh-input" id="ps-user" type="text" value="ava" autocomplete="username"><p class="fh-field__hint">Shown as @ava</p></div>
+    <div class="fh-field"><label for="ps-tz">Time zone</label><div class="fh-select-wrap"><select class="fh-select" id="ps-tz"><option selected>America/New_York (ET)</option><option>America/Chicago (CT)</option><option>Europe/London (GMT)</option></select></div></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="teal" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--mail fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Contact</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field"><label for="ps-email">Email</label><input class="fh-input" id="ps-email" type="email" value="ava@rascode.dev" readonly><p class="fh-field__hint">From the sign-in account</p></div>
+    <div class="fh-field"><label for="ps-phone">Phone</label><input class="fh-input" id="ps-phone" type="tel" value="+1 212 555 0142" autocomplete="tel"></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit">Save</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="violet" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Photo</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">1 image</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-image-field" data-kind="person" data-size="xl">
+  <div class="fh-image-field__layout">
+    <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--xl" data-kind="person"><img src="/img/avatars/ava.webp" alt=""></span></div>
+    <div class="fh-image-field__main">
+      <div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Photo source"><button type="button" data-pane="upload" aria-pressed="true">Upload</button><button type="button" data-pane="url" aria-pressed="false">From a URL</button></div>
+      <div class="fh-image-field__panes">
+        <div class="fh-image-field__pane" data-pane="upload">
+          <label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"><span class="fh-dropzone__title">Drop, paste or browse</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label>
+        </div>
+        <div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden>
+          <div class="fh-field"><label for="ps-photo-url">Image address</label><div class="fh-image-field__url"><input class="fh-input" id="ps-photo-url" type="url" inputmode="url" placeholder="https://" pattern="https://.*" value=""><button class="fh-button fh-button--secondary" type="button" data-fetch>Fetch</button></div><p class="fh-image-field__status" role="status"><span class="fh-spinner" aria-hidden="true"></span>Fetching the image</p><p class="fh-field__error"></p><p class="fh-image-field__fetched"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fh-image-field__foot"><button class="fh-button" type="button">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove>Remove</button></div>
+</div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--target fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Goals</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 goals</span><span class="fh-chip" data-tone="amber">1 inherits</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap"><table class="fh-table">
+  <thead><tr><th scope="col">Goal</th><th scope="col">Image</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><td><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="goal" data-tone="teal"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><a class="fh-ref" href="#c-people" data-sidecar="goal-harbor"><span class="fh-ref__label" title="Harbor index refresh">Harbor index refresh</span></a></span></td><td>Its own icon</td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+    <tr><td><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="goal"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="goal-ledger"><span class="fh-ref__label" title="Ledger cleanup">Ledger cleanup</span></a></span><p class="fh-image-field__source fh-field__hint">From Ava's photo <button class="fh-button fh-button--ghost fh-button--sm" type="button" data-reset>Reset</button></p></td><td>Inherited</td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Activity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">3 steps</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap"><table class="fh-table">
+  <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+  <tbody>
+    <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+    <tr><td data-label="Time">20:35</td><td data-label="Step">Changed the photo</td><td data-label="Detail">Uploaded a WebP, 240 KB</td></tr>
+    <tr><td data-label="Time">18:12</td><td data-label="Step">Remarked on an idea</td><td data-label="Detail">Profile editor plan, #201</td></tr>
+    <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+    <tr><td data-label="Time">09:40</td><td data-label="Step">Opened a goal</td><td data-label="Detail">Harbor index refresh</td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+  </div>
+</dialog>
+</div>
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" id="pe1-person-sidecar" data-sidecar-resize aria-labelledby="pd-title">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow">Person</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark"><span class="fh-avatar fh-avatar--lg" data-kind="person" data-status="online"><img src="/img/avatars/ava.webp" alt=""></span></span>
+      <div>
+        <h2 class="fh-sidecar__title" id="pd-title">Ava Moreno</h2>
+        <p class="fh-sidecar__sub"><code>@ava</code> · ava@rascode.dev</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="rose">Admin</span><span class="fh-chip" data-tone="sky">Design</span><span class="fh-chip" data-tone="lime">active</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--id-card fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Identity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky">5 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field"><label for="pd-display">Display name</label><input class="fh-input" id="pd-display" type="text" value="Ava Moreno" autocomplete="nickname"></div>
+    <div class="fh-field"><label for="pd-first">First name</label><input class="fh-input" id="pd-first" type="text" value="Ava" autocomplete="given-name"></div>
+    <div class="fh-field"><label for="pd-last">Last name</label><input class="fh-input" id="pd-last" type="text" value="Moreno" autocomplete="family-name"></div>
+    <div class="fh-field"><label for="pd-user">Username</label><input class="fh-input" id="pd-user" type="text" value="ava" autocomplete="username"><p class="fh-field__hint">Shown as @ava</p></div>
+    <div class="fh-field"><label for="pd-tz">Time zone</label><div class="fh-select-wrap"><select class="fh-select" id="pd-tz"><option selected>America/New_York (ET)</option><option>America/Chicago (CT)</option><option>Europe/London (GMT)</option></select></div></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset">Discard</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="teal" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--mail fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Contact</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field"><label for="pd-email">Email</label><input class="fh-input" id="pd-email" type="email" value="ava@rascode.dev" readonly><p class="fh-field__hint">From the sign-in account</p></div>
+    <div class="fh-field"><label for="pd-phone">Phone</label><input class="fh-input" id="pd-phone" type="tel" value="+1 212 555 0142" autocomplete="tel"></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit">Save</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="violet" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Photo</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet">1 image</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-image-field" data-kind="person" data-size="xl">
+  <div class="fh-image-field__layout">
+    <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--xl" data-kind="person"><img src="/img/avatars/ava.webp" alt=""></span></div>
+    <div class="fh-image-field__main">
+      <div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Photo source"><button type="button" data-pane="upload" aria-pressed="true">Upload</button><button type="button" data-pane="url" aria-pressed="false">From a URL</button></div>
+      <div class="fh-image-field__panes">
+        <div class="fh-image-field__pane" data-pane="upload">
+          <label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"><span class="fh-dropzone__title">Drop, paste or browse</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label>
+        </div>
+        <div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden>
+          <div class="fh-field"><label for="pd-photo-url">Image address</label><div class="fh-image-field__url"><input class="fh-input" id="pd-photo-url" type="url" inputmode="url" placeholder="https://" pattern="https://.*" value=""><button class="fh-button fh-button--secondary" type="button" data-fetch>Fetch</button></div><p class="fh-image-field__status" role="status"><span class="fh-spinner" aria-hidden="true"></span>Fetching the image</p><p class="fh-field__error"></p><p class="fh-image-field__fetched"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fh-image-field__foot"><button class="fh-button" type="button">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove>Remove</button></div>
+</div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--target fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Goals</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal">2 goals</span><span class="fh-chip" data-tone="amber">1 inherits</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap"><table class="fh-table">
+  <thead><tr><th scope="col">Goal</th><th scope="col">Image</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><td><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="goal" data-tone="teal"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><a class="fh-ref" href="#c-people" data-sidecar="goal-harbor"><span class="fh-ref__label" title="Harbor index refresh">Harbor index refresh</span></a></span></td><td>Its own icon</td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running">running</span></td></tr>
+    <tr><td><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12"><span class="fh-avatar" data-kind="goal"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="goal-ledger"><span class="fh-ref__label" title="Ledger cleanup">Ledger cleanup</span></a></span><p class="fh-image-field__source fh-field__hint">From Ava's photo <button class="fh-button fh-button--ghost fh-button--sm" type="button" data-reset>Reset</button></p></td><td>Inherited</td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged">merged</span></td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open>
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true"></i>
+    <h3 class="fh-panel-section__title">Activity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">3 steps</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap"><table class="fh-table">
+  <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+  <tbody>
+    <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+    <tr><td data-label="Time">20:35</td><td data-label="Step">Changed the photo</td><td data-label="Detail">Uploaded a WebP, 240 KB</td></tr>
+    <tr><td data-label="Time">18:12</td><td data-label="Step">Remarked on an idea</td><td data-label="Detail">Profile editor plan, #201</td></tr>
+    <tr class="fh-panel-section__day"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+    <tr><td data-label="Time">09:40</td><td data-label="Step">Opened a goal</td><td data-label="Detail">Harbor index refresh</td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+  </div>
+</dialog>
+</div>
+          </div>
+        </div>
+
 
         <div class="site-demo site-anchor" id="c-sec" data-fh-id="SCT" data-fh-groups="Section shell">
           <div class="site-demo__head"><h3>Section shell</h3><p>The header every section shares: an icon, a title larger than body text in the strongest text role, and a collapse control. Collapsed, it shows summary chips for what it holds; open, the chips are gone. Chips live only here and in the sidecar header.</p></div>
