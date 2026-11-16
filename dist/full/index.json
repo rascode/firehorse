@@ -4682,312 +4682,69 @@
       "anchor": "c-deck",
       "page": "/components/content/",
       "url": "https://firehorse.rascode.dev/components/content/stacking-deck/",
-      "summary": "Panels that pin as you scroll: each next one slides up over the last, and the ones behind shrink and darken into a deck with their top edges showing. Here it opens with a hero handoff (--hero): a full-height first card the deck slides in over. Pure CSS: sticky for the stack, a scroll-driven animation for the recede. Scroll the page.",
+      "summary": "Cards that pin as you scroll: each next one slides up over the last, and the ones behind shrink and dim into a deck with their top edges showing. Each card is a tile in the new look: the etched frost, a cube in its tone, a numbered mono eyebrow and an arrow, a picture if it has one, and a big title with a quiet note.",
       "classes": [
         "fh-deck",
         "fh-deck__card",
+        "fh-deck__head",
+        "fh-deck__cube",
+        "fh-icon",
+        "fh-deck__eyebrow",
+        "fh-deck__go",
         "fh-deck__media",
-        "fh-deck__caption",
-        "fh-deck__index",
+        "fh-deck__foot",
         "fh-deck__title",
-        "fh-deck__body",
-        "fh-label",
-        "fh-lede",
-        "fh-deck--hero",
-        "fh-title",
-        "fh-deck--fade",
-        "fh-deck--blur",
-        "fh-deck--lift",
-        "fh-deck--fan",
-        "fh-deck__card--split",
-        "fh-body",
-        "fh-deck__caption--top",
-        "fh-deck__meta",
-        "fh-deck--count",
-        "fh-deck--x",
-        "fh-deck--reverse"
+        "fh-deck__note"
       ],
-      "markup": "<ol class=\"fh-deck\" data-fh=\"DEK-1.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 02</p><p class=\"fh-lede\">Sites and products that hold up on every screen.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 03</p><p class=\"fh-lede\">Motion systems, from a hover to a launch film.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 04</p><p class=\"fh-lede\">Shoots, casting and art direction for campaigns.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
+      "markup": "<ol class=\"fh-deck\" data-fh=\"DEK-1.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--palette\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">01 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Branding</b><span class=\"fh-deck__note\">Identities that hold up from a favicon to a billboard.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--monitor\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">02 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Digital</b><span class=\"fh-deck__note\">Sites and products that hold up on every screen.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--play\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">03 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Motion</b><span class=\"fh-deck__note\">Motion systems, from a hover to a launch film.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--sparkles\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">04 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Art direction</b><span class=\"fh-deck__note\">Shoots, casting and art direction for campaigns.</span></div>\n  </li>\n</ol>",
       "groups": [
         {
           "id": "DEK-1",
           "name": "Stacking deck",
-          "summary": "The same deck without the hero: every card is the same size and starts the stack. Number left, title right, a hairline under both; a card is a tone surface or fills with __media.",
+          "summary": "",
           "variants": [
             "DEK-1.1"
           ],
-          "markup": "<ol class=\"fh-deck\" data-fh=\"DEK-1.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 02</p><p class=\"fh-lede\">Sites and products that hold up on every screen.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 03</p><p class=\"fh-lede\">Motion systems, from a hover to a launch film.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 04</p><p class=\"fh-lede\">Shoots, casting and art direction for campaigns.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "markupFrom": "group",
-          "anchor": "c-deck-alt",
-          "demo": true
-        },
-        {
-          "id": "DEK-2",
-          "name": "Hero handoff",
-          "summary": "",
-          "variants": [
-            "DEK-2.1"
-          ],
-          "markup": "<ol class=\"fh-deck fh-deck--hero\" data-fh=\"DEK-2.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__body\"><p class=\"fh-title\">Ink, etch &amp; ember. A studio in four practices.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">Studio</span><span class=\"fh-deck__title\">(Scroll)</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"amber\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 01</p><p class=\"fh-lede\">Marks, type and systems that hold together.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 02</p><p class=\"fh-lede\">Sites and products that hold up on every screen.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 03</p><p class=\"fh-lede\">Motion systems, from a hover to a launch film.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 04</p><p class=\"fh-lede\">Shoots, casting and art direction for campaigns.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
+          "markup": "<ol class=\"fh-deck\" data-fh=\"DEK-1.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--palette\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">01 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Branding</b><span class=\"fh-deck__note\">Identities that hold up from a favicon to a billboard.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--monitor\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">02 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Digital</b><span class=\"fh-deck__note\">Sites and products that hold up on every screen.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--play\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">03 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Motion</b><span class=\"fh-deck__note\">Motion systems, from a hover to a launch film.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--sparkles\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">04 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Art direction</b><span class=\"fh-deck__note\">Shoots, casting and art direction for campaigns.</span></div>\n  </li>\n</ol>",
           "markupFrom": "variant"
-        },
-        {
-          "id": "DEK-3",
-          "name": "Recede styles",
-          "summary": "How the cards behind go back. --fade fades them, --blur blurs them, --lift tilts them back in 3D, --fan turns each a degree or two and shows more of it. Each has a knob, and they combine. Scroll inside each box.",
-          "variants": [
-            "DEK-3.1",
-            "DEK-3.2",
-            "DEK-3.3",
-            "DEK-3.4"
-          ],
-          "markup": "<div class=\"fh-grid\" data-cols=\"2\" style=\"--fh-grid-min: 18rem; --fh-gap: var(--fh-space-8)\">\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Fade <code>--fade</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Fade, scrolls\">\n    <ol class=\"fh-deck fh-deck--fade\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.1\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Blur <code>--blur</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Blur, scrolls\">\n    <ol class=\"fh-deck fh-deck--blur\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.2\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Lift <code>--lift</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Lift, scrolls\">\n    <ol class=\"fh-deck fh-deck--lift\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.3\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Fan <code>--fan</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Fan, scrolls\">\n    <ol class=\"fh-deck fh-deck--fan\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.4\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n</div>",
-          "markupFrom": "group",
-          "anchor": "c-deck-recede",
-          "demo": true
-        },
-        {
-          "id": "DEK-4",
-          "name": "Cards and captions",
-          "summary": "__card--split puts the picture on one half and the words on the other (picture over text in a narrow slot). __caption--top moves the caption up; __meta adds a small mono line. --count adds a 01 / 04 readout that follows the card in front.",
-          "variants": [
-            "DEK-4.1",
-            "DEK-4.2",
-            "DEK-4.3"
-          ],
-          "markup": "<div class=\"fh-grid\" data-cols=\"2\" style=\"--fh-grid-min: 18rem; --fh-gap: var(--fh-space-8)\">\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Split card <code>__card--split</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Split card, scrolls\">\n    <ol class=\"fh-deck\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 20rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-4.1\">\n      <li class=\"fh-deck__card fh-deck__card--split\" data-tone=\"orange\">\n        <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n        <div class=\"fh-deck__body\"><p class=\"fh-label\">Case 01</p><p class=\"fh-body\">A mark and a system that hold together.</p></div>\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card fh-deck__card--split\" data-tone=\"sky\">\n        <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-hoof.webp\" alt>\n        <div class=\"fh-deck__body\"><p class=\"fh-label\">Case 02</p><p class=\"fh-body\">Sites and products for every screen.</p></div>\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card fh-deck__card--split\" data-tone=\"violet\">\n        <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n        <div class=\"fh-deck__body\"><p class=\"fh-label\">Case 03</p><p class=\"fh-body\">A house style, set in motion.</p></div>\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Caption on top, meta line <code>__caption--top · __meta</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Caption on top, meta line, scrolls\">\n    <ol class=\"fh-deck\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-4.2\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding<small class=\"fh-deck__meta\">2026 · Identity</small></span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital<small class=\"fh-deck__meta\">2025 · Web, product</small></span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion<small class=\"fh-deck__meta\">2025 · Film, UI</small></span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction<small class=\"fh-deck__meta\">2024 · Campaign</small></span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Count <code>--count</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Count, scrolls\">\n    <ol class=\"fh-deck fh-deck--count\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-4.3\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n</div>",
-          "markupFrom": "group",
-          "anchor": "c-deck-cards",
-          "demo": true
-        },
-        {
-          "id": "DEK-5",
-          "name": "Direction",
-          "summary": "--x runs the deck sideways in its own scroll row; cards pin at the left edge and recede to the left. --reverse keeps the cards in a pile at the bottom, and the front one rises off it as you scroll.",
-          "variants": [
-            "DEK-5.1",
-            "DEK-5.2"
-          ],
-          "markup": "<div class=\"fh-grid\" data-cols=\"2\" style=\"--fh-grid-min: 18rem; --fh-gap: var(--fh-space-8)\">\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Sideways <code>--x</code></figcaption>\n  <ol class=\"fh-deck fh-deck--x\" style=\"--fh-deck-height: 16rem; --fh-deck-width: min(80%, 22rem)\" data-fh=\"DEK-5.1\">\n    <li class=\"fh-deck__card\" data-tone=\"orange\">\n      <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n    </li>\n    <li class=\"fh-deck__card\" data-tone=\"sky\">\n      <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n    </li>\n    <li class=\"fh-deck__card\" data-tone=\"violet\">\n      <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n    </li>\n    <li class=\"fh-deck__card\" data-tone=\"lime\">\n      <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n    </li>\n  </ol>\n</figure>\n<figure class=\"fh-stack fh-stack--sm\">\n  <figcaption class=\"fh-label\">Reverse <code>--reverse</code></figcaption>\n  <div style=\"block-size: 26rem; overflow-y: auto; padding: 0.75rem\" tabindex=\"0\" aria-label=\"Reverse, scrolls\">\n    <ol class=\"fh-deck fh-deck--reverse\" style=\"--fh-deck-bottom: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-5.2\">\n      <li class=\"fh-deck__card\" data-tone=\"orange\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"sky\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"violet\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n      </li>\n      <li class=\"fh-deck__card\" data-tone=\"lime\">\n        <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n      </li>\n    </ol>\n  </div>\n</figure>\n</div>",
-          "markupFrom": "group",
-          "anchor": "c-deck-direction",
-          "demo": true
         }
       ],
       "variants": [
         {
           "id": "DEK-1.1",
           "group": "DEK-1",
-          "name": "Tone cards · media",
+          "name": "Deck",
           "classes": [
             "fh-deck",
             "fh-deck__card",
+            "fh-deck__head",
+            "fh-deck__cube",
+            "fh-icon",
+            "fh-deck__eyebrow",
+            "fh-deck__go",
             "fh-deck__media",
-            "fh-deck__caption",
-            "fh-deck__index",
+            "fh-deck__foot",
             "fh-deck__title",
-            "fh-deck__body",
-            "fh-label",
-            "fh-lede"
+            "fh-deck__note"
           ],
           "config": {},
-          "markup": "<ol class=\"fh-deck\" data-fh=\"DEK-1.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 02</p><p class=\"fh-lede\">Sites and products that hold up on every screen.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 03</p><p class=\"fh-lede\">Motion systems, from a hover to a launch film.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 04</p><p class=\"fh-lede\">Shoots, casting and art direction for campaigns.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-2.1",
-          "group": "DEK-2",
-          "name": "Hero handoff",
-          "classes": [
-            "fh-deck",
-            "fh-deck--hero",
-            "fh-deck__card",
-            "fh-deck__media",
-            "fh-deck__body",
-            "fh-title",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title",
-            "fh-label",
-            "fh-lede"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--hero\" data-fh=\"DEK-2.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__body\"><p class=\"fh-title\">Ink, etch &amp; ember. A studio in four practices.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">Studio</span><span class=\"fh-deck__title\">(Scroll)</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"amber\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 01</p><p class=\"fh-lede\">Marks, type and systems that hold together.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 02</p><p class=\"fh-lede\">Sites and products that hold up on every screen.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 03</p><p class=\"fh-lede\">Motion systems, from a hover to a launch film.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Practice 04</p><p class=\"fh-lede\">Shoots, casting and art direction for campaigns.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-3.1",
-          "group": "DEK-3",
-          "name": "Fade",
-          "classes": [
-            "fh-deck",
-            "fh-deck--fade",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--fade\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-3.2",
-          "group": "DEK-3",
-          "name": "Blur",
-          "classes": [
-            "fh-deck",
-            "fh-deck--blur",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--blur\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.2\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-3.3",
-          "group": "DEK-3",
-          "name": "Lift",
-          "classes": [
-            "fh-deck",
-            "fh-deck--lift",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--lift\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.3\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-3.4",
-          "group": "DEK-3",
-          "name": "Fan",
-          "classes": [
-            "fh-deck",
-            "fh-deck--fan",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--fan\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-3.4\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-4.1",
-          "group": "DEK-4",
-          "name": "Split card",
-          "classes": [
-            "fh-deck",
-            "fh-deck__card",
-            "fh-deck__card--split",
-            "fh-deck__media",
-            "fh-deck__body",
-            "fh-label",
-            "fh-body",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 20rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-4.1\">\n  <li class=\"fh-deck__card fh-deck__card--split\" data-tone=\"orange\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Case 01</p><p class=\"fh-body\">A mark and a system that hold together.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card fh-deck__card--split\" data-tone=\"sky\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-hoof.webp\" alt>\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Case 02</p><p class=\"fh-body\">Sites and products for every screen.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card fh-deck__card--split\" data-tone=\"violet\">\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__body\"><p class=\"fh-label\">Case 03</p><p class=\"fh-body\">A house style, set in motion.</p></div>\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-4.2",
-          "group": "DEK-4",
-          "name": "Caption top · meta",
-          "classes": [
-            "fh-deck",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__caption--top",
-            "fh-deck__index",
-            "fh-deck__title",
-            "fh-deck__meta"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-4.2\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding<small class=\"fh-deck__meta\">2026 · Identity</small></span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital<small class=\"fh-deck__meta\">2025 · Web, product</small></span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion<small class=\"fh-deck__meta\">2025 · Film, UI</small></span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption fh-deck__caption--top\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction<small class=\"fh-deck__meta\">2024 · Campaign</small></span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-4.3",
-          "group": "DEK-4",
-          "name": "Count",
-          "classes": [
-            "fh-deck",
-            "fh-deck--count",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--count\" style=\"--fh-deck-top: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-4.3\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-5.1",
-          "group": "DEK-5",
-          "name": "Sideways",
-          "classes": [
-            "fh-deck",
-            "fh-deck--x",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--x\" style=\"--fh-deck-height: 16rem; --fh-deck-width: min(80%, 22rem)\" data-fh=\"DEK-5.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "DEK-5.2",
-          "group": "DEK-5",
-          "name": "Reverse",
-          "classes": [
-            "fh-deck",
-            "fh-deck--reverse",
-            "fh-deck__card",
-            "fh-deck__caption",
-            "fh-deck__index",
-            "fh-deck__title"
-          ],
-          "config": {},
-          "markup": "<ol class=\"fh-deck fh-deck--reverse\" style=\"--fh-deck-bottom: 0.75rem; --fh-deck-height: 15rem; --fh-deck-gap: 5rem\" data-fh=\"DEK-5.2\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">01</span><span class=\"fh-deck__title\">Branding</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">02</span><span class=\"fh-deck__title\">Digital</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">03</span><span class=\"fh-deck__title\">Motion</span></p>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <p class=\"fh-deck__caption\"><span class=\"fh-deck__index\">04</span><span class=\"fh-deck__title\">Art direction</span></p>\n  </li>\n</ol>",
+          "markup": "<ol class=\"fh-deck\" data-fh=\"DEK-1.1\">\n  <li class=\"fh-deck__card\" data-tone=\"orange\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--palette\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">01 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <img class=\"fh-deck__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Branding</b><span class=\"fh-deck__note\">Identities that hold up from a favicon to a billboard.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"sky\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--monitor\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">02 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Digital</b><span class=\"fh-deck__note\">Sites and products that hold up on every screen.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"violet\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--play\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">03 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Motion</b><span class=\"fh-deck__note\">Motion systems, from a hover to a launch film.</span></div>\n  </li>\n  <li class=\"fh-deck__card\" data-tone=\"lime\">\n    <div class=\"fh-deck__head\"><span class=\"fh-deck__cube\"><i class=\"fh-icon fh-icon--sparkles\" aria-hidden=\"true\"></i></span><small class=\"fh-deck__eyebrow\">04 · Practice</small><i class=\"fh-icon fh-icon--arrow-right fh-deck__go\" aria-hidden=\"true\"></i></div>\n    <div class=\"fh-deck__foot\"><b class=\"fh-deck__title\">Art direction</b><span class=\"fh-deck__note\">Shoots, casting and art direction for campaigns.</span></div>\n  </li>\n</ol>",
           "status": "hold",
           "tier": "free"
         }
       ],
       "stageClasses": [
         "fh-deck",
-        "fh-deck--hero",
         "fh-deck__card",
+        "fh-deck__head",
+        "fh-deck__cube",
+        "fh-icon",
+        "fh-deck__eyebrow",
+        "fh-deck__go",
         "fh-deck__media",
-        "fh-deck__body",
-        "fh-title",
-        "fh-deck__caption",
-        "fh-deck__index",
+        "fh-deck__foot",
         "fh-deck__title",
-        "fh-label",
-        "fh-lede"
+        "fh-deck__note"
       ],
       "status": "hold",
       "tier": "free"
@@ -5198,10 +4955,9 @@
       "anchor": "c-story",
       "page": "/components/content/",
       "url": "https://firehorse.rascode.dev/components/content/story-card/",
-      "summary": "A tall card in three parts: a logo on top, a quote and a link at the bottom, and a wide open field between them that carries the story. Here the field draws a brand mark in shimmering vertical lines; hover brings it up. Solid fills come from the Firehorse palette: data-tone on its own, --deep toward ink, --ink, --paper. The whole card is the link.",
+      "summary": "One card in three parts: a logo on top, a line and a link at the bottom, and an open field between them that carries the story. Each variant changes one thing: the surface (tone, ink or paper; the tone is data-tone, any tone on any surface) or what the field holds (a picture, a big figure, a meter).",
       "classes": [
         "fh-story",
-        "fh-story--deep",
         "fh-story__head",
         "fh-story__logo",
         "fh-story__field",
@@ -5211,75 +4967,50 @@
         "fh-story__quote",
         "fh-story__link",
         "fh-story--ink",
-        "fh-story__figure",
-        "fh-story__figure-label",
         "fh-story--paper",
         "fh-story__media",
         "fh-story__tag",
-        "fh-story--glare",
-        "fh-story--duotone",
-        "fh-progress-field",
-        "fh-progress",
+        "fh-story__figure",
+        "fh-story__figure-label",
         "fh-story__ring-wrap",
-        "fh-story__ring",
-        "fh-story__chart"
+        "fh-story__ring"
       ],
-      "markup": "<article class=\"fh-story fh-story--deep\" data-tone=\"violet\" data-fh=\"STY-1.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon keeps a million rooms in sync with Firehorse.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>",
+      "markup": "<article class=\"fh-story\" data-tone=\"violet\" data-fh=\"STY-1.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon keeps a million rooms in sync with Firehorse.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>",
       "groups": [
         {
           "id": "STY-1",
-          "name": "Solid",
-          "summary": "",
+          "name": "Surface",
+          "summary": ".fh-story · --ink · --paper",
           "variants": [
             "STY-1.1",
             "STY-1.2",
-            "STY-1.3",
-            "STY-1.4",
-            "STY-1.5",
-            "STY-1.6"
+            "STY-1.3"
           ],
-          "markup": "<article class=\"fh-story fh-story--deep\" data-tone=\"violet\" data-fh=\"STY-1.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon keeps a million rooms in sync with Firehorse.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>",
-          "markupFrom": "variant"
+          "markup": "<div><dt>Surface<code>.fh-story · --ink · --paper</code></dt><dd>\n<div class=\"fh-grid\" data-cols=\"3\" style=\"--fh-grid-min: 15rem; --fh-gap: var(--fh-space-6)\">\n<article class=\"fh-story\" data-tone=\"violet\" data-fh=\"STY-1.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon keeps a million rooms in sync with Firehorse.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--ink\" data-tone=\"violet\" data-fh=\"STY-1.2\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg>Voltline</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Voltline ships every dashboard on one design system.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Voltline's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--paper\" data-tone=\"teal\" data-fh=\"STY-1.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen builds its docs, app and emails from one set of tokens.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>\n</div></dd></div>",
+          "markupFrom": "group",
+          "anchor": "c-story"
         },
         {
           "id": "STY-2",
-          "name": "Picture and glare",
-          "summary": "__media puts a picture behind the card with a scrim top and bottom; --duotone washes it in the tone. --glare sends a band of light across the card every few seconds, and quickly on hover, over a picture or a solid fill.",
+          "name": "Centre",
+          "summary": "__media · __figure · __ring",
           "variants": [
             "STY-2.1",
             "STY-2.2",
-            "STY-2.3",
-            "STY-2.4"
+            "STY-2.3"
           ],
-          "markup": "<div class=\"fh-grid\" data-cols=\"4\" style=\"--fh-grid-min: 15rem; --fh-gap: var(--fh-space-6)\">\n<article class=\"fh-story\" data-tone=\"orange\" data-fh=\"STY-2.1\">\n  <img class=\"fh-story__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M22 90V46a28 28 0 0 1 56 0v44\" fill=\"none\" stroke-width=\"16\"></path></svg>Stirrup</span><span class=\"fh-story__tag\">Case study</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Stirrup's riders book a lesson in under a minute.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Stirrup's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--glare\" data-tone=\"amber\" data-fh=\"STY-2.2\">\n  <img class=\"fh-story__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span><span class=\"fh-story__tag\">Launch</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon launched its new site in a single sprint.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--deep fh-story--duotone\" data-tone=\"violet\" data-fh=\"STY-2.3\">\n  <img class=\"fh-story__media\" src=\"img/backdrop/firehorse-hoof.webp\" alt>\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M6 60c14-28 30-28 44 0s30 28 44 0\" fill=\"none\" stroke-width=\"16\"></path></svg>Northwind</span><span class=\"fh-story__tag\">Archive</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Northwind's archive, re-set in its own type.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Northwind's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--deep fh-story--glare\" data-tone=\"fuchsia\" data-fh=\"STY-2.4\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg>Voltline</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Voltline's team ships twice as often since the move.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Voltline's story</a>\n  </footer>\n</article>\n</div>",
+          "markup": "<div><dt>Centre<code>__media · __figure · __ring</code></dt><dd>\n<div class=\"fh-grid\" data-cols=\"3\" style=\"--fh-grid-min: 15rem; --fh-gap: var(--fh-space-6)\">\n<article class=\"fh-story\" data-tone=\"orange\" data-fh=\"STY-2.1\">\n  <img class=\"fh-story__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M22 90V46a28 28 0 0 1 56 0v44\" fill=\"none\" stroke-width=\"16\"></path></svg>Stirrup</span><span class=\"fh-story__tag\">Case study</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Stirrup's riders book a lesson in under a minute.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Stirrup's story</a>\n  </footer>\n</article>\n<article class=\"fh-story\" data-tone=\"lime\" data-fh=\"STY-2.2\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M22 90V46a28 28 0 0 1 56 0v44\" fill=\"none\" stroke-width=\"16\"></path></svg>Stirrup</span></header>\n  <div class=\"fh-story__field\"><p class=\"fh-story__figure\">98%</p><p class=\"fh-story__figure-label\">Screens moved</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Stirrup moved 98% of its screens in six weeks.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Stirrup's story</a>\n  </footer>\n</article>\n<article class=\"fh-story\" data-tone=\"teal\" data-fh=\"STY-2.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span><span class=\"fh-story__tag\">Tokens</span></header>\n  <div class=\"fh-story__field\"><div class=\"fh-story__ring-wrap\"><span class=\"fh-story__ring\" style=\"--value: 72\" role=\"img\" aria-label=\"72% complete\"></span><p class=\"fh-story__figure\">72%</p></div><p class=\"fh-story__figure-label\">Complete</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen's token migration is nearly there.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>\n</div></dd></div>",
           "markupFrom": "group",
-          "anchor": "c-story-image",
-          "demo": true
-        },
-        {
-          "id": "STY-3",
-          "name": "In the field",
-          "summary": "The open middle holds what the story needs: Firehorse progress fields, a __ring that fills to --value as it scrolls in, a __chart of columns drawn in lines, a live indeterminate bar with a count. Anything else fits too.",
-          "variants": [
-            "STY-3.1",
-            "STY-3.2",
-            "STY-3.3",
-            "STY-3.4"
-          ],
-          "markup": "<div class=\"fh-grid\" data-cols=\"4\" style=\"--fh-grid-min: 15rem; --fh-gap: var(--fh-space-6)\">\n<article class=\"fh-story fh-story--deep\" data-tone=\"amber\" data-fh=\"STY-3.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"50,4 90,27 90,73 50,96 10,73 10,27\"></polygon></svg>Hexwork</span><span class=\"fh-story__tag\">Week 4</span></header>\n  <div class=\"fh-story__field\">\n    <div class=\"fh-progress-field\"><span>Migration</span><output>72%</output><progress class=\"fh-progress\" value=\"72\" max=\"100\">72%</progress></div>\n    <div class=\"fh-progress-field\"><span>Tests</span><output>100%</output><progress class=\"fh-progress\" value=\"100\" max=\"100\">100%</progress></div>\n    <div class=\"fh-progress-field\"><span>Docs</span><output>40%</output><progress class=\"fh-progress\" value=\"40\" max=\"100\">40%</progress></div>\n  </div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Hexwork's move to Firehorse, week four.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Hexwork's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--deep\" data-tone=\"teal\" data-fh=\"STY-3.2\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span><span class=\"fh-story__tag\">Tokens</span></header>\n  <div class=\"fh-story__field\"><div class=\"fh-story__ring-wrap\"><span class=\"fh-story__ring\" style=\"--value: 72\" role=\"img\" aria-label=\"72% complete\"></span><p class=\"fh-story__figure\">72%</p></div><p class=\"fh-story__figure-label\" style=\"text-align: center\">Complete</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen's token migration is nearly there.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>\n<article class=\"fh-story\" data-tone=\"sky\" data-fh=\"STY-3.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M6 60c14-28 30-28 44 0s30 28 44 0\" fill=\"none\" stroke-width=\"16\"></path></svg>Northwind</span><span class=\"fh-story__tag\">Releases</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"><div class=\"fh-story__chart\"><span style=\"--value: 18\"></span><span style=\"--value: 26\"></span><span style=\"--value: 22\"></span><span style=\"--value: 38\"></span><span style=\"--value: 34\"></span><span style=\"--value: 52\"></span><span style=\"--value: 61\"></span><span style=\"--value: 78\"></span></div></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Northwind's weekly releases, up eight weeks running.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Northwind's story</a>\n  </footer>\n</article>\n<article class=\"fh-story fh-story--ink fh-story--glare\" data-tone=\"rose\" data-fh=\"STY-3.4\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg>Voltline</span><span class=\"fh-story__tag\">Live</span></header>\n  <div class=\"fh-story__field\">\n    <p class=\"fh-story__figure-label\">Deploying · 2 of 5</p>\n    <progress class=\"fh-progress\" aria-label=\"Deploying\"></progress>\n    <p class=\"fh-story__figure\">02<span style=\"opacity: 0.4\">/05</span></p>\n  </div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Voltline is rolling out its new dashboard now.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Voltline's story</a>\n  </footer>\n</article>\n</div>",
-          "markupFrom": "group",
-          "anchor": "c-story-field",
-          "demo": true
+          "anchor": "c-story"
         }
       ],
       "variants": [
         {
           "id": "STY-1.1",
           "group": "STY-1",
-          "name": "Violet · deep · lines",
+          "name": "Tone",
           "classes": [
             "fh-story",
-            "fh-story--deep",
             "fh-story__head",
             "fh-story__logo",
             "fh-story__field",
@@ -5290,14 +5021,14 @@
             "fh-story__link"
           ],
           "config": {},
-          "markup": "<article class=\"fh-story fh-story--deep\" data-tone=\"violet\" data-fh=\"STY-1.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon keeps a million rooms in sync with Firehorse.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>",
+          "markup": "<article class=\"fh-story\" data-tone=\"violet\" data-fh=\"STY-1.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon keeps a million rooms in sync with Firehorse.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>",
           "status": "hold",
           "tier": "free"
         },
         {
           "id": "STY-1.2",
           "group": "STY-1",
-          "name": "Ink · lines",
+          "name": "Ink",
           "classes": [
             "fh-story",
             "fh-story--ink",
@@ -5318,68 +5049,7 @@
         {
           "id": "STY-1.3",
           "group": "STY-1",
-          "name": "Ember · lines",
-          "classes": [
-            "fh-story",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__field",
-            "fh-story__field--lines",
-            "fh-story__mark",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story\" data-tone=\"accent\" data-fh=\"STY-1.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"50,4 90,27 90,73 50,96 10,73 10,27\"></polygon></svg>Hexwork</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><polygon points=\"50,4 90,27 90,73 50,96 10,73 10,27\"></polygon></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Hexwork cut its UI code in half in a quarter.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Hexwork's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-1.4",
-          "group": "STY-1",
-          "name": "Lime · figure",
-          "classes": [
-            "fh-story",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__field",
-            "fh-story__figure",
-            "fh-story__figure-label",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story\" data-tone=\"lime\" data-fh=\"STY-1.4\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M22 90V46a28 28 0 0 1 56 0v44\" fill=\"none\" stroke-width=\"16\"></path></svg>Stirrup</span></header>\n  <div class=\"fh-story__field\"><p class=\"fh-story__figure\">98%</p><p class=\"fh-story__figure-label\">Screens moved</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Stirrup moved 98% of its screens in six weeks.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Stirrup's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-1.5",
-          "group": "STY-1",
-          "name": "Sky · deep · lines",
-          "classes": [
-            "fh-story",
-            "fh-story--deep",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__field",
-            "fh-story__field--lines",
-            "fh-story__mark",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story fh-story--deep\" data-tone=\"sky\" data-fh=\"STY-1.5\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M6 60c14-28 30-28 44 0s30 28 44 0\" fill=\"none\" stroke-width=\"16\"></path></svg>Northwind</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><path d=\"M6 60c14-28 30-28 44 0s30 28 44 0\" fill=\"none\" stroke-width=\"16\"></path></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Northwind reads every surface the same, light or dark.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Northwind's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-1.6",
-          "group": "STY-1",
-          "name": "Paper · lines",
+          "name": "Paper",
           "classes": [
             "fh-story",
             "fh-story--paper",
@@ -5393,7 +5063,7 @@
             "fh-story__link"
           ],
           "config": {},
-          "markup": "<article class=\"fh-story fh-story--paper\" data-tone=\"teal\" data-fh=\"STY-1.6\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen builds its docs, app and emails from one set of tokens.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>",
+          "markup": "<article class=\"fh-story fh-story--paper\" data-tone=\"teal\" data-fh=\"STY-1.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen builds its docs, app and emails from one set of tokens.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>",
           "status": "hold",
           "tier": "free"
         },
@@ -5420,97 +5090,29 @@
         {
           "id": "STY-2.2",
           "group": "STY-2",
-          "name": "Picture · glare",
+          "name": "Figure",
           "classes": [
             "fh-story",
-            "fh-story--glare",
-            "fh-story__media",
             "fh-story__head",
             "fh-story__logo",
-            "fh-story__tag",
             "fh-story__field",
+            "fh-story__figure",
+            "fh-story__figure-label",
             "fh-story__foot",
             "fh-story__quote",
             "fh-story__link"
           ],
           "config": {},
-          "markup": "<article class=\"fh-story fh-story--glare\" data-tone=\"amber\" data-fh=\"STY-2.2\">\n  <img class=\"fh-story__media\" src=\"img/backdrop/firehorse-horse.webp\" alt>\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><circle cx=\"50\" cy=\"50\" r=\"33\" fill=\"none\" stroke-width=\"16\"></circle></svg>Halcyon</span><span class=\"fh-story__tag\">Launch</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Halcyon launched its new site in a single sprint.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Halcyon's story</a>\n  </footer>\n</article>",
+          "markup": "<article class=\"fh-story\" data-tone=\"lime\" data-fh=\"STY-2.2\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M22 90V46a28 28 0 0 1 56 0v44\" fill=\"none\" stroke-width=\"16\"></path></svg>Stirrup</span></header>\n  <div class=\"fh-story__field\"><p class=\"fh-story__figure\">98%</p><p class=\"fh-story__figure-label\">Screens moved</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Stirrup moved 98% of its screens in six weeks.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Stirrup's story</a>\n  </footer>\n</article>",
           "status": "hold",
           "tier": "free"
         },
         {
           "id": "STY-2.3",
           "group": "STY-2",
-          "name": "Duotone",
+          "name": "Meter",
           "classes": [
             "fh-story",
-            "fh-story--deep",
-            "fh-story--duotone",
-            "fh-story__media",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__tag",
-            "fh-story__field",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story fh-story--deep fh-story--duotone\" data-tone=\"violet\" data-fh=\"STY-2.3\">\n  <img class=\"fh-story__media\" src=\"img/backdrop/firehorse-hoof.webp\" alt>\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M6 60c14-28 30-28 44 0s30 28 44 0\" fill=\"none\" stroke-width=\"16\"></path></svg>Northwind</span><span class=\"fh-story__tag\">Archive</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Northwind's archive, re-set in its own type.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Northwind's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-2.4",
-          "group": "STY-2",
-          "name": "Fuchsia · deep · glare · lines",
-          "classes": [
-            "fh-story",
-            "fh-story--deep",
-            "fh-story--glare",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__field",
-            "fh-story__field--lines",
-            "fh-story__mark",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story fh-story--deep fh-story--glare\" data-tone=\"fuchsia\" data-fh=\"STY-2.4\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg>Voltline</span></header>\n  <div class=\"fh-story__field fh-story__field--lines\" aria-hidden=\"true\"><svg class=\"fh-story__mark\" viewBox=\"0 0 100 100\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Voltline's team ships twice as often since the move.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Voltline's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-3.1",
-          "group": "STY-3",
-          "name": "Progress",
-          "classes": [
-            "fh-story",
-            "fh-story--deep",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__tag",
-            "fh-story__field",
-            "fh-progress-field",
-            "fh-progress",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story fh-story--deep\" data-tone=\"amber\" data-fh=\"STY-3.1\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"50,4 90,27 90,73 50,96 10,73 10,27\"></polygon></svg>Hexwork</span><span class=\"fh-story__tag\">Week 4</span></header>\n  <div class=\"fh-story__field\">\n    <div class=\"fh-progress-field\"><span>Migration</span><output>72%</output><progress class=\"fh-progress\" value=\"72\" max=\"100\">72%</progress></div>\n    <div class=\"fh-progress-field\"><span>Tests</span><output>100%</output><progress class=\"fh-progress\" value=\"100\" max=\"100\">100%</progress></div>\n    <div class=\"fh-progress-field\"><span>Docs</span><output>40%</output><progress class=\"fh-progress\" value=\"40\" max=\"100\">40%</progress></div>\n  </div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Hexwork's move to Firehorse, week four.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Hexwork's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-3.2",
-          "group": "STY-3",
-          "name": "Ring",
-          "classes": [
-            "fh-story",
-            "fh-story--deep",
             "fh-story__head",
             "fh-story__logo",
             "fh-story__tag",
@@ -5524,59 +5126,15 @@
             "fh-story__link"
           ],
           "config": {},
-          "markup": "<article class=\"fh-story fh-story--deep\" data-tone=\"teal\" data-fh=\"STY-3.2\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span><span class=\"fh-story__tag\">Tokens</span></header>\n  <div class=\"fh-story__field\"><div class=\"fh-story__ring-wrap\"><span class=\"fh-story__ring\" style=\"--value: 72\" role=\"img\" aria-label=\"72% complete\"></span><p class=\"fh-story__figure\">72%</p></div><p class=\"fh-story__figure-label\" style=\"text-align: center\">Complete</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen's token migration is nearly there.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-3.3",
-          "group": "STY-3",
-          "name": "Chart",
-          "classes": [
-            "fh-story",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__tag",
-            "fh-story__field",
-            "fh-story__chart",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story\" data-tone=\"sky\" data-fh=\"STY-3.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><path d=\"M6 60c14-28 30-28 44 0s30 28 44 0\" fill=\"none\" stroke-width=\"16\"></path></svg>Northwind</span><span class=\"fh-story__tag\">Releases</span></header>\n  <div class=\"fh-story__field\" aria-hidden=\"true\"><div class=\"fh-story__chart\"><span style=\"--value: 18\"></span><span style=\"--value: 26\"></span><span style=\"--value: 22\"></span><span style=\"--value: 38\"></span><span style=\"--value: 34\"></span><span style=\"--value: 52\"></span><span style=\"--value: 61\"></span><span style=\"--value: 78\"></span></div></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Northwind's weekly releases, up eight weeks running.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Northwind's story</a>\n  </footer>\n</article>",
-          "status": "hold",
-          "tier": "free"
-        },
-        {
-          "id": "STY-3.4",
-          "group": "STY-3",
-          "name": "Live",
-          "classes": [
-            "fh-story",
-            "fh-story--ink",
-            "fh-story--glare",
-            "fh-story__head",
-            "fh-story__logo",
-            "fh-story__tag",
-            "fh-story__field",
-            "fh-story__figure-label",
-            "fh-progress",
-            "fh-story__figure",
-            "fh-story__foot",
-            "fh-story__quote",
-            "fh-story__link"
-          ],
-          "config": {},
-          "markup": "<article class=\"fh-story fh-story--ink fh-story--glare\" data-tone=\"rose\" data-fh=\"STY-3.4\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><polygon points=\"38,6 74,6 52,42 78,42 30,96 44,56 22,56\"></polygon></svg>Voltline</span><span class=\"fh-story__tag\">Live</span></header>\n  <div class=\"fh-story__field\">\n    <p class=\"fh-story__figure-label\">Deploying · 2 of 5</p>\n    <progress class=\"fh-progress\" aria-label=\"Deploying\"></progress>\n    <p class=\"fh-story__figure\">02<span style=\"opacity: 0.4\">/05</span></p>\n  </div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Voltline is rolling out its new dashboard now.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Voltline's story</a>\n  </footer>\n</article>",
+          "markup": "<article class=\"fh-story\" data-tone=\"teal\" data-fh=\"STY-2.3\">\n  <header class=\"fh-story__head\"><span class=\"fh-story__logo\"><svg viewBox=\"0 0 100 100\" aria-hidden=\"true\"><rect x=\"10\" y=\"14\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"41\" width=\"80\" height=\"18\" rx=\"9\"></rect><rect x=\"10\" y=\"68\" width=\"80\" height=\"18\" rx=\"9\"></rect></svg>Lumen</span><span class=\"fh-story__tag\">Tokens</span></header>\n  <div class=\"fh-story__field\"><div class=\"fh-story__ring-wrap\"><span class=\"fh-story__ring\" style=\"--value: 72\" role=\"img\" aria-label=\"72% complete\"></span><p class=\"fh-story__figure\">72%</p></div><p class=\"fh-story__figure-label\">Complete</p></div>\n  <footer class=\"fh-story__foot\">\n    <p class=\"fh-story__quote\">Lumen's token migration is nearly there.</p>\n    <a class=\"fh-story__link\" href=\"#STY\">Read Lumen's story</a>\n  </footer>\n</article>",
           "status": "hold",
           "tier": "free"
         }
       ],
       "stageClasses": [
+        "fh-dl",
         "fh-grid",
         "fh-story",
-        "fh-story--deep",
         "fh-story__head",
         "fh-story__logo",
         "fh-story__field",
@@ -5586,9 +5144,13 @@
         "fh-story__quote",
         "fh-story__link",
         "fh-story--ink",
+        "fh-story--paper",
+        "fh-story__media",
+        "fh-story__tag",
         "fh-story__figure",
         "fh-story__figure-label",
-        "fh-story--paper"
+        "fh-story__ring-wrap",
+        "fh-story__ring"
       ],
       "status": "hold",
       "tier": "free"
@@ -19756,6 +19318,9 @@
     "SOC-01": "SOC-1.1",
     "SOC-02": "SOC-1.2",
     "SOC-03": "SOC-1.3",
+    "STY-1.4": "STY-2.2",
+    "STY-1.6": "STY-1.3",
+    "STY-3.2": "STY-2.3",
     "TAG-01": "TAG-1.1",
     "TAG-02": "TAG-2.1",
     "TAG-03": "TAG-2.2",

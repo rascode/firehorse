@@ -11828,6 +11828,19 @@
     inset-inline-end: var(--fh-gap-grouped);
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      
+    }
+  }
+
+  @keyframes fh-deck-recede {
+    to {
+      scale: calc(1 - var(--_k) * var(--_shrink));
+      filter: brightness(calc(1 - var(--_k) * var(--_dim)));
+    }
+  }
+
   .fh-swatches-ramp {
     border: var(--fh-border-thin) var(--fh-card-border-style, solid) var(--fh-color-border-strong);
     border-radius: var(--fh-radius-md);
