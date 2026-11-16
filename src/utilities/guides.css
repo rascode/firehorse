@@ -51,7 +51,7 @@
   /* Everything else: one layer, each guide adding its own image. */
   html[data-fh-guides]::after {
     --_none: linear-gradient(transparent, transparent);
-    --_line: 1px;
+    --_line: var(--fh-border-thin);
     --_c: var(--fh-guides-color, color-mix(in oklab, var(--fh-color-accent) 55%, transparent));
     inset-inline: 0;
     background-image:
@@ -62,27 +62,27 @@
       var(--_safe, var(--_none));
   }
   html[data-fh-guides~="golden"]::after {
-    --_golden: linear-gradient(to right, transparent calc(38.2% - 0.5px), var(--_c) 0 calc(38.2% + 0.5px), transparent 0 calc(61.8% - 0.5px), var(--_c) 0 calc(61.8% + 0.5px), transparent 0);
-    --_golden-y: linear-gradient(to bottom, transparent calc(38.2% - 0.5px), var(--_c) 0 calc(38.2% + 0.5px), transparent 0 calc(61.8% - 0.5px), var(--_c) 0 calc(61.8% + 0.5px), transparent 0);
+    --_golden: linear-gradient(to right, transparent calc(38.2% - var(--fh-border-thin) / 2), var(--_c) 0 calc(38.2% + var(--fh-border-thin) / 2), transparent 0 calc(61.8% - var(--fh-border-thin) / 2), var(--_c) 0 calc(61.8% + var(--fh-border-thin) / 2), transparent 0);
+    --_golden-y: linear-gradient(to bottom, transparent calc(38.2% - var(--fh-border-thin) / 2), var(--_c) 0 calc(38.2% + var(--fh-border-thin) / 2), transparent 0 calc(61.8% - var(--fh-border-thin) / 2), var(--_c) 0 calc(61.8% + var(--fh-border-thin) / 2), transparent 0);
   }
   html[data-fh-guides~="thirds"]::after {
-    --_thirds: linear-gradient(to right, transparent calc(33.333% - 0.5px), var(--_c) 0 calc(33.333% + 0.5px), transparent 0 calc(66.667% - 0.5px), var(--_c) 0 calc(66.667% + 0.5px), transparent 0);
-    --_thirds-y: linear-gradient(to bottom, transparent calc(33.333% - 0.5px), var(--_c) 0 calc(33.333% + 0.5px), transparent 0 calc(66.667% - 0.5px), var(--_c) 0 calc(66.667% + 0.5px), transparent 0);
+    --_thirds: linear-gradient(to right, transparent calc(33.333% - var(--fh-border-thin) / 2), var(--_c) 0 calc(33.333% + var(--fh-border-thin) / 2), transparent 0 calc(66.667% - var(--fh-border-thin) / 2), var(--_c) 0 calc(66.667% + var(--fh-border-thin) / 2), transparent 0);
+    --_thirds-y: linear-gradient(to bottom, transparent calc(33.333% - var(--fh-border-thin) / 2), var(--_c) 0 calc(33.333% + var(--fh-border-thin) / 2), transparent 0 calc(66.667% - var(--fh-border-thin) / 2), var(--_c) 0 calc(66.667% + var(--fh-border-thin) / 2), transparent 0);
   }
   html[data-fh-guides~="baseline"]::after {
-    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 1px, transparent 1px var(--fh-guides-baseline, var(--fh-space-2)));
+    --_baseline: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 22%, transparent) 0 var(--fh-border-thin), transparent var(--fh-border-thin) var(--fh-guides-baseline, var(--fh-space-2)));
   }
   html[data-fh-guides~="modular"]::after {
-    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module, var(--fh-space-8)));
-    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 1px, transparent 1px var(--fh-guides-module, var(--fh-space-8)));
+    --_modular: repeating-linear-gradient(to right, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 var(--fh-border-thin), transparent var(--fh-border-thin) var(--fh-guides-module, var(--fh-space-8)));
+    --_modular-y: repeating-linear-gradient(to bottom, color-mix(in oklab, var(--fh-color-accent) 16%, transparent) 0 var(--fh-border-thin), transparent var(--fh-border-thin) var(--fh-guides-module, var(--fh-space-8)));
   }
   html[data-fh-guides~="safe"]::after {
     --_m: var(--fh-page-margin);
     --_e: max(var(--fh-page-margin), (100vw - var(--fh-content-max)) / 2);
     --_safe: linear-gradient(to right,
       color-mix(in oklab, var(--fh-color-danger) 10%, transparent) 0 max(var(--_m), env(safe-area-inset-left, 0px)),
-      transparent 0 calc(var(--_e) - 1px), var(--_c) 0 var(--_e),
-      transparent 0 calc(100% - var(--_e)), var(--_c) 0 calc(100% - var(--_e) + 1px),
+      transparent 0 calc(var(--_e) - var(--fh-border-thin)), var(--_c) 0 var(--_e),
+      transparent 0 calc(100% - var(--_e)), var(--_c) 0 calc(100% - var(--_e) + var(--fh-border-thin)),
       transparent 0 calc(100% - max(var(--_m), env(safe-area-inset-right, 0px))),
       color-mix(in oklab, var(--fh-color-danger) 10%, transparent) 0);
   }
