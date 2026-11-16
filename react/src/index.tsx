@@ -10,7 +10,7 @@
  */
 import * as React from "react";
 import { digitsFor, marksFor, formatTyped, parseMinor, formatMinor } from "@rascode/firehorse/money";
-import { Dialog as D, DropdownMenu as M, ContextMenu as CM, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C, Toast as To } from "radix-ui";
+import { Dialog as D, DropdownMenu as M, ContextMenu as CM, Popover as P, Tooltip as T, Tabs as Tb, Accordion as A, Select as S, Switch as Sw, Checkbox as C } from "radix-ui";
 
 export {
   SideNav,
@@ -424,10 +424,16 @@ export const Checkbox = ({ label, ...p }: React.ComponentProps<typeof C.Root> & 
 );
 
 /* —— Toasts —— */
-export const ToastProvider = ({ children }: { children: React.ReactNode }) => <To.Provider swipeDirection="right">{children}<To.Viewport className="fh-toaster" /></To.Provider>;
-export const Toast = ({ title, tone = "lime", ...p }: React.ComponentProps<typeof To.Root> & { title: React.ReactNode; tone?: Tone }) => (
-  <To.Root data-fh="DLG" className="fh-toast" data-tone={tone} {...p}><To.Title asChild><p>{title}</p></To.Title><To.Close className="fh-close" aria-label="Dismiss" /></To.Root>
-);
+export {
+  ToastProvider,
+  Toast,
+  Toaster,
+  toast,
+  type ToastProps,
+  type ToastOptions,
+  type ToastAction,
+  type ToastTone,
+} from "./toaster";
 
 /* —— Themes ——
  * A theme is the whole look in one attribute: <html data-fh-theme="friesian">.
