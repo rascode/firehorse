@@ -1434,28 +1434,36 @@ A code block with its copy button, a divider with a word in it, and keyboard key
 
 ### TIR · Pricing tiers
 
-The featured tier glows in its tone; every tier stacks or sits side by side by container.
+Each tier is a card in the new look: an Icon cube in its tone, a numbered name and the price on the stat tier. The featured tier takes a tone wash and its tag; the cards stack or sit side by side by container.
 
 ```html
 <div class="fh-tiers" data-fh="TIR">
   <article class="fh-tier" data-tone="sky">
-    <h4 class="fh-tier__name">Assessment</h4>
-    <p class="fh-tier__price"><b>$750</b> one time</p>
+    <header>
+      <div class="fh-tier__head"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--search" aria-hidden="true"></i></span><h4 class="fh-tier__name">Assessment</h4></div>
+      <p class="fh-tier__price"><b>$750</b> one time</p>
+      <p class="fh-tier__note">Readout in a week</p>
+    </header>
     <p class="fh-tier__pitch">Find the risks before they find you.</p>
     <ul class="fh-checklist" data-tone><li>Backend review</li><li>Risk register</li><li>30-minute readout</li></ul>
     <a class="fh-button fh-button--secondary fh-button--block" href="#c-pricing">Book assessment</a>
   </article>
-  <article class="fh-tier fh-tier--featured" data-tone="accent">
-    <span class="fh-tier__flag fh-badge">Most chosen</span>
-    <h4 class="fh-tier__name">Agent</h4>
-    <p class="fh-tier__price"><b>$1,695</b> per month</p>
+  <article class="fh-tier" data-tone="accent" data-featured="Most chosen">
+    <header>
+      <div class="fh-tier__head"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--bot" aria-hidden="true"></i></span><h4 class="fh-tier__name">Agent</h4></div>
+      <p class="fh-tier__price"><b>$1,695</b> per month</p>
+      <p class="fh-tier__note">3-day free trial</p>
+    </header>
     <p class="fh-tier__pitch">A trained agent on your channels, live in days.</p>
-    <ul class="fh-checklist" data-tone><li>Voice and text</li><li>5 channels wired</li><li>3-day free trial</li></ul>
+    <ul class="fh-checklist" data-tone><li>Voice and text</li><li>5 channels wired</li><li>Weekly tuning</li></ul>
     <a class="fh-button fh-button--block" href="#c-pricing">Add an agent</a>
   </article>
   <article class="fh-tier" data-tone="lime">
-    <h4 class="fh-tier__name">Managed</h4>
-    <p class="fh-tier__price"><b>$400</b> per month</p>
+    <header>
+      <div class="fh-tier__head"><span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--shield-check" aria-hidden="true"></i></span><h4 class="fh-tier__name">Managed</h4></div>
+      <p class="fh-tier__price"><b>$400</b> per month</p>
+      <p class="fh-tier__note">Cancel anytime</p>
+    </header>
     <p class="fh-tier__pitch">A steady hand on the systems you already run.</p>
     <ul class="fh-checklist" data-tone><li>Monitoring</li><li>Monthly report</li><li>Priority fixes</li></ul>
     <a class="fh-button fh-button--secondary fh-button--block" href="#c-pricing">Talk to us</a>

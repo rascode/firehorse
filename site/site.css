@@ -1181,9 +1181,7 @@ body::before {
 /* Four across, two by two, or one: never three plus an orphan. */
 @container fh-frame (inline-size >= 36rem) { .site-pricing__tiers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @container fh-frame (inline-size >= 68rem) { .site-pricing__tiers { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-/* Pricing: the etched tier sheet is the package's own (fh-tiers). The site
- * only adds the frost behind it and lines the rows up across tiers. */
-.site-pricing__tiers { background-color: var(--site-frost); }
+/* Pricing: the tier cards are the package's own (fh-tiers); the site lines the rows up across tiers. */
 .site-pricing__tiers > .fh-tier {
   /* Every tier shares the sheet's row tracks (header, pitch, features,
      actions), so prices, lists and buttons line up across the row.
@@ -1195,7 +1193,6 @@ body::before {
   grid-template-rows: subgrid;
   align-content: start;
 }
-.site-pricing__tiers .fh-tier__price > b { font-size: clamp(2.3rem, 1.6rem + 1.4vw, 2.9rem); }
 .site-pricing__tiers .fh-tier > .fh-checklist { align-self: stretch; }
 .site-pricing__tiers .fh-tier > :is(.fh-button, .fh-tier__actions) { align-self: start; margin-block-start: 0; }
 

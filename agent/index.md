@@ -1758,9 +1758,9 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## TIR · Pricing tiers
 
-The featured tier glows in its tone; every tier stacks or sits side by side by container.
+Each tier is a card in the new look: an Icon cube in its tone, a numbered name and the price on the stat tier. The featured tier takes a tone wash and its tag; the cards stack or sit side by side by container.
 
-Classes: `fh-tiers` `fh-tier` `fh-tier__name` `fh-tier__price` `fh-tier__pitch` `fh-checklist` `fh-button` `fh-button--secondary` `fh-button--block` `fh-tier--featured` `fh-tier__flag` `fh-badge`
+Classes: `fh-tiers` `fh-tier` `fh-tier__head` `fh-cube` `fh-cube--icon` `fh-icon` `fh-tier__name` `fh-tier__price` `fh-tier__note` `fh-tier__pitch` `fh-checklist` `fh-button` `fh-button--secondary` `fh-button--block`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/pricing-tiers/.
 

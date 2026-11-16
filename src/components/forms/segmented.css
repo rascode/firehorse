@@ -36,7 +36,7 @@
       padding: var(--fh-item-block) var(--fh-item-inline);
       border-radius: var(--fh-radius-pill);
       color: var(--fh-color-text-muted);
-      font-family: var(--fh-type-meta-family);
+      font-family: var(--fh-type-meta-family, var(--fh-font-sans));
       font-size: var(--fh-type-meta);
       font-weight: var(--fh-type-meta-weight);
       letter-spacing: var(--fh-type-meta-tracking);
@@ -80,9 +80,9 @@
   }
 
   .fh-segmented--sm {
-    padding: 2px;
+    padding: var(--fh-border-heavy);
 
-    & > label { padding: 0.32rem 0.6rem; font-size: var(--fh-text-micro); }
+    & > label { padding: var(--fh-segmented-sm-pad-block, 0.32rem) var(--fh-segmented-sm-pad-inline, 0.6rem); font-size: var(--fh-text-micro); }
   }
 
   /* Vertical, on purpose: --stack. Otherwise a row holds until the slot

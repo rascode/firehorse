@@ -252,7 +252,7 @@
     align-items: center;
     gap: var(--fh-gap-bound);
     inline-size: fit-content;
-    padding: 0.1rem var(--fh-inset-tight);
+    padding: var(--fh-metric-delta-pad, 0.1rem) var(--fh-inset-tight);
     border-radius: var(--fh-radius-pill);
     background-color: color-mix(in oklab, var(--_c, var(--fh-color-text-muted)) 14%, transparent);
     color: var(--_c, var(--fh-color-text-muted));
@@ -263,9 +263,9 @@
 
     &[data-trend="up"] { --_c: var(--_good); }
     &[data-trend="down"] { --_c: var(--_bad); }
-    &[data-trend="up"]::before { content: "▲"; font-size: 0.7em; }
-    &[data-trend="down"]::before { content: "▼"; font-size: 0.7em; }
-    &[data-trend="flat"]::before { content: "■"; font-size: 0.6em; }
+    &[data-trend="up"]::before { content: "▲"; font-size: var(--fh-metric-arrow, 0.7em); }
+    &[data-trend="down"]::before { content: "▼"; font-size: var(--fh-metric-arrow, 0.7em); }
+    &[data-trend="flat"]::before { content: "■"; font-size: var(--fh-metric-flat, 0.6em); }
   }
 
   :is(.fh-metric[data-good="down"], .fh-metric__delta[data-good="down"]) .fh-metric__delta,
