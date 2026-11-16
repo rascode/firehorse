@@ -4,7 +4,7 @@
  * image-field.css; the same markup as the plain script (dist/image-field.js),
  * with the behaviour held in React state instead.
  *
- *   <ImageField kind="person" size="xl" value={{ image, initials: "AM", label: "Ava Moreno" }}
+ *   <ImageField kind="person" size="2xl" value={{ image, initials: "AM", label: "Ava Moreno" }}
  *     onChange={(change) => save(change)} onFetchUrl={(url) => api.fetchImage(url)} />
  *
  * Fetching a URL is the host's job: onFetchUrl(url) resolves { image } or { error }.
@@ -35,7 +35,7 @@ export type ImageFieldProps = {
   icons?: string[];
   onChange?: (change: ImageFieldChange) => void;
   onFetchUrl?: (url: string) => Promise<{ image: string } | { error: string }>;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "2xl";
   /** An error for the field as a whole, in the field error style. */
   error?: string;
   className?: string;
