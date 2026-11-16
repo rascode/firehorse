@@ -104,6 +104,16 @@
     display: flex;
   }
 
+  /* The URL error is the field error line (FLD), shown by the pane state. */
+  .fh-image-field__pane[data-state="error"] .fh-field__error { display: block; }
+  .fh-image-field__pane[data-state="error"] .fh-input { border-color: var(--fh-color-danger); }
+
+  .fh-image-field__tones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound);
+  }
+
   .fh-image-field__icons {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(2.25rem, 1fr));
