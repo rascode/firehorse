@@ -65,6 +65,17 @@
     min-inline-size: 0;
   }
 
+  /* The brand in the head reads like the app bar's crumbs beside it: the same face and size as a crumb's name,
+   * the app's name heavier (bold), no icon, no mono caps. */
+  .fh-sidebar__head .fh-app__brand {
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
+    font-size: var(--fh-masthead-value-text, var(--fh-type-value));
+    letter-spacing: normal;
+    text-transform: none;
+
+    & span { color: var(--fh-color-text); font-weight: var(--fh-weight-bold); }
+  }
+
   .fh-sidebar__toggle {
     display: inline-grid;
     place-items: center;
