@@ -917,6 +917,12 @@
     color: var(--fh-color-text);
   }
 
+  .fh-sidebar__item:not([aria-current="page"], [data-contains-active="true"]) .fh-sidebar__cube {
+    background-color: color-mix(in oklab, var(--_ic) 14%, transparent);
+    color: var(--_ic);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+
   .fh-sidebar__item[data-contains-active="true"]:not([aria-current="page"]) {
     background-color: color-mix(in oklab, var(--_c) 6%, transparent);
     color: var(--fh-color-text);

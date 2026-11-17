@@ -253,6 +253,15 @@
     color: var(--fh-color-text);
   }
 
+  /* Only where you are carries the full colour block: the current row's cube, or its area's when the current page
+   * is a subpage. Every other cube is a soft tint of its tone (the icon in the tone, a faint fill), so colour
+   * supports finding things without competing with the current page. */
+  .fh-sidebar__item:not([aria-current="page"], [data-contains-active="true"]) .fh-sidebar__cube {
+    background-color: color-mix(in oklab, var(--_ic) 14%, transparent);
+    color: var(--_ic);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+
   .fh-sidebar__item[data-contains-active="true"]:not([aria-current="page"]) {
     background-color: color-mix(in oklab, var(--_c) 6%, transparent);
     color: var(--fh-color-text);
