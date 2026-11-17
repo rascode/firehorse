@@ -1,5 +1,5 @@
 /**
- * Firehorse AccountMenu (PRF-2): the profile picker's menu on the new look. A popover of sidebar rows under an
+ * Firehorse AccountMenu (PRF-2): the profile picker's menu on the new look. A popover of rows (the sidebar's recipe) under an
  * identity row; a row with details opens its panel inside the same menu. Style from @rascode/firehorse
  * profile-picker.css; the behaviour (slide, keys, focus) from dist/account-menu.js, which this file loads.
  *
@@ -127,11 +127,11 @@ export type AccountRowProps = {
 /** A row: the sidebar row (soft cube, label, value, chevron when it has a panel). */
 export function AccountRow({ label, icon, tone, value, panel, href, onSelect, danger, control, className }: AccountRowProps) {
   const menu = React.useContext(MenuId);
-  const cls = cx("fh-sidebar__item", "fh-account-row", control && "fh-account-row--inline", danger && "fh-account-row--danger", className);
+  const cls = cx("fh-account-row", control && "fh-account-row--inline", danger && "fh-account-row--danger", className);
   const body = (
     <>
-      {icon ? <span className="fh-cube fh-cube--icon fh-sidebar__cube" aria-hidden="true"><i className={`fh-icon fh-icon--${icon}`} /></span> : null}
-      <span className="fh-sidebar__label">{label}</span>
+      {icon ? <span className="fh-cube fh-cube--icon" aria-hidden="true"><i className={`fh-icon fh-icon--${icon}`} /></span> : null}
+      <span className="fh-account-row__label">{label}</span>
       {control ?? (value ? <span className="fh-account-row__value">{value}</span> : null)}
       {panel ? <i className="fh-icon fh-icon--chevron-right fh-account-row__go" aria-hidden="true" /> : null}
     </>
@@ -161,9 +161,9 @@ export function AccountPanel({ name, label, children }: AccountPanelProps) {
   const menu = React.useContext(MenuId);
   return (
     <div className="fh-account-menu__panel" id={`${menu}-${name}`} data-fh-panel={name} role="group" aria-label={label}>
-      <button type="button" className="fh-sidebar__item fh-account-row fh-account-row--back" role="menuitem" data-fh-back>
+      <button type="button" className="fh-account-row fh-account-row--back" role="menuitem" data-fh-back>
         <i className="fh-icon fh-icon--chevron-left" aria-hidden="true" />
-        <span className="fh-sidebar__label">{label}</span>
+        <span className="fh-account-row__label">{label}</span>
       </button>
       <hr />
       {children}

@@ -282,17 +282,17 @@
    *           <span class="fh-badge" data-tone="amber">Prod</span>
    *         </div>
    *         <hr>
-   *         <button class="fh-sidebar__item fh-account-row" type="button" role="menuitem" data-tone="amber"
+   *         <button class="fh-account-row" type="button" role="menuitem" data-tone="amber"
    *           aria-controls="me-now" aria-expanded="false">
-   *           <span class="fh-cube fh-cube--icon fh-sidebar__cube"><i class="fh-icon fh-icon--calendar"></i></span>
-   *           <span class="fh-sidebar__label">Now</span><span class="fh-account-row__value">Tue 17 Nov</span>
+   *           <span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--calendar"></i></span>
+   *           <span class="fh-account-row__label">Now</span><span class="fh-account-row__value">Tue 17 Nov</span>
    *           <i class="fh-icon fh-icon--chevron-right fh-account-row__go"></i></button>
    *         <hr>
-   *         <button class="fh-sidebar__item fh-account-row fh-account-row--danger" role="menuitem">…Sign out</button>
+   *         <button class="fh-account-row fh-account-row--danger" role="menuitem">…Sign out</button>
    *       </div>
    *       <div class="fh-account-menu__panel" id="me-now" data-fh-panel="now" role="group" aria-label="Now">
-   *         <button class="fh-sidebar__item fh-account-row fh-account-row--back" data-fh-back>
-   *           <i class="fh-icon fh-icon--chevron-left"></i><span class="fh-sidebar__label">Now</span></button>
+   *         <button class="fh-account-row fh-account-row--back" data-fh-back>
+   *           <i class="fh-icon fh-icon--chevron-left"></i><span class="fh-account-row__label">Now</span></button>
    *         <hr> …panel body (fh-account-fact, fh-account-card, fh-account-option, fh-account-meter)…
    *       </div>
    *     </div>
@@ -366,12 +366,16 @@
     display: grid;
     align-content: start;
     gap: var(--fh-item-frame);
+    /* The shown panel is visible at once (so focus can land in it); a leaving one stays visible until it has slid. */
     transition:
       translate var(--fh-duration-base) var(--fh-ease-standard),
       opacity var(--fh-duration-base) var(--fh-ease-standard),
-      visibility var(--fh-duration-base) allow-discrete;
+      visibility 0s;
 
     &:not([data-state="active"]) {
+      transition-property: translate, opacity, visibility;
+      transition-duration: var(--fh-duration-base), var(--fh-duration-base), 0s;
+      transition-delay: 0s, 0s, var(--fh-duration-base);
       position: absolute;
       inset: 0 0 auto;
       visibility: hidden;
@@ -405,26 +409,31 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: start;
-    gap: var(--fh-gap-grouped-wide);
+    column-gap: var(--fh-gap-grouped-wide);
     padding: var(--fh-inset-control);
 
     & > .fh-avatar {
       --fh-avatar-size: var(--fh-control-height);
+      grid-column: 1;
+      grid-row: 1 / span 3;
       --fh-avatar-radius: var(--_cube-r);
 
       border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
       box-shadow: none;
     }
 
-    & > .fh-badge { margin-block-start: var(--fh-gap-bound); }
+    & > .fh-badge { grid-column: 3; grid-row: 1; margin-block-start: var(--fh-gap-bound); }
   }
 
+  /* The name, email and facts are grid items of the identity row itself (display: contents), so the facts line
+   * runs under both the text and the environment badge: one line. */
   .fh-account-identity__who {
-    display: grid;
-    min-inline-size: 0;
+    display: contents;
     line-height: var(--fh-leading-snug);
 
     & > b {
+      grid-column: 2;
+      min-inline-size: 0;
       overflow: hidden;
       font-size: var(--fh-text-body);
       font-weight: var(--fh-weight-bold);
@@ -433,6 +442,8 @@
     }
 
     & > small {
+      grid-column: 2;
+      min-inline-size: 0;
       overflow: hidden;
       color: var(--fh-color-text-muted);
       font-size: var(--fh-text-caption);
@@ -441,20 +452,66 @@
     }
 
     & > .fh-account-identity__facts {
+      grid-column: 2 / -1;
       margin-block-start: var(--fh-gap-bound);
       font-size: var(--fh-text-micro);
-      white-space: normal;
     }
   }
 
-  /* A row is the sidebar row (fh-sidebar__item), given a column for the chevron. */
+  /* A row is the sidebar row's recipe (SBR): cube, label, value, the 6% hover, the cube's corner; the cube is the
+   * soft tint (the tone's icon on a 14% fill), never the full block. It is written out here, not borrowed from
+   * fh-sidebar__item, because the sidebar's styles ship in the admin sheet and this menu ships in the main one.
+   * A column after the value is kept for the chevron of a row with details, so every value ends at one edge. */
   .fh-account-row {
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    --_c: var(--fh-tone, var(--fh-color-accent));
 
-    /* A row without a cube or chevron keeps its label first. */
-    &:not(:has(> .fh-sidebar__cube)) { grid-template-columns: minmax(0, 1fr) auto auto; }
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto 0.8rem;
+    align-items: center;
+    gap: var(--fh-gap-grouped-wide);
+    inline-size: 100%;
+    padding: var(--fh-inset-control);
+    border: 0;
+    border-radius: var(--_cube-r);
+    background: transparent;
+    color: var(--fh-color-text-muted);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    text-align: start;
+    text-decoration: none;
+    cursor: var(--fh-cursor-action);
+    transition:
+      background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    /* A row without a cube keeps its label first. */
+    &:not(:has(> .fh-cube)) { grid-template-columns: minmax(0, 1fr) auto 0.8rem; }
+
+    &:is(a, button):hover {
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+      color: var(--fh-color-text);
+    }
+
+    &:is(a, button):focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: -1px;
+    }
 
     &:is(div) { cursor: default; }
+
+    & > .fh-cube--icon {
+      --_cube: var(--_c);
+
+      background-color: color-mix(in oklab, var(--_ic) 14%, transparent);
+      color: var(--_ic);
+    }
+  }
+
+  .fh-account-row__label {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .fh-account-row__value {
@@ -477,7 +534,7 @@
   .fh-account-row[aria-expanded="true"] .fh-account-row__go { color: var(--fh-color-text); }
 
   /* An inline setting (Theme): the control sits where the value would. */
-  .fh-account-row--inline { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .fh-account-row.fh-account-row--inline { grid-template-columns: auto minmax(0, 1fr) auto; }
 
   .fh-account-row--danger {
     --fh-tone: var(--fh-color-danger);
@@ -488,7 +545,7 @@
   }
 
   /* The back row: ‹ and the row's label, bold. */
-  .fh-account-row--back {
+  .fh-account-row.fh-account-row--back {
     grid-template-columns: auto minmax(0, 1fr);
     color: var(--fh-color-text);
     font-weight: var(--fh-weight-bold);
@@ -546,8 +603,7 @@
     & > span { display: grid; min-inline-size: 0; }
     & > span > b { font-weight: var(--fh-weight-medium); }
     & > span > small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
-    &:has(> .fh-switch) { grid-template-columns: minmax(0, 1fr) auto; }
-    &:has(> .fh-switch) > .fh-switch { order: 2; }
+    &:has(> .fh-switch) { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
   }
 
   .fh-account-meter {

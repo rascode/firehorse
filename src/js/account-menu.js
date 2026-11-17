@@ -7,10 +7,10 @@
  *   <div id="me" popover class="fh-account-menu" role="menu" aria-label="Account">
  *     <div class="fh-account-menu__stage">
  *       <div class="fh-account-menu__panel" data-fh-panel="main" data-state="active">
- *         <button class="fh-sidebar__item fh-account-row" role="menuitem" aria-controls="me-now" aria-expanded="false">…</button>
+ *         <button class="fh-account-row" role="menuitem" aria-controls="me-now" aria-expanded="false">…</button>
  *       </div>
  *       <div class="fh-account-menu__panel" id="me-now" data-fh-panel="now" role="group" aria-label="Now">
- *         <button class="fh-sidebar__item fh-account-row fh-account-row--back" data-fh-back>…</button>
+ *         <button class="fh-account-row fh-account-row--back" data-fh-back>…</button>
  *       </div>
  *     </div>
  *   </div>
