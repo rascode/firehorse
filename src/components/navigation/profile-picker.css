@@ -265,4 +265,310 @@
   /* A profile to switch to: avatar and two lines, check when current. */
   .fh-menu > .fh-profile-menu__option { gap: var(--fh-gap-related); padding-block: var(--fh-inset-tight); }
 
+  /* —— Account menu (PRF-2) ——
+   * The profile picker's menu on the new look: the App bar's frost with one etched edge and no shadow, the
+   * Crumbs bar's corner, an identity row on top, then sidebar rows (SBR: soft cube, label, a muted mono value,
+   * a chevron when the row has details). A row with details opens its panel inside the same menu: the list
+   * slides out, the panel slides in, its first row is the back row. The menu's height follows the shown panel.
+   * Behaviour (slide, keys, focus) from dist/account-menu.js; without it the main list shows and rows are links.
+   *
+   *   <div id="me" popover class="fh-account-menu" role="menu" aria-label="Account" style="position-anchor: --me">
+   *     <div class="fh-account-menu__stage">
+   *       <div class="fh-account-menu__panel" data-fh-panel="main" data-state="active">
+   *         <div class="fh-account-identity">
+   *           <span class="fh-avatar" data-tone="sky">JR</span>
+   *           <span class="fh-account-identity__who"><b>Justin Rascoe</b><small>justin@rascode.dev</small>
+   *             <small class="fh-account-identity__facts">Member since 2019 · 214 ideas · 51 remarks</small></span>
+   *           <span class="fh-badge" data-tone="amber">Prod</span>
+   *         </div>
+   *         <hr>
+   *         <button class="fh-sidebar__item fh-account-row" type="button" role="menuitem" data-tone="amber"
+   *           aria-controls="me-now" aria-expanded="false">
+   *           <span class="fh-cube fh-cube--icon fh-sidebar__cube"><i class="fh-icon fh-icon--calendar"></i></span>
+   *           <span class="fh-sidebar__label">Now</span><span class="fh-account-row__value">Tue 17 Nov</span>
+   *           <i class="fh-icon fh-icon--chevron-right fh-account-row__go"></i></button>
+   *         <hr>
+   *         <button class="fh-sidebar__item fh-account-row fh-account-row--danger" role="menuitem">…Sign out</button>
+   *       </div>
+   *       <div class="fh-account-menu__panel" id="me-now" data-fh-panel="now" role="group" aria-label="Now">
+   *         <button class="fh-sidebar__item fh-account-row fh-account-row--back" data-fh-back>
+   *           <i class="fh-icon fh-icon--chevron-left"></i><span class="fh-sidebar__label">Now</span></button>
+   *         <hr> …panel body (fh-account-fact, fh-account-card, fh-account-option, fh-account-meter)…
+   *       </div>
+   *     </div>
+   *   </div>
+   * Tokens only: --fh-frost-panel-*, --fh-tile-cube-radius, --fh-item-frame, --fh-border-thin. On a phone the
+   * width (100vi less a margin each side) makes the menu a full-width sheet under its trigger. */
+  .fh-account-menu {
+    --_f: var(--fh-frost-panel-f);
+    --_fill: var(--fh-frost-panel-fill);
+    --_filter: var(--fh-frost-panel-filter);
+    --_cube-r: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    --_frame: var(--fh-item-frame);
+    --_slide: 1.25rem;
+
+    inline-size: min(20rem, 100vi - 2rem);
+    max-block-size: min(40rem, 85dvh);
+    margin: 0;
+    padding: var(--_frame);
+    overflow: hidden auto;
+    overscroll-behavior: contain;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-radius: calc(var(--_cube-r) + var(--_frame) + var(--fh-border-thin));
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: var(--_filter);
+    backdrop-filter: var(--_filter);
+    box-shadow: none;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-snug);
+
+    &:popover-open {
+      opacity: 1;
+      translate: 0 0;
+      transition:
+        opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        translate var(--fh-duration-fast) var(--fh-ease-standard),
+        display var(--fh-duration-fast) allow-discrete,
+        overlay var(--fh-duration-fast) allow-discrete;
+
+      @starting-style { opacity: 0; translate: 0 calc(-1 * var(--fh-gap-bound)); }
+    }
+
+    & hr {
+      block-size: 0;
+      margin: var(--fh-gap-bound) var(--fh-inset-control);
+      border: 0;
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    }
+  }
+
+  @supports (position-area: bottom) {
+    .fh-account-menu { position-area: block-end span-inline-start; }
+  }
+
+  /* A menu drawn in the page (specimens): no popover, in the flow. */
+  .fh-account-menu--static {
+    position: static;
+    display: block;
+    translate: none;
+    opacity: 1;
+  }
+
+  .fh-account-menu__stage {
+    position: relative;
+    overflow: clip;
+    transition: block-size var(--fh-duration-base) var(--fh-ease-standard);
+  }
+
+  /* Only the shown panel is in the flow, so the stage is as tall as it. The others wait to its side. */
+  .fh-account-menu__panel {
+    display: grid;
+    align-content: start;
+    gap: var(--fh-item-frame);
+    transition:
+      translate var(--fh-duration-base) var(--fh-ease-standard),
+      opacity var(--fh-duration-base) var(--fh-ease-standard),
+      visibility var(--fh-duration-base) allow-discrete;
+
+    &:not([data-state="active"]) {
+      position: absolute;
+      inset: 0 0 auto;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      translate: var(--_slide) 0;
+    }
+
+    &[data-state="before"] { translate: calc(-1 * var(--_slide)) 0; }
+
+    /* No script: the main list shows. */
+    &[data-fh-panel="main"]:not([data-state]) {
+      position: static;
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      translate: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-account-menu,
+    .fh-account-menu:popover-open,
+    .fh-account-menu__stage,
+    .fh-account-menu__panel { transition: none; }
+  }
+
+  /* Identity row: the avatar is a rounded square at control height with the cube's corner and one etched line
+   * (as the Crumbs bar's); the name bold, the email muted, one muted line of facts, the environment at the end. */
+  .fh-account-identity {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-control);
+
+    & > .fh-avatar {
+      --fh-avatar-size: var(--fh-control-height);
+      --fh-avatar-radius: var(--_cube-r);
+
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+      box-shadow: none;
+    }
+
+    & > .fh-badge { margin-block-start: var(--fh-gap-bound); }
+  }
+
+  .fh-account-identity__who {
+    display: grid;
+    min-inline-size: 0;
+    line-height: var(--fh-leading-snug);
+
+    & > b {
+      overflow: hidden;
+      font-size: var(--fh-text-body);
+      font-weight: var(--fh-weight-bold);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > small {
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-size: var(--fh-text-caption);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > .fh-account-identity__facts {
+      margin-block-start: var(--fh-gap-bound);
+      font-size: var(--fh-text-micro);
+      white-space: normal;
+    }
+  }
+
+  /* A row is the sidebar row (fh-sidebar__item), given a column for the chevron. */
+  .fh-account-row {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+
+    /* A row without a cube or chevron keeps its label first. */
+    &:not(:has(> .fh-sidebar__cube)) { grid-template-columns: minmax(0, 1fr) auto auto; }
+
+    &:is(div) { cursor: default; }
+  }
+
+  .fh-account-row__value {
+    max-inline-size: 11rem;
+    overflow: hidden;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-account-row__go {
+    inline-size: 0.8rem;
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-account-row[aria-expanded="true"] .fh-account-row__go { color: var(--fh-color-text); }
+
+  /* An inline setting (Theme): the control sits where the value would. */
+  .fh-account-row--inline { grid-template-columns: auto minmax(0, 1fr) auto; }
+
+  .fh-account-row--danger {
+    --fh-tone: var(--fh-color-danger);
+
+    color: var(--fh-color-danger);
+
+    &:is(a, button):hover { color: var(--fh-color-danger); }
+  }
+
+  /* The back row: ‹ and the row's label, bold. */
+  .fh-account-row--back {
+    grid-template-columns: auto minmax(0, 1fr);
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-bold);
+
+    & > .fh-icon { inline-size: var(--fh-tile-cube-size); color: var(--fh-color-text-muted); }
+  }
+
+  /* Panel body: lines, a card, options with a line of help, meters. */
+  .fh-account-fact {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--fh-gap-grouped);
+    padding: var(--fh-inset-tight) var(--fh-inset-control);
+    color: var(--fh-color-text-muted);
+
+    & > :last-child {
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .fh-account-card {
+    --_c: var(--fh-tone, var(--fh-color-accent));
+
+    display: grid;
+    gap: var(--fh-gap-related);
+    margin: var(--fh-gap-bound) var(--fh-inset-tight);
+    padding: var(--fh-inset-control);
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-radius: var(--_cube-r);
+    background-color: color-mix(in oklab, var(--_c) 6%, transparent);
+
+    & > b { font-size: var(--fh-text-body); font-weight: var(--fh-weight-bold); }
+    & > small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+    & .fh-account-fact { padding-inline: 0; }
+    & .fh-progress { --fh-tone: var(--_c); }
+  }
+
+  .fh-account-option {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--fh-gap-grouped-wide);
+    padding: var(--fh-inset-control);
+    border-radius: var(--fh-radius-sm);
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+    &:has(:focus-visible) { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -1px; }
+    & > input { margin: 0.15rem 0 0; accent-color: var(--fh-color-primary); }
+    & > span { display: grid; min-inline-size: 0; }
+    & > span > b { font-weight: var(--fh-weight-medium); }
+    & > span > small { color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+    &:has(> .fh-switch) { grid-template-columns: minmax(0, 1fr) auto; }
+    &:has(> .fh-switch) > .fh-switch { order: 2; }
+  }
+
+  .fh-account-meter {
+    display: grid;
+    gap: var(--fh-gap-related);
+    padding: var(--fh-inset-control);
+
+    & > span {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--fh-gap-grouped);
+      color: var(--fh-color-text-muted);
+    }
+
+    & > span > :last-child {
+      color: var(--fh-color-text);
+      font-family: var(--fh-font-mono);
+      font-size: var(--fh-text-label);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
 }
