@@ -1,0 +1,187 @@
+/*
+ * Firehorse - Chart section (SCV)
+ * components/sections · layer fh.components · docs /components/sections/#SCV
+ */
+
+@layer fh.components {
+  /* Chart
+   * One figure.fh-chart per chart, drawn as inline SVG with a viewBox and no
+   * script. The SVG holds only the gridlines and the series, stretched to the
+   * plot (preserveAspectRatio="none", strokes that do not scale), so the text
+   * stays HTML at its own tier: the axis labels at the Meta tier, the values at
+   * the Value tier. Each point or bar sits at the centre of its column, and the
+   * x labels are a grid with one column per point, so they line up at any
+   * width. A series takes its colour from data-tone through var(--fh-tone).
+   * The legend lists each series under the chart, and a visually hidden table
+   * holds the same data for screen readers.
+   *   <figure class="fh-chart fh-chart--line">
+   *     <figcaption>Runs a week</figcaption>
+   *     <div class="fh-chart__plot" aria-hidden="true">
+   *       <ol class="fh-chart__y"><li>40</li>…<li>0</li></ol>
+   *       <svg class="fh-chart__svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+   *         <g class="fh-chart__grid"><line x1="0" x2="120" y1="0" y2="0"/>…</g>
+   *         <polyline class="fh-chart__series" data-tone="sky" points="5,28 15,25 …"/>
+   *       </svg>
+   *       <ol class="fh-chart__x"><li>W1</li>…</ol>
+   *     </div>
+   *     <ul class="fh-chart__legend"><li data-tone="sky"><span class="fh-chart__name">Passed</span> <span class="fh-chart__value">34</span></li></ul>
+   *     <table class="fh-sr-only">…</table>
+   *   </figure>
+   * Bars: fh-chart--bar, one rect.fh-chart__series per column, and each x
+   * label carries its value: <li>Jun <span class="fh-chart__value">18</span></li>. */
+
+  .fh-panel-section--chart .fh-panel-section__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fh-gap-sectioned);
+    min-inline-size: 0;
+  }
+
+  .fh-chart {
+    container: fh-chart / inline-size;
+    display: flex;
+    flex-direction: column;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    margin: 0;
+
+    & > figcaption {
+      font-family: var(--fh-type-label-family);
+      font-size: var(--fh-type-label);
+      font-weight: var(--fh-type-label-weight);
+      letter-spacing: var(--fh-type-label-tracking);
+      text-transform: var(--fh-type-label-case);
+      color: var(--fh-color-text-muted);
+    }
+  }
+
+  .fh-chart__plot {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: clamp(8rem, 40cqi, 14rem) auto;
+    column-gap: var(--fh-gap-bound);
+    row-gap: var(--fh-gap-bound);
+  }
+
+  /* Axis labels at the Meta tier, muted, in tabular figures. */
+  :is(.fh-chart__y, .fh-chart__x) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--fh-type-meta-family);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    color: var(--fh-color-text-muted);
+  }
+
+  /* The y labels spread from the top gridline to the bottom one, each centred on its line. */
+  .fh-chart__y {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-block: -0.5em;
+    text-align: end;
+  }
+
+  .fh-chart__svg {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+  }
+
+  .fh-chart__x {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    text-align: center;
+
+    & > li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--fh-gap-bound);
+      min-inline-size: 0;
+    }
+  }
+
+  .fh-chart__grid line {
+    stroke: var(--fh-color-border);
+    stroke-width: var(--fh-border-thin);
+    vector-effect: non-scaling-stroke;
+  }
+
+  .fh-chart__series {
+    vector-effect: non-scaling-stroke;
+  }
+
+  polyline.fh-chart__series {
+    fill: none;
+    stroke: var(--fh-tone);
+    stroke-width: var(--fh-border-heavy);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  rect.fh-chart__series {
+    fill: var(--fh-tone);
+  }
+
+  /* Values at the Value tier: under each bar, and after each series in the legend. */
+  .fh-chart__value {
+    font-family: var(--fh-type-value-family);
+    font-size: var(--fh-type-value);
+    font-weight: var(--fh-type-value-weight);
+    letter-spacing: var(--fh-type-value-tracking);
+    font-variant-numeric: tabular-nums;
+    color: var(--fh-color-text);
+  }
+
+  .fh-chart__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--fh-gap-bound);
+    }
+
+    /* The swatch: a short rule in the series tone. */
+    & > li::before {
+      content: "";
+      align-self: center;
+      inline-size: 0.75em;
+      block-size: var(--fh-border-heavy);
+      background-color: var(--fh-tone);
+    }
+  }
+
+  .fh-chart__name {
+    font-family: var(--fh-type-meta-family);
+    font-size: var(--fh-type-meta);
+    font-weight: var(--fh-type-meta-weight);
+    letter-spacing: var(--fh-type-meta-tracking);
+    color: var(--fh-color-text-muted);
+  }
+
+  /* Narrow: a long line keeps every other x label. */
+  @container fh-chart (inline-size < 28rem) {
+    .fh-chart--line .fh-chart__x > li:nth-child(even) {
+      visibility: hidden;
+    }
+  }
+}

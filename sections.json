@@ -319,6 +319,16 @@
       "body": "fh-table fh-matrix inside fh-table-wrap: capability rows (th scope=row holding a reference that opens its record) by role columns (a short label at the Label tier); cells data-included true (toned check), false (ghost dash) or inherited (hollow check, muted), each with its word in fh-sr-only; a wide matrix scrolls inside the section with the capability column and the head held",
       "slots": ["capability (th scope=row, a with data-sidecar)", "role (th scope=col, Label tier)", "cell (td data-included: true, false, inherited)"],
       "chips": { "rule": "The capability count and the role count.", "max": 2 }
+    },
+    "chart": {
+      "id": "SCV",
+      "members": ["SCT", "CHP"],
+      "class": "fh-panel-section fh-panel-section--chart",
+      "icon": "chart-line",
+      "tone": "sky",
+      "body": "one figure.fh-chart per chart (fh-chart--line or fh-chart--bar) with a figcaption: inline SVG with a viewBox and no script, gridlines in the border colour, each series toned by data-tone; HTML axis labels at the Meta tier, values at the Value tier; a legend list under the chart and a visually hidden table with the same data; it scales with its container",
+      "slots": ["caption (figcaption, Label tier)", "y axis (ol.fh-chart__y, Meta tier)", "plot (svg.fh-chart__svg: g.fh-chart__grid, .fh-chart__series data-tone)", "x axis (ol.fh-chart__x, Meta tier; a bar's value in fh-chart__value)", "legend (ul.fh-chart__legend, a name and its value)", "data (table.fh-sr-only)"],
+      "chips": { "rule": "The last value and the change.", "max": 2 }
     }
   },
   "fields": {
