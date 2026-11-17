@@ -13,13 +13,14 @@
  *     <AccountRow icon="user" tone="sky" label="Profile" href="/profile" />
  *     <hr />
  *     <AccountRow icon="log-out" label="Sign out" danger onSelect={signOut} />
+ *     <AccountNow now={today} label="Now" period={{ summary: ["C6", "Y1", "Ch4"], facts: [{ label: "House", value: "Ember" }], progress: 0.71, progressLabel: "Period", links: [{ label: "Open the year", href: "/year" }] }} onNavigate={go} />
  *   </AccountMenu>
  *
  * Firehorse knows nothing about who is signed in: the host fills the identity, the rows and the panels.
  */
 import * as React from "react";
 import "@rascode/firehorse/account-menu";
-import { initAccountMenu } from "@rascode/firehorse/account-menu";
+import { accountNowParts, accountNowValue, initAccountMenu } from "@rascode/firehorse/account-menu";
 import type { AccountPanelDetail } from "@rascode/firehorse/account-menu";
 
 export type { AccountPanelDetail };
@@ -51,6 +52,14 @@ export function AccountMenu({ id, label = "Account", anchor, children, panels, o
   const ref = React.useRef<HTMLDivElement>(null);
   const change = React.useRef(onPanelChange);
   change.current = onPanelChange;
+  const rows: React.ReactNode[] = [];
+  const nowPanels: React.ReactNode[] = [];
+  React.Children.forEach(children, (child) => {
+    rows.push(child);
+    if (React.isValidElement<AccountNowProps>(child) && child.type === AccountNow) {
+      nowPanels.push(<AccountNowPanel key={`fh-now-${String(child.key ?? "row")}`} {...child.props} />);
+    }
+  });
 
   React.useEffect(() => {
     const menu = ref.current;
@@ -67,7 +76,8 @@ export function AccountMenu({ id, label = "Account", anchor, children, panels, o
         className={cx("fh-account-menu", inPage && "fh-account-menu--static", className)}
         style={anchor ? ({ positionAnchor: anchor } as React.CSSProperties) : undefined}>
         <div className="fh-account-menu__stage">
-          <div className="fh-account-menu__panel" data-fh-panel="main" data-state="active">{children}</div>
+          <div className="fh-account-menu__panel" data-fh-panel="main" data-state="active">{rows}</div>
+          {nowPanels}
           {panels}
         </div>
       </div>
@@ -169,4 +179,82 @@ export function AccountPanel({ name, label, children }: AccountPanelProps) {
       {children}
     </div>
   );
+}
+
+export type AccountNowFact = { label: string; value: string };
+export type AccountNowLink = { label: string; href: string };
+
+export type AccountNowPeriod = {
+  /** Short parts after the date on the row, joined with " · ". */
+  summary?: string[];
+  facts?: AccountNowFact[];
+  /** 0 to 1. */
+  progress?: number;
+  /** The progress bar's name. */
+  progressLabel?: string;
+  links?: AccountNowLink[];
+};
+
+export type AccountNowProps = {
+  /** The moment the row shows. Null draws the row with no value, so server and client agree. */
+  now: Date | null;
+  period?: AccountNowPeriod;
+  /** The row's label. Default "Now". */
+  label?: string;
+  /** A link in the panel foot was chosen. The link still follows its href. */
+  onNavigate?: (href: string) => void;
+};
+
+function nowPercent(progress: number) {
+  return `${Math.round(Math.min(1, Math.max(0, progress)) * 100)}%`;
+}
+
+function AccountNowRow({ now, period, label = "Now" }: AccountNowProps) {
+  const value = now ? accountNowValue(now, period?.summary) : "";
+  return <AccountRow icon="calendar" tone="amber" label={label} value={value || undefined} panel="now" />;
+}
+
+function AccountNowPanel({ now, period, label = "Now", onNavigate }: AccountNowProps) {
+  const parts = now ? accountNowParts(now) : null;
+  const facts: AccountNowFact[] = [
+    ...(parts ? [
+      { label: "Now", value: parts.label },
+      { label: "Day of the year", value: String(parts.day) },
+      { label: `Days left in ${parts.year}`, value: String(parts.left) },
+    ] : []),
+    ...(period?.facts ?? []),
+  ];
+  const progress = period?.progress;
+  const bar = typeof progress === "number" && Number.isFinite(progress) ? Math.min(1, Math.max(0, progress)) : null;
+  const barLabel = period?.progressLabel || "Progress";
+  return (
+    <AccountPanel name="now" label={label}>
+      {facts.length ? (
+        <dl className="fh-kv fh-kv--single">
+          {facts.map((fact, index) => (
+            <div key={`${fact.label}-${index}`}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+          ))}
+        </dl>
+      ) : null}
+      {bar !== null ? (
+        <div className="fh-progress-field">
+          <span>{barLabel}</span>
+          <output>{nowPercent(bar)}</output>
+          <progress className="fh-progress" value={bar} max={1} aria-label={barLabel}>{nowPercent(bar)}</progress>
+        </div>
+      ) : null}
+      {period?.links?.length ? (
+        <div className="fh-menu__foot">
+          {period.links.map((link) => (
+            <a key={`${link.href}-${link.label}`} className="fh-link" href={link.href} onClick={() => onNavigate?.(link.href)}>{link.label}</a>
+          ))}
+        </div>
+      ) : null}
+    </AccountPanel>
+  );
+}
+
+/** The Now row. AccountMenu lifts its panel out of the main list. */
+export function AccountNow(props: AccountNowProps) {
+  return <AccountNowRow {...props} />;
 }

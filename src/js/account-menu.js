@@ -26,6 +26,10 @@
  *
  *   import "@rascode/firehorse/account-menu";
  *   import { initAccountMenu, showAccountPanel } from "@rascode/firehorse/account-menu";
+ *
+ * A row with data-fh-now fills its value from the row's datetime attribute and data-fh-summary
+ * (parts separated by |). The value is "Tue 17 Nov", or that date plus the parts joined
+ * with " · ". A date-only datetime is that calendar day. With no datetime the row is left as written.
  */
 
 const SELECTOR = ".fh-account-menu";
@@ -165,7 +169,66 @@ export function initAccountMenu(menu) {
   return menu;
 }
 
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function dateFrom(value) {
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? null : value;
+  if (typeof value !== "string" || !value.trim()) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value.trim());
+  if (match) return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/** The date block for a Now row: label "Tue 17 Nov", day of the year, days left, year. Null when there is no date. */
+export function accountNowParts(input) {
+  const date = dateFrom(input);
+  if (!date) return null;
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const n = Math.round((Date.UTC(year, month, day) - Date.UTC(year, 0, 1)) / 86400000) + 1;
+  const leap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  return { label: `${WEEKDAYS[date.getDay()]} ${day} ${MONTHS[month]}`, day: n, left: (leap ? 366 : 365) - n, year };
+}
+
+/** The collapsed value. The date alone when summary is missing or empty. */
+export function accountNowValue(input, summary) {
+  const parts = accountNowParts(input);
+  if (!parts) return "";
+  const extra = [];
+  for (const part of summary ?? []) {
+    const text = String(part).trim();
+    if (text) extra.push(text);
+  }
+  return extra.length ? `${parts.label} · ${extra.join(" · ")}` : parts.label;
+}
+
+function summaryOf(row) {
+  return (row.getAttribute("data-fh-summary") || "").split("|").map((part) => part.trim()).filter(Boolean);
+}
+
+function fillNow(row) {
+  if (!row.hasAttribute("datetime")) return;
+  const text = accountNowValue(row.getAttribute("datetime"), summaryOf(row));
+  let value = row.querySelector(".fh-account-row__value");
+  if (!text) { value?.remove(); return; }
+  if (!value) {
+    value = row.ownerDocument.createElement("span");
+    value.className = "fh-account-row__value";
+    row.insertBefore(value, row.querySelector(".fh-account-row__go"));
+  }
+  value.textContent = text;
+}
+
+function fillNowRows(root) {
+  if (!root?.querySelectorAll) return;
+  for (const row of root.querySelectorAll("[data-fh-now]")) fillNow(row);
+}
+
 function initAll(root = doc) {
+  fillNowRows(root);
   for (const menu of root.querySelectorAll(SELECTOR)) initAccountMenu(menu);
 }
 

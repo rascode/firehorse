@@ -628,6 +628,14 @@
   }
 
 
+  /* The Now panel's links sit in fh-menu__foot. That foot's gap and padding read the menu's
+   * private values, which this menu does not set, so the foot would draw with none. */
+  .fh-account-menu .fh-menu__foot {
+    --_gap: var(--fh-gap-related);
+    --_pad-b: var(--fh-inset-tight);
+    --_pad-i: var(--fh-inset-control);
+  }
+
   /* The Theme switch inside the account menu: the new look, not a pill. The cube's corner on each option and
    * the ring's corner on the track; the chosen option is a quiet tint, not a solid fill. */
   .fh-account-menu .fh-segmented {

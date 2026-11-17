@@ -26,6 +26,25 @@ export function showAccountPanel(menu: Element, name: string, options?: AccountP
 /** The name of the shown panel ("main" for the list). */
 export function currentAccountPanel(menu: Element): string;
 
+export type AccountNowParts = {
+  /** "Tue 17 Nov". */
+  label: string;
+  /** Day of the year, 1 to 366. */
+  day: number;
+  /** Days left in the year after this day. */
+  left: number;
+  year: number;
+};
+
+/**
+ * The date block for a Now row. A Date, or a string (a date-only `YYYY-MM-DD` is that calendar day).
+ * Null when there is no date.
+ */
+export function accountNowParts(input: Date | string | null | undefined): AccountNowParts | null;
+
+/** The collapsed value: the date, then any summary parts joined with " · ". Empty when there is no date. */
+export function accountNowValue(input: Date | string | null | undefined, summary?: readonly string[]): string;
+
 declare global {
   interface HTMLElementEventMap {
     "fh:account-panel": CustomEvent<AccountPanelDetail>;
