@@ -309,6 +309,16 @@
       "body": "ul.fh-gallery of square thumbnails (li > button > img with its alt), each with an optional caption and kind chip; the grid fills by the section's width (container query); a thumbnail opens the Image stack viewer (IMS-2.1) at that image and the arrow keys walk the set; fh-empty when there are none",
       "slots": ["thumbnail (button holding the img, alt text required)", "caption (fh-gallery__caption, Meta tier)", "kind (fh-chip)", "viewer (IMS-2.1)", "empty (fh-empty)"],
       "chips": { "rule": "The image count and the newest date.", "max": 2 }
+    },
+    "matrix": {
+      "id": "SMX",
+      "members": ["SCT", "CHP", "TBL"],
+      "class": "fh-panel-section fh-panel-section--matrix",
+      "icon": "shield-check",
+      "tone": "fuchsia",
+      "body": "fh-table fh-matrix inside fh-table-wrap: capability rows (th scope=row holding a reference that opens its record) by role columns (a short label at the Label tier); cells data-included true (toned check), false (ghost dash) or inherited (hollow check, muted), each with its word in fh-sr-only; a wide matrix scrolls inside the section with the capability column and the head held",
+      "slots": ["capability (th scope=row, a with data-sidecar)", "role (th scope=col, Label tier)", "cell (td data-included: true, false, inherited)"],
+      "chips": { "rule": "The capability count and the role count.", "max": 2 }
     }
   },
   "fields": {
