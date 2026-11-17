@@ -1977,6 +1977,77 @@ Every check in `relay:verify -- --tier screen` passed.
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-sec-code" data-fh-id="SCO" data-fh-groups="Code section">
+          <div class="site-demo__head"><h3>Code section</h3><p><code>fh-panel-section--code</code>. One code block per file: the name, a language chip, a short checksum you can copy, and a Copy button. Line numbers sit in a gutter and do not copy.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--code" data-tone="orange" open data-fh-id="SCO-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--code fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">fold.js</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">js</span><span class="fh-chip" data-tone="sky">20 lines</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure class="fh-code">
+          <figcaption>
+            <span>fold.js</span>
+            <span class="fh-chip" data-tone="orange">js</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono"><span class="fh-value__name" title="9f2a1c0e4b71">9f2a1c0</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy fold.js" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">const LINES = 24;</span><span class="fh-code__line"></span><span class="fh-code__line">const clampOf = (fold) => {</span><span class="fh-code__line">  const raw = getComputedStyle(fold).getPropertyValue("--fh-fold-lines");</span><span class="fh-code__line">  const n = Number.parseInt(raw, 10);</span><span class="fh-code__line">  return Number.isFinite(n) && n > 0 ? n : LINES;</span><span class="fh-code__line">};</span><span class="fh-code__line"></span><span class="fh-code__line">export function measureFold(fold) {</span><span class="fh-code__line">  const body = fold.querySelector(".fh-fold__body");</span><span class="fh-code__line">  const toggle = fold.querySelector(".fh-fold__toggle");</span><span class="fh-code__line">  if (!body || !toggle) return;</span><span class="fh-code__line">  fold.classList.add("fh-fold--js");</span><span class="fh-code__line">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span><span class="fh-code__line">  const over = body.scrollHeight > clampOf(fold) * line + 1;</span><span class="fh-code__line">  if (over) toggle.hidden = false;</span><span class="fh-code__line">  else fold.dataset.fits = "true";</span><span class="fh-code__line">}</span><span class="fh-code__line"></span><span class="fh-code__line">export const ready = true;</span></code></pre>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--code" data-tone="orange" data-fh-id="SCO-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--code fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">fold.js</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">js</span><span class="fh-chip" data-tone="sky">20 lines</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure class="fh-code">
+          <figcaption>
+            <span>fold.js</span>
+            <span class="fh-chip" data-tone="orange">js</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono"><span class="fh-value__name" title="9f2a1c0e4b71">9f2a1c0</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy fold.js" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">const LINES = 24;</span><span class="fh-code__line"></span><span class="fh-code__line">const clampOf = (fold) => {</span><span class="fh-code__line">  const raw = getComputedStyle(fold).getPropertyValue("--fh-fold-lines");</span><span class="fh-code__line">  const n = Number.parseInt(raw, 10);</span><span class="fh-code__line">  return Number.isFinite(n) && n > 0 ? n : LINES;</span><span class="fh-code__line">};</span><span class="fh-code__line"></span><span class="fh-code__line">export function measureFold(fold) {</span><span class="fh-code__line">  const body = fold.querySelector(".fh-fold__body");</span><span class="fh-code__line">  const toggle = fold.querySelector(".fh-fold__toggle");</span><span class="fh-code__line">  if (!body || !toggle) return;</span><span class="fh-code__line">  fold.classList.add("fh-fold--js");</span><span class="fh-code__line">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span><span class="fh-code__line">  const over = body.scrollHeight > clampOf(fold) * line + 1;</span><span class="fh-code__line">  if (over) toggle.hidden = false;</span><span class="fh-code__line">  else fold.dataset.fits = "true";</span><span class="fh-code__line">}</span><span class="fh-code__line"></span><span class="fh-code__line">export const ready = true;</span></code></pre>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--code" data-tone="orange" open data-fh-id="SCO-1.3" data-fh-name="Several files">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--code fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Fold</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="orange">2 files</span><span class="fh-chip" data-tone="sky">12 lines</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure class="fh-code">
+          <figcaption>
+            <span>fold.css</span>
+            <span class="fh-chip" data-tone="orange">css</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono"><span class="fh-value__name" title="c31d0ab88e22">c31d0ab</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy fold.css" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">.fh-fold {</span><span class="fh-code__line">  display: grid;</span><span class="fh-code__line">  min-inline-size: 0;</span><span class="fh-code__line">}</span><span class="fh-code__line"></span><span class="fh-code__line">.fh-fold__body { min-inline-size: 0; }</span></code></pre>
+        </figure>
+        <figure class="fh-code">
+          <figcaption>
+            <span>ready.js</span>
+            <span class="fh-chip" data-tone="orange">js</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono"><span class="fh-value__name" title="71ae04d2c908">71ae04d</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy ready.js" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">export function ready(fold) {</span><span class="fh-code__line">  const body = fold.querySelector(".fh-fold__body");</span><span class="fh-code__line">  if (!body) return false;</span><span class="fh-code__line">  fold.classList.add("fh-fold--js");</span><span class="fh-code__line">  return true;</span><span class="fh-code__line">}</span></code></pre>
+        </figure>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
       </div>
     </section>
 

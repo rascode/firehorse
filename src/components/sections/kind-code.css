@@ -1,0 +1,78 @@
+/*
+ * Firehorse - Code section (SCO)
+ * components/sections · layer fh.components · docs /components/sections/#SCO
+ */
+
+@layer fh.components {
+  /* Code
+   * One code block per file. The caption is the file name, a language chip,
+   * a short checksum (fh-value--mono with its copy action) and a Copy button
+   * for the code. Line numbers are a CSS counter on span.fh-code__line and
+   * are not part of a selection. Long code scrolls inside the block.
+   *   <figure class="fh-code">
+   *     <figcaption>
+   *       <span>fold.js</span>
+   *       <span class="fh-chip">js</span>
+   *       <span class="fh-value fh-value--mono">…</span>
+   *       <button class="fh-button fh-button--sm fh-button--ghost" type="button">Copy</button>
+   *     </figcaption>
+   *     <pre><code><span class="fh-code__line">…</span></code></pre>
+   *   </figure> */
+  .fh-panel-section--code .fh-code {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .fh-panel-section--code .fh-code > figcaption {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: var(--fh-gap-bound);
+  }
+
+  .fh-panel-section--code .fh-code > figcaption > :first-child {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-panel-section--code .fh-code > figcaption > :is(.fh-chip, .fh-value) {
+    flex: none;
+  }
+
+  .fh-panel-section--code .fh-code > figcaption > .fh-button {
+    margin-inline-start: auto;
+  }
+
+  /* Source newlines between the line rows must not paint: pre would keep them.
+   * Each row keeps its own spaces. About twelve rows show; the rest scroll. */
+  .fh-panel-section--code .fh-code > pre {
+    overflow: auto;
+    max-block-size: calc(12 * 1lh);
+    max-inline-size: 100%;
+    white-space: normal;
+  }
+
+  .fh-panel-section--code .fh-code code {
+    display: block;
+    counter-reset: fh-code-line;
+  }
+
+  .fh-panel-section--code .fh-code__line {
+    display: block;
+    counter-increment: fh-code-line;
+    white-space: pre;
+  }
+
+  .fh-panel-section--code .fh-code__line::before {
+    content: counter(fh-code-line);
+    display: inline-block;
+    inline-size: 3ch;
+    margin-inline-end: var(--fh-gap-related);
+    color: var(--fh-color-text-subtle);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
