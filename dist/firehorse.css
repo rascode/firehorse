@@ -16301,10 +16301,20 @@
   }
 
   .fh-masthead--app.fh-masthead--app-crumbs {
+    border-radius: calc(var(--fh-tile-cube-radius, var(--fh-radius-sm)) + var(--_frame) + var(--fh-border-thin));
     grid-template-columns: minmax(0, 1fr) auto;
 
     & > .fh-crumbs {
-      padding-inline: calc((var(--_height) - var(--fh-tile-cube-size)) / 2) var(--_pad-i);
+      padding-inline: 0 var(--_pad-i);
+    }
+
+    & .fh-crumb__button {
+      block-size: var(--_height);
+      border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    }
+
+    & .fh-crumb--area > .fh-crumb__button {
+      padding-inline-start: calc((var(--_height) - var(--fh-crumb-mark, 1.5rem)) / 2);
     }
 
     & .fh-masthead__summary {

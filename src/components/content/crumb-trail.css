@@ -287,10 +287,17 @@
   /* —— MST-4.4 Crumbs ——
    * The MST-3 panel recipe as is (frost, radius, shadow, no etched edge, the sidebar head row's height); the
    * trail is the lead and there is no summary zone, so the trail takes the width and the tools sit at the end. */
+  /* The bar wraps its contents tightly: its corner is the cube's corner plus the ring (frame + edge), so the
+   * Organizations crumb on the left and the avatar on the right sit in it with parallel curves. Both are the
+   * row's full height at the ring, with the cube's corner. */
   .fh-masthead--app.fh-masthead--app-crumbs {
     grid-template-columns: minmax(0, 1fr) auto;
+    border-radius: calc(var(--fh-tile-cube-radius, var(--fh-radius-sm)) + var(--_frame) + var(--fh-border-thin));
 
-    & > .fh-crumbs { padding-inline: calc((var(--_height) - var(--fh-tile-cube-size)) / 2) var(--_pad-i); }
+    & > .fh-crumbs { padding-inline: 0 var(--_pad-i); }
+    & .fh-crumb__button { block-size: var(--_height); border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm)); }
+    /* The area cube as far from the button's start as from its top and bottom. */
+    & .fh-crumb--area > .fh-crumb__button { padding-inline-start: calc((var(--_height) - var(--fh-crumb-mark, 1.5rem)) / 2); }
     & .fh-masthead__summary { display: none; }
   }
 
