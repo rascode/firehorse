@@ -20,21 +20,30 @@
     max-inline-size: 100%;
   }
 
-  .fh-panel-section--document .fh-prose h1 {
-    color: var(--fh-color-text);
-    font-size: var(--fh-text-h2);
-  }
+  /* The section title is an h3, so the rendered headings step down: the
+   * markdown's h1 and h2 are written as h4, its h3 and below as h5. The prose
+   * roles space h2 to h4 only, so h5 and h6 get the same spacing here. */
+  .fh-panel-section--document .fh-prose {
+    & :is(h4, h5, h6) {
+      color: var(--fh-color-text);
+      margin-block-start: var(--_section);
+    }
 
-  .fh-panel-section--document .fh-prose h2 {
-    font-size: var(--fh-text-h3);
-  }
+    & h4 {
+      font-size: var(--fh-text-large);
+    }
 
-  .fh-panel-section--document .fh-prose h3 {
-    font-size: var(--fh-text-h4);
-  }
+    & :is(h5, h6) {
+      font-size: var(--fh-text-body);
+    }
 
-  .fh-panel-section--document .fh-prose h4 {
-    font-size: var(--fh-text-small);
+    & :is(h4, h5, h6) + * {
+      margin-block-start: var(--_after-head);
+    }
+
+    & > :first-child {
+      margin-block-start: 0;
+    }
   }
 
   .fh-panel-section--document :is(.fh-table-wrap, .fh-code) {
