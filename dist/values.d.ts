@@ -1,5 +1,5 @@
 // Firehorse data display contract (values.js). Rules: schema/display-rules.json. Doc: agent/components/values.md.
-export type Shape = "text" | "prose" | "number" | "money" | "ratio" | "temporal" | "option" | "options" | "entity" | "file" | "link" | "flag" | "code" | "series";
+export type Shape = "text" | "prose" | "number" | "money" | "ratio" | "temporal" | "option" | "options" | "entity" | "file" | "link" | "flag" | "code" | "series" | "place";
 /** Where a value sits. text is never drawn: it names the plain string for CSV export, aria-label, copy and search. */
 export type Context = "cell" | "record" | "card" | "metric" | "form" | "text";
 export type DrawnContext = Exclude<Context, "text">;
@@ -159,5 +159,15 @@ export declare function renderValue(field: ValueField, value: unknown, context?:
 export declare function entityOf(e: unknown): { label: string; [k: string]: unknown } | null;
 /** A file from a string or an object: { name, … }. */
 export declare function fileOf(f: unknown): { name: string; [k: string]: unknown } | null;
+/** Hours today for a place: open until a time, closing at a time, or closed (opening at a time). label replaces the words. */
+export interface PlaceHours { state: "open" | "closing" | "closed"; until?: string; opens?: string; label?: string }
+/** A Places lookup state, toned through the Status chip's states: matched done, review moving, unmatched waiting. */
+export type PlaceMatch = "matched" | "unmatched" | "review";
+/** A place value (VAL-12): the address lines (one or two drawn), hours today, a map link the host builds, the lookup state. */
+export interface PlaceValue { lines: string[]; hours?: PlaceHours | string | null; mapUrl?: string | null; match?: PlaceMatch | null }
+/** A place from a string (one line per line break), a list of lines or an object: { lines, hours, mapUrl, match }. */
+export declare function placeOf(p: unknown): (PlaceValue & { hours: PlaceHours | string | null; mapUrl: string | null; match: PlaceMatch | null }) | null;
+/** A place value's address lines: { lines } or { address }, a list, or a string with a line break per line. */
+export declare function placeLines(p: unknown): string[];
 /** The metric tile's sparkline (120 × 32) for a list of numbers. */
 export declare function sparkline(values: number[]): string;

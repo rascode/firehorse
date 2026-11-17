@@ -115,6 +115,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | code, git branch | `branch` | `branch` | `branch` | · | `input-mono` | `value` | VAL-11 |
 | code, file path | `path` | `path-copy` | `path` | · | `input-mono` | `value` | VAL-11 |
 | code | `mono` | `copyable` | `mono` | · | `input-mono` | `value` | VAL-11 |
+| place (The address on one or two lines; hours today, the map link (href from the host) and the Places lookup state when the value carries them) | `cell` | `address` | `hours` | · | `textarea` | `place` | VAL-12 |
 | text, action (computed button) (computed_button is text / action: an action renderer, left out of sort, filter and export (decision 4)) | `action` | `action` | `action` | · | · | `label` | VAL-11 |
 | text (Not in the approved grid (the plan's grid had no text row)) | `line` | `line` | `line` | · | `input` | `value` | VAL-11 |
 
@@ -136,6 +137,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | VAL-11 Prose, text and code | prose | `clamp-2` · `clamp-3` · `full` · `textarea` (edit) FLD |
 | VAL-11 Prose, text and code | text | `line` · `input` (edit) FLD · `action` ACT |
 | VAL-11 Prose, text and code | code | `mono` DET · `copyable` DET · `masked` DET · `code-block` DET · `input-mono` (edit) FLD · `textarea-mono` (edit) FLD · `key-field` (edit) KEY · `branch` DET · `path` DET · `path-copy` DET |
+| VAL-12 Place | place | `address` ACT, CHP · `hours` ACT · `match` CHP · `cell` CHP · `textarea` (edit) FLD |
 <!-- grid:end -->
 
 ## Fields
@@ -249,7 +251,7 @@ Every relation cell and picker row reads this object and shows as much as its va
 <!-- types:start -->
 | Shape | Kind | Semantic types |
 |---|---|---|
-| text | · | `city`, `display_name`, `family_name`, `first_name`, `full_name`, `given_name`, `initials`, `last_name`, `legal_name`, `middle_name`, `nickname`, `postal_code`, `preferred_name`, `query`, `short_text`, `street_address`, `title`, `username` |
+| text | · | `city`, `display_name`, `family_name`, `first_name`, `full_name`, `given_name`, `initials`, `last_name`, `legal_name`, `middle_name`, `nickname`, `postal_code`, `preferred_name`, `query`, `short_text`, `title`, `username` |
 | text | action | `computed_button` |
 | text | formula | `computed_formula` |
 | prose | markdown | `markdown` |
@@ -289,6 +291,7 @@ Every relation cell and picker row reads this object and shows as much as its va
 | code | path | `file_path` |
 | code | secret | `access_token_ref`, `api_key_secret_ref`, `private_key_ref`, `secret_key_ref` |
 | series | · | `waveform_data` |
+| place | · | `street_address` |
 <!-- types:end -->
 
 ## Parts
@@ -1363,6 +1366,67 @@ Owners see the breach in their next relay readout.</textarea></div>
   <span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span><button class="fh-value__action" type="button" aria-label="Copy the path" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
   <span class="fh-value fh-value--path-copy fh-value--mono" data-mode="edit" data-fh="VAL-11.16"><input class="fh-value__input" type="text" value="apps/helm/scripts/relay-audit.mts" aria-label="Path" spellcheck="false"></span>
   <span class="fh-value fh-value--path-copy fh-value--mono fh-value--lg" data-fh="VAL-11.16"><span class="fh-value__name" title="apps/helm/scripts/relay-audit.mts">…/scripts/relay-audit.mts</span><button class="fh-value__action" type="button" aria-label="Copy the path" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+</div>
+```
+
+#### VAL-12 Place
+
+`VAL-12.1` Address · `place` `address` · built from ACT, CHP
+
+```html
+<div class="fh-stack">
+  <div class="fh-value fh-value--place-address" data-fh="VAL-12.1"><address class="fh-value__lines"><span>16 Market Street</span><span>Austin, TX 78701</span></address><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></div>
+  <div class="fh-value fh-value--place-address" data-fh="VAL-12.1"><address class="fh-value__lines"><span>2200 Northeast Martin Luther King Junior Boulevard</span><span>Suite 140, Portland, OR 97212</span></address><a class="fh-value__action" href="https://maps.example/?q=2200+NE+MLK+Portland" aria-label="Open 2200 Northeast Martin Luther King Junior Boulevard on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></div>
+  <div class="fh-value fh-value--textarea fh-value--field" data-mode="edit" data-fh="VAL-12.1"><textarea class="fh-textarea" rows="4" name="address" aria-label="Address">16 Market Street
+Austin, TX 78701</textarea></div>
+  <div class="fh-value fh-value--place-address fh-value--lg" data-fh="VAL-12.1"><address class="fh-value__lines"><span>16 Market Street</span><span>Austin, TX 78701</span></address><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></div>
+  <span class="fh-value fh-value--place-address" data-empty data-fh="VAL-12.1"><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span>
+</div>
+```
+
+`VAL-12.2` With hours · `place` `hours` · built from ACT
+
+```html
+<div class="fh-stack">
+  <span class="fh-value fh-value--place-hours" data-fh="VAL-12.2"><span class="fh-value__name" title="16 Market Street, Austin, TX 78701">16 Market Street</span><span class="fh-value__hours" data-state="open" data-tone="lime"><span class="fh-dot"></span><span class="fh-value__sub">Open until 6 PM</span></span><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></span>
+  <span class="fh-value fh-value--place-hours" data-fh="VAL-12.2"><span class="fh-value__name" title="16 Market Street, Austin, TX 78701">16 Market Street</span><span class="fh-value__hours" data-state="closing" data-tone="amber"><span class="fh-dot"></span><span class="fh-value__sub">Closes at 5:30 PM</span></span><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></span>
+  <span class="fh-value fh-value--place-hours" data-fh="VAL-12.2"><span class="fh-value__name" title="16 Market Street, Austin, TX 78701">16 Market Street</span><span class="fh-value__hours" data-state="closed" data-tone="neutral"><span class="fh-dot"></span><span class="fh-value__sub">Closed · Opens 9 AM</span></span><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></span>
+  <div class="fh-value fh-value--place-address" data-fh="VAL-12.2"><address class="fh-value__lines"><span>16 Market Street</span><span>Austin, TX 78701</span></address><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a><span class="fh-value__meta"><span class="fh-value__hours" data-state="open" data-tone="lime"><span class="fh-dot"></span><span class="fh-value__sub">Open until 6 PM</span></span></span></div>
+  <span class="fh-value fh-value--place-hours fh-value--lg" data-fh="VAL-12.2"><span class="fh-value__name" title="16 Market Street, Austin, TX 78701">16 Market Street</span><span class="fh-value__hours" data-state="open" data-tone="lime"><span class="fh-dot"></span><span class="fh-value__sub">Open until 6 PM</span></span><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a></span>
+</div>
+```
+
+`VAL-12.3` Match states · `place` `match` · built from CHP
+
+```html
+<div class="fh-stack">
+  <div class="fh-cluster"><span class="fh-value fh-value--place-match" title="16 Market Street, Austin, TX 78701" data-fh="VAL-12.3"><span data-match="matched" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">Matched</span></span> <span class="fh-value fh-value--place-match" title="16 Market Street, Austin, TX 78701" data-fh="VAL-12.3"><span data-match="review" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="sky">Review</span></span> <span class="fh-value fh-value--place-match" title="16 Market Street, Austin, TX 78701" data-fh="VAL-12.3"><span data-match="unmatched" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Unmatched</span></span></div>
+  <div class="fh-value fh-value--place-address" data-fh="VAL-12.3"><address class="fh-value__lines"><span>16 Market Street</span><span>Austin, TX 78701</span></address><a class="fh-value__action" href="https://maps.example/?q=16+Market+Street+Austin" aria-label="Open 16 Market Street on a map" title="Map"><i class="fh-icon fh-icon--map-pin" aria-hidden="true"></i></a><span class="fh-value__meta"><span class="fh-value__hours" data-state="open" data-tone="lime"><span class="fh-dot"></span><span class="fh-value__sub">Open until 6 PM</span></span><span data-match="review" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="sky">Review</span></span></div>
+  <span class="fh-value fh-value--place-match fh-value--lg" title="16 Market Street, Austin, TX 78701" data-fh="VAL-12.3"><span data-match="matched" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">Matched</span></span>
+</div>
+```
+
+`VAL-12.4` In a table cell · `place` `cell` · built from CHP
+
+```html
+<div class="fh-stack">
+  <div class="fh-table-wrap" data-fh="VAL-12.4"><table class="fh-table"><caption class="fh-sr-only">Shops and their addresses</caption><thead><tr><th scope="col">Shop</th><th scope="col">Address</th></tr></thead><tbody>
+    <tr><td data-label="Shop"><a class="fh-ref" href="#" data-sidecar="shop-market"><span class="fh-ref__label">Market Street</span></a></td><td data-label="Address"><span class="fh-value fh-value--place-cell"><span class="fh-value__name" title="16 Market Street, Austin, TX 78701">16 Market Street</span><span data-match="matched" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">Matched</span></span></td></tr>
+    <tr><td data-label="Shop"><a class="fh-ref" href="#" data-sidecar="shop-mlk"><span class="fh-ref__label">Northeast MLK</span></a></td><td data-label="Address"><span class="fh-value fh-value--place-cell"><span class="fh-value__name" title="2200 Northeast Martin Luther King Junior Boulevard, Suite 140, Portland, OR 97212">2200 Northeast Martin Luther King Junior Boulevard</span><span data-match="review" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="sky">Review</span></span></td></tr>
+    <tr><td data-label="Shop"><a class="fh-ref" href="#" data-sidecar="shop-pier"><span class="fh-ref__label">Pier 9</span></a></td><td data-label="Address"><span class="fh-value fh-value--place-cell"><span class="fh-value__name" title="Pier 9, The Embarcadero, San Francisco, CA 94111">Pier 9, The Embarcadero</span><span data-match="unmatched" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber">Unmatched</span></span></td></tr>
+    <tr><td data-label="Shop"><a class="fh-ref" href="#" data-sidecar="shop-new"><span class="fh-ref__label">New site</span></a></td><td data-label="Address"><span class="fh-value fh-value--place-cell" data-empty><span aria-hidden="true">—</span><span class="fh-sr-only">Empty</span></span></td></tr>
+  </tbody></table></div>
+  <span class="fh-value fh-value--place-cell fh-value--lg" data-fh="VAL-12.4"><span class="fh-value__name" title="16 Market Street, Austin, TX 78701">16 Market Street</span><span data-match="matched" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">Matched</span></span>
+</div>
+```
+
+`VAL-11.4` Textarea · `place` `textarea` · editable · built from FLD
+
+```html
+<div class="fh-stack">
+  <div class="fh-value fh-value--textarea fh-value--field" data-mode="read" data-fh="VAL-11.4"><textarea class="fh-textarea" rows="4" aria-label="Summary" readonly>The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+  <div class="fh-value fh-value--textarea fh-value--field" data-mode="edit" data-fh="VAL-11.4"><textarea class="fh-textarea" rows="4" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
+  <div class="fh-value fh-value--textarea fh-value--field fh-value--lg" data-mode="edit" data-fh="VAL-11.4"><textarea class="fh-textarea" rows="4" aria-label="Summary">The index refresh moves every goal onto the new display contract, so a status, a person or an amount reads the same in Helm, on the site and in the sidecar. Rows that fail the check are flagged in the audit and sent back to their owner with the rule they broke.</textarea></div>
 </div>
 ```
 <!-- parts:end -->
