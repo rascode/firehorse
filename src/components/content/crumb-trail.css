@@ -316,9 +316,20 @@
     &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); color: var(--fh-color-text); }
   }
 
-  /* The person's avatar in the Crumbs bar: a rounded square in the etched outline (the profile ring's dashed etch). */
-  .fh-masthead--app-crumbs .fh-profile { border-radius: var(--fh-radius-md); }
-  .fh-masthead--app-crumbs .fh-profile .fh-avatar { border-radius: var(--fh-radius-sm); }
+  /* The person's avatar in the Crumbs bar: one etched line, the avatar filling the control height, the cube's own
+   * corner (--fh-tile-cube-radius). The profile button drops its ring and inset so only the avatar's line shows. */
+  .fh-masthead--app-crumbs .fh-profile {
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+  }
+  .fh-masthead--app-crumbs .fh-profile .fh-avatar {
+    --fh-avatar-size: var(--fh-control-height);
+    --fh-avatar-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    box-shadow: none;
+  }
 
   /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
   @container fh-masthead (inline-size < 56rem) {

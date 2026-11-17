@@ -21629,11 +21629,16 @@
   }
 
   .fh-masthead--app-crumbs .fh-profile {
-    border-radius: var(--fh-radius-md);
+    border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    border: 0;
+    padding: 0;
   }
 
   .fh-masthead--app-crumbs .fh-profile .fh-avatar {
-    border-radius: var(--fh-radius-sm);
+    --fh-avatar-size: var(--fh-control-height);
+    --fh-avatar-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    box-shadow: none;
   }
 
   @container fh-masthead (inline-size < 56rem) {
