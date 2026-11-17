@@ -13,8 +13,8 @@ const ledger = JSON.parse(readFileSync(join(root, "index-ledger.json"), "utf8"))
 let n = 0;
 const t = (name, fn) => { fn(); n++; };
 
-t("fourteen shapes (series is the 14th), six contexts (text is the sixth)", () => {
-  assert.deepEqual([...SHAPES], ["text", "prose", "number", "money", "ratio", "temporal", "option", "options", "entity", "file", "link", "flag", "code", "series"]);
+t("fifteen shapes (series is the 14th, place the 15th), six contexts (text is the sixth)", () => {
+  assert.deepEqual([...SHAPES], ["text", "prose", "number", "money", "ratio", "temporal", "option", "options", "entity", "file", "link", "flag", "code", "series", "place"]);
   assert.deepEqual([...CONTEXTS], ["cell", "record", "card", "metric", "form", "text"]);
   assert.deepEqual([...DRAWN_CONTEXTS], ["cell", "record", "card", "metric", "form"]);
 });
@@ -31,7 +31,7 @@ t("every one of the 129 semantic types has a shape and resolves in every context
       assert.deepEqual(r.warnings, [], `${type.key} in ${c}: ${r.warnings}`);
     }
   }
-  assert.equal(used.size, 14, "all fourteen shapes are used");
+  assert.equal(used.size, 15, "all fifteen shapes are used");
 });
 
 t("the grid only names variants its shape has, and every part is a Firehorse family", () => {
@@ -397,7 +397,7 @@ t("variants(): the default first, none for a secret, none in metric or form, a m
 });
 
 t("renderValue(): every semantic type draws in every drawn context as the part resolveValue() names", () => {
-  const sample = { option: "active", options: ["demo"], entity: { label: "Ava Mendes", key: "AM-1" }, money: 1250, ratio: 42, number: 12, series: [1, 3, 2], temporal: "2026-11-27", file: [{ name: "brief.pdf" }], link: "https://example.com", flag: true, prose: "Two\n\nparagraphs", text: "Line", code: "rc_01HF3K9ZQ4" };
+  const sample = { option: "active", options: ["demo"], entity: { label: "Ava Mendes", key: "AM-1" }, money: 1250, ratio: 42, number: 12, series: [1, 3, 2], temporal: "2026-11-27", file: [{ name: "brief.pdf" }], link: "https://example.com", flag: true, prose: "Two\n\nparagraphs", text: "Line", code: "rc_01HF3K9ZQ4", place: { lines: ["16 Market Street", "Austin, TX 78701"], match: "matched" } };
   for (const type of types) {
     for (const c of DRAWN_CONTEXTS) {
       const field = { key: "f", label: "F", semanticType: type.key, currency: "USD" };
@@ -459,6 +459,30 @@ t("a branch and a path draw in mono with the full value as their title (VAL-11.1
   assert.match(renderValue(path, "README.md", "cell"), /title="README\.md">README\.md</, "a short path is shown whole");
   assert.match(renderValue(path, "a/b/c.md", "record"), /data-fh="VAL-11\.16">.*…\/b\/c\.md<\/span><button class="fh-value__action" type="button" aria-label="Copy Path"/);
   assert.equal(textOf(path, "a/b/c.md"), "a/b/c.md", "the text form is the full path");
+});
+
+t("a place (VAL-12): two lines, hours today and the match chip on the status states, a map link from the host, one line in a cell", () => {
+  const field = { key: "address", label: "Address", semanticType: "street_address" };
+  const v = { lines: ["2200 NE MLK Blvd", "Suite 140", "Portland, OR 97212"], hours: { state: "open", until: "18:00" }, mapUrl: "https://maps.example/?q=2200", match: "review" };
+  assert.equal(resolveValue(field, "cell").variant, "cell");
+  assert.equal(resolveValue(field, "record").id, "VAL-12.1");
+  assert.equal(resolveValue(field, "card").id, "VAL-12.2");
+  assert.equal(resolveValue(field, "form").id, "VAL-11.4", "the form is the prose textarea");
+  assert.equal(resolveValue(field, "metric").variant, null);
+  const record = renderValue(field, v, "record");
+  assert.match(record, /^<div class="fh-value fh-value--place-address" data-fh="VAL-12\.1"><address class="fh-value__lines"><span>2200 NE MLK Blvd<\/span><span>Suite 140, Portland, OR 97212<\/span><\/address>/);
+  assert.match(record, /<a class="fh-value__action" href="https:\/\/maps\.example\/\?q=2200"[^>]*><i class="fh-icon fh-icon--map-pin"/);
+  assert.match(record, /class="fh-value__hours" data-state="open" data-tone="lime"><span class="fh-dot"><\/span><span class="fh-value__sub">Open until 6 PM</);
+  assert.match(record, /data-match="review" class="fh-chip fh-chip--tone fh-chip--sm" data-tone="sky">Review</);
+  assert.match(renderValue(field, { ...v, hours: { state: "closed", opens: "09:00" } }, "card"), /data-tone="neutral">.*Closed · Opens 9 AM/);
+  assert.match(renderValue(field, { ...v, hours: { state: "closing", until: "17:30" } }, "card"), /data-tone="amber">.*Closes at 5:30 PM/);
+  const cell = renderValue(field, { ...v, match: "unmatched" }, "cell");
+  assert.match(cell, /fh-value--place-cell" data-fh="VAL-12\.4"><span class="fh-value__name" title="2200 NE MLK Blvd, Suite 140, Portland, OR 97212">2200 NE MLK Blvd<\/span><span data-match="unmatched"[^>]*data-tone="amber">Unmatched</);
+  assert.ok(!/fh-value__action/.test(renderValue(field, { lines: ["16 Market Street"] }, "record")), "no map link unless the host gives one");
+  assert.match(renderValue(field, { lines: [] }, "cell"), /data-empty/);
+  assert.match(renderValue(field, "16 Market Street\nAustin, TX", "form"), /<textarea class="fh-textarea"[^>]*>16 Market Street\nAustin, TX<\/textarea>/);
+  assert.equal(textOf(field, v), "2200 NE MLK Blvd, Suite 140, Portland, OR 97212");
+  for (const [m, tone] of [["matched", "lime"], ["review", "sky"], ["unmatched", "amber"]]) assert.equal(STATES[rules.place.match[m]], tone, m);
 });
 
 t("the avatar cascade: own image, then the family's, then the platform's, then initials (G4, RS1)", () => {

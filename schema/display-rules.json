@@ -15,7 +15,8 @@
     "link": "an address you can open",
     "flag": "yes or no",
     "code": "an identifier shown in mono",
-    "series": "a list of numbers over time"
+    "series": "a list of numbers over time",
+    "place": "an address, its hours today, a map link and its lookup state"
   },
   "contexts": {
     "cell": "a datatable or table row",
@@ -1145,6 +1146,33 @@
       }
     },
     {
+      "row": "place",
+      "label": "place",
+      "shape": "place",
+      "cell": "cell",
+      "record": "address",
+      "card": "hours",
+      "metric": null,
+      "form": "textarea",
+      "text": "place",
+      "note": "The address on one or two lines; hours today, the map link (href from the host) and the Places lookup state when the value carries them.",
+      "choices": {
+        "cell": [
+          "cell",
+          "hours",
+          "match"
+        ],
+        "record": [
+          "address",
+          "hours"
+        ],
+        "card": [
+          "hours",
+          "cell"
+        ]
+      }
+    },
+    {
       "row": "text.action",
       "label": "text, action (computed button)",
       "shape": "text",
@@ -1976,6 +2004,50 @@
           ]
         }
       }
+    },
+    "place": {
+      "group": "VAL-12",
+      "name": "Place",
+      "variants": {
+        "address": {
+          "id": "VAL-12.1",
+          "label": "Address",
+          "parts": [
+            "ACT",
+            "CHP"
+          ]
+        },
+        "hours": {
+          "id": "VAL-12.2",
+          "label": "With hours",
+          "parts": [
+            "ACT"
+          ]
+        },
+        "match": {
+          "id": "VAL-12.3",
+          "label": "Match states",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "cell": {
+          "id": "VAL-12.4",
+          "label": "In a table cell",
+          "parts": [
+            "CHP"
+          ]
+        },
+        "textarea": {
+          "id": "VAL-11.4",
+          "label": "Textarea",
+          "parts": [
+            "FLD"
+          ],
+          "editable": true,
+          "of": "prose"
+        }
+      }
     }
   },
   "textFormats": {
@@ -1996,7 +2068,8 @@
     "value": "the value as stored",
     "yes-no": "Yes or No",
     "plain": "the words with markup stripped",
-    "json": "the JSON"
+    "json": "the JSON",
+    "place": "the address lines joined by \", \""
   },
   "toneMap": {
     "lime": [
@@ -2057,6 +2130,19 @@
     "waiting": "amber",
     "failed": "rose",
     "ended": "neutral"
+  },
+  "place": {
+    "note": "A place value (VAL-12): { lines, hours, mapUrl, match }. Its hours state and its Places match state take their tone from the status states above, the Status chip tone map: no tone of their own.",
+    "hours": {
+      "open": "done",
+      "closing": "waiting",
+      "closed": "ended"
+    },
+    "match": {
+      "matched": "done",
+      "review": "moving",
+      "unmatched": "waiting"
+    }
   },
   "ramp": {
     "hue": "orange",
