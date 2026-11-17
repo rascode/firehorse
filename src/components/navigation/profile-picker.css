@@ -636,6 +636,10 @@
     --_pad-i: var(--fh-inset-control);
   }
 
+  /* The Now panel's facts and its progress field take the rows' inline inset, so their text lines up
+   * with the back row's label instead of meeting the menu's edge. */
+  .fh-account-menu__panel > :is(.fh-kv, .fh-progress-field) { padding-inline: var(--fh-inset-control); }
+
   /* The Theme switch inside the account menu: the new look, not a pill. The cube's corner on each option and
    * the ring's corner on the track; the chosen option is a quiet tint, not a solid fill. */
   .fh-account-menu .fh-segmented {
