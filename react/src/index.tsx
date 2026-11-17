@@ -25,6 +25,21 @@ export {
   type NavBadgeProps,
 } from "./sidenav";
 export {
+  CrumbTrail,
+  AreaCrumb,
+  RecordCrumb,
+  LeafCrumb,
+  OverflowCrumb,
+  type CrumbTrailProps,
+  type AreaCrumbProps,
+  type RecordCrumbProps,
+  type LeafCrumbProps,
+  type OverflowCrumbProps,
+  type CrumbRow,
+  type CrumbGroup,
+  type CrumbCount,
+} from "./crumb-trail";
+export {
   ImageField,
   type ImageFieldProps,
   type ImageFieldValue,
