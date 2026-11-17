@@ -1,0 +1,49 @@
+/*
+ * Firehorse - Document section (SDO)
+ * components/sections · layer fh.components · docs /components/sections/#SDO
+ */
+
+@layer fh.components {
+  /* Document
+   * Long markdown already rendered to HTML, in the prose roles, with headings
+   * stepped down inside the section. Past about 24 lines it sits in an fh-fold
+   * with a Show all control. A short note does not fold. Tables use fh-table.
+   * Code uses fh-code. */
+
+  .fh-panel-section--document .fh-fold {
+    --fh-fold-lines: 24;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .fh-panel-section--document .fh-prose {
+    max-inline-size: 100%;
+  }
+
+  .fh-panel-section--document .fh-prose h1 {
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-h2);
+  }
+
+  .fh-panel-section--document .fh-prose h2 {
+    font-size: var(--fh-text-h3);
+  }
+
+  .fh-panel-section--document .fh-prose h3 {
+    font-size: var(--fh-text-h4);
+  }
+
+  .fh-panel-section--document .fh-prose h4 {
+    font-size: var(--fh-text-small);
+  }
+
+  .fh-panel-section--document :is(.fh-table-wrap, .fh-code) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .fh-panel-section--document .fh-code > pre {
+    overflow: auto;
+    max-inline-size: 100%;
+  }
+}

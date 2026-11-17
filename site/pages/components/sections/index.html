@@ -2048,6 +2048,137 @@ Every check in `relay:verify -- --tier screen` passed.
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-sec-document" data-fh-id="SDO" data-fh-groups="Document section">
+          <div class="site-demo__head"><h3>Document section</h3><p><code>fh-panel-section--document</code>. A note already rendered, in the prose roles, folded past about 24 lines. A short note shows no fold.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--document" data-tone="amber" open data-fh-id="SDO-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--file-text fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Report policy</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">660 words</span><span class="fh-chip" data-tone="sky">17 Nov 2026</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-fold">
+          <div class="fh-fold__body fh-prose" id="sdo-open-body">
+            <h2>How a relay report is written</h2>
+            <p>A relay report is the record of one run. It names the relay, the worktree and the branch, then what was built and what each check printed. It is written once, when the run ends, and it does not carry a key. The person who reads it should be able to see the work without opening the branch.</p>
+            <p>The timetable is one line per step. Each line starts with the local time the step finished. The time comes from the clock, never from a guess. A step that is still running is not a finished line, and a time you did not read is not a time you may print.</p>
+            <p>House voice is plain. Say what the section holds and what a person can do with it. Leave out a claim you did not check. If a screen was not opened, say that the screen was not opened. A guess dressed up as a result is worse than a gap.</p>
+            <h3>What goes in</h3>
+            <p>Start with the run context as it was handed over. Then the timetable. Then the codes you issued, and the result of each check. End with the words the spec asks for. Do not add a second ending, and do not rewrite the context block.</p>
+            <p>Commands go in with a short view of their output. Trim a long log to the lines that show the result. If a command was not allowed, say so and do not invent a result. A skipped check is a result of its own: name it, and say why it was skipped.</p>
+            <p>A fix after a commit is a second commit. Nothing is amended, stashed, reset or pushed. The hook runs. A message names the kind and the spec, so a later reader can find the run from the history alone.</p>
+            <h3>What stays out</h3>
+            <ul>
+              <li>No key, token or password, even when a check printed one.</li>
+              <li>No path outside the worktree, and no read of a file that holds a secret.</li>
+              <li>No claim that a test passed unless the output says it passed.</li>
+              <li>No second layout, and no colour, radius or shadow of your own.</li>
+              <li>No retired code brought back, and no code renumbered to make a row fit.</li>
+              <li>No part from outside Firehorse. If a part is missing, stop and say so.</li>
+            </ul>
+            <h3>How the checks read</h3>
+            <p>Read the result from the command, not from memory. A line that says skip is expected when the diff does not touch what that check reads. Do not run a skipped check by hand to fill the report. The sweep runs the wide checks once per wave.</p>
+            <p>The screen tier checks the page. At a narrow width the page itself does not scroll sideways: a long line of code, and a deep tree, scroll inside the section. The report says so only after a check, or it says the check was not run.</p>
+            <p>The same rules apply to a policy, a long reply and a spec. Past about 24 lines the text folds, and Show all opens it in place. A short note does not fold. Headings step down so they sit under the section title, in the prose roles.</p>
+            <h3>Records this policy names</h3>
+            <div class="fh-table-wrap"><table class="fh-table">
+              <thead><tr><th scope="col">Record</th><th scope="col">Kind</th><th scope="col">Where</th></tr></thead>
+              <tbody>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-report"><span class="fh-ref__label">Relay report</span></a></td><td data-label="Kind">note</td><td data-label="Where">the run folder</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-timetable"><span class="fh-ref__label">Timetable</span></a></td><td data-label="Kind">section</td><td data-label="Where">inside the report</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-ledger"><span class="fh-ref__label">Index ledger</span></a></td><td data-label="Kind">record</td><td data-label="Where">the package root</td></tr>
+              </tbody>
+            </table></div>
+            <h3>A line the report may quote</h3>
+            <figure class="fh-code">
+              <figcaption>report.md</figcaption>
+              <pre><code>Timetable
+11:09 read the spec and chose the codes
+11:22 wrote the code section
+11:29 committed it
+The report ends when the checks have a result.</code></pre>
+            </figure>
+            <p>Chips show only while the section is closed. For a document they are the word count and the date it was updated. The count is the words in the body, including the headings, the table and the code.</p>
+            <p>When the run cannot finish, the report still gets written. It says what is left, and it ends by saying the report is incomplete. Updated with the sections for code, a document and a tree.</p>
+          </div>
+          <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="sdo-open-body" hidden>Show all</button>
+        </div>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--document" data-tone="amber" data-fh-id="SDO-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--file-text fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Report policy</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">660 words</span><span class="fh-chip" data-tone="sky">17 Nov 2026</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-fold">
+          <div class="fh-fold__body fh-prose" id="sdo-collapsed-body">
+            <h2>How a relay report is written</h2>
+            <p>A relay report is the record of one run. It names the relay, the worktree and the branch, then what was built and what each check printed. It is written once, when the run ends, and it does not carry a key. The person who reads it should be able to see the work without opening the branch.</p>
+            <p>The timetable is one line per step. Each line starts with the local time the step finished. The time comes from the clock, never from a guess. A step that is still running is not a finished line, and a time you did not read is not a time you may print.</p>
+            <p>House voice is plain. Say what the section holds and what a person can do with it. Leave out a claim you did not check. If a screen was not opened, say that the screen was not opened. A guess dressed up as a result is worse than a gap.</p>
+            <h3>What goes in</h3>
+            <p>Start with the run context as it was handed over. Then the timetable. Then the codes you issued, and the result of each check. End with the words the spec asks for. Do not add a second ending, and do not rewrite the context block.</p>
+            <p>Commands go in with a short view of their output. Trim a long log to the lines that show the result. If a command was not allowed, say so and do not invent a result. A skipped check is a result of its own: name it, and say why it was skipped.</p>
+            <p>A fix after a commit is a second commit. Nothing is amended, stashed, reset or pushed. The hook runs. A message names the kind and the spec, so a later reader can find the run from the history alone.</p>
+            <h3>What stays out</h3>
+            <ul>
+              <li>No key, token or password, even when a check printed one.</li>
+              <li>No path outside the worktree, and no read of a file that holds a secret.</li>
+              <li>No claim that a test passed unless the output says it passed.</li>
+              <li>No second layout, and no colour, radius or shadow of your own.</li>
+              <li>No retired code brought back, and no code renumbered to make a row fit.</li>
+              <li>No part from outside Firehorse. If a part is missing, stop and say so.</li>
+            </ul>
+            <h3>How the checks read</h3>
+            <p>Read the result from the command, not from memory. A line that says skip is expected when the diff does not touch what that check reads. Do not run a skipped check by hand to fill the report. The sweep runs the wide checks once per wave.</p>
+            <p>The screen tier checks the page. At a narrow width the page itself does not scroll sideways: a long line of code, and a deep tree, scroll inside the section. The report says so only after a check, or it says the check was not run.</p>
+            <p>The same rules apply to a policy, a long reply and a spec. Past about 24 lines the text folds, and Show all opens it in place. A short note does not fold. Headings step down so they sit under the section title, in the prose roles.</p>
+            <h3>Records this policy names</h3>
+            <div class="fh-table-wrap"><table class="fh-table">
+              <thead><tr><th scope="col">Record</th><th scope="col">Kind</th><th scope="col">Where</th></tr></thead>
+              <tbody>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-report"><span class="fh-ref__label">Relay report</span></a></td><td data-label="Kind">note</td><td data-label="Where">the run folder</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-timetable"><span class="fh-ref__label">Timetable</span></a></td><td data-label="Kind">section</td><td data-label="Where">inside the report</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-ledger"><span class="fh-ref__label">Index ledger</span></a></td><td data-label="Kind">record</td><td data-label="Where">the package root</td></tr>
+              </tbody>
+            </table></div>
+            <h3>A line the report may quote</h3>
+            <figure class="fh-code">
+              <figcaption>report.md</figcaption>
+              <pre><code>Timetable
+11:09 read the spec and chose the codes
+11:22 wrote the code section
+11:29 committed it
+The report ends when the checks have a result.</code></pre>
+            </figure>
+            <p>Chips show only while the section is closed. For a document they are the word count and the date it was updated. The count is the words in the body, including the headings, the table and the code.</p>
+            <p>When the run cannot finish, the report still gets written. It says what is left, and it ends by saying the report is incomplete. Updated with the sections for code, a document and a tree.</p>
+          </div>
+          <button class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="sdo-collapsed-body" hidden>Show all</button>
+        </div>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--document" data-tone="amber" open data-fh-id="SDO-1.3" data-fh-name="Short">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--file-text fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Short note</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber">36 words</span><span class="fh-chip" data-tone="sky">17 Nov 2026</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-prose" id="sdo-short-body">
+          <h2>A short note</h2>
+          <p>A short note stays open. The fold is for a policy, a long reply or a spec that runs past about 24 lines. This one fits, so there is no Show all control.</p>
+        </div>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
       </div>
     </section>
 
