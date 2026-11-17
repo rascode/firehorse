@@ -1,0 +1,341 @@
+/*
+ * Firehorse — Crumb trail (MST-5) and the Crumbs App bar layout (MST-4.4)
+ * components/content · layer fh.components · docs /layout/#MST
+ * MST-5 Crumb trail: MST-5.1 Area crumb, MST-5.2 Record crumb, MST-5.3 Switcher menu, MST-5.4 Leaf, MST-5.5 Overflow.
+ * MST-4.4 Crumbs: .fh-masthead--app.fh-masthead--app-crumbs, the trail as the App bar's lead, no summary.
+ * Imported by masthead.css. Generic: the host fills marks, labels, meta, counts and rows.
+ *
+ *   <header class="fh-masthead fh-masthead--app fh-masthead--app-crumbs">
+ *     <nav class="fh-crumbs" aria-label="Breadcrumb">
+ *       <ol class="fh-crumbs__list">
+ *         <li class="fh-crumb fh-crumb--area" data-fh-crumb>
+ *           <button class="fh-crumb__button" type="button" aria-haspopup="menu" aria-expanded="false"
+ *             aria-controls="area-menu" aria-label="Organizations, switch area">
+ *             <span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--building-2"></i></span>
+ *             <span class="fh-crumb__name">Organizations</span>
+ *             <i class="fh-icon fh-icon--chevron-down fh-crumb__caret" aria-hidden="true"></i></button>
+ *           <div id="area-menu" popover="manual" class="fh-menu fh-menu--rich fh-crumb-menu" role="menu" aria-label="Areas">…</div></li>
+ *         <li class="fh-crumb fh-crumb--record" data-fh-crumb>
+ *           <i class="fh-icon fh-icon--chevron-right fh-crumb__sep" aria-hidden="true"></i>
+ *           <button class="fh-crumb__button" …>
+ *             <span class="fh-crumb__mark">…logo, avatar, icon or cube…</span>
+ *             <span class="fh-crumb__name">Rascode</span><span class="fh-crumb__meta">Company · Rascode and Company</span>
+ *             <span class="fh-crumb__counts"><span class="fh-sr-only">3 businesses · 4 brands · 2 people</span>
+ *               <span aria-hidden="true">3</span><span aria-hidden="true">4</span><span aria-hidden="true">2</span></span>
+ *             <i class="fh-icon fh-icon--chevron-down fh-crumb__caret" aria-hidden="true"></i></button>…</li>
+ *         <li class="fh-crumb fh-crumb--leaf"><i … fh-crumb__sep></i><span class="fh-crumb__name" aria-current="page">Edit</span></li>
+ *       </ol>
+ *     </nav>
+ *     <div class="fh-masthead__tools">…</div>
+ *   </header>
+ *
+ * MST-5.1 Area: the area's cube, its label, a caret; the menu lists every area under group headings.
+ * MST-5.2 Record: a mark, the name, muted meta, then counts as small low-contrast mono figures (no chips or boxes).
+ * MST-5.3 Switcher menu: DRP-4 Rich menu frame with a filter field, group headings, rows (mark, name, meta,
+ *   a check on the current one), loading and empty states; scrolls past about ten rows (--fh-crumb-rows).
+ * MST-5.4 Leaf: a tab, Edit or New, plain text. MST-5.5 Overflow: a … that opens the hidden earlier levels.
+ * crumb-menu.js opens the menus (hover intent, click, Enter, ↓), filters, moves with ↑ ↓ and closes on Esc.
+ *
+ * Widths (the masthead's own width): under 56rem the meta and counts hide; under 40rem only the area cube,
+ * the overflow crumb and the last record crumb show; under 30rem the menus open as a sheet.
+ * Knobs: --fh-crumb-mark (the mark, 1.5rem), --fh-crumb-name-max (a name before it ellipses, 14rem),
+ * --fh-crumb-meta-max (meta, 16rem), --fh-crumb-rows (rows before the list scrolls, 10).
+ */
+
+@layer fh.components {
+  .fh-crumbs { min-inline-size: 0; }
+
+  .fh-crumbs__list {
+    display: flex;
+    align-items: center;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fh-crumb {
+    --_mark: var(--fh-crumb-mark, 1.5rem);
+
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    position: relative;
+  }
+
+  .fh-crumb--area { flex: none; }
+
+  /* A chevron between crumbs: the icon, subtle, never a typed ›. */
+  .fh-crumb__sep {
+    --fh-icon-size: 1rem;
+
+    flex: none;
+    margin-inline: var(--fh-gap-bound);
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-crumb__button {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+    block-size: calc(var(--_height) - 2 * var(--_frame) / 2);
+    padding: 0 var(--fh-inset-tight);
+    border: 0;
+    border-radius: var(--fh-radius-md);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
+    font-size: var(--_value);
+    line-height: var(--_leading);
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(:hover, [aria-expanded="true"]) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+
+  .fh-crumb__mark {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: var(--_mark);
+    block-size: var(--_mark);
+    overflow: hidden;
+    border-radius: var(--fh-radius-sm);
+
+    & > :is(img, svg, .fh-avatar) { inline-size: 100%; block-size: 100%; object-fit: cover; --fh-avatar-size: var(--_mark); }
+  }
+
+  .fh-crumb__name {
+    overflow: hidden;
+    max-inline-size: var(--fh-crumb-name-max, 14rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-crumb__meta {
+    overflow: hidden;
+    max-inline-size: var(--fh-crumb-meta-max, 16rem);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-masthead-small-text, var(--fh-text-caption));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Counts: small, low-contrast mono figures, set up and tight like a footnote. No chips, no boxes. */
+  .fh-crumb__counts {
+    display: inline-flex;
+    flex: none;
+    align-self: start;
+    gap: 0.4em;
+    margin-block-start: calc(var(--_height) / 5);
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-micro);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    opacity: 0.8;
+  }
+
+  .fh-crumb__caret {
+    --fh-icon-size: 0.875rem;
+
+    flex: none;
+    color: var(--fh-color-text-subtle);
+    transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+  .fh-crumb__button[aria-expanded="true"] > .fh-crumb__caret { rotate: 180deg; }
+
+  /* The last crumb is the page: full ink. Earlier records read quieter. */
+  .fh-crumb--record:not(:last-child) > .fh-crumb__button { color: var(--fh-color-text-muted); }
+  .fh-crumb--record:not(:last-child) > .fh-crumb__button:is(:hover, [aria-expanded="true"]) { color: var(--fh-color-text); }
+
+  /* MST-5.4 Leaf: plain text. */
+  .fh-crumb--leaf > .fh-crumb__name {
+    padding-inline: var(--fh-inset-tight);
+    color: var(--fh-color-text);
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
+    font-size: var(--_value);
+  }
+
+  /* MST-5.5 Overflow: shown by the narrow steps (or by data-show). */
+  .fh-crumb--overflow:not([data-show]) { display: none; }
+  .fh-crumb--overflow > .fh-crumb__button { padding-inline: var(--fh-inset-tight); color: var(--fh-color-text-muted); }
+
+  /* —— MST-5.3 Switcher menu ———————————————————————————————————————————————— */
+  .fh-crumb-menu {
+    --_rows: var(--fh-crumb-rows, 10);
+    --_row-h: 2.5rem;
+
+    position: fixed;
+    inset: auto;
+    inset-block-start: var(--fh-crumb-y, 0px);
+    inset-inline-start: var(--fh-crumb-x, 0px);
+    display: none;
+    flex-direction: column;
+    inline-size: var(--fh-menu-min, 20rem);
+    max-inline-size: calc(100dvw - 2 * var(--fh-gap-grouped));
+    max-block-size: none;
+    padding: 0;
+    overflow: hidden;
+
+    &:popover-open { display: flex; }
+
+    @supports (position-area: bottom) {
+      inset: auto;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline;
+      margin-block-start: var(--fh-gap-bound);
+    }
+  }
+
+  .fh-crumb-menu__search {
+    flex: none;
+    padding: var(--fh-inset-tight);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft, var(--fh-color-etch));
+
+    & > input {
+      inline-size: 100%;
+      block-size: 2rem;
+      padding-inline: var(--fh-inset-control);
+      border: var(--fh-border-thin) solid transparent;
+      border-radius: var(--fh-radius-md);
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+      color: var(--fh-color-text);
+      font: inherit;
+      font-size: var(--fh-text-small);
+      appearance: none;
+
+      &::placeholder { color: var(--fh-color-text-subtle); }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    }
+  }
+
+  .fh-crumb-menu__list {
+    flex: 1 1 auto;
+    min-block-size: 0;
+    max-block-size: calc(var(--_rows) * var(--_row-h));
+    padding: var(--fh-inset-tight);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .fh-crumb-menu .fh-menu__label { padding: var(--fh-inset-tight) var(--fh-inset-control) 0; }
+  .fh-crumb-menu .fh-menu__label:not(:first-child) { margin-block-start: var(--fh-gap-related); }
+
+  .fh-crumb-menu__row {
+    display: grid;
+    grid-template-columns: var(--fh-crumb-mark, 1.5rem) minmax(0, 1fr) 1rem;
+    column-gap: var(--fh-gap-grouped);
+    align-items: center;
+    inline-size: 100%;
+    min-block-size: var(--_row-h);
+    padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) var(--fh-inset-tight);
+    border: 0;
+    border-radius: var(--fh-radius-md);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    text-align: start;
+    text-decoration: none;
+    cursor: var(--fh-cursor-action);
+
+    /* A subpage sits in under its area. */
+    &[data-depth="1"] { padding-inline-start: calc(var(--fh-inset-tight) + var(--fh-crumb-mark, 1.5rem) + var(--fh-gap-grouped)); }
+
+    &:is(:hover, :focus-visible, [data-active]) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    &[hidden] { display: none; }
+    &[aria-checked="true"]::after {
+      content: "";
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text);
+      mask: var(--fh-icon-check) center / contain no-repeat;
+    }
+    & > .fh-crumb__mark { grid-row: 1 / span 2; }
+    & > .fh-crumb__name { grid-column: 2; max-inline-size: none; }
+    & > .fh-crumb__meta { grid-column: 2; max-inline-size: none; }
+    &:not(:has(> .fh-crumb__meta)) > .fh-crumb__mark { grid-row: 1; }
+  }
+
+  .fh-crumb-menu__status {
+    margin: 0;
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+
+    &[hidden] { display: none; }
+  }
+
+  /* Loading: three quiet bars where rows will be. */
+  .fh-crumb-menu[data-state="loading"] .fh-crumb-menu__list::before {
+    content: "";
+    display: block;
+    block-size: calc(3 * var(--_row-h));
+    border-radius: var(--fh-radius-md);
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--fh-color-text) 8%, transparent), transparent) 0 0 / 200% 100%;
+    animation: fh-crumb-load 1.2s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes fh-crumb-load { to { background-position: -200% 0; } }
+
+  /* —— MST-4.4 Crumbs ——
+   * The MST-3 panel recipe as is (frost, radius, shadow, no etched edge, the sidebar head row's height); the
+   * trail is the lead and there is no summary zone, so the trail takes the width and the tools sit at the end. */
+  .fh-masthead--app-crumbs {
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    & > .fh-crumbs { padding-inline: calc((var(--_height) - var(--fh-tile-cube-size)) / 2) var(--_pad-i); }
+    & .fh-masthead__summary { display: none; }
+  }
+
+  @container fh-masthead (inline-size < 56rem) {
+    .fh-masthead--app-crumbs :is(.fh-crumb__meta, .fh-crumb__counts) { display: none; }
+  }
+
+  @container fh-masthead (inline-size < 40rem) {
+    .fh-masthead--app-crumbs {
+      & .fh-crumb--area .fh-crumb__name { display: none; }
+      & .fh-crumb--overflow { display: flex; }
+      & .fh-crumb--leaf { display: none; }
+      & .fh-crumb--record:has(~ .fh-crumb--record) { display: none; }
+    }
+  }
+
+  /* Phone: menus open as a sheet along the bottom. */
+  @container fh-masthead (inline-size < 30rem) {
+    .fh-masthead--app-crumbs .fh-crumb__name { max-inline-size: 9rem; }
+    .fh-masthead--app-crumbs .fh-crumb--area .fh-crumb__caret { display: none; }
+    .fh-crumb-menu {
+      position: fixed;
+      inset: auto 0 0 0;
+      inline-size: auto;
+      max-inline-size: none;
+      margin: 0;
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+      position-area: none;
+
+      & .fh-crumb-menu__list { max-block-size: min(calc(var(--_rows) * var(--_row-h)), 50dvh); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-crumb__button, .fh-crumb__caret { transition: none; }
+    .fh-crumb-menu[data-state="loading"] .fh-crumb-menu__list::before { animation: none; }
+  }
+
+  @media (forced-colors: active) {
+    .fh-crumb__button:is(:hover, [aria-expanded="true"]) { background-color: Highlight; color: HighlightText; }
+    .fh-crumb-menu__row[aria-checked="true"]::after { background-color: CanvasText; }
+  }
+}
