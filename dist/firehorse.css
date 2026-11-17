@@ -4872,8 +4872,8 @@
     display: flex;
 
     & > input:not(.fh-switch) {
-      block-size: 1rem;
-      inline-size: 1rem;
+      inline-size: var(--fh-target-floor, 1rem);
+      block-size: var(--fh-target-floor, 1rem);
       accent-color: var(--fh-color-primary);
       flex: none;
       margin-block-start: var(--fh-choice-nudge, .15rem);
@@ -17353,6 +17353,11 @@
     :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)) {
       --_hit: var(--fh-tap-target);
     }
+  }
+
+  :where(input[type="checkbox"], input[type="radio"]):not(.fh-switch) {
+    inline-size: var(--fh-target-floor);
+    block-size: var(--fh-target-floor);
   }
 
   .fh-target-floor .fh-menu {

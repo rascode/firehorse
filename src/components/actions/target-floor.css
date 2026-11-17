@@ -12,7 +12,7 @@
  *   a toned button's edge, a busy button's spinner, the disc (its own coarse rule),
  *   the switch thumb, the chip dot, the chip remove (its hit area is in chips.css),
  *   a tab bar tick, an entity row's separator.
- * A checkbox or radio is drawn at 1rem, which is the floor. A replaced input cannot grow
+ * A checkbox or radio is drawn at the floor (rule below). A replaced input cannot grow
  * from a ::before, so a theme that raises the floor raises those controls with it.
  */
 
@@ -72,6 +72,13 @@
     ) {
       --_hit: var(--fh-tap-target);
     }
+  }
+
+  /* A checkbox or radio cannot grow a hit area from ::before (a replaced input), so it is drawn at the floor.
+     Gate V1, Rascode 2026-11-17: draw them at 16px rather than rely on a wrapping label. */
+  :where(input[type="checkbox"], input[type="radio"]):not(.fh-switch) {
+    inline-size: var(--fh-target-floor);
+    block-size: var(--fh-target-floor);
   }
 
   /* The specimen draws the menu in the page so its row can be measured. */
