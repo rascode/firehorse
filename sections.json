@@ -299,6 +299,16 @@
       "body": "ul.fh-tree of nested rows: details when a row has children, a plain row when it does not; each label is a reference (a with data-sidecar) with an icon and a muted mono meta",
       "slots": ["row (details, or a plain row)", "chevron (down when open)", "reference (a with data-sidecar, icon, label)", "meta (version, type, muted mono)"],
       "chips": { "rule": "The node count and the depth.", "max": 2 }
+    },
+    "gallery": {
+      "id": "SGA",
+      "members": ["SCT", "CHP", "IMS", "EMP"],
+      "class": "fh-panel-section fh-panel-section--gallery",
+      "icon": "image",
+      "tone": "amber",
+      "body": "ul.fh-gallery of square thumbnails (li > button > img with its alt), each with an optional caption and kind chip; the grid fills by the section's width (container query); a thumbnail opens the Image stack viewer (IMS-2.1) at that image and the arrow keys walk the set; fh-empty when there are none",
+      "slots": ["thumbnail (button holding the img, alt text required)", "caption (fh-gallery__caption, Meta tier)", "kind (fh-chip)", "viewer (IMS-2.1)", "empty (fh-empty)"],
+      "chips": { "rule": "The image count and the newest date.", "max": 2 }
     }
   },
   "fields": {
