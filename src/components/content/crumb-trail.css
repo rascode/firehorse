@@ -111,7 +111,7 @@
     & > :is(img, svg, .fh-avatar) { inline-size: 100%; block-size: 100%; object-fit: cover; --fh-avatar-size: var(--_mark); }
   }
 
-  /* The name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. The meta takes the squeeze. */
+  /* While the meta shows, the name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. The meta takes the squeeze. Under 56rem the meta hides and the name gives way. */
   .fh-crumb__name {
     flex: none;
     overflow: hidden;
@@ -317,6 +317,8 @@
   /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
   @container fh-masthead (inline-size < 56rem) {
     .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) { display: none; }
+    /* With no meta to take the squeeze, the name gives way (ellipsis) so the tools never cover it. */
+    .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { flex: 0 1 auto; min-inline-size: 0; }
   }
 
   @container fh-masthead (inline-size < 40rem) {
@@ -336,6 +338,9 @@
     .fh-masthead--app.fh-masthead--app-crumbs > .fh-crumbs { padding-inline: 0; }
     .fh-masthead--app-crumbs .fh-crumb__sep { margin-inline: 0; }
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { max-inline-size: 9rem; }
+    /* Plan: on a phone, the sheet menu (the areas live there), the last crumb and the tools. */
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) :is(.fh-crumb--area, .fh-crumb--overflow) { display: none; }
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep { display: none; }
     .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret { display: none; }
     .fh-crumb-menu {
       position: fixed;

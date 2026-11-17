@@ -21624,6 +21624,11 @@
     .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) {
       display: none;
     }
+
+    .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name {
+      flex: 0 auto;
+      min-inline-size: 0;
+    }
   }
 
   @container fh-masthead (inline-size < 40rem) {
@@ -21663,7 +21668,7 @@
       max-inline-size: 9rem;
     }
 
-    .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret {
+    .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) :is(.fh-crumb--area, .fh-crumb--overflow), .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep, .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret {
       display: none;
     }
 
