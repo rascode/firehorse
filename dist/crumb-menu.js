@@ -27,7 +27,7 @@
  * Rows from the host: a menu with data-fh-source asks for its rows when it opens and when the filter
  * changes (after 200 ms). The crumb gets a bubbling `fh:crumb-load`, detail { source, parent, q, menu,
  * respond(rows), fail() }, and the menu shows its loading state until the host answers. A row is
- * { name, href?, meta?, mark?, group?, current?, depth?, id? }; mark is an element, an image URL or short
+ * { name, href?, meta?, mark?, tone?, group?, current?, depth?, id? }; mark is an element, an image URL or short
  * text. Answers to an older request are dropped. The host filters by q; the script filters only menus with
  * no source.
  *
@@ -135,16 +135,32 @@ function buildRow(item) {
   if (item.id != null) row.dataset.fhId = String(item.id);
   if (item.depth) row.dataset.depth = String(item.depth);
   if (item.current) row.setAttribute("aria-current", "true");
+  // A Node is the host's own mark (an area's cube); a logo URL or an initial goes in a solid cube on the row's tone.
   const mark = doc.createElement("span");
-  mark.className = "fh-crumb__mark";
   mark.setAttribute("aria-hidden", "true");
-  if (item.mark instanceof Node) mark.append(item.mark);
-  else if (typeof item.mark === "string" && /^(https?:|\/|data:image\/)/.test(item.mark)) {
-    const img = doc.createElement("img");
-    img.alt = "";
-    img.src = item.mark;
-    mark.append(img);
-  } else if (item.mark) mark.textContent = item.mark;
+  if (item.mark instanceof Node) {
+    mark.className = "fh-crumb__mark";
+    mark.append(item.mark);
+  } else {
+    mark.className = "fh-sidebar__cube fh-crumb__mark";
+    mark.dataset.tone = item.tone || "neutral";
+    const text = typeof item.mark === "string" && item.mark ? item.mark : (item.name || "").trim().charAt(0).toUpperCase();
+    if (item.icon) {
+      const i = doc.createElement("i");
+      i.className = `fh-icon fh-icon--${item.icon}`;
+      mark.append(i);
+    } else if (/^(https?:|\/|data:image\/)/.test(text)) {
+      const img = doc.createElement("img");
+      img.alt = "";
+      img.src = text;
+      mark.append(img);
+    } else {
+      const initial = doc.createElement("span");
+      initial.className = "fh-crumb__initial";
+      initial.textContent = text;
+      mark.append(initial);
+    }
+  }
   const name = doc.createElement("span");
   name.className = "fh-crumb__name";
   name.textContent = item.name;

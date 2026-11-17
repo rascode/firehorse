@@ -1,7 +1,7 @@
 /*
  * Firehorse — Crumb trail (MST-5) and the Crumbs App bar layout (MST-4.4)
  * components/content · layer fh.components · docs /layout/#MST
- * MST-5 Crumb trail: MST-5.1 Area crumb, MST-5.2 Record crumb, MST-5.3 Switcher menu, MST-5.4 Leaf, MST-5.5 Overflow.
+ * MST-5 Crumb trail: MST-5.1 Area crumb, MST-5.2 Record crumb, MST-5.3 Switcher menu. Two levels at most: area, then one record.
  * MST-4.4 Crumbs: .fh-masthead--app.fh-masthead--app-crumbs, the trail as the App bar's lead, no summary.
  * Imported by masthead.css. Generic: the host fills marks, labels, meta, counts and rows.
  *
@@ -18,27 +18,26 @@
  *         <li class="fh-crumb fh-crumb--record" data-fh-crumb>
  *           <i class="fh-icon fh-icon--chevron-right fh-crumb__sep" aria-hidden="true"></i>
  *           <button class="fh-crumb__button" …>
- *             <span class="fh-crumb__mark">…logo, avatar, icon or cube…</span>
+ *             <span class="fh-sidebar__cube fh-crumb__mark" data-tone="amber">R or a logo</span>
  *             <span class="fh-crumb__name">Rascode</span><span class="fh-crumb__meta">Company · Rascode and Company</span>
  *             <span class="fh-crumb__counts"><span class="fh-sr-only">3 businesses · 4 brands · 2 people</span>
  *               <span aria-hidden="true">3</span><span aria-hidden="true">4</span><span aria-hidden="true">2</span></span>
  *             <i class="fh-icon fh-icon--chevron-down fh-crumb__caret" aria-hidden="true"></i></button>…</li>
- *         <li class="fh-crumb fh-crumb--leaf"><i … fh-crumb__sep></i><span class="fh-crumb__name" aria-current="page">Edit</span></li>
  *       </ol>
  *     </nav>
  *     <div class="fh-masthead__tools">…</div>
  *   </header>
  *
- * MST-5.1 Area: the area's cube, its label, a caret; the menu lists every area under group headings.
- * MST-5.2 Record: a mark, the name, muted meta, then counts as small low-contrast mono figures (no chips or boxes).
+ * MST-5.1 Area: the area's cube, its label; the menu lists every area under group headings.
+ * MST-5.2 Record: a solid cube mark (initial or logo), the name, muted meta, then counts as small low-contrast mono
+ *   figures (no chips or boxes). A crumb's drop-down chevron shows only on hover, focus or while open.
  * MST-5.3 Switcher menu: DRP-4 Rich menu frame with a filter field, group headings, rows (mark, name, meta,
  *   a check on the current one), loading and empty states; scrolls past about ten rows (--fh-crumb-rows).
- * MST-5.4 Leaf: a tab, Edit or New, plain text. MST-5.5 Overflow: a … that opens the hidden earlier levels.
  * crumb-menu.js opens the menus (hover intent, click, Enter, ↓), filters, moves with ↑ ↓ and closes on Esc.
  *
- * Widths (the masthead's own width): under 56rem the meta and counts hide; under 40rem only the area cube,
- * the overflow crumb and the last record crumb show; under 30rem the menus open as a sheet.
- * Knobs: --fh-crumb-mark (the mark, 1.5rem), --fh-crumb-name-max (a name before it ellipses, 14rem),
+ * Widths (the masthead's own width): under 56rem the meta and counts hide; under 40rem the area shows only its
+ * cube; under 30rem, with the sheet button, the area crumb hides and the menus open as a sheet.
+ * Knobs: --fh-crumb-mark (every cube in the trail and its menus, 1.5rem), --fh-crumb-name-max (a name before it ellipses, 14rem),
  * --fh-crumb-meta-max (meta, 16rem), --fh-crumb-rows (rows before the list scrolls, 10).
  */
 
@@ -65,7 +64,7 @@
   }
 
   /* Only a record crumb gives up width, and its meta before its name. */
-  :is(.fh-crumb--area, .fh-crumb--leaf, .fh-crumb--overflow) { flex: none; }
+  .fh-crumb--area { flex: none; }
 
   /* A chevron between crumbs: the icon, subtle, never a typed ›. */
   .fh-crumb__sep {
@@ -84,7 +83,7 @@
     block-size: calc(var(--_height) - 2 * var(--_frame) / 2);
     padding: 0 var(--fh-inset-tight);
     border: 0;
-    border-radius: var(--fh-radius-md);
+    border-radius: var(--fh-radius-sm);
     background: none;
     color: var(--fh-color-text);
     font: inherit;
@@ -95,21 +94,22 @@
     cursor: var(--fh-cursor-action);
     transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
 
-    &:is(:hover, [aria-expanded="true"]) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+    &:is(:hover, [aria-expanded="true"]) { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
     &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
   }
 
+  /* A record's mark is a solid cube, the same as the area cube (fh-sidebar__cube): an initial or a logo on its tone. */
   .fh-crumb__mark {
     display: inline-grid;
     flex: none;
     place-items: center;
-    inline-size: var(--_mark);
-    block-size: var(--_mark);
     overflow: hidden;
-    border-radius: var(--fh-radius-sm);
 
-    & > :is(img, svg, .fh-avatar) { inline-size: 100%; block-size: 100%; object-fit: cover; --fh-avatar-size: var(--_mark); }
+    & > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; }
   }
+  .fh-crumb__initial { line-height: 1; }
+  /* Area and record cubes, in the bar and in the menus, are one size. */
+  :is(.fh-crumbs, .fh-crumb-menu) .fh-sidebar__cube { --fh-cube-size: var(--fh-crumb-mark, 1.5rem); }
 
   /* While the meta shows, the name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. The meta takes the squeeze. Under 56rem the meta hides and the name gives way. */
   .fh-crumb__name {
@@ -147,30 +147,23 @@
     opacity: 0.8;
   }
 
+  /* The drop-down chevron shows only on hover, keyboard focus or while open; at rest the only chevron is the separator. */
   .fh-crumb__caret {
     --fh-icon-size: 0.875rem;
 
     flex: none;
     color: var(--fh-color-text-subtle);
-    transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    opacity: 0;
+    transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
   }
+  .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"]) > .fh-crumb__caret { opacity: 1; }
   .fh-crumb__button[aria-expanded="true"] > .fh-crumb__caret { rotate: 180deg; }
 
   /* The last crumb is the page: full ink. Earlier records read quieter. */
   .fh-crumb--record:not(:last-child) > .fh-crumb__button { color: var(--fh-color-text-muted); }
   .fh-crumb--record:not(:last-child) > .fh-crumb__button:is(:hover, [aria-expanded="true"]) { color: var(--fh-color-text); }
 
-  /* MST-5.4 Leaf: plain text. */
-  .fh-crumb--leaf > .fh-crumb__name {
-    padding-inline: var(--fh-inset-tight);
-    color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family, var(--fh-font-sans));
-    font-size: var(--_value);
-  }
 
-  /* MST-5.5 Overflow: shown by the narrow steps (or by data-show). */
-  .fh-crumb--overflow:not([data-show]) { display: none; }
-  .fh-crumb--overflow > .fh-crumb__button { padding-inline: var(--fh-inset-tight); color: var(--fh-color-text-muted); }
 
   /* —— MST-5.3 Switcher menu ———————————————————————————————————————————————— */
   .fh-crumb-menu {
@@ -314,6 +307,18 @@
     & > .fh-crumbs { margin-inline-start: calc(-1 * var(--_gap)); }
   }
 
+  /* Tools in the Crumbs bar are plain icons: no disc fill, no ring. Hover is the sidebar row's. */
+  .fh-masthead--app-crumbs :is(.fh-masthead__tools, .fh-crumbs__sheet) .fh-button--disc,
+  .fh-masthead--app-crumbs > .fh-crumbs__sheet.fh-button--disc {
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    box-shadow: none;
+    color: var(--fh-color-text-muted);
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); color: var(--fh-color-text); }
+  }
+
   /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
   @container fh-masthead (inline-size < 56rem) {
     .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) { display: none; }
@@ -324,9 +329,6 @@
   @container fh-masthead (inline-size < 40rem) {
     .fh-masthead--app-crumbs {
       & .fh-crumb--area > .fh-crumb__button > .fh-crumb__name { display: none; }
-      & .fh-crumb--overflow { display: flex; }
-      & .fh-crumb--leaf { display: none; }
-      & .fh-crumb--record:has(~ .fh-crumb--record) { display: none; }
     }
   }
 
@@ -339,7 +341,7 @@
     .fh-masthead--app-crumbs .fh-crumb__sep { margin-inline: 0; }
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { max-inline-size: 9rem; }
     /* Plan: on a phone, the sheet menu (the areas live there), the last crumb and the tools. */
-    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) :is(.fh-crumb--area, .fh-crumb--overflow) { display: none; }
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--area { display: none; }
     .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep { display: none; }
     .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret { display: none; }
     .fh-crumb-menu {

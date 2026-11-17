@@ -3,7 +3,11 @@ export interface CrumbRow {
   name: string;
   href?: string;
   meta?: string;
+  /** An element (used as is), or a logo URL or initial shown in a solid cube on `tone`; default the name's initial. */
   mark?: Node | string;
+  tone?: string;
+  /** A Firehorse icon name: the cube shows the icon (an area row) instead of an initial or logo. */
+  icon?: string;
   group?: string;
   current?: boolean;
   /** 1 sets the row in under the one before it (a subpage under its area). */

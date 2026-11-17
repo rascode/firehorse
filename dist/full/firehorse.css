@@ -21314,7 +21314,7 @@
     position: relative;
   }
 
-  :is(.fh-crumb--area, .fh-crumb--leaf, .fh-crumb--overflow) {
+  .fh-crumb--area {
     flex: none;
   }
 
@@ -21331,7 +21331,7 @@
     min-inline-size: 0;
     block-size: calc(var(--_height) - 2 * var(--_frame) / 2);
     padding: 0 var(--fh-inset-tight);
-    border-radius: var(--fh-radius-md);
+    border-radius: var(--fh-radius-sm);
     color: var(--fh-color-text);
     font: inherit;
     font-family: var(--fh-type-value-family, var(--fh-font-sans));
@@ -21345,7 +21345,7 @@
     display: flex;
 
     &:is(:hover, [aria-expanded="true"]) {
-      background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent);
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
     }
 
     &:focus-visible {
@@ -21355,20 +21355,24 @@
   }
 
   .fh-crumb__mark {
-    inline-size: var(--_mark);
-    block-size: var(--_mark);
-    border-radius: var(--fh-radius-sm);
     flex: none;
     place-items: center;
     display: inline-grid;
     overflow: hidden;
 
-    & > :is(img, svg, .fh-avatar) {
+    & > :is(img, svg) {
       object-fit: cover;
-      --fh-avatar-size: var(--_mark);
       block-size: 100%;
       inline-size: 100%;
     }
+  }
+
+  .fh-crumb__initial {
+    line-height: 1;
+  }
+
+  :is(.fh-crumbs, .fh-crumb-menu) .fh-sidebar__cube {
+    --fh-cube-size: var(--fh-crumb-mark, 1.5rem);
   }
 
   .fh-crumb__name {
@@ -21407,8 +21411,13 @@
   .fh-crumb__caret {
     --fh-icon-size: .875rem;
     color: var(--fh-color-text-subtle);
-    transition: rotate var(--fh-duration-fast) var(--fh-ease-standard);
+    opacity: 0;
+    transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
     flex: none;
+  }
+
+  .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"]) > .fh-crumb__caret {
+    opacity: 1;
   }
 
   .fh-crumb__button[aria-expanded="true"] > .fh-crumb__caret {
@@ -21421,22 +21430,6 @@
 
   .fh-crumb--record:not(:last-child) > .fh-crumb__button:is(:hover, [aria-expanded="true"]) {
     color: var(--fh-color-text);
-  }
-
-  .fh-crumb--leaf > .fh-crumb__name {
-    padding-inline: var(--fh-inset-tight);
-    color: var(--fh-color-text);
-    font-family: var(--fh-type-value-family, var(--fh-font-sans));
-    font-size: var(--_value);
-  }
-
-  .fh-crumb--overflow:not([data-show]) {
-    display: none;
-  }
-
-  .fh-crumb--overflow > .fh-crumb__button {
-    padding-inline: var(--fh-inset-tight);
-    color: var(--fh-color-text-muted);
   }
 
   .fh-crumb-menu {
@@ -21620,6 +21613,19 @@
     }
   }
 
+  .fh-masthead--app-crumbs :is(.fh-masthead__tools, .fh-crumbs__sheet) .fh-button--disc, .fh-masthead--app-crumbs > .fh-crumbs__sheet.fh-button--disc {
+    border-radius: var(--fh-radius-sm);
+    box-shadow: none;
+    color: var(--fh-color-text-muted);
+    background: none;
+    border: 0;
+
+    &:hover {
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+      color: var(--fh-color-text);
+    }
+  }
+
   @container fh-masthead (inline-size < 56rem) {
     .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) {
       display: none;
@@ -21634,14 +21640,6 @@
   @container fh-masthead (inline-size < 40rem) {
     .fh-masthead--app-crumbs {
       & .fh-crumb--area > .fh-crumb__button > .fh-crumb__name {
-        display: none;
-      }
-
-      & .fh-crumb--overflow {
-        display: flex;
-      }
-
-      & .fh-crumb--leaf, & .fh-crumb--record:has( ~ .fh-crumb--record) {
         display: none;
       }
     }
@@ -21668,7 +21666,7 @@
       max-inline-size: 9rem;
     }
 
-    .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) :is(.fh-crumb--area, .fh-crumb--overflow), .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep, .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret {
+    .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--area, .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep, .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret {
       display: none;
     }
 

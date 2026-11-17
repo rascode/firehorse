@@ -1,15 +1,14 @@
 /**
- * Firehorse CrumbTrail (MST-5): the App bar's lead as a trail of crumbs. An area crumb, one record
- * crumb per level, a leaf and an overflow crumb. Style from @rascode/firehorse crumb-trail.css; the
+ * Firehorse CrumbTrail (MST-5): the App bar's lead as a trail of two crumbs at most: an area crumb,
+ * then one record crumb. A crumb's drop-down chevron shows only on hover, focus or while open. Style from @rascode/firehorse crumb-trail.css; the
  * behaviour (hover intent, keys, filter) from dist/crumb-menu.js, which this file loads.
  *
  *   inside <header className="fh-masthead fh-masthead--app fh-masthead--app-crumbs"> (MST-4.4), tools after it:
  *   <CrumbTrail onLoadSiblings={(source, parent, q) => api.siblings(source, parent, q)}>
  *     <AreaCrumb label="Organizations" cube={{ icon: "building-2", tone: "sky" }} groups={areaGroups} />
  *     <RecordCrumb name="Rascode" noun="organization" meta="Company · Rascode and Company"
- *       mark={<img src={logo} alt="" />} counts={[{ value: 3, label: "businesses" }, { value: 4, label: "brands" }]}
+ *       tone="amber" logo={logoUrl} counts={[{ value: 3, label: "businesses" }, { value: 4, label: "brands" }]}
  *       source="organizations" parent={null} />
- *     <LeafCrumb>Edit</LeafCrumb>
  *   </CrumbTrail>
  *
  * Firehorse knows nothing about organizations or goals: the host fills the marks, labels, meta, counts and
@@ -91,13 +90,23 @@ type MenuProps = {
   id: string;
 };
 
+const isImage = (s: string) => /^(https?:|\/|data:image\/)/.test(s);
+
+/** A record's mark: a solid cube (the area cube's look) holding a logo or an initial. */
+function Cube({ tone, logo, text, icon }: { tone?: string; logo?: string | null; text: string; icon?: string }) {
+  return (
+    <span className="fh-sidebar__cube fh-crumb__mark" data-tone={tone ?? "neutral"} aria-hidden="true">
+      {icon ? <i className={`fh-icon fh-icon--${icon}`} /> : logo ? <img src={logo} alt="" /> : <span className="fh-crumb__initial">{text}</span>}
+    </span>
+  );
+}
+
 function Row({ row }: { row: CrumbRow }) {
   const mark = row.mark;
+  const text = typeof mark === "string" && mark ? mark : row.name.trim().charAt(0).toUpperCase();
   const body = (
     <>
-      <span className="fh-crumb__mark" aria-hidden="true">
-        {typeof mark === "string" && /^(https?:|\/|data:image\/)/.test(mark) ? <img src={mark} alt="" /> : typeof mark === "string" ? mark : null}
-      </span>
+      <Cube tone={row.tone} icon={row.icon} logo={isImage(text) ? text : null} text={text} />
       <span className="fh-crumb__name">{row.name}</span>
       {row.meta ? <span className="fh-crumb__meta">{row.meta}</span> : null}
     </>
@@ -157,16 +166,18 @@ export type RecordCrumbProps = Omit<MenuProps, "menuLabel" | "id"> & {
   /** What this level is, for the button's name: "organization" gives "Rascode, switch organization". */
   noun: string;
   meta?: string;
-  /** A logo, avatar, icon or cube, set by the host. */
-  mark?: React.ReactNode;
+  /** The cube's tone. */
+  tone?: Tone;
+  /** A logo image URL for the cube; without it the cube shows the name's initial. */
+  logo?: string | null;
   counts?: CrumbCount[];
   /** Passed to onLoadSiblings: the record this level sits under. */
   parent?: string | null;
   menuLabel?: string;
 } & CrumbInjected;
 
-/** MST-5.2: a mark, the name, muted meta and low-contrast counts; opens the switcher (MST-5.3). */
-export function RecordCrumb({ name, noun, meta, mark, counts, parent, menuLabel, current, first, ...menu }: RecordCrumbProps) {
+/** MST-5.2: a solid cube (logo or initial), the name, muted meta and low-contrast counts; opens the switcher (MST-5.3). */
+export function RecordCrumb({ name, noun, meta, tone, logo, counts, parent, menuLabel, current, first, ...menu }: RecordCrumbProps) {
   const id = React.useId();
   const summary = counts?.map((c) => `${c.value} ${c.label}`).join(" · ");
   return (
@@ -175,7 +186,7 @@ export function RecordCrumb({ name, noun, meta, mark, counts, parent, menuLabel,
       <button className="fh-crumb__button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls={id}
         aria-current={current ? "page" : undefined}
         aria-label={`${name}${summary ? `, ${summary}` : ""}, switch ${noun}`}>
-        {mark ? <span className="fh-crumb__mark" aria-hidden="true">{mark}</span> : null}
+        <Cube tone={tone} logo={logo} text={name.trim().charAt(0).toUpperCase()} />
         <span className="fh-crumb__name">{name}</span>
         {meta ? <span className="fh-crumb__meta">{meta}</span> : null}
         {counts?.length ? (
@@ -184,34 +195,6 @@ export function RecordCrumb({ name, noun, meta, mark, counts, parent, menuLabel,
         <Caret />
       </button>
       <Menu {...menu} menuLabel={menuLabel ?? `${noun[0]?.toUpperCase() ?? ""}${noun.slice(1)}s`} id={id} />
-    </li>
-  );
-}
-
-export type LeafCrumbProps = { children: React.ReactNode } & CrumbInjected;
-
-/** MST-5.4: a tab, Edit or New, plain text. The page the trail ends on. */
-export function LeafCrumb({ children, current }: LeafCrumbProps) {
-  return (
-    <li className="fh-crumb fh-crumb--leaf">
-      <Sep />
-      <span className="fh-crumb__name" aria-current={current ? "page" : undefined}>{children}</span>
-    </li>
-  );
-}
-
-export type OverflowCrumbProps = { rows: CrumbRow[]; label?: string; always?: boolean } & CrumbInjected;
-
-/** MST-5.5: `…`, a menu of the earlier levels the trail has no room for. Shown by the narrow steps, or always. */
-export function OverflowCrumb({ rows, label = "Earlier levels", always }: OverflowCrumbProps) {
-  const id = React.useId();
-  return (
-    <li className="fh-crumb fh-crumb--overflow" data-fh-crumb data-show={always ? "" : undefined}>
-      <Sep />
-      <button className="fh-crumb__button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls={id} aria-label={label}>
-        <span aria-hidden="true">…</span>
-      </button>
-      <Menu menuLabel={label} filterLabel="Filter" rows={rows} id={id} />
     </li>
   );
 }
