@@ -639,4 +639,17 @@
       color: var(--fh-color-text);
     }
   }
+
+  /* A choice row (AccountRow checked): a help line under the label, a check at the end when chosen. */
+  .fh-account-row__hint { display: block; color: var(--fh-color-text-muted); font-size: var(--fh-text-caption); }
+  .fh-account-row:is([role="menuitemradio"], [role="menuitemcheckbox"])::after {
+    content: "";
+    inline-size: 1rem;
+    block-size: 1rem;
+    margin-inline-start: auto;
+    background-color: currentColor;
+    mask: var(--fh-icon-check) center / contain no-repeat;
+    opacity: 0;
+  }
+  .fh-account-row:is([role="menuitemradio"], [role="menuitemcheckbox"])[aria-checked="true"]::after { opacity: 1; }
 }

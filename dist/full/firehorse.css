@@ -16139,6 +16139,26 @@
     }
   }
 
+  .fh-account-row__hint {
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-caption);
+    display: block;
+  }
+
+  .fh-account-row:is([role="menuitemradio"], [role="menuitemcheckbox"]):after {
+    content: "";
+    block-size: 1rem;
+    inline-size: 1rem;
+    mask: var(--fh-icon-check) center / contain no-repeat;
+    opacity: 0;
+    background-color: currentColor;
+    margin-inline-start: auto;
+  }
+
+  .fh-account-row:is([role="menuitemradio"], [role="menuitemcheckbox"])[aria-checked="true"]:after {
+    opacity: 1;
+  }
+
   .fh-command {
     --fh-dialog-size: 36rem;
     margin-block-start: var(--fh-command-menu-drop, 12vh);

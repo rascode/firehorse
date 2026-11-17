@@ -121,17 +121,22 @@ export type AccountRowProps = {
   danger?: boolean;
   /** An inline control in place of the value (Theme): the row is then not a button. */
   control?: React.ReactNode;
+  /** A choice row (Presence: Active, Away; Mirror to Slack): given, the row is a menuitemradio (or `kind`) with aria-checked. */
+  checked?: boolean;
+  kind?: "radio" | "checkbox";
+  /** A second muted line under the label (a choice's help). */
+  hint?: string;
   className?: string;
 };
 
 /** A row: the sidebar row (soft cube, label, value, chevron when it has a panel). */
-export function AccountRow({ label, icon, tone, value, panel, href, onSelect, danger, control, className }: AccountRowProps) {
+export function AccountRow({ label, icon, tone, value, panel, href, onSelect, danger, control, checked, kind = "radio", hint, className }: AccountRowProps) {
   const menu = React.useContext(MenuId);
-  const cls = cx("fh-account-row", control && "fh-account-row--inline", danger && "fh-account-row--danger", className);
+  const cls = cx("fh-account-row", !!control && "fh-account-row--inline", danger && "fh-account-row--danger", className);
   const body = (
     <>
       {icon ? <span className="fh-cube fh-cube--icon" aria-hidden="true"><i className={`fh-icon fh-icon--${icon}`} /></span> : null}
-      <span className="fh-account-row__label">{label}</span>
+      <span className="fh-account-row__label">{label}{hint ? <small className="fh-account-row__hint">{hint}</small> : null}</span>
       {control ?? (value ? <span className="fh-account-row__value">{value}</span> : null)}
       {panel ? <i className="fh-icon fh-icon--chevron-right fh-account-row__go" aria-hidden="true" /> : null}
     </>
@@ -139,7 +144,8 @@ export function AccountRow({ label, icon, tone, value, panel, href, onSelect, da
   if (control) return <div className={cls} role="group" aria-label={label} data-tone={tone}>{body}</div>;
   if (href && !panel) return <a className={cls} href={href} role="menuitem" data-tone={tone}>{body}</a>;
   return (
-    <button type="button" className={cls} role="menuitem" data-tone={tone}
+    <button type="button" className={cls} role={checked === undefined ? "menuitem" : kind === "checkbox" ? "menuitemcheckbox" : "menuitemradio"}
+      aria-checked={checked === undefined ? undefined : checked} data-tone={tone}
       aria-haspopup={panel ? "true" : undefined}
       aria-controls={panel ? `${menu}-${panel}` : undefined} aria-expanded={panel ? false : undefined}
       onClick={panel ? undefined : onSelect}>
