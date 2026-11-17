@@ -118,9 +118,15 @@
   .fh-diff__row,
   .fh-diff__side { display: block; min-inline-size: 0; }
 
+  /* A split row wraps beside its gutter, never under it. */
   .fh-diff--split .fh-code__line {
+    display: grid;
+    grid-template-columns: 5ch minmax(0, 1fr);
+    column-gap: var(--fh-gap-related);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+
+    &::before { margin-inline-end: 0; }
   }
 
   .fh-diff__side[data-side="old"]:has(> [data-diff="ctx"]),

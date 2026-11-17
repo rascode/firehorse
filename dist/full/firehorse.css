@@ -20703,8 +20703,15 @@
   }
 
   .fh-diff--split .fh-code__line {
+    column-gap: var(--fh-gap-related);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+    grid-template-columns: 5ch minmax(0, 1fr);
+    display: grid;
+
+    &:before {
+      margin-inline-end: 0;
+    }
   }
 
   .fh-diff__side[data-side="old"]:has( > [data-diff="ctx"]), .fh-diff__side:empty {
