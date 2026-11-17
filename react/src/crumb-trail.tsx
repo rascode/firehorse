@@ -6,12 +6,10 @@
  *   inside <header className="fh-masthead fh-masthead--app fh-masthead--app-crumbs"> (MST-4.4), tools after it:
  *   <CrumbTrail onLoadSiblings={(source, parent, q) => api.siblings(source, parent, q)}>
  *     <AreaCrumb label="Organizations" cube={{ icon: "building-2", tone: "sky" }} groups={areaGroups} />
- *     <RecordCrumb name="Rascode" noun="organization" meta="Company · Rascode and Company"
- *       tone="amber" logo={logoUrl} counts={[{ value: 3, label: "businesses" }, { value: 4, label: "brands" }]}
- *       source="organizations" parent={null} />
+ *     <RecordCrumb name="Rascode" noun="organization" tone="amber" logo={logoUrl} source="organizations" parent={null} />
  *   </CrumbTrail>
  *
- * Firehorse knows nothing about organizations or goals: the host fills the marks, labels, meta, counts and
+ * Firehorse knows nothing about organizations or goals: the host fills the marks, labels and
  * rows. A menu has fixed rows (`rows`, `groups`) or fetches them (`source`): when it opens and when the filter
  * changes the trail calls onLoadSiblings(source, parent, q) and shows the loading state until it resolves.
  */
@@ -24,7 +22,6 @@ type Tone = "sky" | "teal" | "lime" | "amber" | "orange" | "accent" | "rose" | "
 const cx = (...c: Array<string | false | undefined | null>) => c.filter(Boolean).join(" ");
 
 export type CrumbGroup = { heading: string; rows: CrumbRow[] };
-export type CrumbCount = { value: number | string; label: string };
 
 export type CrumbTrailProps = {
   /** The landmark's name. */
@@ -165,33 +162,26 @@ export type RecordCrumbProps = Omit<MenuProps, "menuLabel" | "id"> & {
   name: string;
   /** What this level is, for the button's name: "organization" gives "Rascode, switch organization". */
   noun: string;
-  meta?: string;
   /** The cube's tone. */
   tone?: Tone;
   /** A logo image URL for the cube; without it the cube shows the name's initial. */
   logo?: string | null;
-  counts?: CrumbCount[];
   /** Passed to onLoadSiblings: the record this level sits under. */
   parent?: string | null;
   menuLabel?: string;
 } & CrumbInjected;
 
-/** MST-5.2: a solid cube (logo or initial), the name, muted meta and low-contrast counts; opens the switcher (MST-5.3). */
-export function RecordCrumb({ name, noun, meta, tone, logo, counts, parent, menuLabel, current, first, ...menu }: RecordCrumbProps) {
+/** MST-5.2: a solid cube (logo or initial) and the name; opens the switcher (MST-5.3). */
+export function RecordCrumb({ name, noun, tone, logo, parent, menuLabel, current, first, ...menu }: RecordCrumbProps) {
   const id = React.useId();
-  const summary = counts?.map((c) => `${c.value} ${c.label}`).join(" · ");
   return (
     <li className="fh-crumb fh-crumb--record" data-fh-crumb data-fh-parent={parent ?? undefined}>
       {first ? null : <Sep />}
       <button className="fh-crumb__button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls={id}
         aria-current={current ? "page" : undefined}
-        aria-label={`${name}${summary ? `, ${summary}` : ""}, switch ${noun}`}>
+        aria-label={`${name}, switch ${noun}`}>
         <Cube tone={tone} logo={logo} text={name.trim().charAt(0).toUpperCase()} />
         <span className="fh-crumb__name">{name}</span>
-        {meta ? <span className="fh-crumb__meta">{meta}</span> : null}
-        {counts?.length ? (
-          <span className="fh-crumb__counts" aria-hidden="true">{counts.map((c) => <span key={c.label}>{c.value}</span>)}</span>
-        ) : null}
         <Caret />
       </button>
       <Menu {...menu} menuLabel={menuLabel ?? `${noun[0]?.toUpperCase() ?? ""}${noun.slice(1)}s`} id={id} />

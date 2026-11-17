@@ -3,7 +3,7 @@
  * components/content · layer fh.components · docs /layout/#MST
  * MST-5 Crumb trail: MST-5.1 Area crumb, MST-5.2 Record crumb, MST-5.3 Switcher menu. Two levels at most: area, then one record.
  * MST-4.4 Crumbs: .fh-masthead--app.fh-masthead--app-crumbs, the trail as the App bar's lead, no summary.
- * Imported by masthead.css. Generic: the host fills marks, labels, meta, counts and rows.
+ * Imported by masthead.css. Generic: the host fills marks, labels and rows.
  *
  *   <header class="fh-masthead fh-masthead--app fh-masthead--app-crumbs">
  *     <nav class="fh-crumbs" aria-label="Breadcrumb">
@@ -19,9 +19,7 @@
  *           <i class="fh-icon fh-icon--chevron-right fh-crumb__sep" aria-hidden="true"></i>
  *           <button class="fh-crumb__button" …>
  *             <span class="fh-sidebar__cube fh-crumb__mark" data-tone="amber">R or a logo</span>
- *             <span class="fh-crumb__name">Rascode</span><span class="fh-crumb__meta">Company · Rascode and Company</span>
- *             <span class="fh-crumb__counts"><span class="fh-sr-only">3 businesses · 4 brands · 2 people</span>
- *               <span aria-hidden="true">3</span><span aria-hidden="true">4</span><span aria-hidden="true">2</span></span>
+ *             <span class="fh-crumb__name">Rascode</span>
  *             <i class="fh-icon fh-icon--chevron-down fh-crumb__caret" aria-hidden="true"></i></button>…</li>
  *       </ol>
  *     </nav>
@@ -29,13 +27,13 @@
  *   </header>
  *
  * MST-5.1 Area: the area's cube, its label; the menu lists every area under group headings.
- * MST-5.2 Record: a solid cube mark (initial or logo), the name, muted meta, then counts as small low-contrast mono
- *   figures (no chips or boxes). A crumb's drop-down chevron shows only on hover, focus or while open.
+ * MST-5.2 Record: a solid cube mark (initial or logo) and the name, nothing else. A crumb's drop-down chevron shows
+ *   only on hover, focus or while open. Kind and parent show as meta in the switcher's rows.
  * MST-5.3 Switcher menu: DRP-4 Rich menu frame with a filter field, group headings, rows (mark, name, meta,
  *   a check on the current one), loading and empty states; scrolls past about ten rows (--fh-crumb-rows).
  * crumb-menu.js opens the menus (hover intent, click, Enter, ↓), filters, moves with ↑ ↓ and closes on Esc.
  *
- * Widths (the masthead's own width): under 56rem the meta and counts hide; under 40rem the area shows only its
+ * Widths (the masthead's own width): under 56rem a long name ellipses sooner; under 40rem the area shows only its
  * cube; under 30rem, with the sheet button, the area crumb hides and the menus open as a sheet.
  * Knobs: --fh-crumb-mark (every cube in the trail and its menus, 1.5rem), --fh-crumb-name-max (a name before it ellipses, 14rem),
  * --fh-crumb-meta-max (meta, 16rem), --fh-crumb-arrow-w and -h (the progress arrow, 0.625rem by 1.5rem), --fh-crumb-rows (rows before the list scrolls, 10).
@@ -74,7 +72,8 @@
     flex: none;
     inline-size: var(--fh-crumb-arrow-w, 0.625rem);
     block-size: var(--fh-crumb-arrow-h, 1.5rem);
-    margin-inline: var(--fh-gap-related);
+    /* Equal space each side: on the left the crumb's resting chevron slot (1rem) plus its inset; on the right 1rem plus the next inset. */
+    margin-inline: 0 1rem;
     background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
     vertical-align: middle;
   }
@@ -115,7 +114,7 @@
   /* Area and record cubes, in the bar and in the menus, are one size. */
   :is(.fh-crumbs, .fh-crumb-menu) .fh-sidebar__cube { --fh-cube-size: var(--fh-crumb-mark, 1.5rem); }
 
-  /* While the meta shows, the name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. The meta takes the squeeze. Under 56rem the meta hides and the name gives way. */
+  /* At full width the name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. Under 56rem it gives way. */
   .fh-crumb__name {
     flex: none;
     overflow: hidden;
@@ -136,26 +135,13 @@
     white-space: nowrap;
   }
 
-  /* Counts: small, low-contrast mono figures, set up and tight like a footnote. No chips, no boxes. */
-  .fh-crumb__counts {
-    display: inline-flex;
-    flex: none;
-    align-self: start;
-    gap: 0.4em;
-    margin-block-start: calc(var(--_height) / 5);
-    color: var(--fh-color-text-subtle);
-    font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-    opacity: 0.8;
-  }
 
   /* The drop-down chevron shows only on hover, keyboard focus or while open; at rest the only chevron is the separator. */
   .fh-crumb__caret {
-    --fh-icon-size: 0.875rem;
+    --fh-icon-size: 0.75rem;
 
     flex: none;
+    margin-inline-start: calc(0.25rem - var(--fh-gap-related));
     color: var(--fh-color-text-subtle);
     opacity: 0;
     transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
@@ -325,8 +311,7 @@
 
   /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
   @container fh-masthead (inline-size < 56rem) {
-    .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) { display: none; }
-    /* With no meta to take the squeeze, the name gives way (ellipsis) so the tools never cover it. */
+    /* Narrow bars: the name gives way (ellipsis) so the tools never cover it. */
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { flex: 0 1 auto; min-inline-size: 0; }
   }
 

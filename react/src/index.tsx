@@ -33,7 +33,6 @@ export {
   type RecordCrumbProps,
   type CrumbRow,
   type CrumbGroup,
-  type CrumbCount,
 } from "./crumb-trail";
 export {
   ImageField,

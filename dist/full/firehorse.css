@@ -21322,10 +21322,10 @@
     --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24'%3E%3Cpath d='M0 0H4L9.2 10.6Q9.9 12 9.2 13.4L4 24H0L5.2 13.4Q5.9 12 5.2 10.6Z'/%3E%3C/svg%3E");
     inline-size: var(--fh-crumb-arrow-w, .625rem);
     block-size: var(--fh-crumb-arrow-h, 1.5rem);
-    margin-inline: var(--fh-gap-related);
     background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
     vertical-align: middle;
     flex: none;
+    margin-inline: 0 1rem;
   }
 
   .fh-crumb__button {
@@ -21397,26 +21397,13 @@
     overflow: hidden;
   }
 
-  .fh-crumb__counts {
-    color: var(--fh-color-text-subtle);
-    font-family: var(--fh-font-mono);
-    font-size: var(--fh-text-micro);
-    font-variant-numeric: tabular-nums;
-    opacity: .8;
-    flex: none;
-    align-self: start;
-    gap: .4em;
-    margin-block-start: calc(var(--_height) / 5);
-    line-height: 1;
-    display: inline-flex;
-  }
-
   .fh-crumb__caret {
-    --fh-icon-size: .875rem;
+    --fh-icon-size: .75rem;
     color: var(--fh-color-text-subtle);
     opacity: 0;
     transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
     flex: none;
+    margin-inline-start: calc(.25rem - var(--fh-gap-related));
   }
 
   .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"]) > .fh-crumb__caret {
@@ -21630,10 +21617,6 @@
   }
 
   @container fh-masthead (inline-size < 56rem) {
-    .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) {
-      display: none;
-    }
-
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name {
       flex: 0 auto;
       min-inline-size: 0;
