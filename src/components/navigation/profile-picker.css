@@ -627,4 +627,16 @@
     }
   }
 
+
+  /* The Theme switch inside the account menu: the new look, not a pill. The cube's corner on each option and
+   * the ring's corner on the track; the chosen option is a quiet tint, not a solid fill. */
+  .fh-account-menu .fh-segmented {
+    border-radius: calc(var(--fh-tile-cube-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
+
+    & > label { border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm)); }
+    & > label:has(:checked) {
+      background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      color: var(--fh-color-text);
+    }
+  }
 }

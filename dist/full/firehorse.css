@@ -16126,6 +16126,19 @@
     }
   }
 
+  .fh-account-menu .fh-segmented {
+    border-radius: calc(var(--fh-tile-cube-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
+
+    & > label {
+      border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    }
+
+    & > label:has(:checked) {
+      background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      color: var(--fh-color-text);
+    }
+  }
+
   .fh-command {
     --fh-dialog-size: 36rem;
     margin-block-start: var(--fh-command-menu-drop, 12vh);
