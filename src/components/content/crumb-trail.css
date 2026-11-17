@@ -38,7 +38,7 @@
  * Widths (the masthead's own width): under 56rem the meta and counts hide; under 40rem the area shows only its
  * cube; under 30rem, with the sheet button, the area crumb hides and the menus open as a sheet.
  * Knobs: --fh-crumb-mark (every cube in the trail and its menus, 1.5rem), --fh-crumb-name-max (a name before it ellipses, 14rem),
- * --fh-crumb-meta-max (meta, 16rem), --fh-crumb-rows (rows before the list scrolls, 10).
+ * --fh-crumb-meta-max (meta, 16rem), --fh-crumb-arrow-w and -h (the progress arrow, 0.625rem by 1.5rem), --fh-crumb-rows (rows before the list scrolls, 10).
  */
 
 @layer fh.components {
@@ -66,13 +66,17 @@
   /* Only a record crumb gives up width, and its meta before its name. */
   .fh-crumb--area { flex: none; }
 
-  /* A chevron between crumbs: the icon, subtle, never a typed ›. */
-  .fh-crumb__sep {
-    --fh-icon-size: 1rem;
+  /* Between crumbs: a progress arrow, not a chevron. A filled band, taller than wide, with a rounded tip, in a very
+   * soft tint of the text colour so it reads as a step without weight. The markup is the chevron icon; the mask swaps. */
+  .fh-crumb > .fh-crumb__sep {
+    --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24'%3E%3Cpath d='M0 0H4L9.2 10.6Q9.9 12 9.2 13.4L4 24H0L5.2 13.4Q5.9 12 5.2 10.6Z'/%3E%3C/svg%3E");
 
     flex: none;
-    margin-inline: var(--fh-gap-bound);
-    color: var(--fh-color-text-subtle);
+    inline-size: var(--fh-crumb-arrow-w, 0.625rem);
+    block-size: var(--fh-crumb-arrow-h, 1.5rem);
+    margin-inline: var(--fh-gap-related);
+    background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+    vertical-align: middle;
   }
 
   .fh-crumb__button {
@@ -343,6 +347,8 @@
     /* Plan: on a phone, the sheet menu (the areas live there), the last crumb and the tools. */
     .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--area { display: none; }
     .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep { display: none; }
+    /* Mobile: the record crumb is its cube alone; the button keeps the name as its label. */
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__button > .fh-crumb__name { display: none; }
     .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret { display: none; }
     .fh-crumb-menu {
       position: fixed;

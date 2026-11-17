@@ -21318,10 +21318,13 @@
     flex: none;
   }
 
-  .fh-crumb__sep {
-    --fh-icon-size: 1rem;
-    margin-inline: var(--fh-gap-bound);
-    color: var(--fh-color-text-subtle);
+  .fh-crumb > .fh-crumb__sep {
+    --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24'%3E%3Cpath d='M0 0H4L9.2 10.6Q9.9 12 9.2 13.4L4 24H0L5.2 13.4Q5.9 12 5.2 10.6Z'/%3E%3C/svg%3E");
+    inline-size: var(--fh-crumb-arrow-w, .625rem);
+    block-size: var(--fh-crumb-arrow-h, 1.5rem);
+    margin-inline: var(--fh-gap-related);
+    background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+    vertical-align: middle;
     flex: none;
   }
 
@@ -21666,7 +21669,7 @@
       max-inline-size: 9rem;
     }
 
-    .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--area, .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep, .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret {
+    .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--area, .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep, .fh-masthead--app-crumbs:has( > .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__button > .fh-crumb__name, .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret {
       display: none;
     }
 
