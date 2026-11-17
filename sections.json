@@ -339,6 +339,17 @@
       "body": "one figure.fh-code.fh-diff per file: figcaption (file name, the change counts as chips, the two versions in fh-value--mono), pre > code of span.fh-code__line rows with data-diff add (soft lime), del (soft rose), ctx or hunk (muted); the gutter holds the row number (data-n) and its + or - mark, neither copied; fh-diff--split puts old and new side by side in span.fh-diff__row of two span.fh-diff__side from 40rem of the block, and stacks to unified under it",
       "slots": ["file name", "change counts (fh-chip lime +N, rose -N)", "versions (fh-diff__versions: two fh-value--mono)", "line (fh-code__line, data-diff add, del, ctx or hunk; data-n)", "split row (fh-diff__row: fh-diff__side data-side old, new)"],
       "chips": { "rule": "The lines added and removed. Several files lead with the file count.", "max": 2 }
+    },
+    "board": {
+      "id": "SBD",
+      "tier": "pro",
+      "members": ["SCT", "CHP", "SCR", "AVT", "REF"],
+      "class": "fh-panel-section fh-panel-section--board",
+      "icon": "kanban",
+      "tone": "violet",
+      "body": "ol.fh-board of li.fh-board__column, one per status: a details.fh-board__fold whose summary is the status chip (data-status) and a count badge, then ul.fh-board__cards; a card is a.fh-board__card with data-sidecar: the title at the Value tier, a meta line (the id in mono, the due date) at the Meta tier, the owner avatar (a circle for a person) and at most two chips. From 40rem of the body the columns sit side by side, stay open and scroll sideways inside the section; under 40rem they stack and each folds. No drag: a card moves by the status picker in its sidecar. Firehorse Pro (pro/src/pm/board.css)",
+      "slots": ["column (li.fh-board__column)", "head (summary.fh-board__head: fh-chip data-status, fh-badge count)", "cards (ul.fh-board__cards)", "card (a.fh-board__card data-sidecar)", "title (fh-board__title, Value tier)", "meta (fh-board__meta: code id, time due; data-overdue in the danger tone)", "owner (fh-avatar--xs, fh-avatar--circle for a person)", "chips (fh-board__chips, at most two)"],
+      "chips": { "rule": "The open count and the done count.", "max": 2 }
     }
   },
   "fields": {
