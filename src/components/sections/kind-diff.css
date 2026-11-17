@@ -1,0 +1,140 @@
+/*
+ * Firehorse - Diff section (SDF)
+ * components/sections · layer fh.components · docs /components/sections/#SDF
+ */
+
+@layer fh.components {
+  /* Diff
+   * A unified diff in the Code block (DET), on the Code section's line rows.
+   * The caption is the file name, the change counts as chips and the two
+   * versions in fh-value--mono. Each row is span.fh-code__line with
+   * data-diff: add (a soft lime fill), del (a soft rose fill), ctx, or hunk
+   * (the @@ header, muted). The gutter holds the row's number (data-n) and its
+   * + or - mark; neither is part of a selection. Long code scrolls inside.
+   *   <figure class="fh-code fh-diff">
+   *     <figcaption>
+   *       <span>fold.js</span>
+   *       <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">+12</span>
+   *       <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="rose">-3</span>
+   *       <span class="fh-diff__versions"><span class="fh-value fh-value--mono">9f2a1c0</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i><span class="fh-value fh-value--mono">c31d0ab</span></span>
+   *     </figcaption>
+   *     <pre><code>
+   *       <span class="fh-code__line" data-diff="hunk">@@ -1,6 +1,8 @@</span>
+   *       <span class="fh-code__line" data-diff="del" data-n="2">…</span>
+   *       <span class="fh-code__line" data-diff="add" data-n="2">…</span>
+   *     </code></pre>
+   *   </figure>
+   * Split (fh-diff--split): each row is span.fh-diff__row holding two
+   * span.fh-diff__side (data-side old, new), each with its lines. Two columns
+   * from 40rem of the block's width; under it the sides stack, the old
+   * context hidden, so it reads as the unified diff. */
+  .fh-diff {
+    --_fill: 14%;
+    container-type: inline-size;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .fh-diff > figcaption {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: var(--fh-gap-bound);
+  }
+
+  .fh-diff > figcaption > :first-child {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-diff > figcaption > .fh-chip { flex: none; }
+
+  .fh-diff__versions {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin-inline-start: auto;
+  }
+
+  /* The fills reach both edges: the rows carry the inset, the code is as wide as its widest row. */
+  .fh-diff > pre {
+    overflow: auto;
+    max-block-size: calc(16 * 1lh);
+    max-inline-size: 100%;
+    padding-inline: 0;
+    white-space: normal;
+  }
+
+  .fh-diff code {
+    display: block;
+    inline-size: max-content;
+    min-inline-size: 100%;
+  }
+
+  .fh-diff .fh-code__line {
+    display: block;
+    padding-inline: var(--fh-inset-tight) var(--fh-inset-card);
+    white-space: pre;
+  }
+
+  .fh-diff .fh-code__line::before {
+    content: attr(data-n) "  ";
+    display: inline-block;
+    inline-size: 5ch;
+    margin-inline-end: var(--fh-gap-related);
+    color: var(--fh-color-text-subtle);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    white-space: pre;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .fh-diff .fh-code__line[data-diff="add"] {
+    background-color: color-mix(in oklab, var(--fh-tone-lime) var(--_fill), transparent);
+
+    &::before { content: attr(data-n) " +"; color: var(--fh-tone-lime); }
+  }
+
+  .fh-diff .fh-code__line[data-diff="del"] {
+    background-color: color-mix(in oklab, var(--fh-tone-rose) var(--_fill), transparent);
+
+    &::before { content: attr(data-n) " -"; color: var(--fh-tone-rose); }
+  }
+
+  .fh-diff .fh-code__line[data-diff="hunk"] {
+    margin-block: var(--fh-gap-bound);
+    background-color: color-mix(in oklab, var(--fh-tone-neutral) 8%, transparent);
+    color: var(--fh-color-text-muted);
+  }
+
+  .fh-diff .fh-code__line[data-diff="hunk"]:first-child { margin-block-start: 0; }
+
+  /* —— Split: old and new side by side from 40rem, unified under it —— */
+  .fh-diff--split code { inline-size: auto; }
+
+  .fh-diff__row,
+  .fh-diff__side { display: block; min-inline-size: 0; }
+
+  .fh-diff--split .fh-code__line {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .fh-diff__side[data-side="old"]:has(> [data-diff="ctx"]),
+  .fh-diff__side:empty { display: none; }
+
+  @container (width >= 40rem) {
+    .fh-diff__row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .fh-diff__side[data-side="old"]:has(> [data-diff="ctx"]),
+    .fh-diff__side:empty { display: block; }
+
+    .fh-diff__side[data-side="old"] { border-inline-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft); }
+  }
+}
