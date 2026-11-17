@@ -111,7 +111,9 @@
     & > :is(img, svg, .fh-avatar) { inline-size: 100%; block-size: 100%; object-fit: cover; --fh-avatar-size: var(--_mark); }
   }
 
+  /* The name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. The meta takes the squeeze. */
   .fh-crumb__name {
+    flex: none;
     overflow: hidden;
     max-inline-size: var(--fh-crumb-name-max, 14rem);
     text-overflow: ellipsis;
