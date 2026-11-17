@@ -685,7 +685,7 @@ The head of a page or app. The header is a glass panel with a large caption: num
   <div style="position: relative; overflow: hidden; contain: paint; padding: var(--fh-space-6); border-radius: var(--fh-radius-lg)">
     <div class="fh-backdrop" data-fh-backdrop="blueprint" aria-hidden="true" style="position: absolute; inset: 0" data-fh="MST-4.4"></div>
     <div class="fh-cluster" style="position: relative; z-index: 1; align-items: start; gap: var(--fh-gap-grouped); flex-wrap: wrap">
-    <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0">
+    <nav class="fh-sidebar" aria-label="Helm" style="inline-size: 12rem; flex: none; min-block-size: 0; grid-template-rows: auto; margin: 0; padding-block-end: 0">
       <div class="fh-sidebar__head">
         <a class="fh-app__brand" href="#l-masthead"><i class="fh-icon fh-icon--panels-top-left" aria-hidden="true"></i><span>Helm</span></a>
         <button class="fh-sidebar__toggle" type="button" aria-expanded="true" aria-label="Collapse sidebar"><i class="fh-icon fh-icon--panel-left" aria-hidden="true"></i></button>

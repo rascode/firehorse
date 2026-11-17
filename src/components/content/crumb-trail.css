@@ -72,8 +72,9 @@
     flex: none;
     inline-size: var(--fh-crumb-arrow-w, 0.625rem);
     block-size: var(--fh-crumb-arrow-h, 1.5rem);
-    /* Equal space each side: on the left the crumb's resting chevron slot (1rem) plus its inset; on the right 1rem plus the next inset. */
-    margin-inline: 0 1rem;
+    /* The same small gap each side at every width: the button's inset plus --fh-gap-bound (12px in all). */
+    margin-inline: var(--fh-gap-bound);
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
     background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
     vertical-align: middle;
   }
@@ -137,16 +138,22 @@
 
 
   /* The drop-down chevron shows only on hover, keyboard focus or while open; at rest the only chevron is the separator. */
+  /* The chevron holds no space: on hover it sits in the arrow's slot after the crumb, and that arrow steps aside. */
+  .fh-crumb__button { position: relative; }
   .fh-crumb__caret {
     --fh-icon-size: 0.75rem;
 
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc(100% + var(--fh-gap-bound) - 1px);
+    translate: 0 -50%;
     flex: none;
-    margin-inline-start: calc(0.25rem - var(--fh-gap-related));
     color: var(--fh-color-text-subtle);
     opacity: 0;
     transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
   }
   .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"]) > .fh-crumb__caret { opacity: 1; }
+  .fh-crumb:has(> .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"])) + .fh-crumb > .fh-crumb__sep { opacity: 0; }
   .fh-crumb__button[aria-expanded="true"] > .fh-crumb__caret { rotate: 180deg; }
 
   /* The last crumb is the page: full ink. Earlier records read quieter. */
@@ -309,6 +316,10 @@
     &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); color: var(--fh-color-text); }
   }
 
+  /* The person's avatar in the Crumbs bar: a rounded square in the etched outline (the profile ring's dashed etch). */
+  .fh-masthead--app-crumbs .fh-profile { border-radius: var(--fh-radius-md); }
+  .fh-masthead--app-crumbs .fh-profile .fh-avatar { border-radius: var(--fh-radius-sm); }
+
   /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
   @container fh-masthead (inline-size < 56rem) {
     /* Narrow bars: the name gives way (ellipsis) so the tools never cover it. */
@@ -327,7 +338,6 @@
     .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) > .fh-crumbs { margin-inline-start: 0; }
     /* The trail gives its room to the last crumb: the buttons carry their own inset. */
     .fh-masthead--app.fh-masthead--app-crumbs > .fh-crumbs { padding-inline: 0; }
-    .fh-masthead--app-crumbs .fh-crumb__sep { margin-inline: 0; }
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { max-inline-size: 9rem; }
     /* Plan: on a phone, the sheet menu (the areas live there), the last crumb and the tools. */
     .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--area { display: none; }

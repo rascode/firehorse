@@ -314,6 +314,9 @@
     padding: var(--fh-app-pad, var(--fh-inset-page));
   }
 
+  /* Under an app bar the page starts a standard section gap below it, not a full page margin. */
+  .fh-app__main > .fh-masthead--app ~ .fh-app__content { padding-block-start: var(--fh-gap-sectioned); }
+
   /* —— Environment band (ADM-ENV) ——
    * A thin rule in the environment's colour along the top of the app, so
    * where you are is visible from any screen. Production gets a thicker one. */

@@ -39,8 +39,10 @@
     inline-size: var(--fh-sidebar-width, 15rem);
     max-inline-size: 100%;
     min-block-size: 18rem;
-    margin: var(--fh-inset-tight);
-    padding: var(--fh-inset-tight);
+    /* The panel's top meets the app bar's (--fh-gap-grouped) and the head is its first 46px with no inset above,
+     * so the head band and the app bar are one height on one line. */
+    margin: var(--fh-gap-grouped) var(--fh-inset-tight) var(--fh-inset-tight);
+    padding: 0 var(--fh-inset-tight) var(--fh-inset-tight);
     border: var(--fh-sidebar-edge, 0);
     border-radius: var(--fh-radius-lg);
     background-color: var(--_fill);

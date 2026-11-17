@@ -295,6 +295,10 @@
     flex: 1;
   }
 
+  .fh-app__main > .fh-masthead--app ~ .fh-app__content {
+    padding-block-start: var(--fh-gap-sectioned);
+  }
+
   .fh-app[data-fh-env] {
     border-block-start: calc(var(--fh-border-heavy) + var(--fh-border-thin)) var(--fh-card-border-style, solid) var(--fh-env-tone, var(--fh-color-text-subtle));
   }
@@ -700,8 +704,8 @@
     inline-size: var(--fh-sidebar-width, 15rem);
     min-block-size: 18rem;
     max-inline-size: 100%;
-    margin: var(--fh-inset-tight);
-    padding: var(--fh-inset-tight);
+    margin: var(--fh-gap-grouped) var(--fh-inset-tight) var(--fh-inset-tight);
+    padding: 0 var(--fh-inset-tight) var(--fh-inset-tight);
     border: var(--fh-sidebar-edge, 0);
     border-radius: var(--fh-radius-lg);
     background-color: var(--_fill);

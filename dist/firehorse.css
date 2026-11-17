@@ -16031,10 +16031,11 @@
     --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24'%3E%3Cpath d='M0 0H4L9.2 10.6Q9.9 12 9.2 13.4L4 24H0L5.2 13.4Q5.9 12 5.2 10.6Z'/%3E%3C/svg%3E");
     inline-size: var(--fh-crumb-arrow-w, .625rem);
     block-size: var(--fh-crumb-arrow-h, 1.5rem);
+    margin-inline: var(--fh-gap-bound);
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
     background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
     vertical-align: middle;
     flex: none;
-    margin-inline: 0 1rem;
   }
 
   .fh-crumb__button {
@@ -16106,17 +16107,28 @@
     overflow: hidden;
   }
 
+  .fh-crumb__button {
+    position: relative;
+  }
+
   .fh-crumb__caret {
     --fh-icon-size: .75rem;
     color: var(--fh-color-text-subtle);
     opacity: 0;
     transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
     flex: none;
-    margin-inline-start: calc(.25rem - var(--fh-gap-related));
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc(100% + var(--fh-gap-bound) - 1px);
+    translate: 0 -50%;
   }
 
   .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"]) > .fh-crumb__caret {
     opacity: 1;
+  }
+
+  .fh-crumb:has( > .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"])) + .fh-crumb > .fh-crumb__sep {
+    opacity: 0;
   }
 
   .fh-crumb__button[aria-expanded="true"] > .fh-crumb__caret {
@@ -16325,6 +16337,14 @@
     }
   }
 
+  .fh-masthead--app-crumbs .fh-profile {
+    border-radius: var(--fh-radius-md);
+  }
+
+  .fh-masthead--app-crumbs .fh-profile .fh-avatar {
+    border-radius: var(--fh-radius-sm);
+  }
+
   @container fh-masthead (inline-size < 56rem) {
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name {
       flex: 0 auto;
@@ -16351,10 +16371,6 @@
 
     .fh-masthead--app.fh-masthead--app-crumbs > .fh-crumbs {
       padding-inline: 0;
-    }
-
-    .fh-masthead--app-crumbs .fh-crumb__sep {
-      margin-inline: 0;
     }
 
     .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name {
