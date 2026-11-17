@@ -67,6 +67,11 @@
       aspect-ratio: 1;
       background-color: var(--fh-color-text-muted);
       mask: var(--fh-icon-chevron-right) center / contain no-repeat;
+
+      /* Nested, so the public build drops it with the rule (a held family). */
+      @media (prefers-reduced-motion: no-preference) {
+        transition: rotate var(--fh-duration-base) var(--fh-ease-standard);
+      }
     }
   }
 
@@ -118,11 +123,5 @@
     outline: var(--fh-focus-width) solid var(--fh-color-focus, currentColor);
     outline-offset: 2px;
     border-radius: var(--fh-radius-sm);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .fh-tree summary::before {
-      transition: rotate var(--fh-duration-base) var(--fh-ease-standard);
-    }
   }
 }
