@@ -1301,6 +1301,12 @@ export const tokens = {
     "tier": "primitives",
     "group": "tap"
   },
+  "--fh-target-floor": {
+    "$value": "1rem",
+    "$type": "dimension",
+    "tier": "primitives",
+    "group": "target"
+  },
   "--fh-control-height": {
     "$value": "2.25rem",
     "$type": "dimension",

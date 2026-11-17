@@ -312,6 +312,7 @@
     --fh-header-height: 4.25rem;
     --fh-dock-height: 4.25rem;
     --fh-tap-target: 2.75rem;
+    --fh-target-floor: 1rem;
     --fh-control-height: 2.25rem;
     --fh-control-height-lg: 3rem;
     --fh-avatar-xs: 1.375rem;
@@ -9788,8 +9789,17 @@
       margin-inline-end: calc(-1 * var(--fh-gap-bound));
       padding: 0;
       display: inline-grid;
+      position: relative;
 
       &:before {
+        content: "";
+        inset-block: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+        inset-inline: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+        border-radius: inherit;
+        position: absolute;
+      }
+
+      &:after {
         content: "";
         aspect-ratio: 1;
         inline-size: .75em;
@@ -9799,6 +9809,10 @@
 
       &:hover {
         background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      }
+
+      @media (pointer: coarse) {
+        --_hit: var(--fh-tap-target);
       }
     }
   }
@@ -16124,6 +16138,12 @@
       font-size: var(--fh-text-label);
       font-variant-numeric: tabular-nums;
     }
+  }
+
+  .fh-account-menu .fh-menu__foot {
+    --_gap: var(--fh-gap-related);
+    --_pad-b: var(--fh-inset-tight);
+    --_pad-i: var(--fh-inset-control);
   }
 
   .fh-account-menu .fh-segmented {
@@ -22916,6 +22936,34 @@
     color: var(--fh-color-danger);
     font-size: var(--fh-text-caption);
     flex: none;
+  }
+
+  :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)) {
+    position: relative;
+  }
+
+  :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)):before {
+    content: "";
+    inset-block: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+    inset-inline: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+    border-radius: inherit;
+    position: absolute;
+  }
+
+  @media (pointer: coarse) {
+    :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)) {
+      --_hit: var(--fh-tap-target);
+    }
+  }
+
+  .fh-target-floor .fh-menu {
+    opacity: 1;
+    position: static;
+    translate: none;
+  }
+
+  .fh-target-floor:has([data-fh-hit-toggle]:checked) [data-fh-hit], .fh-target-floor:has([data-fh-hit-toggle]:checked) [data-fh-hit]:not(.fh-switch):before {
+    outline: var(--fh-border-thin) solid var(--fh-color-focus);
   }
 }
 

@@ -194,6 +194,125 @@ Drop shadows are a theme setting, data-fh-shadow (or "shadow" in a theme's confi
 </div>
 ```
 
+### TGT · Target floor
+
+The smallest hit area on a fine pointer is --fh-target-floor (1rem), in both directions. A control drawn smaller keeps its size and grows the hit area around it. Coarse pointers keep --fh-tap-target. Each family is at its smallest size.
+
+```html
+<div class="fh-target-floor" data-fh="TGT">
+  
+  
+    <div class="fh-stack fh-stack--lg">
+      <label class="fh-check"><input type="checkbox" data-fh-hit-toggle> Outline hit areas</label>
+      <div class="fh-cluster">
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Button</span>
+          <button class="fh-button fh-button--sm" type="button" data-fh-hit>Go</button>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Icon</span>
+          <button class="fh-button fh-button--icon fh-button--sm" type="button" aria-label="Add" data-fh-hit><i class="fh-icon fh-icon--plus" aria-hidden="true"></i></button>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Disc</span>
+          <button class="fh-button fh-button--disc" type="button" aria-label="Typeface" data-fh-hit>T</button>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Link</span>
+          <a class="fh-button fh-button--sm" href="#foundations" data-fh-hit>Link</a>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Chip</span>
+          <span class="fh-chip fh-chip--sm" data-tone="teal">Tag <button class="fh-chip__remove" type="button" aria-label="Remove tag" data-fh-hit></button></span>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Checkbox</span>
+          <label class="fh-check"><input type="checkbox" data-fh-hit> On</label>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Radio</span>
+          <label class="fh-check"><input type="radio" name="tgt-radio" data-fh-hit> One</label>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Switch</span>
+          <input class="fh-switch" type="checkbox" role="switch" aria-label="Switch" data-fh-hit>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Segmented</span>
+          <fieldset class="fh-segmented fh-segmented--sm">
+            <legend class="fh-sr-only">Segment</legend>
+            <label data-fh-hit><input type="radio" name="tgt-seg" checked> A</label>
+            <label data-fh-hit><input type="radio" name="tgt-seg"> B</label>
+          </fieldset>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Segment</span>
+          <nav class="fh-segment" aria-label="Segment">
+            <a href="#foundations" aria-current="true" data-fh-hit>All</a>
+          </nav>
+        </div>
+      </div>
+      <div class="fh-stack fh-stack--sm">
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Tabs</span>
+          <div class="fh-tabs fh-tabs--sub" role="tablist" aria-label="Sections">
+            <button type="button" role="tab" aria-selected="true" data-fh-hit>One</button>
+            <button type="button" role="tab" data-fh-hit>Two</button>
+          </div>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Menu</span>
+          <div class="fh-menu" role="menu" aria-label="Sample">
+            <button type="button" role="menuitem" data-fh-hit>Item</button>
+          </div>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Picker</span>
+          <button class="fh-entity" type="button" data-fh-hit>Rascode</button>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Sidenav</span>
+          <nav class="fh-sidenav" aria-label="Sample">
+            <section><a href="#foundations" data-fh-hit>Overview</a></section>
+          </nav>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Sidebar</span>
+          <button class="fh-sidebar__item" type="button" data-fh-hit>Overview</button>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Crumb</span>
+          <header class="fh-masthead">
+            <nav class="fh-crumbs" aria-label="Breadcrumb">
+              <ol class="fh-crumbs__list">
+                <li class="fh-crumb fh-crumb--area">
+                  <button class="fh-crumb__button" type="button" data-fh-hit><span class="fh-crumb__name">Area</span></button>
+                </li>
+              </ol>
+            </nav>
+          </header>
+        </div>
+        <div class="fh-stack fh-stack--2xs">
+          <span class="fh-label">Account</span>
+          <div class="fh-account-menu fh-account-menu--static" role="menu" aria-label="Account sample">
+            <div class="fh-account-menu__stage">
+              <div class="fh-account-menu__panel" data-fh-panel="main" data-state="active">
+                <button class="fh-account-row" type="button" role="menuitem" data-tone="amber" data-fh-hit>
+                  <span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>
+                  <span class="fh-account-row__label">Now</span>
+                  <span class="fh-account-row__value">Tue 17 Nov</span>
+                  <i class="fh-icon fh-icon--chevron-right fh-account-row__go" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+</div>
+```
+
 ### WRT · Word rotator
 
 The rolling word, without the usual wiring: no library, no word array in a script, no timers. Write the words in the markup and they take turns; change them by editing the HTML. `--walk` gives each word a step of the root colour's own family, held to a lightness that reads on each scheme. In a headline, or inside a paragraph.

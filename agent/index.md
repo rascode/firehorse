@@ -29,6 +29,7 @@
 | `SPC` | Space | Foundations | — | [open](https://firehorse.rascode.dev/foundations/space/) |
 | `RAD` | Radius | Foundations | — | [open](https://firehorse.rascode.dev/foundations/radius/) |
 | `ELV` | Elevation | Foundations | — | [open](https://firehorse.rascode.dev/foundations/elevation/) |
+| `TGT` | Target floor | Foundations | — | [open](https://firehorse.rascode.dev/foundations/target-floor/) |
 | `WRT` | Word rotator | Foundations | 1 Word rotator (2) | [open](https://firehorse.rascode.dev/foundations/word-rotator/) |
 | `MOT` | Motion | Motion | 1 Entrances (10) · 2 Sequences (2) · 3 Scroll-linked (5) · 4 Choreography (4) · 5 Drift (8) | [open](https://firehorse.rascode.dev/motion/motion/) |
 | `STK` | Stack | Layout | 1 Stack (3) | [open](https://firehorse.rascode.dev/layout/stack/) |
@@ -162,6 +163,14 @@ Drop shadows are a theme setting, data-fh-shadow (or "shadow" in a theme's confi
 Classes: `fh-cluster` `fh-button`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/elevation/.
+
+## TGT · Target floor
+
+The smallest hit area on a fine pointer is --fh-target-floor (1rem), in both directions. A control drawn smaller keeps its size and grows the hit area around it. Coarse pointers keep --fh-tap-target. Each family is at its smallest size.
+
+Classes: `fh-target-floor` `fh-stack` `fh-stack--lg` `fh-check` `fh-cluster` `fh-stack--2xs` `fh-label` `fh-button` `fh-button--sm` `fh-button--icon` `fh-icon` `fh-button--disc` `fh-chip` `fh-chip--sm` `fh-chip__remove` `fh-switch` `fh-segmented` `fh-segmented--sm` `fh-sr-only` `fh-segment` `fh-stack--sm` `fh-tabs` `fh-tabs--sub` `fh-menu` `fh-entity` `fh-sidenav` `fh-sidebar__item` `fh-masthead` `fh-crumbs` `fh-crumbs__list` `fh-crumb` `fh-crumb--area` `fh-crumb__button` `fh-crumb__name` `fh-account-menu` `fh-account-menu--static` `fh-account-menu__stage` `fh-account-menu__panel` `fh-account-row` `fh-cube` `fh-cube--icon` `fh-account-row__label` `fh-account-row__value` `fh-account-row__go`
+
+Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/foundations/target-floor/.
 
 ## WRT · Word rotator
 

@@ -312,6 +312,7 @@
     --fh-header-height: 4.25rem;
     --fh-dock-height: 4.25rem;
     --fh-tap-target: 2.75rem;
+    --fh-target-floor: 1rem;
     --fh-control-height: 2.25rem;
     --fh-control-height-lg: 3rem;
     --fh-avatar-xs: 1.375rem;
@@ -9536,8 +9537,17 @@
       margin-inline-end: calc(-1 * var(--fh-gap-bound));
       padding: 0;
       display: inline-grid;
+      position: relative;
 
       &:before {
+        content: "";
+        inset-block: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+        inset-inline: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+        border-radius: inherit;
+        position: absolute;
+      }
+
+      &:after {
         content: "";
         aspect-ratio: 1;
         inline-size: .75em;
@@ -9547,6 +9557,10 @@
 
       &:hover {
         background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      }
+
+      @media (pointer: coarse) {
+        --_hit: var(--fh-tap-target);
       }
     }
   }
@@ -13651,12 +13665,227 @@
     padding-block: var(--fh-inset-tight);
   }
 
+  .fh-account-menu {
+    --_f: var(--fh-frost-panel-f);
+    --_fill: var(--fh-frost-panel-fill);
+    --_filter: var(--fh-frost-panel-filter);
+    --_cube-r: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    --_frame: var(--fh-item-frame);
+    --_slide: 1.25rem;
+    max-block-size: min(40rem, 85dvh);
+    inline-size: min(20rem, 100vi - 2rem);
+    padding: var(--_frame);
+    overscroll-behavior: contain;
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    border-radius: calc(var(--_cube-r) + var(--_frame) + var(--fh-border-thin));
+    background-color: var(--_fill);
+    -webkit-backdrop-filter: var(--_filter);
+    backdrop-filter: var(--_filter);
+    box-shadow: none;
+    color: var(--fh-color-text);
+    font-size: var(--fh-text-small);
+    line-height: var(--fh-leading-snug);
+    margin: 0;
+    overflow: hidden auto;
+
+    &:popover-open {
+      opacity: 1;
+      transition: opacity var(--fh-duration-fast) var(--fh-ease-standard),
+        translate var(--fh-duration-fast) var(--fh-ease-standard),
+        display var(--fh-duration-fast) allow-discrete,
+        overlay var(--fh-duration-fast) allow-discrete;
+      translate: 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 calc(-1 * var(--fh-gap-bound));
+      }
+    }
+
+    & hr {
+      block-size: 0;
+      margin: var(--fh-gap-bound) var(--fh-inset-control);
+      border: 0;
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    }
+  }
+
   @supports (position-area: bottom) {
-    
+    .fh-account-menu {
+      position-area: block-end span-inline-start;
+    }
+  }
+
+  .fh-account-menu--static {
+    opacity: 1;
+    display: block;
+    position: static;
+    translate: none;
+  }
+
+  .fh-account-menu__stage {
+    transition: block-size var(--fh-duration-base) var(--fh-ease-standard);
+    position: relative;
+    overflow: clip;
+  }
+
+  .fh-account-menu__panel {
+    align-content: start;
+    gap: var(--fh-item-frame);
+    transition: translate var(--fh-duration-base) var(--fh-ease-standard),
+      opacity var(--fh-duration-base) var(--fh-ease-standard),
+      visibility 0s;
+    display: grid;
+
+    &:not([data-state="active"]) {
+      transition-property: translate, opacity, visibility;
+      transition-duration: var(--fh-duration-base), var(--fh-duration-base), 0s;
+      transition-delay: 0s, 0s, var(--fh-duration-base);
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      translate: var(--_slide) 0;
+      position: absolute;
+      inset: 0 0 auto;
+    }
+
+    &[data-state="before"] {
+      translate: calc(-1 * var(--_slide)) 0;
+    }
+
+    &[data-fh-panel="main"]:not([data-state]) {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      position: static;
+      translate: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    
+    .fh-account-menu, .fh-account-menu__stage, .fh-account-menu__panel {
+      transition: none;
+    }
+
+    .fh-account-menu:popover-open {
+      transition: none;
+    }
+  }
+
+  .fh-account-row {
+    --_c: var(--fh-tone, var(--fh-color-accent));
+    align-items: center;
+    gap: var(--fh-gap-grouped-wide);
+    inline-size: 100%;
+    padding: var(--fh-inset-control);
+    border-radius: var(--_cube-r);
+    color: var(--fh-color-text-muted);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard),
+      color var(--fh-duration-fast) var(--fh-ease-standard);
+    background: none;
+    border: 0;
+    grid-template-columns: auto minmax(0, 1fr) auto .8rem;
+    text-decoration: none;
+    display: grid;
+
+    &:not(:has( > .fh-cube)) {
+      grid-template-columns: minmax(0, 1fr) auto .8rem;
+    }
+
+    &:is(a, button):hover {
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+      color: var(--fh-color-text);
+    }
+
+    &:is(a, button):focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: -1px;
+    }
+
+    &:is(div) {
+      cursor: default;
+    }
+
+    & > .fh-cube--icon {
+      --_cube: var(--_c);
+      background-color: color-mix(in oklab, var(--_ic) 14%, transparent);
+      color: var(--_ic);
+    }
+  }
+
+  .fh-account-row__label {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-inline-size: 0;
+    overflow: hidden;
+  }
+
+  .fh-account-row__value {
+    max-inline-size: 11rem;
+    color: var(--fh-color-text-muted);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-label);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .fh-account-row__go {
+    inline-size: .8rem;
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-account-row[aria-expanded="true"] .fh-account-row__go {
+    color: var(--fh-color-text);
+  }
+
+  .fh-account-row.fh-account-row--inline {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .fh-account-row--danger {
+    --fh-tone: var(--fh-color-danger);
+    color: var(--fh-color-danger);
+
+    &:is(a, button):hover {
+      color: var(--fh-color-danger);
+    }
+  }
+
+  .fh-account-row.fh-account-row--back {
+    color: var(--fh-color-text);
+    font-weight: var(--fh-weight-bold);
+    grid-template-columns: auto minmax(0, 1fr);
+
+    & > .fh-icon {
+      inline-size: var(--fh-tile-cube-size);
+      color: var(--fh-color-text-muted);
+    }
+  }
+
+  .fh-account-menu .fh-menu__foot {
+    --_gap: var(--fh-gap-related);
+    --_pad-b: var(--fh-inset-tight);
+    --_pad-i: var(--fh-inset-control);
+  }
+
+  .fh-account-menu .fh-segmented {
+    border-radius: calc(var(--fh-tile-cube-radius, var(--fh-radius-sm)) + var(--fh-gap-bound));
+
+    & > label {
+      border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+    }
+
+    & > label:has(:checked) {
+      background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+      color: var(--fh-color-text);
+    }
   }
 
   .fh-command {
@@ -17106,6 +17335,34 @@
     color: var(--fh-color-danger);
     font-size: var(--fh-text-caption);
     flex: none;
+  }
+
+  :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)) {
+    position: relative;
+  }
+
+  :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)):before {
+    content: "";
+    inset-block: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+    inset-inline: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+    border-radius: inherit;
+    position: absolute;
+  }
+
+  @media (pointer: coarse) {
+    :where(.fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc), .fh-segmented > label, :is(.fh-segment, .fh-dictate) > :is(a, button), .fh-tabs > :is(button, a), .fh-menu > :is(a, button, [role^="menuitem"]), .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]), .fh-menu__item, .fh-sidebar__item:is(a, button), .fh-sidenav a, .fh-sidenav .fh-sidenav__row, .fh-crumb__button, .fh-account-row:is(a, button)) {
+      --_hit: var(--fh-tap-target);
+    }
+  }
+
+  .fh-target-floor .fh-menu {
+    opacity: 1;
+    position: static;
+    translate: none;
+  }
+
+  .fh-target-floor:has([data-fh-hit-toggle]:checked) [data-fh-hit], .fh-target-floor:has([data-fh-hit-toggle]:checked) [data-fh-hit]:not(.fh-switch):before {
+    outline: var(--fh-border-thin) solid var(--fh-color-focus);
   }
 }
 
