@@ -64,7 +64,8 @@
     position: relative;
   }
 
-  .fh-crumb--area { flex: none; }
+  /* Only a record crumb gives up width, and its meta before its name. */
+  :is(.fh-crumb--area, .fh-crumb--leaf, .fh-crumb--overflow) { flex: none; }
 
   /* A chevron between crumbs: the icon, subtle, never a typed ›. */
   .fh-crumb__sep {
@@ -117,7 +118,10 @@
     white-space: nowrap;
   }
 
+  /* The meta gives way first: a name keeps its width while the meta ellipses. */
   .fh-crumb__meta {
+    flex: 0 100 auto;
+    min-inline-size: 0;
     overflow: hidden;
     max-inline-size: var(--fh-crumb-meta-max, 16rem);
     color: var(--fh-color-text-muted);
@@ -291,20 +295,31 @@
   /* —— MST-4.4 Crumbs ——
    * The MST-3 panel recipe as is (frost, radius, shadow, no etched edge, the sidebar head row's height); the
    * trail is the lead and there is no summary zone, so the trail takes the width and the tools sit at the end. */
-  .fh-masthead--app-crumbs {
+  .fh-masthead--app.fh-masthead--app-crumbs {
     grid-template-columns: minmax(0, 1fr) auto;
 
     & > .fh-crumbs { padding-inline: calc((var(--_height) - var(--fh-tile-cube-size)) / 2) var(--_pad-i); }
     & .fh-masthead__summary { display: none; }
   }
 
+  /* Phone: the host's sheet button (the sidebar's menu) comes first; it shows only there. A container
+   * query cannot change its own container's grid, so the bar always has the sheet's column and the trail
+   * takes back its gap while the button is hidden. */
+  .fh-crumbs__sheet { display: none; }
+  .fh-masthead--app.fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+
+    & > .fh-crumbs { margin-inline-start: calc(-1 * var(--_gap)); }
+  }
+
+  /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
   @container fh-masthead (inline-size < 56rem) {
-    .fh-masthead--app-crumbs :is(.fh-crumb__meta, .fh-crumb__counts) { display: none; }
+    .fh-masthead--app-crumbs .fh-crumb__button > :is(.fh-crumb__meta, .fh-crumb__counts) { display: none; }
   }
 
   @container fh-masthead (inline-size < 40rem) {
     .fh-masthead--app-crumbs {
-      & .fh-crumb--area .fh-crumb__name { display: none; }
+      & .fh-crumb--area > .fh-crumb__button > .fh-crumb__name { display: none; }
       & .fh-crumb--overflow { display: flex; }
       & .fh-crumb--leaf { display: none; }
       & .fh-crumb--record:has(~ .fh-crumb--record) { display: none; }
@@ -313,8 +328,13 @@
 
   /* Phone: menus open as a sheet along the bottom. */
   @container fh-masthead (inline-size < 30rem) {
-    .fh-masthead--app-crumbs .fh-crumb__name { max-inline-size: 9rem; }
-    .fh-masthead--app-crumbs .fh-crumb--area .fh-crumb__caret { display: none; }
+    .fh-masthead--app-crumbs > .fh-crumbs__sheet { display: inline-grid; }
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) > .fh-crumbs { margin-inline-start: 0; }
+    /* The trail gives its room to the last crumb: the buttons carry their own inset. */
+    .fh-masthead--app.fh-masthead--app-crumbs > .fh-crumbs { padding-inline: 0; }
+    .fh-masthead--app-crumbs .fh-crumb__sep { margin-inline: 0; }
+    .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { max-inline-size: 9rem; }
+    .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret { display: none; }
     .fh-crumb-menu {
       position: fixed;
       inset: auto 0 0 0;
