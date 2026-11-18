@@ -2443,11 +2443,11 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 ## DLG · Dialog, menu, toast
 
-Native <dialog> and popovers, with enter and exit animations from @starting-style.
+Native <dialog> and popovers, with enter and exit animations from @starting-style. A toast is neutral, success or danger: a title, an optional muted description, and an optional action that is the text link.
 
 Layer: composite. Slots: `body` `actions`.
 
-Classes: `fh-cluster` `fh-button` `fh-button--secondary` `fh-button--ghost` `fh-menu` `fh-dialog` `fh-dialog__header` `fh-stack` `fh-stack--xs` `fh-label` `fh-subheading` `fh-close` `fh-dialog__body` `fh-body` `fh-dialog__footer`
+Classes: `fh-cluster` `fh-button` `fh-button--secondary` `fh-button--ghost` `fh-stack` `fh-toast` `fh-toast__body` `fh-close` `fh-link` `fh-toast__action` `fh-toast__description` `fh-menu` `fh-dialog` `fh-dialog__header` `fh-stack--xs` `fh-label` `fh-subheading` `fh-dialog__body` `fh-body` `fh-dialog__footer`
 
 Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/overlays/dialog-menu-toast/.
 

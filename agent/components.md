@@ -20,7 +20,7 @@
 | Admin (admin.css) | `fh-app` `fh-record` (`--cover` `__cover`) `fh-section-card` (`__head` `__title` `__tools` `__lede` `__subhead` `__note` `__foot` `--inset` `--aside`) `fh-gauge` `fh-tracker` (`__head` `__meter` `__done` `__body` `__log`) `fh-quick` (`__label` `__action`) `fh-check-cards` `fh-check-card` (`__check` `__area` `__icon` `__title` `__meter` `__above` `__below`) |
 | Commerce | `fh-invoice` (`__cover` `__head` `__logo` `__number` `__title` `__parties` `__label` `__dates` `__items` `__totals` `__total` `__sign` `__foot` `--classic`) `fh-pay` (`--float` `__mark` `__doc` `__amount` `__icon` `__panel` `__head` `__route` `__party` `__sum` `__total` `__details` `__actions`) |
 | Forms | `fh-form` (`__row` `__actions`) `fh-field` (`--optional` `__hint` `__error`) `fh-input` `fh-textarea` `fh-select` `fh-select-wrap` `fh-input-group` `fh-check` `fh-switch` `fh-segmented` `fh-segment` (`--entities` `--roll` `__roll` `--mode`) |
-| Disclosure | `fh-accordion` `fh-tabs` (`--mono`) `fh-dialog` (`__header` `__body` `__footer`) `fh-menu` `fh-toaster` `fh-toast` |
+| Disclosure | `fh-accordion` `fh-tabs` (`--mono`) `fh-dialog` (`__header` `__body` `__footer`) `fh-menu` `fh-toaster` `fh-toast` (`__body` `__description` `__action`) |
 | Chrome | `fh-header` (`__bar` `__brand` `__actions` `__toggle`) `fh-nav` `fh-nav__link` `fh-drawer` (`__group`) `fh-mega` (`__grid` `__rail`) `fh-footer` (`__columns` `__column` `__base`) |
 | Design patterns | `fh-hero` `fh-hero__actions` `fh-hero-split` `fh-section-head` `fh-etched-split` (`__pane`) `fh-cta-band` (`__main` `__title` `__aside` `__people` `__fine`) `fh-window` (`__bar` `__body`) `fh-letter` (`__portrait`) `fh-panel` `fh-panel-inset` `[data-fh-panel-start]` `fh-footer--tall` |
 | Helpers | `fh-sr-only` `fh-skip` `fh-reveal` `fh-reveal-children` `fh-hide-narrow` `fh-hide-wide` `fh-tone-text` `fh-text-start|center|end` `fh-nowrap` `fh-tabular` `fh-full` `fh-text-small` `fh-text-micro` `fh-font-mono` `fh-stack--md` |
@@ -2064,13 +2064,35 @@ Native `<details>` with a shared `name`, so only one stays open. The height anim
 
 ### DLG · Dialog, menu, toast
 
-Native `<dialog>` and popovers, with enter and exit animations from `@starting-style`.
+Native `<dialog>` and popovers, with enter and exit animations from `@starting-style`. A toast is neutral, success or danger: a title, an optional muted description, and an optional action that is the text link.
 
 ```html
 <div class="fh-cluster" style="--fh-gap: var(--fh-space-4)">
   <button class="fh-button" type="button" data-open-dialog="demo-dialog" data-fh="BTN">Open dialog</button>
   <button class="fh-button fh-button--secondary" type="button" popovertarget="demo-menu" style="anchor-name: --demo-menu" data-fh="BTN-1.5">Open menu</button>
   <button class="fh-button fh-button--ghost" type="button" data-toast="Saved. We'll be in touch within a day." data-fh="BTN-2.2">Show toast</button>
+</div>
+<div class="fh-stack" style="--fh-gap: var(--fh-gap-grouped)">
+  <div class="fh-toast" data-tone="neutral" role="status" data-fh="DLG">
+    <div class="fh-toast__body" data-fh-slot="body">
+      <p>Saved.</p>
+    </div>
+    <button class="fh-close" type="button" aria-label="Dismiss" data-fh-slot="actions"></button>
+  </div>
+  <div class="fh-toast" data-tone="success" role="status" data-fh="DLG">
+    <div class="fh-toast__body" data-fh-slot="body">
+      <p>Published to X</p>
+      <a class="fh-link fh-toast__action" data-fh="ACT-2.1" data-fh-slot="actions" href="https://x.com" target="_blank" rel="noreferrer">View on X</a>
+    </div>
+    <button class="fh-close" type="button" aria-label="Dismiss" data-fh-slot="actions"></button>
+  </div>
+  <div class="fh-toast" data-tone="danger" role="alert" data-fh="DLG">
+    <div class="fh-toast__body" data-fh-slot="body">
+      <p>Could not publish</p>
+      <p class="fh-toast__description">The post did not go out. Try again in a moment.</p>
+    </div>
+    <button class="fh-close" type="button" aria-label="Dismiss" data-fh-slot="actions"></button>
+  </div>
 </div>
 <div id="demo-menu" popover class="fh-menu" style="position-anchor: --demo-menu" data-fh="DRP-1.1">
   <a href="#c-overlay">Duplicate</a>
