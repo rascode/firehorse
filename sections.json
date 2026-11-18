@@ -90,12 +90,13 @@
     },
     "datatable": {
       "id": "DTB-2",
-      "members": ["REF", "VAL-1.1", "SSG"],
+      "members": ["REF", "VAL-1.1", "BTN", "CHP"],
       "class": "fh-dt fh-dt--records",
       "row": "tr with data-sidecar and tabindex=0; every td has data-label; first cell is fh-ref (second, after the toggle cell, in an expandable row); the row's status is the Values dot and word (VAL-1.1, decision 5)",
       "expand": {
         "toggle": "first cell of the row: <td><button class=\"fh-dt__expand\" type=\"button\" aria-expanded=\"false\" aria-controls=\"<detail row id>\" aria-label=\"<what it shows>\"></button></td>, no data-label; the header cell above it is <th scope=\"col\"><span class=\"fh-sr-only\">Open</span></th>. The chevron turns when aria-expanded is true.",
-        "detail": "<tr class=\"fh-dt__detail\" id=\"<detail row id>\" hidden><td colspan=\"<every column>\">…</td></tr>, directly after its record row. It holds any content: a stage (div.fh-panel-section__stage, then an optional p.fh-panel-section__caption with the code) or a nested fh-dt fh-dt--records (a list of variants), which indents once, under the reference cell.",
+        "detail": "<tr class=\"fh-dt__detail\" id=\"<detail row id>\" hidden><td colspan=\"<every column>\">…</td></tr>, directly after its record row. It holds any content: a stage (div.fh-panel-section__stage, then an optional p.fh-panel-section__caption with the code) or a nested fh-dt fh-dt--records (a list of variants), which indents once, under the reference cell. The stage is the records table's own stage slot (its one live part, BTN or CHP, fills stage; the code fills caption), not a Stage section (SSG): a section never sits inside the table. A nested records table fills body.",
+        "tree": "DTB-2.5, fh-dt--tree: role=\"treegrid\" on the table, the rows flat in one tbody at any depth. Each row: <tr role=\"row\" aria-level=\"<depth from 1>\" tabindex=\"0 on the first, -1 on the rest\">, plus aria-expanded on a row with children and hidden on the rows under a closed one. The first cell: <td role=\"gridcell\"><span class=\"fh-dt__node\"><button class=\"fh-dt__expand\" type=\"button\" tabindex=\"-1\" aria-hidden=\"true\"></button>the reference value</span></td> (a leaf has no button). data-sidecar stays on the reference link, not the row. records.js adds the treegrid keys and setRowExpanded.",
         "state": "aria-expanded on the toggle and hidden on the detail row. A server renders either state; nothing needs datatable.js.",
         "script": "records.js (optional): a click on the toggle flips aria-expanded and hidden (the row named in aria-controls, else the detail row right after) and fires fh:record-toggle { open, toggle, detail } on the toggle. sidecar.js never opens the row's sidecar from a click or key on the toggle.",
         "import": "@rascode/firehorse/records"

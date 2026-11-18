@@ -3,7 +3,7 @@
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readComposition, compose, guard, lintFireKit } from "../scripts/composition.mjs";
+import { readComposition, compose, guard, lintFireKit, layerOf, RANK } from "../scripts/composition.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const fails = [];
@@ -63,6 +63,16 @@ expect(full.families.every((f) => f.layer && typeof f.transparent === "boolean" 
 expect(full.families.find((f) => f.id === "REC")?.compositions.some((e) => e.child.startsWith("EYE") && e.slot === "eyebrow"), "REC has no eyebrow composition (REC-1.1's pill)");
 // G11: fh-row was a stray owner (TMR's "Landing metric row"); since FC3 it is the List row's block (LST-1).
 expect(full.owners["fh-row"] === "LST", `fh-row is owned by ${full.owners["fh-row"]}, not LST`);
+
+// Helm reads sections.json members as edges too (surface > member), beside the specimen compositions. Together they
+// make no cycle and no member outranks its surface (FC3: a kind holds the shell, never the shell the kind; DTB-2's
+// expanding row holds its stage's parts, not a Stage section).
+const members = [];
+const walkMembers = (o) => { if (!o || typeof o !== "object") return; if (!Array.isArray(o) && typeof o.id === "string" && Array.isArray(o.members)) for (const m of o.members) members.push({ parent: o.id, child: m, slot: "(members)", order: 1 }); for (const v of Object.values(o)) walkMembers(v); };
+walkMembers(JSON.parse(readFileSync(join(root, "sections.json"), "utf8")));
+const helm = []; guard([...full.families.flatMap((f) => f.compositions), ...members], comp, helm);
+const refused = [...helm.filter((e) => /^M(9|10) /.test(e)), ...members.filter((e) => RANK[layerOf(comp, e.child)] > RANK[layerOf(comp, e.parent)]).map((e) => `${e.parent} lists ${e.child}, which outranks it`)];
+expect(members.length > 0 && !refused.length, `Helm would refuse: ${refused.join("; ")}`);
 
 if (fails.length) { console.error("✗ composition:\n  " + fails.join("\n  ")); process.exit(1); }
 console.log("✓ composition: M1 to M10 catch their cases; the Index carries layers, slots and compositions");
