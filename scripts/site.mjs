@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { sitePages, assemble, render, absolutize, frameDemoStages } from "./pages.mjs";
+import { sitePages, assemble, render, absolutize, frameDemoStages, proRoot } from "./pages.mjs";
 import { sourceFiles } from "./developer.mjs";
 // release.json decides what is built: the public build (default) leaves held pages, demos, links and field types
 // out; --all (or FH_RELEASE=all) builds everything with a Held / Draft / Pro chip, for a local preview.
@@ -148,12 +148,15 @@ for (const [from, to] of Object.entries(movedPages)) {
 // Integration sheets (reveal.css): the public site serves the ones the public build ships; --all serves every one.
 for (const i of buildPlan.integrations) if (showAll || !i.out) cp(i.out ? `dist/full/${i.name}` : `dist/${i.name}`, i.name);
 cp("dist/full/admin.css", "admin.css");
-// Firehorse Pro (private, git-ignored): its demo pages need the built CSS, calendar.js and keyfield.js.
-if (existsSync(join(root, "pro/dist/firehorse-pro.min.css"))) {
-  cp("pro/dist/firehorse-pro.min.css", "firehorse-pro.css");
-  cp("pro/dist/calendar.js", "calendar.js");
-  cp("pro/dist/keyfield.js", "keyfield.js");
-  if (existsSync(join(root, "pro/dist/motion.js"))) cp("pro/dist/motion.js", "motion-pro.js");
+// Firehorse Pro (private, beside Firehorse in the platform: ../firehorse-pro): its demo pages need the built CSS,
+// calendar.js and keyfield.js. The public repo has no Pro, so the site builds without them.
+const proDist = join(proRoot, "dist");
+const cpPro = (from, to) => copyFileSync(join(proDist, from), join(out, to));
+if (existsSync(join(proDist, "firehorse-pro.min.css"))) {
+  cpPro("firehorse-pro.min.css", "firehorse-pro.css");
+  cpPro("calendar.js", "calendar.js");
+  cpPro("keyfield.js", "keyfield.js");
+  if (existsSync(join(proDist, "motion.js"))) cpPro("motion.js", "motion-pro.js");
 }
 // site/audio (the Audio demo tracks) goes with Audio: held, so only --all copies it.
 for (const dir of ["img/supply", "img/backdrop", "img/og", "img/brand", "img/theme-horses", ...(showAll || isLivePage("/audio/") ? ["audio"] : [])]) {

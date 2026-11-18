@@ -6,7 +6,7 @@
 //   <!--@main-->          everything inside <main>
 //   <!--@after-->         page-only dialogs/popovers that live after the footer (optional)
 // site/parts/layout.html wraps it; {{> name}} pulls in site/parts/name.html.
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expandGenerated, summaryCells } from "./developer.mjs";
@@ -16,6 +16,10 @@ import { withSpecimens, categoryGrid, redirectsFor, stageMode } from "./specimen
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pagesDir = join(root, "site/pages");
 const partsDir = join(root, "site/parts");
+// Firehorse Pro (private) sits beside Firehorse in the platform monorepo: packages/firehorse-pro. Its docs pages
+// (site/pages/pro/**) join the site when it is there; the public repo has no Pro, so they are simply left out.
+export const proRoot = join(root, "..", "firehorse-pro");
+const proPagesDir = join(proRoot, "site/pages");
 
 const walk = (d) => readdirSync(d).flatMap((f) => {
   const p = join(d, f);
@@ -23,20 +27,21 @@ const walk = (d) => readdirSync(d).flatMap((f) => {
 });
 
 const parse = (file) => {
+  const base = file.startsWith(proPagesDir) ? proPagesDir : pagesDir;
   const src = readFileSync(file, "utf8");
   const block = (name) => {
     const m = src.match(new RegExp(`<!--@${name}-->\\n?([\\s\\S]*?)(?=\\n?<!--@|$)`));
     return m ? m[1].replace(/\n+$/, "") : "";
   };
   const meta = JSON.parse(src.match(/<!--@meta ([\s\S]*?)-->/)[1]);
-  const rel = relative(pagesDir, file).replace(/\\/g, "/");
+  const rel = relative(base, file).replace(/\\/g, "/");
   const path = meta.path ?? "/" + rel.replace(/(^|\/)index\.html$/, "$1").replace(/\.html$/, "/");
   const out = path === "/" ? "index.html" : path.replace(/^\//, "") + "index.html";
   return { file, rel, out, path, meta, jsonld: block("jsonld"), main: expandGenerated(block("main")), after: block("after") };
 };
 
 /** Every page, in site order (meta.order, then path). */
-export const pages = () => walk(pagesDir).map(parse)
+export const pages = () => [...walk(pagesDir), ...(existsSync(proPagesDir) ? walk(proPagesDir) : [])].map(parse)
   .sort((a, b) => (a.meta.order ?? 0) - (b.meta.order ?? 0) || a.path.localeCompare(b.path));
 
 /** The pages this build shows (release.json): public, held pages out and held demos removed; with --all

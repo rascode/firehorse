@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = join(root, "src");
-// `node scripts/lint.mjs pro/src` lints another source tree (Firehorse Pro)
+// `node scripts/lint.mjs ../firehorse-pro/src` lints another source tree (Firehorse Pro, beside Firehorse)
 // against the core tokens: core files define, only the target is checked.
 const argPath = process.argv.slice(2).find((a) => !a.startsWith("--"));
 const target = argPath ? join(root, argPath) : src;
