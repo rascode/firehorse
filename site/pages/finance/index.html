@@ -26,9 +26,9 @@
         <div class="site-demo__head"><h3>Balance</h3><p>The total, what is available, what is pending and declined, and the split by segment or entity.</p></div>
         <div class="site-demo__stage" data-demo>
 <section class="fh-balance" data-tone="teal">
-  <p class="fh-balance__label">Total balance · All</p>
-  <p class="fh-balance__figure"><span class="fh-balance__currency">$</span>48,210<span class="fh-balance__cents">.33</span></p>
-  <dl class="fh-balance__meta">
+  <p class="fh-balance__label" data-fh-slot="label">Total balance · All</p>
+  <p class="fh-balance__figure"><span class="fh-balance__currency" data-fh-slot="currency">$</span>48,210<span class="fh-balance__cents">.33</span></p>
+  <dl class="fh-balance__meta" data-fh-slot="meta">
     <div><dt>Available</dt><dd>$41,005.10</dd></div>
     <div><dt>Owed</dt><dd>$3,120.00</dd></div>
     <div data-status="pending"><dt>Pending · 3</dt><dd>$412.80</dd></div>
@@ -37,7 +37,7 @@
   <div class="fh-balance__split" role="img" aria-label="Business 62 percent, Personal 38 percent">
     <span style="--fh-share: 62%" data-tone="amber"></span><span style="--fh-share: 38%" data-tone="sky"></span>
   </div>
-  <ul class="fh-balance__legend">
+  <ul class="fh-balance__legend" data-fh-slot="caption">
     <li data-tone="amber"><span>Business</span><b>$29,890.40</b></li>
     <li data-tone="sky"><span>Personal</span><b>$18,319.93</b></li>
   </ul>
@@ -49,16 +49,16 @@
         <div class="site-demo__head"><h3>Account card</h3><p>Name, institution and last four, the entity tag, balance and sync health. Owed balances read red.</p></div>
         <div class="site-demo__stage" data-demo>
 <div class="fh-accounts">
-  <article class="fh-account" data-tone="amber">
-    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true">CH</span><div><h3 class="fh-account__name">Operating</h3><p class="fh-account__sub">Chase · ••4417</p></div><span class="fh-account__tag" data-tone="orange">Rascode</span></header>
+  <article class="fh-account" data-tone="amber" data-fh="ACN" data-fh-slot="body">
+    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true" data-fh-slot="mark">CH</span><div><h3 class="fh-account__name" data-fh-slot="name">Operating</h3><p class="fh-account__sub" data-fh-slot="sub">Chase · ••4417</p></div><span class="fh-account__tag" data-tone="orange" data-fh-slot="chips">Rascode</span></header>
     <p class="fh-account__figure">$18,240.12</p>
-    <dl class="fh-account__meta"><div><dt>Available</dt><dd>$17,990.12</dd></div></dl>
+    <dl class="fh-account__meta" data-fh-slot="meta"><div><dt>Available</dt><dd>$17,990.12</dd></div></dl>
     <footer class="fh-account__foot"><span data-health="ok">Synced 4 min ago</span></footer>
   </article>
-  <article class="fh-account" data-tone="sky">
-    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true">AX</span><div><h3 class="fh-account__name">Gold Card</h3><p class="fh-account__sub">Amex · ••1009</p></div><span class="fh-account__tag" data-tone="sky">Personal</span></header>
+  <article class="fh-account" data-tone="sky" data-fh="ACN" data-fh-slot="body">
+    <header class="fh-account__head"><span class="fh-account__mark" aria-hidden="true" data-fh-slot="mark">AX</span><div><h3 class="fh-account__name" data-fh-slot="name">Gold Card</h3><p class="fh-account__sub" data-fh-slot="sub">Amex · ••1009</p></div><span class="fh-account__tag" data-tone="sky" data-fh-slot="chips">Personal</span></header>
     <p class="fh-account__figure" data-flow="owed">−$3,120.00</p>
-    <dl class="fh-account__meta"><div><dt>Limit</dt><dd>$15,000</dd></div></dl>
+    <dl class="fh-account__meta" data-fh-slot="meta"><div><dt>Limit</dt><dd>$15,000</dd></div></dl>
     <footer class="fh-account__foot"><span data-health="stale">Synced yesterday</span></footer>
   </article>
 </div>
@@ -69,10 +69,10 @@
         <div class="site-demo__head"><h3>Ledger</h3><p>Pending first and labelled; declined and reversed struck through; money in reads green with a plus.</p></div>
         <div class="site-demo__stage" data-demo>
 <ol class="fh-ledger">
-  <li class="fh-ledger__day">Today</li>
-  <li data-status="pending"><span class="fh-ledger__mark" aria-hidden="true">AW</span><div class="fh-ledger__what"><b>AWS</b><small>Card ••2231 · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Pending</span><span class="fh-ledger__amount">−$212.40</span></li>
-  <li data-status="declined"><span class="fh-ledger__mark" aria-hidden="true">FG</span><div class="fh-ledger__what"><b>Figma</b><small>Card ••8810 · Spend limit reached</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Declined</span><span class="fh-ledger__amount">−$45.00</span></li>
-  <li data-status="posted"><span class="fh-ledger__mark" aria-hidden="true">ST</span><div class="fh-ledger__what"><b>Stripe payout</b><small>Operating · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02">Nov 2</time><span class="fh-ledger__status">Posted</span><span class="fh-ledger__amount" data-flow="in">+$2,400.00</span></li>
+  <li class="fh-ledger__day" data-fh-slot="date">Today</li>
+  <li data-status="pending"><span class="fh-ledger__mark" aria-hidden="true" data-fh-slot="mark">AW</span><div class="fh-ledger__what" data-fh-slot="title"><b>AWS</b><small>Card ••2231 · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02" data-fh-slot="time">Nov 2</time><span class="fh-ledger__status" data-fh-slot="chips">Pending</span><span class="fh-ledger__amount" data-fh-slot="value">−$212.40</span></li>
+  <li data-status="declined"><span class="fh-ledger__mark" aria-hidden="true" data-fh-slot="mark">FG</span><div class="fh-ledger__what" data-fh-slot="title"><b>Figma</b><small>Card ••8810 · Spend limit reached</small></div><time class="fh-ledger__when" datetime="2026-11-02" data-fh-slot="time">Nov 2</time><span class="fh-ledger__status" data-fh-slot="chips">Declined</span><span class="fh-ledger__amount" data-fh-slot="value">−$45.00</span></li>
+  <li data-status="posted"><span class="fh-ledger__mark" aria-hidden="true" data-fh-slot="mark">ST</span><div class="fh-ledger__what" data-fh-slot="title"><b>Stripe payout</b><small>Operating · Rascode</small></div><time class="fh-ledger__when" datetime="2026-11-02" data-fh-slot="time">Nov 2</time><span class="fh-ledger__status" data-fh-slot="chips">Posted</span><span class="fh-ledger__amount" data-flow="in" data-fh-slot="value">+$2,400.00</span></li>
 </ol>
         </div>
       </div>
@@ -81,16 +81,16 @@
         <div class="site-demo__head"><h3>Virtual card</h3><p>A card face for issued cards: last four only, spend against its limit, lock and declines.</p></div>
         <div class="site-demo__stage" data-demo>
 <div class="fh-vcards">
-  <article class="fh-vcard" data-tone="violet" data-state="open">
-    <header><span class="fh-vcard__name">AWS</span><span>Open</span></header>
-    <p class="fh-vcard__number">•••• 2231</p>
-    <div class="fh-vcard__limit" style="--fh-used: 42%"><span>$212 of $500 / month</span></div>
+  <article class="fh-vcard" data-tone="violet" data-state="open" data-fh="VCD" data-fh-slot="body">
+    <header><span class="fh-vcard__name" data-fh-slot="name">AWS</span><span>Open</span></header>
+    <p class="fh-vcard__number" data-fh-slot="value">•••• 2231</p>
+    <div class="fh-vcard__limit" style="--fh-used: 42%" data-fh-slot="meta"><span>$212 of $500 / month</span></div>
     <footer><span>Merchant-locked</span><span>0 declines · 30d</span></footer>
   </article>
-  <article class="fh-vcard" data-tone="orange" data-state="paused">
-    <header><span class="fh-vcard__name">Trial subscriptions</span><span>Paused</span></header>
-    <p class="fh-vcard__number">•••• 8810</p>
-    <div class="fh-vcard__limit" style="--fh-used: 100%"><span>$45 of $45 / transaction</span></div>
+  <article class="fh-vcard" data-tone="orange" data-state="paused" data-fh="VCD" data-fh-slot="body">
+    <header><span class="fh-vcard__name" data-fh-slot="name">Trial subscriptions</span><span>Paused</span></header>
+    <p class="fh-vcard__number" data-fh-slot="value">•••• 8810</p>
+    <div class="fh-vcard__limit" style="--fh-used: 100%" data-fh-slot="meta"><span>$45 of $45 / transaction</span></div>
     <footer><span>Single use</span><span>3 declines · 30d</span></footer>
   </article>
 </div>
