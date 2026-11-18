@@ -9,7 +9,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const fails = [];
 const expect = (ok, msg) => { if (!ok) fails.push(msg); };
 const comp = readComposition(root, fails);
-const ids = new Set(["REC", "REC-1.1", "BTN", "BTN-2.2", "EYE", "STK", "CHP", "VAL", "VAL-1.1", "SFL", "MET", "TIR"]);
+const ids = new Set(["REC", "REC-1.1", "BTN", "BTN-2.2", "EYE", "STK", "CHP", "VAL", "VAL-1.1", "SFL", "SFL-2.1", "FLD-4.1", "MET", "TIR"]);
 const roots = new Set(["fh-record", "fh-button", "fh-eyebrow-pill", "fh-chip", "fh-value", "fh-tier"]);
 const run = (html) => { const errors = []; const edges = compose({ markups: [{ id: "T", html }], comp, ids, roots, errors }); return { errors, edges }; };
 const rec = (inner) => `<header class="fh-record" data-fh="REC-1.1"><span class="fh-record__mark" data-fh-slot="mark"></span><h2 class="fh-record__title" data-fh-slot="title">T</h2><p class="fh-record__sub" data-fh-slot="sub">S</p>${inner}</header>`;
@@ -29,7 +29,9 @@ expect(has(run(rec(`<button class="fh-button" data-fh="BTN-2.2" data-fh-slot="wi
 expect(has(run(`<header class="fh-record" data-fh="REC-1.1"><h2 class="fh-record__title" data-fh-slot="title">T</h2></header>`), "M4"), "M4: a record with no mark passes");
 expect(has(run(`<span class="fh-value" data-fh="VAL-1.1"><span class="fh-value" data-fh="VAL-1.1"></span></span>`), "M5"), "M5: a field in a field passes");
 expect(has(run(`<span class="fh-chip" data-fh="CHP"><header class="fh-record" data-fh="REC-1.1"></header></span>`), "M5"), "M5: a composite in a part passes");
-expect(!has(run(`<span class="fh-value" data-fh="VAL-1.1"><span class="fh-files" data-fh="SFL"></span></span>`), "M5"), "M5: a listed layer exception (VAL > SFL) fails");
+expect(!has(run(`<div class="fh-input-group" data-fh="FLD-4.1"><span class="fh-value" data-fh="VAL-1.1"></span></div>`), "M5"), "M5: a listed layer exception (FLD > VAL) fails");
+expect(!has(run(`<span class="fh-value" data-fh="VAL-1.1"><ul class="fh-files" data-fh="SFL-2.1"></ul></span>`), "M5"), "M5: a split part (SFL-2.1, ranked part in layers) fails inside a field");
+expect(has(run(`<span class="fh-value" data-fh="VAL-1.1"><ul class="fh-files" data-fh="SFL"></ul></span>`), "M5"), "M5: the section (SFL) passes inside a field");
 expect(has(run(rec(`<div class="fh-stack" data-fh-slot="actions"><button class="fh-button" data-fh="BTN-2.2" data-fh-slot="actions">Go</button></div>`)), "M6"), "M6: a slot on a layout element passes");
 
 // M8 to M10 run on the emitted compositions, as Helm's guards (migration 480) see them.

@@ -8,7 +8,7 @@
 //   M3 a direct child component of a composite, section or template has no data-fh-slot, or a key that is not a
 //      slot key or not declared for the parent
 //   M4 a required slot of the parent is empty in its specimen
-//   M5 a child's layer outranks its parent's, or a field holds a field (layerExceptions skipped, until ruled)
+//   M5 a child's layer (its own row in layers, else its group's, else its family's) outranks its parent's, or a field holds a field (layerExceptions skipped, until ruled)
 //   M6 data-fh-slot sits on a transparent or layout element
 //   M7 a public FireKit View whose doc comment names an fh-/hx- class or a code has no "/// fh:" line
 // and, on the compositions all specimens emit together (Helm's guards, migration 480):
@@ -22,6 +22,9 @@ import { LAYOUT, NON_ROOT, isBlock } from "./fh-tag.mjs";
 
 export const RANK = { token: 0, part: 1, field: 2, composite: 3, section: 4, template: 5 };
 const fam = (id) => id.split("-")[0];
+/** An ID's layer: its own row in its family's "layers", else its group's, else the family's (C0 section 1: groups
+ *  and variants inherit their family's layer unless a row overrides it; a split part ranks part in a composite family). */
+export const layerOf = (comp, id) => { const f = comp.families[fam(id)]; return f?.layers?.[id] ?? f?.layers?.[id.split(".")[0]] ?? f?.layer; };
 
 /** schema/composition.json, checked against the rules of schema/composition.schema.json. */
 export function readComposition(root, errors) {
@@ -29,6 +32,7 @@ export function readComposition(root, errors) {
   const contexts = new Set(c.contexts);
   for (const [code, f] of Object.entries(c.families)) {
     if (!(f.layer in RANK)) errors.push(`composition: ${code} has layer ${f.layer}`);
+    for (const [id, l] of Object.entries(f.layers ?? {})) if (!id.startsWith(code + "-") || !(l in RANK)) errors.push(`composition: ${code} layers ${id} as ${l}`);
     const keys = new Set();
     for (const s of f.slots ?? []) {
       if (!c.slotKeys[s.key]) errors.push(`composition: ${code} slot ${s.key} is not a slot key`);
@@ -58,7 +62,7 @@ const classes = (n) => (n.getAttribute?.("class") || "").split(/\s+/).filter(Boo
 
 /** Lint one family's specimen markup (M1 to M6) and return its compositions: parent, child, slot, order. */
 export function compose({ markups, comp, ids, roots, owners = {}, errors }) {
-  const layer = (id) => comp.families[fam(id)]?.layer;
+  const layer = (id) => layerOf(comp, id);
   // A transparent family passes its children through; so does a token family's demo frame (a motion card
   // shows other components, it never holds them).
   const through = (id) => !!comp.families[fam(id)]?.transparent || layer(id) === "token";
@@ -115,7 +119,7 @@ export function compose({ markups, comp, ids, roots, owners = {}, errors }) {
 export const accepts = (code, id) => id === code || id.startsWith(code + (code.includes("-") ? "." : "-"));
 export function guard(edges, comp, errors) {
   const slotOf = (id, key) => (comp.families[fam(id)]?.slots ?? []).find((s) => s.key === key);
-  const isField = (id) => comp.families[fam(id)]?.layer === "field";
+  const isField = (id) => layerOf(comp, id) === "field";
   const filled = new Map(); // parent|slot → edges, for one slots
   const next = new Map(); // parent → children, for cycles
   for (const e of edges) {

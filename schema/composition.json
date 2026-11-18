@@ -1,7 +1,7 @@
 {
   "$schema": "./composition.schema.json",
   "name": "Firehorse composition",
-  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). pieces: root classes that are a family's own markup inside its component (fh-tier in fh-tiers), with no ID of their own, so no data-fh and no composition. gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M10 (M8 to M10 are Helm's composition guards: accepts, one slots, no self edge or cycle).",
+  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). layers: a group or variant ranked apart from its family (a split part, MET-4 in the metric tiles). pieces: root classes that are a family's own markup inside its component (fh-tier in fh-tiers), with no ID of their own, so no data-fh and no composition. gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M10 (M8 to M10 are Helm's composition guards: accepts, one slots, no self edge or cycle).",
   "layers": [
     "token",
     "part",
@@ -2282,7 +2282,10 @@
           ],
           "default": "TBL"
         }
-      ]
+      ],
+      "layers": {
+        "MET-4": "part"
+      }
     },
     "MIX": {
       "layer": "composite",
@@ -3002,7 +3005,10 @@
           ],
           "default": "VAL"
         }
-      ]
+      ],
+      "layers": {
+        "REF-1": "part"
+      }
     },
     "REL": {
       "layer": "composite",
@@ -3885,7 +3891,10 @@
           "fieldType": "date",
           "context": "record"
         }
-      ]
+      ],
+      "layers": {
+        "SFL-2": "part"
+      }
     },
     "SFM": {
       "layer": "section",
@@ -4283,7 +4292,10 @@
             "ACT"
           ]
         }
-      ]
+      ],
+      "layers": {
+        "SLK-2": "composite"
+      }
     },
     "SMT": {
       "layer": "section",
@@ -5913,38 +5925,18 @@
   "layerExceptions": [
     {
       "parent": "VAL",
-      "child": "REF",
-      "reason": "VAL-3.8, VAL-3.9 and VAL-3.12 (reference values) draw REF's fh-ref link, and REF is a composite since round 2 (fh-cell is a composite, Rascode, #210): REF holds both the cell and the link; needs a ruling (fh-ref as a part, or a cell family)"
-    },
-    {
-      "parent": "VAL",
-      "child": "MET",
-      "reason": "VAL-5.3 and VAL-6.5 draw MET's ring and sparkline (C0 G6: split them into parts)"
-    },
-    {
-      "parent": "VAL",
-      "child": "SFL",
-      "reason": "VAL-8.4 draws SFL's file row (C0 section 1 conflict to watch, G6: split the file row into a part)"
+      "child": "TBL",
+      "reason": "VAL-12.4 (In a table cell) shows the Place value in context: an fh-table whose cells hold VAL-12 values, and fh-tag tags the specimen top-most root (the table wrap) as VAL-12.4. The table is context, not a piece the value draws, so no part splits out honestly; the fix is a specimen ruling (declare VAL-12.4 on the cell value, not the stack) (FC2)"
     },
     {
       "parent": "FLD",
       "child": "VAL",
-      "reason": "FLD-4.1 wraps a Values field (VAL-3.10 picker, VAL-1.5 segmented): FLD is the field frame, ranked part"
+      "reason": "FLD-4.1 wraps a Values field (VAL-3.10 picker, VAL-1.5 segmented): FLD is the field frame, ranked part, and the piece it holds is already its own Values variant, so there is nothing to split; it needs a layer ruling on FLD-4 (a frame that holds a field) (FC2)"
     },
     {
       "parent": "STP",
       "child": "SFM",
-      "reason": "STP-2.1 form steps hold a form section body (fh-form-step__body fh-form)"
-    },
-    {
-      "parent": "SEC",
-      "child": "SLK",
-      "reason": "SEC-1.1 holds the links list of the links kind (fh-links) without its section shell"
-    },
-    {
-      "parent": "VAL",
-      "child": "TBL",
-      "reason": "VAL-12.4 (Place value, added in 7c6d6e4) draws its address lines as an fh-table; a field holding a composite waits for an FC2 split or a layer ruling, as the other VAL exceptions"
+      "reason": "STP-2.1 form steps hold a form section body (fh-form-step__body fh-form), with its fields: a part holding a form is a composite by role, so it needs a layer ruling on STP-2, not a split part (FC2)"
     }
   ]
 }

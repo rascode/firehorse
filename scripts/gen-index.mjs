@@ -18,7 +18,7 @@ import { allMain, pageOf } from "./pages.mjs";
 import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
 import { isPublic, shownStatus, tierOf, releaseIds } from "./release.mjs";
 import { hasSpecimen, specimenPath } from "./specimen.mjs";
-import { readComposition, rootClasses, compose, guard, lintFireKit } from "./composition.mjs";
+import { readComposition, rootClasses, compose, guard, layerOf, lintFireKit } from "./composition.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
@@ -192,6 +192,8 @@ for (const f of list) {
   const c = comp.families[f.id];
   if (!c) { errors.push(`composition: ${f.id} has no entry in schema/composition.json`); continue; }
   Object.assign(f, { layer: c.layer, transparent: c.transparent, slots: c.slots ?? [], compositions: [...edges.values()].filter((e) => e.parent.split("-")[0] === f.id).sort(byEdge) });
+  // A group or variant ranked apart from its family (a split part) carries its own layer.
+  for (const x of [...f.groups, ...f.variants]) { const l = layerOf(comp, x.id); if (l !== c.layer) x.layer = l; }
 }
 if (errors.length) { console.error("✗ index:\n  " + errors.join("\n  ")); process.exit(1); }
 const nV = list.reduce((n, f) => n + f.variants.length, 0);

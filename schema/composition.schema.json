@@ -38,6 +38,7 @@
           "layer": { "$ref": "#/$defs/layer" },
           "transparent": { "type": "boolean" },
           "slots": { "type": "array", "items": { "$ref": "#/$defs/slot" } },
+          "layers": { "description": "A group or variant ranked apart from its family (a split part in a composite family): ID to layer. A variant takes its own row, else its group's, else the family's layer.", "type": "object", "propertyNames": { "pattern": "^[A-Z]{3}-\\d+(\\.\\d+)?$" }, "additionalProperties": { "$ref": "#/$defs/layer" } },
           "pieces": { "description": "Root classes that are this family's own markup inside its component (fh-tier in fh-tiers): no ID of their own, so no data-fh and no composition.", "type": "array", "items": { "type": "string", "pattern": "^fh-[a-z0-9-]+$" }, "uniqueItems": true }
         }
       }
