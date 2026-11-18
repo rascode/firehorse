@@ -7,7 +7,7 @@
     "members": ["BTN", "CHP", "SCT", "SPR", "TBL-3", "SFM", "FLD", "FLD-5", "SPM", "STT", "TBL", "SCH", "CHT", "SMT", "TMR", "MET", "SLG", "STL", "TML", "SRC", "ACT", "SLK", "SFL"],
     "class": "fh-sidecar",
     "drawer": "fh-dialog fh-dialog--float fh-sidecar",
-    "slots": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"],
+    "slots": {"ref": "schema/composition.json#/families/SDC/slots", "keys": ["eyebrow", "mark", "title", "sub", "chips", "actions", "close", "sections"]},
     "chips": "One chip row in the header: the record's state, in at most four chips. Chips appear nowhere else in the body, except one status chip a row may carry (a log line level, a prompt state).",
     "events": {
       "fh:sidecar-before-close": {
@@ -22,7 +22,7 @@
     "members": ["CHP", "TBL-3"],
     "element": "details",
     "class": "fh-panel-section",
-    "slots": ["icon", "title", "chips", "body"],
+    "slots": {"ref": "schema/composition.json#/families/SCT/slots", "keys": ["icon", "title", "chips", "body"]},
     "icon": "Required, first. An fh-icon with class fh-panel-section__icon; the section's tone colours it.",
     "title": "An h3 with class fh-panel-section__title. Larger than body text, in the strongest text role.",
     "collapse": "The summary is the control. Open by default unless the kind says otherwise.",
@@ -84,7 +84,7 @@
       "id": "REF",
       "members": [],
       "class": "fh-ref",
-      "slots": ["fh-ref__label", "fh-ref__key (optional, mono)"],
+      "slots": {"ref": "schema/composition.json#/families/REF/slots", "keys": ["label", "key"], "prose": {"label": "fh-ref__label", "key": "fh-ref__key (optional, mono)"}},
       "attributes": "href (the record page) and data-sidecar (the record id, opened by the sidecar opener)",
       "gone": "fh-ref fh-ref--gone with fh-ref__note: not a link, says what happened"
     },
@@ -129,7 +129,7 @@
       "icon": "list-checks",
       "tone": "sky",
       "body": "fh-kv fh-kv--single",
-      "slots": ["rows: label and value"],
+      "slots": {"ref": "schema/composition.json#/families/SPR/slots", "keys": ["label", "value"], "prose": {"label": "rows: label", "value": "rows: value"}},
       "chips": { "rule": "The two or three values that matter most (status, owner, duration).", "max": 3 }
     },
     "records": {
@@ -139,7 +139,7 @@
       "icon": "table-2",
       "tone": "teal",
       "body": "fh-table-wrap > fh-table",
-      "slots": ["columns", "rows; every reference in a cell is a link that opens that record's sidecar"],
+      "slots": {"ref": "schema/composition.json#/families/SRC/slots", "keys": ["body"], "prose": {"body": "columns, then rows; every reference in a cell is a link that opens that record's sidecar"}},
       "chips": { "rule": "The record count, then the count that needs attention.", "max": 2 }
     },
     "timetable": {
@@ -149,7 +149,7 @@
       "icon": "clock",
       "tone": "amber",
       "body": "fh-table-wrap > fh-table (columns: time, step, detail)",
-      "slots": ["day mark (tr.fh-panel-section__day before the first row of each day: one th colspan=3 scope=colgroup, Label tier, e.g. Sat 15 Nov; no details, no control; stays one full-width row when the table stacks)", "time (td data-label=Time)", "step (td data-label=Step)", "detail (td data-label=Detail; under 36rem the table stacks by data-label, the fh-table reflow rule)"],
+      "slots": {"ref": "schema/composition.json#/families/STT/slots", "keys": ["date", "time", "title", "sub"], "prose": {"date": "day mark (tr.fh-panel-section__day before the first row of each day: one th colspan=3 scope=colgroup, Label tier, e.g. Sat 15 Nov; no details, no control; stays one full-width row when the table stacks)", "time": "time (td data-label=Time)", "title": "step (td data-label=Step)", "sub": "detail (td data-label=Detail; under 36rem the table stacks by data-label, the fh-table reflow rule)"}},
       "chips": { "rule": "The step count and the span, first time to last.", "max": 2 }
     },
     "timeline": {
@@ -159,7 +159,7 @@
       "icon": "activity",
       "tone": "violet",
       "body": "fh-timeline",
-      "slots": ["time", "event (bold lead, then detail)", "tone per event"],
+      "slots": {"ref": "schema/composition.json#/families/STL/slots", "keys": ["time", "title", "sub"], "prose": {"time": "time", "title": "event (bold lead)", "sub": "event detail; tone per event"}},
       "chips": { "rule": "The event count and the time of the last event.", "max": 2 }
     },
     "chat": {
@@ -169,7 +169,7 @@
       "icon": "message-square",
       "tone": "fuchsia",
       "body": "fh-chat > fh-message (fh-message__head: fh-message__name, fh-message__time); a long message in fh-fold (fold.js)",
-      "slots": ["speaker", "time", "message"],
+      "slots": {"ref": "schema/composition.json#/families/SCH/slots", "keys": ["who", "time", "body"], "prose": {"who": "speaker", "time": "time", "body": "message"}},
       "chips": { "rule": "The message count and the time of the last one.", "max": 2 }
     },
     "activity": {
@@ -179,7 +179,7 @@
       "icon": "activity",
       "tone": "violet",
       "body": "fh-activity-log (TML-2.1 Thread log): fh-activity-log__bar with the Rendered | Plain text switch; fh-activity-log__list > fh-activity-log__entry (actor avatar; fh-activity-log__head: actor, kind chip, time; fh-activity-log__summary; markdown body in fh-fold; fh-activity-log__links; images in fh-activity-log__media > fh-image-stack). activity-log.js, fold.js, image-stack.js",
-      "slots": ["actor (an agent: data-kind=agent avatar, its logo or tone; a person: a circle)", "kind (action, update, note, verify, commit, fix, error: the work log's event kinds)", "time", "summary", "body (markdown, folded)", "links", "images (Image stack)"],
+      "slots": {"ref": "schema/composition.json#/families/SAC/slots", "keys": ["who", "kind", "time", "summary", "body", "links", "images"], "prose": {"who": "actor (an agent: data-kind=agent avatar, its logo or tone; a person: a circle)", "kind": "kind (action, update, note, verify, commit, fix, error: the work log's event kinds)", "time": "time", "summary": "summary", "body": "body (markdown, folded)", "links": "links", "images": "images (Image stack)"}},
       "chips": { "rule": "The entry count and the span of time it covers.", "max": 2 }
     },
     "log": {
@@ -189,7 +189,7 @@
       "icon": "terminal",
       "tone": "orange",
       "body": "fh-log",
-      "slots": ["time", "level (the row status chip, toned by data-tone on the row)", "line (monospace)"],
+      "slots": {"ref": "schema/composition.json#/families/SLG/slots", "keys": ["time", "chips", "body"], "prose": {"time": "time", "chips": "level (the row status chip, toned by data-tone on the row)", "body": "line (monospace)"}},
       "chips": { "rule": "The line count and the count of warnings or errors, if any.", "max": 2 }
     },
     "prompts": {
@@ -199,7 +199,7 @@
       "icon": "sparkles",
       "tone": "teal",
       "body": "fh-prompts > li > a.fh-prompt (fh-prompt__key, fh-prompt__version, status chip, fh-prompt__meta)",
-      "slots": ["key", "version", "state (the row status chip)", "meta (dispatch and time)", "link that opens the prompt"],
+      "slots": {"ref": "schema/composition.json#/families/SPM/slots", "keys": ["key", "version", "chips", "meta", "link"], "prose": {"key": "key", "version": "version", "chips": "state (the row status chip)", "meta": "meta (dispatch and time)", "link": "link that opens the prompt"}},
       "chips": { "rule": "The prompt count and the dispatch they belong to.", "max": 2 }
     },
     "metrics": {
@@ -209,7 +209,7 @@
       "icon": "chart-bar",
       "tone": "lime",
       "body": "fh-metrics > fh-metric",
-      "slots": ["label", "value", "sub", "source"],
+      "slots": {"ref": "schema/composition.json#/families/SMT/slots", "keys": ["label", "value", "sub", "source"]},
       "css": "firehorse.css",
       "chips": { "rule": "The headline figures, as value and unit.", "max": 2 }
     },
@@ -220,7 +220,7 @@
       "icon": "link",
       "tone": "sky",
       "body": "fh-links",
-      "slots": ["icon", "label", "kind", "link that opens the record's sidecar"],
+      "slots": {"ref": "schema/composition.json#/families/SLK/slots", "keys": ["icon", "label", "kind", "link"], "prose": {"icon": "icon", "label": "label", "kind": "kind", "link": "link that opens the record's sidecar"}},
       "chips": { "rule": "The linked count.", "max": 1 }
     },
     "files": {
@@ -230,7 +230,7 @@
       "icon": "paperclip",
       "tone": "rose",
       "body": "fh-files",
-      "slots": ["icon", "name", "size", "date"],
+      "slots": {"ref": "schema/composition.json#/families/SFL/slots", "keys": ["icon", "name", "value", "date"], "prose": {"icon": "icon", "name": "name", "value": "size", "date": "date"}},
       "chips": { "rule": "The file count and the total size.", "max": 2 }
     },
     "form": {
@@ -241,7 +241,7 @@
       "tone": "sky",
       "body": "form > fieldset of fh-field (any Fields member, fh-money included) and fh-panel-section__slot, then fh-panel-section__actions; or, when a field in the slot renders its own form, div.fh-panel-section__form (role=group, aria-labelledby the title id) in place of the form, holding the same parts",
       "hostForms": "Use form when the section submits its own fields. Use div.fh-panel-section__form when a field in the slot renders its own form (a Pro key field). Never put a form inside a form. The layout rules reach the direct child of fh-panel-section__body only, so a host field's own editor is not restyled. sidecar.js marks dirty on input or change inside the section either way, and a submit from a nested host form clears data-dirty unless the page cancels it.",
-      "slots": ["note (fh-panel-section__note, locked only)", "fields; a read only value goes in the field's hint (fh-field__hint)", "slot for a host field (fh-panel-section__slot, data-slot=field)", "actions (fh-panel-section__actions: save button, optional second action, one inline fh-status)"],
+      "slots": {"ref": "schema/composition.json#/families/SFM/slots", "keys": ["note", "fields", "actions"], "prose": {"note": "note (fh-panel-section__note, locked only)", "fields": "fields; a read only value goes in the field's hint (fh-field__hint); and the slot for a host field (fh-panel-section__slot, data-slot=field)", "actions": "actions (fh-panel-section__actions: save button, optional second action, one inline fh-status)"}},
       "states": {
         "clean": "no data-dirty",
         "changed": "data-dirty on the section (sidecar.js sets it, and on the sidecar)",
@@ -260,7 +260,7 @@
       "icon": "box",
       "tone": "violet",
       "body": "div.fh-panel-section__stage holding one component's markup, rendered live, then an optional p.fh-panel-section__caption with the component's code in a code element",
-      "slots": ["stage (fh-panel-section__stage): the component's markup and nothing else", "caption (fh-panel-section__caption, optional): the code, e.g. BTN-1.2"],
+      "slots": {"ref": "schema/composition.json#/families/SSG/slots", "keys": ["stage", "caption"], "prose": {"stage": "stage (fh-panel-section__stage): the component's markup and nothing else", "caption": "caption (fh-panel-section__caption, optional): the code, e.g. BTN-1.2"}},
       "rules": [
         "One component per stage.",
         "No site or app chrome inside the stage: no site-* helper, no host wrapper, no second component around the first.",
@@ -282,7 +282,7 @@
       "import": "@rascode/firehorse/money",
       "posts": "Whole minor units (cents) as a digit string. Without the script the visible input posts what was typed.",
       "options": ["data-currency", "data-minor", "data-locale", "data-allow-negative"],
-      "slots": ["label", "currency", "input", "error (fh-field__error)", "hint (fh-field__hint)"],
+      "slots": {"ref": "schema/composition.json#/families/FLD/slots", "keys": ["label", "currency", "input", "error", "hint"], "prose": {"label": "label", "currency": "currency", "input": "input", "error": "error (fh-field__error)", "hint": "hint (fh-field__hint)"}},
       "use": "Any amount of money in a form. Never type=number."
     }
   }

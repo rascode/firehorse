@@ -1,0 +1,5108 @@
+{
+  "$schema": "./composition.schema.json",
+  "name": "Firehorse composition",
+  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M7.",
+  "layers": [
+    "token",
+    "part",
+    "field",
+    "composite",
+    "section",
+    "template"
+  ],
+  "contexts": [
+    "cell",
+    "record",
+    "card",
+    "metric",
+    "form"
+  ],
+  "slotKeys": {
+    "media": {
+      "meaning": "the picture or block that leads",
+      "cardinality": "one",
+      "fieldType": "image_asset",
+      "accepts": [
+        "AVT",
+        "CUB",
+        "THB"
+      ]
+    },
+    "mark": {
+      "meaning": "a tone mark or icon block at the start",
+      "cardinality": "one",
+      "accepts": [
+        "MRK",
+        "CUB"
+      ]
+    },
+    "icon": {
+      "meaning": "the icon of a section, link or file",
+      "cardinality": "one"
+    },
+    "eyebrow": {
+      "meaning": "the small line above the title",
+      "cardinality": "one",
+      "fieldType": "short_text",
+      "accepts": [
+        "EYE"
+      ]
+    },
+    "title": {
+      "meaning": "the main line",
+      "cardinality": "one",
+      "fieldType": "title"
+    },
+    "sub": {
+      "meaning": "the line under the title (the description)",
+      "cardinality": "one",
+      "fieldType": "description"
+    },
+    "body": {
+      "meaning": "longer text, or the composite a section kind puts there",
+      "cardinality": "one",
+      "fieldType": "long_text"
+    },
+    "label": {
+      "meaning": "the name of a value",
+      "cardinality": "one",
+      "fieldType": "short_text"
+    },
+    "value": {
+      "meaning": "the value or figure",
+      "cardinality": "one"
+    },
+    "name": {
+      "meaning": "a person's or item's name",
+      "cardinality": "one",
+      "fieldType": "display_name"
+    },
+    "who": {
+      "meaning": "the person or agent",
+      "cardinality": "one",
+      "fieldType": "owner_reference",
+      "accepts": [
+        "AVT"
+      ]
+    },
+    "meta": {
+      "meaning": "small facts after the title",
+      "cardinality": "many",
+      "fieldType": "short_text"
+    },
+    "note": {
+      "meaning": "a muted line",
+      "cardinality": "one",
+      "fieldType": "short_text"
+    },
+    "hint": {
+      "meaning": "help under a field",
+      "cardinality": "one",
+      "fieldType": "short_text"
+    },
+    "error": {
+      "meaning": "what is wrong with a field",
+      "cardinality": "one",
+      "fieldType": "short_text"
+    },
+    "time": {
+      "meaning": "when",
+      "cardinality": "one",
+      "fieldType": "timestamp"
+    },
+    "date": {
+      "meaning": "the day",
+      "cardinality": "one",
+      "fieldType": "date"
+    },
+    "count": {
+      "meaning": "a count",
+      "cardinality": "one",
+      "fieldType": "number_(whole)"
+    },
+    "key": {
+      "meaning": "a mono identifier",
+      "cardinality": "one",
+      "fieldType": "short_code"
+    },
+    "version": {
+      "meaning": "a version number",
+      "cardinality": "one",
+      "fieldType": "number_(whole)"
+    },
+    "kind": {
+      "meaning": "what sort of thing it is",
+      "cardinality": "one",
+      "fieldType": "status"
+    },
+    "caption": {
+      "meaning": "the line under a stage or figure",
+      "cardinality": "one",
+      "fieldType": "short_text"
+    },
+    "source": {
+      "meaning": "where a figure comes from",
+      "cardinality": "one",
+      "fieldType": "short_text"
+    },
+    "summary": {
+      "meaning": "what happened, in a line",
+      "cardinality": "one",
+      "fieldType": "long_text"
+    },
+    "link": {
+      "meaning": "where it goes",
+      "cardinality": "one",
+      "fieldType": "url",
+      "accepts": [
+        "ACT"
+      ]
+    },
+    "chips": {
+      "meaning": "a chip row",
+      "cardinality": "many",
+      "fieldType": "status",
+      "accepts": [
+        "CHP"
+      ]
+    },
+    "actions": {
+      "meaning": "buttons",
+      "cardinality": "many",
+      "accepts": [
+        "BTN",
+        "ACT"
+      ]
+    },
+    "end": {
+      "meaning": "what sits at a row's end",
+      "cardinality": "many",
+      "accepts": [
+        "BTN",
+        "CHO",
+        "CHP"
+      ]
+    },
+    "close": {
+      "meaning": "the close control",
+      "cardinality": "one",
+      "accepts": [
+        "BTN"
+      ]
+    },
+    "currency": {
+      "meaning": "a currency",
+      "cardinality": "one",
+      "fieldType": "fiat_currency_code"
+    },
+    "input": {
+      "meaning": "the control itself",
+      "cardinality": "one",
+      "accepts": [
+        "FLD"
+      ]
+    },
+    "fields": {
+      "meaning": "the fields of a form",
+      "cardinality": "many"
+    },
+    "stage": {
+      "meaning": "one live component",
+      "cardinality": "one"
+    },
+    "sections": {
+      "meaning": "the sections of a surface",
+      "cardinality": "many"
+    },
+    "images": {
+      "meaning": "pictures that belong together",
+      "cardinality": "many",
+      "fieldType": "image_asset",
+      "accepts": [
+        "IMS"
+      ]
+    },
+    "links": {
+      "meaning": "related links",
+      "cardinality": "many",
+      "fieldType": "url"
+    }
+  },
+  "families": {
+    "ACC": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "ACN": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "mark",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "body",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "ACN"
+          ],
+          "default": "ACN"
+        },
+        {
+          "key": "name",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "sub",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        },
+        {
+          "key": "chips",
+          "element": "tag",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ]
+        },
+        {
+          "key": "meta",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "ACT": {
+      "layer": "part",
+      "transparent": false
+    },
+    "ADK": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "eyebrow",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ],
+          "default": "EYE"
+        },
+        {
+          "key": "body",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CPS"
+          ],
+          "default": "CPS"
+        },
+        {
+          "key": "media",
+          "element": "avatar",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "CUB"
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "meta",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "actions",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "AUT": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": [
+            "art",
+            "brand",
+            "logo"
+          ],
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "form",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "fields",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "CHO",
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "meta",
+          "element": "method",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "form",
+          "accepts": [
+            "TBL"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "form",
+          "accepts": [
+            "DET",
+            "TBL"
+          ],
+          "default": "DET"
+        },
+        {
+          "key": "actions",
+          "order": 5,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "links",
+          "element": "social",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "form",
+          "accepts": [
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "link",
+          "element": "forgot",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "form",
+          "accepts": [
+            "ACT",
+            "BTN",
+            "FLD"
+          ],
+          "default": "FLD"
+        }
+      ]
+    },
+    "AVT": {
+      "layer": "part",
+      "transparent": false
+    },
+    "BAL": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "label",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "metric"
+        },
+        {
+          "key": "currency",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "fiat_currency_code",
+          "context": "metric"
+        },
+        {
+          "key": "meta",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "metric"
+        },
+        {
+          "key": "caption",
+          "element": "legend",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "metric"
+        }
+      ]
+    },
+    "BIZ": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "mark",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "sub",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        }
+      ]
+    },
+    "BKD": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "TIL"
+          ],
+          "default": "TIL"
+        },
+        {
+          "key": "label",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "fields",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "UPL"
+          ],
+          "default": "UPL"
+        }
+      ]
+    },
+    "BRG": {
+      "layer": "part",
+      "transparent": false
+    },
+    "BTN": {
+      "layer": "part",
+      "transparent": false
+    },
+    "CAL": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "label",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "form"
+        },
+        {
+          "key": "fields",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "actions",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "date",
+          "element": [
+            "day",
+            "week"
+          ],
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "date",
+          "context": "form"
+        },
+        {
+          "key": "chips",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "form",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        }
+      ]
+    },
+    "CAP": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "element": "line",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card"
+        }
+      ]
+    },
+    "CAR": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "STA"
+          ],
+          "default": "STA"
+        },
+        {
+          "key": "count",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "number_(whole)",
+          "context": "card"
+        }
+      ]
+    },
+    "CAT": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "mark",
+          "element": "flag",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "meta",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "name",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "media",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "title",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "value",
+          "element": "price",
+          "order": 6,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "sub",
+          "element": "pitch",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 8,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CKL",
+            "MET",
+            "STA"
+          ],
+          "default": "STA"
+        },
+        {
+          "key": "link",
+          "order": 9,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "url",
+          "context": "card",
+          "accepts": [
+            "ACT"
+          ],
+          "default": "ACT"
+        }
+      ]
+    },
+    "CCH": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "CHO": {
+      "layer": "part",
+      "transparent": false
+    },
+    "CHP": {
+      "layer": "part",
+      "transparent": false
+    },
+    "CHT": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "body",
+          "element": "bubble",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CHT"
+          ],
+          "default": "CHT"
+        },
+        {
+          "key": "name",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "time",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "card"
+        },
+        {
+          "key": "actions",
+          "element": "toggle",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "CIN": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CTB"
+          ],
+          "default": "CTB"
+        }
+      ]
+    },
+    "CKL": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "CKO": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "CLS": {
+      "layer": "part",
+      "transparent": true
+    },
+    "CNF": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "CNX": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "COL": {
+      "layer": "part",
+      "transparent": true
+    },
+    "CPS": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "fields",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "actions",
+          "element": "attach",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "ACT",
+            "BTN",
+            "CHP"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "CRD": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "CRT": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "CTB": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "eyebrow",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ],
+          "default": "EYE"
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "actions",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "media",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "CUB"
+        },
+        {
+          "key": "who",
+          "element": "people",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "card",
+          "accepts": [
+            "AVT"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "body",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CKL"
+          ],
+          "default": "CKL"
+        },
+        {
+          "key": "note",
+          "element": "fine",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "CUB": {
+      "layer": "part",
+      "transparent": false
+    },
+    "CVR": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "mark",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "count",
+          "element": "badge",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "card"
+        },
+        {
+          "key": "title",
+          "order": 5,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "sub",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        }
+      ]
+    },
+    "DCK": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "DEK": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "cube",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "link",
+          "element": "go",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "url",
+          "context": "card",
+          "accepts": [
+            "ACT"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "note",
+          "order": 5,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "DET": {
+      "layer": "part",
+      "transparent": false
+    },
+    "DLG": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CHO"
+          ],
+          "default": "CHO"
+        },
+        {
+          "key": "actions",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "DRP": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "title",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "cell"
+        },
+        {
+          "key": "label",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        },
+        {
+          "key": "chips",
+          "element": [
+            "status",
+            "pill"
+          ],
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ]
+        },
+        {
+          "key": "body",
+          "element": "line",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "DRP",
+            "TIL",
+            "VAL"
+          ],
+          "default": "TIL"
+        },
+        {
+          "key": "fields",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "actions",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "DRW": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "DTB": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "title",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "cell"
+        },
+        {
+          "key": "actions",
+          "element": "expand",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ]
+        },
+        {
+          "key": "count",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "cell"
+        },
+        {
+          "key": "value",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "VAL"
+          ],
+          "default": "VAL"
+        },
+        {
+          "key": "chips",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "DTB",
+            "REF"
+          ],
+          "default": "REF"
+        },
+        {
+          "key": "stage",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "BTN",
+            "CHP"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "caption",
+          "order": 8,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        }
+      ]
+    },
+    "DTH": {
+      "layer": "token",
+      "transparent": false
+    },
+    "ELV": {
+      "layer": "token",
+      "transparent": false
+    },
+    "EMP": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "element": "tag",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ]
+        },
+        {
+          "key": "actions",
+          "element": "cta",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "ENT": {
+      "layer": "part",
+      "transparent": false
+    },
+    "ENV": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "name",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "form"
+        }
+      ]
+    },
+    "ESP": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "EXP": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "EYE": {
+      "layer": "part",
+      "transparent": false
+    },
+    "FAB": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "actions",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "FBK": {
+      "layer": "part",
+      "transparent": false
+    },
+    "FEA": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        }
+      ]
+    },
+    "FLD": {
+      "layer": "part",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "label",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "form"
+        },
+        {
+          "key": "hint",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "form"
+        },
+        {
+          "key": "error",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "form"
+        },
+        {
+          "key": "currency",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "fiat_currency_code",
+          "context": "form"
+        },
+        {
+          "key": "input",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "FLD"
+          ]
+        }
+      ]
+    },
+    "FND": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "PNL"
+          ],
+          "default": "PNL"
+        }
+      ]
+    },
+    "FOL": {
+      "layer": "part",
+      "transparent": true
+    },
+    "GAU": {
+      "layer": "part",
+      "transparent": false
+    },
+    "GDS": {
+      "layer": "part",
+      "transparent": true
+    },
+    "GRD": {
+      "layer": "part",
+      "transparent": true
+    },
+    "HDR": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "sub",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        },
+        {
+          "key": "mark",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "body",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "AVT"
+          ],
+          "default": "AVT"
+        }
+      ]
+    },
+    "HLP": {
+      "layer": "token",
+      "transparent": false
+    },
+    "IMS": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "count",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "card"
+        },
+        {
+          "key": "close",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "media",
+          "element": [
+            "shot",
+            "img"
+          ],
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "actions",
+          "element": [
+            "prev",
+            "next"
+          ],
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "INV": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": [
+            "logo",
+            "cover"
+          ],
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "mark",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "body",
+          "element": "doc",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card"
+        },
+        {
+          "key": "value",
+          "element": [
+            "total",
+            "number",
+            "amount"
+          ],
+          "order": 4,
+          "cardinality": "many",
+          "required": true
+        },
+        {
+          "key": "chips",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "icon",
+          "order": 6,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "title",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "actions",
+          "order": 8,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "label",
+          "order": 9,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "who",
+          "element": "party",
+          "order": 10,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "card",
+          "accepts": [
+            "AVT"
+          ]
+        },
+        {
+          "key": "date",
+          "element": "dates",
+          "order": 11,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "date",
+          "context": "card"
+        }
+      ]
+    },
+    "KEY": {
+      "layer": "part",
+      "transparent": false
+    },
+    "KVL": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "LDG": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "date",
+          "element": "day",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "date",
+          "context": "cell"
+        },
+        {
+          "key": "mark",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "title",
+          "element": "what",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "title",
+          "context": "cell"
+        },
+        {
+          "key": "time",
+          "element": "when",
+          "order": 4,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "timestamp",
+          "context": "cell"
+        },
+        {
+          "key": "chips",
+          "element": "status",
+          "order": 5,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ]
+        },
+        {
+          "key": "value",
+          "element": "amount",
+          "order": 6,
+          "cardinality": "many",
+          "required": true
+        }
+      ]
+    },
+    "LGS": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "LQG": {
+      "layer": "token",
+      "transparent": false
+    },
+    "LST": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "cell",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "link",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "url",
+          "context": "cell",
+          "accepts": [
+            "ACT"
+          ]
+        },
+        {
+          "key": "meta",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "cell"
+        }
+      ]
+    },
+    "MBR": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "art",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "name",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "sub",
+          "element": "tagline",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        },
+        {
+          "key": "meta",
+          "element": [
+            "role",
+            "facts"
+          ],
+          "order": 4,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "time",
+          "element": "stamp",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "card"
+        },
+        {
+          "key": "count",
+          "element": "badge",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "card"
+        }
+      ]
+    },
+    "MEG": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "link-media",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "cell",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "title",
+          "element": "link-title",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "title",
+          "context": "cell"
+        },
+        {
+          "key": "count",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "cell"
+        },
+        {
+          "key": "sub",
+          "element": "link-desc",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "description",
+          "context": "cell"
+        },
+        {
+          "key": "label",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        },
+        {
+          "key": "body",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "TIL"
+          ],
+          "default": "TIL"
+        }
+      ]
+    },
+    "MET": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "metric",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "CUB"
+        },
+        {
+          "key": "label",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "metric"
+        },
+        {
+          "key": "body",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "metric",
+          "accepts": [
+            "MET",
+            "TBL"
+          ],
+          "default": "MET"
+        },
+        {
+          "key": "sub",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "metric"
+        },
+        {
+          "key": "value",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "VAL"
+          ],
+          "default": "VAL"
+        },
+        {
+          "key": "source",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "metric"
+        },
+        {
+          "key": "actions",
+          "element": "more",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN",
+            "TBL"
+          ],
+          "default": "TBL"
+        }
+      ]
+    },
+    "MIX": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "name",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "MIX",
+            "PLY",
+            "PRM",
+            "STG"
+          ],
+          "default": "MIX"
+        },
+        {
+          "key": "time",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "card"
+        },
+        {
+          "key": "value",
+          "order": 4,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "actions",
+          "element": "buttons",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN",
+            "PLY"
+          ],
+          "default": "PLY"
+        }
+      ]
+    },
+    "MOT": {
+      "layer": "token",
+      "transparent": false
+    },
+    "MRK": {
+      "layer": "part",
+      "transparent": false
+    },
+    "MST": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "mark",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "AVT",
+            "CUB",
+            "MRK"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "eyebrow",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ],
+          "default": "EYE"
+        },
+        {
+          "key": "media",
+          "element": [
+            "cube",
+            "wordmark"
+          ],
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card",
+          "accepts": [
+            "WRT"
+          ],
+          "default": "WRT"
+        },
+        {
+          "key": "body",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "MST",
+            "PRF",
+            "TBL",
+            "WRK"
+          ],
+          "default": "MST"
+        },
+        {
+          "key": "label",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "meta",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "link",
+          "element": "crumb",
+          "order": 8,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "card",
+          "accepts": [
+            "ACT"
+          ],
+          "default": "ACT"
+        },
+        {
+          "key": "chips",
+          "order": 9,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "value",
+          "order": 10,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "summary",
+          "order": 11,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card"
+        },
+        {
+          "key": "actions",
+          "order": 12,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "MTL": {
+      "layer": "token",
+      "transparent": false
+    },
+    "NAV": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "brand",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "cell",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "label",
+          "element": "group-label",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        },
+        {
+          "key": "link",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "cell",
+          "accepts": [
+            "ACT"
+          ]
+        },
+        {
+          "key": "actions",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "AVT",
+            "BTN"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "body",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "DRP",
+            "NAV"
+          ],
+          "default": "DRP"
+        }
+      ]
+    },
+    "NEU": {
+      "layer": "token",
+      "transparent": false
+    },
+    "PAY": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "PDP": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "PLY": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "art",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "element": "kicker",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE",
+            "TRK"
+          ],
+          "default": "TRK"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "PLY",
+            "PRM",
+            "STG",
+            "TBL"
+          ],
+          "default": "PLY"
+        },
+        {
+          "key": "who",
+          "element": "by",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "card",
+          "accepts": [
+            "AVT"
+          ]
+        },
+        {
+          "key": "time",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "card"
+        }
+      ]
+    },
+    "PNL": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "PNL"
+          ],
+          "default": "PNL"
+        }
+      ]
+    },
+    "PRC": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "PRD": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "PRF": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "meta",
+          "element": "facts",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "label",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "TBL"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "who",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "card",
+          "accepts": [
+            "AVT"
+          ]
+        }
+      ]
+    },
+    "PRM": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "label",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "PRM"
+          ],
+          "default": "PRM"
+        },
+        {
+          "key": "value",
+          "order": 3,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "hint",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "RAD": {
+      "layer": "token",
+      "transparent": false
+    },
+    "RDT": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "REC": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "cover",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "record",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "mark",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record",
+          "accepts": [
+            "EYE"
+          ],
+          "default": "EYE"
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "sub",
+          "order": 6,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "description",
+          "context": "record"
+        },
+        {
+          "key": "meta",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        },
+        {
+          "key": "actions",
+          "order": 8,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "REF": {
+      "layer": "part",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "label",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        },
+        {
+          "key": "key",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_code",
+          "context": "cell"
+        }
+      ]
+    },
+    "REL": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "RVW": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "SAC": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "TML"
+          ],
+          "default": "TML"
+        },
+        {
+          "key": "who",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "record",
+          "accepts": [
+            "AVT"
+          ]
+        },
+        {
+          "key": "time",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        },
+        {
+          "key": "kind",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "status",
+          "context": "record"
+        },
+        {
+          "key": "summary",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record"
+        },
+        {
+          "key": "images",
+          "order": 9,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "record",
+          "accepts": [
+            "IMS"
+          ]
+        },
+        {
+          "key": "links",
+          "order": 10,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "record"
+        }
+      ]
+    },
+    "SBR": {
+      "layer": "section",
+      "transparent": false
+    },
+    "SCD": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "photo",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "name",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "element": "bio",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "SCH": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "CHT"
+          ],
+          "default": "CHT"
+        },
+        {
+          "key": "who",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "record",
+          "accepts": [
+            "AVT"
+          ]
+        },
+        {
+          "key": "time",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
+    "SCR": {
+      "layer": "part",
+      "transparent": false
+    },
+    "SCT": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "fields",
+          "element": "slot",
+          "order": 4,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "stage",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "BTN",
+            "CHP"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "actions",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN",
+            "SCR"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "body",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "CHT",
+            "FLD",
+            "SFL",
+            "SLG",
+            "SLK",
+            "SPM",
+            "TBL",
+            "TML",
+            "TMR"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "caption",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        }
+      ]
+    },
+    "SDC": {
+      "layer": "template",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "eyebrow",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "record",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "actions",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "mark",
+          "order": 3,
+          "cardinality": "one",
+          "required": true,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "sub",
+          "order": 5,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "description",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 6,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 7,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SCT"
+          ],
+          "default": "SCT"
+        },
+        {
+          "key": "close",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "BTN"
+          ]
+        },
+        {
+          "key": "sections",
+          "order": 9,
+          "cardinality": "many",
+          "required": false
+        }
+      ]
+    },
+    "SDD": {
+      "layer": "template",
+      "transparent": false
+    },
+    "SEC": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "title",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "fields",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SEC",
+            "SLK",
+            "TBL",
+            "TMR"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "sub",
+          "element": [
+            "lede",
+            "subhead"
+          ],
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "description",
+          "context": "record"
+        },
+        {
+          "key": "note",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        },
+        {
+          "key": "actions",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "SEG": {
+      "layer": "part",
+      "transparent": false
+    },
+    "SFL": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SFL"
+          ],
+          "default": "SFL"
+        },
+        {
+          "key": "value",
+          "order": 5,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "name",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "record"
+        },
+        {
+          "key": "date",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "date",
+          "context": "record"
+        }
+      ]
+    },
+    "SFM": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "form"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "form",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "form",
+          "accepts": [
+            "CAL",
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "note",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "form"
+        },
+        {
+          "key": "fields",
+          "element": "slot",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "actions",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN",
+            "SCR"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "SHL": {
+      "layer": "template",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "brand",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "record",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "sections",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "NAV"
+          ],
+          "default": "NAV"
+        },
+        {
+          "key": "label",
+          "element": "menu-label",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 5,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        }
+      ]
+    },
+    "SLD": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "eyebrow",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "mark",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "body",
+          "element": "quote",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "BTN",
+            "CHP",
+            "CHT",
+            "DTB",
+            "EYE",
+            "NAV",
+            "SLD"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "sub",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        },
+        {
+          "key": "who",
+          "element": "cite",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "card",
+          "accepts": [
+            "AVT"
+          ]
+        },
+        {
+          "key": "key",
+          "element": "code",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_code",
+          "context": "card"
+        }
+      ]
+    },
+    "SLG": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
+    "SLK": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLK"
+          ],
+          "default": "SLK"
+        },
+        {
+          "key": "label",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        },
+        {
+          "key": "kind",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "status",
+          "context": "record"
+        },
+        {
+          "key": "link",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "url",
+          "context": "record",
+          "accepts": [
+            "ACT"
+          ]
+        }
+      ]
+    },
+    "SMT": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "metric"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "metric",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "metric",
+          "accepts": [
+            "TMR"
+          ],
+          "default": "TMR"
+        },
+        {
+          "key": "sub",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "metric"
+        },
+        {
+          "key": "label",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "metric"
+        },
+        {
+          "key": "value",
+          "order": 7,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "source",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "metric"
+        }
+      ]
+    },
+    "SOC": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "face",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "count",
+          "element": "badge",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "card"
+        },
+        {
+          "key": "mark",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 5,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "sub",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        }
+      ]
+    },
+    "SPC": {
+      "layer": "token",
+      "transparent": false
+    },
+    "SPD": {
+      "layer": "token",
+      "transparent": false
+    },
+    "SPM": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "key",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_code",
+          "context": "record"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SPM"
+          ],
+          "default": "SPM"
+        },
+        {
+          "key": "version",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "meta",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        },
+        {
+          "key": "link",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "url",
+          "context": "record",
+          "accepts": [
+            "ACT"
+          ]
+        }
+      ]
+    },
+    "SPR": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "TBL"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "label",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        },
+        {
+          "key": "value",
+          "order": 6,
+          "cardinality": "one",
+          "required": false
+        }
+      ]
+    },
+    "SRC": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "TBL"
+          ],
+          "default": "TBL"
+        }
+      ]
+    },
+    "SSG": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "eyebrow",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "actions",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "mark",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "chips",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "stage",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "sub",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 9,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SCT"
+          ],
+          "default": "SCT"
+        },
+        {
+          "key": "caption",
+          "order": 10,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "record"
+        }
+      ]
+    },
+    "STA": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "STG": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "meta",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "STK": {
+      "layer": "part",
+      "transparent": true
+    },
+    "STL": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "TML"
+          ],
+          "default": "TML"
+        },
+        {
+          "key": "sub",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "record"
+        },
+        {
+          "key": "time",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
+    "STP": {
+      "layer": "part",
+      "transparent": false
+    },
+    "STT": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": true
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "TBL"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "sub",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "record"
+        },
+        {
+          "key": "time",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        },
+        {
+          "key": "date",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "date",
+          "context": "record"
+        }
+      ]
+    },
+    "STY": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "logo",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "chips",
+          "element": "tag",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ]
+        },
+        {
+          "key": "mark",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "label",
+          "element": "figure-label",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "fields",
+          "element": "field",
+          "order": 5,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "body",
+          "element": "quote",
+          "order": 6,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card"
+        },
+        {
+          "key": "link",
+          "order": 7,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "url",
+          "context": "card",
+          "accepts": [
+            "ACT"
+          ]
+        }
+      ]
+    },
+    "SUM": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "TAB": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "TAG": {
+      "layer": "part",
+      "transparent": false
+    },
+    "TBL": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "REF",
+            "TBL"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "date",
+          "element": "day",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "date",
+          "context": "cell"
+        },
+        {
+          "key": "link",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "cell",
+          "accepts": [
+            "ACT"
+          ],
+          "default": "ACT"
+        },
+        {
+          "key": "fields",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "FLD"
+          ],
+          "default": "FLD"
+        },
+        {
+          "key": "value",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "VAL"
+          ],
+          "default": "VAL"
+        },
+        {
+          "key": "actions",
+          "element": [
+            "button",
+            "edit"
+          ],
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "ACT"
+        },
+        {
+          "key": "chips",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "hint",
+          "order": 8,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        }
+      ]
+    },
+    "TBR": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "THB": {
+      "layer": "part",
+      "transparent": false
+    },
+    "THM": {
+      "layer": "token",
+      "transparent": false
+    },
+    "THS": {
+      "layer": "part",
+      "transparent": false
+    },
+    "TIL": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "cube",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "body",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "TIL"
+          ],
+          "default": "TIL"
+        },
+        {
+          "key": "key",
+          "element": "code",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_code",
+          "context": "card"
+        },
+        {
+          "key": "stage",
+          "element": "specimen",
+          "order": 4,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "title",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "eyebrow",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "note",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "link",
+          "element": "go",
+          "order": 8,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "url",
+          "context": "card",
+          "accepts": [
+            "ACT"
+          ]
+        }
+      ]
+    },
+    "TIR": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "media",
+          "element": "cube",
+          "order": 1,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "card",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        },
+        {
+          "key": "name",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "sub",
+          "element": "pitch",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "CKL",
+            "TIR"
+          ],
+          "default": "TIR"
+        },
+        {
+          "key": "note",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "TML": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "date",
+          "element": "day",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "date",
+          "context": "cell"
+        },
+        {
+          "key": "label",
+          "element": "group-title",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "cell"
+        },
+        {
+          "key": "stage",
+          "element": "render",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "SEG"
+          ],
+          "default": "SEG"
+        },
+        {
+          "key": "title",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "title",
+          "context": "cell"
+        },
+        {
+          "key": "chips",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "media",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "cell",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "IMS",
+            "THB"
+          ],
+          "default": "AVT"
+        },
+        {
+          "key": "count",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "number_(whole)",
+          "context": "cell"
+        },
+        {
+          "key": "who",
+          "element": "actor",
+          "order": 8,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "owner_reference",
+          "context": "cell",
+          "accepts": [
+            "AVT"
+          ]
+        },
+        {
+          "key": "kind",
+          "order": 9,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "time",
+          "order": 10,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "cell"
+        },
+        {
+          "key": "summary",
+          "order": 11,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell"
+        },
+        {
+          "key": "links",
+          "order": 12,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "url",
+          "context": "cell",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "body",
+          "element": [
+            "line",
+            "remark"
+          ],
+          "order": 13,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "FBK",
+            "SCR"
+          ],
+          "default": "SCR"
+        },
+        {
+          "key": "actions",
+          "element": "toggle",
+          "order": 14,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        }
+      ]
+    },
+    "TMR": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": true,
+          "fieldType": "long_text",
+          "context": "metric",
+          "accepts": [
+            "MET"
+          ],
+          "default": "MET"
+        }
+      ]
+    },
+    "TON": {
+      "layer": "token",
+      "transparent": false
+    },
+    "TPL": {
+      "layer": "template",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "chips",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "fields",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "THS"
+          ],
+          "default": "THS"
+        },
+        {
+          "key": "sections",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "REC",
+            "SCT",
+            "SEC",
+            "TAB",
+            "TMR",
+            "TPL"
+          ],
+          "default": "TPL"
+        },
+        {
+          "key": "actions",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "body",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "DTB",
+            "EMP",
+            "REF",
+            "SEC"
+          ],
+          "default": "SEC"
+        }
+      ]
+    },
+    "TRA": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "label",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "chips",
+          "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "card",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "actions",
+          "element": "action",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "ACT",
+            "BTN"
+          ]
+        },
+        {
+          "key": "body",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "TRA"
+          ],
+          "default": "TRA"
+        },
+        {
+          "key": "title",
+          "order": 6,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "value",
+          "order": 7,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "FBK"
+          ],
+          "default": "FBK"
+        }
+      ]
+    },
+    "TRK": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "cell",
+          "accepts": [
+            "TRK"
+          ],
+          "default": "TRK"
+        },
+        {
+          "key": "media",
+          "element": "art",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "image_asset",
+          "context": "cell",
+          "accepts": [
+            "AVT",
+            "CUB",
+            "THB"
+          ]
+        }
+      ]
+    },
+    "TST": {
+      "layer": "composite",
+      "transparent": false
+    },
+    "TYP": {
+      "layer": "token",
+      "transparent": false
+    },
+    "UPL": {
+      "layer": "part",
+      "transparent": false
+    },
+    "VAL": {
+      "layer": "field",
+      "transparent": false
+    },
+    "VCD": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "body",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card",
+          "accepts": [
+            "VCD"
+          ],
+          "default": "VCD"
+        },
+        {
+          "key": "name",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "display_name",
+          "context": "card"
+        },
+        {
+          "key": "value",
+          "element": "number",
+          "order": 3,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "meta",
+          "element": "limit",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        }
+      ]
+    },
+    "WAL": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "mark",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "eyebrow",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "short_text",
+          "context": "card",
+          "accepts": [
+            "EYE"
+          ]
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "card"
+        }
+      ]
+    },
+    "WRK": {
+      "layer": "composite",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "mark",
+          "order": 1,
+          "cardinality": "one",
+          "required": true,
+          "accepts": [
+            "CUB",
+            "MRK"
+          ]
+        },
+        {
+          "key": "title",
+          "element": "what",
+          "order": 2,
+          "cardinality": "one",
+          "required": true,
+          "fieldType": "title",
+          "context": "card"
+        }
+      ]
+    },
+    "WRT": {
+      "layer": "part",
+      "transparent": false
+    }
+  },
+  "layerExceptions": [
+    {
+      "parent": "REF",
+      "child": "VAL",
+      "reason": "fh-cell is owned by REF (a part, from sections.json cells.reference) and the datatable cells draw Values in it: a cell is a composite (Rascode, #210); needs a layer ruling for REF or a cell family"
+    },
+    {
+      "parent": "VAL",
+      "child": "MET",
+      "reason": "VAL-5.3 and VAL-6.5 draw MET's ring and sparkline (C0 G6: split them into parts)"
+    },
+    {
+      "parent": "VAL",
+      "child": "SFL",
+      "reason": "VAL-8.4 draws SFL's file row (C0 section 1 conflict to watch, G6: split the file row into a part)"
+    },
+    {
+      "parent": "FLD",
+      "child": "VAL",
+      "reason": "FLD-4.1 wraps a Values field (VAL-3.10 picker, VAL-1.5 segmented): FLD is the field frame, ranked part"
+    },
+    {
+      "parent": "STP",
+      "child": "SFM",
+      "reason": "STP-2.1 form steps hold a form section body (fh-form-step__body fh-form)"
+    },
+    {
+      "parent": "SEC",
+      "child": "SLK",
+      "reason": "SEC-1.1 holds the links list of the links kind (fh-links) without its section shell"
+    }
+  ]
+}

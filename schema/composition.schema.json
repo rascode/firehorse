@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firehorse.rascode.dev/schema/composition.schema.json",
+  "title": "Firehorse composition",
+  "description": "Layers, slot keys and slots of every Firehorse family (C0 composition spec, sections 1, 2 and 8).",
+  "type": "object",
+  "required": ["name", "layers", "contexts", "slotKeys", "families"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string" },
+    "note": { "type": "string" },
+    "layers": { "type": "array", "items": { "$ref": "#/$defs/layer" }, "minItems": 6, "maxItems": 6 },
+    "contexts": { "type": "array", "items": { "$ref": "#/$defs/context" } },
+    "slotKeys": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z]+$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["meaning", "cardinality"],
+        "additionalProperties": false,
+        "properties": {
+          "meaning": { "type": "string" },
+          "cardinality": { "$ref": "#/$defs/cardinality" },
+          "fieldType": { "type": "string" },
+          "accepts": { "$ref": "#/$defs/codes" }
+        }
+      }
+    },
+    "families": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[A-Z]{3}$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["layer", "transparent"],
+        "additionalProperties": false,
+        "properties": {
+          "layer": { "$ref": "#/$defs/layer" },
+          "transparent": { "type": "boolean" },
+          "slots": { "type": "array", "items": { "$ref": "#/$defs/slot" } }
+        }
+      }
+    },
+    "layerExceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["parent", "child", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "parent": { "$ref": "#/$defs/code" },
+          "child": { "$ref": "#/$defs/code" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "layer": { "enum": ["token", "part", "field", "composite", "section", "template"] },
+    "context": { "enum": ["cell", "record", "card", "metric", "form"] },
+    "cardinality": { "enum": ["one", "many"] },
+    "code": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "codes": { "type": "array", "items": { "$ref": "#/$defs/code" }, "uniqueItems": true },
+    "slot": {
+      "type": "object",
+      "required": ["key", "order", "cardinality", "required"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string", "description": "A slotKeys key: what data-fh-slot says." },
+        "element": { "description": "The BEM element name(s) that fill the slot, when they differ from the key.", "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" }, "minItems": 2 }] },
+        "order": { "type": "integer", "minimum": 1 },
+        "cardinality": { "$ref": "#/$defs/cardinality" },
+        "required": { "type": "boolean" },
+        "fieldType": { "type": "string", "description": "The field type the slot binds (a semantic type key)." },
+        "context": { "$ref": "#/$defs/context" },
+        "accepts": { "$ref": "#/$defs/codes" },
+        "default": { "$ref": "#/$defs/code" }
+      },
+      "dependentRequired": { "fieldType": ["context"] }
+    }
+  }
+}
