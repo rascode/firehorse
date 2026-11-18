@@ -4,6 +4,9 @@
 //   dist/full/index.json: every family and variant, each with its release status and tier (release.json)
 //   dist/index.json: the public registry, public families and variants only (shipped in the package, read by the MCP server)
 //   agent/index.md: the lookup table agents read when a person names an ID (public set)
+// Each family carries its layer, transparent flag and slots (schema/composition.json) and the compositions its
+// specimens hold (data-fh on every component root, data-fh-slot on every filler); rules M1 to M7
+// (scripts/composition.mjs) fail the build.
 // Validation and the ledger always read every family, held or not.
 // Run: node scripts/gen-index.mjs [--check|--dist]   (--check only validates, both sets; --dist writes the two
 //      index.json files only, no ledger and no agent/index.md: the first step of npm run build)
@@ -15,6 +18,7 @@ import { allMain, pageOf } from "./pages.mjs";
 import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
 import { isPublic, shownStatus, tierOf, releaseIds } from "./release.mjs";
 import { hasSpecimen, specimenPath } from "./specimen.mjs";
+import { readComposition, rootClasses, compose, lintFireKit } from "./composition.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
@@ -60,6 +64,7 @@ const ID_RE = /^([A-Z]{3})(?:-(\d+)(?:\.(\d+))?)?$/;
 const byNum = (a, b) => { const x = a.split(/[-.]/).slice(1).map(Number), y = b.split(/[-.]/).slice(1).map(Number); return (x[0] ?? 0) - (y[0] ?? 0) || (x[1] ?? 0) - (y[1] ?? 0); };
 const errors = [];
 const families = new Map();
+const familyStage = new Map(); // each family's own stage markup, before the first variant's replaces it
 const all = doc.querySelectorAll("[data-fh-id]");
 const seen = new Set();
 for (const el of all) {
@@ -156,7 +161,7 @@ for (const f of families.values()) {
   const first = entries.find((e) => isPublic(e.id)) ?? (isPublic(f.id) && f.markup ? null : entries[0]);
   // stageClasses: every fh- class the family's whole docs stage uses, kept so the public CSS build (builds.mjs)
   // still counts parts of a demo that are no variant of their own (a spinner beside the meters).
-  if (f.markup) f.stageClasses = classesOf(f.markup);
+  if (f.markup) { f.stageClasses = classesOf(f.markup); familyStage.set(f.id, f.markup); }
   if (first) f.markup = first.markup;
   else if (f.markup) { f.markup = clean(unwrapSite(f.markup)); f.classes = classesOf(f.markup); }
   delete f.el; delete f.groupNames; delete f.groupEls;
@@ -171,6 +176,22 @@ const live = new Map(list.flatMap((f) => [[f.id, f.name], ...f.groups.map((g) =>
 for (const id of Object.keys(ledger.issued)) if (!live.has(id) && !ledger.retired[id]) errors.push(`${id} (${ledger.issued[id]}) was issued but is gone: restore it or list it under "retired" in index-ledger.json`);
 for (const id of live.keys()) if (ledger.retired[id]) errors.push(`${id} is retired and can't be reused`);
 for (const [old, to] of Object.entries(ledger.moved)) { if (!ledger.retired[old]) errors.push(`moved ${old} → ${to}, but ${old} isn't retired`); if (!live.has(to)) errors.push(`moved ${old} → ${to}, but ${to} isn't live`); }
+// Composition: layer, slots and what each specimen holds. A lint failure (M1 to M7) is an error like any other.
+const comp = readComposition(root, errors);
+const idSet = new Set(live.keys());
+const specimens = list.flatMap((f) => [{ id: f.id, html: familyStage.get(f.id) ?? "" }, ...f.groups.filter((g) => g.markupFrom === "group").map((g) => ({ id: g.id, html: g.markup })), ...f.variants.map((v) => ({ id: v.id, html: v.markup }))]).filter((m) => m.html);
+const lint = [];
+const edges = new Map();
+for (const e of compose({ markups: specimens, comp, ids: idSet, roots: rootClasses(root, owners, specimens.map((m) => m.html)), errors: lint })) edges.set(`${e.parent}|${e.child}|${e.slot}|${e.order}`, e);
+const fireKit = lintFireKit(join(root, "fire-kit/Sources/FireKit"), idSet, lint);
+const lintErrors = [...new Set(lint)];
+if (lintErrors.length) errors.push(`composition lint: ${lintErrors.length} failure(s)`, ...lintErrors.slice(0, 60), ...(lintErrors.length > 60 ? [`… and ${lintErrors.length - 60} more`] : []));
+const byEdge = (a, b) => a.parent.localeCompare(b.parent) || a.slot.localeCompare(b.slot) || a.order - b.order || a.child.localeCompare(b.child);
+for (const f of list) {
+  const c = comp.families[f.id];
+  if (!c) { errors.push(`composition: ${f.id} has no entry in schema/composition.json`); continue; }
+  Object.assign(f, { layer: c.layer, transparent: c.transparent, slots: c.slots ?? [], compositions: [...edges.values()].filter((e) => e.parent.split("-")[0] === f.id).sort(byEdge) });
+}
 if (errors.length) { console.error("✗ index:\n  " + errors.join("\n  ")); process.exit(1); }
 const nV = list.reduce((n, f) => n + f.variants.length, 0);
 const nG = list.reduce((n, f) => n + f.groups.length, 0);
@@ -185,7 +206,8 @@ const publicList = list.filter((f) => isPublic(f.id)).map((f) => {
   const kept = new Set(variants.map((v) => v.id));
   const groups = f.groups.filter((g) => isPublic(g.id) && (!g.variants.length || g.variants.some((id) => kept.has(id)))).map((g) => ({ ...g, variants: g.variants.filter((id) => kept.has(id)) }));
   const { status, ...rest } = f;
-  return { ...rest, groups, variants };
+  const compositions = f.compositions.filter((e) => isPublic(e.parent) && isPublic(e.child));
+  return { ...rest, groups, variants, compositions };
 });
 const pV = publicList.reduce((n, f) => n + f.variants.length, 0);
 const pG = publicList.reduce((n, f) => n + f.groups.length, 0);
@@ -197,6 +219,7 @@ if (check) {
   for (const id of list.flatMap((f) => f.groups.filter((g) => g.markupFrom === "none").map((g) => g.id))) console.warn(`warning: ${id} has no markup`);
   console.log(`✓ index: ${list.length} families, ${nG} groups, ${nV} variants, IDs unique and in order`);
   console.log(`✓ index (public): ${publicList.length} families, ${pG} groups, ${pV} variants`);
+  console.log(`✓ composition: ${list.filter((f) => f.slots.length).length} families with slots, ${edges.size} compositions, M1 to M6 clean${fireKit ? `, M7: ${fireKit.annotated} of ${fireKit.views} FireKit views annotated` : "; M7: no FireKit sources in this checkout"}`);
   process.exit(0);
 }
 
@@ -249,14 +272,15 @@ let md = `# Firehorse Index
 
 ## Families
 
-| ID | Name | Section | Groups | Demo |
-|---|---|---|---|---|
-${publicList.map((f) => `| \`${f.id}\` | ${esc(f.name)} | ${esc(f.section)} | ${f.groups.length ? f.groups.map((g) => `${g.id.slice(4)} ${esc(g.name)}${g.variants.length ? ` (${g.variants.length})` : ""}`).join(" · ") : "—"} | [open](${f.url}) |`).join("\n")}
+| ID | Name | Layer | Section | Groups | Demo |
+|---|---|---|---|---|---|
+${publicList.map((f) => `| \`${f.id}\` | ${esc(f.name)} | ${f.layer} | ${esc(f.section)} | ${f.groups.length ? f.groups.map((g) => `${g.id.slice(4)} ${esc(g.name)}${g.variants.length ? ` (${g.variants.length})` : ""}`).join(" · ") : "—"} | [open](${f.url}) |`).join("\n")}
 
 `;
 for (const f of publicList) {
   md += `## ${f.id} · ${f.name}\n\n`;
   if (f.summary) md += `${f.summary}\n\n`;
+  md += `Layer: ${f.layer}${f.transparent ? " (transparent)" : ""}.${f.slots.length ? ` Slots: ${f.slots.map((s) => `\`${s.key}\``).join(" ")}.` : ""}\n\n`;
   md += `Classes: ${f.classes.map((c) => `\`${c}\``).join(" ")}\n\n`;
   if (!f.groups.length) { md += `Markup: see [components.md](components.md) or copy from ${f.url}.\n\n`; continue; }
   for (const g of f.groups) {

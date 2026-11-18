@@ -946,7 +946,52 @@
     },
     "CRD": {
       "layer": "composite",
-      "transparent": false
+      "transparent": false,
+      "slots": [
+        {
+          "key": "meta",
+          "order": 1,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "short_text",
+          "context": "card"
+        },
+        {
+          "key": "title",
+          "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "card"
+        },
+        {
+          "key": "body",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "card"
+        },
+        {
+          "key": "value",
+          "element": "price",
+          "order": 4,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "link",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "url",
+          "context": "card",
+          "accepts": [
+            "ACT"
+          ],
+          "default": "ACT"
+        }
+      ]
     },
     "CRT": {
       "layer": "composite",
@@ -1541,14 +1586,15 @@
         {
           "key": "body",
           "order": 1,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "fieldType": "long_text",
           "context": "card",
           "accepts": [
+            "CRD",
             "PNL"
           ],
-          "default": "PNL"
+          "default": "CRD"
         }
       ]
     },

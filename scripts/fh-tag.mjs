@@ -73,7 +73,10 @@ export function ownersOf(doc) {
     const name = (n.getAttribute("data-fh-name") || n.querySelector(":scope > .site-demo__head h3")?.text || "").trim().toLowerCase();
     if (/^[a-z-]+$/.test(name)) owners[`fh-${name.replace(/s$/, "")}`] ??= fam;
   }
-  for (const [c, fams] of Object.entries(named)) if (fams.size === 1) owners[c] ??= [...fams][0];
+  // A word in a name claims only a class the docs use: "Landing metric row" does not own fh-row, which no
+  // Firehorse demo or stylesheet has (it is the Helm iOS canvas's row).
+  const used = new Set(doc.querySelectorAll("[class]").flatMap((n) => (n.getAttribute("class") || "").split(/\s+/)));
+  for (const [c, fams] of Object.entries(named)) if (fams.size === 1 && used.has(c)) owners[c] ??= [...fams][0];
   for (const [c, by] of Object.entries(uses)) {
     if (owners[c]) continue;
     const share = ([f, n]) => n / sizes[f] + (built.has(f) ? 0.001 : 0); // ties go to the family with variants

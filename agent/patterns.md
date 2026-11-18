@@ -34,9 +34,9 @@ Anatomy, top to bottom:
   <main class="fh-main">
     <section class="fh-section">
       <div class="fh-grid" data-cols="3" style="--fh-grid-min: 6rem">
-        <div class="fh-card fh-card--solid">Example</div>
-        <div class="fh-card fh-card--solid">Example</div>
-        <div class="fh-card fh-card--solid">Example</div>
+        <div class="fh-card fh-card--solid" data-fh-slot="body" data-fh="CRD">Example</div>
+        <div class="fh-card fh-card--solid" data-fh-slot="body" data-fh="CRD">Example</div>
+        <div class="fh-card fh-card--solid" data-fh-slot="body" data-fh="CRD">Example</div>
       </div>
       <aside data-fh-panel-start>
         <p class="fh-label">Closing note</p>
@@ -44,12 +44,12 @@ Anatomy, top to bottom:
       </aside>
     </section>
     <section class="fh-section fh-section--ruled">
-      <header class="fh-section-head fh-panel-inset">
+      <header class="fh-section-head fh-panel-inset" data-fh="PNL" data-fh-slot="body">
         <div><p data-tone="violet"><b>02</b> Next chapter</p><h3 class="fh-subheading">Stepped onto the panel</h3></div>
       </header>
       <div class="fh-grid" data-cols="2" style="--fh-grid-min: 8rem">
-        <div class="fh-card">Wide content runs across both tones</div>
-        <div class="fh-card">and keeps its own width</div>
+        <div class="fh-card" data-fh-slot="body" data-fh="CRD">Wide content runs across both tones</div>
+        <div class="fh-card" data-fh-slot="body" data-fh="CRD">and keeps its own width</div>
       </div>
     </section>
   </main>
@@ -85,15 +85,15 @@ Anatomy, top to bottom:
 ```html
 <section class="fh-section fh-section--flush" aria-labelledby="cinch-demo-heading">
   <div class="fh-etched-split fh-etched-split--roomy fh-bleed">
-    <div class="fh-etched-split__pane fh-crosses">
+    <div class="fh-etched-split__pane fh-crosses" data-fh="CTB" data-fh-slot="body">
       <div class="fh-stack">
-        <p class="fh-eyebrow-pill" data-tone="rose"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>Why it matters</span></p>
+        <p class="fh-eyebrow-pill" data-tone="rose" data-fh="EYE-1.1" data-fh-slot="eyebrow"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>Why it matters</span></p>
         <h2 id="cinch-demo-heading" class="fh-heading">A design system that ships the layouts, not only the parts.</h2>
       </div>
     </div>
-    <div class="fh-etched-split__pane fh-crosses">
+    <div class="fh-etched-split__pane fh-crosses" data-fh="CTB" data-fh-slot="body">
       <div class="fh-stack">
-        <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The design pattern</span></p>
+        <p class="fh-eyebrow-pill" data-tone="orange" data-fh="EYE-1.1" data-fh-slot="eyebrow"><span class="fh-dot fh-dot--live" aria-hidden="true"></span><span>The design pattern</span></p>
         <p class="fh-lede">Every design pattern has an ID, a live demo and the rules that keep its fit, so a person or an agent can cut it again in any theme.</p>
         <p class="fh-body fh-muted">Design patterns at launch: <strong>2</strong>, plus 3 building blocks.</p>
       </div>
@@ -121,7 +121,7 @@ A tinted column that begins where you mark it and runs to the bottom of the page
       </aside>
     </section>
     <section class="fh-section fh-section--ruled">
-      <header class="fh-section-head fh-panel-inset">
+      <header class="fh-section-head fh-panel-inset" data-fh="PNL" data-fh-slot="body">
         <div><h3 class="fh-subheading">Next section</h3><p class="fh-small fh-muted">On the panel, stepped off its edge.</p></div>
       </header>
     </section>
@@ -141,18 +141,18 @@ A tinted column that begins where you mark it and runs to the bottom of the page
 A full-bleed pair that breaks out of the content column while its copy still lines up with the content edge on both sides. Stacks when the page is narrow. `--roomy` gives each pane the full section rhythm. Cinch is built on it.
 
 ```html
-<div class="fh-etched-split fh-bleed">
-  <div class="fh-etched-split__pane fh-crosses">
+<div class="fh-etched-split fh-bleed" data-fh="CIN">
+  <div class="fh-etched-split__pane fh-crosses" data-fh="CTB" data-fh-slot="body">
     <div class="fh-stack fh-stack--lg">
-      <p class="fh-eyebrow-pill" data-tone="rose"><span class="fh-dot fh-dot--live"></span>Why it matters</p>
+      <p class="fh-eyebrow-pill" data-tone="rose" data-fh="EYE-1.1" data-fh-slot="eyebrow"><span class="fh-dot fh-dot--live"></span>Why it matters</p>
       <h3 class="fh-heading">Most systems fail at the seams, not the center</h3>
       <p class="fh-lede">Each tool works on its own. The cost shows up where data crosses from one to the next: re-keyed orders, stale reports, follow-ups nobody owns.</p>
     </div>
   </div>
-  <div class="fh-etched-split__pane fh-crosses">
+  <div class="fh-etched-split__pane fh-crosses" data-fh="CTB" data-fh-slot="body">
     <div class="fh-stack fh-stack--lg">
-      <p class="fh-eyebrow-pill" data-tone="orange"><span class="fh-dot fh-dot--live"></span>The approach</p>
-      <ul class="fh-checklist" data-tone="orange">
+      <p class="fh-eyebrow-pill" data-tone="orange" data-fh="EYE-1.1" data-fh-slot="eyebrow"><span class="fh-dot fh-dot--live"></span>The approach</p>
+      <ul class="fh-checklist" data-tone="orange" data-fh="CKL" data-fh-slot="body">
         <li>Map every hand-off between systems</li>
         <li>Fix the model before adding automation</li>
         <li>Instrument it so problems surface first</li>
@@ -169,25 +169,25 @@ The closing ask. A display-size title and the actions on the left; the proof on 
 ```html
 <div class="fh-cta-band fh-crosses" data-tone="accent">
   <div class="fh-cta-band__main">
-    <p class="fh-eyebrow-pill" data-tone="live"><span class="fh-dot fh-dot--live" aria-hidden="true"></span>Booking November</p>
-    <h2 class="fh-cta-band__title">Ready when <em>the path is clear.</em></h2>
+    <p class="fh-eyebrow-pill" data-tone="live" data-fh="EYE-1.1" data-fh-slot="eyebrow"><span class="fh-dot fh-dot--live" aria-hidden="true"></span>Booking November</p>
+    <h2 class="fh-cta-band__title" data-fh-slot="title">Ready when <em>the path is clear.</em></h2>
     <p class="fh-lede">Two weeks from kickoff to a site your team can run. Fixed price, no retainer, and everything we build is yours.</p>
     <div class="fh-hero__actions">
-      <a class="fh-button" href="#cta-band">Book a call</a>
-      <a class="fh-button fh-button--secondary" href="#cta-band">See pricing</a>
+      <a class="fh-button" href="#cta-band" data-fh="BTN" data-fh-slot="actions">Book a call</a>
+      <a class="fh-button fh-button--secondary" href="#cta-band" data-fh="BTN-1.5" data-fh-slot="actions">See pricing</a>
     </div>
   </div>
   <aside class="fh-cta-band__aside" aria-label="What to expect">
-    <ul class="fh-cubes">
-      <li><b class="fh-cube fh-cube--lg">$1,250</b> fixed</li>
-      <li><b class="fh-cube fh-cube--lg">14</b> days</li>
-      <li><b class="fh-cube fh-cube--lg">4</b> deliverables</li>
+    <ul class="fh-cubes" data-fh="CUB-1" data-fh-slot="media">
+      <li><b class="fh-cube fh-cube--lg" data-fh="CUB">$1,250</b> fixed</li>
+      <li><b class="fh-cube fh-cube--lg" data-fh="CUB">14</b> days</li>
+      <li><b class="fh-cube fh-cube--lg" data-fh="CUB">4</b> deliverables</li>
     </ul>
     <div class="fh-cta-band__people">
-      <div class="fh-avatars" role="group" aria-label="Your team"><span class="fh-avatar" data-face><img src="img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar" data-face><img src="img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar" data-face><img src="img/avatars/maya.webp" alt="Maya"></span></div>
+      <div class="fh-avatars" role="group" aria-label="Your team" data-fh="AVT" data-fh-slot="who"><span class="fh-avatar" data-face data-fh="AVT"><img src="img/avatars/ava.webp" alt="Ava"></span><span class="fh-avatar" data-face data-fh="AVT"><img src="img/avatars/cole.webp" alt="Cole"></span><span class="fh-avatar" data-face data-fh="AVT"><img src="img/avatars/maya.webp" alt="Maya"></span></div>
       <span>Talk to <b>Ava, Cole or Maya</b>. Replies within a day.</span>
     </div>
-    <p class="fh-cta-band__fine">30-minute call · No prep needed</p>
+    <p class="fh-cta-band__fine" data-fh-slot="note">30-minute call · No prep needed</p>
   </aside>
 </div>
 ```
