@@ -1,4 +1,4 @@
-/** Firehorse 1.1.0 — CSS custom property names. Generated. */
+/** Firehorse 1.1.1 — CSS custom property names. Generated. */
 export type FirehorseToken =
   | "--fh-gray-1000"
   | "--fh-gray-950"
