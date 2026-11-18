@@ -346,6 +346,7 @@ t("the text context: one plain string per value, none for a secret (decision 8)"
     [{ semanticType: "crypto_amount" }, { amount: 0.12345678, currency: "ETH" }, "0.12345678 ETH"],
     [{ semanticType: "gas_price" }, 31.5, "31.50 gwei"],
     [{ semanticType: "percentage" }, 42.5, "42.5%"],
+    [{ semanticType: "percentage" }, [{ label: "Firehorse", value: 62 }, { label: "candidate", value: 23 }, { label: "raw", value: 15 }], "Firehorse 62% · candidate 23% · raw 15%"],
     [{ semanticType: "duration_minutes" }, 514, "PT8H34M"],
     [{ semanticType: "duration_seconds" }, 90, "PT1M30S"],
     [{ semanticType: "duration_iso8601" }, 30840, "PT8H34M"],

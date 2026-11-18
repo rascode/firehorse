@@ -380,6 +380,67 @@
     text-align: end;
   }
 
+  /* —— VAL-5.6 Split bar: one whole in named parts (board coverage: Firehorse, candidate, raw) ——
+   * fh-value__split is the bar: one i per part, its share (0 to 100) in --fh-value and its colour in
+   * data-tone. The bar is aria-hidden; fh-value__legend under it says the same in words, so it is the
+   * accessible text. The text form is "Firehorse 62% · candidate 23% · raw 15%" (textOf on [{ label, value }]).
+   * Knob: --fh-value-split-size (the bar's height). */
+  .fh-value--split {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--fh-gap-related);
+    inline-size: 100%;
+    min-inline-size: var(--fh-value-track-min, var(--fh-track-min));
+  }
+
+  .fh-value__split {
+    display: flex;
+    gap: var(--fh-border-thin);
+    block-size: var(--fh-value-split-size, calc(var(--fh-gap-bound) * 1.5));
+    overflow: hidden;
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+
+    & > i {
+      flex: 0 1 calc(var(--fh-value, 0) * 1%);
+      background-color: var(--fh-tone);
+    }
+  }
+
+  .fh-value__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-type-meta);
+
+    & > * {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-bound);
+    }
+
+    & .fh-dot { --fh-dot-size: 0.45em; }
+
+    & b {
+      color: var(--fh-color-text);
+      font-family: var(--fh-type-figure-family, var(--fh-font-mono));
+      font-variant-numeric: tabular-nums;
+      font-weight: var(--fh-type-value-weight);
+      letter-spacing: var(--fh-type-figure-tracking);
+    }
+  }
+
+  .fh-value--split.fh-value--lg {
+    --fh-value-split-size: calc(var(--fh-gap-bound) * 2.5);
+
+    & .fh-value__legend { font-size: var(--fh-type-value); }
+  }
+
 
   /* —— VAL-6 Number: a series as a sparkline (the metric tile's) —— */
   .fh-value > .fh-sparkline {

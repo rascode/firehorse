@@ -127,7 +127,7 @@ Read `warnings`: an unknown semantic type, money without a currency, a refused o
 | VAL-2 Options | options | `chips` CHP · `chips-inline` CHP · `count` · `tag-field` (edit) TAG |
 | VAL-3 Entity | entity | `name` · `name-key` DET · `avatar-name` AVT · `avatar-name-description` AVT, ENT · `full` AVT, ENT · `chip` CHP, AVT · `stack` AVT · `ref` REF · `ref-key` REF · `picker` (edit) ENT · `picker-multi` (edit) ENT · `avatar-ref` AVT, REF · `cube` CUB |
 | VAL-4 Money | money | `amount` · `amount-code` · `compact` · `delta` · `compact-delta` · `money-input` (edit) FLD · `cube` CUB |
-| VAL-5 Ratio | ratio | `text` · `bar` MET · `ring` FBK · `meter` MET, GAU · `range` (edit) UPL |
+| VAL-5 Ratio | ratio | `text` · `bar` MET · `ring` FBK · `meter` MET, GAU · `range` (edit) UPL · `split` |
 | VAL-6 Number | number | `plain` · `unit` · `delta` · `plain-delta` · `sparkline` MET · `number-input` (edit) FLD · `duration` · `duration-input` (edit) FLD · `cube` CUB |
 | VAL-6 Number | series | `sparkline` MET · `sparkline-last` MET |
 | VAL-7 Temporal | temporal | `date` · `date-relative` · `relative` · `datetime` · `range` · `overdue` · `time` · `duration` · `date-picker` (edit) FLD · `time-input` (edit) FLD · `duration-input` (edit) FLD |
@@ -682,6 +682,16 @@ Every part below shows read, edit and `--lg`, in that order (generated from the 
   <span class="fh-value fh-value--range" data-mode="read" data-tone="sky" data-fh="VAL-5.5"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" disabled data-fh="UPL"><output>69%</output></span>
   <span class="fh-value fh-value--range" data-mode="edit" data-tone="sky" data-fh="VAL-5.5"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" oninput="this.nextElementSibling.value = this.value + '%'" data-fh="UPL"><output>69%</output></span>
   <span class="fh-value fh-value--range fh-value--lg" data-mode="edit" data-tone="sky" data-fh="VAL-5.5"><input class="fh-range" type="range" min="0" max="100" value="69" aria-label="Progress" oninput="this.nextElementSibling.value = this.value + '%'" data-fh="UPL"><output>69%</output></span>
+</div>
+```
+
+`VAL-5.6` Split bar · `ratio` `split`
+
+```html
+<div class="fh-stack">
+  <span class="fh-value fh-value--split" data-fh="VAL-5.6"><span class="fh-value__split" aria-hidden="true"><i data-tone="lime" style="--fh-value: 62"></i><i data-tone="amber" style="--fh-value: 23"></i><i data-tone="neutral" style="--fh-value: 15"></i></span><span class="fh-value__legend"><span data-tone="lime"><span class="fh-dot"></span>Firehorse <b>62%</b></span><span data-tone="amber"><span class="fh-dot"></span>candidate <b>23%</b></span><span data-tone="neutral"><span class="fh-dot"></span>raw <b>15%</b></span></span></span>
+  <span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.6">Firehorse 62% · candidate 23% · raw 15%</span>
+  <span class="fh-value fh-value--split fh-value--lg" data-fh="VAL-5.6"><span class="fh-value__split" aria-hidden="true"><i data-tone="lime" style="--fh-value: 62"></i><i data-tone="amber" style="--fh-value: 23"></i><i data-tone="neutral" style="--fh-value: 15"></i></span><span class="fh-value__legend"><span data-tone="lime"><span class="fh-dot"></span>Firehorse <b>62%</b></span><span data-tone="amber"><span class="fh-dot"></span>candidate <b>23%</b></span><span data-tone="neutral"><span class="fh-dot"></span>raw <b>15%</b></span></span></span>
 </div>
 ```
 

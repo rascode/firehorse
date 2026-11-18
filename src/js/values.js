@@ -427,7 +427,12 @@ export function textOf(field = {}, value, opts = {}) {
       const suffix = code ?? r.unit;
       return suffix ? `${figure} ${suffix}` : figure;
     }
-    case "percent": return `${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2, useGrouping: false }).format(Number(value))}%`;
+    case "percent": {
+      const pct = (n) => `${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2, useGrouping: false }).format(Number(n))}%`;
+      // A split (VAL-5.6): one whole in named parts, [{ label, value }] → "Firehorse 62% · candidate 23% · raw 15%".
+      if (Array.isArray(value)) return value.map((p) => `${p.label} ${pct(p.value)}`).join(" · ");
+      return pct(value);
+    }
     case "last": {
       const values = Array.isArray(value) ? value : Array.isArray(value?.values) ? value.values : [value];
       return values.length ? String(values[values.length - 1]) : "";

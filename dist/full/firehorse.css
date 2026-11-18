@@ -8767,6 +8767,73 @@
     }
   }
 
+  .fh-dt--tree {
+    --_indent: var(--fh-dt-tree-indent, var(--fh-inset-tile));
+
+    & tr[aria-level="2"] {
+      --fh-dt-level: 2;
+    }
+
+    & tr[aria-level="3"] {
+      --fh-dt-level: 3;
+    }
+
+    & tr[aria-level="4"] {
+      --fh-dt-level: 4;
+    }
+
+    & tr[aria-level="5"] {
+      --fh-dt-level: 5;
+    }
+
+    & tr[aria-level="6"] {
+      --fh-dt-level: 6;
+    }
+
+    & tr[aria-level="7"] {
+      --fh-dt-level: 7;
+    }
+
+    & tr[aria-level="8"] {
+      --fh-dt-level: 8;
+    }
+
+    & .fh-dt__table > tbody > tr[role="row"] {
+      &[hidden] {
+        display: none;
+      }
+
+      & > td:first-child {
+        padding-inline-start: calc(var(--_pad) + (var(--fh-dt-level, 1) - 1) * var(--_indent));
+      }
+
+      &:focus-visible {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: -2px;
+      }
+
+      &[aria-expanded="true"] .fh-dt__node > .fh-dt__expand:before {
+        rotate: 0deg;
+      }
+
+      &:not([aria-expanded]) .fh-dt__node {
+        padding-inline-start: calc(var(--_ctl) + var(--fh-gap-bound));
+      }
+    }
+
+    & .fh-dt__node {
+      align-items: center;
+      gap: var(--fh-gap-bound);
+      min-inline-size: 0;
+      max-inline-size: 100%;
+      display: inline-flex;
+
+      & > .fh-dt__expand {
+        flex: none;
+      }
+    }
+  }
+
   .fh-colmenu__button {
     border-radius: var(--fh-radius-sm);
     block-size: 1.5rem;
@@ -21669,6 +21736,66 @@
     letter-spacing: var(--fh-type-figure-tracking);
     text-align: end;
     flex: none;
+  }
+
+  .fh-value--split {
+    align-items: stretch;
+    gap: var(--fh-gap-related);
+    inline-size: 100%;
+    min-inline-size: var(--fh-value-track-min, var(--fh-track-min));
+    flex-direction: column;
+    display: flex;
+  }
+
+  .fh-value__split {
+    gap: var(--fh-border-thin);
+    block-size: var(--fh-value-split-size, calc(var(--fh-gap-bound) * 1.5));
+    border-radius: var(--fh-radius-pill);
+    background-color: color-mix(in oklab, var(--fh-color-text) 10%, transparent);
+    display: flex;
+    overflow: hidden;
+
+    & > i {
+      flex: 0 1 calc(var(--fh-value, 0) * 1%);
+      background-color: var(--fh-tone);
+    }
+  }
+
+  .fh-value__legend {
+    gap: var(--fh-gap-bound) var(--fh-gap-grouped);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-type-meta);
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+
+    & > * {
+      align-items: center;
+      gap: var(--fh-gap-bound);
+      display: inline-flex;
+    }
+
+    & .fh-dot {
+      --fh-dot-size: .45em;
+    }
+
+    & b {
+      color: var(--fh-color-text);
+      font-family: var(--fh-type-figure-family, var(--fh-font-mono));
+      font-variant-numeric: tabular-nums;
+      font-weight: var(--fh-type-value-weight);
+      letter-spacing: var(--fh-type-figure-tracking);
+    }
+  }
+
+  .fh-value--split.fh-value--lg {
+    --fh-value-split-size: calc(var(--fh-gap-bound) * 2.5);
+
+    & .fh-value__legend {
+      font-size: var(--fh-type-value);
+    }
   }
 
   .fh-value > .fh-sparkline {

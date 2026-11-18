@@ -3263,7 +3263,7 @@ Fields and rows in, a database out: search, filters, multi-sort, grouping with t
 
 Layer: composite. Slots: `title` `actions` `count` `value` `chips` `body` `stage` `caption` `link`.
 
-Classes: `fh-dt` `fh-dt--records` `fh-dt__scroll` `fh-dt__table` `fh-value` `fh-value--ref-key` `fh-ref` `fh-ref__label` `fh-ref__key` `fh-value--ref` `fh-value--duration` `fh-value--tabular` `fh-value--dot` `fh-dot` `fh-ref--gone` `fh-ref__note` `fh-sr-only` `fh-dt__expand` `fh-value--plain` `fh-dt__detail` `fh-panel-section__stage` `fh-button` `fh-button--secondary` `fh-panel-section__caption` `fh-chips` `fh-chips--wrap` `fh-chip` `fh-button--accent` `fh-value--date`
+Classes: `fh-dt` `fh-dt--records` `fh-dt__scroll` `fh-dt__table` `fh-value` `fh-value--ref-key` `fh-ref` `fh-ref__label` `fh-ref__key` `fh-value--ref` `fh-value--duration` `fh-value--tabular` `fh-value--dot` `fh-dot` `fh-ref--gone` `fh-ref__note` `fh-sr-only` `fh-dt__expand` `fh-value--plain` `fh-dt__detail` `fh-panel-section__stage` `fh-button` `fh-button--secondary` `fh-panel-section__caption` `fh-chips` `fh-chips--wrap` `fh-chip` `fh-button--accent` `fh-value--date` `fh-dt--tree` `fh-dt__node`
 
 ### DTB-1 · Datatable
 

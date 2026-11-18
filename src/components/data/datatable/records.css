@@ -241,4 +241,53 @@
       }
     }
   }
+
+  /* —— Tree table (DTB-2.5) ——
+   * A records table whose rows nest at any depth: Made of, Used by, a node
+   * tree. role="treegrid" on the table; the rows sit flat in one tbody, each
+   * with aria-level, and a row with children carries aria-expanded. The rows
+   * under a closed row carry hidden. The first cell holds fh-dt__node: the
+   * toggle (tabindex="-1", aria-hidden; the row is what takes the focus),
+   * then the reference. Each level indents the first cell by
+   * --fh-dt-tree-indent (tile inset); a leaf keeps the toggle's room, so names
+   * line up. records.js adds the keys and the clicks; without it the markup
+   * still shows the state the server wrote.
+   *   <table class="fh-dt__table" role="treegrid" aria-label="Made of">
+   *     <tbody>
+   *       <tr role="row" aria-level="1" aria-expanded="true" tabindex="0">
+   *         <td role="gridcell"><span class="fh-dt__node"><button class="fh-dt__expand" type="button" tabindex="-1" aria-hidden="true"></button>…reference…</span></td>…
+   *       <tr role="row" aria-level="2" tabindex="-1">… */
+  .fh-dt--tree {
+    --_indent: var(--fh-dt-tree-indent, var(--fh-inset-tile));
+
+    & tr[aria-level="2"] { --fh-dt-level: 2; }
+    & tr[aria-level="3"] { --fh-dt-level: 3; }
+    & tr[aria-level="4"] { --fh-dt-level: 4; }
+    & tr[aria-level="5"] { --fh-dt-level: 5; }
+    & tr[aria-level="6"] { --fh-dt-level: 6; }
+    & tr[aria-level="7"] { --fh-dt-level: 7; }
+    & tr[aria-level="8"] { --fh-dt-level: 8; }
+
+    & .fh-dt__table > tbody > tr[role="row"] {
+      &[hidden] { display: none; }
+
+      & > td:first-child {
+        padding-inline-start: calc(var(--_pad) + (var(--fh-dt-level, 1) - 1) * var(--_indent));
+      }
+
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+      &[aria-expanded="true"] .fh-dt__node > .fh-dt__expand::before { rotate: 0deg; }
+      &:not([aria-expanded]) .fh-dt__node { padding-inline-start: calc(var(--_ctl) + var(--fh-gap-bound)); }
+    }
+
+    & .fh-dt__node {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--fh-gap-bound);
+      min-inline-size: 0;
+      max-inline-size: 100%;
+
+      & > .fh-dt__expand { flex: none; }
+    }
+  }
 }
