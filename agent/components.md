@@ -1,6 +1,6 @@
 # Firehorse — component markup
 
-> Canonical markup for every Firehorse component, v1.1.1. Generated from the
+> Canonical markup for every Firehorse component, v1.1.2. Generated from the
 > live demos on https://firehorse.rascode.dev — copy these exactly, then change
 > the copy. Rules live in [system.md](system.md).
 
