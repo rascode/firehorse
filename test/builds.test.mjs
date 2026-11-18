@@ -53,7 +53,9 @@ for (const [min, full] of [["dist/firehorse.min.css", "dist/full/firehorse.min.c
 // The tarball: the staged public package, listed by npm pack --dry-run.
 const dir = join(root, "site/dist/.builds-test-stage");
 const pkg = stage(dir);
-const [{ files }] = JSON.parse(execFileSync("npm", ["pack", "--dry-run", "--json"], { cwd: dir, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }));
+const packed = JSON.parse(execFileSync("npm", ["pack", "--dry-run", "--json"], { cwd: dir, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }));
+// npm 11 prints an array of results, later npm one object keyed by package name.
+const { files } = Array.isArray(packed) ? packed[0] : Object.values(packed)[0];
 const listed = files.map((f) => f.path);
 for (const f of listed) {
   expect(!f.startsWith("dist/full/"), `tarball has ${f}`);

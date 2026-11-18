@@ -34,9 +34,11 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const dir = join(out, ".stage");
   mkdirSync(out, { recursive: true });
   const pkg = stage(dir);
-  const [{ filename, integrity, size, entryCount }] = JSON.parse(
+  const packed = JSON.parse(
     execFileSync("npm", ["pack", "--json", "--pack-destination", out], { cwd: dir, encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] }),
   );
+  // npm 11 prints an array of results, later npm one object keyed by package name.
+  const { filename, integrity, size, entryCount } = Array.isArray(packed) ? packed[0] : Object.values(packed)[0];
   rmSync(dir, { recursive: true, force: true });
   const versioned = `firehorse-${pkg.version}.tgz`;
   renameSync(join(out, filename), join(out, versioned));
