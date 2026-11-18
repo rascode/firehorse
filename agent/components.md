@@ -1280,6 +1280,14 @@ Chips filter or jump; the selected one fills with its tone. Icons replace the do
 
 <!-- CHP-3.4 · Chip cards › Scope-of-work.pdf -->
 <a class="fh-chip-card" data-tone="rose" href="#c-chip-cards" data-fh="CHP-3.4"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a>
+
+<!-- CHP-3.5 · Chip cards › Cards list -->
+<nav class="fh-chip-cards" aria-label="Goals" style="max-inline-size: 26rem" data-fh="CHP-3.5">
+  <a class="fh-chip-card" data-tone="lime" href="#c-chip-cards" aria-current="true" data-fh="CHP-3.1"><span class="fh-chip-card__block">HE</span><span class="fh-chip-card__text"><b>Health</b><small>3 goals</small></span></a>
+  <a class="fh-chip-card" data-tone="sky" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">WO</span><span class="fh-chip-card__text"><b>Work</b><small>5 goals</small></span></a>
+  <a class="fh-chip-card" data-tone="amber" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">MO</span><span class="fh-chip-card__text"><b>Money</b><small>2 goals</small></span></a>
+  <a class="fh-chip-card" data-tone="violet" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">HO</span><span class="fh-chip-card__text"><b>Home</b><small>4 goals</small></span></a>
+</nav>
 ```
 
 ### CUB · Cubes
@@ -1567,17 +1575,44 @@ Multi-panel slider modelled on X media posts: swipe or scroll, panels snap, and 
 Rows with a visual, text and a trailing slot. A dashed timeline for activity.
 
 ```html
-<div class="fh-stack fh-stack--xl">
-  <ul class="fh-list" role="list" data-fh="LST">
-    <li><span class="fh-avatar" data-status="online" data-fh="AVT" data-fh-slot="media"><img src="img/avatars/eleanor.webp" alt></span><div><p class="fh-list__title"><a class="fh-list__link" href="#c-list" data-fh-slot="link">Eleanor</a></p><p class="fh-list__meta" data-fh-slot="meta">Legal intake · 14 leads today</p></div><span class="fh-badge" data-tone="lime" data-fh="CLS-1">Live</span></li>
-    <li><span class="fh-avatar" data-status="away" data-fh="AVT" data-fh-slot="media"><img src="img/avatars/sam.webp" alt></span><div><p class="fh-list__title"><a class="fh-list__link" href="#c-list" data-fh-slot="link">Sam</a></p><p class="fh-list__meta" data-fh-slot="meta">Medical front desk · paused</p></div><span class="fh-badge" data-tone="amber" data-fh="CLS-1">Away</span></li>
-    <li><span class="fh-avatar fh-avatar--generated" data-tone="violet" data-fh="AVT" data-fh-slot="media">RT</span><div><p class="fh-list__title"><a class="fh-list__link" href="#c-list" data-fh-slot="link">Ruth</a></p><p class="fh-list__meta" data-fh-slot="meta">Property management · setup</p></div><span class="fh-badge" data-fh="CLS-1">Draft</span></li>
-  </ul>
-  <ol class="fh-timeline" data-fh="TML">
-    <li data-tone="lime"><time>Today · 9:41</time><p><strong>Wes</strong> booked an estimate for 14 Oak Lane.</p></li>
-    <li data-tone="sky"><time>Today · 9:12</time><p><strong>Wes</strong> replied to a new inquiry in 4 seconds.</p></li>
-    <li data-tone="amber"><time>Yesterday</time><p>Quote follow-up sequence started for 6 open quotes.</p></li>
-  </ol>
+<!-- LST-1.1 · List row › Row -->
+<div class="fh-row" data-tone="orange" data-fh="LST-1.1">
+  <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i></span>
+  <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Push-ups</p><p class="fh-row__sub" data-fh-slot="sub">50 of 100 reps</p></div>
+  <div class="fh-row__end"><button class="fh-button fh-button--secondary fh-button--sm" type="button" data-fh="BTN-1.5" data-fh-slot="end"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i>25</button></div>
+</div>
+
+<!-- LST-1.2 · List row › Done -->
+<div class="fh-row fh-row--done" data-tone="lime" data-fh="LST-1.2">
+  <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--droplet" aria-hidden="true"></i></span>
+  <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Water</p><p class="fh-row__sub" data-fh-slot="sub">8 of 8 glasses</p></div>
+  <div class="fh-row__end"><span class="fh-chip" data-tone="lime" data-fh="CHP" data-fh-slot="end">done</span></div>
+</div>
+
+<!-- LST-1.3 · List row › End bar -->
+<a class="fh-row" href="#c-list-row" data-tone="sky" data-fh="LST-1.3">
+  <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>
+  <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Ship FirehorseKit</p><p class="fh-row__sub" data-fh-slot="sub">46 days left</p></div>
+  <div class="fh-row__end"><span class="fh-row__bar"><b>58%</b><progress class="fh-progress" value="58" max="100" data-fh="FBK" data-fh-slot="end">58%</progress></span></div>
+</a>
+
+<!-- LST-1.4 · List row › Rows -->
+<div class="fh-rows" data-fh="LST-1.4">
+  <div class="fh-row" data-tone="orange" data-fh="LST-1.1" data-fh-slot="items">
+    <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i></span>
+    <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Push-ups</p><p class="fh-row__sub" data-fh-slot="sub">50 of 100 reps</p></div>
+    <div class="fh-row__end"><button class="fh-button fh-button--secondary fh-button--sm" type="button" data-fh="BTN-1.5" data-fh-slot="end"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i>25</button></div>
+  </div>
+  <div class="fh-row fh-row--done" data-tone="lime" data-fh="LST-1.2" data-fh-slot="items">
+    <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--droplet" aria-hidden="true"></i></span>
+    <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Water</p><p class="fh-row__sub" data-fh-slot="sub">8 of 8 glasses</p></div>
+    <div class="fh-row__end"><span class="fh-chip" data-tone="lime" data-fh="CHP" data-fh-slot="end">done</span></div>
+  </div>
+  <a class="fh-row" href="#c-list-row" data-tone="sky" data-fh="LST-1.3" data-fh-slot="items">
+    <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>
+    <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Ship FirehorseKit</p><p class="fh-row__sub" data-fh-slot="sub">46 days left</p></div>
+    <div class="fh-row__end"><span class="fh-row__bar"><b>58%</b><progress class="fh-progress" value="58" max="100" data-fh="FBK" data-fh-slot="end">58%</progress></span></div>
+  </a>
 </div>
 ```
 
@@ -2561,17 +2596,20 @@ One etched pill of choices, or a toggle between two states. The switch is links 
 Real radios and checkboxes under the styling, so they submit with the form and work with the keyboard. The segmented switch stays a row in a phone-width slot; add `fh-segmented--stack` to stack its options.
 
 ```html
-<div class="fh-stack fh-stack--lg">
-  <fieldset class="fh-segmented" data-fh="CHO">
-    <legend class="fh-sr-only">How should we reach you?</legend>
-    <label><input type="radio" name="reach" value="email" checked> Email</label>
-    <label><input type="radio" name="reach" value="call"> Call</label>
-    <label><input type="radio" name="reach" value="text"> Text</label>
-  </fieldset>
-  <label class="fh-check" data-fh="CHO"><input class="fh-switch" type="checkbox" role="switch" checked data-fh="SEG"> Send me a copy</label>
-  <label class="fh-check" data-fh="CHO"><input type="checkbox"> Keep me posted on new articles</label>
-  <label class="fh-check" data-fh="CHO"><input type="radio" name="plan"> Monthly</label>
-  <label class="fh-check" data-fh="CHO"><input type="radio" name="plan" checked> Annual, two months free</label>
+<!-- CHO-1.1 · Choice row › Several -->
+<div class="fh-choice-row" role="group" aria-label="Days" onclick="const b = event.target.closest('.fh-choice'); if (b) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')" data-fh="CHO-1.1">
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Mon</button>
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Wed</button>
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="false">Fri</button>
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="false">Sun</button>
+</div>
+
+<!-- CHO-1.2 · Choice row › One of many -->
+<div class="fh-choice-row" role="radiogroup" aria-label="Area" onclick="const b = event.target.closest('.fh-choice'); if (b) for (const x of this.querySelectorAll('.fh-choice')) x.setAttribute('aria-checked', x === b)" data-fh="CHO-1.2">
+  <button class="fh-choice" type="button" role="radio" data-tone="lime" aria-checked="true">Health</button>
+  <button class="fh-choice" type="button" role="radio" data-tone="sky" aria-checked="false">Work</button>
+  <button class="fh-choice" type="button" role="radio" data-tone="amber" aria-checked="false">Money</button>
+  <button class="fh-choice" type="button" role="radio" data-tone="violet" aria-checked="false">Home</button>
 </div>
 ```
 

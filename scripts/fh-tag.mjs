@@ -8,9 +8,9 @@ import { parse } from "node-html-parser";
 
 // Layout primitives wrap components; they identify themselves by class and never take the tag
 // on a component's behalf.
-export const LAYOUT = new Set(["fh-stack", "fh-cluster", "fh-grid", "fh-auto-grid", "fh-row", "fh-split", "fh-frame", "fh-container", "fh-section", "fh-center", "fh-cover", "fh-switcher", "fh-sidebar", "fh-page", "fh-full", "fh-bento"]);
+export const LAYOUT = new Set(["fh-stack", "fh-cluster", "fh-grid", "fh-auto-grid", "fh-split", "fh-frame", "fh-container", "fh-section", "fh-center", "fh-cover", "fh-switcher", "fh-sidebar", "fh-page", "fh-full", "fh-bento"]);
 // Type and utility classes: they style text or behaviour inside components and are never a component's root.
-export const TEXT = new Set(["fh-label", "fh-title", "fh-heading", "fh-subheading", "fh-lede", "fh-display", "fh-body", "fh-small", "fh-mono", "fh-muted", "fh-subtle", "fh-tabular", "fh-nowrap", "fh-sr-only", "fh-skip", "fh-text-center", "fh-text-end", "fh-text-start", "fh-tone-text", "fh-hide-narrow", "fh-hide-wide", "fh-reveal", "fh-reveal-children", "fh-index", "fh-prose", "fh-eyebrow", "fh-signature", "fh-parallax", "fh-scroll-progress", "fh-roll", "fh-kbd", "fh-dot", "fh-dl", "fh-close", "fh-section-head"]);
+export const TEXT = new Set(["fh-label", "fh-title", "fh-heading", "fh-subheading", "fh-lede", "fh-display", "fh-body", "fh-small", "fh-meta", "fh-mono", "fh-muted", "fh-subtle", "fh-tabular", "fh-nowrap", "fh-sr-only", "fh-skip", "fh-text-center", "fh-text-end", "fh-text-start", "fh-tone-text", "fh-hide-narrow", "fh-hide-wide", "fh-reveal", "fh-reveal-children", "fh-index", "fh-prose", "fh-eyebrow", "fh-signature", "fh-parallax", "fh-scroll-progress", "fh-roll", "fh-kbd", "fh-dot", "fh-dl", "fh-close", "fh-section-head"]);
 export const NON_ROOT = new Set([...LAYOUT, ...TEXT]);
 export const isBlock = (c) => /^fh-[a-z0-9-]+$/.test(c) && !c.includes("--") && !/^fh-icon/.test(c);
 const isRoot = (c) => !NON_ROOT.has(c);
@@ -37,9 +37,12 @@ export function ownersOf(doc) {
   }
   // A family without variants votes with its demo: the components at the top of its stage
   // (the Fields demo is mostly fh-field, so fh-field is FLD's even though date pickers sit in one).
+  // A family whose variants all sit in group demos of their own (CHO: the choice row) still votes with its
+  // own stage, as a voter of its own ("CHO#stage"), so the stage never dilutes what its variants own.
   for (const n of doc.querySelectorAll("[data-fh-id]")) {
-    const fam = n.getAttribute("data-fh-id");
-    if (fam.includes("-") || sizes[fam]) continue;
+    let fam = n.getAttribute("data-fh-id");
+    if (fam.includes("-")) continue;
+    if (sizes[fam]) fam += "#stage";
     // Layout, foundation and theming demos show other components; they never own them.
     let sec = ""; for (let p = n; p; p = p.parentNode) if (p.rawTagName === "section" && p.getAttribute("data-fh-label")) { sec = p.getAttribute("data-fh-label"); break; }
     if (/^(Layout|Foundations|Theming|Themes)$/.test(sec)) continue;
@@ -76,12 +79,15 @@ export function ownersOf(doc) {
   // A word in a name claims only a class the docs use: "Landing metric row" does not own fh-row, which no
   // Firehorse demo or stylesheet has (it is the Helm iOS canvas's row).
   const used = new Set(doc.querySelectorAll("[class]").flatMap((n) => (n.getAttribute("class") || "").split(/\s+/)));
-  for (const [c, fams] of Object.entries(named)) if (fams.size === 1 && used.has(c)) owners[c] ??= [...fams][0];
+  // Nor one the named family never uses while another family's variants are built on it (C0 G11: fh-row is
+  // the List row's, LST-1, not TMR's for the word "row").
+  const builtOn = (c, fam) => Object.entries(uses[c] ?? {}).some(([f, n]) => f !== fam && built.has(f) && n / sizes[f] >= 0.5);
+  for (const [c, fams] of Object.entries(named)) { const fam = [...fams][0]; if (fams.size === 1 && used.has(c) && (uses[c]?.[fam] || !builtOn(c, fam))) owners[c] ??= fam; }
   for (const [c, by] of Object.entries(uses)) {
     if (owners[c]) continue;
     const share = ([f, n]) => n / sizes[f] + (built.has(f) ? 0.001 : 0); // ties go to the family with variants
     const [fam, n] = Object.entries(by).sort((x, y) => share(y) - share(x))[0];
-    if (n / sizes[fam] >= 0.5) owners[c] = fam;
+    if (n / sizes[fam] >= 0.5) owners[c] = fam.split("#")[0];
   }
   return owners;
 }

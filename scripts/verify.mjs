@@ -28,7 +28,7 @@ const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
 
 const checks = [
   // [foreground, background, minimum]
-  ...["text", "text-muted", "text-subtle"].flatMap((t) => ["canvas", "surface", "surface-raised"].map((bg) => [`--fh-color-${t}`, `--fh-color-${bg}`, 4.5])),
+  ...["text", "text-muted", "text-subtle", "text-light", "note"].flatMap((t) => ["canvas", "surface", "surface-raised"].map((bg) => [`--fh-color-${t}`, `--fh-color-${bg}`, 4.5])),
   ["--fh-color-text", "--fh-color-field", 4.5],
   ["--fh-color-text-placeholder", "--fh-color-field", 4.5],
   ["--fh-color-danger", "--fh-color-canvas", 4.5],

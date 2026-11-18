@@ -25,7 +25,7 @@ const txt = (el) => (el?.textContent ?? "").replace(/\s+/g, " ").trim();
 // data-fh: copied markup carries the Firehorse reference on each component root, so pages built
 // from it can be audited (npx firehorse-audit) and read by agents. Same rule as scripts/fh-tag.mjs.
 // Never a component's root (layout, type, utilities); index.json lists them as nonRoot, this is the fallback.
-let NON_ROOT = new Set(["fh-stack", "fh-cluster", "fh-grid", "fh-auto-grid", "fh-row", "fh-split", "fh-frame", "fh-container", "fh-section", "fh-center", "fh-cover", "fh-switcher", "fh-sidebar", "fh-page", "fh-full", "fh-bento", "fh-label", "fh-title", "fh-heading", "fh-subheading", "fh-lede", "fh-display", "fh-body", "fh-small", "fh-mono", "fh-muted", "fh-subtle", "fh-tabular", "fh-nowrap", "fh-sr-only", "fh-index", "fh-prose", "fh-eyebrow", "fh-roll", "fh-kbd", "fh-dot", "fh-dl", "fh-close", "fh-section-head"]);
+let NON_ROOT = new Set(["fh-stack", "fh-cluster", "fh-grid", "fh-auto-grid", "fh-split", "fh-frame", "fh-container", "fh-section", "fh-center", "fh-cover", "fh-switcher", "fh-sidebar", "fh-page", "fh-full", "fh-bento", "fh-label", "fh-title", "fh-heading", "fh-subheading", "fh-lede", "fh-display", "fh-body", "fh-small", "fh-meta", "fh-mono", "fh-muted", "fh-subtle", "fh-tabular", "fh-nowrap", "fh-sr-only", "fh-index", "fh-prose", "fh-eyebrow", "fh-roll", "fh-kbd", "fh-dot", "fh-dl", "fh-close", "fh-section-head"]);
 let OWNERS = {};
 const blocksOf = (el) => [...(el.classList ?? [])].filter((c) => /^fh-[a-z0-9-]+$/.test(c) && !c.includes("--") && !/^fh-icon/.test(c));
 function tagOne(node, id) {

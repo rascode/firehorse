@@ -86,4 +86,28 @@
     }
   }
 
+  /* —— Chip cards list (CHP-3.5) ——
+   * A strip of chip cards: one line, each card its own width, the strip
+   * scrolls along when it runs out of room (Helm iOS goal and area strips).
+   * Knob: --fh-chip-cards-gap (related, 8px).
+   *   <div class="fh-chip-cards"><a class="fh-chip-card" …>…</a><a class="fh-chip-card" …>…</a></div> */
+  .fh-chip-cards {
+    display: flex;
+    gap: var(--fh-chip-cards-gap, var(--fh-gap-related));
+    min-inline-size: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+
+    & > .fh-chip-card {
+      flex: none;
+    }
+
+    & > .fh-chip-card[aria-current="true"] {
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 12%, transparent);
+    }
+  }
+
 }

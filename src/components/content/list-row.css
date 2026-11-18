@@ -1,0 +1,120 @@
+/*
+ * Firehorse - List row (LST-1)
+ * components/content · layer fh.components · docs /components/content/#LST
+ */
+
+@layer fh.components {
+  /* —— List row ——
+   * The Helm iOS row (FireKit FireRow): a small lead (a cube or an avatar),
+   * a title with a light line under it, and whatever sits at the end (a
+   * button, a choice, a chip, a figure over a bar). fh-rows is the list:
+   * rows split by the dashed etch, an etch above and below.
+   * Slots (C0 3A): media, title, sub, link (an <a class="fh-row">), end.
+   * Knobs: --fh-row-gap (grouped, 12px), --fh-row-min-size (a tap target
+   * and a step, 52px), --fh-row-pad (tight, 8px), --fh-row-done-line (the
+   * strike on a done title, etch), --fh-row-bar-size (the end bar, 56px).
+   *   <div class="fh-rows">
+   *     <div class="fh-row" data-tone="orange">
+   *       <span class="fh-cube fh-cube--icon"><i class="fh-icon fh-icon--flame"></i></span>
+   *       <div class="fh-row__text"><p class="fh-row__title">Push-ups</p><p class="fh-row__sub">50 of 100 reps</p></div>
+   *       <div class="fh-row__end"><button class="fh-button fh-button--sm">Log</button></div>
+   *     </div>
+   *   </div> */
+  .fh-rows {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+  }
+
+  .fh-row {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-row-gap, var(--fh-gap-grouped));
+    min-block-size: var(--fh-row-min-size, calc(var(--fh-tap-target) + var(--fh-inset-tight)));
+    padding-block: var(--fh-row-pad, var(--fh-inset-tight));
+    color: inherit;
+    text-decoration: none;
+
+    & + & {
+      border-block-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft);
+    }
+
+    & > :not(.fh-row__text) {
+      flex: none;
+    }
+
+    &:is(a) {
+      cursor: var(--fh-cursor-action);
+
+      &:focus-visible {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus);
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  .fh-row__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  .fh-row__title,
+  .fh-row__sub {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fh-row__title {
+    color: var(--fh-color-text-strong);
+    font-size: var(--fh-text-body);
+    font-weight: var(--fh-weight-medium);
+  }
+
+  .fh-row__sub {
+    color: var(--fh-color-text-light);
+    font-size: var(--fh-type-meta);
+  }
+
+  .fh-row__end {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin-inline-start: auto;
+    color: var(--fh-color-text-light);
+  }
+
+  /* Done: the title goes light and is struck through. */
+  .fh-row--done .fh-row__title {
+    color: var(--fh-color-text-light);
+    text-decoration: line-through;
+    text-decoration-color: var(--fh-row-done-line, var(--fh-color-etch));
+  }
+
+  /* End bar: a figure over a progress bar, flush to the end. */
+  .fh-row__bar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--fh-gap-bound);
+    inline-size: var(--fh-row-bar-size, calc(var(--fh-control-height-lg) + var(--fh-inset-tight)));
+
+    & > b {
+      color: var(--fh-color-text-strong);
+      font-family: var(--fh-font-figure);
+      font-size: var(--fh-text-label);
+      font-variant-numeric: tabular-nums;
+      font-weight: var(--fh-weight-semibold);
+    }
+
+    & > .fh-progress {
+      inline-size: 100%;
+    }
+  }
+}

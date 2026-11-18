@@ -335,6 +335,28 @@
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-choice-row" data-fh-id="CHO-1">
+          <div class="site-demo__head"><h3>Choice row</h3><p>The Helm iOS form choice: <code>fh-choice-row</code> holds <code>fh-choice</code> pills, each led by its tone dot, and wraps. A choice is a toggle (<code>aria-pressed</code>); for one of many, the row is a <code>radiogroup</code> and each choice a <code>radio</code> with <code>aria-checked</code>. Knobs: <code>--fh-choice-row-gap</code>, <code>--fh-choice-size</code>.</p></div>
+          <div class="site-demo__stage" data-demo>
+<dl class="fh-dl site-variants">
+  <div><dt>Several<code>.fh-choice-row · aria-pressed</code></dt><dd>
+    <div class="fh-choice-row" role="group" aria-label="Days" data-fh-id="CHO-1.1" data-fh-name="Several" onclick="const b = event.target.closest('.fh-choice'); if (b) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')">
+      <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Mon</button>
+      <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Wed</button>
+      <button class="fh-choice" type="button" data-tone="lime" aria-pressed="false">Fri</button>
+      <button class="fh-choice" type="button" data-tone="lime" aria-pressed="false">Sun</button>
+    </div></dd></div>
+  <div><dt>One of many<code>role="radiogroup" · aria-checked</code></dt><dd>
+    <div class="fh-choice-row" role="radiogroup" aria-label="Area" data-fh-id="CHO-1.2" data-fh-name="One of many" onclick="const b = event.target.closest('.fh-choice'); if (b) for (const x of this.querySelectorAll('.fh-choice')) x.setAttribute('aria-checked', x === b)">
+      <button class="fh-choice" type="button" role="radio" data-tone="lime" aria-checked="true">Health</button>
+      <button class="fh-choice" type="button" role="radio" data-tone="sky" aria-checked="false">Work</button>
+      <button class="fh-choice" type="button" role="radio" data-tone="amber" aria-checked="false">Money</button>
+      <button class="fh-choice" type="button" role="radio" data-tone="violet" aria-checked="false">Home</button>
+    </div></dd></div>
+</dl>
+          </div>
+        </div>
+
         <div class="site-demo site-anchor" id="c-disabled-choices">
           <div class="site-demo__head"><h3>Disabled choices</h3><p>A disabled option, a disabled segmented group, and a disabled switch. The control stays in the form and takes no pointer.</p></div>
           <div class="site-demo__stage" data-demo>

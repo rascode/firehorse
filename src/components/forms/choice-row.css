@@ -1,0 +1,64 @@
+/*
+ * Firehorse - Choice row (CHO-1)
+ * components/forms · layer fh.components · docs /forms/#CHO
+ */
+
+@layer fh.components {
+  /* —— Choice row ——
+   * The Helm iOS form choice: a row of etched pills, each led by a tone
+   * dot, that wraps. A choice is a toggle button (aria-pressed); the pressed
+   * one takes a solid tone edge and a wash. For one of many, put the row in
+   * role="radiogroup" and give each choice role="radio" and aria-checked.
+   * Knobs: --fh-choice-row-gap (related, 8px), --fh-choice-size (40px).
+   *   <div class="fh-choice-row" role="group" aria-label="Area">
+   *     <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Health</button>
+   *     <button class="fh-choice" type="button" data-tone="sky" aria-pressed="false">Work</button>
+   *   </div> */
+  .fh-choice-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-choice-row-gap, var(--fh-gap-related));
+  }
+
+  .fh-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-block-size: var(--fh-choice-size, calc(var(--fh-control-height) + var(--fh-gap-bound)));
+    padding: 0 var(--fh-inset-control);
+    border: var(--fh-border-thin) dashed var(--fh-color-etch);
+    border-radius: var(--fh-radius-pill);
+    background: none;
+    color: var(--fh-color-text-muted);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    font-weight: var(--fh-weight-regular);
+    cursor: var(--fh-cursor-action);
+
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: 0.5em;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: var(--fh-tone);
+    }
+
+    &:is([aria-pressed="true"], [aria-checked="true"]) {
+      border-style: solid;
+      border-color: color-mix(in oklab, var(--fh-tone) 70%, transparent);
+      background-color: color-mix(in oklab, var(--fh-tone) 14%, transparent);
+      color: var(--fh-color-text);
+    }
+
+    &:focus-visible {
+      outline: var(--fh-focus-width) solid var(--fh-color-focus);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

@@ -61,7 +61,8 @@ expect(kit.length === 2 && kit.some((e) => /Unmarked\.swift:3:.*no \/\/\/ fh: li
 const full = JSON.parse(readFileSync(join(root, "dist/full/index.json"), "utf8"));
 expect(full.families.every((f) => f.layer && typeof f.transparent === "boolean" && Array.isArray(f.slots) && Array.isArray(f.compositions)), "a family in dist/full/index.json lacks layer, transparent, slots or compositions");
 expect(full.families.find((f) => f.id === "REC")?.compositions.some((e) => e.child.startsWith("EYE") && e.slot === "eyebrow"), "REC has no eyebrow composition (REC-1.1's pill)");
-expect(full.owners["fh-row"] === undefined, "fh-row is owned (it is a layout class, not a component)");
+// G11: fh-row was a stray owner (TMR's "Landing metric row"); since FC3 it is the List row's block (LST-1).
+expect(full.owners["fh-row"] === "LST", `fh-row is owned by ${full.owners["fh-row"]}, not LST`);
 
 if (fails.length) { console.error("✗ composition:\n  " + fails.join("\n  ")); process.exit(1); }
 console.log("✓ composition: M1 to M10 catch their cases; the Index carries layers, slots and compositions");

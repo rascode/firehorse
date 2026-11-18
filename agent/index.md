@@ -47,7 +47,7 @@
 | `ACT` | Action & link | part | Actions | 1 Action (4) · 2 Link (2) · 3 Cue (4) | [open](https://firehorse.rascode.dev/components/actions/action-and-link/) |
 | `MRK` | Markers | part | Actions | 1 Markers (2) | [open](https://firehorse.rascode.dev/components/actions/markers/) |
 | `EYE` | Eyebrow pill | part | Actions | 1 Lines (7) · 2 Shapes (4) · 3 Fills (4) · 4 Edges (2) · 5 Parts (4) · 6 Sentences (3) | [open](https://firehorse.rascode.dev/components/actions/eyebrow-pill/) |
-| `CHP` | Chips | part | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (4) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
+| `CHP` | Chips | part | Actions | 1 Kinds (4) · 2 Parts (3) · 3 Chip cards (5) | [open](https://firehorse.rascode.dev/components/actions/chips/) |
 | `CUB` | Cubes | part | Actions | 1 Cubes (6) · 2 Cube cards (4) | [open](https://firehorse.rascode.dev/components/actions/cubes/) |
 | `LGS` | Logo strip | composite | Content | 1 Logo strip (1) | [open](https://firehorse.rascode.dev/components/content/logo-strip/) |
 | `CRD` | Card in a ruled grid | composite | Content | — | [open](https://firehorse.rascode.dev/components/content/card-in-a-ruled-grid/) |
@@ -56,7 +56,7 @@
 | `CKL` | Checklist | composite | Content | — | [open](https://firehorse.rascode.dev/components/content/checklist/) |
 | `STP` | Steps | part | Content | 1 Steps (1) · 2 Form steps (1) | [open](https://firehorse.rascode.dev/components/content/steps/) |
 | `CAR` | Carousel | composite | Content | — | [open](https://firehorse.rascode.dev/components/content/carousel/) |
-| `LST` | List & timeline | composite | Content | — | [open](https://firehorse.rascode.dev/components/content/list-and-timeline/) |
+| `LST` | List & timeline | composite | Content | 1 List row (4) | [open](https://firehorse.rascode.dev/components/content/list-and-timeline/) |
 | `FOL` | Text fold | part | Content | 1 Text fold (3) | [open](https://firehorse.rascode.dev/components/content/text-fold/) |
 | `IMS` | Image stack | composite | Content | 1 Image stack (2) · 2 Viewer (1) | [open](https://firehorse.rascode.dev/components/content/image-stack/) |
 | `DET` | Code and divider | part | Content | — | [open](https://firehorse.rascode.dev/components/content/code-and-divider/) |
@@ -77,7 +77,7 @@
 | `AUT` | Sign in & sign up | composite | Forms | 1 Layouts (4) · 2 Method (1) | [open](https://firehorse.rascode.dev/forms/sign-in-and-sign-up/) |
 | `FLD` | Fields | part | Fields & choices | 1 Fields (1) · 2 Dictation (2) · 3 Quiet (1) · 4 Password reveal (1) | [open](https://firehorse.rascode.dev/forms/fields/) |
 | `SEG` | Segment switch | part | Fields & choices | 1 Switch (2) · 2 Toggle (3) | [open](https://firehorse.rascode.dev/forms/segment-switch/) |
-| `CHO` | Choices | part | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/choices/) |
+| `CHO` | Choices | part | Fields & choices | 1 Choice row (2) | [open](https://firehorse.rascode.dev/forms/choices/) |
 | `UPL` | Upload, range, tags, sheet | part | Fields & choices | — | [open](https://firehorse.rascode.dev/forms/upload-range-tags-sheet/) |
 | `TAG` | Tag field | part | Fields & choices | 1 Field (1) · 2 Inline (4) | [open](https://firehorse.rascode.dev/forms/tag-field/) |
 | `DTB` | Datatable | composite | Data | 1 Datatable (1) | [open](https://firehorse.rascode.dev/data/datatable/) |
@@ -1446,7 +1446,7 @@ Chips filter or jump; the selected one fills with its tone. Icons replace the do
 
 Layer: part.
 
-Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text` `fh-chip--sm`
+Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid` `fh-icon` `fh-chip--tone` `fh-chip--plain` `fh-chip--underline` `fh-chip--indexed` `fh-chip__index` `fh-chips--indexed` `fh-chip__remove` `fh-chip-card` `fh-chip-card__block` `fh-chip-card__text` `fh-chip-cards` `fh-chip--sm`
 
 ### CHP-1 · Kinds
 
@@ -1524,7 +1524,7 @@ Classes: `fh-chips` `fh-chips--wrap` `fh-chip` `fh-chips--track` `fh-chip--solid
 
 ### CHP-3 · Chip cards
 
-Compact cards led by a tone block: categories, people, files.
+Compact cards led by a tone block: categories, people, files. fh-chip-cards lines them up in one strip that scrolls along; aria-current="true" marks the one in view.
 
 #### CHP-3.1 · Data architecture
 
@@ -1548,6 +1548,17 @@ Compact cards led by a tone block: categories, people, files.
 
 ```html
 <a class="fh-chip-card" data-tone="rose" href="#c-chip-cards" data-fh="CHP-3.4"><span class="fh-chip-card__block">PDF</span><span class="fh-chip-card__text"><b>Scope-of-work.pdf</b><small>212 KB · signed</small></span></a>
+```
+
+#### CHP-3.5 · Cards list
+
+```html
+<nav class="fh-chip-cards" aria-label="Goals" style="max-inline-size: 26rem" data-fh="CHP-3.5">
+  <a class="fh-chip-card" data-tone="lime" href="#c-chip-cards" aria-current="true" data-fh="CHP-3.1"><span class="fh-chip-card__block">HE</span><span class="fh-chip-card__text"><b>Health</b><small>3 goals</small></span></a>
+  <a class="fh-chip-card" data-tone="sky" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">WO</span><span class="fh-chip-card__text"><b>Work</b><small>5 goals</small></span></a>
+  <a class="fh-chip-card" data-tone="amber" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">MO</span><span class="fh-chip-card__text"><b>Money</b><small>2 goals</small></span></a>
+  <a class="fh-chip-card" data-tone="violet" href="#c-chip-cards" data-fh="CHP-3.1"><span class="fh-chip-card__block">HO</span><span class="fh-chip-card__text"><b>Home</b><small>4 goals</small></span></a>
+</nav>
 ```
 
 ## CUB · Cubes
@@ -1880,11 +1891,65 @@ Markup: see [components.md](components.md) or copy from https://firehorse.rascod
 
 Rows with a visual, text and a trailing slot. A dashed timeline for activity.
 
-Layer: composite. Slots: `media` `link` `meta`.
+Layer: composite. Slots: `media` `title` `sub` `link` `meta` `end` `items`.
 
-Classes: `fh-stack` `fh-stack--xl` `fh-list` `fh-avatar` `fh-list__title` `fh-list__link` `fh-list__meta` `fh-badge` `fh-avatar--generated` `fh-timeline`
+Classes: `fh-row` `fh-cube` `fh-cube--icon` `fh-icon` `fh-row__text` `fh-row__title` `fh-row__sub` `fh-row__end` `fh-button` `fh-button--secondary` `fh-button--sm` `fh-row--done` `fh-chip` `fh-row__bar` `fh-progress` `fh-rows`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/components/content/list-and-timeline/.
+### LST-1 · List row
+
+The Helm iOS row (FireKit FireRow): fh-row with a small lead in media, fh-row__title and fh-row__sub in fh-row__text, and fh-row__end for a button, a choice, a chip or a figure over a bar. An <a class="fh-row"> fills link. fh-rows is the list: each row fills its items. Knobs: --fh-row-gap, --fh-row-min-size, --fh-row-pad, --fh-row-done-line, --fh-row-bar-size.
+
+#### LST-1.1 · Row
+
+```html
+<div class="fh-row" data-tone="orange" data-fh="LST-1.1">
+  <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i></span>
+  <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Push-ups</p><p class="fh-row__sub" data-fh-slot="sub">50 of 100 reps</p></div>
+  <div class="fh-row__end"><button class="fh-button fh-button--secondary fh-button--sm" type="button" data-fh="BTN-1.5" data-fh-slot="end"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i>25</button></div>
+</div>
+```
+
+#### LST-1.2 · Done
+
+```html
+<div class="fh-row fh-row--done" data-tone="lime" data-fh="LST-1.2">
+  <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--droplet" aria-hidden="true"></i></span>
+  <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Water</p><p class="fh-row__sub" data-fh-slot="sub">8 of 8 glasses</p></div>
+  <div class="fh-row__end"><span class="fh-chip" data-tone="lime" data-fh="CHP" data-fh-slot="end">done</span></div>
+</div>
+```
+
+#### LST-1.3 · End bar
+
+```html
+<a class="fh-row" href="#c-list-row" data-tone="sky" data-fh="LST-1.3">
+  <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>
+  <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Ship FirehorseKit</p><p class="fh-row__sub" data-fh-slot="sub">46 days left</p></div>
+  <div class="fh-row__end"><span class="fh-row__bar"><b>58%</b><progress class="fh-progress" value="58" max="100" data-fh="FBK" data-fh-slot="end">58%</progress></span></div>
+</a>
+```
+
+#### LST-1.4 · Rows
+
+```html
+<div class="fh-rows" data-fh="LST-1.4">
+  <div class="fh-row" data-tone="orange" data-fh="LST-1.1" data-fh-slot="items">
+    <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--flame" aria-hidden="true"></i></span>
+    <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Push-ups</p><p class="fh-row__sub" data-fh-slot="sub">50 of 100 reps</p></div>
+    <div class="fh-row__end"><button class="fh-button fh-button--secondary fh-button--sm" type="button" data-fh="BTN-1.5" data-fh-slot="end"><i class="fh-icon fh-icon--plus" aria-hidden="true"></i>25</button></div>
+  </div>
+  <div class="fh-row fh-row--done" data-tone="lime" data-fh="LST-1.2" data-fh-slot="items">
+    <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--droplet" aria-hidden="true"></i></span>
+    <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Water</p><p class="fh-row__sub" data-fh-slot="sub">8 of 8 glasses</p></div>
+    <div class="fh-row__end"><span class="fh-chip" data-tone="lime" data-fh="CHP" data-fh-slot="end">done</span></div>
+  </div>
+  <a class="fh-row" href="#c-list-row" data-tone="sky" data-fh="LST-1.3" data-fh-slot="items">
+    <span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>
+    <div class="fh-row__text"><p class="fh-row__title" data-fh-slot="title">Ship FirehorseKit</p><p class="fh-row__sub" data-fh-slot="sub">46 days left</p></div>
+    <div class="fh-row__end"><span class="fh-row__bar"><b>58%</b><progress class="fh-progress" value="58" max="100" data-fh="FBK" data-fh-slot="end">58%</progress></span></div>
+  </a>
+</div>
+```
 
 ## FOL · Text fold
 
@@ -3095,9 +3160,33 @@ Real radios and checkboxes under the styling, so they submit with the form and w
 
 Layer: part.
 
-Classes: `fh-stack` `fh-stack--lg` `fh-segmented` `fh-sr-only` `fh-check` `fh-switch`
+Classes: `fh-choice-row` `fh-choice`
 
-Markup: see [components.md](components.md) or copy from https://firehorse.rascode.dev/forms/choices/.
+### CHO-1 · Choice row
+
+The Helm iOS form choice: fh-choice-row holds fh-choice pills, each led by its tone dot, and wraps. A choice is a toggle (aria-pressed); for one of many, the row is a radiogroup and each choice a radio with aria-checked. Knobs: --fh-choice-row-gap, --fh-choice-size.
+
+#### CHO-1.1 · Several
+
+```html
+<div class="fh-choice-row" role="group" aria-label="Days" onclick="const b = event.target.closest('.fh-choice'); if (b) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')" data-fh="CHO-1.1">
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Mon</button>
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="true">Wed</button>
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="false">Fri</button>
+  <button class="fh-choice" type="button" data-tone="lime" aria-pressed="false">Sun</button>
+</div>
+```
+
+#### CHO-1.2 · One of many
+
+```html
+<div class="fh-choice-row" role="radiogroup" aria-label="Area" onclick="const b = event.target.closest('.fh-choice'); if (b) for (const x of this.querySelectorAll('.fh-choice')) x.setAttribute('aria-checked', x === b)" data-fh="CHO-1.2">
+  <button class="fh-choice" type="button" role="radio" data-tone="lime" aria-checked="true">Health</button>
+  <button class="fh-choice" type="button" role="radio" data-tone="sky" aria-checked="false">Work</button>
+  <button class="fh-choice" type="button" role="radio" data-tone="amber" aria-checked="false">Money</button>
+  <button class="fh-choice" type="button" role="radio" data-tone="violet" aria-checked="false">Home</button>
+</div>
+```
 
 ## UPL · Upload, range, tags, sheet
 

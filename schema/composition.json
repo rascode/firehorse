@@ -818,7 +818,10 @@
     },
     "CHO": {
       "layer": "part",
-      "transparent": false
+      "transparent": false,
+      "pieces": [
+        "fh-choice"
+      ]
     },
     "CHP": {
       "layer": "part",
@@ -2025,7 +2028,7 @@
           "key": "media",
           "order": 1,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "image_asset",
           "context": "cell",
           "accepts": [
@@ -2036,10 +2039,26 @@
           "default": "AVT"
         },
         {
-          "key": "link",
+          "key": "title",
           "order": 2,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "cell"
+        },
+        {
+          "key": "sub",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "description",
+          "context": "cell"
+        },
+        {
+          "key": "link",
+          "order": 4,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "url",
           "context": "cell",
           "accepts": [
@@ -2048,11 +2067,34 @@
         },
         {
           "key": "meta",
-          "order": 3,
+          "order": 5,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "short_text",
           "context": "cell"
+        },
+        {
+          "key": "end",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "BTN",
+            "CHO",
+            "CHP",
+            "FBK"
+          ],
+          "default": "BTN"
+        },
+        {
+          "key": "items",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "LST"
+          ],
+          "default": "LST"
         }
       ]
     },

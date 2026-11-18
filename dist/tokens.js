@@ -1571,6 +1571,18 @@ export const tokens = {
     "tier": "semantic",
     "group": "color"
   },
+  "--fh-glass-opacity": {
+    "$value": "0.55",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "glass"
+  },
+  "--fh-glass": {
+    "$value": "color-mix(in oklab, var(--fh-color-canvas) calc(var(--fh-glass-opacity) * 100%), transparent)",
+    "$type": "dimension",
+    "tier": "semantic",
+    "group": "glass"
+  },
   "--fh-color-field": {
     "$value": "light-dark(var(--fh-gray-50), var(--fh-gray-875))",
     "$type": "color",
@@ -1603,6 +1615,18 @@ export const tokens = {
   },
   "--fh-color-text-subtle": {
     "$value": "light-dark(#6b6b6b, var(--fh-gray-500))",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
+  "--fh-color-text-light": {
+    "$value": "light-dark(#6e6e6e, #8f8f8f)",
+    "$type": "color",
+    "tier": "semantic",
+    "group": "color"
+  },
+  "--fh-color-note": {
+    "$value": "light-dark(#5f5f5f, #a3a3a3)",
     "$type": "color",
     "tier": "semantic",
     "group": "color"
