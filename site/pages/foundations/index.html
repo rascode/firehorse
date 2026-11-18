@@ -115,9 +115,9 @@
             <div class="site-demo__head"><h3>Elevation</h3><p>Drop shadows are a theme setting, <code>data-fh-shadow</code> (or <code>"shadow"</code> in a theme's config): <code>none</code>, <code>hint</code> (the default: no shadow on panels, bars, cards and rows, a barely visible one under menus and overlays), <code>soft</code> or <code>full</code>. A style that asks for a shadow keeps it, like the convex button (<code>data-fh-button="convex"</code>): bends out at rest, the shadow inverts on hover, it sinks on press.</p></div>
             <div class="site-demo__stage">
               <div class="fh-cluster" style="--fh-gap: var(--fh-space-6)">
-                <a class="fh-button" href="#foundations">Rest</a>
-                <span class="fh-button" style="box-shadow: var(--fh-shadow-convex-hover)">Hover</span>
-                <span class="fh-button" style="translate: 0 2px; box-shadow: var(--fh-shadow-convex-active)">Press</span>
+                <a class="fh-button" href="#foundations" data-fh="BTN">Rest</a>
+                <span class="fh-button" style="box-shadow: var(--fh-shadow-convex-hover)" data-fh="BTN">Hover</span>
+                <span class="fh-button" style="translate: 0 2px; box-shadow: var(--fh-shadow-convex-active)" data-fh="BTN">Press</span>
               </div>
             </div>
           </div>
@@ -158,10 +158,10 @@
           <div class="site-demo__head"><h3>Type presets</h3><p>Four faces as one attribute: <code>data-fh-type</code> sets the sans and display families and the heading tracking each face wants (Hanken Grotesk at −5%, Archivo at −3%). A theme picks one with <code>config.type</code>. Presets name the family only: load the font yourself.</p></div>
           <div class="site-demo__stage" data-demo>
             <div>
-              <div class="fh-type-scale" data-fh-type="geist"><div><span class="fh-label">Geist</span><code>data-fh-type="geist" · −4% display</code></div><div class="fh-type-scale" data-fh-type="geist" data-fh-id="TYP-1.1" data-fh-name="Geist"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
-              <div class="fh-type-scale" data-fh-type="inter"><div><span class="fh-label">Inter</span><code>data-fh-type="inter" · −3.5% display</code></div><div class="fh-type-scale" data-fh-type="inter" data-fh-id="TYP-1.2" data-fh-name="Inter"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
-              <div class="fh-type-scale" data-fh-type="hanken"><div><span class="fh-label">Hanken Grotesk</span><code>data-fh-type="hanken" · −5% display</code></div><div class="fh-type-scale" data-fh-type="hanken" data-fh-id="TYP-1.3" data-fh-name="Hanken Grotesk"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
-              <div class="fh-type-scale" data-fh-type="archivo"><div><span class="fh-label">Archivo</span><code>data-fh-type="archivo" · −3% display</code></div><div class="fh-type-scale" data-fh-type="archivo" data-fh-id="TYP-1.4" data-fh-name="Archivo"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+              <div class="fh-type-scale" data-fh-type="geist" data-fh="TYP-1"><div><span class="fh-label">Geist</span><code>data-fh-type="geist" · −4% display</code></div><div class="fh-type-scale" data-fh-type="geist" data-fh-id="TYP-1.1" data-fh-name="Geist"><p class="fh-title">Ink, etch and ember.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+              <div class="fh-type-scale" data-fh-type="inter" data-fh="TYP-1"><div><span class="fh-label">Inter</span><code>data-fh-type="inter" · −3.5% display</code></div><div class="fh-type-scale" data-fh-type="inter" data-fh-id="TYP-1.2" data-fh-name="Inter"><p class="fh-title">Built for every screen.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+              <div class="fh-type-scale" data-fh-type="hanken" data-fh="TYP-1"><div><span class="fh-label">Hanken Grotesk</span><code>data-fh-type="hanken" · −5% display</code></div><div class="fh-type-scale" data-fh-type="hanken" data-fh-id="TYP-1.3" data-fh-name="Hanken Grotesk"><p class="fh-title">Beyond the ordinary.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
+              <div class="fh-type-scale" data-fh-type="archivo" data-fh="TYP-1"><div><span class="fh-label">Archivo</span><code>data-fh-type="archivo" · −3% display</code></div><div class="fh-type-scale" data-fh-type="archivo" data-fh-id="TYP-1.4" data-fh-name="Archivo"><p class="fh-title">Create something different.</p><p class="fh-body" style="margin: 0">The quick brown fox jumps over the lazy dog, 0123456789.</p></div></div>
             </div>
           </div>
         </div>
@@ -171,17 +171,17 @@
 <dl class="fh-dl site-variants site-motion">
   <div><dt>Flip<code>.fh-roll</code></dt><dd>
     <div class="fh-cluster" style="--fh-gap: var(--fh-space-4)">
-      <a class="fh-button fh-button--plain" href="#motion"><span class="fh-roll">Book a call</span></a>
+      <a class="fh-button fh-button--plain" href="#motion" data-fh="BTN"><span class="fh-roll">Book a call</span></a>
       <a class="fh-nav__link" href="#motion"><span class="fh-roll">Menu link</span></a>
-      <a class="fh-chip fh-chip--indexed" data-tone="teal" href="#motion"><b class="fh-chip__index">01</b><span class="fh-roll">Chip</span></a>
+      <a class="fh-chip fh-chip--indexed" data-tone="teal" href="#motion" data-fh="CHP"><b class="fh-chip__index">01</b><span class="fh-roll">Chip</span></a>
     </div>
     <p class="site-motion__note">Hover or focus: the label rolls up and its twin rolls in.</p></dd></div>
   <div><dt>Rollover<code>Firehorse.rollover()</code></dt><dd>
     <div class="site-motion__row">
-      <p class="site-motion__roll" data-tone="sky"><span class="fh-rollover" id="motion-roll"><span class="fh-rollover__item"><b>04</b>Data</span></span></p>
+      <p class="site-motion__roll" data-tone="sky"><span class="fh-rollover" id="motion-roll" data-fh="MTL"><span class="fh-rollover__item"><b>04</b>Data</span></span></p>
       <div class="fh-cluster" style="--fh-gap: var(--fh-space-2)">
-        <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-roll="-1">Back</button>
-        <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-roll="1">Forward</button>
+        <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-roll="-1" data-fh="BTN-1.5">Back</button>
+        <button class="fh-button fh-button--sm fh-button--secondary" type="button" data-roll="1" data-fh="BTN-1.5">Forward</button>
       </div>
     </div>
     <p class="site-motion__note">Rolls up going forward, down going back. The floating bar's title uses it.</p></dd></div>
@@ -196,7 +196,7 @@
     </div>
     <p class="site-motion__note">Scroll the box. Each card runs on its own view timeline, no script.</p></dd></div>
   <div><dt>Rules<code>always on</code></dt><dd>
-    <ul class="fh-checklist site-motion__rules" data-tone="teal">
+    <ul class="fh-checklist site-motion__rules" data-tone="teal" data-fh="CKL">
       <li>Still under <code>prefers-reduced-motion</code></li>
       <li>Scroll-driven, never waits on JavaScript</li>
       <li>Loops pause off-screen</li>
