@@ -34,9 +34,9 @@ Anatomy, top to bottom:
   <main class="fh-main">
     <section class="fh-section">
       <div class="fh-grid" data-cols="3" style="--fh-grid-min: 6rem">
-        <div class="fh-card fh-card--solid" data-fh-slot="body" data-fh="CRD">Example</div>
-        <div class="fh-card fh-card--solid" data-fh-slot="body" data-fh="CRD">Example</div>
-        <div class="fh-card fh-card--solid" data-fh-slot="body" data-fh="CRD">Example</div>
+        <div class="fh-card fh-card--solid" data-fh-slot="items" data-fh="CRD">Example</div>
+        <div class="fh-card fh-card--solid" data-fh-slot="items" data-fh="CRD">Example</div>
+        <div class="fh-card fh-card--solid" data-fh-slot="items" data-fh="CRD">Example</div>
       </div>
       <aside data-fh-panel-start>
         <p class="fh-label">Closing note</p>
@@ -48,8 +48,8 @@ Anatomy, top to bottom:
         <div><p data-tone="violet"><b>02</b> Next chapter</p><h3 class="fh-subheading">Stepped onto the panel</h3></div>
       </header>
       <div class="fh-grid" data-cols="2" style="--fh-grid-min: 8rem">
-        <div class="fh-card" data-fh-slot="body" data-fh="CRD">Wide content runs across both tones</div>
-        <div class="fh-card" data-fh-slot="body" data-fh="CRD">and keeps its own width</div>
+        <div class="fh-card" data-fh-slot="items" data-fh="CRD">Wide content runs across both tones</div>
+        <div class="fh-card" data-fh-slot="items" data-fh="CRD">and keeps its own width</div>
       </div>
     </section>
   </main>
@@ -121,7 +121,7 @@ A tinted column that begins where you mark it and runs to the bottom of the page
       </aside>
     </section>
     <section class="fh-section fh-section--ruled">
-      <header class="fh-section-head fh-panel-inset" data-fh="PNL" data-fh-slot="body">
+      <header class="fh-section-head fh-panel-inset" data-fh-slot="body">
         <div><h3 class="fh-subheading">Next section</h3><p class="fh-small fh-muted">On the panel, stepped off its edge.</p></div>
       </header>
     </section>

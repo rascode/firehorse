@@ -37,7 +37,8 @@
         "properties": {
           "layer": { "$ref": "#/$defs/layer" },
           "transparent": { "type": "boolean" },
-          "slots": { "type": "array", "items": { "$ref": "#/$defs/slot" } }
+          "slots": { "type": "array", "items": { "$ref": "#/$defs/slot" } },
+          "pieces": { "description": "Root classes that are this family's own markup inside its component (fh-tier in fh-tiers): no ID of their own, so no data-fh and no composition.", "type": "array", "items": { "type": "string", "pattern": "^fh-[a-z0-9-]+$" }, "uniqueItems": true }
         }
       }
     },

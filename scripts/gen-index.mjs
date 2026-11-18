@@ -182,7 +182,7 @@ const idSet = new Set(live.keys());
 const specimens = list.flatMap((f) => [{ id: f.id, html: familyStage.get(f.id) ?? "" }, ...f.groups.filter((g) => g.markupFrom === "group").map((g) => ({ id: g.id, html: g.markup })), ...f.variants.map((v) => ({ id: v.id, html: v.markup }))]).filter((m) => m.html);
 const lint = [];
 const edges = new Map();
-for (const e of compose({ markups: specimens, comp, ids: idSet, roots: rootClasses(root, owners, specimens.map((m) => m.html)), errors: lint })) edges.set(`${e.parent}|${e.child}|${e.slot}|${e.order}`, e);
+for (const e of compose({ markups: specimens, comp, ids: idSet, roots: rootClasses(root, owners, specimens.map((m) => m.html)), owners, errors: lint })) edges.set(`${e.parent}|${e.child}|${e.slot}|${e.order}`, e);
 guard([...edges.values()], comp, lint);
 const fireKit = lintFireKit(join(root, "fire-kit/Sources/FireKit"), idSet, lint);
 const lintErrors = [...new Set(lint)];

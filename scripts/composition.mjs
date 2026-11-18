@@ -2,7 +2,8 @@
 // schema/composition.json holds each family's layer, transparent flag and slots; the specimens say the rest with
 // data-fh on every component root (children included) and data-fh-slot on every element that fills a slot.
 // gen-index.mjs reads both: it emits layer, transparent, slots and compositions per family, and fails the build on
-//   M1 an element in a specimen carries a component root class and no data-fh
+//   M1 an element in a specimen carries a component root class and no data-fh (a class the surrounding
+//      component's family owns is its own markup and needs none)
 //   M2 a data-fh value is not an Index ID (local:<name> is refused in Firehorse)
 //   M3 a direct child component of a composite, section or template has no data-fh-slot, or a key that is not a
 //      slot key or not declared for the parent
@@ -56,7 +57,7 @@ function* walk(n) { for (const c of elements(n)) { yield c; yield* walk(c); } }
 const classes = (n) => (n.getAttribute?.("class") || "").split(/\s+/).filter(Boolean);
 
 /** Lint one family's specimen markup (M1 to M6) and return its compositions: parent, child, slot, order. */
-export function compose({ markups, comp, ids, roots, errors }) {
+export function compose({ markups, comp, ids, roots, owners = {}, errors }) {
   const layer = (id) => comp.families[fam(id)]?.layer;
   // A transparent family passes its children through; so does a token family's demo frame (a motion card
   // shows other components, it never holds them).
@@ -74,10 +75,13 @@ export function compose({ markups, comp, ids, roots, errors }) {
       if (docs.has(n)) continue;
       const id = n.getAttribute("data-fh"), key = n.getAttribute("data-fh-slot");
       const at = `${where}: <${n.rawTagName} class="${classes(n).join(" ")}">`;
-      if (!id && classes(n).some((c) => roots.has(c))) errors.push(`M1 ${at} is a component root with no data-fh`);
+      const P = parentOf(n), pid = P?.getAttribute("data-fh");
+      // A class the surrounding component's own family owns, or lists as a piece, is that component's markup
+      // (fh-tier in fh-tiers, fh-message in fh-chat): no ID of its own, so no child and no data-fh.
+      const own = (c) => P && (owners[c] === fam(pid) || !!comp.families[fam(pid)]?.pieces?.includes(c));
+      if (!id && classes(n).some((c) => roots.has(c) && !own(c))) errors.push(`M1 ${at} is a component root with no data-fh`);
       if (id && !ids.has(id)) errors.push(`M2 ${at} data-fh="${id}" is ${id.startsWith("local:") ? "a local name (refused in Firehorse)" : "not an Index ID"}`);
       if (key && (classes(n).some((c) => LAYOUT.has(c)) || (id && through(id)))) errors.push(`M6 ${at} data-fh-slot="${key}" sits on a transparent or layout element`);
-      const P = parentOf(n), pid = P?.getAttribute("data-fh");
       if (id && !through(id) && P) {
         const a = RANK[layer(pid)], b = RANK[layer(id)];
         if ((b > a || (a === RANK.field && b === RANK.field)) && !exempt.has(`${fam(pid)}>${fam(id)}`)) errors.push(`M5 ${at} ${id} (${layer(id)}) inside ${pid} (${layer(pid)})`);

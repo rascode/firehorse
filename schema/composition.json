@@ -1,7 +1,7 @@
 {
   "$schema": "./composition.schema.json",
   "name": "Firehorse composition",
-  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M10 (M8 to M10 are Helm's composition guards: accepts, one slots, no self edge or cycle).",
+  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). pieces: root classes that are a family's own markup inside its component (fh-tier in fh-tiers), with no ID of their own, so no data-fh and no composition. gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M10 (M8 to M10 are Helm's composition guards: accepts, one slots, no self edge or cycle).",
   "layers": [
     "token",
     "part",
@@ -297,6 +297,9 @@
           "fieldType": "short_text",
           "context": "card"
         }
+      ],
+      "pieces": [
+        "fh-account"
       ]
     },
     "ACT": {
@@ -404,7 +407,8 @@
           "required": true,
           "accepts": [
             "CHO",
-            "FLD"
+            "FLD",
+            "SEG"
           ],
           "default": "FLD"
         },
@@ -571,11 +575,7 @@
           "cardinality": "many",
           "required": false,
           "fieldType": "long_text",
-          "context": "card",
-          "accepts": [
-            "TIL"
-          ],
-          "default": "TIL"
+          "context": "card"
         },
         {
           "key": "label",
@@ -594,6 +594,16 @@
             "UPL"
           ],
           "default": "UPL"
+        },
+        {
+          "key": "items",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "TIL"
+          ],
+          "default": "TIL"
         }
       ]
     },
@@ -821,7 +831,7 @@
         {
           "key": "media",
           "order": 1,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "fieldType": "image_asset",
           "context": "card",
@@ -883,6 +893,10 @@
           ],
           "default": "BTN"
         }
+      ],
+      "pieces": [
+        "fh-message",
+        "fh-typing"
       ]
     },
     "CIN": {
@@ -982,7 +996,10 @@
           "cardinality": "one",
           "required": false,
           "fieldType": "long_text",
-          "context": "card"
+          "context": "card",
+          "accepts": [
+            "REF"
+          ]
         },
         {
           "key": "value",
@@ -1007,13 +1024,19 @@
           "key": "media",
           "order": 6,
           "cardinality": "one",
-          "required": false
+          "required": false,
+          "accepts": [
+            "AVT"
+          ]
         },
         {
           "key": "chips",
           "order": 7,
           "cardinality": "one",
-          "required": false
+          "required": false,
+          "accepts": [
+            "CHP"
+          ]
         }
       ]
     },
@@ -1316,10 +1339,9 @@
           "context": "cell",
           "accepts": [
             "DRP",
-            "TIL",
             "VAL"
           ],
-          "default": "TIL"
+          "default": "DRP"
         },
         {
           "key": "fields",
@@ -1341,6 +1363,16 @@
             "BTN"
           ],
           "default": "BTN"
+        },
+        {
+          "key": "items",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "TIL"
+          ],
+          "default": "TIL"
         }
       ]
     },
@@ -1437,7 +1469,10 @@
           "key": "link",
           "order": 9,
           "cardinality": "many",
-          "required": false
+          "required": false,
+          "accepts": [
+            "ACT"
+          ]
         }
       ]
     },
@@ -1621,8 +1656,17 @@
           "fieldType": "long_text",
           "context": "card",
           "accepts": [
-            "CRD",
             "PNL"
+          ],
+          "default": "PNL"
+        },
+        {
+          "key": "items",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "CRD"
           ],
           "default": "CRD"
         }
@@ -2137,7 +2181,13 @@
           "cardinality": "many",
           "required": false,
           "fieldType": "long_text",
-          "context": "cell",
+          "context": "cell"
+        },
+        {
+          "key": "items",
+          "order": 7,
+          "cardinality": "many",
+          "required": false,
           "accepts": [
             "TIL"
           ],
@@ -2298,6 +2348,10 @@
           ],
           "default": "PLY"
         }
+      ],
+      "pieces": [
+        "fh-channel",
+        "fh-meter-level"
       ]
     },
     "MOT": {
@@ -2374,6 +2428,7 @@
           "fieldType": "long_text",
           "context": "card",
           "accepts": [
+            "MST",
             "PRF",
             "TBL",
             "WRK"
@@ -2462,6 +2517,10 @@
           "cardinality": "many",
           "required": false
         }
+      ],
+      "pieces": [
+        "fh-crumb",
+        "fh-crumbs"
       ]
     },
     "MTL": {
@@ -2531,6 +2590,9 @@
           ],
           "default": "DRP"
         }
+      ],
+      "pieces": [
+        "fh-nav"
       ]
     },
     "NEU": {
@@ -2620,6 +2682,11 @@
           "fieldType": "timestamp",
           "context": "card"
         }
+      ],
+      "pieces": [
+        "fh-audio-btn",
+        "fh-volume",
+        "fh-wave"
       ]
     },
     "PNL": {
@@ -2638,6 +2705,9 @@
           ],
           "default": "PNL"
         }
+      ],
+      "pieces": [
+        "fh-panel-inset"
       ]
     },
     "PRC": {
@@ -2709,8 +2779,11 @@
         {
           "key": "value",
           "order": 6,
-          "cardinality": "one",
-          "required": false
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "FBK"
+          ]
         },
         {
           "key": "link",
@@ -2721,15 +2794,31 @@
         {
           "key": "fields",
           "order": 8,
-          "cardinality": "one",
-          "required": false
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "SEG"
+          ]
         },
         {
           "key": "stage",
           "order": 9,
           "cardinality": "many",
-          "required": false
+          "required": false,
+          "accepts": [
+            "ACT",
+            "FBK",
+            "TBL"
+          ]
         }
+      ],
+      "pieces": [
+        "fh-account-card",
+        "fh-account-fact",
+        "fh-account-identity",
+        "fh-account-meter",
+        "fh-account-option",
+        "fh-account-row"
       ]
     },
     "PRM": {
@@ -2780,6 +2869,10 @@
           "fieldType": "short_text",
           "context": "card"
         }
+      ],
+      "pieces": [
+        "fh-param",
+        "fh-scrub"
       ]
     },
     "RAD": {
@@ -2902,7 +2995,7 @@
         {
           "key": "value",
           "order": 3,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "accepts": [
             "VAL"
@@ -3055,6 +3148,7 @@
           "fieldType": "long_text",
           "context": "record",
           "accepts": [
+            "SBD",
             "SLG"
           ],
           "default": "SLG"
@@ -3071,8 +3165,14 @@
           "key": "who",
           "order": 6,
           "cardinality": "many",
-          "required": false
+          "required": false,
+          "accepts": [
+            "AVT"
+          ]
         }
+      ],
+      "pieces": [
+        "fh-board"
       ]
     },
     "SBR": {
@@ -3221,6 +3321,7 @@
           "fieldType": "long_text",
           "context": "record",
           "accepts": [
+            "DET",
             "SLG"
           ],
           "default": "SLG"
@@ -3279,7 +3380,7 @@
         {
           "key": "stage",
           "order": 5,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "accepts": [
             "BTN",
@@ -3308,7 +3409,9 @@
           "context": "record",
           "accepts": [
             "CHT",
+            "EMP",
             "FLD",
+            "IMF",
             "SFL",
             "SLG",
             "SLK",
@@ -3379,6 +3482,9 @@
           "fieldType": "timestamp",
           "context": "record"
         }
+      ],
+      "pieces": [
+        "fh-chart"
       ]
     },
     "SDC": {
@@ -3413,6 +3519,7 @@
           "cardinality": "one",
           "required": false,
           "accepts": [
+            "AVT",
             "CUB",
             "MRK"
           ]
@@ -3453,6 +3560,9 @@
           "fieldType": "long_text",
           "context": "record",
           "accepts": [
+            "CRD",
+            "DTB",
+            "REF",
             "SCT"
           ],
           "default": "SCT"
@@ -3470,19 +3580,32 @@
           "key": "sections",
           "order": 9,
           "cardinality": "many",
-          "required": false
+          "required": false,
+          "accepts": [
+            "REC",
+            "TAB",
+            "TMR"
+          ]
         },
         {
           "key": "fields",
           "order": 10,
           "cardinality": "many",
-          "required": false
+          "required": false,
+          "accepts": [
+            "FLD",
+            "SEG",
+            "THS"
+          ]
         },
         {
           "key": "media",
           "order": 11,
           "cardinality": "many",
-          "required": false
+          "required": false,
+          "accepts": [
+            "AVT"
+          ]
         },
         {
           "key": "meta",
@@ -3534,6 +3657,7 @@
           "fieldType": "long_text",
           "context": "record",
           "accepts": [
+            "DET",
             "SLG"
           ],
           "default": "SLG"
@@ -3586,7 +3710,9 @@
           "fieldType": "long_text",
           "context": "record",
           "accepts": [
-            "SLG"
+            "DET",
+            "SLG",
+            "TBL"
           ],
           "default": "SLG"
         },
@@ -3602,7 +3728,10 @@
           "key": "actions",
           "order": 6,
           "cardinality": "one",
-          "required": false
+          "required": false,
+          "accepts": [
+            "BTN"
+          ]
         }
       ]
     },
@@ -3884,6 +4013,9 @@
           "fieldType": "timestamp",
           "context": "record"
         }
+      ],
+      "pieces": [
+        "fh-gallery"
       ]
     },
     "SHL": {
@@ -4265,7 +4397,8 @@
           "fieldType": "long_text",
           "context": "record",
           "accepts": [
-            "SLG"
+            "SLG",
+            "TBL"
           ],
           "default": "SLG"
         },
@@ -4277,6 +4410,9 @@
           "fieldType": "timestamp",
           "context": "record"
         }
+      ],
+      "pieces": [
+        "fh-table-wrap"
       ]
     },
     "SOC": {
@@ -4452,6 +4588,9 @@
             "ACT"
           ]
         }
+      ],
+      "pieces": [
+        "fh-prompt"
       ]
     },
     "SPR": {
@@ -4793,6 +4932,9 @@
           "fieldType": "timestamp",
           "context": "record"
         }
+      ],
+      "pieces": [
+        "fh-tree"
       ]
     },
     "STT": {
@@ -5046,6 +5188,9 @@
           "fieldType": "short_text",
           "context": "cell"
         }
+      ],
+      "pieces": [
+        "fh-table"
       ]
     },
     "TBR": {
@@ -5218,6 +5363,9 @@
           "fieldType": "short_text",
           "context": "card"
         }
+      ],
+      "pieces": [
+        "fh-tier"
       ]
     },
     "TML": {
@@ -5387,13 +5535,9 @@
           "key": "body",
           "order": 1,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "long_text",
-          "context": "metric",
-          "accepts": [
-            "MET"
-          ],
-          "default": "MET"
+          "context": "metric"
         },
         {
           "key": "media",
@@ -5424,6 +5568,16 @@
           "order": 6,
           "cardinality": "one",
           "required": false
+        },
+        {
+          "key": "items",
+          "order": 7,
+          "cardinality": "many",
+          "required": true,
+          "accepts": [
+            "MET"
+          ],
+          "default": "MET"
         }
       ]
     },
@@ -5574,13 +5728,16 @@
         {
           "key": "value",
           "order": 8,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "accepts": [
             "FBK"
           ],
           "default": "FBK"
         }
+      ],
+      "pieces": [
+        "fh-check-card"
       ]
     },
     "TRK": {
@@ -5623,6 +5780,10 @@
             "THB"
           ]
         }
+      ],
+      "pieces": [
+        "fh-eq",
+        "fh-track"
       ]
     },
     "TST": {
@@ -5679,6 +5840,9 @@
           "fieldType": "short_text",
           "context": "card"
         }
+      ],
+      "pieces": [
+        "fh-vcard"
       ]
     },
     "WAL": {
