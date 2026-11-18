@@ -63,6 +63,10 @@
       "cardinality": "one",
       "fieldType": "long_text"
     },
+    "items": {
+      "meaning": "the repeated members of a list root (a tile in tiles, a chip in chips, a row in rows)",
+      "cardinality": "many"
+    },
     "label": {
       "meaning": "the name of a value",
       "cardinality": "one",
@@ -248,12 +252,10 @@
           ]
         },
         {
-          "key": "body",
+          "key": "items",
           "order": 2,
           "cardinality": "many",
           "required": false,
-          "fieldType": "long_text",
-          "context": "card",
           "accepts": [
             "ACN"
           ],
@@ -844,8 +846,18 @@
           "default": "CHT"
         },
         {
-          "key": "name",
+          "key": "items",
           "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "CHT"
+          ],
+          "default": "CHT"
+        },
+        {
+          "key": "name",
+          "order": 4,
           "cardinality": "one",
           "required": false,
           "fieldType": "display_name",
@@ -853,7 +865,7 @@
         },
         {
           "key": "time",
-          "order": 4,
+          "order": 5,
           "cardinality": "one",
           "required": false,
           "fieldType": "timestamp",
@@ -862,7 +874,7 @@
         {
           "key": "actions",
           "element": "toggle",
-          "order": 5,
+          "order": 6,
           "cardinality": "many",
           "required": false,
           "accepts": [
@@ -2145,14 +2157,23 @@
           "fieldType": "long_text",
           "context": "metric",
           "accepts": [
-            "MET",
             "TBL"
+          ],
+          "default": "TBL"
+        },
+        {
+          "key": "items",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "MET"
           ],
           "default": "MET"
         },
         {
           "key": "sub",
-          "order": 4,
+          "order": 5,
           "cardinality": "one",
           "required": false,
           "fieldType": "description",
@@ -2160,7 +2181,7 @@
         },
         {
           "key": "value",
-          "order": 5,
+          "order": 6,
           "cardinality": "many",
           "required": false,
           "accepts": [
@@ -2170,7 +2191,7 @@
         },
         {
           "key": "source",
-          "order": 6,
+          "order": 7,
           "cardinality": "one",
           "required": false,
           "fieldType": "short_text",
@@ -2179,7 +2200,7 @@
         {
           "key": "actions",
           "element": "more",
-          "order": 7,
+          "order": 8,
           "cardinality": "many",
           "required": false,
           "accepts": [
@@ -2219,8 +2240,18 @@
           "default": "MIX"
         },
         {
-          "key": "time",
+          "key": "items",
           "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "MIX"
+          ],
+          "default": "MIX"
+        },
+        {
+          "key": "time",
+          "order": 4,
           "cardinality": "one",
           "required": false,
           "fieldType": "timestamp",
@@ -2228,14 +2259,14 @@
         },
         {
           "key": "value",
-          "order": 4,
+          "order": 5,
           "cardinality": "one",
           "required": false
         },
         {
           "key": "actions",
           "element": "buttons",
-          "order": 5,
+          "order": 6,
           "cardinality": "many",
           "required": false,
           "accepts": [
@@ -2321,16 +2352,25 @@
           "fieldType": "long_text",
           "context": "card",
           "accepts": [
-            "MST",
             "PRF",
             "TBL",
             "WRK"
+          ],
+          "default": "PRF"
+        },
+        {
+          "key": "items",
+          "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "MST"
           ],
           "default": "MST"
         },
         {
           "key": "label",
-          "order": 6,
+          "order": 7,
           "cardinality": "one",
           "required": false,
           "fieldType": "short_text",
@@ -2338,7 +2378,7 @@
         },
         {
           "key": "meta",
-          "order": 7,
+          "order": 8,
           "cardinality": "many",
           "required": false,
           "fieldType": "short_text",
@@ -2347,7 +2387,7 @@
         {
           "key": "link",
           "element": "crumb",
-          "order": 8,
+          "order": 9,
           "cardinality": "many",
           "required": false,
           "fieldType": "url",
@@ -2359,7 +2399,7 @@
         },
         {
           "key": "chips",
-          "order": 9,
+          "order": 10,
           "cardinality": "many",
           "required": false,
           "fieldType": "status",
@@ -2371,13 +2411,13 @@
         },
         {
           "key": "value",
-          "order": 10,
+          "order": 11,
           "cardinality": "one",
           "required": false
         },
         {
           "key": "summary",
-          "order": 11,
+          "order": 12,
           "cardinality": "one",
           "required": false,
           "fieldType": "long_text",
@@ -2385,7 +2425,7 @@
         },
         {
           "key": "actions",
-          "order": 12,
+          "order": 13,
           "cardinality": "many",
           "required": false,
           "accepts": [
@@ -2665,14 +2705,24 @@
           "default": "PRM"
         },
         {
-          "key": "value",
+          "key": "items",
           "order": 3,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "PRM"
+          ],
+          "default": "PRM"
+        },
+        {
+          "key": "value",
+          "order": 4,
           "cardinality": "one",
           "required": false
         },
         {
           "key": "hint",
-          "order": 4,
+          "order": 5,
           "cardinality": "one",
           "required": false,
           "fieldType": "short_text",
@@ -2778,7 +2828,7 @@
       ]
     },
     "REF": {
-      "layer": "part",
+      "layer": "composite",
       "transparent": false,
       "slots": [
         {
@@ -2796,6 +2846,16 @@
           "required": false,
           "fieldType": "short_code",
           "context": "cell"
+        },
+        {
+          "key": "value",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "accepts": [
+            "VAL"
+          ],
+          "default": "VAL"
         }
       ]
     },
@@ -3898,8 +3958,18 @@
           "default": "SPM"
         },
         {
-          "key": "version",
+          "key": "items",
           "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "SPM"
+          ],
+          "default": "SPM"
+        },
+        {
+          "key": "version",
+          "order": 6,
           "cardinality": "one",
           "required": false,
           "fieldType": "number_(whole)",
@@ -3907,7 +3977,7 @@
         },
         {
           "key": "chips",
-          "order": 6,
+          "order": 7,
           "cardinality": "many",
           "required": false,
           "fieldType": "status",
@@ -3919,7 +3989,7 @@
         },
         {
           "key": "meta",
-          "order": 7,
+          "order": 8,
           "cardinality": "many",
           "required": false,
           "fieldType": "short_text",
@@ -3927,7 +3997,7 @@
         },
         {
           "key": "link",
-          "order": 8,
+          "order": 9,
           "cardinality": "one",
           "required": false,
           "fieldType": "url",
@@ -4515,12 +4585,10 @@
           ]
         },
         {
-          "key": "body",
+          "key": "items",
           "order": 2,
           "cardinality": "many",
           "required": false,
-          "fieldType": "long_text",
-          "context": "card",
           "accepts": [
             "TIL"
           ],
@@ -4622,18 +4690,27 @@
           "key": "body",
           "order": 4,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "long_text",
           "context": "card",
           "accepts": [
-            "CKL",
+            "CKL"
+          ],
+          "default": "CKL"
+        },
+        {
+          "key": "items",
+          "order": 5,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
             "TIR"
           ],
           "default": "TIR"
         },
         {
           "key": "note",
-          "order": 5,
+          "order": 6,
           "cardinality": "one",
           "required": false,
           "fieldType": "short_text",
@@ -4945,8 +5022,18 @@
           "default": "TRA"
         },
         {
-          "key": "title",
+          "key": "items",
           "order": 6,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "TRA"
+          ],
+          "default": "TRA"
+        },
+        {
+          "key": "title",
+          "order": 7,
           "cardinality": "one",
           "required": false,
           "fieldType": "title",
@@ -4954,7 +5041,7 @@
         },
         {
           "key": "value",
-          "order": 7,
+          "order": 8,
           "cardinality": "one",
           "required": false,
           "accepts": [
@@ -4981,9 +5068,19 @@
           "default": "TRK"
         },
         {
+          "key": "items",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "accepts": [
+            "TRK"
+          ],
+          "default": "TRK"
+        },
+        {
           "key": "media",
           "element": "art",
-          "order": 2,
+          "order": 3,
           "cardinality": "one",
           "required": false,
           "fieldType": "image_asset",
@@ -5017,12 +5114,10 @@
       "transparent": false,
       "slots": [
         {
-          "key": "body",
+          "key": "items",
           "order": 1,
           "cardinality": "many",
           "required": false,
-          "fieldType": "long_text",
-          "context": "card",
           "accepts": [
             "VCD"
           ],
@@ -5121,9 +5216,9 @@
   },
   "layerExceptions": [
     {
-      "parent": "REF",
-      "child": "VAL",
-      "reason": "fh-cell is owned by REF (a part, from sections.json cells.reference) and the datatable cells draw Values in it: a cell is a composite (Rascode, #210); needs a layer ruling for REF or a cell family"
+      "parent": "VAL",
+      "child": "REF",
+      "reason": "VAL-3.8, VAL-3.9 and VAL-3.12 (reference values) draw REF's fh-ref link, and REF is a composite since round 2 (fh-cell is a composite, Rascode, #210): REF holds both the cell and the link; needs a ruling (fh-ref as a part, or a cell family)"
     },
     {
       "parent": "VAL",
