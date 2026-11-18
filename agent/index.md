@@ -1,6 +1,6 @@
 # Firehorse Index
 
-> Every Firehorse component, group and variant has a stable ID, v1.1.2. People
+> Every Firehorse component, group and variant has a stable ID, v1.1.3. People
 > name what they want by ID instead of describing it ("use CHP-1.3", "swap the
 > pricing badge for TIR"). Look the ID up here and use the markup exactly.
 > Generated from https://firehorse.rascode.dev. Rules: [system.md](system.md). Full markup for each
