@@ -184,7 +184,9 @@ const lint = [];
 const edges = new Map();
 for (const e of compose({ markups: specimens, comp, ids: idSet, roots: rootClasses(root, owners, specimens.map((m) => m.html)), owners, errors: lint })) edges.set(`${e.parent}|${e.child}|${e.slot}|${e.order}`, e);
 guard([...edges.values()], comp, lint);
-const fireKit = lintFireKit(join(root, "fire-kit/Sources/FireKit"), idSet, lint);
+// FireKit (private, the iOS parts) sits beside Firehorse in the platform monorepo: packages/fire-kit, like Pro.
+// Only its counts reach the console; nothing from it is written to the Index, the agent docs or the site.
+const fireKit = lintFireKit(join(root, "..", "fire-kit", "Sources", "FireKit"), idSet, lint);
 const lintErrors = [...new Set(lint)];
 if (lintErrors.length) errors.push(`composition lint: ${lintErrors.length} failure(s)`, ...lintErrors.slice(0, 60), ...(lintErrors.length > 60 ? [`… and ${lintErrors.length - 60} more`] : []));
 const byEdge = (a, b) => a.parent.localeCompare(b.parent) || a.slot.localeCompare(b.slot) || a.order - b.order || a.child.localeCompare(b.child);
