@@ -10,6 +10,10 @@
 //   M5 a child's layer outranks its parent's, or a field holds a field (layerExceptions skipped, until ruled)
 //   M6 data-fh-slot sits on a transparent or layout element
 //   M7 a public FireKit View whose doc comment names an fh-/hx- class or a code has no "/// fh:" line
+// and, on the compositions all specimens emit together (Helm's guards, migration 480):
+//   M8 a child the slot does not accept: not in its accepts, and not a field in a slot that binds a field type
+//   M9 more than one child in a one slot
+//   M10 a self edge (the same ID as parent and child) or a cycle
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "node-html-parser";
@@ -100,6 +104,37 @@ export function compose({ markups, comp, ids, roots, errors }) {
     }
   }
   return [...edges.values()];
+}
+
+/** M8 to M10: Helm's guards (migration 480, firehorse.guard_composition) on the emitted compositions, all
+ *  specimens together, as sync sees them. A family code accepts its groups and variants, a group its variants. */
+export const accepts = (code, id) => id === code || id.startsWith(code + (code.includes("-") ? "." : "-"));
+export function guard(edges, comp, errors) {
+  const slotOf = (id, key) => (comp.families[fam(id)]?.slots ?? []).find((s) => s.key === key);
+  const isField = (id) => comp.families[fam(id)]?.layer === "field";
+  const filled = new Map(); // parent|slot → edges, for one slots
+  const next = new Map(); // parent → children, for cycles
+  for (const e of edges) {
+    const at = `${e.parent} > ${e.child} in ${e.slot}`;
+    const s = slotOf(e.parent, e.slot);
+    if (s && !(s.accepts ?? []).some((a) => accepts(a, e.child)) && !(s.fieldType && isField(e.child)))
+      errors.push(`M8 ${at}: the slot accepts ${s.accepts?.length ? s.accepts.join(", ") : "no component"}${s.fieldType ? ` or a ${s.fieldType} field` : ""}`);
+    if (s?.cardinality === "one") { const k = `${e.parent}|${e.slot}`; filled.set(k, [...(filled.get(k) ?? []), e]); }
+    if (e.parent === e.child) errors.push(`M10 ${at} is a self edge`);
+    else next.set(e.parent, new Set([...(next.get(e.parent) ?? []), e.child]));
+  }
+  for (const [k, es] of filled) if (es.length > 1) errors.push(`M9 ${k.replace("|", " slot ")} is a one slot holding ${es.length}: ${es.map((e) => `${e.child} (${e.order})`).join(", ")}`);
+  // A cycle is a path back to a node still on the stack; each is reported once, from its smallest ID.
+  const state = new Map(), seen = new Set();
+  const visit = (id, path) => {
+    state.set(id, 1); path.push(id);
+    for (const c of [...(next.get(id) ?? [])].sort()) {
+      if (state.get(c) === 1) { const loop = path.slice(path.indexOf(c)); const min = [...loop].sort()[0]; const r = [...loop.slice(loop.indexOf(min)), ...loop.slice(0, loop.indexOf(min)), min].join(" > "); if (!seen.has(r)) { seen.add(r); errors.push(`M10 cycle ${r}`); } }
+      else if (!state.has(c)) visit(c, path);
+    }
+    state.set(id, 2); path.pop();
+  };
+  for (const id of [...next.keys()].sort()) if (!state.has(id)) visit(id, []);
 }
 
 /** M7: public FireKit views name what they implement on a "/// fh: <CODE> v<N>" or "/// fh: local:<block>" line. */

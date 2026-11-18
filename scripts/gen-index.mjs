@@ -5,7 +5,7 @@
 //   dist/index.json: the public registry, public families and variants only (shipped in the package, read by the MCP server)
 //   agent/index.md: the lookup table agents read when a person names an ID (public set)
 // Each family carries its layer, transparent flag and slots (schema/composition.json) and the compositions its
-// specimens hold (data-fh on every component root, data-fh-slot on every filler); rules M1 to M7
+// specimens hold (data-fh on every component root, data-fh-slot on every filler); rules M1 to M10
 // (scripts/composition.mjs) fail the build.
 // Validation and the ledger always read every family, held or not.
 // Run: node scripts/gen-index.mjs [--check|--dist]   (--check only validates, both sets; --dist writes the two
@@ -18,7 +18,7 @@ import { allMain, pageOf } from "./pages.mjs";
 import { snippet as snip, ownersOf, NON_ROOT } from "./fh-tag.mjs";
 import { isPublic, shownStatus, tierOf, releaseIds } from "./release.mjs";
 import { hasSpecimen, specimenPath } from "./specimen.mjs";
-import { readComposition, rootClasses, compose, lintFireKit } from "./composition.mjs";
+import { readComposition, rootClasses, compose, guard, lintFireKit } from "./composition.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const base = "https://firehorse.rascode.dev";
@@ -176,13 +176,14 @@ const live = new Map(list.flatMap((f) => [[f.id, f.name], ...f.groups.map((g) =>
 for (const id of Object.keys(ledger.issued)) if (!live.has(id) && !ledger.retired[id]) errors.push(`${id} (${ledger.issued[id]}) was issued but is gone: restore it or list it under "retired" in index-ledger.json`);
 for (const id of live.keys()) if (ledger.retired[id]) errors.push(`${id} is retired and can't be reused`);
 for (const [old, to] of Object.entries(ledger.moved)) { if (!ledger.retired[old]) errors.push(`moved ${old} → ${to}, but ${old} isn't retired`); if (!live.has(to)) errors.push(`moved ${old} → ${to}, but ${to} isn't live`); }
-// Composition: layer, slots and what each specimen holds. A lint failure (M1 to M7) is an error like any other.
+// Composition: layer, slots and what each specimen holds. A lint failure (M1 to M10) is an error like any other.
 const comp = readComposition(root, errors);
 const idSet = new Set(live.keys());
 const specimens = list.flatMap((f) => [{ id: f.id, html: familyStage.get(f.id) ?? "" }, ...f.groups.filter((g) => g.markupFrom === "group").map((g) => ({ id: g.id, html: g.markup })), ...f.variants.map((v) => ({ id: v.id, html: v.markup }))]).filter((m) => m.html);
 const lint = [];
 const edges = new Map();
 for (const e of compose({ markups: specimens, comp, ids: idSet, roots: rootClasses(root, owners, specimens.map((m) => m.html)), errors: lint })) edges.set(`${e.parent}|${e.child}|${e.slot}|${e.order}`, e);
+guard([...edges.values()], comp, lint);
 const fireKit = lintFireKit(join(root, "fire-kit/Sources/FireKit"), idSet, lint);
 const lintErrors = [...new Set(lint)];
 if (lintErrors.length) errors.push(`composition lint: ${lintErrors.length} failure(s)`, ...lintErrors.slice(0, 60), ...(lintErrors.length > 60 ? [`… and ${lintErrors.length - 60} more`] : []));
@@ -219,7 +220,7 @@ if (check) {
   for (const id of list.flatMap((f) => f.groups.filter((g) => g.markupFrom === "none").map((g) => g.id))) console.warn(`warning: ${id} has no markup`);
   console.log(`✓ index: ${list.length} families, ${nG} groups, ${nV} variants, IDs unique and in order`);
   console.log(`✓ index (public): ${publicList.length} families, ${pG} groups, ${pV} variants`);
-  console.log(`✓ composition: ${list.filter((f) => f.slots.length).length} families with slots, ${edges.size} compositions, M1 to M6 clean${fireKit ? `, M7: ${fireKit.annotated} of ${fireKit.views} FireKit views annotated` : "; M7: no FireKit sources in this checkout"}`);
+  console.log(`✓ composition: ${list.filter((f) => f.slots.length).length} families with slots, ${edges.size} compositions, M1 to M6 and M8 to M10 clean${fireKit ? `, M7: ${fireKit.annotated} of ${fireKit.views} FireKit views annotated` : "; M7: no FireKit sources in this checkout"}`);
   process.exit(0);
 }
 

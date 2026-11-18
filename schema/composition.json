@@ -1,7 +1,7 @@
 {
   "$schema": "./composition.schema.json",
   "name": "Firehorse composition",
-  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M7.",
+  "note": "What every Firehorse family is made of (#210, C0 sections 1, 2 and 8). layer: token < part < field < composite < section < template; a child's layer never outranks its parent's and a field never holds a field. transparent: layout primitives and the text fold; their children count as children of the nearest non-transparent ancestor. slots: the named places a family's children fill, keyed by slotKeys (data-fh-slot on the filler). gen-index.mjs reads this file, emits layer, transparent, slots and compositions per family into both index files, and fails the build on rules M1 to M10 (M8 to M10 are Helm's composition guards: accepts, one slots, no self edge or cycle).",
   "layers": [
     "token",
     "part",
