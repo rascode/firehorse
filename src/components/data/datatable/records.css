@@ -289,5 +289,20 @@
 
       & > .fh-dt__expand { flex: none; }
     }
+
+    /* Columns size to their values: the tree column holds the indent and the name on one line and takes the
+     * leftover width; the others keep only what their values need. Narrower than the content, the name ends in
+     * an ellipsis (the link's text, its accessible name, stays whole). Under 36rem the rows stack as above. */
+    @container fh-dt (inline-size >= 36rem) {
+      & .fh-dt__table {
+        inline-size: 100%;
+        table-layout: auto;
+
+        & > :is(thead, tbody) > tr > :first-child { inline-size: 100%; max-inline-size: 0; }
+      }
+
+      & .fh-dt__node .fh-ref { flex-wrap: nowrap; }
+      & .fh-dt__node .fh-ref__label { display: block; white-space: nowrap; text-overflow: ellipsis; }
+    }
   }
 }

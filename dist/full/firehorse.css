@@ -8832,6 +8832,28 @@
         flex: none;
       }
     }
+
+    @container fh-dt (inline-size >= 36rem) {
+      & .fh-dt__table {
+        table-layout: auto;
+        inline-size: 100%;
+
+        & > :is(thead, tbody) > tr > :first-child {
+          inline-size: 100%;
+          max-inline-size: 0;
+        }
+      }
+
+      & .fh-dt__node .fh-ref {
+        flex-wrap: nowrap;
+      }
+
+      & .fh-dt__node .fh-ref__label {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: block;
+      }
+    }
   }
 
   .fh-colmenu__button {
