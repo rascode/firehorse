@@ -32,7 +32,8 @@
  * has a value, that value is the localStorage key (for example
  * helm.sidecar.width). The saved width is read when the dialog opens, and
  * storage is wrapped in try/catch. A handle, .fh-sidecar__resize, is
- * inserted once as the dialog's first child. Dragging sets --fh-dialog-size
+ * inserted once as the dialog's first child; a page that renders that handle
+ * itself (as the first child, so server markup matches) has it wired instead. Dragging sets --fh-dialog-size
  * to the pointer's distance from the dialog's right edge, in px, clamped
  * between 352px and the window width minus 32px. ArrowLeft widens by 32px,
  * ArrowRight narrows by 32px, and Home or a double-click removes the
@@ -210,14 +211,19 @@ const restoreWidth = (dlg) => {
 };
 
 const mountResize = (dlg) => {
-  if (dlg.querySelector(":scope > .fh-sidecar__resize")) return;
-  const handle = document.createElement("div");
-  handle.className = "fh-sidecar__resize";
-  handle.setAttribute("role", "separator");
-  handle.setAttribute("aria-orientation", "vertical");
-  handle.tabIndex = 0;
-  handle.setAttribute("aria-label", "Drag to change the panel width");
-  dlg.insertBefore(handle, dlg.firstChild);
+  // A page that renders the handle itself (server-rendered markup, so hydration matches) gets it wired, not a second one.
+  let handle = dlg.querySelector(":scope > .fh-sidecar__resize");
+  if (handle?.__fhResize) return;
+  if (!handle) {
+    handle = document.createElement("div");
+    handle.className = "fh-sidecar__resize";
+    handle.setAttribute("role", "separator");
+    handle.setAttribute("aria-orientation", "vertical");
+    handle.tabIndex = 0;
+    handle.setAttribute("aria-label", "Drag to change the panel width");
+    dlg.insertBefore(handle, dlg.firstChild);
+  }
+  handle.__fhResize = true;
 
   handle.addEventListener("pointerdown", (e) => {
     if (e.button !== 0) return;
