@@ -1,0 +1,94 @@
+/*
+ * Firehorse - Gallery section (SGA)
+ * components/sections · layer fh.components · docs /components/sections/#SGA
+ */
+
+@layer fh.components {
+  /* Gallery
+   * A grid of square thumbnails. Each item is a button holding the image (its
+   * alt text names the button), then an optional caption and kind chip. The
+   * grid fills by the section's width, not the window's: two columns in a
+   * narrow slot, up to five in a wide one. A thumbnail opens the Image stack
+   * viewer (IMS-2.1, image-stack.js) at that image, and the arrow keys walk
+   * the set. With no images the body holds an fh-empty (EMP) instead.
+   *   <ul class="fh-gallery" aria-label="9 images">
+   *     <li>
+   *       <button type="button" aria-haspopup="dialog"><img src="…" alt="…" width="960" height="600" loading="lazy"></button>
+   *       <span class="fh-gallery__caption">akhal-teke.webp</span>
+   *       <span class="fh-chip fh-chip--sm" data-tone="amber">photo</span>
+   *     </li>
+   *   </ul> */
+
+  .fh-panel-section--gallery .fh-panel-section__body {
+    min-inline-size: 0;
+    container: fh-gallery / inline-size;
+  }
+
+  .fh-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--fh-gap-grouped);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--fh-gap-bound);
+      min-inline-size: 0;
+    }
+
+    & > li > button {
+      display: block;
+      inline-size: 100%;
+      padding: 0;
+      overflow: hidden;
+      border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-card-border-color, var(--fh-color-etch-soft));
+      border-radius: var(--fh-radius-md);
+      background-color: var(--fh-color-surface-raised);
+      cursor: var(--fh-cursor-action);
+
+      &:hover {
+        border-color: var(--fh-color-border);
+      }
+
+      &:focus-visible {
+        outline: var(--fh-focus-width) solid var(--fh-color-focus, currentColor);
+        outline-offset: 2px;
+      }
+    }
+
+    & img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    & .fh-gallery__caption {
+      max-inline-size: 100%;
+      overflow: hidden;
+      color: var(--fh-color-text-muted);
+      font-family: var(--fh-type-meta-family);
+      font-size: var(--fh-type-meta);
+      letter-spacing: var(--fh-type-meta-tracking);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  @container fh-gallery (inline-size >= 24rem) {
+    .fh-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @container fh-gallery (inline-size >= 36rem) {
+    .fh-gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  @container fh-gallery (inline-size >= 48rem) {
+    .fh-gallery { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  }
+}

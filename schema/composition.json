@@ -1002,6 +1002,18 @@
             "ACT"
           ],
           "default": "ACT"
+        },
+        {
+          "key": "media",
+          "order": 6,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 7,
+          "cardinality": "one",
+          "required": false
         }
       ]
     },
@@ -1420,6 +1432,12 @@
           "required": false,
           "fieldType": "short_text",
           "context": "cell"
+        },
+        {
+          "key": "link",
+          "order": 9,
+          "cardinality": "many",
+          "required": false
         }
       ]
     },
@@ -1696,6 +1714,10 @@
     },
     "HLP": {
       "layer": "token",
+      "transparent": false
+    },
+    "IMF": {
+      "layer": "part",
       "transparent": false
     },
     "IMS": {
@@ -2321,7 +2343,7 @@
             "wordmark"
           ],
           "order": 3,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "fieldType": "image_asset",
           "context": "card",
@@ -2335,7 +2357,7 @@
         {
           "key": "title",
           "order": 4,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "fieldType": "title",
           "context": "card",
@@ -2371,7 +2393,7 @@
         {
           "key": "label",
           "order": 7,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "fieldType": "short_text",
           "context": "card"
@@ -2412,7 +2434,7 @@
         {
           "key": "value",
           "order": 11,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false
         },
         {
@@ -2433,6 +2455,12 @@
             "BTN"
           ],
           "default": "BTN"
+        },
+        {
+          "key": "name",
+          "order": 14,
+          "cardinality": "many",
+          "required": false
         }
       ]
     },
@@ -2628,7 +2656,7 @@
           "key": "media",
           "order": 1,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "image_asset",
           "context": "card",
           "accepts": [
@@ -2658,7 +2686,7 @@
         {
           "key": "body",
           "order": 4,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": false,
           "fieldType": "long_text",
           "context": "card",
@@ -2677,6 +2705,30 @@
           "accepts": [
             "AVT"
           ]
+        },
+        {
+          "key": "value",
+          "order": 6,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "link",
+          "order": 7,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "fields",
+          "order": 8,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "stage",
+          "order": 9,
+          "cardinality": "many",
+          "required": false
         }
       ]
     },
@@ -2760,7 +2812,7 @@
           "key": "mark",
           "order": 2,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "accepts": [
             "CUB",
             "MRK"
@@ -2965,6 +3017,64 @@
         }
       ]
     },
+    "SBD": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        },
+        {
+          "key": "who",
+          "order": 6,
+          "cardinality": "many",
+          "required": false
+        }
+      ]
+    },
     "SBR": {
       "layer": "section",
       "transparent": false
@@ -3073,6 +3183,58 @@
         }
       ]
     },
+    "SCO": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
     "SCR": {
       "layer": "part",
       "transparent": false
@@ -3099,7 +3261,7 @@
           "key": "chips",
           "order": 3,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "status",
           "context": "record",
           "accepts": [
@@ -3167,6 +3329,58 @@
         }
       ]
     },
+    "SCV": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
     "SDC": {
       "layer": "template",
       "transparent": false,
@@ -3175,7 +3389,7 @@
           "key": "eyebrow",
           "order": 1,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "fieldType": "short_text",
           "context": "record",
           "accepts": [
@@ -3186,7 +3400,7 @@
           "key": "actions",
           "order": 2,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "accepts": [
             "ACT",
             "BTN"
@@ -3197,7 +3411,7 @@
           "key": "mark",
           "order": 3,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "accepts": [
             "CUB",
             "MRK"
@@ -3207,7 +3421,7 @@
           "key": "title",
           "order": 4,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "fieldType": "title",
           "context": "record"
         },
@@ -3215,7 +3429,7 @@
           "key": "sub",
           "order": 5,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "fieldType": "description",
           "context": "record"
         },
@@ -3223,7 +3437,7 @@
           "key": "chips",
           "order": 6,
           "cardinality": "many",
-          "required": true,
+          "required": false,
           "fieldType": "status",
           "context": "record",
           "accepts": [
@@ -3257,12 +3471,140 @@
           "order": 9,
           "cardinality": "many",
           "required": false
+        },
+        {
+          "key": "fields",
+          "order": 10,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "media",
+          "order": 11,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "meta",
+          "order": 12,
+          "cardinality": "many",
+          "required": false
         }
       ]
     },
     "SDD": {
       "layer": "template",
       "transparent": false
+    },
+    "SDF": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
+    "SDO": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        },
+        {
+          "key": "actions",
+          "order": 6,
+          "cardinality": "one",
+          "required": false
+        }
+      ]
     },
     "SEC": {
       "layer": "composite",
@@ -3271,7 +3613,7 @@
         {
           "key": "title",
           "order": 1,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": true,
           "fieldType": "title",
           "context": "record"
@@ -3492,6 +3834,58 @@
         }
       ]
     },
+    "SGA": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
     "SHL": {
       "layer": "template",
       "transparent": false,
@@ -3533,7 +3927,7 @@
         {
           "key": "title",
           "order": 4,
-          "cardinality": "one",
+          "cardinality": "many",
           "required": true,
           "fieldType": "title",
           "context": "record"
@@ -3830,6 +4224,58 @@
           "required": false,
           "fieldType": "short_text",
           "context": "metric"
+        }
+      ]
+    },
+    "SMX": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
         }
       ]
     },
@@ -4297,6 +4743,58 @@
       "layer": "part",
       "transparent": false
     },
+    "STR": {
+      "layer": "section",
+      "transparent": false,
+      "slots": [
+        {
+          "key": "icon",
+          "order": 1,
+          "cardinality": "one",
+          "required": false
+        },
+        {
+          "key": "chips",
+          "order": 2,
+          "cardinality": "many",
+          "required": false,
+          "fieldType": "status",
+          "context": "record",
+          "accepts": [
+            "CHP"
+          ],
+          "default": "CHP"
+        },
+        {
+          "key": "title",
+          "order": 3,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "title",
+          "context": "record"
+        },
+        {
+          "key": "body",
+          "order": 4,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "long_text",
+          "context": "record",
+          "accepts": [
+            "SLG"
+          ],
+          "default": "SLG"
+        },
+        {
+          "key": "time",
+          "order": 5,
+          "cardinality": "one",
+          "required": false,
+          "fieldType": "timestamp",
+          "context": "record"
+        }
+      ]
+    },
     "STT": {
       "layer": "section",
       "transparent": false,
@@ -4552,6 +5050,10 @@
     },
     "TBR": {
       "layer": "composite",
+      "transparent": false
+    },
+    "TGT": {
+      "layer": "token",
       "transparent": false
     },
     "THB": {
@@ -4892,6 +5394,36 @@
             "MET"
           ],
           "default": "MET"
+        },
+        {
+          "key": "media",
+          "order": 2,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "sub",
+          "order": 3,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "value",
+          "order": 4,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "source",
+          "order": 5,
+          "cardinality": "many",
+          "required": false
+        },
+        {
+          "key": "actions",
+          "order": 6,
+          "cardinality": "one",
+          "required": false
         }
       ]
     },
@@ -5192,7 +5724,7 @@
           "key": "mark",
           "order": 1,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "accepts": [
             "CUB",
             "MRK"
@@ -5203,7 +5735,7 @@
           "element": "what",
           "order": 2,
           "cardinality": "one",
-          "required": true,
+          "required": false,
           "fieldType": "title",
           "context": "card"
         }
@@ -5244,6 +5776,11 @@
       "parent": "SEC",
       "child": "SLK",
       "reason": "SEC-1.1 holds the links list of the links kind (fh-links) without its section shell"
+    },
+    {
+      "parent": "VAL",
+      "child": "TBL",
+      "reason": "VAL-12.4 (Place value, added in 7c6d6e4) draws its address lines as an fh-table; a field holding a composite waits for an FC2 split or a layer ruling, as the other VAL exceptions"
     }
   ]
 }

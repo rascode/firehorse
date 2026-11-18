@@ -22,9 +22,15 @@
  * .fh-image-stack__meta. Set data-full on the link for a different full-size
  * file than its href. "fh:image-open" fires on the stack (detail: { index, href }).
  * Mark a stack data-viewer="off" to keep plain links.
+ *
+ * A gallery (ul.fh-gallery, the Gallery section SGA) shares the viewer: a
+ * click on a thumbnail button opens the set at that image. Its details come
+ * from the item's .fh-gallery__caption and its kind chip; data-full on the
+ * button names a different full-size file than the img.
  */
 
 const SELECTOR = ".fh-image-stack";
+const GALLERY = ".fh-gallery";
 const doc = typeof document === "undefined" ? null : document;
 let lastPointer = "mouse";
 let viewer = null;
@@ -32,7 +38,19 @@ let state = null;   // { stack, items, index, opener }
 
 const icon = (name) => `<i class="fh-icon fh-icon--${name}" aria-hidden="true"></i>`;
 
-const itemsOf = (stack) => [...stack.querySelectorAll(":scope > .fh-image-stack__list > .fh-image-stack__item")].map((li) => {
+const galleryItemsOf = (gallery) => [...gallery.querySelectorAll(":scope > li")].filter((li) => li.querySelector(":scope > button img")).map((li) => {
+  const button = li.querySelector(":scope > button");
+  const img = button.querySelector("img");
+  return {
+    link: button,
+    href: button.dataset.full || img.currentSrc || img.src || "",
+    alt: img.getAttribute("alt") ?? "",
+    file: li.querySelector(".fh-gallery__caption")?.textContent?.trim() ?? "",
+    meta: [...li.querySelectorAll(":scope > .fh-chip")].map((m) => m.textContent.trim()).filter(Boolean),
+  };
+});
+
+const itemsOf = (stack) => stack.matches(GALLERY) ? galleryItemsOf(stack) : [...stack.querySelectorAll(":scope > .fh-image-stack__list > .fh-image-stack__item")].map((li) => {
   const link = li.querySelector(".fh-image-stack__open");
   const img = li.querySelector("img");
   return {
@@ -142,6 +160,14 @@ export function closeImageStacks(except = null) {
 }
 
 function onClick(e) {
+  const thumb = e.target.closest?.(`${GALLERY} > li > button`);
+  if (thumb && thumb.querySelector("img")) {
+    const gallery = thumb.closest(GALLERY);
+    if (gallery.dataset.viewer === "off") return;
+    const shots = [...gallery.querySelectorAll(":scope > li")].filter((li) => li.querySelector(":scope > button img"));
+    openImageViewer(gallery, shots.indexOf(thumb.parentElement));
+    return;
+  }
   const link = e.target.closest?.(".fh-image-stack__open");
   if (!link) {
     if (!e.target.closest?.(SELECTOR)) closeImageStacks();

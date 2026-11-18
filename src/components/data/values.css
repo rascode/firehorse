@@ -13,7 +13,7 @@
  *   <span class="fh-value fh-value--dot" data-tone="sky" data-fh="VAL-1.1"><span class="fh-dot"></span>running</span>
  *
  * Groups: VAL-1 Option · VAL-2 Options · VAL-3 Entity · VAL-4 Money · VAL-5 Ratio · VAL-6 Number ·
- * VAL-7 Temporal · VAL-8 File · VAL-9 Link · VAL-10 Flag · VAL-11 Prose, text and code.
+ * VAL-7 Temporal · VAL-8 File · VAL-9 Link · VAL-10 Flag · VAL-11 Prose, text and code · VAL-12 Place.
  *
  * Read and edit (rule 6). Every variant has both states, at the same size, colour and position:
  *   read   the value as it is drawn.
@@ -254,8 +254,6 @@
     .fh-value .fh-entity { --_avatar: var(--fh-value-avatar-inline, var(--fh-avatar-inline)); --fh-avatar-initials: var(--fh-type-label); }
     .fh-value .fh-entity { gap: var(--fh-gap-related); padding-inline-start: var(--fh-gap-bound); }
     .fh-value .fh-entity-picker > .fh-entity { padding-inline-end: var(--fh-gap-related); }
-    /* The arc overlaps the avatar; it takes no gap of its own. */
-    .fh-value .fh-entity__sep { margin-inline-end: calc(var(--fh-gap-related) * -1); }
     .fh-value .fh-entity__stat { padding-inline-start: var(--fh-gap-related); }
     .fh-value .fh-entity__stat > small { display: none; }
   }
@@ -471,6 +469,56 @@
       outline-offset: var(--fh-focus-offset);
     }
   }
+
+  /* —— VAL-12 Place: the address, its hours today, a map link, the Places match chip ——
+   * A record (address) is a grid: the lines, the map action beside the first line, then the hours and the chip.
+   * A card (hours) is the first line over the hours; a cell is the first line and the chip. One line truncates
+   * (the full address is its title). The tones are the status states (display-rules.json place): no new colour. */
+  .fh-value:is(.fh-value--place-address, .fh-value--place-hours) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
+  }
+
+  .fh-value--place-address { inline-size: 100%; align-items: start; }
+
+  .fh-value__lines {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+    font-style: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .fh-value--place-address > .fh-value__action { grid-column: 2; grid-row: 1; }
+
+  .fh-value--place-address > .fh-value__meta {
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 1 / -1;
+    align-items: center;
+    gap: var(--fh-gap-related) var(--fh-gap-grouped);
+    min-inline-size: 0;
+  }
+
+  .fh-value--place-hours > .fh-value__name { grid-column: 1; }
+  .fh-value--place-hours > .fh-value__hours { grid-column: 1; }
+  .fh-value--place-hours > .fh-value__action { grid-column: 2; grid-row: 1 / span 2; }
+
+  .fh-value__hours {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+
+    & > .fh-dot { --fh-dot-size: 0.45em; }
+    & > .fh-value__sub { overflow: hidden; text-overflow: ellipsis; }
+  }
+
+  .fh-value:is(.fh-value--place-cell, .fh-value--place-match) > .fh-chip { flex: none; }
+
+  a.fh-value__action { text-decoration: none; }
 
   /* —— Edit (rule 6): the same part, with a chevron or a control —— */
   .fh-value[data-mode="edit"] { border-radius: var(--fh-radius-sm); }

@@ -1,0 +1,159 @@
+/*
+ * Firehorse — Image field (IMF)
+ * components/forms · layer fh.components · docs /forms/#IMF
+ *
+ * One image: a preview in the avatar part, then a Segmented control (SEG-2.2)
+ * whose panes are the compact dropzone (UPL), an https field, and (only with
+ * data-icons) an icon search. The size is the avatar step on the preview
+ * (fh-avatar--sm through fh-avatar--2xl; 2xl, 7rem, for a profile header and photo, Rascode 2026-11-15). data-kind sets the avatar shape:
+ * person is a circle; org, agent, record and goal are rounded squares.
+ *
+ *   <div class="fh-image-field" data-kind="person" data-size="xl">
+ *     <div class="fh-image-field__layout">
+ *       <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--xl" data-kind="person">AM</span></div>
+ *       <div class="fh-image-field__main">…segment, panes…</div>
+ *     </div>
+ *     <p class="fh-image-field__source">From Ava's photo <button class="fh-button fh-button--ghost" type="button" data-reset>Reset</button></p>
+ *     <div class="fh-image-field__foot"><button class="fh-button" type="button">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove>Remove</button></div>
+ *   </div>
+ *
+ * Held until Helm makes IMF live. A single image in the values contract draws
+ * this part (VAL-8.7); several images stay on the dropzone.
+ */
+
+@layer fh.components {
+  .fh-image-field {
+    container: fh-image-field / inline-size;
+    display: grid;
+    gap: var(--fh-gap-grouped);
+    min-inline-size: 0;
+    overflow-x: hidden;
+  }
+
+  .fh-image-field__layout {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--fh-gap-grouped);
+    align-items: start;
+    min-inline-size: 0;
+
+    /* Narrow slot (a 375 page): the preview sits above the panes. */
+    @container fh-image-field (inline-size < 26rem) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .fh-image-field__preview { min-inline-size: 0; }
+
+  /* Goal is a rounded square, the same shape as an org, an agent or a record. */
+  .fh-image-field[data-kind="goal"] .fh-avatar {
+    --fh-avatar-radius: var(--fh-avatar-entity-radius, var(--fh-avatar-plate-radius, var(--fh-radius-md)));
+  }
+
+  .fh-image-field__preview .fh-avatar > .fh-icon {
+    inline-size: 1.15em;
+    block-size: 1.15em;
+    color: var(--fh-tone, var(--fh-color-text));
+  }
+
+  .fh-image-field__main {
+    display: grid;
+    gap: var(--fh-gap-related);
+    align-content: start;
+    min-inline-size: 0;
+  }
+
+  .fh-image-field__panes { min-inline-size: 0; }
+
+  .fh-image-field__pane {
+    display: grid;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+  }
+
+  .fh-image-field__pane[hidden],
+  .fh-image-field:not([data-icons]) .fh-image-field__pane[data-pane="icon"],
+  .fh-image-field:not([data-icons]) .fh-image-field__modes [data-pane="icon"] {
+    display: none;
+  }
+
+  .fh-image-field__url {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+  }
+
+  .fh-image-field__url > .fh-input {
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+  }
+
+  .fh-image-field__status,
+  .fh-image-field__fetched {
+    display: none;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin: 0;
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+  }
+
+  .fh-image-field__pane[data-state="loading"] .fh-image-field__status,
+  .fh-image-field__pane[data-state="ready"] .fh-image-field__fetched {
+    display: flex;
+  }
+
+  /* The URL error is the field error line (FLD), shown by the pane state. */
+  .fh-image-field__pane[data-state="error"] .fh-field__error,
+  .fh-image-field > .fh-field__error { display: block; }
+  .fh-image-field__pane[data-state="error"] .fh-input { border-color: var(--fh-color-danger); }
+
+  .fh-image-field__tones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-bound);
+  }
+
+  .fh-image-field__icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(2.25rem, 1fr));
+    gap: var(--fh-gap-bound);
+    max-block-size: 8.5rem;
+    min-inline-size: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .fh-image-field__icons > .fh-button[hidden] { display: none; }
+
+  .fh-image-field__source {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    margin: 0;
+  }
+
+  .fh-image-field__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fh-gap-related);
+  }
+
+  /* Ghost buttons do not take data-tone. The remove control is danger ink. */
+  .fh-image-field__foot > .fh-button--ghost[data-tone="danger"],
+  .fh-image-field__foot > .fh-button--ghost[data-tone="danger"]:hover {
+    --_fg: var(--fh-color-danger);
+  }
+}
+
+@layer fh.components {
+  /* 375: the compact dropzone's hint goes under the title instead of over it (PE1 review). */
+  @container fh-image-field (max-width: 26rem) {
+    .fh-image-field .fh-dropzone--compact {
+      grid-template-columns: auto minmax(0, 1fr);
+      & > .fh-dropzone__hint { grid-column: 1 / -1; justify-self: start; white-space: normal; }
+    }
+  }
+}

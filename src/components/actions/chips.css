@@ -72,8 +72,11 @@
       pointer-events: none;
     }
 
-    /* Removable chip: <button class="fh-chip__remove" aria-label="Remove …"> */
+    /* Removable chip: <button class="fh-chip__remove" aria-label="Remove …">
+       The drawn control stays one line tall. ::before is only the hit area (the disc recipe,
+       clamped so it never shrinks the box). ::after is the close glyph, still 0.75em. */
     & .fh-chip__remove {
+      position: relative;
       display: inline-grid;
       place-items: center;
       flex: none;
@@ -88,6 +91,14 @@
 
       &::before {
         content: "";
+        position: absolute;
+        inset-block: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+        inset-inline: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+        border-radius: inherit;
+      }
+
+      &::after {
+        content: "";
         inline-size: 0.75em;
         aspect-ratio: 1;
         background-color: currentColor;
@@ -97,6 +108,8 @@
       &:hover {
         background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
       }
+
+      @media (pointer: coarse) { --_hit: var(--fh-tap-target); }
     }
   }
 

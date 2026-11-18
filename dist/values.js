@@ -16,9 +16,9 @@ import { rules, semanticTypes, optionSets } from "./value-rules.js";
 
 export { rules, semanticTypes, optionSets };
 // The Values parts as markup (W3): renderValue(field, value, context, opts), and the shapes it reads.
-export { renderValue, entityOf, fileOf, sparkline } from "./value-render.js";
+export { renderValue, entityOf, fileOf, placeOf, sparkline } from "./value-render.js";
 
-/** The fourteen shapes, in display-rules.json order (series is the 14th). */
+/** The fifteen shapes, in display-rules.json order (series is the 14th, place the 15th). */
 export const SHAPES = Object.freeze(Object.keys(rules.shapes));
 /** The six contexts: cell, record, card, metric, form, and text (the plain string, never drawn). */
 export const CONTEXTS = Object.freeze(Object.keys(rules.contexts));
@@ -460,8 +460,15 @@ export function textOf(field = {}, value, opts = {}) {
         .replace(/\s+/g, " ")
         .trim();
     case "json": return typeof value === "string" ? value : JSON.stringify(value);
+    case "place": return placeLines(value).join(", ");
     default: return value && typeof value === "object" ? JSON.stringify(value) : String(value);
   }
+}
+
+/** A place value's address lines (VAL-12): { lines } or { address }, a list, or a string with a line break per line. */
+export function placeLines(value) {
+  const v = value && typeof value === "object" && !Array.isArray(value) ? value.lines ?? value.address ?? [] : value;
+  return (Array.isArray(v) ? v : String(v ?? "").split(/\n/)).map((l) => String(l).trim()).filter(Boolean);
 }
 
 /** The contexts a viewer may re-display a value in (the column display menu): cell, record and card. */

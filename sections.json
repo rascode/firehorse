@@ -269,6 +269,87 @@
       ],
       "knobs": { "--fh-panel-section-stage-min": "minimum height of the stage, 8rem" },
       "chips": { "rule": "The code shown, then its status.", "max": 2 }
+    },
+    "code": {
+      "id": "SCO",
+      "members": ["SCT", "CHP", "DET", "VAL-11.16"],
+      "class": "fh-panel-section fh-panel-section--code",
+      "icon": "code",
+      "tone": "orange",
+      "body": "one fh-code per file: figcaption (file name, language chip, checksum in fh-value--mono with its copy action, Copy button), pre > code of span.fh-code__line rows",
+      "slots": ["file name", "language chip", "checksum (fh-value--mono, copy action)", "Copy button for the code", "line (fh-code__line, numbered by a CSS counter)"],
+      "chips": { "rule": "The language and the line count. Several files use the file count in place of one language.", "max": 2 }
+    },
+    "document": {
+      "id": "SDO",
+      "members": ["SCT", "CHP", "FOL", "TBL", "DET"],
+      "class": "fh-panel-section fh-panel-section--document",
+      "icon": "file-text",
+      "tone": "amber",
+      "body": "rendered prose (fh-prose, headings stepped down under the h3 title: h4, then h5) inside fh-fold past about 24 lines; tables are fh-table; code is fh-code",
+      "slots": ["prose (fh-prose)", "fold (fh-fold, Show all past about 24 lines)", "table (fh-table)", "code (fh-code)"],
+      "chips": { "rule": "The word count and the updated date.", "max": 2 }
+    },
+    "tree": {
+      "id": "STR",
+      "members": ["SCT", "CHP"],
+      "class": "fh-panel-section fh-panel-section--tree",
+      "icon": "folder",
+      "tone": "teal",
+      "body": "ul.fh-tree of nested rows: details when a row has children, a plain row when it does not; each label is a reference (a with data-sidecar) with an icon and a muted mono meta",
+      "slots": ["row (details, or a plain row)", "chevron (down when open)", "reference (a with data-sidecar, icon, label)", "meta (version, type, muted mono)"],
+      "chips": { "rule": "The node count and the depth.", "max": 2 }
+    },
+    "gallery": {
+      "id": "SGA",
+      "members": ["SCT", "CHP", "IMS", "EMP"],
+      "class": "fh-panel-section fh-panel-section--gallery",
+      "icon": "image",
+      "tone": "amber",
+      "body": "ul.fh-gallery of square thumbnails (li > button > img with its alt), each with an optional caption and kind chip; the grid fills by the section's width (container query); a thumbnail opens the Image stack viewer (IMS-2.1) at that image and the arrow keys walk the set; fh-empty when there are none",
+      "slots": ["thumbnail (button holding the img, alt text required)", "caption (fh-gallery__caption, Meta tier)", "kind (fh-chip)", "viewer (IMS-2.1)", "empty (fh-empty)"],
+      "chips": { "rule": "The image count and the newest date.", "max": 2 }
+    },
+    "matrix": {
+      "id": "SMX",
+      "members": ["SCT", "CHP", "TBL"],
+      "class": "fh-panel-section fh-panel-section--matrix",
+      "icon": "shield-check",
+      "tone": "fuchsia",
+      "body": "fh-table fh-matrix inside fh-table-wrap: capability rows (th scope=row holding a reference that opens its record) by role columns (a short label at the Label tier); cells data-included true (toned check), false (ghost dash) or inherited (hollow check, muted), each with its word in fh-sr-only; a wide matrix scrolls inside the section with the capability column and the head held",
+      "slots": ["capability (th scope=row, a with data-sidecar)", "role (th scope=col, Label tier)", "cell (td data-included: true, false, inherited)"],
+      "chips": { "rule": "The capability count and the role count.", "max": 2 }
+    },
+    "chart": {
+      "id": "SCV",
+      "members": ["SCT", "CHP"],
+      "class": "fh-panel-section fh-panel-section--chart",
+      "icon": "chart-line",
+      "tone": "sky",
+      "body": "one figure.fh-chart per chart (fh-chart--line or fh-chart--bar) with a figcaption: inline SVG with a viewBox and no script, gridlines in the border colour, each series toned by data-tone; HTML axis labels at the Meta tier, values at the Value tier; a legend list under the chart and a visually hidden table with the same data; it scales with its container",
+      "slots": ["caption (figcaption, Label tier)", "y axis (ol.fh-chart__y, Meta tier)", "plot (svg.fh-chart__svg: g.fh-chart__grid, .fh-chart__series data-tone)", "x axis (ol.fh-chart__x, Meta tier; a bar's value in fh-chart__value)", "legend (ul.fh-chart__legend, a name and its value)", "data (table.fh-sr-only)"],
+      "chips": { "rule": "The last value and the change.", "max": 2 }
+    },
+    "diff": {
+      "id": "SDF",
+      "members": ["SCT", "CHP", "DET", "VAL-11.7"],
+      "class": "fh-panel-section fh-panel-section--diff",
+      "icon": "git-branch",
+      "tone": "teal",
+      "body": "one figure.fh-code.fh-diff per file: figcaption (file name, the change counts as chips, the two versions in fh-value--mono), pre > code of span.fh-code__line rows with data-diff add (soft lime), del (soft rose), ctx or hunk (muted); the gutter holds the row number (data-n) and its + or - mark, neither copied; fh-diff--split puts old and new side by side in span.fh-diff__row of two span.fh-diff__side from 40rem of the block, and stacks to unified under it",
+      "slots": ["file name", "change counts (fh-chip lime +N, rose -N)", "versions (fh-diff__versions: two fh-value--mono)", "line (fh-code__line, data-diff add, del, ctx or hunk; data-n)", "split row (fh-diff__row: fh-diff__side data-side old, new)"],
+      "chips": { "rule": "The lines added and removed. Several files lead with the file count.", "max": 2 }
+    },
+    "board": {
+      "id": "SBD",
+      "tier": "pro",
+      "members": ["SCT", "CHP", "SCR", "AVT", "REF"],
+      "class": "fh-panel-section fh-panel-section--board",
+      "icon": "kanban",
+      "tone": "violet",
+      "body": "ol.fh-board of li.fh-board__column, one per status: a details.fh-board__fold whose summary is the status chip (data-status) and a count badge, then ul.fh-board__cards; a card is a.fh-board__card with data-sidecar: the title at the Value tier, a meta line (the id in mono, the due date) at the Meta tier, the owner avatar (a circle for a person) and one chip. From 40rem of the body the columns sit side by side, stay open and scroll sideways inside the section; under 40rem they stack and each folds. No drag: a card moves by the status picker in its sidecar. Firehorse Pro (pro/src/pm/board.css)",
+      "slots": ["column (li.fh-board__column)", "head (summary.fh-board__head: fh-chip data-status, fh-badge count)", "cards (ul.fh-board__cards)", "card (a.fh-board__card data-sidecar)", "title (fh-board__title, Value tier)", "meta (fh-board__meta: code id, time due; data-overdue in the danger tone)", "owner (fh-avatar--xs, fh-avatar--circle for a person)", "chips (fh-board__chips, one chip)"],
+      "chips": { "rule": "The open count and the done count.", "max": 2 }
     }
   },
   "fields": {

@@ -1,0 +1,389 @@
+/*
+ * Firehorse — Crumb trail (MST-5) and the Crumbs App bar layout (MST-4.4)
+ * components/content · layer fh.components · docs /layout/#MST
+ * MST-5 Crumb trail: MST-5.1 Area crumb, MST-5.2 Record crumb, MST-5.3 Switcher menu. Two levels at most: area, then one record.
+ * MST-4.4 Crumbs: .fh-masthead--app.fh-masthead--app-crumbs, the trail as the App bar's lead, no summary.
+ * Imported by masthead.css. Generic: the host fills marks, labels and rows.
+ *
+ *   <header class="fh-masthead fh-masthead--app fh-masthead--app-crumbs">
+ *     <nav class="fh-crumbs" aria-label="Breadcrumb">
+ *       <ol class="fh-crumbs__list">
+ *         <li class="fh-crumb fh-crumb--area" data-fh-crumb>
+ *           <button class="fh-crumb__button" type="button" aria-haspopup="menu" aria-expanded="false"
+ *             aria-controls="area-menu" aria-label="Organizations, switch area">
+ *             <span class="fh-sidebar__cube" data-tone="sky"><i class="fh-icon fh-icon--building-2"></i></span>
+ *             <span class="fh-crumb__name">Organizations</span>
+ *             <i class="fh-icon fh-icon--chevron-down fh-crumb__caret" aria-hidden="true"></i></button>
+ *           <div id="area-menu" popover="manual" class="fh-menu fh-menu--rich fh-crumb-menu" role="menu" aria-label="Areas">…</div></li>
+ *         <li class="fh-crumb fh-crumb--record" data-fh-crumb>
+ *           <i class="fh-icon fh-icon--chevron-right fh-crumb__sep" aria-hidden="true"></i>
+ *           <button class="fh-crumb__button" …>
+ *             <span class="fh-sidebar__cube fh-crumb__mark" data-tone="amber">R or a logo</span>
+ *             <span class="fh-crumb__name">Rascode</span>
+ *             <i class="fh-icon fh-icon--chevron-down fh-crumb__caret" aria-hidden="true"></i></button>…</li>
+ *       </ol>
+ *     </nav>
+ *     <div class="fh-masthead__tools">…</div>
+ *   </header>
+ *
+ * MST-5.1 Area: the area's cube, its label; the menu lists every area under group headings.
+ * MST-5.2 Record: a solid cube mark (initial or logo) and the name, nothing else. A crumb's drop-down chevron shows
+ *   only on hover, focus or while open. Kind and parent show as meta in the switcher's rows.
+ * MST-5.3 Switcher menu: DRP-4 Rich menu frame with a filter field, group headings, rows (mark, name, meta,
+ *   a check on the current one), loading and empty states; scrolls past about ten rows (--fh-crumb-rows).
+ * crumb-menu.js opens the menus (hover intent, click, Enter, ↓), filters, moves with ↑ ↓ and closes on Esc.
+ *
+ * Widths (the masthead's own width): under 56rem a long name ellipses sooner; under 40rem the area shows only its
+ * cube; under 30rem, with the sheet button, the area crumb hides and the menus open as a sheet.
+ * Knobs: --fh-crumb-mark (every cube in the trail and its menus, 1.5rem), --fh-crumb-name-max (a name before it ellipses, 14rem),
+ * --fh-crumb-meta-max (meta, 16rem), --fh-crumb-arrow-w and -h (the progress arrow, 0.625rem by 1.5rem), --fh-crumb-rows (rows before the list scrolls, 10).
+ */
+
+@layer fh.components {
+  .fh-crumbs { min-inline-size: 0; }
+
+  .fh-crumbs__list {
+    display: flex;
+    align-items: center;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fh-crumb {
+    --_mark: var(--fh-crumb-mark, 1.5rem);
+
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    position: relative;
+  }
+
+  /* Only a record crumb gives up width, and its meta before its name. */
+  .fh-crumb--area { flex: none; }
+
+  /* Between crumbs: a progress arrow, not a chevron. A filled band, taller than wide, with a rounded tip, in a very
+   * soft tint of the text colour so it reads as a step without weight. The markup is the chevron icon; the mask swaps. */
+  .fh-crumb > .fh-crumb__sep {
+    --fh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24'%3E%3Cpath d='M0 0H4L9.2 10.6Q9.9 12 9.2 13.4L4 24H0L5.2 13.4Q5.9 12 5.2 10.6Z'/%3E%3C/svg%3E");
+
+    flex: none;
+    inline-size: var(--fh-crumb-arrow-w, 0.625rem);
+    block-size: var(--fh-crumb-arrow-h, 1.5rem);
+    /* The same small gap each side at every width: the button's inset plus --fh-gap-bound (12px in all). */
+    margin-inline: var(--fh-gap-bound);
+    transition: opacity var(--fh-duration-fast) var(--fh-ease-standard);
+    background-color: color-mix(in oklab, var(--fh-color-text) 12%, transparent);
+    vertical-align: middle;
+  }
+
+  .fh-crumb__button {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    min-inline-size: 0;
+    block-size: calc(var(--_height) - 2 * var(--_frame) / 2);
+    padding: 0 var(--fh-inset-tight);
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
+    font-size: var(--_value);
+    line-height: var(--_leading);
+    text-align: start;
+    cursor: var(--fh-cursor-action);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard);
+
+    &:is(:hover, [aria-expanded="true"]) { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+  }
+
+  /* A record's mark is a solid cube, the same as the area cube (fh-sidebar__cube): an initial or a logo on its tone. */
+  .fh-crumb__mark {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    overflow: hidden;
+
+    & > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; }
+  }
+  .fh-crumb__initial { line-height: 1; }
+  /* Area and record cubes, in the bar and in the menus, are one size. */
+  :is(.fh-crumbs, .fh-crumb-menu) .fh-sidebar__cube { --fh-cube-size: var(--fh-crumb-mark, 1.5rem); }
+
+  /* At full width the name never shrinks (a 1px squeeze is enough to ellipse it): only its cap cuts it. Under 56rem it gives way. */
+  .fh-crumb__name {
+    flex: none;
+    overflow: hidden;
+    max-inline-size: var(--fh-crumb-name-max, 14rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* The meta gives way first: a name keeps its width while the meta ellipses. */
+  .fh-crumb__meta {
+    flex: 0 100 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    max-inline-size: var(--fh-crumb-meta-max, 16rem);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-masthead-small-text, var(--fh-text-caption));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+
+  /* The drop-down chevron shows only on hover, keyboard focus or while open; at rest the only chevron is the separator. */
+  /* The chevron holds no space: on hover it sits in the arrow's slot after the crumb, and that arrow steps aside. */
+  .fh-crumb__button { position: relative; }
+  .fh-crumb__caret {
+    --fh-icon-size: 0.75rem;
+
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc(100% + var(--fh-gap-bound) - 1px);
+    translate: 0 -50%;
+    flex: none;
+    color: var(--fh-color-text-subtle);
+    opacity: 0;
+    transition: rotate var(--fh-duration-fast) var(--fh-ease-standard), opacity var(--fh-duration-fast) var(--fh-ease-standard);
+  }
+  .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"]) > .fh-crumb__caret { opacity: 1; }
+  .fh-crumb:has(> .fh-crumb__button:is(:hover, :focus-visible, [aria-expanded="true"])) + .fh-crumb > .fh-crumb__sep { opacity: 0; }
+  .fh-crumb__button[aria-expanded="true"] > .fh-crumb__caret { rotate: 180deg; }
+
+  /* The last crumb is the page: full ink. Earlier records read quieter. */
+  .fh-crumb--record:not(:last-child) > .fh-crumb__button { color: var(--fh-color-text-muted); }
+  .fh-crumb--record:not(:last-child) > .fh-crumb__button:is(:hover, [aria-expanded="true"]) { color: var(--fh-color-text); }
+
+
+
+  /* —— MST-5.3 Switcher menu ———————————————————————————————————————————————— */
+  .fh-crumb-menu {
+    --_rows: var(--fh-crumb-rows, 10);
+    --_row-h: 2.5rem;
+
+    position: fixed;
+    inset: auto;
+    inset-block-start: var(--fh-crumb-y, 0px);
+    inset-inline-start: var(--fh-crumb-x, 0px);
+    display: none;
+    flex-direction: column;
+    inline-size: var(--fh-menu-min, 20rem);
+    max-inline-size: calc(100dvw - 2 * var(--fh-gap-grouped));
+    max-block-size: none;
+    padding: 0;
+    overflow: hidden;
+
+    &:popover-open { display: flex; }
+
+    @supports (position-area: bottom) {
+      inset: auto;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline;
+      margin-block-start: var(--fh-gap-bound);
+    }
+  }
+
+  .fh-crumb-menu__search {
+    flex: none;
+    padding: var(--fh-inset-tight);
+    border-block-end: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch-soft, var(--fh-color-etch));
+
+    & > input {
+      inline-size: 100%;
+      block-size: 2rem;
+      padding-inline: var(--fh-inset-control);
+      border: var(--fh-border-thin) solid transparent;
+      border-radius: var(--fh-radius-md);
+      background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent);
+      color: var(--fh-color-text);
+      font: inherit;
+      font-size: var(--fh-text-small);
+      appearance: none;
+
+      &::placeholder { color: var(--fh-color-text-subtle); }
+      &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    }
+  }
+
+  .fh-crumb-menu__list {
+    flex: 1 1 auto;
+    min-block-size: 0;
+    max-block-size: calc(var(--_rows) * var(--_row-h));
+    padding: var(--fh-inset-tight);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .fh-crumb-menu .fh-menu__label { padding: var(--fh-inset-tight) var(--fh-inset-control) 0; }
+  .fh-crumb-menu .fh-menu__label:not(:first-child) { margin-block-start: var(--fh-gap-related); }
+
+  .fh-crumb-menu__row {
+    display: grid;
+    grid-template-columns: var(--fh-crumb-mark, 1.5rem) minmax(0, 1fr) 1rem;
+    column-gap: var(--fh-gap-grouped);
+    align-items: center;
+    inline-size: 100%;
+    min-block-size: var(--_row-h);
+    padding: var(--fh-inset-tight) var(--fh-inset-control) var(--fh-inset-tight) var(--fh-inset-tight);
+    border: 0;
+    border-radius: var(--fh-radius-md);
+    background: none;
+    color: var(--fh-color-text);
+    font: inherit;
+    font-size: var(--fh-text-small);
+    text-align: start;
+    text-decoration: none;
+    cursor: var(--fh-cursor-action);
+
+    /* A subpage sits in under its area. */
+    &[data-depth="1"] { padding-inline-start: calc(var(--fh-inset-tight) + var(--fh-crumb-mark, 1.5rem) + var(--fh-gap-grouped)); }
+
+    &:is(:hover, :focus-visible, [data-active]) { background-color: color-mix(in oklab, var(--fh-color-text) 8%, transparent); }
+    &:focus-visible { outline: var(--fh-focus-width) solid var(--fh-color-focus); outline-offset: -2px; }
+    &[hidden] { display: none; }
+    &[aria-checked="true"]::after {
+      content: "";
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      inline-size: 1rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text);
+      mask: var(--fh-icon-check) center / contain no-repeat;
+    }
+    & > .fh-crumb__mark { grid-row: 1 / span 2; }
+    & > .fh-crumb__name { grid-column: 2; max-inline-size: none; }
+    & > .fh-crumb__meta { grid-column: 2; max-inline-size: none; }
+    &:not(:has(> .fh-crumb__meta)) > .fh-crumb__mark { grid-row: 1; }
+  }
+
+  .fh-crumb-menu__status {
+    margin: 0;
+    padding: var(--fh-inset-control) var(--fh-inset-tile);
+    color: var(--fh-color-text-muted);
+    font-size: var(--fh-text-small);
+
+    &[hidden] { display: none; }
+  }
+
+  /* Loading: three quiet bars where rows will be. */
+  .fh-crumb-menu[data-state="loading"] .fh-crumb-menu__list::before {
+    content: "";
+    display: block;
+    block-size: calc(3 * var(--_row-h));
+    border-radius: var(--fh-radius-md);
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--fh-color-text) 8%, transparent), transparent) 0 0 / 200% 100%;
+    animation: fh-crumb-load 1.2s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes fh-crumb-load { to { background-position: -200% 0; } }
+
+  /* —— MST-4.4 Crumbs ——
+   * The MST-3 panel recipe as is (frost, radius, shadow, no etched edge, the sidebar head row's height); the
+   * trail is the lead and there is no summary zone, so the trail takes the width and the tools sit at the end. */
+  /* The bar wraps its contents tightly: its corner is the cube's corner plus the ring (frame + edge), so the
+   * Organizations crumb on the left and the avatar on the right sit in it with parallel curves. Both are the
+   * row's full height at the ring, with the cube's corner. */
+  .fh-masthead--app.fh-masthead--app-crumbs {
+    grid-template-columns: minmax(0, 1fr) auto;
+    border-radius: calc(var(--fh-tile-cube-radius, var(--fh-radius-sm)) + var(--_frame) + var(--fh-border-thin));
+
+    & > .fh-crumbs { padding-inline: 0 var(--_pad-i); }
+    & .fh-crumb__button { block-size: var(--_height); border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm)); }
+    /* The area cube as far from the button's start as from its top and bottom. */
+    & .fh-crumb--area > .fh-crumb__button { padding-inline-start: calc((var(--_height) - var(--fh-crumb-mark, 1.5rem)) / 2); }
+    & .fh-masthead__summary { display: none; }
+  }
+
+  /* Phone: the host's sheet button (the sidebar's menu) comes first; it shows only there. A container
+   * query cannot change its own container's grid, so the bar always has the sheet's column and the trail
+   * takes back its gap while the button is hidden. */
+  .fh-crumbs__sheet { display: none; }
+  .fh-masthead--app.fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+
+    & > .fh-crumbs { margin-inline-start: calc(-1 * var(--_gap)); }
+  }
+
+  /* Tools in the Crumbs bar are plain icons: no disc fill, no ring. Hover is the sidebar row's. */
+  .fh-masthead--app-crumbs :is(.fh-masthead__tools, .fh-crumbs__sheet) .fh-button--disc,
+  .fh-masthead--app-crumbs > .fh-crumbs__sheet.fh-button--disc {
+    border: 0;
+    border-radius: var(--fh-radius-sm);
+    background: none;
+    box-shadow: none;
+    color: var(--fh-color-text-muted);
+
+    &:hover { background-color: color-mix(in oklab, var(--fh-color-text) 6%, transparent); color: var(--fh-color-text); }
+  }
+
+  /* The person's avatar in the Crumbs bar: one etched line, the avatar filling the control height, the cube's own
+   * corner (--fh-tile-cube-radius). The profile button drops its ring and inset so only the avatar's line shows. */
+  .fh-masthead--app-crumbs .fh-profile {
+    padding: 0;
+    border: 0;
+    border-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+  }
+  .fh-masthead--app-crumbs .fh-profile .fh-avatar {
+    --fh-avatar-size: var(--fh-control-height);
+    --fh-avatar-radius: var(--fh-tile-cube-radius, var(--fh-radius-sm));
+
+    border: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-etch);
+    box-shadow: none;
+  }
+
+  /* The steps reach the crumb buttons only: the menus' rows keep their name and meta. */
+  @container fh-masthead (inline-size < 56rem) {
+    /* Narrow bars: the name gives way (ellipsis) so the tools never cover it. */
+    .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { flex: 0 1 auto; min-inline-size: 0; }
+  }
+
+  @container fh-masthead (inline-size < 40rem) {
+    .fh-masthead--app-crumbs {
+      & .fh-crumb--area > .fh-crumb__button > .fh-crumb__name { display: none; }
+    }
+  }
+
+  /* Phone: menus open as a sheet along the bottom. */
+  @container fh-masthead (inline-size < 30rem) {
+    .fh-masthead--app-crumbs > .fh-crumbs__sheet { display: inline-grid; }
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) > .fh-crumbs { margin-inline-start: 0; }
+    /* The trail gives its room to the last crumb: the buttons carry their own inset. */
+    .fh-masthead--app.fh-masthead--app-crumbs > .fh-crumbs { padding-inline: 0; }
+    .fh-masthead--app-crumbs .fh-crumb__button > .fh-crumb__name { max-inline-size: 9rem; }
+    /* Plan: on a phone, the sheet menu (the areas live there), the last crumb and the tools. */
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--area { display: none; }
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__sep { display: none; }
+    /* Mobile: the record crumb is its cube alone; the button keeps the name as its label. */
+    .fh-masthead--app-crumbs:has(> .fh-crumbs__sheet) .fh-crumb--record > .fh-crumb__button > .fh-crumb__name { display: none; }
+    .fh-masthead--app-crumbs .fh-crumb--area > .fh-crumb__button > .fh-crumb__caret { display: none; }
+    .fh-crumb-menu {
+      position: fixed;
+      inset: auto 0 0 0;
+      inline-size: auto;
+      max-inline-size: none;
+      margin: 0;
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+      position-area: none;
+
+      & .fh-crumb-menu__list { max-block-size: min(calc(var(--_rows) * var(--_row-h)), 50dvh); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fh-crumb__button, .fh-crumb__caret { transition: none; }
+    .fh-crumb-menu[data-state="loading"] .fh-crumb-menu__list::before { animation: none; }
+  }
+
+  @media (forced-colors: active) {
+    .fh-crumb__button:is(:hover, [aria-expanded="true"]) { background-color: Highlight; color: HighlightText; }
+    .fh-crumb-menu__row[aria-checked="true"]::after { background-color: CanvasText; }
+  }
+}

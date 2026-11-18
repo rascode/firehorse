@@ -122,7 +122,7 @@ Wrong: the same wrong examples as rules 6 and 7.
 
 ### 10. Space is a relationship
 
-Padding, margin, gap, and inset use a relationship or inset token (`--fh-gap-*`, `--fh-inset-*`, `--fh-item-*`, and the page tokens `--fh-page-margin`, `--fh-section-space`, `--fh-float-gap`, `--fh-tap-target`, `--fh-header-height`, `--fh-dock-height`). A component does not pick a raw length, and it does not read a raw `--fh-space-*` step.
+Padding, margin, gap, and inset use a relationship or inset token (`--fh-gap-*`, `--fh-inset-*`, `--fh-item-*`, and the page tokens `--fh-page-margin`, `--fh-section-space`, `--fh-float-gap`, `--fh-tap-target`, `--fh-target-floor`, `--fh-header-height`, `--fh-dock-height`). A component does not pick a raw length, and it does not read a raw `--fh-space-*` step.
 
 Source: `site/pages/guidelines/index.html:23-30` (a component picks a relationship, not a number) and line 51 (2px, 6px, 10px, 14px, 20px, and 28px are not relationships). `src/tokens/semantic.css:138-170` names the steps. `scripts/lint.mjs:18-21` and line 44-45 fail a component on `--fh-space-*`. `site/pages/guidelines/index.html:110` exempts tokens, themes, and the layout primitives.
 

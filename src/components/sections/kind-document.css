@@ -1,0 +1,58 @@
+/*
+ * Firehorse - Document section (SDO)
+ * components/sections · layer fh.components · docs /components/sections/#SDO
+ */
+
+@layer fh.components {
+  /* Document
+   * Long markdown already rendered to HTML, in the prose roles, with headings
+   * stepped down inside the section. Past about 24 lines it sits in an fh-fold
+   * with a Show all control. A short note does not fold. Tables use fh-table.
+   * Code uses fh-code. */
+
+  .fh-panel-section--document .fh-fold {
+    --fh-fold-lines: 24;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .fh-panel-section--document .fh-prose {
+    max-inline-size: 100%;
+  }
+
+  /* The section title is an h3, so the rendered headings step down: the
+   * markdown's h1 and h2 are written as h4, its h3 and below as h5. The prose
+   * roles space h2 to h4 only, so h5 and h6 get the same spacing here. */
+  .fh-panel-section--document .fh-prose {
+    & :is(h4, h5, h6) {
+      color: var(--fh-color-text);
+      margin-block-start: var(--_section);
+    }
+
+    & h4 {
+      font-size: var(--fh-text-large);
+    }
+
+    & :is(h5, h6) {
+      font-size: var(--fh-text-body);
+    }
+
+    & :is(h4, h5, h6) + * {
+      margin-block-start: var(--_after-head);
+    }
+
+    & > :first-child {
+      margin-block-start: 0;
+    }
+  }
+
+  .fh-panel-section--document :is(.fh-table-wrap, .fh-code) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .fh-panel-section--document .fh-code > pre {
+    overflow: auto;
+    max-inline-size: 100%;
+  }
+}

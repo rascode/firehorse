@@ -1,0 +1,99 @@
+/*
+ * Firehorse — Target floor (TGT)
+ * components/actions · layer fh.components · docs /foundations/#TGT
+ *
+ * --fh-target-floor (1rem) is the smallest hit area on a fine pointer, in both axes.
+ * Where the drawn control is smaller, a ::before grows the hit area and the drawn box stays put.
+ * The inset is the disc recipe (button.css) clamped at 0, so a control that is already
+ * at least the floor does not shrink. 100% is that control's own axis.
+ * Coarse pointers keep --fh-tap-target, through --_hit.
+ *
+ * Left out, because their ::before is already a part of the control:
+ *   a toned button's edge, a busy button's spinner, the disc (its own coarse rule),
+ *   the switch thumb, the chip dot, the chip remove (its hit area is in chips.css),
+ *   a tab bar tick, an entity row's separator.
+ * A checkbox or radio is drawn at the floor (rule below). A replaced input cannot grow
+ * from a ::before, so a theme that raises the floor raises those controls with it.
+ */
+
+@layer fh.components {
+  :where(
+    .fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc),
+    .fh-segmented > label,
+    :is(.fh-segment, .fh-dictate) > :is(a, button),
+    .fh-tabs > :is(button, a),
+    .fh-menu > :is(a, button, [role^="menuitem"]),
+    .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]),
+    .fh-menu__item,
+    .fh-sidebar__item:is(a, button),
+    .fh-sidenav a,
+    .fh-sidenav .fh-sidenav__row,
+    .fh-crumb__button,
+    .fh-account-row:is(a, button)
+  ) {
+    position: relative;
+  }
+
+  :where(
+    .fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc),
+    .fh-segmented > label,
+    :is(.fh-segment, .fh-dictate) > :is(a, button),
+    .fh-tabs > :is(button, a),
+    .fh-menu > :is(a, button, [role^="menuitem"]),
+    .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]),
+    .fh-menu__item,
+    .fh-sidebar__item:is(a, button),
+    .fh-sidenav a,
+    .fh-sidenav .fh-sidenav__row,
+    .fh-crumb__button,
+    .fh-account-row:is(a, button)
+  )::before {
+    content: "";
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+    inset-inline: min(0px, calc((100% - var(--_hit, var(--fh-target-floor))) / 2));
+    border-radius: inherit;
+  }
+
+  @media (pointer: coarse) {
+    :where(
+      .fh-button:not([data-tone]):not([aria-busy="true"]):not(.fh-button--disc),
+      .fh-segmented > label,
+      :is(.fh-segment, .fh-dictate) > :is(a, button),
+      .fh-tabs > :is(button, a),
+      .fh-menu > :is(a, button, [role^="menuitem"]),
+      .fh-menu > .fh-menu__sub > :is(a, button, [role^="menuitem"]),
+      .fh-menu__item,
+      .fh-sidebar__item:is(a, button),
+      .fh-sidenav a,
+      .fh-sidenav .fh-sidenav__row,
+      .fh-crumb__button,
+      .fh-account-row:is(a, button)
+    ) {
+      --_hit: var(--fh-tap-target);
+    }
+  }
+
+  /* A checkbox or radio cannot grow a hit area from ::before (a replaced input), so it is drawn at the floor.
+     Gate V1, Rascode 2026-11-17: draw them at 16px rather than rely on a wrapping label. */
+  :where(input[type="checkbox"], input[type="radio"]):not(.fh-switch) {
+    inline-size: var(--fh-target-floor);
+    block-size: var(--fh-target-floor);
+  }
+
+  /* The specimen draws the menu in the page so its row can be measured. */
+  .fh-target-floor .fh-menu {
+    position: static;
+    opacity: 1;
+    translate: none;
+  }
+
+  /* The toggle outlines the hit area. It is not the focus ring. */
+  .fh-target-floor:has([data-fh-hit-toggle]:checked) [data-fh-hit] {
+    outline: var(--fh-border-thin) solid var(--fh-color-focus);
+  }
+
+  .fh-target-floor:has([data-fh-hit-toggle]:checked) [data-fh-hit]:not(.fh-switch)::before {
+    outline: var(--fh-border-thin) solid var(--fh-color-focus);
+  }
+}

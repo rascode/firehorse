@@ -1,0 +1,88 @@
+/*
+ * Firehorse - Matrix section (SMX)
+ * components/sections · layer fh.components · docs /components/sections/#SMX
+ */
+
+@layer fh.components {
+  /* Matrix
+   * Capability by role, on the Comparison matrix (fh-matrix, TBL) inside an
+   * fh-table-wrap. The first column is the capability, a reference that opens
+   * its record. One column per role, its short label at the Label tier. Each
+   * cell carries data-included: "true" is the toned check, "false" the ghost
+   * dash (both from comparison-matrix.css), and "inherited" a hollow check in
+   * the muted tone: the role has it through another role. Each cell keeps its
+   * word in fh-sr-only. A wide matrix scrolls inside its section; the
+   * capability column and the head stay put.
+   *   <div class="fh-table-wrap"><table class="fh-table fh-matrix">
+   *     <thead><tr><th scope="col">Capability</th><th scope="col" title="Owner">Owner</th>…</tr></thead>
+   *     <tbody><tr>
+   *       <th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-merge">Merge a pull request</a></th>
+   *       <td data-included="true"><span class="fh-sr-only">Yes</span></td>
+   *       <td data-included="inherited"><span class="fh-sr-only">Inherited</span></td>
+   *       <td data-included="false"><span class="fh-sr-only">No</span></td>
+   *     </tr></tbody>
+   *   </table></div> */
+
+  .fh-panel-section--matrix .fh-panel-section__body {
+    min-inline-size: 0;
+  }
+
+  .fh-panel-section--matrix .fh-table-wrap {
+    max-inline-size: 100%;
+    overscroll-behavior-inline: contain;
+  }
+
+  .fh-panel-section--matrix .fh-matrix {
+    & :is(th, td) {
+      padding: var(--fh-inset-tight) var(--fh-inset-control);
+    }
+
+    & thead th {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 1;
+      font-family: var(--fh-type-label-family);
+      font-size: var(--fh-type-label);
+      font-weight: var(--fh-type-label-weight);
+      letter-spacing: var(--fh-type-label-tracking);
+      text-align: center;
+      text-transform: var(--fh-type-label-case);
+    }
+
+    /* The capability column: a reference at the Value tier, pinned to the start edge. */
+    & :is(thead, tbody) :is(th, td):first-child {
+      position: sticky;
+      inset-inline-start: 0;
+      text-align: start;
+    }
+
+    & tbody th:first-child {
+      z-index: 1;
+      background-color: var(--fh-color-surface);
+      font-size: var(--fh-type-value);
+      font-weight: var(--fh-type-value-weight);
+      white-space: nowrap;
+    }
+
+    & thead th:first-child {
+      z-index: 2;
+    }
+
+    & td[data-included="inherited"] {
+      text-align: center;
+    }
+
+    /* Inherited: a ring and a check, both in the muted tone, so it reads as a lighter yes. */
+    & td[data-included="inherited"]::after {
+      content: "";
+      display: inline-block;
+      inline-size: 0.95rem;
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text-muted);
+      mask:
+        var(--fh-icon-check) center / 55% no-repeat,
+        radial-gradient(circle closest-side, transparent calc(100% - var(--fh-border-thin) - 0.5px), black calc(100% - var(--fh-border-thin)), black calc(100% - 0.5px), transparent 100%);
+      vertical-align: middle;
+    }
+  }
+}

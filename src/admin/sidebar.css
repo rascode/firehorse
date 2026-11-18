@@ -39,8 +39,10 @@
     inline-size: var(--fh-sidebar-width, 15rem);
     max-inline-size: 100%;
     min-block-size: 18rem;
-    margin: var(--fh-inset-tight);
-    padding: var(--fh-inset-tight);
+    /* The panel's top meets the app bar's (--fh-gap-grouped) and the head is its first 46px with no inset above,
+     * so the head band and the app bar are one height on one line. */
+    margin: var(--fh-gap-grouped) var(--fh-inset-tight) var(--fh-inset-tight);
+    padding: 0 var(--fh-inset-tight) var(--fh-inset-tight);
     border: var(--fh-sidebar-edge, 0);
     border-radius: var(--fh-radius-lg);
     background-color: var(--_fill);
@@ -61,6 +63,17 @@
     block-size: calc(var(--fh-control-height) + 2 * (var(--fh-item-frame) + var(--fh-border-thin)));
     padding: calc(var(--fh-item-frame) + var(--fh-border-thin)) var(--fh-inset-control);
     min-inline-size: 0;
+  }
+
+  /* The brand in the head reads like the app bar's crumbs beside it: the same face and size as a crumb's name,
+   * the app's name heavier (bold), no icon, no mono caps. */
+  .fh-sidebar__head .fh-app__brand {
+    font-family: var(--fh-type-value-family, var(--fh-font-sans));
+    font-size: var(--fh-masthead-value-text, var(--fh-type-value));
+    letter-spacing: normal;
+    text-transform: none;
+
+    & span { color: var(--fh-color-text); font-weight: var(--fh-weight-bold); }
   }
 
   .fh-sidebar__toggle {
@@ -238,6 +251,15 @@
     background-color: color-mix(in oklab, var(--_c) 12%, transparent);
     box-shadow: inset var(--fh-border-heavy) 0 0 var(--_c);
     color: var(--fh-color-text);
+  }
+
+  /* Only where you are carries the full colour block: the current row's cube, or its area's when the current page
+   * is a subpage. Every other cube is a soft tint of its tone (the icon in the tone, a faint fill), so colour
+   * supports finding things without competing with the current page. */
+  .fh-sidebar__item:not([aria-current="page"], [data-contains-active="true"]) .fh-sidebar__cube {
+    background-color: color-mix(in oklab, var(--_ic) 14%, transparent);
+    color: var(--_ic);
+    transition: background-color var(--fh-duration-fast) var(--fh-ease-standard), color var(--fh-duration-fast) var(--fh-ease-standard);
   }
 
   .fh-sidebar__item[data-contains-active="true"]:not([aria-current="page"]) {

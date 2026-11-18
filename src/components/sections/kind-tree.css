@@ -1,0 +1,127 @@
+/*
+ * Firehorse - Tree section (STR)
+ * components/sections · layer fh.components · docs /components/sections/#STR
+ */
+
+@layer fh.components {
+  /* Tree
+   * Nested rows. A row with children is a details element, so it opens with
+   * no script; a row without children is a plain link. The summary stays
+   * focusable. The label is a reference (an anchor with data-sidecar), then
+   * an icon, then a muted mono meta (version, type). Each level indents one
+   * token step and draws a guide line in the border color. The chevron
+   * points down while the row is open. A wide tree scrolls inside the section.
+   *   <ul class="fh-tree">
+   *     <li><details open>
+   *       <summary><a href="#c-sidecar" data-sidecar="file-src">
+   *         <i class="fh-icon fh-icon--folder"></i><span>src</span><small>directory</small>
+   *       </a></summary>
+   *       <ul class="fh-tree"><li><a href="#c-sidecar" data-sidecar="file-css">…</a></li></ul>
+   *     </details></li>
+   *   </ul> */
+
+  .fh-panel-section--tree .fh-panel-section__body {
+    min-inline-size: 0;
+  }
+
+  /* Only the root list scrolls. Nested lists keep their own width, so a deep
+   * row moves inside the section and the page stays still. */
+  .fh-panel-section--tree > .fh-panel-section__body > .fh-tree {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .fh-tree {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fh-tree .fh-tree {
+    padding-inline-start: var(--fh-inset-tile);
+    border-inline-start: var(--fh-border-thin) var(--fh-card-border-style, dashed) var(--fh-color-border);
+  }
+
+  .fh-tree summary {
+    display: flex;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    list-style: none;
+    cursor: var(--fh-cursor-action);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::marker {
+      content: none;
+    }
+
+    /* Closed it points along the row. Open it points down. */
+    &::before {
+      content: "";
+      flex: none;
+      inline-size: var(--fh-inset-tile);
+      aspect-ratio: 1;
+      background-color: var(--fh-color-text-muted);
+      mask: var(--fh-icon-chevron-right) center / contain no-repeat;
+
+      /* Nested, so the public build drops it with the rule (a held family). */
+      @media (prefers-reduced-motion: no-preference) {
+        transition: rotate var(--fh-duration-base) var(--fh-ease-standard);
+      }
+    }
+  }
+
+  .fh-tree details[open] > summary::before {
+    rotate: 90deg;
+  }
+
+  .fh-tree a {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: var(--fh-gap-related);
+    inline-size: max-content;
+    padding-block: var(--fh-inset-tight);
+    color: var(--fh-color-text);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--fh-color-accent-text);
+    }
+  }
+
+  /* A leaf has no chevron, so it starts where a folder's label starts. */
+  .fh-tree li > a {
+    margin-inline-start: calc(var(--fh-inset-tile) + var(--fh-gap-related));
+  }
+
+  .fh-tree .fh-icon {
+    flex: none;
+    color: var(--fh-color-text-subtle);
+  }
+
+  .fh-tree a span {
+    min-inline-size: 0;
+    white-space: nowrap;
+  }
+
+  .fh-tree a small {
+    flex: none;
+    color: var(--fh-color-text-subtle);
+    font-family: var(--fh-font-mono);
+    font-size: var(--fh-text-caption);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .fh-tree summary:focus-visible,
+  .fh-tree a:focus-visible {
+    outline: var(--fh-focus-width) solid var(--fh-color-focus, currentColor);
+    outline-offset: 2px;
+    border-radius: var(--fh-radius-sm);
+  }
+}

@@ -8,7 +8,7 @@
   "description": "Firehorse sections: the record sidecar, the section shell, and twelve pluggable sections (properties, records, timetable, timeline, chat, log, prompts, metrics, links, files, form, stage).",
   "headline": "One sidecar, one section shell, twelve kinds of data",
   "lede": "A record sidecar with a fixed header, and a library of sections picked by the kind of data they hold. Each one starts with an icon and a title, collapses, and shows summary chips only when collapsed.",
-  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js", "/fold.js", "/image-stack.js", "/activity-log.js"],
+  "scripts": ["/sidecar.js", "/records.js", "/tabs-nav.js", "/fold.js", "/image-stack.js", "/activity-log.js", "/image-field.js"],
   "styles": [],
   "icon": "panels-top-left",
   "summary": [
@@ -28,7 +28,7 @@
     <section id="sections" class="fh-section fh-section--ruled site-anchor" data-tone="sky" data-fh-label="Sections" aria-label="Sections">
       <div class="fh-stack fh-stack--xl">
 
-        <div class="site-demo site-anchor" id="c-sidecar" data-fh-id="SDC" data-fh-groups="Sidecar|Relay record">
+        <div class="site-demo site-anchor" id="c-sidecar" data-fh-id="SDC" data-fh-groups="Sidecar|Relay record|Profile page|People">
           <div class="site-demo__head"><h3>Record sidecar</h3><p>One drawer for every record. A fixed header (eyebrow with the record kind, mark, title, one chip row, actions, one close control), then the sections, then the linked records. Body text steps down through the public text tokens, so every component inside follows. Open the whole stack from the first section or collapse them all.</p></div>
           <div class="site-demo__stage" data-demo>
 <aside class="fh-sidecar" style="--fh-sidecar-height: 44rem" aria-label="Record" data-fh-id="SDC-1.1" data-fh-name="Sidecar">
@@ -120,7 +120,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">4 steps</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">15:07 to 15:45</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
             <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
@@ -195,7 +195,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">3 records</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 open</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
           <tbody>
             <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor" data-fh="ACT-2.1" data-fh-slot="link">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard" data-fh="ACT-2.1" data-fh-slot="link">Orchard</a></td><td>Merged</td></tr>
@@ -245,7 +245,7 @@
           <div class="site-demo__head"><h3>Sidecar as a drawer</h3><p>The same sidecar in a floating dialog: it slides in from the edge, and Escape, the close control or a click outside puts it away. Any element with data-sidecar="record-id" opens it (sidecar.js sets data-record and fires fh:sidecar-open so the app can fill it); focus returns to the opener on close.</p></div>
           <div class="site-demo__stage" data-demo>
 <button type="button" class="fh-button fh-button--secondary" data-sidecar="goal-harbor" data-fh-id="SDD-1.1" data-fh-name="Opener">Open the sidecar</button>
-<dialog class="fh-dialog fh-dialog--float fh-sidecar" id="sidecar-demo" aria-label="Record" style="--fh-dialog-size: 32rem" data-fh="SDC-2.1">
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" id="sidecar-demo" aria-label="Record" style="--fh-dialog-size: 32rem" data-fh="SDC">
   <header class="fh-sidecar__header">
     <div class="fh-sidecar__bar">
       <span class="fh-sidecar__eyebrow" data-fh-slot="eyebrow">Relays · audit</span>
@@ -310,7 +310,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">4 steps</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">15:07 to 15:45</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
             <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
@@ -385,7 +385,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">3 records</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 open</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
           <tbody>
             <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor" data-fh="ACT-2.1" data-fh-slot="link">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard" data-fh="ACT-2.1" data-fh-slot="link">Orchard</a></td><td>Merged</td></tr>
@@ -497,11 +497,11 @@
             </div>
             <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body">
               <span class="fh-field__label">Model</span>
-              <div class="fh-value fh-value--picker fh-value--field" data-mode="edit" data-fh="VAL-3.10"><div class="fh-entity-picker" data-fh-entity data-fh="ENT"><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="Model" data-fh="ENT"><span class="fh-entity__value"><span class="fh-avatar" data-kind="agent" data-fh="AVT"><img src="/img/samples/rs1-platform-mark.svg" alt=""></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b title="Claude Opus 5.5">Claude Opus 5.5</b><small title="claude-opus-5-5">claude-opus-5-5</small></span></span></button></div></div>
+              <div class="fh-value fh-value--picker fh-value--field" data-mode="edit" data-fh="VAL-3.10"><div class="fh-entity-picker" data-fh-entity data-fh="ENT"><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="Model" data-fh="ENT"><span class="fh-entity__value"><span class="fh-avatar" data-kind="agent" data-fh="AVT"><img src="/img/samples/rs1-platform-mark.svg" alt=""></span><span class="fh-entity__who"><b title="Claude Opus 5.5">Claude Opus 5.5</b><small title="claude-opus-5-5">claude-opus-5-5</small></span></span></button></div></div>
             </div>
             <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body">
               <span class="fh-field__label">Fallback model</span>
-              <div class="fh-value fh-value--picker fh-value--field" data-mode="edit" data-fh="VAL-3.10"><div class="fh-entity-picker" data-fh-entity data-fh="ENT"><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="Fallback model" data-fh="ENT"><span class="fh-entity__value"><span class="fh-avatar" data-kind="agent" data-fh="AVT"><img src="/img/samples/rs1-family-mark.svg" alt=""></span><span class="fh-entity__sep"></span><span class="fh-entity__who"><b title="Claude Sonnet 5.5">Claude Sonnet 5.5</b><small title="claude-sonnet-5-5">claude-sonnet-5-5</small></span></span></button></div></div>
+              <div class="fh-value fh-value--picker fh-value--field" data-mode="edit" data-fh="VAL-3.10"><div class="fh-entity-picker" data-fh-entity data-fh="ENT"><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="Fallback model" data-fh="ENT"><span class="fh-entity__value"><span class="fh-avatar" data-kind="agent" data-fh="AVT"><img src="/img/samples/rs1-family-mark.svg" alt=""></span><span class="fh-entity__who"><b title="Claude Sonnet 5.5">Claude Sonnet 5.5</b><small title="claude-sonnet-5-5">claude-sonnet-5-5</small></span></span></button></div></div>
             </div>
           </fieldset>
           <div class="fh-panel-section__actions">
@@ -531,7 +531,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">6 steps</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">Fri 22:48 to Sat 09:20</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
             <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
@@ -566,7 +566,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">4 rows</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 estimate</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Round</th><th scope="col">Layer</th><th scope="col">Share</th><th scope="col">In</th><th scope="col">Out</th><th scope="col">Cache read</th><th scope="col">Cache write</th><th scope="col">Effective</th><th scope="col">Cost</th><th scope="col">Precision</th></tr></thead>
           <tbody>
             <tr><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">1</span></td><td>Sender</td><td><span class="fh-value fh-value--text fh-value--tabular" data-fh="VAL-5.1" data-fh-slot="value">9.4%</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">38,420</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">9,860</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">212,300</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">31,800</span></td><td><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">109,260</span></td><td><span class="fh-value fh-value--amount fh-value--tabular fh-value--mono" data-fh="VAL-4.1" data-fh-slot="value"><data value="0.74">$0.74</data></span></td><td>Exact</td></tr>
@@ -612,6 +612,541 @@
 </div>
           </div>
         </div>
+
+        <!-- Profile page (SDC-3, PE1 #201): one person on the detail template, built from Firehorse parts only: the record
+             header with the xl person avatar in the mark slot, metric tiles, sub tabs, and the Profile sections, Photo
+             holding the image field (IMF). Sample data and the sample avatars. -->
+        <div class="site-demo site-anchor" id="c-profile-page" data-fh-id="SDC-3" data-fh-groups="Profile page">
+          <div class="site-demo__head"><h3>Profile page</h3><p>One person on the detail template: the record header with the xl person avatar, the name, the @handle, a presence dot and role chips; four metric tiles; sub tabs Profile, Photo and Activity; then Identity, Contact, Photo (the image field), Goals (one goal with its own icon, one inheriting the person's photo, with its source line) and Activity.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-tpl fh-tpl--detail" data-fh-id="SDC-3.1" data-fh-name="Profile page">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky" data-fh="REC-1.1" data-fh-slot="sections">
+      <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="online" style="grid-area: mark" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/ava.webp" alt=""></span>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title" data-fh-slot="title">Ava Moreno</h2>
+        <p class="fh-record__sub" data-fh-slot="sub">@ava · online</p>
+        <p class="fh-record__chips"><span class="fh-chip fh-chip--sm" data-tone="rose" data-fh="CHP" data-fh-slot="chips">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP" data-fh-slot="chips">Design</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm fh-button--secondary" type="button" data-fh="BTN-1.5" data-fh-slot="actions">Edit</button></div>
+    </div>
+  </header>
+  <div class="fh-metrics" data-fh="TMR" data-fh-slot="sections">
+<article class="fh-metric" data-tone="sky" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--sparkles" aria-hidden="true"></i></span>Ideas</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">3 this week</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">14</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Helm ideas</p>
+</article>
+<article class="fh-metric" data-tone="violet" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--message-square" aria-hidden="true"></i></span>Remarks</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">8 this week</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">52</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Idea remarks</p>
+</article>
+<article class="fh-metric" data-tone="teal" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span>Active goals</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">1 inherits the photo</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">2</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Goals</p>
+</article>
+<article class="fh-metric" data-tone="amber" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--calendar" aria-hidden="true"></i></span>Member since</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">8 months</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">Mar 2026</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Account</p>
+</article>
+  </div>
+  <div class="fh-tpl__nav">
+    <nav class="fh-tabs fh-tabs--sub" aria-label="Profile pages" data-fh="TAB" data-fh-slot="sections">
+      <a href="#c-profile-page" aria-current="page">Profile</a>
+      <a href="#c-profile-page">Photo</a>
+      <a href="#c-profile-page">Activity <span class="fh-badge" data-fh="CLS-1">3</span></a>
+    </nav>
+  </div>
+  <div class="fh-tpl__body fh-stack">
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--id-card fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Identity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">5 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-display">Display name</label><input class="fh-input" id="pf-display" type="text" value="Ava Moreno" autocomplete="nickname" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-first">First name</label><input class="fh-input" id="pf-first" type="text" value="Ava" autocomplete="given-name" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-last">Last name</label><input class="fh-input" id="pf-last" type="text" value="Moreno" autocomplete="family-name" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-user">Username</label><input class="fh-input" id="pf-user" type="text" value="ava" autocomplete="username" data-fh="FLD"><p class="fh-field__hint">Shown as @ava</p></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-tz">Time zone</label><div class="fh-select-wrap" data-fh="THS"><select class="fh-select" id="pf-tz" data-fh="THS"><option selected>America/New_York (ET)</option><option>America/Chicago (CT)</option><option>Europe/London (GMT)</option></select></div></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit" data-fh="BTN" data-fh-slot="actions">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset" data-fh="BTN-1.5" data-fh-slot="actions">Discard</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="teal" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--mail fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Contact</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">2 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-email">Email</label><input class="fh-input" id="pf-email" type="email" value="ava@rascode.dev" readonly data-fh="FLD"><p class="fh-field__hint">From the sign-in account</p></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pf-phone">Phone</label><input class="fh-input" id="pf-phone" type="tel" value="+1 212 555 0142" autocomplete="tel" data-fh="FLD"></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit" data-fh="BTN" data-fh-slot="actions">Save</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="violet" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Photo</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet" data-fh="CHP" data-fh-slot="chips">1 image</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-image-field" data-kind="person" data-size="2xl" data-fh="IMF-1" data-fh-slot="body">
+  <div class="fh-image-field__layout">
+    <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span></div>
+    <div class="fh-image-field__main">
+      <div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Photo source" data-fh="SEG-2"><button type="button" data-pane="upload" aria-pressed="true">Upload</button><button type="button" data-pane="url" aria-pressed="false">From a URL</button></div>
+      <div class="fh-image-field__panes">
+        <div class="fh-image-field__pane" data-pane="upload">
+          <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-fh="UPL-2"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"><span class="fh-dropzone__title">Drop, paste or browse</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label>
+        </div>
+        <div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden>
+          <div class="fh-field" data-fh="FLD-4.1"><label for="pf-photo-url">Image address</label><div class="fh-image-field__url"><input class="fh-input" id="pf-photo-url" type="url" inputmode="url" placeholder="https://" pattern="https://.*" value="" data-fh="FLD"><button class="fh-button fh-button--secondary" type="button" data-fetch data-fh="BTN-1.5">Fetch</button></div><p class="fh-image-field__status" role="status"><span class="fh-spinner" aria-hidden="true" data-fh="FBK"></span>Fetching the image</p><p class="fh-field__error"></p><p class="fh-image-field__fetched"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fh-image-field__foot"><button class="fh-button" type="button" data-fh="BTN">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove data-fh="BTN-2.2">Remove</button></div>
+</div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--target fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Goals</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">2 goals</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 inherits</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table fh-table--reflow" data-fh="TBL-1.2" data-fh-slot="body">
+  <thead><tr><th scope="col">Goal</th><th scope="col">Image</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Goal"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="goal" data-tone="teal" data-fh="AVT"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><a class="fh-ref" href="#pe1-person-sidecar" data-sidecar="goal-harbor" data-fh="REF-1.1"><span class="fh-ref__label" title="Harbor index refresh">Harbor index refresh</span></a></span></td><td data-label="Image">Its own icon</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running" data-fh="CHP" data-fh-slot="chips">running</span></td></tr>
+    <tr><td data-label="Goal"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="goal" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#pe1-person-sidecar" data-sidecar="goal-ledger" data-fh="REF-1.1"><span class="fh-ref__label" title="Ledger cleanup">Ledger cleanup</span></a></span><p class="fh-image-field__source fh-field__hint">From Ava's photo <button class="fh-button fh-button--ghost fh-button--sm" type="button" data-reset data-fh="BTN-2.2" data-fh-slot="actions">Reset</button></p></td><td data-label="Image">Inherited</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged" data-fh="CHP" data-fh-slot="chips">merged</span></td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Activity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">3 steps</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+  <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+  <tbody>
+    <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+    <tr><td data-label="Time">20:35</td><td data-label="Step">Changed the photo</td><td data-label="Detail">Uploaded a WebP, 240 KB</td></tr>
+    <tr><td data-label="Time">18:12</td><td data-label="Step">Remarked on an idea</td><td data-label="Detail">Profile editor plan, #201</td></tr>
+    <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+    <tr><td data-label="Time">09:40</td><td data-label="Step">Opened a goal</td><td data-label="Detail">Harbor index refresh</td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <!-- People (SDC-4, PE1 #201): the people area on the list template: metric tiles, a datatable of people with a
+             table and cards toggle (SEG-2.2), and the person record sidecar. A name opens #pe1-person-sidecar (a closed
+             dialog after #sidecar-demo); SDC-4.3 is the same sidecar open in place. Sample data. -->
+        <div class="site-demo site-anchor" id="c-people" data-fh-id="SDC-4" data-fh-groups="People">
+          <div class="site-demo__head"><h3>People</h3><p>The people area on the list template: four metric tiles, then the people as a datatable (avatar and name, @username, email, roles as chips, status, last seen) or, with the toggle, a grid of person cards with the large avatar. A name opens the person in the record sidecar with the Profile sections; the last specimen is that sidecar open in place.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack fh-stack--xl">
+<div class="fh-tpl fh-tpl--list" data-fh-id="SDC-4.1" data-fh-name="People list">
+  <header class="fh-tpl__header">
+    <div class="fh-record" data-tone="sky" data-fh="REC-1.1" data-fh-slot="sections">
+      <div class="fh-record__mark" data-fh-slot="mark"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></div>
+      <div class="fh-record__id">
+        <h2 class="fh-record__title" data-fh-slot="title">People</h2>
+        <p class="fh-record__sub" data-fh-slot="sub">Everyone with an account, newest first.</p>
+      </div>
+      <div class="fh-record__actions"><button class="fh-button fh-button--sm" type="button" data-fh="BTN" data-fh-slot="actions">Invite</button></div>
+    </div>
+  </header>
+  <div class="fh-metrics" data-fh="TMR" data-fh-slot="sections">
+<article class="fh-metric" data-tone="sky" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--users" aria-hidden="true"></i></span>People</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">2 joined this month</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">6</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Accounts</p>
+</article>
+<article class="fh-metric" data-tone="lime" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--activity" aria-hidden="true"></i></span>Active</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">Seen in the last 7 days</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">4</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Sessions</p>
+</article>
+<article class="fh-metric" data-tone="violet" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--image" aria-hidden="true"></i></span>With a photo</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">1 shows initials</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">5</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Profiles</p>
+</article>
+<article class="fh-metric" data-tone="amber" data-fh="MET-1" data-fh-slot="body">
+  <p class="fh-metric__label"><span class="fh-cube fh-cube--icon" data-fh="CUB" data-fh-slot="media"><i class="fh-icon fh-icon--user-plus" aria-hidden="true"></i></span>Pending approvals</p>
+  <p class="fh-metric__sub" data-fh-slot="sub">Oldest: 3 days</p>
+  <div class="fh-metric__figure"><p class="fh-metric__value"><span class="fh-value fh-value--plain fh-value--tabular" data-fh="VAL-6.1" data-fh-slot="value">2</span></p></div>
+  <p class="fh-metric__source" data-fh-slot="source">Sign-ups</p>
+</article>
+  </div>
+  <div class="fh-tpl__filters">
+    <label data-fh-slot="fields" data-fh="FLD" class="fh-search"><span class="fh-sr-only">Find a person</span><input type="search" placeholder="Find a person"></label>
+    <div class="fh-select-wrap" data-fh="THS" data-fh-slot="fields"><select class="fh-select" aria-label="Role" data-fh="THS"><option>All roles</option><option>Admin</option><option>Engineer</option><option>Operator</option></select></div>
+    <div class="fh-segment fh-segment--mode" role="group" aria-label="View" onclick="const b = event.target.closest('button'); if (!b) return; for (const x of this.querySelectorAll('button')) x.setAttribute('aria-pressed', String(x === b)); for (const v of this.closest('.fh-tpl').querySelectorAll('[data-view]')) v.hidden = v.dataset.view !== b.value" data-fh="SEG-2" data-fh-slot="fields"><button type="button" value="table" aria-pressed="true"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Table</button><button type="button" value="cards" aria-pressed="false"><i class="fh-icon fh-icon--layout-grid" aria-hidden="true"></i>Cards</button></div>
+  </div>
+  <div class="fh-tpl__body">
+    <div class="fh-dt fh-dt--records" aria-label="People" data-view="table" data-fh="DTB-1.1" data-fh-slot="body">
+      <div class="fh-dt__scroll"><table class="fh-dt__table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Username</th><th scope="col">Email</th><th scope="col">Roles</th><th scope="col">Status</th><th scope="col">Last seen</th></tr></thead>
+        <tbody>
+          <tr data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="person" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1"><span class="fh-ref__label" title="Ava Moreno">Ava Moreno</span></a></span></td><td data-label="Username"><code>@ava</code></td><td data-label="Email"><a class="fh-link" href="mailto:ava@rascode.dev" data-fh="ACT-2.1" data-fh-slot="link">ava@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="rose" data-fh="CHP">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">Design</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></td><td data-label="Last seen">Today, 21:02</td></tr>
+          <tr data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="person" data-fh="AVT"><img src="/img/avatars/mateo.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1"><span class="fh-ref__label" title="Mateo Ruiz">Mateo Ruiz</span></a></span></td><td data-label="Username"><code>@mateo</code></td><td data-label="Email"><a class="fh-link" href="mailto:mateo@rascode.dev" data-fh="ACT-2.1" data-fh-slot="link">mateo@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="teal" data-fh="CHP">Engineer</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></td><td data-label="Last seen">Today, 18:40</td></tr>
+          <tr data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="person" data-fh="AVT"><img src="/img/avatars/isla.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1"><span class="fh-ref__label" title="Isla Grant">Isla Grant</span></a></span></td><td data-label="Username"><code>@isla</code></td><td data-label="Email"><a class="fh-link" href="mailto:isla@rascode.dev" data-fh="ACT-2.1" data-fh-slot="link">isla@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">Operator</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></td><td data-label="Last seen">Yesterday</td></tr>
+          <tr data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="person" data-fh="AVT"><img src="/img/avatars/ray.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1"><span class="fh-ref__label" title="Ray Okafor">Ray Okafor</span></a></span></td><td data-label="Username"><code>@ray</code></td><td data-label="Email"><a class="fh-link" href="mailto:ray@rascode.dev" data-fh="ACT-2.1" data-fh-slot="link">ray@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="teal" data-fh="CHP">Engineer</span><span class="fh-chip fh-chip--sm" data-tone="violet" data-fh="CHP">Reviewer</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></td><td data-label="Last seen">Nov 12</td></tr>
+          <tr data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="person" data-fh="AVT">RA</span><a class="fh-ref" href="#c-people" data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1"><span class="fh-ref__label" title="Ruth Abara">Ruth Abara</span></a></span></td><td data-label="Username"><code>@ruth</code></td><td data-label="Email"><a class="fh-link" href="mailto:ruth@rascode.dev" data-fh="ACT-2.1" data-fh-slot="link">ruth@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="neutral" data-fh="CHP">Viewer</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber" data-fh="CHP" data-fh-slot="chips">pending</span></td><td data-label="Last seen">Never</td></tr>
+          <tr data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar" tabindex="0"><td data-label="Name"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="person" data-fh="AVT"><img src="/img/avatars/sam.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1"><span class="fh-ref__label" title="Sam Lee">Sam Lee</span></a></span></td><td data-label="Username"><code>@sam</code></td><td data-label="Email"><a class="fh-link" href="mailto:sam@rascode.dev" data-fh="ACT-2.1" data-fh-slot="link">sam@rascode.dev</a></td><td data-label="Roles"><span class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">Operator</span></span></td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber" data-fh="CHP" data-fh-slot="chips">pending</span></td><td data-label="Last seen">Never</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="fh-grid" style="--fh-grid-min: 12rem" data-view="cards" hidden>
+  <article class="fh-card" data-tone="rose" data-fh="CRD" data-fh-slot="body"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="online" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/ava.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@ava</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Ava Moreno</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="rose" data-fh="CHP">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">Design</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal" data-fh="CRD" data-fh-slot="body"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="away" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/mateo.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@mateo</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Mateo Ruiz</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="teal" data-fh="CHP">Engineer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber" data-fh="CRD" data-fh-slot="body"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/isla.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@isla</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Isla Grant</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal" data-fh="CRD" data-fh-slot="body"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/ray.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@ray</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Ray Okafor</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="teal" data-fh="CHP">Engineer</span><span class="fh-chip fh-chip--sm" data-tone="violet" data-fh="CHP">Reviewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="neutral" data-fh="CRD" data-fh-slot="body"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media">RA</span>
+    <p class="fh-card__meta" data-fh-slot="meta">@ruth</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Ruth Abara</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="neutral" data-fh="CHP">Viewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber" data-fh="CHP">pending</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber" data-fh="CRD" data-fh-slot="body"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/sam.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@sam</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Sam Lee</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber" data-fh="CHP">pending</span></p>
+  </div></article>
+    </div>
+  </div>
+</div>
+<div class="fh-grid" style="--fh-grid-min: 12rem" data-fh-id="SDC-4.2" data-fh-name="People cards">
+  <article class="fh-card" data-tone="rose"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="online" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/ava.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@ava</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ava" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Ava Moreno</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="rose" data-fh="CHP">Admin</span><span class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">Design</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-status="away" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/mateo.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@mateo</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-mateo" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Mateo Ruiz</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="teal" data-fh="CHP">Engineer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/isla.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@isla</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-isla" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Isla Grant</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="teal"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/ray.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@ray</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ray" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Ray Okafor</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="teal" data-fh="CHP">Engineer</span><span class="fh-chip fh-chip--sm" data-tone="violet" data-fh="CHP">Reviewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime" data-fh="CHP">active</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="neutral"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media">RA</span>
+    <p class="fh-card__meta" data-fh-slot="meta">@ruth</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-ruth" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Ruth Abara</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="neutral" data-fh="CHP">Viewer</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber" data-fh="CHP">pending</span></p>
+  </div></article>
+  <article class="fh-card" data-tone="amber"><div class="fh-card__content">
+    <span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT" data-fh-slot="media"><img src="/img/avatars/sam.webp" alt=""></span>
+    <p class="fh-card__meta" data-fh-slot="meta">@sam</p>
+    <h3 class="fh-card__title"><a class="fh-ref" href="#c-people" data-sidecar="person-sam" data-sidecar-target="#pe1-person-sidecar" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Sam Lee</span></a></h3>
+    <p class="fh-chips" data-fh="CHP" data-fh-slot="chips"><span class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">Operator</span><span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="amber" data-fh="CHP">pending</span></p>
+  </div></article>
+</div>
+<div class="fh-stack" style="max-inline-size: 34rem">
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" open style="--fh-dialog-size: 34rem; position: relative; inset: auto; inline-size: 100%; block-size: 60rem; margin: 0" aria-labelledby="ps-title" data-fh-id="SDC-4.3" data-fh-name="Person record (SDC)">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow" data-fh-slot="eyebrow">Person</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link" data-fh="BTN-2.2" data-fh-slot="actions"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark"><span class="fh-avatar fh-avatar--lg" data-kind="person" data-status="online" data-fh="AVT" data-fh-slot="mark"><img src="/img/avatars/ava.webp" alt=""></span></span>
+      <div>
+        <h2 class="fh-sidecar__title" id="ps-title" data-fh-slot="title">Ava Moreno</h2>
+        <p class="fh-sidecar__sub" data-fh-slot="sub"><code>@ava</code> · ava@rascode.dev</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="rose" data-fh="CHP" data-fh-slot="chips">Admin</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">Design</span><span class="fh-chip" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--id-card fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Identity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">5 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-display">Display name</label><input class="fh-input" id="ps-display" type="text" value="Ava Moreno" autocomplete="nickname" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-first">First name</label><input class="fh-input" id="ps-first" type="text" value="Ava" autocomplete="given-name" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-last">Last name</label><input class="fh-input" id="ps-last" type="text" value="Moreno" autocomplete="family-name" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-user">Username</label><input class="fh-input" id="ps-user" type="text" value="ava" autocomplete="username" data-fh="FLD"><p class="fh-field__hint">Shown as @ava</p></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-tz">Time zone</label><div class="fh-select-wrap" data-fh="THS"><select class="fh-select" id="ps-tz" data-fh="THS"><option selected>America/New_York (ET)</option><option>America/Chicago (CT)</option><option>Europe/London (GMT)</option></select></div></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit" data-fh="BTN" data-fh-slot="actions">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset" data-fh="BTN-1.5" data-fh-slot="actions">Discard</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="teal" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--mail fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Contact</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">2 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-email">Email</label><input class="fh-input" id="ps-email" type="email" value="ava@rascode.dev" readonly data-fh="FLD"><p class="fh-field__hint">From the sign-in account</p></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="ps-phone">Phone</label><input class="fh-input" id="ps-phone" type="tel" value="+1 212 555 0142" autocomplete="tel" data-fh="FLD"></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit" data-fh="BTN" data-fh-slot="actions">Save</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="violet" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Photo</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet" data-fh="CHP" data-fh-slot="chips">1 image</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-image-field" data-kind="person" data-size="2xl" data-fh="IMF-1" data-fh-slot="body">
+  <div class="fh-image-field__layout">
+    <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span></div>
+    <div class="fh-image-field__main">
+      <div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Photo source" data-fh="SEG-2"><button type="button" data-pane="upload" aria-pressed="true">Upload</button><button type="button" data-pane="url" aria-pressed="false">From a URL</button></div>
+      <div class="fh-image-field__panes">
+        <div class="fh-image-field__pane" data-pane="upload">
+          <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-fh="UPL-2"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"><span class="fh-dropzone__title">Drop, paste or browse</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label>
+        </div>
+        <div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden>
+          <div class="fh-field" data-fh="FLD-4.1"><label for="ps-photo-url">Image address</label><div class="fh-image-field__url"><input class="fh-input" id="ps-photo-url" type="url" inputmode="url" placeholder="https://" pattern="https://.*" value="" data-fh="FLD"><button class="fh-button fh-button--secondary" type="button" data-fetch data-fh="BTN-1.5">Fetch</button></div><p class="fh-image-field__status" role="status"><span class="fh-spinner" aria-hidden="true" data-fh="FBK"></span>Fetching the image</p><p class="fh-field__error"></p><p class="fh-image-field__fetched"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fh-image-field__foot"><button class="fh-button" type="button" data-fh="BTN">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove data-fh="BTN-2.2">Remove</button></div>
+</div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--target fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Goals</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">2 goals</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 inherits</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table fh-table--reflow" data-fh="TBL-1.2" data-fh-slot="body">
+  <thead><tr><th scope="col">Goal</th><th scope="col">Image</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Goal"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="goal" data-tone="teal" data-fh="AVT"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><a class="fh-ref" href="#c-people" data-sidecar="goal-harbor" data-fh="REF-1.1"><span class="fh-ref__label" title="Harbor index refresh">Harbor index refresh</span></a></span></td><td data-label="Image">Its own icon</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running" data-fh="CHP" data-fh-slot="chips">running</span></td></tr>
+    <tr><td data-label="Goal"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="goal" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="goal-ledger" data-fh="REF-1.1"><span class="fh-ref__label" title="Ledger cleanup">Ledger cleanup</span></a></span><p class="fh-image-field__source fh-field__hint">From Ava's photo <button class="fh-button fh-button--ghost fh-button--sm" type="button" data-reset data-fh="BTN-2.2" data-fh-slot="actions">Reset</button></p></td><td data-label="Image">Inherited</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged" data-fh="CHP" data-fh-slot="chips">merged</span></td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Activity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">3 steps</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+  <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+  <tbody>
+    <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+    <tr><td data-label="Time">20:35</td><td data-label="Step">Changed the photo</td><td data-label="Detail">Uploaded a WebP, 240 KB</td></tr>
+    <tr><td data-label="Time">18:12</td><td data-label="Step">Remarked on an idea</td><td data-label="Detail">Profile editor plan, #201</td></tr>
+    <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+    <tr><td data-label="Time">09:40</td><td data-label="Step">Opened a goal</td><td data-label="Detail">Harbor index refresh</td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+  </div>
+</dialog>
+</div>
+<dialog class="fh-dialog fh-dialog--float fh-sidecar" id="pe1-person-sidecar" data-sidecar-resize aria-labelledby="pd-title" data-fh="SDC-4.3">
+  <header class="fh-sidecar__header">
+    <div class="fh-sidecar__bar">
+      <span class="fh-sidecar__eyebrow" data-fh-slot="eyebrow">Person</span>
+      <span class="fh-sidecar__actions">
+        <button type="button" class="fh-button fh-button--ghost fh-button--icon fh-button--sm" aria-label="Copy link" data-fh="BTN-2.2" data-fh-slot="actions"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button>
+        <button type="button" class="fh-close" aria-label="Close"></button>
+      </span>
+    </div>
+    <div class="fh-sidecar__identity">
+      <span class="fh-sidecar__mark"><span class="fh-avatar fh-avatar--lg" data-kind="person" data-status="online" data-fh="AVT" data-fh-slot="mark"><img src="/img/avatars/ava.webp" alt=""></span></span>
+      <div>
+        <h2 class="fh-sidecar__title" id="pd-title" data-fh-slot="title">Ava Moreno</h2>
+        <p class="fh-sidecar__sub" data-fh-slot="sub"><code>@ava</code> · ava@rascode.dev</p>
+      </div>
+    </div>
+    <div class="fh-sidecar__chips"><span class="fh-chip" data-tone="rose" data-fh="CHP" data-fh-slot="chips">Admin</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">Design</span><span class="fh-chip" data-tone="lime" data-fh="CHP" data-fh-slot="chips">active</span></div>
+  </header>
+  <div class="fh-sidecar__body">
+<details class="fh-panel-section fh-panel-section--form" data-tone="sky" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--id-card fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Identity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">5 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-display">Display name</label><input class="fh-input" id="pd-display" type="text" value="Ava Moreno" autocomplete="nickname" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-first">First name</label><input class="fh-input" id="pd-first" type="text" value="Ava" autocomplete="given-name" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-last">Last name</label><input class="fh-input" id="pd-last" type="text" value="Moreno" autocomplete="family-name" data-fh="FLD"></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-user">Username</label><input class="fh-input" id="pd-user" type="text" value="ava" autocomplete="username" data-fh="FLD"><p class="fh-field__hint">Shown as @ava</p></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-tz">Time zone</label><div class="fh-select-wrap" data-fh="THS"><select class="fh-select" id="pd-tz" data-fh="THS"><option selected>America/New_York (ET)</option><option>America/Chicago (CT)</option><option>Europe/London (GMT)</option></select></div></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit" data-fh="BTN" data-fh-slot="actions">Save</button><button class="fh-button fh-button--secondary fh-button--sm" type="reset" data-fh="BTN-1.5" data-fh-slot="actions">Discard</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="teal" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--mail fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Contact</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">2 fields</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<form>
+  <fieldset>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-email">Email</label><input class="fh-input" id="pd-email" type="email" value="ava@rascode.dev" readonly data-fh="FLD"><p class="fh-field__hint">From the sign-in account</p></div>
+    <div class="fh-field" data-fh="FLD-4.1" data-fh-slot="body"><label for="pd-phone">Phone</label><input class="fh-input" id="pd-phone" type="tel" value="+1 212 555 0142" autocomplete="tel" data-fh="FLD"></div>
+  </fieldset>
+  <div class="fh-panel-section__actions"><button class="fh-button fh-button--sm" type="submit" data-fh="BTN" data-fh-slot="actions">Save</button></div>
+</form>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--form" data-tone="violet" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Photo</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="violet" data-fh="CHP" data-fh-slot="chips">1 image</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-image-field" data-kind="person" data-size="2xl" data-fh="IMF-1" data-fh-slot="body">
+  <div class="fh-image-field__layout">
+    <div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--2xl" data-kind="person" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span></div>
+    <div class="fh-image-field__main">
+      <div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Photo source" data-fh="SEG-2"><button type="button" data-pane="upload" aria-pressed="true">Upload</button><button type="button" data-pane="url" aria-pressed="false">From a URL</button></div>
+      <div class="fh-image-field__panes">
+        <div class="fh-image-field__pane" data-pane="upload">
+          <label class="fh-dropzone fh-dropzone--compact" data-tone="sky" data-fh="UPL-2"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"><span class="fh-dropzone__title">Drop, paste or browse</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label>
+        </div>
+        <div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden>
+          <div class="fh-field" data-fh="FLD-4.1"><label for="pd-photo-url">Image address</label><div class="fh-image-field__url"><input class="fh-input" id="pd-photo-url" type="url" inputmode="url" placeholder="https://" pattern="https://.*" value="" data-fh="FLD"><button class="fh-button fh-button--secondary" type="button" data-fetch data-fh="BTN-1.5">Fetch</button></div><p class="fh-image-field__status" role="status"><span class="fh-spinner" aria-hidden="true" data-fh="FBK"></span>Fetching the image</p><p class="fh-field__error"></p><p class="fh-image-field__fetched"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fh-image-field__foot"><button class="fh-button" type="button" data-fh="BTN">Save</button><button class="fh-button fh-button--ghost" type="button" data-tone="danger" data-remove data-fh="BTN-2.2">Remove</button></div>
+</div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--records" data-tone="teal" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--target fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Goals</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">2 goals</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 inherits</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table fh-table--reflow" data-fh="TBL-1.2" data-fh-slot="body">
+  <thead><tr><th scope="col">Goal</th><th scope="col">Image</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Goal"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="goal" data-tone="teal" data-fh="AVT"><i class="fh-icon fh-icon--target" aria-hidden="true"></i></span><a class="fh-ref" href="#c-people" data-sidecar="goal-harbor" data-fh="REF-1.1"><span class="fh-ref__label" title="Harbor index refresh">Harbor index refresh</span></a></span></td><td data-label="Image">Its own icon</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="running" data-fh="CHP" data-fh-slot="chips">running</span></td></tr>
+    <tr><td data-label="Goal"><span class="fh-value fh-value--avatar-ref" data-fh="VAL-3.12" data-fh-slot="value"><span class="fh-avatar" data-kind="goal" data-fh="AVT"><img src="/img/avatars/ava.webp" alt=""></span><a class="fh-ref" href="#c-people" data-sidecar="goal-ledger" data-fh="REF-1.1"><span class="fh-ref__label" title="Ledger cleanup">Ledger cleanup</span></a></span><p class="fh-image-field__source fh-field__hint">From Ava's photo <button class="fh-button fh-button--ghost fh-button--sm" type="button" data-reset data-fh="BTN-2.2" data-fh-slot="actions">Reset</button></p></td><td data-label="Image">Inherited</td><td data-label="Status"><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged" data-fh="CHP" data-fh-slot="chips">merged</span></td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+<details class="fh-panel-section fh-panel-section--timetable" data-tone="amber" open data-fh="SCT" data-fh-slot="body">
+  <summary class="fh-panel-section__head">
+    <i class="fh-icon fh-icon--clock fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+    <h3 class="fh-panel-section__title" data-fh-slot="title">Activity</h3>
+    <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">3 steps</span></span>
+  </summary>
+  <div class="fh-panel-section__body">
+<div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+  <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
+  <tbody>
+    <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Sat 15 Nov</th></tr>
+    <tr><td data-label="Time">20:35</td><td data-label="Step">Changed the photo</td><td data-label="Detail">Uploaded a WebP, 240 KB</td></tr>
+    <tr><td data-label="Time">18:12</td><td data-label="Step">Remarked on an idea</td><td data-label="Detail">Profile editor plan, #201</td></tr>
+    <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
+    <tr><td data-label="Time">09:40</td><td data-label="Step">Opened a goal</td><td data-label="Detail">Harbor index refresh</td></tr>
+  </tbody>
+</table></div>
+  </div>
+</details>
+  </div>
+</dialog>
+</div>
+          </div>
+        </div>
+
 
         <div class="site-demo site-anchor" id="c-sec" data-fh-id="SCT" data-fh-groups="Section shell">
           <div class="site-demo__head"><h3>Section shell</h3><p>The header every section shares: an icon, a title larger than body text in the strongest text role, and a collapse control. Collapsed, it shows summary chips for what it holds; open, the chips are gone. Chips live only here and in the sidecar header.</p></div>
@@ -700,7 +1235,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">3 records</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 open</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
           <tbody>
             <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor" data-fh="ACT-2.1" data-fh-slot="link">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard" data-fh="ACT-2.1" data-fh-slot="link">Orchard</a></td><td>Merged</td></tr>
@@ -717,7 +1252,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="teal" data-fh="CHP" data-fh-slot="chips">3 records</span><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">1 open</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
           <tbody>
             <tr><td><a class="fh-link" href="#c-sidecar" data-sidecar="goal-harbor" data-fh="ACT-2.1" data-fh-slot="link">Harbor index refresh</a></td><td><a class="fh-link" href="#c-sidecar" data-sidecar="agent-orchard" data-fh="ACT-2.1" data-fh-slot="link">Orchard</a></td><td>Merged</td></tr>
@@ -742,7 +1277,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">4 steps</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">15:07 to 15:45</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
             <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
@@ -760,7 +1295,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">4 steps</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">15:07 to 15:45</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
             <tr><td>15:07</td><td>Read the spec</td><td>Claimed the files</td></tr>
@@ -778,7 +1313,7 @@
           <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">4 steps</span><span class="fh-chip" data-tone="sky" data-fh="CHP" data-fh-slot="chips">Fri 23:40 to Sat 09:12</span></span>
         </summary>
         <div class="fh-panel-section__body">
-        <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+        <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
           <thead><tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">Detail</th></tr></thead>
           <tbody>
             <tr class="fh-panel-section__day" data-fh-slot="date"><th colspan="3" scope="colgroup">Fri 14 Nov</th></tr>
@@ -1442,6 +1977,675 @@ Every check in `relay:verify -- --tier screen` passed.
           </div>
         </div>
 
+        <div class="site-demo site-anchor" id="c-sec-code" data-fh-id="SCO" data-fh-groups="Code section">
+          <div class="site-demo__head"><h3>Code section</h3><p><code>fh-panel-section--code</code>. One code block per file: the name, a language chip, a short checksum you can copy, and a Copy button. Line numbers sit in a gutter and do not copy.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--code" data-tone="orange" open data-fh-id="SCO-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--code fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">fold.js</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="orange" data-fh="CHP">js</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">20 lines</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-code" data-fh="DET">
+          <figcaption>
+            <span>fold.js</span>
+            <span class="fh-chip" data-tone="orange">js</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="9f2a1c0e4b71">9f2a1c0</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy fold.js" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">const LINES = 24;</span><span class="fh-code__line"></span><span class="fh-code__line">const clampOf = (fold) => {</span><span class="fh-code__line">  const raw = getComputedStyle(fold).getPropertyValue("--fh-fold-lines");</span><span class="fh-code__line">  const n = Number.parseInt(raw, 10);</span><span class="fh-code__line">  return Number.isFinite(n) && n > 0 ? n : LINES;</span><span class="fh-code__line">};</span><span class="fh-code__line"></span><span class="fh-code__line">export function measureFold(fold) {</span><span class="fh-code__line">  const body = fold.querySelector(".fh-fold__body");</span><span class="fh-code__line">  const toggle = fold.querySelector(".fh-fold__toggle");</span><span class="fh-code__line">  if (!body || !toggle) return;</span><span class="fh-code__line">  fold.classList.add("fh-fold--js");</span><span class="fh-code__line">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span><span class="fh-code__line">  const over = body.scrollHeight > clampOf(fold) * line + 1;</span><span class="fh-code__line">  if (over) toggle.hidden = false;</span><span class="fh-code__line">  else fold.dataset.fits = "true";</span><span class="fh-code__line">}</span><span class="fh-code__line"></span><span class="fh-code__line">export const ready = true;</span></code></pre>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--code" data-tone="orange" data-fh-id="SCO-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--code fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">fold.js</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="orange" data-fh="CHP">js</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">20 lines</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-code" data-fh="DET">
+          <figcaption>
+            <span>fold.js</span>
+            <span class="fh-chip" data-tone="orange">js</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="9f2a1c0e4b71">9f2a1c0</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy fold.js" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">const LINES = 24;</span><span class="fh-code__line"></span><span class="fh-code__line">const clampOf = (fold) => {</span><span class="fh-code__line">  const raw = getComputedStyle(fold).getPropertyValue("--fh-fold-lines");</span><span class="fh-code__line">  const n = Number.parseInt(raw, 10);</span><span class="fh-code__line">  return Number.isFinite(n) && n > 0 ? n : LINES;</span><span class="fh-code__line">};</span><span class="fh-code__line"></span><span class="fh-code__line">export function measureFold(fold) {</span><span class="fh-code__line">  const body = fold.querySelector(".fh-fold__body");</span><span class="fh-code__line">  const toggle = fold.querySelector(".fh-fold__toggle");</span><span class="fh-code__line">  if (!body || !toggle) return;</span><span class="fh-code__line">  fold.classList.add("fh-fold--js");</span><span class="fh-code__line">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span><span class="fh-code__line">  const over = body.scrollHeight > clampOf(fold) * line + 1;</span><span class="fh-code__line">  if (over) toggle.hidden = false;</span><span class="fh-code__line">  else fold.dataset.fits = "true";</span><span class="fh-code__line">}</span><span class="fh-code__line"></span><span class="fh-code__line">export const ready = true;</span></code></pre>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--code" data-tone="orange" open data-fh-id="SCO-1.3" data-fh-name="Several files">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--code fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Fold</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="orange" data-fh="CHP">2 files</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">12 lines</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-code" data-fh="DET">
+          <figcaption>
+            <span>fold.css</span>
+            <span class="fh-chip" data-tone="orange">css</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="c31d0ab88e22">c31d0ab</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy fold.css" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">.fh-fold {</span><span class="fh-code__line">  display: grid;</span><span class="fh-code__line">  min-inline-size: 0;</span><span class="fh-code__line">}</span><span class="fh-code__line"></span><span class="fh-code__line">.fh-fold__body { min-inline-size: 0; }</span></code></pre>
+        </figure>
+        <figure data-fh-slot="body" class="fh-code" data-fh="DET">
+          <figcaption>
+            <span>ready.js</span>
+            <span class="fh-chip" data-tone="orange">js</span>
+            <span class="fh-value fh-value--path-copy fh-value--mono" data-fh="VAL-11.16"><span class="fh-value__name" title="71ae04d2c908">71ae04d</span><button class="fh-value__action" type="button" aria-label="Copy checksum" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)"><i class="fh-icon fh-icon--copy" aria-hidden="true"></i></button></span>
+            <button class="fh-button fh-button--sm fh-button--ghost" type="button" aria-label="Copy ready.js" onclick="navigator.clipboard?.writeText(this.closest('figure').querySelector('code').innerText)">Copy</button>
+          </figcaption>
+          <pre><code><span class="fh-code__line">export function ready(fold) {</span><span class="fh-code__line">  const body = fold.querySelector(".fh-fold__body");</span><span class="fh-code__line">  if (!body) return false;</span><span class="fh-code__line">  fold.classList.add("fh-fold--js");</span><span class="fh-code__line">  return true;</span><span class="fh-code__line">}</span></code></pre>
+        </figure>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-document" data-fh-id="SDO" data-fh-groups="Document section">
+          <div class="site-demo__head"><h3>Document section</h3><p><code>fh-panel-section--document</code>. A note already rendered, in the prose roles, folded past about 24 lines. A short note shows no fold.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--document" data-tone="amber" open data-fh-id="SDO-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--file-text fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Report policy</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="amber" data-fh="CHP">660 words</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">17 Nov 2026</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-fold" data-fh="FOL-1">
+          <div class="fh-fold__body fh-prose" id="sdo-open-body">
+            <h4>How a relay report is written</h4>
+            <p>A relay report is the record of one run. It names the relay, the worktree and the branch, then what was built and what each check printed. It is written once, when the run ends, and it does not carry a key. The person who reads it should be able to see the work without opening the branch.</p>
+            <p>The timetable is one line per step. Each line starts with the local time the step finished. The time comes from the clock, never from a guess. A step that is still running is not a finished line, and a time you did not read is not a time you may print.</p>
+            <p>House voice is plain. Say what the section holds and what a person can do with it. Leave out a claim you did not check. If a screen was not opened, say that the screen was not opened. A guess dressed up as a result is worse than a gap.</p>
+            <h5>What goes in</h5>
+            <p>Start with the run context as it was handed over. Then the timetable. Then the codes you issued, and the result of each check. End with the words the spec asks for. Do not add a second ending, and do not rewrite the context block.</p>
+            <p>Commands go in with a short view of their output. Trim a long log to the lines that show the result. If a command was not allowed, say so and do not invent a result. A skipped check is a result of its own: name it, and say why it was skipped.</p>
+            <p>A fix after a commit is a second commit. Nothing is amended, stashed, reset or pushed. The hook runs. A message names the kind and the spec, so a later reader can find the run from the history alone.</p>
+            <h5>What stays out</h5>
+            <ul>
+              <li>No key, token or password, even when a check printed one.</li>
+              <li>No path outside the worktree, and no read of a file that holds a secret.</li>
+              <li>No claim that a test passed unless the output says it passed.</li>
+              <li>No second layout, and no colour, radius or shadow of your own.</li>
+              <li>No retired code brought back, and no code renumbered to make a row fit.</li>
+              <li>No part from outside Firehorse. If a part is missing, stop and say so.</li>
+            </ul>
+            <h5>How the checks read</h5>
+            <p>Read the result from the command, not from memory. A line that says skip is expected when the diff does not touch what that check reads. Do not run a skipped check by hand to fill the report. The sweep runs the wide checks once per wave.</p>
+            <p>The screen tier checks the page. At a narrow width the page itself does not scroll sideways: a long line of code, and a deep tree, scroll inside the section. The report says so only after a check, or it says the check was not run.</p>
+            <p>The same rules apply to a policy, a long reply and a spec. Past about 24 lines the text folds, and Show all opens it in place. A short note does not fold. Headings step down so they sit under the section title, in the prose roles.</p>
+            <h5>Records this policy names</h5>
+            <div data-fh-slot="body" class="fh-table-wrap" data-fh="TMR"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+              <thead><tr><th scope="col">Record</th><th scope="col">Kind</th><th scope="col">Where</th></tr></thead>
+              <tbody>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-report" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Relay report</span></a></td><td data-label="Kind">note</td><td data-label="Where">the run folder</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-timetable" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Timetable</span></a></td><td data-label="Kind">section</td><td data-label="Where">inside the report</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-ledger" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Index ledger</span></a></td><td data-label="Kind">record</td><td data-label="Where">the package root</td></tr>
+              </tbody>
+            </table></div>
+            <h5>A line the report may quote</h5>
+            <figure data-fh-slot="body" class="fh-code" data-fh="DET">
+              <figcaption>report.md</figcaption>
+              <pre><code>Timetable
+11:09 read the spec and chose the codes
+11:22 wrote the code section
+11:29 committed it
+The report ends when the checks have a result.</code></pre>
+            </figure>
+            <p>Chips show only while the section is closed. For a document they are the word count and the date it was updated. The count is the words in the body, including the headings, the table and the code.</p>
+            <p>When the run cannot finish, the report still gets written. It says what is left, and it ends by saying the report is incomplete. Updated with the sections for code, a document and a tree.</p>
+          </div>
+          <button data-fh-slot="actions" class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="sdo-open-body" hidden data-fh="BTN-2.2">Show all</button>
+        </div>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--document" data-tone="amber" data-fh-id="SDO-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--file-text fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Report policy</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="amber" data-fh="CHP">660 words</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">17 Nov 2026</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-fold" data-fh="FOL-1">
+          <div class="fh-fold__body fh-prose" id="sdo-collapsed-body">
+            <h4>How a relay report is written</h4>
+            <p>A relay report is the record of one run. It names the relay, the worktree and the branch, then what was built and what each check printed. It is written once, when the run ends, and it does not carry a key. The person who reads it should be able to see the work without opening the branch.</p>
+            <p>The timetable is one line per step. Each line starts with the local time the step finished. The time comes from the clock, never from a guess. A step that is still running is not a finished line, and a time you did not read is not a time you may print.</p>
+            <p>House voice is plain. Say what the section holds and what a person can do with it. Leave out a claim you did not check. If a screen was not opened, say that the screen was not opened. A guess dressed up as a result is worse than a gap.</p>
+            <h5>What goes in</h5>
+            <p>Start with the run context as it was handed over. Then the timetable. Then the codes you issued, and the result of each check. End with the words the spec asks for. Do not add a second ending, and do not rewrite the context block.</p>
+            <p>Commands go in with a short view of their output. Trim a long log to the lines that show the result. If a command was not allowed, say so and do not invent a result. A skipped check is a result of its own: name it, and say why it was skipped.</p>
+            <p>A fix after a commit is a second commit. Nothing is amended, stashed, reset or pushed. The hook runs. A message names the kind and the spec, so a later reader can find the run from the history alone.</p>
+            <h5>What stays out</h5>
+            <ul>
+              <li>No key, token or password, even when a check printed one.</li>
+              <li>No path outside the worktree, and no read of a file that holds a secret.</li>
+              <li>No claim that a test passed unless the output says it passed.</li>
+              <li>No second layout, and no colour, radius or shadow of your own.</li>
+              <li>No retired code brought back, and no code renumbered to make a row fit.</li>
+              <li>No part from outside Firehorse. If a part is missing, stop and say so.</li>
+            </ul>
+            <h5>How the checks read</h5>
+            <p>Read the result from the command, not from memory. A line that says skip is expected when the diff does not touch what that check reads. Do not run a skipped check by hand to fill the report. The sweep runs the wide checks once per wave.</p>
+            <p>The screen tier checks the page. At a narrow width the page itself does not scroll sideways: a long line of code, and a deep tree, scroll inside the section. The report says so only after a check, or it says the check was not run.</p>
+            <p>The same rules apply to a policy, a long reply and a spec. Past about 24 lines the text folds, and Show all opens it in place. A short note does not fold. Headings step down so they sit under the section title, in the prose roles.</p>
+            <h5>Records this policy names</h5>
+            <div data-fh-slot="body" class="fh-table-wrap" data-fh="TMR"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+              <thead><tr><th scope="col">Record</th><th scope="col">Kind</th><th scope="col">Where</th></tr></thead>
+              <tbody>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-report" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Relay report</span></a></td><td data-label="Kind">note</td><td data-label="Where">the run folder</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-timetable" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Timetable</span></a></td><td data-label="Kind">section</td><td data-label="Where">inside the report</td></tr>
+                <tr><td data-label="Record"><a class="fh-ref" href="#c-sidecar" data-sidecar="policy-ledger" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Index ledger</span></a></td><td data-label="Kind">record</td><td data-label="Where">the package root</td></tr>
+              </tbody>
+            </table></div>
+            <h5>A line the report may quote</h5>
+            <figure data-fh-slot="body" class="fh-code" data-fh="DET">
+              <figcaption>report.md</figcaption>
+              <pre><code>Timetable
+11:09 read the spec and chose the codes
+11:22 wrote the code section
+11:29 committed it
+The report ends when the checks have a result.</code></pre>
+            </figure>
+            <p>Chips show only while the section is closed. For a document they are the word count and the date it was updated. The count is the words in the body, including the headings, the table and the code.</p>
+            <p>When the run cannot finish, the report still gets written. It says what is left, and it ends by saying the report is incomplete. Updated with the sections for code, a document and a tree.</p>
+          </div>
+          <button data-fh-slot="actions" class="fh-button fh-button--ghost fh-button--sm fh-fold__toggle" type="button" aria-expanded="false" aria-controls="sdo-collapsed-body" hidden data-fh="BTN-2.2">Show all</button>
+        </div>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--document" data-tone="amber" open data-fh-id="SDO-1.3" data-fh-name="Short">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--file-text fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Short note</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="amber" data-fh="CHP">36 words</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">17 Nov 2026</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-prose" id="sdo-short-body">
+          <h4>A short note</h4>
+          <p>A short note stays open. The fold is for a policy, a long reply or a spec that runs past about 24 lines. This one fits, so there is no Show all control.</p>
+        </div>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-tree" data-fh-id="STR" data-fh-groups="Tree section">
+          <div class="site-demo__head"><h3>Tree section</h3><p><code>fh-panel-section--tree</code>. A package as nested rows. A folder opens in place, and each name opens its record.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 34rem">
+      <details class="fh-panel-section fh-panel-section--tree" data-tone="teal" open data-fh-id="STR-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--folder fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Package</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="teal" data-fh="CHP">8 nodes</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">depth 3</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+          <li>
+            <details open>
+              <summary><a href="#c-sidecar" data-sidecar="file-firehorse"><i class="fh-icon fh-icon--package" aria-hidden="true"></i><span>firehorse</span><small>1.4.0 · package</small></a></summary>
+              <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                <li>
+                  <details open>
+                    <summary><a href="#c-sidecar" data-sidecar="file-src"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>src</span><small>directory</small></a></summary>
+                    <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                      <li><a href="#c-sidecar" data-sidecar="file-components"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>components</span><small>directory</small></a></li>
+                      <li><a href="#c-sidecar" data-sidecar="file-firehorse-css"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>firehorse.css</span><small>css · file</small></a></li>
+                      <li><a href="#c-sidecar" data-sidecar="file-index-js"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>index.js</span><small>js · file</small></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li><a href="#c-sidecar" data-sidecar="file-package-json"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>package.json</span><small>1.4.0 · file</small></a></li>
+                <li><a href="#c-sidecar" data-sidecar="file-readme"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>README.md</span><small>md · file</small></a></li>
+                <li><a href="#c-sidecar" data-sidecar="file-changelog"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>CHANGELOG.md</span><small>md · file</small></a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--tree" data-tone="teal" data-fh-id="STR-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--folder fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Package</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="teal" data-fh="CHP">8 nodes</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">depth 3</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+          <li>
+            <details open>
+              <summary><a href="#c-sidecar" data-sidecar="file-firehorse"><i class="fh-icon fh-icon--package" aria-hidden="true"></i><span>firehorse</span><small>1.4.0 · package</small></a></summary>
+              <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                <li>
+                  <details open>
+                    <summary><a href="#c-sidecar" data-sidecar="file-src"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>src</span><small>directory</small></a></summary>
+                    <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                      <li><a href="#c-sidecar" data-sidecar="file-components"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>components</span><small>directory</small></a></li>
+                      <li><a href="#c-sidecar" data-sidecar="file-firehorse-css"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>firehorse.css</span><small>css · file</small></a></li>
+                      <li><a href="#c-sidecar" data-sidecar="file-index-js"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>index.js</span><small>js · file</small></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li><a href="#c-sidecar" data-sidecar="file-package-json"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>package.json</span><small>1.4.0 · file</small></a></li>
+                <li><a href="#c-sidecar" data-sidecar="file-readme"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>README.md</span><small>md · file</small></a></li>
+                <li><a href="#c-sidecar" data-sidecar="file-changelog"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>CHANGELOG.md</span><small>md · file</small></a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--tree" data-tone="teal" open data-fh-id="STR-1.3" data-fh-name="Deep">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--folder fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Package</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="teal" data-fh="CHP">9 nodes</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">depth 5</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+          <li>
+            <details open>
+              <summary><a href="#c-sidecar" data-sidecar="file-firehorse"><i class="fh-icon fh-icon--package" aria-hidden="true"></i><span>firehorse</span><small>1.4.0 · package</small></a></summary>
+              <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                <li>
+                  <details open>
+                    <summary><a href="#c-sidecar" data-sidecar="file-src"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>src</span><small>directory</small></a></summary>
+                    <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                      <li>
+                        <details open>
+                          <summary><a href="#c-sidecar" data-sidecar="file-components"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>components</span><small>directory</small></a></summary>
+                          <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                            <li>
+                              <details open>
+                                <summary><a href="#c-sidecar" data-sidecar="file-sections"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>sections</span><small>directory</small></a></summary>
+                                <ul data-fh-slot="body" class="fh-tree" data-fh="STR">
+                                  <li><a href="#c-sidecar" data-sidecar="file-kind-tree"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>kind-tree.css</span><small>css · file</small></a></li>
+                                  <li><a href="#c-sidecar" data-sidecar="file-kinds"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>kinds.css</span><small>css · file</small></a></li>
+                                </ul>
+                              </details>
+                            </li>
+                            <li><a href="#c-sidecar" data-sidecar="file-content"><i class="fh-icon fh-icon--folder" aria-hidden="true"></i><span>content</span><small>directory</small></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li><a href="#c-sidecar" data-sidecar="file-firehorse-css"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>firehorse.css</span><small>css · file</small></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li><a href="#c-sidecar" data-sidecar="file-package-json"><i class="fh-icon fh-icon--file" aria-hidden="true"></i><span>package.json</span><small>1.4.0 · file</small></a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-gallery" data-fh-id="SGA" data-fh-groups="Gallery section">
+          <div class="site-demo__head"><h3>Gallery section</h3><p><code>fh-panel-section--gallery</code>. A record's images as square thumbnails. The grid fills by the section's width, and a thumbnail opens the image viewer at that image; the arrow keys walk the set.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 48rem">
+      <details class="fh-panel-section fh-panel-section--gallery" data-tone="amber" open data-fh-id="SGA-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Images</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="amber" data-fh="CHP">9 images</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">Nov 16</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul data-fh-slot="body" class="fh-gallery" aria-label="9 images" data-fh="SGA">
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/akhal-teke.webp" alt="Theme image: Akhal-Teke" loading="lazy"></button><span class="fh-gallery__caption">akhal-teke.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/firehorse.webp" alt="Theme image: Firehorse" loading="lazy"></button><span class="fh-gallery__caption">firehorse.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/friesian.webp" alt="Theme image: Friesian" loading="lazy"></button><span class="fh-gallery__caption">friesian.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/lipizzaner.webp" alt="Theme image: Lipizzaner" loading="lazy"></button><span class="fh-gallery__caption">lipizzaner.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/mustang.webp" alt="Theme image: Mustang" loading="lazy"></button><span class="fh-gallery__caption">mustang.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/backdrop/firehorse-horse.webp" alt="Backdrop image: the Firehorse horse" loading="lazy"></button><span class="fh-gallery__caption">firehorse-horse.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="violet" data-fh="CHP">backdrop</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy"></button><span class="fh-gallery__caption">actions-dark.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy"></button><span class="fh-gallery__caption">actions-light.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/ims-forms-dark.webp" alt="Screenshot: Forms page, dark mode" loading="lazy"></button><span class="fh-gallery__caption">forms-dark.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+        </ul>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--gallery" data-tone="amber" data-fh-id="SGA-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Images</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="amber" data-fh="CHP">9 images</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">Nov 16</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul data-fh-slot="body" class="fh-gallery" aria-label="9 images" data-fh="SGA">
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/akhal-teke.webp" alt="Theme image: Akhal-Teke" loading="lazy"></button><span class="fh-gallery__caption">akhal-teke.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/firehorse.webp" alt="Theme image: Firehorse" loading="lazy"></button><span class="fh-gallery__caption">firehorse.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/friesian.webp" alt="Theme image: Friesian" loading="lazy"></button><span class="fh-gallery__caption">friesian.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/lipizzaner.webp" alt="Theme image: Lipizzaner" loading="lazy"></button><span class="fh-gallery__caption">lipizzaner.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/mustang.webp" alt="Theme image: Mustang" loading="lazy"></button><span class="fh-gallery__caption">mustang.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/backdrop/firehorse-horse.webp" alt="Backdrop image: the Firehorse horse" loading="lazy"></button><span class="fh-gallery__caption">firehorse-horse.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="violet" data-fh="CHP">backdrop</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy"></button><span class="fh-gallery__caption">actions-dark.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy"></button><span class="fh-gallery__caption">actions-light.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/ims-forms-dark.webp" alt="Screenshot: Forms page, dark mode" loading="lazy"></button><span class="fh-gallery__caption">forms-dark.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+        </ul>
+        </div>
+      </details>
+      <details data-fh-slot="body" class="fh-panel-section fh-panel-section--gallery" data-tone="amber" open data-fh="SCT">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true" data-fh-slot="icon"></i>
+          <h3 class="fh-panel-section__title" data-fh-slot="title">Images</h3>
+          <span class="fh-panel-section__chips"><span class="fh-chip" data-tone="amber" data-fh="CHP" data-fh-slot="chips">0 images</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div class="fh-empty" data-tone="amber" data-fh="EMP-2.1" data-fh-slot="body">
+          <span class="fh-empty__icon" data-fh-slot="icon"><i class="fh-icon fh-icon--image" aria-hidden="true"></i></span>
+          <h4>No images yet</h4>
+          <p>Screenshots and files attached to this record show up here.</p>
+        </div>
+        </div>
+      </details>
+</div>
+<div class="fh-stack" style="max-inline-size: 23.4375rem">
+      <details class="fh-panel-section fh-panel-section--gallery" data-tone="amber" open data-fh-id="SGA-1.3" data-fh-name="Narrow">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--image fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Images</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="amber" data-fh="CHP">9 images</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">Nov 16</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <ul data-fh-slot="body" class="fh-gallery" aria-label="9 images" data-fh="SGA">
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/akhal-teke.webp" alt="Theme image: Akhal-Teke" loading="lazy"></button><span class="fh-gallery__caption">akhal-teke.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/firehorse.webp" alt="Theme image: Firehorse" loading="lazy"></button><span class="fh-gallery__caption">firehorse.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/friesian.webp" alt="Theme image: Friesian" loading="lazy"></button><span class="fh-gallery__caption">friesian.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/lipizzaner.webp" alt="Theme image: Lipizzaner" loading="lazy"></button><span class="fh-gallery__caption">lipizzaner.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/theme-horses/mustang.webp" alt="Theme image: Mustang" loading="lazy"></button><span class="fh-gallery__caption">mustang.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="amber" data-fh="CHP">photo</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/backdrop/firehorse-horse.webp" alt="Backdrop image: the Firehorse horse" loading="lazy"></button><span class="fh-gallery__caption">firehorse-horse.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="violet" data-fh="CHP">backdrop</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/tml2-actions-dark.webp" alt="Screenshot: Actions page, dark mode" loading="lazy"></button><span class="fh-gallery__caption">actions-dark.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/tml2-actions-light.webp" alt="Screenshot: Actions page, light mode" loading="lazy"></button><span class="fh-gallery__caption">actions-light.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+          <li><button type="button" aria-haspopup="dialog"><img src="/img/samples/ims-forms-dark.webp" alt="Screenshot: Forms page, dark mode" loading="lazy"></button><span class="fh-gallery__caption">forms-dark.webp</span><span data-fh-slot="chips" class="fh-chip fh-chip--sm" data-tone="sky" data-fh="CHP">screenshot</span></li>
+        </ul>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-matrix" data-fh-id="SMX" data-fh-groups="Matrix section">
+          <div class="site-demo__head"><h3>Matrix section</h3><p><code>fh-panel-section--matrix</code>. What each role may do. A filled check is granted, a hollow one comes through another role, and each capability opens its record. A wide matrix scrolls inside the section with the capability column held.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 40rem">
+      <details class="fh-panel-section fh-panel-section--matrix" data-tone="fuchsia" open data-fh-id="SMX-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--shield-check fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Access</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="fuchsia" data-fh="CHP">8 capabilities</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">4 roles</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div data-fh-slot="body" class="fh-table-wrap" data-fh="TMR"><table class="fh-table fh-matrix" data-fh="TBL" data-fh-slot="body">
+          <thead><tr><th scope="col">Capability</th><th scope="col">Owner</th><th scope="col">Admin</th><th scope="col">Member</th><th scope="col">Guest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-read" data-fh="ACT-2.1" data-fh-slot="link">Read records</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-edit" data-fh="ACT-2.1" data-fh-slot="link">Edit records</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-comment" data-fh="ACT-2.1" data-fh-slot="link">Comment</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-merge" data-fh="ACT-2.1" data-fh-slot="link">Merge a pull request</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-dispatch" data-fh="ACT-2.1" data-fh-slot="link">Dispatch a relay</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-invite" data-fh="ACT-2.1" data-fh-slot="link">Invite people</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-billing" data-fh="ACT-2.1" data-fh-slot="link">Manage billing</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-delete" data-fh="ACT-2.1" data-fh-slot="link">Delete the project</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--matrix" data-tone="fuchsia" data-fh-id="SMX-1.2" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--shield-check fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Access</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="fuchsia" data-fh="CHP">8 capabilities</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">4 roles</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div data-fh-slot="body" class="fh-table-wrap" data-fh="TMR"><table class="fh-table fh-matrix" data-fh="TBL" data-fh-slot="body">
+          <thead><tr><th scope="col">Capability</th><th scope="col">Owner</th><th scope="col">Admin</th><th scope="col">Member</th><th scope="col">Guest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-read" data-fh="ACT-2.1" data-fh-slot="link">Read records</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-edit" data-fh="ACT-2.1" data-fh-slot="link">Edit records</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-comment" data-fh="ACT-2.1" data-fh-slot="link">Comment</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-merge" data-fh="ACT-2.1" data-fh-slot="link">Merge a pull request</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-dispatch" data-fh="ACT-2.1" data-fh-slot="link">Dispatch a relay</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-invite" data-fh="ACT-2.1" data-fh-slot="link">Invite people</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-billing" data-fh="ACT-2.1" data-fh-slot="link">Manage billing</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-delete" data-fh="ACT-2.1" data-fh-slot="link">Delete the project</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+</div>
+<div class="fh-stack" style="max-inline-size: 23.4375rem">
+      <details class="fh-panel-section fh-panel-section--matrix" data-tone="fuchsia" open data-fh-id="SMX-1.3" data-fh-name="Wide">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--shield-check fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Access</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="fuchsia" data-fh="CHP">8 capabilities</span><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">12 roles</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <div data-fh-slot="body" class="fh-table-wrap" data-fh="TMR"><table class="fh-table fh-matrix" data-fh="TBL" data-fh-slot="body">
+          <thead><tr><th scope="col">Capability</th><th scope="col">Owner</th><th scope="col">Admin</th><th scope="col">Lead</th><th scope="col">Editor</th><th scope="col">Member</th><th scope="col">Reviewer</th><th scope="col">Agent</th><th scope="col">Bot</th><th scope="col">Auditor</th><th scope="col">Billing</th><th scope="col">Viewer</th><th scope="col">Guest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-read" data-fh="ACT-2.1" data-fh-slot="link">Read records</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-edit" data-fh="ACT-2.1" data-fh-slot="link">Edit records</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-comment" data-fh="ACT-2.1" data-fh-slot="link">Comment</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-merge" data-fh="ACT-2.1" data-fh-slot="link">Merge a pull request</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-dispatch" data-fh="ACT-2.1" data-fh-slot="link">Dispatch a relay</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="inherited"><span class="fh-sr-only">Inherited</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-invite" data-fh="ACT-2.1" data-fh-slot="link">Invite people</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-billing" data-fh="ACT-2.1" data-fh-slot="link">Manage billing</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+            <tr><th scope="row"><a class="fh-link" href="#c-sidecar" data-sidecar="cap-delete" data-fh="ACT-2.1" data-fh-slot="link">Delete the project</a></th><td data-included="true"><span class="fh-sr-only">Yes</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td><td data-included="false"><span class="fh-sr-only">No</span></td></tr>
+          </tbody>
+        </table></div>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-chart" data-fh-id="SCV" data-fh-groups="Chart section">
+          <div class="site-demo__head"><h3>Chart section</h3><p><code>fh-panel-section--chart</code>. A line or bars as inline SVG, with no script. The labels stay text at their own tier, each series takes its tone, and a hidden table reads the same data out.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 40rem">
+      <details class="fh-panel-section fh-panel-section--chart" data-tone="sky" open data-fh-id="SCV-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--chart-line fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Relay checks</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">34 passed</span><span data-fh-slot="chips" class="fh-chip" data-tone="lime" data-fh="CHP">+3 on last week</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-chart fh-chart--line" data-fh="SCV">
+          <figcaption>Checks a week, last 12 weeks</figcaption>
+          <div class="fh-chart__plot" aria-hidden="true">
+            <ol class="fh-chart__y"><li>40</li><li>30</li><li>20</li><li>10</li><li>0</li></ol>
+            <svg class="fh-chart__svg" viewBox="0 0 120 40" preserveAspectRatio="none" focusable="false">
+              <g class="fh-chart__grid"><line x1="0" x2="120" y1="0" y2="0"/><line x1="0" x2="120" y1="10" y2="10"/><line x1="0" x2="120" y1="20" y2="20"/><line x1="0" x2="120" y1="30" y2="30"/><line x1="0" x2="120" y1="40" y2="40"/></g>
+              <polyline class="fh-chart__series" data-tone="sky" points="5,28 15,25 25,26 35,22 45,19 55,21 65,16 75,14 85,15 95,11 105,9 115,6"/>
+              <polyline class="fh-chart__series" data-tone="rose" points="5,34 15,33 25,35 35,32 45,33 55,31 65,34 75,35 85,33 95,36 105,35 115,37"/>
+            </svg>
+            <ol class="fh-chart__x"><li>W1</li><li>W2</li><li>W3</li><li>W4</li><li>W5</li><li>W6</li><li>W7</li><li>W8</li><li>W9</li><li>W10</li><li>W11</li><li>W12</li></ol>
+          </div>
+          <ul class="fh-chart__legend">
+            <li data-tone="sky"><span class="fh-chart__name">Passed</span> <span class="fh-chart__value">34</span></li>
+            <li data-tone="rose"><span class="fh-chart__name">Failed</span> <span class="fh-chart__value">3</span></li>
+          </ul>
+          <table class="fh-sr-only">
+            <thead><tr><th scope="col">Week</th><th scope="col">Passed</th><th scope="col">Failed</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">W1</th><td>12</td><td>6</td></tr>
+              <tr><th scope="row">W2</th><td>15</td><td>7</td></tr>
+              <tr><th scope="row">W3</th><td>14</td><td>5</td></tr>
+              <tr><th scope="row">W4</th><td>18</td><td>8</td></tr>
+              <tr><th scope="row">W5</th><td>21</td><td>7</td></tr>
+              <tr><th scope="row">W6</th><td>19</td><td>9</td></tr>
+              <tr><th scope="row">W7</th><td>24</td><td>6</td></tr>
+              <tr><th scope="row">W8</th><td>26</td><td>5</td></tr>
+              <tr><th scope="row">W9</th><td>25</td><td>7</td></tr>
+              <tr><th scope="row">W10</th><td>29</td><td>4</td></tr>
+              <tr><th scope="row">W11</th><td>31</td><td>5</td></tr>
+              <tr><th scope="row">W12</th><td>34</td><td>3</td></tr>
+            </tbody>
+          </table>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--chart" data-tone="sky" open data-fh-id="SCV-1.2" data-fh-name="Bars">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--chart-bar fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Pages shipped</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="teal" data-fh="CHP">42 in November</span><span data-fh-slot="chips" class="fh-chip" data-tone="lime" data-fh="CHP">+6 on October</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-chart fh-chart--bar" data-fh="SCV">
+          <figcaption>Pages a month, June to November</figcaption>
+          <div class="fh-chart__plot" aria-hidden="true">
+            <ol class="fh-chart__y"><li>50</li><li>40</li><li>30</li><li>20</li><li>10</li><li>0</li></ol>
+            <svg class="fh-chart__svg" viewBox="0 0 60 50" preserveAspectRatio="none" focusable="false">
+              <g class="fh-chart__grid"><line x1="0" x2="60" y1="0" y2="0"/><line x1="0" x2="60" y1="10" y2="10"/><line x1="0" x2="60" y1="20" y2="20"/><line x1="0" x2="60" y1="30" y2="30"/><line x1="0" x2="60" y1="40" y2="40"/><line x1="0" x2="60" y1="50" y2="50"/></g>
+              <rect class="fh-chart__series" data-tone="teal" x="2" y="32" width="6" height="18"/>
+              <rect class="fh-chart__series" data-tone="teal" x="12" y="26" width="6" height="24"/>
+              <rect class="fh-chart__series" data-tone="teal" x="22" y="28" width="6" height="22"/>
+              <rect class="fh-chart__series" data-tone="teal" x="32" y="19" width="6" height="31"/>
+              <rect class="fh-chart__series" data-tone="teal" x="42" y="14" width="6" height="36"/>
+              <rect class="fh-chart__series" data-tone="teal" x="52" y="8" width="6" height="42"/>
+            </svg>
+            <ol class="fh-chart__x"><li>Jun <span class="fh-chart__value">18</span></li><li>Jul <span class="fh-chart__value">24</span></li><li>Aug <span class="fh-chart__value">22</span></li><li>Sep <span class="fh-chart__value">31</span></li><li>Oct <span class="fh-chart__value">36</span></li><li>Nov <span class="fh-chart__value">42</span></li></ol>
+          </div>
+          <ul class="fh-chart__legend">
+            <li data-tone="teal"><span class="fh-chart__name">Pages shipped</span> <span class="fh-chart__value">173</span></li>
+          </ul>
+          <table class="fh-sr-only">
+            <thead><tr><th scope="col">Month</th><th scope="col">Pages shipped</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">June</th><td>18</td></tr>
+              <tr><th scope="row">July</th><td>24</td></tr>
+              <tr><th scope="row">August</th><td>22</td></tr>
+              <tr><th scope="row">September</th><td>31</td></tr>
+              <tr><th scope="row">October</th><td>36</td></tr>
+              <tr><th scope="row">November</th><td>42</td></tr>
+            </tbody>
+          </table>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--chart" data-tone="sky" data-fh-id="SCV-1.3" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--chart-line fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Relay checks</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="sky" data-fh="CHP">34 passed</span><span data-fh-slot="chips" class="fh-chip" data-tone="lime" data-fh="CHP">+3 on last week</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-chart fh-chart--line" data-fh="SCV">
+          <figcaption>Checks a week, last 12 weeks</figcaption>
+          <div class="fh-chart__plot" aria-hidden="true">
+            <ol class="fh-chart__y"><li>40</li><li>30</li><li>20</li><li>10</li><li>0</li></ol>
+            <svg class="fh-chart__svg" viewBox="0 0 120 40" preserveAspectRatio="none" focusable="false">
+              <g class="fh-chart__grid"><line x1="0" x2="120" y1="0" y2="0"/><line x1="0" x2="120" y1="10" y2="10"/><line x1="0" x2="120" y1="20" y2="20"/><line x1="0" x2="120" y1="30" y2="30"/><line x1="0" x2="120" y1="40" y2="40"/></g>
+              <polyline class="fh-chart__series" data-tone="sky" points="5,28 15,25 25,26 35,22 45,19 55,21 65,16 75,14 85,15 95,11 105,9 115,6"/>
+              <polyline class="fh-chart__series" data-tone="rose" points="5,34 15,33 25,35 35,32 45,33 55,31 65,34 75,35 85,33 95,36 105,35 115,37"/>
+            </svg>
+            <ol class="fh-chart__x"><li>W1</li><li>W2</li><li>W3</li><li>W4</li><li>W5</li><li>W6</li><li>W7</li><li>W8</li><li>W9</li><li>W10</li><li>W11</li><li>W12</li></ol>
+          </div>
+          <ul class="fh-chart__legend">
+            <li data-tone="sky"><span class="fh-chart__name">Passed</span> <span class="fh-chart__value">34</span></li>
+            <li data-tone="rose"><span class="fh-chart__name">Failed</span> <span class="fh-chart__value">3</span></li>
+          </ul>
+          <table class="fh-sr-only">
+            <thead><tr><th scope="col">Week</th><th scope="col">Passed</th><th scope="col">Failed</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">W1</th><td>12</td><td>6</td></tr>
+              <tr><th scope="row">W2</th><td>15</td><td>7</td></tr>
+              <tr><th scope="row">W3</th><td>14</td><td>5</td></tr>
+              <tr><th scope="row">W4</th><td>18</td><td>8</td></tr>
+              <tr><th scope="row">W5</th><td>21</td><td>7</td></tr>
+              <tr><th scope="row">W6</th><td>19</td><td>9</td></tr>
+              <tr><th scope="row">W7</th><td>24</td><td>6</td></tr>
+              <tr><th scope="row">W8</th><td>26</td><td>5</td></tr>
+              <tr><th scope="row">W9</th><td>25</td><td>7</td></tr>
+              <tr><th scope="row">W10</th><td>29</td><td>4</td></tr>
+              <tr><th scope="row">W11</th><td>31</td><td>5</td></tr>
+              <tr><th scope="row">W12</th><td>34</td><td>3</td></tr>
+            </tbody>
+          </table>
+        </figure>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
+        <div class="site-demo site-anchor" id="c-sec-diff" data-fh-id="SDF" data-fh-groups="Diff section">
+          <div class="site-demo__head"><h3>Diff section</h3><p><code>fh-panel-section--diff</code>. A unified diff in the Code block: added rows on a soft lime fill, removed rows on a soft rose fill, the hunk header muted. The gutter holds the row number and its + or - mark, and neither copies. The caption is the file name, the change counts and the two versions. Split puts old and new side by side from 40rem of the block's width and stacks back to unified under it.</p></div>
+          <div class="site-demo__stage" data-demo>
+<div class="fh-stack" style="max-inline-size: 56rem">
+      <details class="fh-panel-section fh-panel-section--diff" data-tone="teal" open data-fh-id="SDF-1.1" data-fh-name="Open">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--git-branch fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">fold.js</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="lime" data-fh="CHP">+7</span><span data-fh-slot="chips" class="fh-chip" data-tone="rose" data-fh="CHP">-4</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-code fh-diff" data-fh="DET">
+          <figcaption>
+            <span>src/js/fold.js</span>
+            <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">+7</span>
+            <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="rose">-4</span>
+            <span class="fh-diff__versions"><span class="fh-value fh-value--mono" data-fh="VAL-11.7" title="Before">9f2a1c0</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i><span class="fh-value fh-value--mono" data-fh="VAL-11.7" title="After">c31d0ab</span></span>
+          </figcaption>
+          <pre><code><span class="fh-code__line" data-diff="hunk">@@ -1,7 +1,8 @@</span><span class="fh-code__line" data-diff="ctx" data-n="1">const LINES = 24;</span><span class="fh-code__line" data-diff="ctx" data-n="2"></span><span class="fh-code__line" data-diff="del" data-n="3">const clampOf = (fold) =&gt; {</span><span class="fh-code__line" data-diff="del" data-n="4">  const raw = getComputedStyle(fold).getPropertyValue(&quot;--fh-fold-lines&quot;);</span><span class="fh-code__line" data-diff="add" data-n="3">const clampOf = (fold, fallback = LINES) =&gt; {</span><span class="fh-code__line" data-diff="add" data-n="4">  const style = getComputedStyle(fold);</span><span class="fh-code__line" data-diff="add" data-n="5">  const raw = style.getPropertyValue(&quot;--fh-fold-lines&quot;);</span><span class="fh-code__line" data-diff="ctx" data-n="6">  const n = Number.parseInt(raw, 10);</span><span class="fh-code__line" data-diff="del" data-n="6">  return Number.isFinite(n) &amp;&amp; n &gt; 0 ? n : LINES;</span><span class="fh-code__line" data-diff="add" data-n="7">  return Number.isFinite(n) &amp;&amp; n &gt; 0 ? n : fallback;</span><span class="fh-code__line" data-diff="ctx" data-n="8">};</span><span class="fh-code__line" data-diff="hunk">@@ -12,6 +13,8 @@</span><span class="fh-code__line" data-diff="ctx" data-n="13">  if (!body || !toggle) return;</span><span class="fh-code__line" data-diff="ctx" data-n="14">  fold.classList.add(&quot;fh-fold--js&quot;);</span><span class="fh-code__line" data-diff="add" data-n="15">  const lines = clampOf(fold, Number(fold.dataset.lines) || LINES);</span><span class="fh-code__line" data-diff="ctx" data-n="16">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span><span class="fh-code__line" data-diff="del" data-n="15">  const over = body.scrollHeight &gt; clampOf(fold) * line + 1;</span><span class="fh-code__line" data-diff="add" data-n="17">  const over = body.scrollHeight &gt; lines * line + 1;</span><span class="fh-code__line" data-diff="add" data-n="18">  toggle.setAttribute(&quot;aria-expanded&quot;, &quot;false&quot;);</span><span class="fh-code__line" data-diff="ctx" data-n="19">  if (over) toggle.hidden = false;</span><span class="fh-code__line" data-diff="ctx" data-n="20">  else fold.dataset.fits = &quot;true&quot;;</span></code></pre>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--diff" data-tone="teal" open data-fh-id="SDF-1.2" data-fh-name="Split">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--git-branch fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">fold.js</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="lime" data-fh="CHP">+7</span><span data-fh-slot="chips" class="fh-chip" data-tone="rose" data-fh="CHP">-4</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-code fh-diff fh-diff--split" data-fh="DET">
+          <figcaption>
+            <span>src/js/fold.js</span>
+            <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">+7</span>
+            <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="rose">-4</span>
+            <span class="fh-diff__versions"><span class="fh-value fh-value--mono" data-fh="VAL-11.7" title="Before">9f2a1c0</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i><span class="fh-value fh-value--mono" data-fh="VAL-11.7" title="After">c31d0ab</span></span>
+          </figcaption>
+          <pre><code><span class="fh-code__line" data-diff="hunk">@@ -1,7 +1,8 @@</span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="1">const LINES = 24;</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="1">const LINES = 24;</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="2"></span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="2"></span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="del" data-n="3">const clampOf = (fold) =&gt; {</span><span class="fh-code__line" data-diff="del" data-n="4">  const raw = getComputedStyle(fold).getPropertyValue(&quot;--fh-fold-lines&quot;);</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="add" data-n="3">const clampOf = (fold, fallback = LINES) =&gt; {</span><span class="fh-code__line" data-diff="add" data-n="4">  const style = getComputedStyle(fold);</span><span class="fh-code__line" data-diff="add" data-n="5">  const raw = style.getPropertyValue(&quot;--fh-fold-lines&quot;);</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="5">  const n = Number.parseInt(raw, 10);</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="6">  const n = Number.parseInt(raw, 10);</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="del" data-n="6">  return Number.isFinite(n) &amp;&amp; n &gt; 0 ? n : LINES;</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="add" data-n="7">  return Number.isFinite(n) &amp;&amp; n &gt; 0 ? n : fallback;</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="7">};</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="8">};</span></span></span><span class="fh-code__line" data-diff="hunk">@@ -12,6 +13,8 @@</span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="12">  if (!body || !toggle) return;</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="13">  if (!body || !toggle) return;</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="13">  fold.classList.add(&quot;fh-fold--js&quot;);</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="14">  fold.classList.add(&quot;fh-fold--js&quot;);</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="add" data-n="15">  const lines = clampOf(fold, Number(fold.dataset.lines) || LINES);</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="14">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="16">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="del" data-n="15">  const over = body.scrollHeight &gt; clampOf(fold) * line + 1;</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="add" data-n="17">  const over = body.scrollHeight &gt; lines * line + 1;</span><span class="fh-code__line" data-diff="add" data-n="18">  toggle.setAttribute(&quot;aria-expanded&quot;, &quot;false&quot;);</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="16">  if (over) toggle.hidden = false;</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="19">  if (over) toggle.hidden = false;</span></span></span><span class="fh-diff__row"><span class="fh-diff__side" data-side="old"><span class="fh-code__line" data-diff="ctx" data-n="17">  else fold.dataset.fits = &quot;true&quot;;</span></span><span class="fh-diff__side" data-side="new"><span class="fh-code__line" data-diff="ctx" data-n="20">  else fold.dataset.fits = &quot;true&quot;;</span></span></span></code></pre>
+        </figure>
+        </div>
+      </details>
+      <details class="fh-panel-section fh-panel-section--diff" data-tone="teal" data-fh-id="SDF-1.3" data-fh-name="Collapsed">
+        <summary class="fh-panel-section__head">
+          <i class="fh-icon fh-icon--git-branch fh-panel-section__icon" aria-hidden="true"></i>
+          <h3 class="fh-panel-section__title">Fold change</h3>
+          <span class="fh-panel-section__chips"><span data-fh-slot="chips" class="fh-chip" data-tone="teal" data-fh="CHP">3 files</span><span data-fh-slot="chips" class="fh-chip" data-tone="lime" data-fh="CHP">+16 -6</span></span>
+        </summary>
+        <div class="fh-panel-section__body">
+        <figure data-fh-slot="body" class="fh-code fh-diff" data-fh="DET">
+          <figcaption>
+            <span>src/js/fold.js</span>
+            <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="lime">+7</span>
+            <span class="fh-chip fh-chip--tone fh-chip--sm" data-tone="rose">-4</span>
+            <span class="fh-diff__versions"><span class="fh-value fh-value--mono" data-fh="VAL-11.7" title="Before">9f2a1c0</span><i class="fh-icon fh-icon--arrow-right" aria-hidden="true"></i><span class="fh-value fh-value--mono" data-fh="VAL-11.7" title="After">c31d0ab</span></span>
+          </figcaption>
+          <pre><code><span class="fh-code__line" data-diff="hunk">@@ -1,7 +1,8 @@</span><span class="fh-code__line" data-diff="ctx" data-n="1">const LINES = 24;</span><span class="fh-code__line" data-diff="ctx" data-n="2"></span><span class="fh-code__line" data-diff="del" data-n="3">const clampOf = (fold) =&gt; {</span><span class="fh-code__line" data-diff="del" data-n="4">  const raw = getComputedStyle(fold).getPropertyValue(&quot;--fh-fold-lines&quot;);</span><span class="fh-code__line" data-diff="add" data-n="3">const clampOf = (fold, fallback = LINES) =&gt; {</span><span class="fh-code__line" data-diff="add" data-n="4">  const style = getComputedStyle(fold);</span><span class="fh-code__line" data-diff="add" data-n="5">  const raw = style.getPropertyValue(&quot;--fh-fold-lines&quot;);</span><span class="fh-code__line" data-diff="ctx" data-n="6">  const n = Number.parseInt(raw, 10);</span><span class="fh-code__line" data-diff="del" data-n="6">  return Number.isFinite(n) &amp;&amp; n &gt; 0 ? n : LINES;</span><span class="fh-code__line" data-diff="add" data-n="7">  return Number.isFinite(n) &amp;&amp; n &gt; 0 ? n : fallback;</span><span class="fh-code__line" data-diff="ctx" data-n="8">};</span><span class="fh-code__line" data-diff="hunk">@@ -12,6 +13,8 @@</span><span class="fh-code__line" data-diff="ctx" data-n="13">  if (!body || !toggle) return;</span><span class="fh-code__line" data-diff="ctx" data-n="14">  fold.classList.add(&quot;fh-fold--js&quot;);</span><span class="fh-code__line" data-diff="add" data-n="15">  const lines = clampOf(fold, Number(fold.dataset.lines) || LINES);</span><span class="fh-code__line" data-diff="ctx" data-n="16">  const line = Number.parseFloat(getComputedStyle(body).lineHeight);</span><span class="fh-code__line" data-diff="del" data-n="15">  const over = body.scrollHeight &gt; clampOf(fold) * line + 1;</span><span class="fh-code__line" data-diff="add" data-n="17">  const over = body.scrollHeight &gt; lines * line + 1;</span><span class="fh-code__line" data-diff="add" data-n="18">  toggle.setAttribute(&quot;aria-expanded&quot;, &quot;false&quot;);</span><span class="fh-code__line" data-diff="ctx" data-n="19">  if (over) toggle.hidden = false;</span><span class="fh-code__line" data-diff="ctx" data-n="20">  else fold.dataset.fits = &quot;true&quot;;</span></code></pre>
+        </figure>
+        </div>
+      </details>
+</div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1485,7 +2689,7 @@ Every check in `relay:verify -- --tier screen` passed.
   <div class="fh-tpl__body">
     <section class="fh-section-card" data-tone="teal" aria-labelledby="tpl-land-recent" data-fh="SEC-1.1" data-fh-slot="body">
       <header class="fh-section-card__head"><h3 class="fh-section-card__title" id="tpl-land-recent" data-fh-slot="title"><i class="fh-icon fh-icon--table-2" aria-hidden="true"></i>Recent goals</h3></header>
-      <div class="fh-table-wrap" data-fh="TBL-1.1" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
+      <div class="fh-table-wrap" data-fh="TMR" data-fh-slot="body"><table class="fh-table" data-fh="TBL" data-fh-slot="body">
         <thead><tr><th scope="col">Goal</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
         <tbody>
           <tr><td><a class="fh-ref" href="#c-sidecar" data-sidecar="goal-harbor" data-fh="REF-1.2" data-fh-slot="body"><span class="fh-ref__label">Harbor index refresh</span><code class="fh-ref__key">GL-014</code></a></td><td><a class="fh-ref" href="#c-sidecar" data-sidecar="agent-orchard" data-fh="REF-1.1" data-fh-slot="body"><span class="fh-ref__label">Orchard</span></a></td><td><span class="fh-chip fh-chip--tone fh-chip--sm" data-status="merged" data-fh="CHP" data-fh-slot="chips">merged</span></td></tr>
@@ -1517,7 +2721,7 @@ Every check in `relay:verify -- --tier screen` passed.
     </nav>
   </div>
   <div class="fh-tpl__filters" data-fh-id="TPL-1.7" data-fh-name="Filter row">
-    <label class="fh-search" data-fh-slot="sections"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
+    <label data-fh="FLD" class="fh-search" data-fh-slot="sections"><span class="fh-sr-only">Find a goal</span><input type="search" placeholder="Find a goal"></label>
     <div class="fh-select-wrap" data-fh-slot="sections"><select class="fh-select" aria-label="Owner" data-fh="THS" data-fh-slot="fields"><option>All owners</option><option>Orchard</option><option>Harbor</option></select></div>
     <div class="fh-select-wrap" data-fh-slot="sections"><select class="fh-select" aria-label="Area" data-fh="THS" data-fh-slot="fields"><option>All areas</option><option>Search</option><option>Billing</option><option>Export</option></select></div>
     <div class="fh-select-wrap" data-fh-slot="sections"><select class="fh-select" aria-label="Cycle" data-fh="THS" data-fh-slot="fields"><option>Any cycle</option><option>Q4</option><option>Q1</option></select></div>

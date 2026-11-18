@@ -10,7 +10,7 @@
 // exactly as agent/components/values.md shows it. A viewer's own pick (the column display menu) comes in as
 // opts.variant and is used only when variants() allows it for the field and context.
 // Data display contract W3 (platform relay/2026-11-14-dc-w3-surfaces.md).
-import { rules, resolveValue, variants, textOf, isEmpty, toneOf, rampOf, isoDuration, avatarOf, avatarImageOf, thumbMarkup, thumbClusterMarkup, formatBytes } from "./values.js";
+import { rules, resolveValue, variants, textOf, isEmpty, toneOf, rampOf, isoDuration, avatarOf, avatarImageOf, thumbMarkup, thumbClusterMarkup, formatBytes, placeLines } from "./values.js";
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const attr = (name, v) => (v == null || v === false ? "" : v === true ? ` ${name}` : ` ${name}="${esc(v)}"`);
@@ -133,7 +133,9 @@ export function sparkline(values = []) {
 /* —— The root —— */
 const CLASS = { range: "range-dates" };
 function rootOpen(tag, r, variant, opts, extra = {}) {
-  const cls = ["fh-value", `fh-value--${r.shape === "temporal" && CLASS[variant] ? CLASS[variant] : variant}`];
+  // A place variant is fh-value--place-<variant> (its names, address or cell, are too general alone); its form is the prose textarea.
+  const name = r.shape === "temporal" && CLASS[variant] ? CLASS[variant] : r.shape === "place" && variant !== "textarea" ? `place-${variant}` : variant;
+  const cls = ["fh-value", `fh-value--${name}`];
   if (extra.cls) cls.push(...[].concat(extra.cls));
   const numeric = ["number", "money", "series"].includes(r.shape) || (r.shape === "ratio" && variant === "text") || ["time", "duration", "count", "phone"].includes(variant);
   if (numeric) cls.push("fh-value--tabular");
@@ -166,7 +168,7 @@ export function renderValue(field = {}, value, context = "cell", opts = {}) {
   const id = meta?.id ?? r.id;
   const label = opts.label ?? field.label ?? field.key ?? "";
   const edit = context === "form" && r.editable;
-  if (isEmpty(value) && !(r.shape === "flag") && !edit) {
+  if ((isEmpty(value) || (r.shape === "place" && !placeLines(value).length)) && !(r.shape === "flag") && !edit) {
     return `${rootOpen("span", r, variant, opts, { id, empty: true })}<span aria-hidden="true">${esc(rules.empty.text)}</span><span class="fh-sr-only">Empty</span></span>`;
   }
   const draw = DRAW[r.shape]?.[variant] ?? DRAW.text.line;
@@ -272,7 +274,7 @@ const entity = {
   full: each((o) => {
     const e = entityOf(o.value);
     const stat = e.stat ? `<span class="fh-entity__stat"${attr("data-tone", e.stat.tone)}><b>${esc(e.stat.value)}</b>${e.stat.label ? `<small>${esc(e.stat.label)}</small>` : ""}</span>` : "";
-    return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}${stat}</span></div>`;
+    return `${rootOpen("div", o.r, "full", o.opts, { id: o.id })}<span class="fh-entity">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${who(e)}${stat}</span></div>`;
   }),
   chip: each((o) => { const e = entityOf(o.value); return `${rootOpen("span", o.r, "chip", o.opts, { id: o.id })}<span class="fh-chip fh-chip--sm fh-chip--avatar">${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${esc(e.label)}</span></span>`; }),
   stack: (o) => {
@@ -287,7 +289,7 @@ const entity = {
   "ref-key": each((o) => `${rootOpen("span", o.r, "ref-key", o.opts, { id: o.id })}${refLink(entityOf(o.value), true, o)}</span>`),
   picker: (o) => {
     const e = entityOf(list(o.value)[0]);
-    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value">${e ? `${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}<span class="fh-entity__sep"></span>${who(e)}` : `<span class="fh-entity__who"><b>${esc(rules.empty.text)}</b></span>`}</span></button></div>`);
+    return field(o, `<div class="fh-entity-picker" data-fh-entity><button class="fh-entity" type="button" aria-haspopup="listbox" aria-label="${esc(o.label)}"${o.edit ? "" : " disabled"}><span class="fh-entity__value">${e ? `${avatar(e, { kind: o.r.avatar?.kind ?? "person" })}${who(e)}` : `<span class="fh-entity__who"><b>${esc(rules.empty.text)}</b></span>`}</span></button></div>`);
   },
   "picker-multi": (o) => {
     const items = list(o.value).map(entityOf).filter(Boolean);
@@ -394,6 +396,8 @@ const file = {
   "file-row": (o) => `${rootOpen("div", o.r, "file-row", o.opts, { id: o.id })}<ul class="fh-files">${list(o.value).map(fileOf).map((f) => { const inner = `${icon(isImage(f) ? "image" : "file-text")}<span>${esc(f.name)}</span>${f.size != null ? `<small>${esc(sizeOf(f.size))}</small>` : ""}${f.date ? `<time datetime="${esc(f.date)}">${esc(dateText(asDate(f.date), o, { month: "short", day: "numeric" }))}</time>` : ""}`; return `<li>${f.url ? `<a href="${esc(f.url)}">${inner}</a>` : `<span>${inner}</span>`}</li>`; }).join("")}</ul></div>`,
   count: (o) => { const n = list(o.value).length; return `${rootOpen("span", o.r, "count", o.opts, { id: o.id })}${icon("paperclip")}${esc(word(n, "file", "files"))}</span>`; },
   dropzone: (o) => field(o, `<label class="fh-dropzone" data-tone="sky"><input type="file" multiple${attr("name", o.opts.name ?? o.field.key)}${o.edit ? "" : " disabled"}><span class="fh-dropzone__title">Drop files or browse</span>${list(o.value).length ? `<span class="fh-dropzone__hint">${esc(list(o.value).map(fileOf).map((f) => f.name).join(", "))}</span>` : ""}</label>`),
+  // One image (VAL-8.7): the image field (IMF), the avatar preview with Upload and From a URL. Several images stay on the dropzone.
+  "image-field": (o) => { const f = list(o.value).map(fileOf)[0]; const img = f && (f.image || f.url); const name = attr("name", o.opts.name ?? o.field.key); const dis = o.edit ? "" : " disabled"; return field(o, `<div class="fh-image-field" data-kind="${esc(o.opts.kind ?? "record")}" data-size="lg"><div class="fh-image-field__layout"><div class="fh-image-field__preview"><span class="fh-avatar fh-avatar--lg" data-kind="${esc(o.opts.kind ?? "record")}">${img ? `<img src="${esc(img)}" alt="">` : esc(initialsOf(o.field.label ?? o.field.key ?? ""))}</span></div><div class="fh-image-field__main"><div class="fh-segment fh-segment--mode fh-image-field__modes" role="group" aria-label="Image source"><button type="button" data-pane="upload" aria-pressed="true"${dis}>Upload</button><button type="button" data-pane="url" aria-pressed="false"${dis}>From a URL</button></div><div class="fh-image-field__panes"><div class="fh-image-field__pane" data-pane="upload"><label class="fh-dropzone fh-dropzone--compact" data-tone="sky"><input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"${name}${dis}><span class="fh-dropzone__title">${f ? esc(f.name) : "Drop, paste or browse"}</span><span class="fh-dropzone__hint">PNG, JPG, WebP, GIF or SVG · up to 10 MB</span></label></div><div class="fh-image-field__pane" data-pane="url" data-state="idle" hidden><div class="fh-image-field__url"><input class="fh-input" type="url" inputmode="url" placeholder="https://" aria-label="Image address"${dis}><button class="fh-button fh-button--secondary" type="button" data-fetch${dis}>Fetch</button></div><p class="fh-field__error"></p></div></div></div></div></div>`); },
 };
 
 const trimUrl = (u) => String(u).replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
@@ -453,6 +457,44 @@ function pathName(s) {
 }
 function copyButton(o) { return `<button class="fh-value__action" type="button" aria-label="${esc(`Copy ${o.label}`.trim())}" title="Copy" onclick="navigator.clipboard?.writeText(this.previousElementSibling.title)">${icon("copy")}</button>`; }
 
+/* —— Place (VAL-12): { lines, hours, mapUrl, match } —————————————————————————— */
+/** A place: { lines, hours?, mapUrl?, match? }; a string is its address, one line per line break. */
+export function placeOf(v) {
+  if (v == null) return null;
+  const o = typeof v === "object" && !Array.isArray(v) ? v : {};
+  return { ...o, lines: placeLines(v), hours: o.hours ?? null, mapUrl: o.mapUrl ?? o.href ?? null, match: o.match ?? null };
+}
+// One or two lines: the street, then the rest joined.
+const placeTwo = (lines) => (lines.length > 2 ? [lines[0], lines.slice(1).join(", ")] : lines);
+const stateTone = (map, key) => rules.states[rules.place?.[map]?.[key]] ?? "neutral";
+const clock = (t, o) => {
+  const m = /^(\d{1,2}):(\d{2})/.exec(String(t ?? ""));
+  if (!m) return String(t ?? "");
+  return new Date(2000, 0, 1, +m[1], +m[2]).toLocaleTimeString(o.opts.locale ?? "en-US", { hour: "numeric", minute: +m[2] ? "2-digit" : undefined });
+};
+// Hours today: a string is the words as given (open); { state: open | closing | closed, until?, opens?, label? }.
+function hoursOf(h, o) {
+  if (h == null || h === "") return null;
+  const v = typeof h === "object" ? h : { state: "open", label: String(h) };
+  const state = rules.place?.hours?.[v.state] ? v.state : "open";
+  const words = v.label ?? (state === "closed" ? `Closed${v.opens ? ` · Opens ${clock(v.opens, o)}` : ""}` : state === "closing" ? `Closes at ${clock(v.until, o)}` : v.until ? `Open until ${clock(v.until, o)}` : "Open");
+  return `<span class="fh-value__hours" data-state="${state}" data-tone="${stateTone("hours", state)}"><span class="fh-dot"></span><span class="fh-value__sub">${esc(words)}</span></span>`;
+}
+const MATCH = { matched: "Matched", unmatched: "Unmatched", review: "Review" };
+const matchChip = (m) => (m && rules.place?.match?.[m] ? chip(MATCH[m] ?? m, stateTone("match", m)).replace("<span class=\"fh-chip", `<span data-match="${esc(m)}" class="fh-chip`) : "");
+const mapAction = (p, o) => (p.mapUrl ? `<a class="fh-value__action" href="${esc(p.mapUrl)}" aria-label="${esc(`Open ${p.lines[0]} on a map`)}" title="Map">${icon("map-pin")}</a>` : "");
+const placeLine = (p) => `<span class="fh-value__name" title="${esc(p.lines.join(", "))}">${esc(p.lines[0])}</span>`;
+const place = {
+  address: (o) => {
+    const p = placeOf(o.value), meta = [hoursOf(p.hours, o), matchChip(p.match)].filter(Boolean).join("");
+    return `${rootOpen("div", o.r, "address", o.opts, { id: o.id })}<address class="fh-value__lines">${placeTwo(p.lines).map((l) => `<span>${esc(l)}</span>`).join("")}</address>${mapAction(p, o)}${meta ? `<span class="fh-value__meta">${meta}</span>` : ""}</div>`;
+  },
+  hours: (o) => { const p = placeOf(o.value); return `${rootOpen("span", o.r, "hours", o.opts, { id: o.id })}${placeLine(p)}${hoursOf(p.hours, o) ?? ""}${mapAction(p, o)}</span>`; },
+  match: (o) => { const p = placeOf(o.value); return `${rootOpen("span", o.r, "match", o.opts, { id: o.id, title: p.lines.join(", ") })}${matchChip(p.match) || `<span class="fh-value__sub">${esc(rules.empty.text)}</span>`}</span>`; },
+  cell: (o) => { const p = placeOf(o.value); return `${rootOpen("span", o.r, "cell", o.opts, { id: o.id })}${placeLine(p)}${matchChip(p.match)}</span>`; },
+  textarea: (o) => prose.textarea({ ...o, value: placeLines(o.value).join("\n") }),
+};
+
 const series = { sparkline: number.sparkline, "sparkline-last": number["sparkline-last"] };
 
-const DRAW = { option, options, entity, money, ratio, number, series, temporal, file, link, flag, prose, text, code };
+const DRAW = { option, options, entity, money, ratio, number, series, temporal, file, link, flag, prose, text, code, place };
